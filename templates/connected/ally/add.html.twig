@@ -62,7 +62,7 @@
                                         {% else %}
                                             <img height="15" width="15" src="{{ asset('img/avatar.png') }}">
                                         {% endif %}
-                                        <span><a href="{{ path('user_profil', {'userPlanet': proposal.getUser().getId(), 'userPlanet': fleet.getUser().getId()}) }}">{{ proposal.getUser().getUserName() }}</a></span>
+                                        <span><a href="{{ path('user_profil', {'userPlanet': proposal.getUser().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ proposal.getUser().getUserName() }}</a></span>
                                     </td>
                                     <td class="center-cells">
                                         {{ proposal.getProposalAt()|date('d/m/Y H:i') }}

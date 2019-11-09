@@ -38,7 +38,7 @@ class BotController extends AbstractController
             $creation->add(new DateInterval('PT' . rand(1, 1000) . 'H'));
             $user->setUsername($nick);
             $user->setEmail($nick . '@fake.com');
-            $user->setCreatedAt($now);
+            $user->setCreatedAt($creation);
             $user->setPassword(password_hash($nick . 'bot', PASSWORD_BCRYPT));
             $user->setTutorial(60);
             $user->setBot(true);
@@ -109,6 +109,7 @@ class BotController extends AbstractController
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $move = $now;
+        $creation = $now;
         $bots = $em->getRepository('App:User')
         ->createQueryBuilder('u')
         ->where('u.bot = true')
@@ -129,7 +130,8 @@ class BotController extends AbstractController
             ->getOneOrNullResult();
 
         foreach ($bots as $bot) {
-            $move->add(new DateInterval('PT' . rand(1, 10) . 'M'));
+            $move->add(new DateInterval('PT' . rand(1, 60) . 'S'));
+            $creation->add(new DateInterval('PT' . rand(1, 10) . 'M'));
             if (rand(1, 48) == 1) {
                 $fPlanet = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
@@ -182,11 +184,11 @@ class BotController extends AbstractController
                     $sonde->setSignature($sonde->getNbrSignatures());
                     $speed = $sonde->getSpeed();
                     $distance = $speed * $base * 100;
-                    $now->add(new DateInterval('PT' . round($distance) . 'S'));
+                    $move->add(new DateInterval('PT' . round($distance) . 'S'));
                     $moreNow = new DateTime();
                     $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
                     $moreNow->add(new DateInterval('PT' . 120 . 'S'));
-                    $sonde->setFlightTime($now);
+                    $sonde->setFlightTime($move);
                     $destination = new Destination();
                     $destination->setFleet($sonde);
                     $destination->setPlanet($planet);
@@ -195,14 +197,6 @@ class BotController extends AbstractController
                     $sonde->setCancelFlight($moreNow);
                     $em->persist($sonde);
                 }
-                $message = new S_Content();
-                $message->setSalon($salon);
-                $allMessages = ['Salut', 'Plop', 'Slt tlm', 'ca va ?', 'wesh', 'bj', 'bonjour', 'hellooo', 'hello', 'comment on fait pour coloniser ?', 'c\'est quoi les zombies ?', 'je me fais attaquer !!!!'];
-                $body = $allMessages[mt_rand(0, count($allMessages) - 1)];
-                $message->setMessage(nl2br($body));
-                $message->setSendAt($now);
-                $message->setUser($bot);
-                $em->persist($message);
                 $bot->setLastActivity($now);
             }
 
@@ -236,12 +230,20 @@ class BotController extends AbstractController
                     }
                 }
                 // créer une flotte et l'envoyer recyclage
-                $bot->setLastActivity($now);
+                $bot->setLastActivity($creation);
             }
-            if (rand(1, 20) == 1) {
+            if (rand(1, 150) == 1) {
+                $message = new S_Content();
+                $message->setSalon($salon);
+                $allMessages = ['Salut', 'Plop', 'Slt tlm', 'ca va ?', 'wesh', 'bj', 'bonjour', 'hellooo', 'hello', 'comment on fait pour coloniser ?', 'c\'est quoi les zombies ?', 'je me fais attaquer !!!!'];
+                $body = $allMessages[mt_rand(0, count($allMessages) - 1)];
+                $message->setMessage(nl2br($body));
+                $message->setSendAt($now);
+                $message->setUser($bot);
+                $em->persist($message);
                 // Alliance création/rejoindre/inviter
                 // créer une flotte et l'envoyer coloniser/envahir
-                $bot->setLastActivity($now);
+                $bot->setLastActivity($creation);
             }
         }
         $em->flush();
