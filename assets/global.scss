@@ -207,6 +207,7 @@ a:hover {
 
 .navbar-right {
   position: sticky;
+  z-index: 1;
   top: 70px;
 }
 
@@ -395,10 +396,7 @@ span a {
 }
 
 .footer {
-  position: fixed;
-  padding: 0.8rem;
-  right: 0;
-  bottom: 0;
+  z-index: 2;
   a {
     color: #fff;
     text-shadow: 1.5px 1.5px 2px rgba(0,0,0, 0.8);
@@ -408,6 +406,20 @@ span a {
     background-color: rgba(0,0,0, 0.4);
     text-decoration: none;
   }
+}
+
+.footer-right {
+  position: fixed;
+  padding: 0.8rem;
+  right: 0;
+  bottom: 0;
+}
+
+.footer-left {
+  position: fixed;
+  padding: 0.8rem;
+  left: 0;
+  bottom: 0;
 }
 
 progress.product-full::-webkit-progress-value {

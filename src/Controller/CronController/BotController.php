@@ -108,8 +108,11 @@ class BotController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));
-        $move = $now;
-        $creation = $now;
+        $move = new DateTime();
+        $move->setTimezone(new DateTimeZone('Europe/Paris'));
+        $creation = new DateTime();
+        $creation->setTimezone(new DateTimeZone('Europe/Paris'));
+        $messageSent = 1;
         $bots = $em->getRepository('App:User')
         ->createQueryBuilder('u')
         ->where('u.bot = true')
@@ -230,10 +233,11 @@ class BotController extends AbstractController
                     }
                 }
                 // créer une flotte et l'envoyer recyclage
-                $bot->setLastActivity($creation);
+                $bot->setLastActivity($now);
             }
-            if (rand(1, 150) == 1) {
+            if (rand(1, 150) == 1 && $messageSent == 1) {
                 $message = new S_Content();
+                $messageSent = 0;
                 $message->setSalon($salon);
                 $allMessages = ['Salut', 'Plop', 'Slt tlm', 'ca va ?', 'wesh', 'bj', 'bonjour', 'hellooo', 'hello', 'comment on fait pour coloniser ?', 'c\'est quoi les zombies ?', 'je me fais attaquer !!!!'];
                 $body = $allMessages[mt_rand(0, count($allMessages) - 1)];
@@ -241,9 +245,17 @@ class BotController extends AbstractController
                 $message->setSendAt($now);
                 $message->setUser($bot);
                 $em->persist($message);
+                $userViews = $em->getRepository('App:User')
+                    ->createQueryBuilder('u')
+                    ->where('u.bot = false')
+                    ->getQuery()
+                    ->getResult();
+                foreach($userViews as $userView) {
+                    $userView->setSalonAt(null);
+                }
                 // Alliance création/rejoindre/inviter
                 // créer une flotte et l'envoyer coloniser/envahir
-                $bot->setLastActivity($creation);
+                $bot->setLastActivity($now);
             }
         }
         $em->flush();

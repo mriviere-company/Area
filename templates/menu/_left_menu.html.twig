@@ -65,8 +65,8 @@
             <a href="{{ path('create_fleet', {'usePlanet': usePlanet.getId()}) }}" data-toggle="modal" data-target="#createFleetModal"><span>{{ 'createFlotte'|trans }}</span></a>
         </div>
     {% endif %}
-    <div class="btn-left{% if app.request.attributes.get('_route') == 'ship_perso' %} currentRoute{% endif %}{% if allTuto < 50 %} tutorial-hide{% endif %}">
-        <a href="{{ path('ship_perso', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'ship.perso'|trans }}</span></a>
+    <div class="btn-left{% if app.request.attributes.get('_route') == 'ship_perso' %} currentRoute{% endif %}{% if app.user.getShip().getMax() > 0 %} freeSearchBuild{% endif %}{% if allTuto < 50 %} tutorial-hide{% endif %}">
+        <a href="{{ path('ship_perso', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'ship.perso'|trans }}</span></a>{% if app.user.getShip().getMax() > 0 %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipsFree'|trans }}"></span>{% endif %}
     </div>
     <div class="btn-left separate"></div>
     <div class="btn-left{% if app.request.attributes.get('_route') == 'message' %} currentRoute{% endif %}{% if allTuto < 50 %} tutorial-hide{% endif %}">

@@ -154,6 +154,7 @@ class SalonController extends AbstractController
                 $userViews = $em->getRepository('App:User')
                     ->createQueryBuilder('u')
                     ->where('u.id != :user')
+                    ->andWhere('u.bot = false')
                     ->setParameters(['user' => $user->getId()])
                     ->getQuery()
                     ->getResult();

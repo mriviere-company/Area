@@ -70,13 +70,23 @@
                             <td class="p-1 pl-3">
                             </td>
                         </tr>
-                        {% if fleet.getRecycleur() %}
+                        {% if fleet.getRecycleur() and fleet.getFlightTime() is null %}
                             <tr>
                                 <td class="p-1 pl-3">
                                     {{ 'fleet.rec'|trans }}
                                 </td>
                                 <td class="p-1 pl-3">
                                     {{ 'fleet.recyclage'|trans }} {% if fleet.getRecycleAt() %}<span class="timerArea" hidden>{{ fleet.getRecycleAt()|date('Y/m/d H:i:s') }}</span>{% endif %} <span class="float-right mr-4">{{ (fleet.getRecycleur() * (1000 + (app.user.getPoliticRecycleur() * 200)))|number_format }} / 10mins</span>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if fleet.getFlightTime() %}
+                            <tr>
+                                <td class="p-1 pl-3">
+                                    {{ 'fleet.cancelFleet'|trans }}
+                                </td>
+                                <td class="p-1 pl-3">
+                                    <a class="text-rouge" href="{{ path('cancel_fleet', {'fleet': fleet.getId(), 'usePlanet': usePlanet.getId()}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.cancel'|trans }}"><span class="timerArea" hidden>{{ fleet.cancelFlight()|date('Y/m/d H:i:s') }}</span></a>
                                 </td>
                             </tr>
                         {% endif %}

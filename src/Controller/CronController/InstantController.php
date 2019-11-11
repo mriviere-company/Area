@@ -238,6 +238,7 @@ class InstantController extends AbstractController
                 $first = rand(0, $maxQuest);
                 $second = $first;
                 $third = $second;
+                $economicGO = 0;
                 while ($second == $first) {
                     $second = rand(0, $maxQuest);
                 }
@@ -341,6 +342,7 @@ class InstantController extends AbstractController
                         $planet->setSoldier(0);
                         $planet->setScientist(0);
                     }
+                    $economicGO = 1;
                     $user->setBitcoin(5000);
                 }
                 if ($gain - $empireCost > 0) {
@@ -361,6 +363,9 @@ class InstantController extends AbstractController
                 $user->getRank()->setPoint($point);
                 $user->setViewReport(false);
 
+                if ($economicGO == 1) {
+                    $report->setContent($report->getContent() . "<br>Votre réserve de Bitcoins passe en négatif et vous n'êtes plus en mesure d'entretenir votre armada.<br>Vous perdez tout les vaisseaux que contenait votre Empire et redémarrez avec 5.000 Bitcoins.");
+                }
                 $em->persist($report);
                 $x++;
             }
