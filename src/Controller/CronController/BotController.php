@@ -113,6 +113,83 @@ class BotController extends AbstractController
         $creation = new DateTime();
         $creation->setTimezone(new DateTimeZone('Europe/Paris'));
         $messageSent = 1;
+
+        if (rand(1, 9) == 1) {
+            $newBot = new DateTime();
+            $newBot->setTimezone(new DateTimeZone('Europe/Paris'));
+            $nickeName = $em->getRepository('App:NickName')->setMaxResults(1)->getOneOrNullResult();
+            $salon = $em->getRepository('App:Salon')
+                ->createQueryBuilder('s')
+                ->where('s.name = :name')
+                ->setParameters(['name' => 'Public'])
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            $nick = ucfirst ($nickeName->getPseudo());
+            $em->remove($nickeName);
+            $user = new User();
+            $newBot->add(new DateInterval('PT' . rand(1, 1000) . 'H'));
+            $user->setUsername($nick);
+            $user->setEmail($nick . '@fake.com');
+            $user->setCreatedAt($newBot);
+            $user->setPassword(password_hash($nick . 'bot', PASSWORD_BCRYPT));
+            $user->setTutorial(60);
+            $user->setBot(true);
+            $user->setDailyConnect($now);
+            $user->setLastActivity($now);
+            $user->setNewletter(false);
+            // image de profil
+            $em->persist($user);
+            $em->flush();
+
+            $planet = $em->getRepository('App:Planet')
+                ->createQueryBuilder('p')
+                ->join('p.sector', 's')
+                ->where('p.user is null')
+                ->andWhere('p.ground = :ground')
+                ->andWhere('p.sky = :sky')
+                ->setParameters(['ground' => 25, 'sky' => 5])
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+
+            if($planet) {
+                $planet->setUser($user);
+                $planet->setName('Terra Nova');
+                $planet->setSonde(10);
+                $planet->setRadar(2);
+                $planet->setGroundPlace(10);
+                $planet->setSkyPlace(1);
+                $planet->setMiner(3);
+                $planet->setNbProduction(12.6);
+                $planet->setWtProduction(11.54);
+                $planet->setExtractor(3);
+                $planet->setSpaceShip(1);
+                $planet->setHunter(500);
+                $planet->setNiobium(150000);
+                $planet->setWater(100000);
+                $planet->setFregate(20);
+                $planet->setWorker(100000);
+                $planet->setSoldier(200);
+                $planet->setColonizer(1);
+                $user->addPlanet($planet);
+                foreach ($planet->getFleets() as $fleet) {
+                    if ($fleet->getUser()->getZombie() == 1) {
+                        $em->remove($fleet);
+                    } else {
+                        $fleet->setPlanet($fleet->getUser()->getFirstPlanetFleet());
+                    }
+                }
+            }
+            $ships = new Ships();
+            $user->setShip($ships);
+            $em->persist($ships);
+            $rank = new Rank();
+            $em->persist($rank);
+            $user->setRank($rank);
+            $salon->addUser($user);
+            $em->flush();
+        }
         $bots = $em->getRepository('App:User')
         ->createQueryBuilder('u')
         ->where('u.bot = true')
@@ -133,6 +210,26 @@ class BotController extends AbstractController
             ->getOneOrNullResult();
 
         foreach ($bots as $bot) {
+
+            if (!$bot->getAlly()) {
+                $proposal = $em->getRepository('App:Proposal')
+                    ->createQueryBuilder('p')
+                    ->where('p.user = :user')
+                    ->setParameters(['user' => $bot])
+                    ->getQuery()
+                    ->setMaxResults(1)
+                    ->getOneOrNullResult();
+
+                if ($proposal) {
+                    $ally = $proposal->getAlly();
+                    $ally->addUser($bot);
+                    $bot->setAlly($ally);
+                    $bot->setJoinAllyAt($now);
+                    $bot->setGrade($ally->getNewMember());
+                    $em->remove($proposal);
+                }
+            }
+
             $move->add(new DateInterval('PT' . rand(1, 60) . 'S'));
             $creation->add(new DateInterval('PT' . rand(1, 10) . 'M'));
             if (rand(1, 48) == 1) {
@@ -239,7 +336,7 @@ class BotController extends AbstractController
                 $message = new S_Content();
                 $messageSent = 0;
                 $message->setSalon($salon);
-                $allMessages = ['Salut', 'Plop', 'Slt tlm', 'ca va ?', 'wesh', 'bj', 'bonjour', 'hellooo', 'hello', 'comment on fait pour coloniser ?', 'c\'est quoi les zombies ?', 'je me fais attaquer !!!!'];
+                $allMessages = ['Salut', 'Plop', 'bonjour', 'bonjour', 'Salut','Salut','Salut','Salut','Salut','Salut','bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'Slt tlm', 'ca va ?', 'wesh', 'bj', 'bonjour', 'hellooo', 'hello', 'hello', 'hello', 'hello', 'hello', 'comment on fait pour coloniser ?', 'c\'est quoi les zombies ?', 'je me fais attaquer !!!!'];
                 $body = $allMessages[mt_rand(0, count($allMessages) - 1)];
                 $message->setMessage(nl2br($body));
                 $message->setSendAt($now);
