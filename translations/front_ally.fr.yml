@@ -125,7 +125,7 @@ rank.ally: 'Nom d''Alliance'
 rank.members: Membres
 rank.createdAt: 'Crée le'
 rank.user: 'Nom du joueur'
-rank.lastActivity: 'Dernière activitée le'
+rank.planets: 'Planète(s)'
 rank.politic: 'Régime politique'
 rank.logo: Logo
 ally.list: 'Liste d''Alliances'

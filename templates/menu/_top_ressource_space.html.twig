@@ -26,7 +26,3 @@
     {% if app.user.getRank().getWarPoint() > 0 %}<span class="border-empire" data-toggle="tooltip" data-placement="bottom" title="{{ 'market'|trans }}"><span id="pdg">{{ app.user.getRank().getWarPoint()|number_format }}</span> <img src="{{ asset('img/pdg.png') }}"></span>{% endif %}
     {% if usePlanet.getNextPlanet() != usePlanet.getId() %}<h1><span data-toggle="tooltip" data-placement="bottom" title="{{ 'nextPlanet'|trans }}"><a href="{{ usePlanet.getNextPlanet() }}">></a></span></h1>{% endif %}
 </div>
-
-<div class="footer">
-    <a href="http://www.facebook.com/areauniverse/" target="_blank">{{ 'footer'|trans }}</a>
-</div>

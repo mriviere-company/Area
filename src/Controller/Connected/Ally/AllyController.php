@@ -591,7 +591,7 @@ class AllyController extends AbstractController
         $em->remove($proposal);
         $em->flush();
 
-        return $this->redirectToRoute('ally', ['usePlanet' => $usePlanet->getId()]);
+        return $this->redirectToRoute('ally_page_add', ['usePlanet' => $usePlanet->getId()]);
     }
 
     /**
@@ -842,13 +842,16 @@ class AllyController extends AbstractController
 
         if (($form_allyAdd->isSubmitted() && $form_allyAdd->isValid()) && $user->getGrade()->getCanRecruit() == 1) {
             if($maxMembers >= $ally->getMaxMembers()) {
-                return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
+                $this->addFlash("fail", "Vous avez atteint le nombre maximum d'invitations.");
+                return $this->redirectToRoute('ally_page_add', ['usePlanet' => $usePlanet->getId()]);
             }
             $userProposal = $em->getRepository('App:User')
                 ->createQueryBuilder('u')
+                ->leftJoin('u.proposals', 'pr')
                 ->where('u.username = :username')
                 ->andWhere('u.ally is null')
-                ->setParameter('username', $form_allyAdd->get('nameUser')->getData())
+                ->andWhere('pr.ally is null or pr.ally != :ally')
+                ->setParameters(['username' => $form_allyAdd->get('nameUser')->getData(), 'ally' => $user->getAlly()])
                 ->getQuery()
                 ->getOneOrNullResult();
 
@@ -870,10 +873,14 @@ class AllyController extends AbstractController
         $lastActivity->sub(new DateInterval('PT' . 5184000 . 'S'));
         $usersRecruitable = $em->getRepository('App:User')
             ->createQueryBuilder('u')
-            ->select('u.username, u.id, u.lastActivity, u.imageName')
+            ->join('u.planets', 'p')
+            ->leftJoin('u.proposals', 'pr')
+            ->select('u.username, u.id, count(DISTINCT p) as planets, u.imageName')
+            ->groupBy('u.id')
             ->where('u.lastActivity > :date')
             ->andWhere('u.ally is null')
             ->andWhere('u.rank is not null')
+            ->andWhere('pr is null')
             ->setParameters(['date' => $lastActivity])
             ->orderBy('u.lastActivity', 'DESC')
             ->getQuery()

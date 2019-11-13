@@ -112,6 +112,9 @@ class BotController extends AbstractController
         $move->setTimezone(new DateTimeZone('Europe/Paris'));
         $creation = new DateTime();
         $creation->setTimezone(new DateTimeZone('Europe/Paris'));
+        $messageTime = new DateTime();
+        $messageTime->setTimezone(new DateTimeZone('Europe/Paris'));
+        $messageTime->sub(new DateInterval('PT' . rand(1, 400) . 'S'));
         $messageSent = 1;
 
         if (rand(1, 9) == 1) {
@@ -339,7 +342,7 @@ class BotController extends AbstractController
                 $allMessages = ['Salut', 'Plop', 'bonjour', 'bonjour', 'Salut','Salut','Salut','Salut','Salut','Salut','bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'Slt tlm', 'ca va ?', 'wesh', 'bj', 'bonjour', 'hellooo', 'hello', 'hello', 'hello', 'hello', 'hello', 'comment on fait pour coloniser ?', 'c\'est quoi les zombies ?', 'je me fais attaquer !!!!'];
                 $body = $allMessages[mt_rand(0, count($allMessages) - 1)];
                 $message->setMessage(nl2br($body));
-                $message->setSendAt($now);
+                $message->setSendAt($messageTime);
                 $message->setUser($bot);
                 $em->persist($message);
                 $userViews = $em->getRepository('App:User')
