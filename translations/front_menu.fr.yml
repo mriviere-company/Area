@@ -44,7 +44,7 @@ scientists: Scientifiques
 soldiers: Soldats
 tanks: Tanks
 groundImg: Terrain
-tooltip.ships: 'Vaisseaux au sol'
+tooltip.ships: 'Signature vaisseaux au sol'
 tooltip.caserne: 'Caserne/bunker sur la planète'
 tooltip.tanks: 'Construction de tanks'
 tooltip.scientists: 'Centre de recherche'

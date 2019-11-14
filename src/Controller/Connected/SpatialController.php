@@ -47,8 +47,8 @@ class SpatialController extends AbstractController
                 return $this->redirectToRoute('spatial', ['usePlanet' => $usePlanet->getId()]);
             }
 
-            if(($user->getTutorial() == 19)) {
-                $user->setTutorial(20);
+            if(($user->getTutorial() == 21)) {
+                $user->setTutorial(22);
                 $now->add(new DateInterval('PT' . 10 . 'S'));
                 $product = new Product();
                 $product->setPlanet($usePlanet);
@@ -222,8 +222,8 @@ class SpatialController extends AbstractController
             return $this->redirectToRoute('spatial', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        if(($user->getTutorial() == 18)) {
-            $user->setTutorial(19);
+        if(($user->getTutorial() == 20)) {
+            $user->setTutorial(21);
             $em->flush();
         }
 
@@ -429,8 +429,8 @@ class SpatialController extends AbstractController
             $usePlanet->setDestroyer($destroyer);
             $usePlanet->addFleet($fleet);
 
-            if(($user->getTutorial() == 20)) {
-                $user->setTutorial(21);
+            if(($user->getTutorial() == 22)) {
+                $user->setTutorial(23);
                 $fleet->setHunter($usePlanet->getHunter());
                 $fleet->setFregate($usePlanet->getFregate());
                 $fleet->setCorvetWar($usePlanet->getCorvetWar());

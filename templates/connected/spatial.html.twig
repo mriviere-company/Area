@@ -14,14 +14,14 @@
         </div>
     {% endfor %}
     <div class="front-block">
-        {% if app.user.getTutorial() == 19 or app.user.getTutorial() == 20 %}
+        {% if app.user.getTutorial() == 21 or app.user.getTutorial() == 22 %}
             <table class="table table-striped borderOverview tutorial">
                 <tbody>
                 <tr>
                     <th class="tab-cells-name p-3 tutorial">
                         <div class="row">
                             <div class="col-12 py-1">
-                                {% if app.user.getTutorial() == 19 %}{{ 'quest.tutorial'|trans|raw }}{% elseif app.user.getTutorial() == 20  %}{{ 'quest.tutorialBis'|trans|raw }}{% endif %}
+                                {% if app.user.getTutorial() == 21 %}{{ 'quest.tutorial'|trans|raw }}{% elseif app.user.getTutorial() == 22  %}{{ 'quest.tutorialBis'|trans|raw }}{% endif %}
                             </div>
                         </div>
                     </th>

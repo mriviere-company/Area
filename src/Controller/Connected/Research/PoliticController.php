@@ -36,7 +36,7 @@ class PoliticController extends AbstractController
 
         if(($userBt < ($level * $cost)) ||
             ($level == 6 || $user->getSearchAt() > $now) ||
-            $user->getWhichResearch($search) === null) {
+            $user->getWhichResearch($search) === 0) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 

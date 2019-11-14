@@ -84,8 +84,8 @@ class ReportController extends AbstractController
         if(($user->getTutorial() == 1)) {
             $user->setTutorial(2);
         }
-        if(($user->getTutorial() == 21)) {
-            $user->setTutorial(22);
+        if(($user->getTutorial() == 23)) {
+            $user->setTutorial(24);
         }
 
         $em->flush();
