@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9764e077-fb05-4a7f-a751-b6af716bf3c3" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Area.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Area.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CronController/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CronController/BotController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet_list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/map/sector.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/sector.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -184,7 +186,8 @@
       <workItem from="1573544029028" duration="1937000" />
       <workItem from="1573563444403" duration="141000" />
       <workItem from="1573564853081" duration="623000" />
-      <workItem from="1573570851833" duration="1566000" />
+      <workItem from="1573570851833" duration="1793000" />
+      <workItem from="1573718630108" duration="3929000" />
     </task>
     <servers />
   </component>
