@@ -3,20 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="9764e077-fb05-4a7f-a751-b6af716bf3c3" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/scss/front/galaxy.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/front/galaxy.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Research/PoliticController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Research/PoliticController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/SearchController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ShipPersoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ShipPersoController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/SpatialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/SpatialController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/ship_perso.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ship_perso.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/spatial.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/spatial.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu/_right_planet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_right_planet.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_ally.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_ally.fr.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_menu.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_menu.fr.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_ship_perso.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_ship_perso.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CronController/InstantController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CronController/InstantController.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -212,7 +199,7 @@
       <workItem from="1573564853081" duration="623000" />
       <workItem from="1573570851833" duration="1793000" />
       <workItem from="1573718630108" duration="5179000" />
-      <workItem from="1573737904847" duration="3253000" />
+      <workItem from="1573737904847" duration="4670000" />
     </task>
     <servers />
   </component>

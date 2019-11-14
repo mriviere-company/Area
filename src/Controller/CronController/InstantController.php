@@ -999,7 +999,7 @@ class InstantController extends AbstractController
                 $planet->setNbProduction($planet->getNbProduction() + ($planet->getMiner() * 1.06));
             } elseif ($build == 'extractor') {
                 $planet->setExtractor($planet->getExtractor() + 1);
-                $planet->setWtProduction($planet->getWtProduction() + ($planet->getExtractor() * 105));
+                $planet->setWtProduction($planet->getWtProduction() + ($planet->getExtractor() * 1.05));
             } elseif ($build == 'niobiumStock') {
                 $planet->setNiobiumStock($planet->getNiobiumStock() + 1);
                 $planet->setNiobiumMax($planet->getNiobiumMax() + 5000000);
