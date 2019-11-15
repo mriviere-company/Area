@@ -3,9 +3,9 @@
 namespace App\Controller\Security;
 
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class AdminController extends Controller
+class AdminController extends AbstractController
 {
     /**
      * @Route("/administration", name="administration")

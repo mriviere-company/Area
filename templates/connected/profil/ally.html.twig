@@ -43,7 +43,7 @@
                     <span class="glyphicon glyphicon-ok-circle text-vert"></span> {{ 'ally.allied'|trans }}
                     <br>
                     {% set x = 1 %}
-                    {% for allied in ally.getAllieds() if allied.getAccepted() == 1 %}
+                    {% for allied in ally.getAllieds()|filter(allied => allied.getAccepted() == 1) %}
                         {% if x > 1 %} - {% endif %}<span class="text-vert"><a href="{{ path('ally_profil', {'allyUser': ally.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ allied.getAllytag() }}</a></span>
                         {% set x = x + 1 %}
                     {% endfor %}
@@ -52,7 +52,7 @@
                     <span class="glyphicon glyphicon-comment text-bleu"></span> {{ 'ally.pna'|trans }}
                     <br>
                     {% set x = 1 %}
-                    {% for pna in ally.getPnas() if pna.getAccepted() == 1 %}
+                    {% for pna in ally.getPnas()|filter(pna => pna.getAccepted() == 1) %}
                         {% if x > 1 %} - {% endif %}<span class="text-bleu"><a href="{{ path('ally_profil', {'allyUser': ally.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ pna.getAllytag() }}</a></span>
                         {% set x = x + 1 %}
                     {% endfor %}

@@ -1,9 +1,9 @@
 security:
     encoders:
-        App\Entity\User: bcrypt
+        App\Entity\User: auto
         App\Entity\Admin:
             algorithm: plaintext
-        Symfony\Component\Security\Core\User\User: bcrypt
+        Symfony\Component\Security\Core\User\User: auto
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     role_hierarchy:
         ROLE_ADMIN: [ ROLE_MODO ]

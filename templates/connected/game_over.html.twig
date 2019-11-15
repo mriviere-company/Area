@@ -38,7 +38,7 @@
             <table class="table table-striped table-bordered table-dark text-left">
                 <tbody>
                 <tr>
-                    {% for galaxy in galaxys if galaxy.server == server.id %}
+                    {% for galaxy in galaxys|filter(galaxy => galaxy.server == server.id) %}
                         <td class="text-center">
                             <a href="{{ path('connect_server', {'id': galaxy.id}) }}"><span><img class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
                         </td>
