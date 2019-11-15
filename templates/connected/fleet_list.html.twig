@@ -106,10 +106,10 @@
                                 </td>
                             {% endif %}
                             <td class="center-cells text-center">
-                                <span class="tipProduct" data-placement="right" data-trigger="" title="{% for ships in fleet.getShipsFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in ships %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">({{ fleet.getNbrSignatures()|number_format }})</span>
+                                <span class="tipProduct" data-placement="right" data-trigger="" title="{% for ships in fleet.getShipsFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in ships %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">{% if fleet.getNbrSignatures() > 1000000 %}({{ (fleet.getNbrSignatures() / 1000000)|number_format(1) }}M){% elseif fleet.getNbrSignatures() > 1000 %}({{ (fleet.getNbrSignatures() / 1000)|number_format }}K){% else %}({{ fleet.getNbrSignatures()|number_format }}){% endif %}</span></span>
                             </td>
                             <td class="center-cells text-center">
-                                <span class="tipProduct" data-placement="right" data-trigger="" title="{% for cargos in fleet.getCargosFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in cargos %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">{{ fleet.getCargoFull()|number_format }}</span>
+                                <span class="tipProduct" data-placement="right" data-trigger="" title="{% for cargos in fleet.getCargosFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in cargos %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">{% if fleet.getCargoFull() > 1000000 %}({{ (fleet.getCargoFull() / 1000000)|number_format(1) }}M){% elseif fleet.getCargoFull() > 1000 %}({{ (fleet.getCargoFull() / 1000)|number_format }}K){% else %}({{ fleet.getCargoFull()|number_format }}){% endif %}</span>
                             </td>
                             {% if fleetList.getFlightTime() %}
                                 {% if fleet.cancelFlight() > date and fleet.getFlightTime() %}
@@ -196,10 +196,10 @@
                                 </td>
                             {% endif %}
                             <td class="center-cells text-center">
-                                <span class="tipProduct" data-placement="right" data-trigger="" title="{% for ships in fleet.getShipsFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in ships %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">({{ fleet.getNbrSignatures()|number_format }})</span>
+                                <span class="tipProduct" data-placement="right" data-trigger="" title="{% for ships in fleet.getShipsFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in ships %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">{% if fleet.getNbrSignatures() > 1000000 %}({{ (fleet.getNbrSignatures() / 1000000)|number_format(1) }}M){% elseif fleet.getNbrSignatures() > 1000 %}({{ (fleet.getNbrSignatures() / 1000)|number_format }}K){% else %}({{ fleet.getNbrSignatures()|number_format }}){% endif %}</span></span>
                             </td>
                             <td class="center-cells text-center">
-                                <span class="tipProduct" data-placement="right" data-trigger="" title="{% for cargos in fleet.getCargosFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in cargos %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">{{ fleet.getCargoFull()|number_format }}</span>
+                                <span class="tipProduct" data-placement="right" data-trigger="" title="{% for cargos in fleet.getCargosFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in cargos %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">{% if fleet.getCargoFull() > 1000000 %}({{ (fleet.getCargoFull() / 1000000)|number_format(1) }}M){% elseif fleet.getCargoFull() > 1000 %}({{ (fleet.getCargoFull() / 1000)|number_format }}K){% else %}({{ fleet.getCargoFull()|number_format }}){% endif %}</span>
                             </td>
                             {% if app.user.getAlly().getFlightTime() and (app.user.getGrade().getPlacement() == 1 or app.user == fleet.getUser()) %}
                                 {% if fleet.cancelFlight() > date and fleet.getFlightTime() %}

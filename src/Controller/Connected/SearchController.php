@@ -110,7 +110,7 @@ class SearchController extends AbstractController
         } elseif ($research == 'heavyShip') {
             $level = $user->getHeavyShip() + 1;
             $user->setBitcoin($user->getBitcoin() + ($level * 42000));
-        } elseif ($user->getWhichResearch($research) === 0 || $user->getWhichResearch($research)) {
+        } elseif ($user->getWhichResearch($research) === 0 || $user->getWhichResearch($research) === -1) {
             $user->setBitcoin($user->getBitcoin() + (($user->getWhichResearch($research) + 1) * $user->getResearchCost($research)));
         }
         $user->setSearch(null);

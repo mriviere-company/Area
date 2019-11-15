@@ -730,7 +730,7 @@ class FleetController  extends AbstractController
                 $sector = $form_sendFleet->get('sector')->getData();
                 $planetTakee = $form_sendFleet->get('planete')->getData();
 
-                if (($galaxy < 1 || $galaxy > 5) || ($sector < 1 || $sector > 100) || ($planetTakee < 1 || $planetTakee > 25)) {
+                if (($galaxy < 1 || $galaxy > 10) || ($sector < 1 || $sector > 100) || ($planetTakee < 1 || $planetTakee > 25)) {
                     return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
                 }
 

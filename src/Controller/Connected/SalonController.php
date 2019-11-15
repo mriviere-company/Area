@@ -193,7 +193,7 @@ class SalonController extends AbstractController
         }
         $user->setSalonAt($now);
 
-        if(($user->getTutorial() == 22)) {
+        if(($user->getTutorial() == 24)) {
             $user->setTutorial(50);
         }
         $em->flush();

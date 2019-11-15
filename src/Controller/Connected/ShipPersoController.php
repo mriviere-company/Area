@@ -147,6 +147,9 @@ class ShipPersoController extends AbstractController
                     $now->add(new DateInterval('PT' . 24 . 'H'));
                     $ship->setLastUpdate($now);
                 }
+                if(($user->getTutorial() == 19)) {
+                    $user->setTutorial(20);
+                }
                 $em->flush();
             } else {
                 $this->addFlash("fail", "Vous ne pouvez dépensez que 40 points par jours.");
@@ -155,7 +158,7 @@ class ShipPersoController extends AbstractController
             return $this->redirectToRoute('ship_perso', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        if(($user->getTutorial() == 101)) {
+        if(($user->getTutorial() == 18)) {
             $user->setTutorial(19);
             $em->flush();
         }

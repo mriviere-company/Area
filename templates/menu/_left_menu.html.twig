@@ -57,25 +57,25 @@
     <div class="btn-left{% if app.request.attributes.get('_route') == 'soldier' %} currentRoute{% endif %}{% if allTuto < 50 %} tutorial-hide{% endif %}">
         <a href="{{ path('soldier', {'usePlanet': usePlanet.getId()}) }}">{{ 'soldier'|trans }}</span></a>
     </div>
-    <div class="btn-left{% if app.request.attributes.get('_route') == 'spatial' %} currentRoute{% endif %}{% if allTuto < 18 %} tutorial-hide{% elseif allTuto == 18 %} tutorial-show{% endif %}">
+    <div class="btn-left{% if app.request.attributes.get('_route') == 'spatial' %} currentRoute{% endif %}{% if allTuto < 20 %} tutorial-hide{% elseif allTuto == 20 %} tutorial-show{% endif %}">
         <a href="{{ path('spatial', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'spatial'|trans }}</span></a>
     </div>
     {% if usePlanet.getShipOn() > 0 %}
-        <div class="btn-left{% if allTuto < 10 %} tutorial-hide{% elseif app.user.getTutorial() == 10 or app.user.getTutorial() == 20 %} tutorial-show{% endif %}">
+        <div class="btn-left{% if allTuto < 10 %} tutorial-hide{% elseif app.user.getTutorial() == 10 or app.user.getTutorial() == 22 %} tutorial-show{% endif %}">
             <a href="{{ path('create_fleet', {'usePlanet': usePlanet.getId()}) }}" data-toggle="modal" data-target="#createFleetModal"><span>{{ 'createFlotte'|trans }}</span></a>
         </div>
     {% endif %}
-    <div class="btn-left{% if app.request.attributes.get('_route') == 'ship_perso' %} currentRoute{% endif %}{% if app.user.getShip().getMax() > 0 %} freeSearchBuild{% endif %}{% if allTuto < 50 %} tutorial-hide{% endif %}">
+    <div class="btn-left{% if app.request.attributes.get('_route') == 'ship_perso' %} currentRoute{% endif %}{% if app.user.getShip().getMax() > 0 %} freeSearchBuild{% endif %}{% if allTuto < 18 %} tutorial-hide{% elseif allTuto == 18 %} tutorial-show{% endif %}">
         <a href="{{ path('ship_perso', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'ship.perso'|trans }}</span></a>{% if app.user.getShip().getMax() > 0 %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipsFree'|trans }}"></span>{% endif %}
     </div>
     <div class="btn-left separate"></div>
     <div class="btn-left{% if app.request.attributes.get('_route') == 'message' %} currentRoute{% endif %}{% if allTuto < 50 %} tutorial-hide{% endif %}">
         <a href="{{ path('message', {'usePlanet': usePlanet.getId()}) }}">{% if app.user.getViewMessage() == false %}<div class="text-orange glyphicon glyphicon-envelope"></div> {% endif %}{{ 'message'|trans }}</span></a>
     </div>
-    <div class="btn-left{% if app.request.attributes.get('_route') == 'salon' %} currentRoute{% endif %}{% if allTuto < 22 %} tutorial-hide{% elseif allTuto == 22 %} tutorial-show{% endif %}">
+    <div class="btn-left{% if app.request.attributes.get('_route') == 'salon' %} currentRoute{% endif %}{% if allTuto < 24 %} tutorial-hide{% elseif allTuto == 24 %} tutorial-show{% endif %}">
         <a href="{{ path('salon', {'usePlanet': usePlanet.getId()}) }}"><span>{% if app.user.getViewSalon() %}<span class="text-vert">{{ app.user.getViewSalon() }}</span> {% elseif app.user.getSalonAt() == null %}<div class="text-vert glyphicon glyphicon-comment"></div> {% endif %}{{ 'salon'|trans }}</span></a>
     </div>
-    <div class="btn-left{% if app.request.attributes.get('_route') == 'report' %} currentRoute{% endif %}{% if allTuto == 1 or allTuto == 21 %} tutorial-show{% endif %}">
+    <div class="btn-left{% if app.request.attributes.get('_route') == 'report' %} currentRoute{% endif %}{% if allTuto == 1 or allTuto == 23 %} tutorial-show{% endif %}">
         <a href="{{ path('report', {'usePlanet': usePlanet.getId()}) }}">{% if app.user.getWhichViewsReport('all') %}<span class="text-vert">{{ app.user.getWhichViewsReport('all') }}</span> {% endif %}{{ 'report'|trans }}</span></a>
     </div>
     <div class="btn-left{% if app.request.attributes.get('_route') == 'rank_ally' %} currentRoute{% endif %}{% if allTuto < 50 %} tutorial-hide{% endif %}">
