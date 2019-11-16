@@ -3,9 +3,9 @@
 <nav class="navbar-left navbar-dark bg-left text-center p-3">
     <div class="logo mb-4">
         <img src="{{ asset('img/logo.png') }}">
-        {#<br>
-        <a target="_blank" href="http://area-control.forumactif.com/f8-mise-a-jour"><button class="text-orange my-4"><strong>{{ 'version'|trans }}</strong></button></a>#}
-            <div class="border-empire mt-3" data-toggle="tooltip" data-placement="bottom" title="{{ 'coin'|trans }}"><span id="bitcoin">{{ app.user.getBitcoin()|number_format }}</span> <img src="{{ asset('img/coin.png') }}"></div>
+        <br>
+        <a target="_blank" href="http://area-control.forumactif.com/f8-mise-a-jour"><button class="text-orange my-2 text-less"><strong>{{ 'version'|trans }}</strong></button></a>
+            <div class="border-empire" data-toggle="tooltip" data-placement="bottom" title="{{ 'coin'|trans }}"><span id="bitcoin">{{ app.user.getBitcoin()|number_format }}</span> <img src="{{ asset('img/coin.png') }}"></div>
         {% if app.user.getRank().getWarPoint() > 0 %}<div class="border-empire" data-toggle="tooltip" data-placement="bottom" title="{{ 'market'|trans }}"><span id="pdg">{{ app.user.getRank().getWarPoint()|number_format }}</span> <img src="{{ asset('img/pdg.png') }}"></div>{% endif %}
     </div>
     {% if app.user.getConfirmed() == 0 %}
