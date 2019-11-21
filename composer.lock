@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef9def6bff419dac287ed21a29103a59",
+    "content-hash": "ab2e9c8752e9ce86f81d75c02ef4b71a",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -6855,16 +6855,16 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v4.3.8",
+            "version": "v4.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",
-                "reference": "c216b32261358a820bb4217eb3a20e3f437a484e"
+                "reference": "7daa9d4a2f457f9cae32f1c2406de1921dc86a79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/c216b32261358a820bb4217eb3a20e3f437a484e",
-                "reference": "c216b32261358a820bb4217eb3a20e3f437a484e",
+                "url": "https://api.github.com/repos/symfony/phpunit-bridge/zipball/7daa9d4a2f457f9cae32f1c2406de1921dc86a79",
+                "reference": "7daa9d4a2f457f9cae32f1c2406de1921dc86a79",
                 "shasum": ""
             },
             "require": {
@@ -6874,7 +6874,7 @@
                 "phpunit/phpunit": "<4.8.35|<5.4.3,>=5.0"
             },
             "suggest": {
-                "symfony/debug": "For tracking deprecated interfaces usages at runtime with DebugClassLoader"
+                "symfony/error-handler": "For tracking deprecated interfaces usages at runtime with DebugClassLoader"
             },
             "bin": [
                 "bin/simple-phpunit"
@@ -6882,7 +6882,7 @@
             "type": "symfony-bridge",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.3-dev"
+                    "dev-master": "4.4-dev"
                 },
                 "thanks": {
                     "name": "phpunit/phpunit",
@@ -6916,7 +6916,7 @@
             ],
             "description": "Symfony PHPUnit Bridge",
             "homepage": "https://symfony.com",
-            "time": "2019-10-30T12:58:49+00:00"
+            "time": "2019-11-08T15:59:14+00:00"
         },
         {
             "name": "symfony/profiler-pack",
@@ -7154,7 +7154,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "*",
+        "php": "^7.3",
         "ext-iconv": "*"
     },
     "platform-dev": []
