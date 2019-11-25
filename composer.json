@@ -83,7 +83,7 @@
         "symfony": {
             "id": "01CAEG5YDCJZNXHJP9MGT4QK6T",
             "allow-contrib": false,
-            "require": "4.3.*"
+            "require": "5.0.*"
         }
     }
 }
