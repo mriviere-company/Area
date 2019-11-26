@@ -51,17 +51,18 @@ class UniverseController extends AbstractController
             ->join('u.planets', 'p')
             ->select('u.id, count(p) as number')
             ->groupBy('u.id')
-            ->where('g.position = :id')
             ->orderBy('count(p.id)', 'DESC')
             ->getQuery()
+            ->setMaxResults(1)
             ->getOneOrNullResult();
 
-        $totalPlanet = $em->getRepository('App:Galaxy')
-            ->createQueryBuilder('g')
-            ->join('g.sectors', 's')
-            ->join('s.planets', 'p')
+        $totalPlanet = $em->getRepository('App:Server')
+            ->createQueryBuilder('s')
+            ->join('s.galaxys', 'g')
+            ->join('g.sectors', 'se')
+            ->join('se.planets', 'p')
             ->select('count(p) as number')
-            ->groupBy('g.id')
+            ->groupBy('s.id')
             ->getQuery()
             ->getSingleScalarResult();
 

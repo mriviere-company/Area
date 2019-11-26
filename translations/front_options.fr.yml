@@ -9,3 +9,6 @@ form.alpha: Alphabétique
 form.pos: Position
 form.col: Colonisation
 newletterActiver: 'Activer/Désactiver Newletter'
+form.planetOrder : ''
+form.newletter: ''
+'': ''

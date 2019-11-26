@@ -160,3 +160,14 @@ tooltip.democrat: '<div class="text-left"><h3 class="text-vert">Pros :</h3><ul><
 advice.fascism: 'Défensif'
 advice.communism: 'Offensif'
 advice.democrat: 'Économique'
+05%: 05%
+10%: 10%
+15%: 15%
+20%: 20%
+25%: 25%
+30%: 30%
+35%: 35%
+40%: 40%
+45%: 45%
+50%: 50%
+form.politic: ''

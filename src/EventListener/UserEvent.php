@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Entity\Report;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -69,9 +69,9 @@ class UserEvent implements EventSubscriberInterface
         return array(KernelEvents::CONTROLLER => "onCoreController");
     }
     /**
-     * @param FilterControllerEvent $event
+     * @param ControllerEvent $event
      */
-    public function onCoreController(FilterControllerEvent $event)
+    public function onCoreController(ControllerEvent $event)
     {
         if($event->getRequestType() == HttpKernel::MASTER_REQUEST)
         {

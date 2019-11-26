@@ -27,3 +27,5 @@ form.startMission: Lancer
 0: Zombie
 zombie.tutorial: 'Cette page est dédié a la menace Zombie, elle vous indique quelle planète est infectée par les zombies et les effectifs que vous avez dessus pour la défendre.<br> A chaque attaque votre niveau de menace est augmenté de +1 si vous êtes sans alliance, +5 dans une alliance fasciste et +10 si vous êtes dans une autre alliance.<br>Deux choix s''offrent a vous, faire baisser la menace en envoyant vos soldats en missions. Ou lancer une mission pour récupérer de l''uranium. Allez y. '
 zombie.tutorialBis: 'Bien, maintenant vous devez attendre la fin du temps que vous avez choisit pour la mission. Puis ensuite récupérer le rapport. Vous aurez toujours des pertes lors de ces missions, le risque zero n''existe pas. Si vous envahissez une planète au main des Zombies vous divisez la menace zombie par 10, ce qui peut être une solution d''urgence.'
+form.time: ''
+'': ''

@@ -27,7 +27,6 @@
     {% if is_granted('ROLE_ADMIN') %}
         <a class="btn-top" href="{{ path('administration') }}">{{ 'easyadmin'|trans }}</a>
         {#<div class="btn-group">
-            <span class="btn-top dropdown-toggle" data-toggle="dropdown">{{ 'easyadmin'|trans }}</span>
             <ul class="dropdown-menu menu-home" role="menu">
                 <li>
                     <a class="btn-menu" href="{{ path('active_server') }}" target="_blank">{{ 'serveur.activate'|trans }}</a>
@@ -49,9 +48,6 @@
                 </li>
                 <li>
                     <a class="btn-menu" href="{{ path('mail_while') }}">{{ 'adminMail'|trans }}</a>
-                </li>
-                <li>
-                    <a class="btn-menu" href="{{ path('easyadmin') }}" target="_blank">{{ 'easyadmin'|trans }}</a>
                 </li>
                 <li>
                     <a class="btn-menu" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>

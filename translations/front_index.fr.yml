@@ -11,3 +11,4 @@ contact: 'Contacter administrateur'
 logout: Disconnect
 ghost.register: 'Inscription anonyme'
 register.question: 'Attention! Êtes vous sûr de vouloir créer un compte temporaire ?'
+form.image: ''
