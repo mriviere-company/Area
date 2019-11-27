@@ -10,6 +10,7 @@ use DateTime;
 use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 class SecurityController extends AbstractController
@@ -109,7 +110,8 @@ class SecurityController extends AbstractController
            $request->getSession()->set('_security_main', serialize($token));
 
            $event = new InteractiveLoginEvent($request, $token);
-           $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+            $dispatcher = new EventDispatcher();
+            $dispatcher->dispatch("security.interactive_login", $event);
 
            return $this->redirectToRoute('login');
         }
@@ -173,7 +175,8 @@ class SecurityController extends AbstractController
         $request->getSession()->set('_security_main', serialize($token));
 
         $event = new InteractiveLoginEvent($request, $token);
-        $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+        $dispatcher = new EventDispatcher();
+        $dispatcher->dispatch("security.interactive_login", $event);
 
         return $this->redirectToRoute('login');
     }
