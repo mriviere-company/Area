@@ -1,6 +1,6 @@
 {% trans_default_domain 'front_menu' %}
 
-<div class="navbar navbar-ressource navbar-dark bg-top">
+<div class="navbar navbar-ressource navbar-dark">
     {% if usePlanet.getPreviousPlanet() != usePlanet.getId() %}<h1><span data-toggle="tooltip" data-placement="bottom" title="{{ 'previousPlanet'|trans }}"><a href="{{ usePlanet.getPreviousPlanet() }}"><</a></span></h1>{% endif %}
     <form id="planet_choice" name="planet_choice" method="post" action="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'usePlanet': usePlanet.getId()})) }}">
         <select class="planetChoice select2">
@@ -27,8 +27,4 @@
     {% if usePlanet.getTank() > 0 %}<span class="border-ressource" data-toggle="tooltip" data-placement="bottom" title="{{ 'tanks'|trans }}"><span id="tank">{{ usePlanet.getTank()|number_format }}</span> / 500 <img src="{{ asset('img/tanks.png') }}"></span>{% endif %}
     <span><span class="border-ressource" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}">{{ usePlanet.getGroundPlace() }}/{{ usePlanet.getGround() }} <img src="{{ asset('img/ground.png') }}"></span> <span class="border-ressource" data-toggle="tooltip" data-placement="bottom" title="{{ 'SkyImg'|trans }}">{{ usePlanet.getSkyPlace() }}/{{ usePlanet.getSky() }} <img src="{{ asset('img/sky.png') }}"></span></span>
     {% if usePlanet.getNextPlanet() != usePlanet.getId() %}<h1><span data-toggle="tooltip" data-placement="bottom" title="{{ 'nextPlanet'|trans }}"><a href="{{ usePlanet.getNextPlanet() }}">></a></span></h1>{% endif %}
-</div>
-
-<div class="footer">
-    <a class="footer-left" href="https://www.mriviere.eu/" target="_blank">{{ 'mriviere'|trans }}</a>
 </div>

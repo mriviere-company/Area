@@ -1,3 +1,11 @@
+.navbar-left {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-image: url("../public/img/back.jpg");
+  border-radius: 5px 0px 5px 5px;
+}
+
 .btn-left {
   border-left: 1px solid #17a2b8;
   border-right: 1px solid #17a2b8;
@@ -48,10 +56,6 @@
   }
 }
 
-.bg-left {
-  background-image: url("../public/img/back.jpg");
-  border-radius: 5px 0px 5px 5px;
-}
 
 .modify {
   cursor: pointer;

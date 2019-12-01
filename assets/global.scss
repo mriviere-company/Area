@@ -205,12 +205,6 @@ a:hover {
   border-radius: 5px;
 }
 
-.navbar-right {
-  position: sticky;
-  z-index: 1;
-  top: 70px;
-}
-
 .confirmation {
   border: 10px solid silver;
   width: auto;
@@ -227,33 +221,6 @@ a:hover {
     margin-left: 0.8rem!important;
     background-color: darkgreen;
     border: none;
-  }
-}
-
-.navbar-left {
-  position: sticky;
-  z-index: 1;
-  top: 0;
-}
-
-.navbar-ressource {
-  position: sticky!important;
-  min-height: 30px;
-  top: 0;
-}
-
-@media screen and (max-width: 1025px) {
-  .navbar-ressource span {
-    padding: -2px;
-  }
-}
-
-@media screen and (max-width: 1025px) {
-  .navbar-ressource {
-    position: sticky!important;
-    min-height: 30px;
-    top: 0;
-    font-size: 1rem;
   }
 }
 
@@ -421,31 +388,6 @@ span a {
   padding: 0.8rem;
   left: 0;
   bottom: 0;
-}
-
-progress.product-full::-webkit-progress-value {
-  width: 60px;
-  height: 7px;
-  background-color: red;
-  border: 1px solid black;
-}
-
-progress.product-ressource::-webkit-progress-value {
-  width: 60px;
-  height: 6px;
-  background-color: limegreen;
-}
-
-progress.product-ressource {
-  width: 60px;
-  height: 6px;
-  background-color: limegreen;
-}
-
-progress.product-full {
-  width: 60px;
-  height: 7px;
-  background-color: red;
 }
 
 .back-banner {

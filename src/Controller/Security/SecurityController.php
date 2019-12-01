@@ -66,7 +66,7 @@ class SecurityController extends AbstractController
                 ->getOneOrNullResult();
 
             if($userSameIp) {
-                $this->addFlash("fail", "Cette IP est déjà rattachée au compte de - " . $userSameIp->getUsername());
+                $this->addFlash("fail", "Cette IP est déjà rattachée au compte de : " . $userSameIp->getUsername());
                 $userSameIp->setCheat($userSameIp->getCheat() + 1);
                 $em->flush();
                 return $this->redirectToRoute('home');
@@ -140,7 +140,7 @@ class SecurityController extends AbstractController
             ->getOneOrNullResult();
 
         if($userSameIp) {
-            $this->addFlash("fail", "Cette IP est déjà rattachée au compte de - " . $userSameIp->getUsername());
+            $this->addFlash("fail", "Cette IP est déjà rattachée au compte de : " . $userSameIp->getUsername());
             $userSameIp->setCheat($userSameIp->getCheat() + 1);
             $em->flush();
             return $this->redirectToRoute('home');
@@ -276,7 +276,7 @@ class SecurityController extends AbstractController
             ->getOneOrNullResult();
 
         if($userSameIp && $this->getUser()->getRoles()[0] == 'ROLE_USER') {
-            $this->addFlash("fail", "Cette IP est déjà rattachée au compte de - " . $userSameIp->getUsername());
+            $this->addFlash("fail", "Cette IP est déjà rattachée au compte de : " . $userSameIp->getUsername());
             return $this->redirectToRoute('home');
         }
 

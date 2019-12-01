@@ -34,6 +34,10 @@ class Kernel extends BaseKernel
             }
         }
     }
+    public function getProjectDir()
+    {
+        return realpath(__DIR__.'/../');
+    }
 
     protected function configureContainer(ContainerBuilder $container, LoaderInterface $loader)
     {

@@ -1,3 +1,9 @@
+.navbar-right {
+  position: sticky;
+  z-index: 1;
+  top: 70px;
+}
+
 .bg-right {
   color: white;
   background-image: url("../public/img/back.jpg");

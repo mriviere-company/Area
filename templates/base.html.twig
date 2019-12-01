@@ -10,23 +10,26 @@
         {% endblock %}
     </head>
     <body class="area">
-    {% set allPlanets = app.user.getPlanets() %}
-    {% set allTuto = app.user.getTutorial() %}
+        {% set allPlanets = app.user.getPlanets() %}
+        {% set allTuto = app.user.getTutorial() %}
 
-    {%- block left_menu -%}
-        {% include 'menu/_left_menu.html.twig' %}
-    {%- endblock -%}
+        {%- block left_menu -%}
+            {% include 'menu/_left_menu.html.twig' %}
+        {%- endblock -%}
 
-    {%- block top_ressource -%}
-        {% include 'menu/_top_ressource.html.twig' %}
-    {%- endblock -%}
+        {%- block top_ressource -%}
+            {% include 'menu/_top_ressource.html.twig' %}
+        {%- endblock -%}
 
-    {%- block right_planet -%}
-        {{ render(controller('App\\Controller\\Connected\\AllPlanetsController::allPlanetsAction', {'usePlanet': usePlanet.getId(), 'id': 1})) }}
-    {%- endblock -%}
+        {%- block right_planet -%}
+            {{ render(controller('App\\Controller\\Connected\\AllPlanetsController::allPlanetsAction', {'usePlanet': usePlanet.getId(), 'id': 1})) }}
+        {%- endblock -%}
 
         {% block body %}{% endblock %}
 
+        {%- block footer -%}
+            {% include 'menu/_footer.html.twig' %}
+        {%- endblock -%}
 
         {% block javascripts %}
             <script src="{{ asset('build/main.js') }}"></script>

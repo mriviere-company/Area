@@ -1,8 +1,24 @@
-.bg-top {
+.navbar-ressource {
   background-image: url("../public/img/back.jpg");
   margin-top: 1%;
   z-index: 2;
   border-radius: 0px 5px 5px 0px;
+  position: sticky!important;
+}
+
+@media screen and (max-width: 1025px) {
+  .navbar-ressource span {
+    padding: -2px;
+  }
+}
+
+@media screen and (max-width: 1025px) {
+  .navbar-ressource {
+    position: sticky!important;
+    min-height: 30px;
+    top: 0;
+    font-size: 1rem;
+  }
 }
 
 #top-menu .btn-top {
@@ -76,4 +92,29 @@ a.btn-top:hover {
 .language-chose {
   display: flex;
   margin: -2rem 0 0 10rem;
+}
+
+progress.product-full::-webkit-progress-value {
+  width: 60px;
+  height: 7px;
+  background-color: red;
+  border: 1px solid black;
+}
+
+progress.product-ressource::-webkit-progress-value {
+  width: 60px;
+  height: 6px;
+  background-color: limegreen;
+}
+
+progress.product-ressource {
+  width: 60px;
+  height: 6px;
+  background-color: limegreen;
+}
+
+progress.product-full {
+  width: 60px;
+  height: 7px;
+  background-color: red;
 }
