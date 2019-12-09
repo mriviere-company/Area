@@ -638,17 +638,20 @@ class InstantController extends AbstractController
                             $planetAtt->setWorker($planetAtt->getWorker() + ($aMilitary / (1 + ($zUser->getPoliticWorkerDef() / 5))));
                             $workerDtmp = $workerDtmp - $planetAtt->getWorker();
                             $reportDef->setContent("«Au secours !» des civils crient et cours dans tout les sens sur " . $planetAtt->getName() . " en <span><a href='/connect/carte-spatiale/" . $planetAtt->getSector()->getPosition() . "/" . $planetAtt->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetAtt->getSector()->getGalaxy()->getPosition() . ":" . $planetAtt->getSector()->getPosition() . ":" . $planetAtt->getPosition() . "</a></span>.<br>Vous n'aviez pas prévu suffisament de soldats et tanks pour faire face a la menace et des zombies envahissent les villes. Heureusement pour vous les travailleurs se réunissent et parviennent exterminer les zombies mais ce n'est pas grâce a vous.<br>" . number_format($soldierAtmp) . " zombies sont tués. <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> de vos soldats succombent aux mâchoires de ces infamies et <span class='text-rouge'>" . number_format($tankDtmp) . "</span> tanks sont mit hors de service. <span class='text-rouge'>" . number_format($workerDtmp) . "</span> de vos travailleurs sont retrouvés morts.<br>Vous ne remportez aucun points de Guerre pour avoir sacrifié vos civils.");
+                            $em->persist($reportDef);
                         } else {
                             $diviser = (1 + ($zUser->getPoliticTankDef() / 10)) * 900;
                             $planetAtt->setTank(round($aMilitary / $diviser));
                             $tankDtmp = $tankDtmp - $planetAtt->getTank();
                             $reportDef->setContent("Vos tanks ont suffit a arrêter les zombies pour cette fois-ci sur la planète " . $planetAtt->getName() . " en <span><a href='/connect/carte-spatiale/" . $planetAtt->getSector()->getPosition() . "/" . $planetAtt->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetAtt->getSector()->getGalaxy()->getPosition() . ":" . $planetAtt->getSector()->getPosition() . ":" . $planetAtt->getPosition() . "</a></span>.br>Mais pensez a rester sur vos gardes. Votre armée extermine " . number_format($soldierAtmp) . " zombies. <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> de vos soldats succombent aux mâchoires de ces infamies et <span class='text-rouge'>" . number_format($tankDtmp) . "</span> tanks sont mit hors de service.<br>Vous remportez <span class='text-vert'>+" . number_format($warPointDef) . "</span> points de Guerre.");
+                            $em->persist($reportDef);
                         }
                     } else {
                         $diviser = (1 + ($zUser->getPoliticSoldierAtt() / 10)) * (6 * $zUser->getBarbedAdv());
                         $planetAtt->setSoldier(round($aMilitary / $diviser));
                         $soldierDtmp = $soldierDtmp - $planetAtt->getSoldier();
                         $reportDef->setContent("Une attaque de zombie est déclarée sur " . $planetAtt->getName() . " en <span><a href='/connect/carte-spatiale/" . $planetAtt->getSector()->getPosition() . "/" . $planetAtt->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetAtt->getSector()->getGalaxy()->getPosition() . ":" . $planetAtt->getSector()->getPosition() . ":" . $planetAtt->getPosition() . "</a></span>.<br>Vous étiez préparé a cette éventualité et vos soldats exterminent " . number_format($soldierAtmp) . " zombies. <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> de vos soldats succombent aux mâchoires de ces infamies.<br>Vous remportez <span class='text-vert'>+" . number_format($warPointDef) . "</span> points de Guerre.");
+                        $em->persist($reportDef);
                     }
                 } else {
                     $zUser->setZombieAtt((round($zUser->getZombieAtt() / 2)));

@@ -1,6 +1,7 @@
 var $ = require('jquery');
         require('bootstrap-sass');
         require('bootstrap-confirmation2');
+const now = new Date();
 
 
 function manageImageForm() {
@@ -34,7 +35,7 @@ function managePlanetChoiceForm() {
     $('#planet_choice').off('change').on('change',function(e){
         e.preventDefault();
 
-        var actionForm = $(this).attr('action');
+        let actionForm = $(this).attr('action');
             planetChoice = $(this)[0][0].value;
 
         actionForm = actionForm.replace(/\/\d+$/, '/' + planetChoice);
@@ -45,10 +46,10 @@ function managePlanetChoiceForm() {
 
 function manageModalContact() {
     $('#contactModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var recipient = button.data('whatever');
-        var title = $('#contactModalLabel').text();
-        var modal = $(this);
+        let button = $(event.relatedTarget);
+        let recipient = button.data('whatever');
+        let title = $('#contactModalLabel').text();
+        let modal = $(this);
         modal.find('.modal-title').text(title);
         modal.find('.modal-body input.form-control').val(recipient);
     });
@@ -56,14 +57,13 @@ function manageModalContact() {
 
 function manageTime() {
     $('.timerArea').each( function(){
-        var build = new Date($(this).text());
-        var area = $(this);
-        var now = new Date();
-        var date_now = Math.abs(build - now) / 1000;
-        var jours = Math.floor(date_now / (60 * 60 * 24));
-        var heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
-        var minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
-        var secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
+        let build = new Date($(this).text());
+        let area = $(this);
+        let date_now = Math.abs(build - now) / 1000;
+        let jours = Math.floor(date_now / (60 * 60 * 24));
+        let heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
+        let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
+        let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
         jours = (jours > 9) ? jours : '0' + jours;
         heures = (heures > 9) ? heures : '0' + heures;
         minutes = (minutes > 9) ? minutes : '0' + minutes;
@@ -113,10 +113,10 @@ function manageTime() {
 
 function manageTotalCaserne() {
     $('.nbrProduct').off('change').on('change',function(e){
-        var niobium = 0;
-        var product = 0;
-        var worker = 0;
-        var bitcoin = 0;
+        let niobium = 0;
+        let product = 0;
+        let worker = 0;
+        let bitcoin = 0;
         if($('#caserne_recruit_soldier').attr('max') - $('#caserne_recruit_soldier').val() < 0) {
             $('#caserne_recruit_soldier').val($('#caserne_recruit_soldier').attr('max'));
         }
@@ -137,7 +137,7 @@ function manageTotalCaserne() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                var delPoint = $(this).find('.niobiumProduct').text().replace('.', '');
+                let delPoint = $(this).find('.niobiumProduct').text().replace('.', '');
                 if (niobium == 0) {
                     niobium = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -147,7 +147,7 @@ function manageTotalCaserne() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                var delPoint = $(this).find('.workerProduct').text().replace('.', '');
+                let delPoint = $(this).find('.workerProduct').text().replace('.', '');
                 if (worker == 0) {
                     worker = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -157,7 +157,7 @@ function manageTotalCaserne() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                var delPoint = $(this).find('.bitcoinProduct').text().replace('.', '');
+                let delPoint = $(this).find('.bitcoinProduct').text().replace('.', '');
                 if (bitcoin == 0) {
                     bitcoin = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -165,7 +165,7 @@ function manageTotalCaserne() {
                 }
             }
         });
-        var re = new RegExp(',', 'g')
+        let re = new RegExp(',', 'g')
         if(niobium <= parseFloat($('#niobium').text().replace(re, ''))) {
             $('#niobiumProduct').text(niobium);
         } else {
@@ -188,7 +188,7 @@ function manageFleetListChoiceForm() {
     $('.fleetList_add').off('change').on('change',function(e){
         e.preventDefault();
 
-        var actionForm = $(this).attr('action');
+        let actionForm = $(this).attr('action');
         fleetChoice = $(this)[0][0].value;
 
         actionForm = actionForm.replace(/\/\d$/, '/' + fleetChoice);
@@ -199,45 +199,44 @@ function manageFleetListChoiceForm() {
 }
 
 function manageFlightTime(){
-    var position = $('#positionFleet').text();
-    var galaxy = $('#galaxyFleet').text();
-    var speed = $('#speedFleet').text();
-    var carburant = 1;
+    let position = $('#positionFleet').text();
+    let galaxy = $('#galaxyFleet').text();
+    let speed = $('#speedFleet').text();
+    let carburant = 1;
 
     $('#fleet_send_planete').off('change').on('change',function(e){
-        var newPosition = $('#fleet_send_sector').val();
-        var newGalaxy = $('#fleet_send_galaxy').val();
+        let newPosition = $('#fleet_send_sector').val();
+        let newGalaxy = $('#fleet_send_galaxy').val();
         newPosition = newPosition.toString();
-        var planete = $('#planeteFleet').text();
-        var newPlanete = $('#fleet_send_planete').val();
+        let planete = $('#planeteFleet').text();
+        let newPlanete = $('#fleet_send_planete').val();
         newPlanete = newPlanete.toString();
         if (galaxy != newGalaxy) {
-            var base = 18;
-            var price = 25;
+            let base = 18;
+            let price = 25;
         } else {
             if (position == newPosition) {
-                var x1 = (planete - 1) % 5;
-                var x2 = (newPlanete - 1) % 5;
-                var y1 = (planete - 1) / 5;
-                var y2 = (newPlanete - 1) / 5;
+                let x1 = (planete - 1) % 5;
+                let x2 = (newPlanete - 1) % 5;
+                let y1 = (planete - 1) / 5;
+                let y2 = (newPlanete - 1) / 5;
             } else {
-                var x1 = ((position - 1) % 10) * 3;
-                var x2 = ((newPosition - 1) % 10) * 3;
-                var y1 = ((position - 1) / 10) * 3;
-                var y2 = ((newPosition - 1) / 10) * 3;
+                let x1 = ((position - 1) % 10) * 3;
+                let x2 = ((newPosition - 1) % 10) * 3;
+                let y1 = ((position - 1) / 10) * 3;
+                let y2 = ((newPosition - 1) / 10) * 3;
             }
-            var base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-            var price = base / 3;
+            let base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+            let price = base / 3;
         }
         carburant = Math.round(price * ($('#signatureFleet').text() / 200));
-        var now = new Date();
-        var travel = new Date();
+        let travel = new Date();
         travel.setSeconds(travel.getSeconds() + (base * speed * 100)); // 1000 MODE NORMAL
-        var date_now = Math.abs((travel - now) / 1000);
-        var jours = Math.floor(date_now / (60 * 60 * 24));
-        var heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
-        var minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
-        var secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
+        let date_now = Math.abs((travel - now) / 1000);
+        let jours = Math.floor(date_now / (60 * 60 * 24));
+        let heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
+        let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
+        let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
         if (jours > 0) {
             $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + 'secondes');
             $('#flightCost').text(carburant);
@@ -257,39 +256,38 @@ function manageFlightTime(){
     });
 
     $('#fleet_send_sector').off('change').on('change',function(e){
-        var newPosition = $('#fleet_send_sector').val();
-        var newGalaxy = $('#fleet_send_galaxy').val();
+        let newPosition = $('#fleet_send_sector').val();
+        let newGalaxy = $('#fleet_send_galaxy').val();
         newPosition = newPosition.toString();
-        var planete = $('#planeteFleet').text();
-        var newPlanete = $('#fleet_send_planete').val();
+        let planete = $('#planeteFleet').text();
+        let newPlanete = $('#fleet_send_planete').val();
         newPlanete = newPlanete.toString();
         if (galaxy != newGalaxy) {
-            var base = 18;
-            var price = 25;
+            let base = 18;
+            let price = 25;
         } else {
             if (position == newPosition) {
-                var x1 = (planete - 1) % 5;
-                var x2 = (newPlanete - 1) % 5;
-                var y1 = (planete - 1) / 5;
-                var y2 = (newPlanete - 1) / 5;
+                let x1 = (planete - 1) % 5;
+                let x2 = (newPlanete - 1) % 5;
+                let y1 = (planete - 1) / 5;
+                let y2 = (newPlanete - 1) / 5;
             } else {
-                var x1 = ((position - 1) % 10) * 3;
-                var x2 = ((newPosition - 1) % 10) * 3;
-                var y1 = ((position - 1) / 10) * 3;
-                var y2 = ((newPosition - 1) / 10) * 3;
+                let x1 = ((position - 1) % 10) * 3;
+                let x2 = ((newPosition - 1) % 10) * 3;
+                let y1 = ((position - 1) / 10) * 3;
+                let y2 = ((newPosition - 1) / 10) * 3;
             }
-            var base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-            var price = base / 3;
+            let base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+            let price = base / 3;
         }
         carburant = Math.round(price * ($('#signatureFleet').text() / 200));
-        var now = new Date();
-        var travel = new Date();
+        let travel = new Date();
         travel.setSeconds(travel.getSeconds() + (base * speed * 100)); // 1000 MODE NORMAL
-        var date_now = Math.abs((travel - now) / 1000);
-        var jours = Math.floor(date_now / (60 * 60 * 24));
-        var heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
-        var minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
-        var secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
+        let date_now = Math.abs((travel - now) / 1000);
+        let jours = Math.floor(date_now / (60 * 60 * 24));
+        let heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
+        let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
+        let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
         if (jours > 0) {
             $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + 'secondes');
             $('#flightCost').text(carburant);
@@ -309,39 +307,38 @@ function manageFlightTime(){
     });
 
     $('#fleet_send_galaxy').off('change').on('change',function(e){
-        var newPosition = $('#fleet_send_sector').val();
-        var newGalaxy = $('#fleet_send_galaxy').val();
+        let newPosition = $('#fleet_send_sector').val();
+        let newGalaxy = $('#fleet_send_galaxy').val();
         newPosition = newPosition.toString();
-        var planete = $('#planeteFleet').text();
-        var newPlanete = $('#fleet_send_planete').val();
+        let planete = $('#planeteFleet').text();
+        let newPlanete = $('#fleet_send_planete').val();
         newPlanete = newPlanete.toString();
         if (galaxy != newGalaxy) {
-            var base = 18;
-            var price = 25;
+            let base = 18;
+            let price = 25;
         } else {
             if (position == newPosition) {
-                var x1 = (planete - 1) % 5;
-                var x2 = (newPlanete - 1) % 5;
-                var y1 = (planete - 1) / 5;
-                var y2 = (newPlanete - 1) / 5;
+                let x1 = (planete - 1) % 5;
+                let x2 = (newPlanete - 1) % 5;
+                let y1 = (planete - 1) / 5;
+                let y2 = (newPlanete - 1) / 5;
             } else {
-                var x1 = ((position - 1) % 10) * 3;
-                var x2 = ((newPosition - 1) % 10) * 3;
-                var y1 = ((position - 1) / 10) * 3;
-                var y2 = ((newPosition - 1) / 10) * 3;
+                let x1 = ((position - 1) % 10) * 3;
+                let x2 = ((newPosition - 1) % 10) * 3;
+                let y1 = ((position - 1) / 10) * 3;
+                let y2 = ((newPosition - 1) / 10) * 3;
             }
-            var base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-            var price = base / 3;
+            let base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+            let price = base / 3;
         }
         carburant = Math.round(price * ($('#signatureFleet').text() / 200)) > 0 ? Math.round(price * ($('#signatureFleet').text() / 200)) : 1;
-        var now = new Date();
-        var travel = new Date();
+        let travel = new Date();
         travel.setSeconds(travel.getSeconds() + (base * speed * 100)); // 1000 MODE NORMAL
-        var date_now = Math.abs((travel - now) / 1000);
-        var jours = Math.floor(date_now / (60 * 60 * 24));
-        var heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
-        var minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
-        var secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
+        let date_now = Math.abs((travel - now) / 1000);
+        let jours = Math.floor(date_now / (60 * 60 * 24));
+        let heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
+        let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
+        let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
         if (jours > 0) {
             $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + 'secondes');
             $('#flightCost').text(carburant);
@@ -377,7 +374,7 @@ function manageAttackFleetForm() {
     $('#fleet_attack_attack').off('change').on('change',function(e){
         e.preventDefault();
 
-        var formContent = $(this).closest('form')[0][1].checked;
+        let formContent = $(this).closest('form')[0][1].checked;
         content = formContent ? 1 : 0;
         $form = $(this).closest('form');
         $.ajax({
@@ -689,48 +686,48 @@ function manageMaxShip() {
 
 function manageMaxClick() {
     $('.maxInput').off('click').on('click',function(e){
-        var parent = $(this).parent().parent();
+        let parent = $(this).parent().parent();
         parent.find('input:first').val(parent.find('input:first').attr('max'));
     });
     $('.maxInputLess').off('click').on('click',function(e){
-        var parent = $(this).parent().parent();
+        let parent = $(this).parent().parent();
         parent.find('input:eq(1)').val(parent.find('input:eq(1)').attr('max'));
     });
     $('.maxInputR').off('click').on('click',function(e){
-        var parent = $(this).parent().parent();
+        let parent = $(this).parent().parent();
         parent.find('input:first').val(parent.find('input:first').attr('max'));
     });
     $('.maxInputLessR').off('click').on('click',function(e){
-        var parent = $(this).parent().parent();
+        let parent = $(this).parent().parent();
         parent.find('input:eq(1)').val(parent.find('input:eq(1)').attr('max'));
     });
     $('.addAllShip').off('click').on('click',function(e){
         $('.maxInput').each( function(){
-            var parent = $(this).parent().parent();
+            let parent = $(this).parent().parent();
             parent.find('input:first').val(parent.find('input:first').attr('max'));
         });
     });
     $('.removeAllShip').off('click').on('click',function(e){
         $('.maxInputLess').each( function(){
-            var parent = $(this).parent().parent();
+            let parent = $(this).parent().parent();
             parent.find('input:eq(1)').val(parent.find('input:eq(1)').attr('max'));
         });
     });
     $('.addAllShipR').off('click').on('click',function(e){
         $('.maxInputR').each( function(){
-            var parent = $(this).parent().parent();
+            let parent = $(this).parent().parent();
             parent.find('input:first').val(parent.find('input:first').attr('max'));
         });
     });
     $('.removeAllShipR').off('click').on('click',function(e){
         $('.maxInputLessR').each( function(){
-            var parent = $(this).parent().parent();
+            let parent = $(this).parent().parent();
             parent.find('input:eq(1)').val(parent.find('input:eq(1)').attr('max'));
         });
     });
     $('.addAllRes').off('click').on('click',function(e){
         $('.maxInputLessR').each( function(){
-            var parent = $(this).parent().parent();
+            let parent = $(this).parent().parent();
             parent.find('input:first').val(parent.find('input:first').attr('max'));
         });
     });
@@ -740,7 +737,7 @@ function manageRenameFleetForm() {
     $('#fleet_rename_sendForm').off('click').on('click',function(e){
         e.preventDefault();
 
-        var content = $(this).closest('input')[0][0].value;
+        let content = $(this).closest('input')[0][0].value;
         $form = $(this).closest('form');
         $.ajax({
             url: $form.attr('action'),
@@ -754,7 +751,7 @@ function managePlanetSellerChoiceForm() {
     $('.planetList_add').off('change').on('change',function(e){
         e.preventDefault();
 
-        var actionForm = $(this).attr('action');
+        let actionForm = $(this).attr('action');
         fleetChoice = $(this)[0][0].value;
 
         actionForm = actionForm.replace(/\/\d$/, '/' + fleetChoice);
@@ -768,7 +765,7 @@ function manageSalon() {
     /*$('#salon_sendForm').click(function(e) {
         e.preventDefault();
 
-        var content = $('#salon_content').val();
+        let content = $('#salon_content').val();
         $form = $('#salon_content').closest('form');
         if (content != "") {
             $.ajax({
@@ -860,15 +857,15 @@ function manageClickShip() {
 function managePointShip() {
     $('tr[name="hunter"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="hunter"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="hunter"] .totalExec').text();
+        let points = 0;
         $('tr[name="hunter"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="hunter"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="hunter"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -893,15 +890,15 @@ function managePointShip() {
     });
     $('tr[name="hunterHeavy"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="hunterHeavy"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="hunterHeavy"] .totalExec').text();
+        let points = 0;
         $('tr[name="hunterHeavy"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="hunterHeavy"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="hunterHeavy"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -926,15 +923,15 @@ function managePointShip() {
     });
     $('tr[name="hunterWar"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="hunterWar"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="hunterWar"] .totalExec').text();
+        let points = 0;
         $('tr[name="hunterWar"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="hunterWar"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="hunterWar"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = Math.abs($(this).parent().prev().find('.addPoint').text()) - 1;
             } else {
@@ -965,15 +962,15 @@ function managePointShip() {
     });
     $('tr[name="corvet"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="corvet"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="corvet"] .totalExec').text();
+        let points = 0;
         $('tr[name="corvet"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="corvet"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="corvet"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -1004,15 +1001,15 @@ function managePointShip() {
     });
     $('tr[name="corvetLaser"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="corvetLaser"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="corvetLaser"] .totalExec').text();
+        let points = 0;
         $('tr[name="corvetLaser"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="corvetLaser"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="corvetLaser"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -1043,15 +1040,15 @@ function managePointShip() {
     });
     $('tr[name="corvetWar"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="corvetWar"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="corvetWar"] .totalExec').text();
+        let points = 0;
         $('tr[name="corvetWar"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="corvetWar"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="corvetWar"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -1082,15 +1079,15 @@ function managePointShip() {
     });
     $('tr[name="fregate"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="fregate"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="fregate"] .totalExec').text();
+        let points = 0;
         $('tr[name="fregate"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="fregate"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="fregate"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -1121,15 +1118,15 @@ function managePointShip() {
     });
     $('tr[name="fregatePlasma"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="fregatePlasma"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="fregatePlasma"] .totalExec').text();
+        let points = 0;
         $('tr[name="fregatePlasma"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="fregatePlasma"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="fregatePlasma"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -1160,15 +1157,15 @@ function managePointShip() {
     });
     $('tr[name="croiser"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="croiser"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="croiser"] .totalExec').text();
+        let points = 0;
         $('tr[name="croiser"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="croiser"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="croiser"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -1199,15 +1196,15 @@ function managePointShip() {
     });
     $('tr[name="ironClad"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="ironClad"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="ironClad"] .totalExec').text();
+        let points = 0;
         $('tr[name="ironClad"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="ironClad"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="ironClad"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -1238,15 +1235,15 @@ function managePointShip() {
     });
     $('tr[name="destroyer"] input').off('change').on('change',function(e){
 
-        var total = $('tr[name="destroyer"] .totalExec').text();
-        var points = 0;
+        let total = $('tr[name="destroyer"] .totalExec').text();
+        let points = 0;
         $('tr[name="destroyer"] input[type="number"]').each(function() { points = points + Math.abs($(this).val()); });
 
         if (total - points < 0) {
             $('tr[name="destroyer"] .totalPoints').text(0);
             $(this).val($(this).val() - 1);
         } else {
-            var val = $(this).val() != 0 ? $(this).val() : 1;
+            let val = $(this).val() != 0 ? $(this).val() : 1;
             if ($('tr[name="destroyer"] .totalPoints').text() < total - points || $(this).val() == 0) {
                 cumul = -1 * val + Math.abs($(this).parent().prev().find('.addPoint').text());
             } else {
@@ -1279,13 +1276,13 @@ function managePointShip() {
 
 function manageTotalShip() {
     $('.nbrProduct').off('change').on('change',function(e){
-        var niobium = 0;
-        var water = 0;
-        var worker = 0;
-        var soldier = 0;
-        var bitcoin = 0;
-        var pdg = 0;
-        var product = 0;
+        let niobium = 0;
+        let water = 0;
+        let worker = 0;
+        let soldier = 0;
+        let bitcoin = 0;
+        let pdg = 0;
+        let product = 0;
         $('.nbrProduct').each( function(){
             if($(this).val() > 0) {
                 if (product == 0) {
@@ -1297,7 +1294,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                var delPoint = $(this).find('.niobiumProduct').text().replace('.', '');
+                let delPoint = $(this).find('.niobiumProduct').text().replace('.', '');
                 if (niobium == 0) {
                     niobium = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1307,7 +1304,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                var delPoint = $(this).find('.waterProduct').text().replace('.', '');
+                let delPoint = $(this).find('.waterProduct').text().replace('.', '');
                 if (water == 0) {
                     water = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1317,7 +1314,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                var delPoint = $(this).find('.workerProduct').text().replace('.', '');
+                let delPoint = $(this).find('.workerProduct').text().replace('.', '');
                 if (worker == 0) {
                     worker = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1327,7 +1324,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                var delPoint = $(this).find('.soldierProduct').text().replace('.', '');
+                let delPoint = $(this).find('.soldierProduct').text().replace('.', '');
                 if (soldier == 0) {
                     soldier = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1337,7 +1334,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                var delPoint = $(this).find('.bitcoinProduct').text().replace('.', '');
+                let delPoint = $(this).find('.bitcoinProduct').text().replace('.', '');
                 if (bitcoin == 0) {
                     bitcoin = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1347,7 +1344,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                var delPoint = $(this).find('.pdgProduct').text().replace('.', '');
+                let delPoint = $(this).find('.pdgProduct').text().replace('.', '');
                 if (product == 0) {
                     pdg = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1355,7 +1352,7 @@ function manageTotalShip() {
                 }
             }
         });
-        var re = new RegExp(',', 'g')
+        let re = new RegExp(',', 'g')
         if(niobium <= parseFloat($('#niobium').text().replace(re, ''))) {
             $('#niobiumProduct').text(niobium);
         } else {
@@ -1392,13 +1389,13 @@ function manageTotalShip() {
 
 function manageZbMission() {
     $('.zbMission .zbForm').off('change').on('change',function(e){
-        var succeedZb = 0;
-        var gainZb = 0;
-        var soldierZb = 0;
-        var tankZb = 0;
-        var timeZb = 0;
-        var zombie = Math.abs($('.zombieIndicator').text()) * 75;
-        var zombieTotal = zombie;
+        let succeedZb = 0;
+        let gainZb = 0;
+        let soldierZb = 0;
+        let tankZb = 0;
+        let timeZb = 0;
+        let zombie = Math.abs($('.zombieIndicator').text()) * 75;
+        let zombieTotal = zombie;
         if($('#mission_soldier').attr('max') - $('#mission_soldier').val() < 0) {
             $('#mission_soldier').val($('#mission_soldier').attr('max'));
         }
@@ -1446,16 +1443,16 @@ function manageZbMission() {
 
 function manageUraMission() {
     $('.uraMission .zbForm').off('change').on('change',function(e){
-        var succeedUra = 0;
-        var gainUra = 0;
-        var soldierUra = 0;
-        var tankUra = 0;
-        var timeUra = 0;
-        var zombie = $('.zombieIndicator').text() * 75;
+        let succeedUra = 0;
+        let gainUra = 0;
+        let soldierUra = 0;
+        let tankUra = 0;
+        let timeUra = 0;
+        let zombie = $('.zombieIndicator').text() * 75;
         if (zombie <= 0) {
             zombie = 1;
         }
-        var zombieTotal = zombie;
+        let zombieTotal = zombie;
         if($('#mission_ura_soldier').attr('max') - $('#mission_ura_soldier').val() < 0) {
             $('#mission_ura_soldier').val($('#mission_ura_soldier').attr('max'));
         }
