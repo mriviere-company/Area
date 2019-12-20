@@ -235,7 +235,7 @@ class BotController extends AbstractController
 
             $move->add(new DateInterval('PT' . rand(1, 60) . 'S'));
             $creation->add(new DateInterval('PT' . rand(1, 10) . 'M'));
-            if (rand(1, 200) == 1) {
+            if (rand(1, 400) == 1) {
                 $fPlanet = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
                     ->where('p.user = :user')
@@ -303,7 +303,7 @@ class BotController extends AbstractController
                 $bot->setLastActivity($now);
             }
 
-            if (rand(1, 60) == 1) {
+            if (rand(1, 300) == 1) {
                 $planetsSeller = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
                     ->where('p.user = :user')
@@ -335,7 +335,7 @@ class BotController extends AbstractController
                 // créer une flotte et l'envoyer recyclage
                 $bot->setLastActivity($now);
             }
-            if (rand(1, 300) == 1 && $messageSent == 1) {
+            if (rand(1, 600) == 1 && $messageSent == 1) {
                 $message = new S_Content();
                 $messageSent = 0;
                 $message->setSalon($salon);
