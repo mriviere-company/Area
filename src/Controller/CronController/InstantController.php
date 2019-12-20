@@ -918,12 +918,12 @@ class InstantController extends AbstractController
 
         $tmpNoCdr = new DateTime();
         $tmpNoCdr->setTimezone(new DateTimeZone('Europe/Paris'));
-        $tmpNoCdr->add(new DateInterval('PT' . 600 . 'S'));
+        $tmpNoCdr->add(new DateInterval('PT' . 300 . 'S'));
         foreach ($fleetCdrs as $fleetCdr) {
             if ($fleetCdr->getUser()->getPoliticRecycleur() > 0) {
-                $recycle = $fleetCdr->getRecycleur() * (500 + ($fleetCdr->getUser()->getPoliticRecycleur() * 200));
+                $recycle = $fleetCdr->getRecycleur() * (1000 + ($fleetCdr->getUser()->getPoliticRecycleur() * 400));
             } else {
-                $recycle = $fleetCdr->getRecycleur() * 500;
+                $recycle = $fleetCdr->getRecycleur() * 1000;
             }
             $planetCdr = $fleetCdr->getPlanet();
             if ($fleetCdr->getCargoPlace() > ($fleetCdr->getCargoFull() + ($recycle * 2))) {

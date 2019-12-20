@@ -627,7 +627,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getCargoFull(): int
+    public function getCargoFull(): float
     {
         $worker = $this->getWorker();
         $soldier = $this->getSoldier();
@@ -643,7 +643,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getCargoPlace(): int
+    public function getCargoPlace(): float
     {
         $barge = $this->getBarge() * 1000;
         $recycleur = $this->getRecycleur() * 5000;
@@ -669,7 +669,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getArmor(): int
+    public function getArmor(): float
     {
         $hunter = $this->getUser()->getShip()->getArmorHunter() * $this->getHunter();
         $hunterHeavy = $this->getUser()->getShip()->getArmorHunterHeavy() * $this->getHunterHeavy();
@@ -698,7 +698,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getShield(): int
+    public function getShield(): float
     {
         $corvet = $this->getUser()->getShip()->getShieldCorvet() * $this->getCorvet();
         $corvetLaser = $this->getUser()->getShip()->getShieldCorvetLaser() * $this->getCorvetLaser();
@@ -720,7 +720,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getAccurate(): int
+    public function getAccurate(): float
     {
         $hunter = $this->getUser()->getShip()->getAccurateHunter() * $this->getHunter();
         $hunterHeavy = $this->getUser()->getShip()->getAccurateHunterHeavy() * $this->getHunterHeavy();
@@ -741,7 +741,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getMissile(): int
+    public function getMissile(): float
     {
         $hunter = $this->getUser()->getShip()->getMissileHunter() * $this->getHunter();
         $hunterHeavy = $this->getUser()->getShip()->getMissileHunterHeavy() * $this->getHunterHeavy();
@@ -762,7 +762,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getLaser(): int
+    public function getLaser(): float
     {
         $hunterWar = $this->getUser()->getShip()->getLaserHunterWar() * $this->getHunterWar();
         $corvetLaser = $this->getUser()->getShip()->getLaserCorvetLaser() * $this->getCorvetLaser();
@@ -780,7 +780,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getPlasma(): int
+    public function getPlasma(): float
     {
         $hunterWar = $this->getUser()->getShip()->getPlasmaHunterWar() * $this->getHunterWar();
         $fregatePlasma = $this->getUser()->getShip()->getPlasmaFregatePlasma() * $this->getFregatePlasma();
@@ -798,7 +798,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getNbrShips(): int
+    public function getNbrShips(): float
     {
         $sonde = $this->getSonde();
         $colonizer = $this->getColonizer();
@@ -831,7 +831,7 @@ class Fleet
     /**
      * @return int
      */
-    public function getNbrSignatures(): int
+    public function getNbrSignatures(): float
     {
         $sonde = $this->getSonde();
         $colonizer = $this->getColonizer() * 200;
@@ -867,7 +867,7 @@ class Fleet
     /**
      * @return int
      */
-    public function putNewSignature(): int
+    public function putNewSignature(): float
     {
         $sonde = $this->getSonde();
         $colonizer = $this->getColonizer() * 200;

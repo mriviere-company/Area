@@ -1,4 +1,4 @@
-var $ = require('jquery');
+const $ = require('jquery');
         require('bootstrap-sass');
         require('bootstrap-confirmation2');
 const now = new Date();
@@ -776,7 +776,7 @@ function manageSalon() {
         }
     });*/
     if(document.location.href.match('/salon(/|$)')) {
-        $('.chat-defil').scrollTop(2000);
+        $('.chat-defil').scrollTop(8000);
         $('#salon_content').select();
     }
 }
