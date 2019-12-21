@@ -357,6 +357,16 @@ class BotController extends AbstractController
                 // créer une flotte et l'envoyer coloniser/envahir
                 $bot->setLastActivity($now);
             }
+            if (rand(1, 20) == 1) {
+                // construire bâtiment mais d'abord refacto controller building
+
+
+                $bot->setLastActivity($now);
+            }
+            if (rand(1, 80) == 1) {
+                // coloniser planète
+                //$bot->setLastActivity($now);
+            }
         }
         $em->flush();
         exit;

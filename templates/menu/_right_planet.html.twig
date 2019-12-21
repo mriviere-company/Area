@@ -11,7 +11,7 @@
                     {{ 'zombie.indic'|trans }} {{ app.user.getZombieAtt() }}
                 </div>
                 <div class="mt-2">
-                    <span class="mt-5 timerArea" hidden>{% if app.user.getZombieAt() %}{{ app.user.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span>{#{% if mission.getMissionAt() < now %}<span class="glyphicon glyphicon-ok-sign text-vert" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.missions'|trans }}"></span>{% endif %} en attente#}
+                    <span class="mt-5 timerArea" hidden>{% if app.user.getZombieAt() %}{{ app.user.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span>{#{% if mission.getMissionAt() < "now"|date("m/d/Y") %}<span class="glyphicon glyphicon-ok-sign text-vert" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.missions'|trans }}"></span>{% endif %} en attente#}
                 </div>
             </div>
         </div>
