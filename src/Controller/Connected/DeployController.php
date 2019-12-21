@@ -47,6 +47,7 @@ class DeployController extends AbstractController
 
         return $this->redirectToRoute('map', ['sector' => $planet->getSector()->getId(), 'gal' => $planet->getSector()->getGalaxy()->getId(), 'usePlanet' => $usePlanet->getId()]);
     }
+
     /**
      * @Route("/deployer-brouilleur/{fleet}/{usePlanet}", name="deploy_brouilleur", requirements={"usePlanet"="\d+", "fleet"="\d+"})
      */
@@ -81,6 +82,7 @@ class DeployController extends AbstractController
 
         return $this->redirectToRoute('map', ['sector' => $planet->getSector()->getId(), 'gal' => $planet->getSector()->getGalaxy()->getId(), 'usePlanet' => $usePlanet->getId()]);
     }
+
     /**
      * @Route("/deployer-lunar/{fleet}/{usePlanet}", name="deploy_moonMaker", requirements={"usePlanet"="\d+", "fleet"="\d+"})
      */
@@ -138,5 +140,25 @@ class DeployController extends AbstractController
         }
 
         return $this->redirectToRoute('map', ['sector' => $planet->getSector()->getId(), 'gal' => $planet->getSector()->getGalaxy()->getId(), 'usePlanet' => $usePlanet->getId()]);
+    }
+
+    /**
+     * @Route("/relancer-recyclage/{fleet}/{usePlanet}", name="recycle_again", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     */
+    public function recycleAgainAction(Planet $usePlanet, Fleet $fleet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $user = $this->getUser();
+
+        if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
+            return $this->redirectToRoute('home');
+        }
+
+        $fleet->setRecycleAt($now);
+        $em->flush();
+
+        return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleet->getId(), 'usePlanet' => $usePlanet->getId()]);
     }
 }

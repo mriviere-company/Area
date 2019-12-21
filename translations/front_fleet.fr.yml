@@ -134,6 +134,8 @@ click.moonMaker: 'Cliquez pour créer une lune'
 fleet.deploy: déployer
 click.radar: 'Cliquez pour déployer le radar'
 click.brouilleur: 'Cliquez pour déployer le brouilleur'
+click.recycle: 'Relancer le recyclage'
+fleet.recycleAgain: Recycler
 fleet.allShip: Tout
 fleet.ressources: Ressources
 fleet.back: Retour

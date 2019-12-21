@@ -43,11 +43,27 @@ class ZombieController extends AbstractController
         $planet = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.user = :user')
+            ->andWhere('p.radarAt is null and p.brouilleurAt is null')
             ->setParameters(['user' => $user])
             ->orderBy('p.ground', 'ASC')
             ->getQuery()
             ->setMaxresults(1)
             ->getOneOrNullResult();
+
+        $planetBis = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->leftJoin('p.missions', 'm')
+            ->where('p.user = :user')
+            ->andWhere('p.radarAt is null and p.brouilleurAt is null and m.soldier is not null')
+            ->setParameters(['user' => $user])
+            ->orderBy('p.ground', 'ASC')
+            ->getQuery()
+            ->setMaxresults(1)
+            ->getOneOrNullResult();
+
+        if ($planetBis) {
+            $planet = $planetBis;
+        }
 
         $form_missionUranium = $this->createForm(MissionUraType::class);
         $form_missionUranium->handleRequest($request);
