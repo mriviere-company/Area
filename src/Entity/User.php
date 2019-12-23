@@ -1543,6 +1543,20 @@ class User implements UserInterface, \Serializable
     /**
      * @return mixed
      */
+    public function getAllMoon()
+    {
+        $nbr = 0;
+        foreach($this->planets as $planet) {
+            if($planet->getMoon() == true) {
+                $nbr = $nbr + 1;
+            }
+        }
+        return $nbr;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getMotherShip()
     {
         foreach($this->planets as $planet) {

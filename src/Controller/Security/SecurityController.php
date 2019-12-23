@@ -261,6 +261,7 @@ class SecurityController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
+        if (!$user->getSpecUsername()) {
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
@@ -278,6 +279,10 @@ class SecurityController extends AbstractController
         if($userSameIp && $this->getUser()->getRoles()[0] == 'ROLE_USER') {
             $this->addFlash("fail", "Cette IP est déjà rattachée au compte de : " . $userSameIp->getUsername());
             return $this->redirectToRoute('home');
+        }
+        } else {
+            $userIp = null;
+            $user->setIpAddress(null);
         }
 
         if ($this->getUser()->getRoles()[0] == 'ROLE_USER') {

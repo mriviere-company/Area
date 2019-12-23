@@ -97,7 +97,7 @@ class DeployController extends AbstractController
         }
         $planet = $fleet->getPlanet();
 
-        if($fleet->getMoonMaker() && $planet->getEmpty() == true &&
+        if($fleet->getMoonMaker() && $planet->getEmpty() == true && $planet->getCdr() == false &&
             $planet->getNbCdr() > 10000000 && $planet->getWtCdr() > 10000000) {
             $fleet->setMoonMaker($fleet->getMoonMaker() - 1);
             $planet->setUser($fleet->getUser());

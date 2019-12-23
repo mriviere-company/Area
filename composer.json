@@ -73,14 +73,11 @@
             "@auto-scripts"
         ]
     },
-    "conflict": {
-        "symfony/symfony": "*"
-    },
     "extra": {
         "symfony": {
             "id": "01CAEG5YDCJZNXHJP9MGT4QK6T",
             "allow-contrib": false,
-            "require": "4.4.*"
+            "require": "5.*"
         }
     }
 }

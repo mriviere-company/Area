@@ -54,7 +54,7 @@ class OverviewController extends AbstractController
         $allBuildings = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.planets', 'p')
-            ->select('sum(p.miner * 15) as miner, sum(p.extractor * 15) as extractor, sum(p.niobiumStock * 45) as niobiumStock, sum(p.waterStock * 45) as waterStock, sum(p.caserne * 1000) as caserne, sum(p.bunker * 12000) as bunker, sum(p.centerSearch * 800) as centerSearch, sum(p.city * 200) as city, sum(p.metropole * 400) as metropole, sum(p.lightUsine * 5000) as lightUsine, sum(p.heavyUsine * 10000) as heavyUsine, sum(p.spaceShip * 1500) as spaceShip, sum(p.radar * 200) as radar, sum(p.skyRadar * 2000) as skyRadar, sum(p.skyBrouilleur * 6000) as skyBrouilleur, sum(p.nuclearBase * 50000) as nuclearBase, sum(p.orbital * 5000) as orbital, sum(p.island * 5000) as island, sum(p.worker) as worker')
+            ->select('sum(p.miner * 15) as miner, sum(p.extractor * 15) as extractor, sum(p.niobiumStock * 45) as niobiumStock, sum(p.waterStock * 45) as waterStock, sum(p.caserne * 1000) as caserne, sum(p.bunker * 12000) as bunker, sum(p.centerSearch * 800) as centerSearch, sum(p.city * 200) as city, sum(p.metropole * 400) as metropole, sum(p.lightUsine * 5000) as lightUsine, sum(p.heavyUsine * 10000) as heavyUsine, sum(p.spaceShip * 1500) as spaceShip, sum(p.radar * 200) as radar, sum(p.skyRadar * 2000) as skyRadar, sum(p.skyBrouilleur * 6000) as skyBrouilleur, sum(p.nuclearBase * 50000) as nuclearBase, sum(p.orbital * 5000) as orbital, sum(p.island * 5000) as island, sum(p.worker) as worker, sum(p.workerProduction) as workerProd')
             ->groupBy('u.id')
             ->where('p.user = :user')
             ->setParameters(['user' => $user])
@@ -63,7 +63,12 @@ class OverviewController extends AbstractController
             ->getOneOrNullResult();
 
         $allWorkers = $allBuildings['worker'];
+        $allWorkersProd = $allBuildings['workerProd'] * 60;
         $allBuilding = $allBuildings['centerSearch'] + $allBuildings['miner'] + $allBuildings['extractor'] + $allBuildings['niobiumStock'] + $allBuildings['waterStock'] + $allBuildings['city'] + $allBuildings['metropole'] + $allBuildings['bunker'] + $allBuildings['caserne'] + $allBuildings['spaceShip'] + $allBuildings['lightUsine'] + $allBuildings['heavyUsine'] + $allBuildings['radar'] + $allBuildings['skyRadar'] + $allBuildings['skyBrouilleur'] + $allBuildings['nuclearBase'] + $allBuildings['orbital'] + $allBuildings['island'];
+
+        if ($user->getPoliticWorker() > 0) {
+            $allWorkers = $allWorkers * (1 + ($user->getPoliticWorker() / 5));
+        }
 
         $attackFleets = $em->getRepository('App:Fleet')
             ->createQueryBuilder('f')
@@ -120,7 +125,7 @@ class OverviewController extends AbstractController
         $myPlanets = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->leftJoin('p.constructions', 'c')
-            ->select('p.name, p.id, p.sky, p.skyPlace, p.ground, p.groundPlace, p.construct, p.constructAt, count(c.construct) as nbrConstruct')
+            ->select('p.name, p.id, p.sky, p.skyPlace, p.ground, p.groundPlace, p.construct, p.constructAt, count(c.construct) as nbrConstruct, p.moon, p.construct')
             ->groupBy('p.id')
             ->where('p.user = :user')
             ->setParameters(['user' => $user])
@@ -155,7 +160,8 @@ class OverviewController extends AbstractController
             'allShips' => $allShips,
             'allBuildings' => $allBuilding,
             'allWorkers' => $allWorkers,
-            'myPlanets' => $myPlanets
+            'myPlanets' => $myPlanets,
+            'allWorkersProd' => $allWorkersProd
         ]);
     }
 

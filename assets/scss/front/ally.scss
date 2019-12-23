@@ -35,9 +35,23 @@
   color: orange;
 }
 
-.front-block-game .nav-tabs .nav-link.active {
+.front-block-second .nav-tabs .nav-link.active {
+  color: orange;
   background-color: black;
   border: 1px solid orange;
+  border-bottom: none;
+}
+
+div.front-block-second li a:hover {
+  background-color: black;
+  border: 1px solid orange;
+  border-bottom: none;
+}
+
+div.front-block-second li a:focus {
+  background-color: black;
+  border: 1px solid orange;
+  border-bottom: none;
 }
 
 .pre-rank{

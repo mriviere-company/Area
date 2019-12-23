@@ -266,6 +266,10 @@ a:hover {
   background-color: darkorange;
 }
 
+.back-jaune {
+  background-color: #F0FF54;
+}
+
 .text-orange {
   color: #FC7F23;
 }
@@ -348,8 +352,13 @@ a:hover {
 }
 
 .tutorial-hide {
-    pointer-events: none;
-    text-decoration: line-through;
+  color: grey!important;
+  pointer-events: none;
+  text-decoration: line-through;
+}
+
+.tutorial-hide a{
+  color: grey!important;
 }
 
 .tutorial-show {
@@ -360,6 +369,10 @@ a:hover {
 }
 
 span a {
+  color: orange;
+}
+
+li a {
   color: orange;
 }
 
@@ -401,7 +414,6 @@ span a {
 input {
   color: black;
 }
-
 
 .logout-private {
   font-size: 2rem;

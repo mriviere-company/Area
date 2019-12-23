@@ -64,6 +64,7 @@ class ZombieController extends AbstractController
         if ($planetBis) {
             $planet = $planetBis;
         }
+        $usePlanet = $planet;
 
         $form_missionUranium = $this->createForm(MissionUraType::class);
         $form_missionUranium->handleRequest($request);

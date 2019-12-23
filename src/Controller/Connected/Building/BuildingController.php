@@ -41,6 +41,53 @@ class BuildingController extends AbstractController
     }
 
     /**
+     * @Route("/construire-batiment/{building}/{usePlanet}", name="build_building", requirements={"building"="\w+", "usePlanet"="\d+"})
+     */
+    public function buildBuildingAction(Planet $usePlanet, $building)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $user = $this->getUser();
+        if ($usePlanet->getUser() != $user) {
+            return $this->redirectToRoute('home');
+        }
+
+        $level = $user->getWhichBuilding($building) + 1;
+        $pdg = $user->getBuildingWarPoint($building);
+        $cost = $user->getBuildingCost($building);
+        $time = $user->getBuildingTime($building);
+        $niobium = $user->getBuildingNiobium($building);
+        $water = $user->getBuildingWater($building);
+        $maxLevel = $user->getBuildingMaxLevel($building);
+        $usePlanetNb = $usePlanet->getNiobium();
+        $usePlanetWt = $usePlanet->getWater();
+        $userBt = $user->getBitcoin();
+        $userPdg = $user->getRank()->getWarPoint();
+        $newGround = $usePlanet->getGroundPlace() + $usePlanet->getBuildingGroundPlace();
+        $newSky = $usePlanet->getSkyPlace() + $usePlanet->getBuildingSkyPlace();
+
+        if(($userBt < ($level * $cost)) ||
+            ($level == $maxLevel || $user->setConstructAt() > $now) ||
+            $user->getWhichBuilding($building) === 0) {
+            return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
+        }
+
+        $now->add(new DateInterval('PT' . round($level * $time) . 'S'));
+        $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
+        $usePlanet->setWater($usePlanetWt - ($level * $water));
+        $usePlanet->setGroundPlace($newGround);
+        $usePlanet->setSkyPlace($newSky);
+        $usePlanet->setConstruct($building);
+        $usePlanet->setConstructAt($now);
+        $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
+        $user->setBitcoin($userBt - ($level * $cost));
+        $em->flush();
+
+        return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
+    }
+
+    /**
      * @Route("/annuler-construction/{cancelPlanet}/{usePlanet}", name="cancel_construction", requirements={"usePlanet"="\d+", "cancelPlanet"="\d+"})
      */
     public function cancelConstructionAction(Planet $usePlanet,Planet $cancelPlanet)

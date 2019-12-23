@@ -25,22 +25,22 @@
             <div class="float-right mb-3"><a class="btn-read-all" href="{{ path('report_all_view', {'usePlanet': usePlanet.getId()}) }}">{{ 'AllNewView'|trans }}</a></div>
             <ul class="nav nav-tabs mt-1" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a{% if reportPage == 'defaut' %} class="py-2 nav-link active"{% endif %} href="{{ path('report_id', {'id': 'defaut', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.defaut'|trans }} {% if app.user.getWhichViewsReport('defaut') %}<span class="text-vert">{{ app.user.getWhichViewsReport('defaut') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'defaut' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'defaut', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.defaut'|trans }} {% if app.user.getWhichViewsReport('defaut') %}<span class="text-vert">{{ app.user.getWhichViewsReport('defaut') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'zombie' %} class="py-2 nav-link active"{% endif %} href="{{ path('report_id', {'id': 'zombie', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.zombie'|trans }} {% if app.user.getWhichViewsReport('zombie') %}<span class="text-vert">{{ app.user.getWhichViewsReport('zombie') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'zombie' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'zombie', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.zombie'|trans }} {% if app.user.getWhichViewsReport('zombie') %}<span class="text-vert">{{ app.user.getWhichViewsReport('zombie') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'fight' %} class="py-2 nav-link active"{% endif %} href="{{ path('report_id', {'id': 'fight', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.fight'|trans }} {% if app.user.getWhichViewsReport('fight') %}<span class="text-vert">{{ app.user.getWhichViewsReport('fight') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'fight' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'fight', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.fight'|trans }} {% if app.user.getWhichViewsReport('fight') %}<span class="text-vert">{{ app.user.getWhichViewsReport('fight') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'invade' %} class="py-2 nav-link active"{% endif %} href="{{ path('report_id', {'id': 'invade', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.invade'|trans }} {% if app.user.getWhichViewsReport('invade') %}<span class="text-vert">{{ app.user.getWhichViewsReport('invade') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'invade' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'invade', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.invade'|trans }} {% if app.user.getWhichViewsReport('invade') %}<span class="text-vert">{{ app.user.getWhichViewsReport('invade') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'economic' %} class="py-2 nav-link active"{% endif %} href="{{ path('report_id', {'id': 'economic', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.economic'|trans }} {% if app.user.getWhichViewsReport('economic') %}<span class="text-vert">{{ app.user.getWhichViewsReport('economic') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'economic' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'economic', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.economic'|trans }} {% if app.user.getWhichViewsReport('economic') %}<span class="text-vert">{{ app.user.getWhichViewsReport('economic') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'move' %} class="py-2 nav-link active"{% endif %} href="{{ path('report_id', {'id': 'move', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.move'|trans }} {% if app.user.getWhichViewsReport('move') %}<span class="text-vert">{{ app.user.getWhichViewsReport('move') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'move' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'move', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.move'|trans }} {% if app.user.getWhichViewsReport('move') %}<span class="text-vert">{{ app.user.getWhichViewsReport('move') }}</span>{% endif %}</a>
                 </li>
             </ul>
             {% for report in reports %}

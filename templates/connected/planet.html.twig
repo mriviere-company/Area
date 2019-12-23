@@ -93,7 +93,7 @@
                     {{ form_start(form_rename) }}
                     {{ form_widget(form_rename.id,{attr: { value: planet.getId()}}) }}
                     <tr>
-                        <td data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.planet'|trans }}" class="center-cells text-center cell-middle{% if app.user.getTutorial() < 4 %} tutorial-hide{% endif %}">
+                        <td data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.planet'|trans }}" class="center-cells text-center cell-middle{% if app.user.getTutorial() < 4 %} tutorial-hide{% endif %}{% if planet.getMoon() %} back-jaune{% endif %}">
                             <a href="{{ path('building', {'usePlanet': planet.getId()}) }}"><img height="70" width="70" src="{{ vich_uploader_asset(planet, 'imageFile') }}"></a>
                         </td>
                         <td width="180px" class="center-cells text-left cell-middle{% if app.user.getTutorial() == 3 %} tutorial-show{% endif %}">

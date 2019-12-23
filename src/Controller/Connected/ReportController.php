@@ -51,8 +51,7 @@ class ReportController extends AbstractController
             $reports = $em->getRepository('App:Report')
                 ->createQueryBuilder('r')
                 ->where('r.user = :user')
-                ->andWhere('r.type = :type')
-                ->setParameters(['user' => $user, 'type' => 'defaut'])
+                ->setParameters(['user' => $user])
                 ->orderBy('r.sendAt', 'DESC')
                 ->getQuery()
                 ->getResult();
@@ -170,9 +169,9 @@ class ReportController extends AbstractController
 
         $reports = $em->getRepository('App:Report')
             ->createQueryBuilder('r')
-            ->where('r.newReport = :one')
+            ->where('r.newReport > :one')
             ->andWhere('r.user = :user')
-            ->setParameters(['user' => $user, 'one' => 1])
+            ->setParameters(['user' => $user, 'one' => 0])
             ->getQuery()
             ->getResult();
 
