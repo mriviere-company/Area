@@ -11,6 +11,8 @@
     {%- endblock -%}
     {%- block right_planet -%}
     {%- endblock -%}
+    {%- block footer -%}
+    {%- endblock -%}
     <div class="front-block display-message text-center">
         {% if app.user.getGameOver() == 'Zombie' %}<h1 class="text-orange m-5 p-5">Se faire poutrer par un bot c'est quand même un peu la honte... <br><br>Bon on va dire que vous n'étiez pas 'investit' dans la partie hein ?</h1>{% else %}<h1 class="text-orange m-5 p-5">On dirait bien que {{ app.user.getGameOver() }} n'a pas eu pitié de vous... Un poutrage en bonne et due forme <3 <br><br>(Oups non c'est vrai c'est le jeu qui est pourri et pis d'abord l'autre c'est un tricheur c'est sûr! Personne n'est meilleur que vous)</h1>{% endif %}
         <div class="text-more my-3">Tu veux retenter ta chance ou tu préfère partir la queue entre les jambes ?</div>

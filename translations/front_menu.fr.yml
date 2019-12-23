@@ -67,5 +67,6 @@ confirm.account: 'Valider compte'
 overview.product: 'Production :'
 overview.hangar: 'Hangar :'
 tooltip.zombie: 'Le niveau de la menace zombie vous indique quelle sera la puissance de la prochaine attaque zombie ainsi que son heure, soyez donc prêt ! Pour faire baisser le niveau de menace détruisez une Base Zombie.'
+zombie.info: Zombie
 zombie.indic: 'Menace Zombie :'
 tooltip.missions: 'Mission zombie terminée !'

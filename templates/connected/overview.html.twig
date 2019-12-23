@@ -90,15 +90,16 @@
                         {% if app.user.getAllMoon() > 0 %}<div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxMoon'|trans }}" class="my-2">{{ 'info.moon'|trans|raw }} {{ app.user.getAllMoon() }} <img class="ml-2" height="15" src="{{ asset('img/moon1.png') }}"></div>{% endif %}
                     </td>
                     <td class="center-cells text-left">
-                        <div class="my-2">{{ 'info.niobium'|trans|raw }} <span class="text-vert">+{{ app.user.getAllNiobium()|number_format }}</span> / h <img height="12" src="{{ asset('img/niobium.png') }}"></div>
-                        <div class="my-2">{{ 'info.water'|trans|raw }} <span class="text-vert">+{{ app.user.getAllWater()|number_format }}</span> / h <img height="12" src="{{ asset('img/water.png') }}"></div>
-                        <div class="my-2">{{ 'info.worker'|trans|raw }} <span class="text-vert">+{{ allWorkersProd|number_format }}</span> / h <img height="12" src="{{ asset('img/worker.png') }}"></div>
+                        <div class="my-2">{{ 'info.niobium'|trans|raw }} <span class="text-vert">+{{ app.user.getAllNiobium()|number_format }}</span> <img height="12" src="{{ asset('img/niobium.png') }}"> / h </div>
+                        <div class="my-2">{{ 'info.water'|trans|raw }} <span class="text-vert">+{{ app.user.getAllWater()|number_format }}</span> <img height="12" src="{{ asset('img/water.png') }}"> / h </div>
+                        <div class="my-2">{{ 'info.worker'|trans|raw }} <span class="text-vert">+{{ allWorkersProd|number_format }}</span>  <img height="12" src="{{ asset('img/worker.png') }}"> / h </div>
                         <div class="my-2">{{ 'info.civil'|trans|raw }} {{ allWorkers|number_format }} <img height="12" src="{{ asset('img/worker.png') }}"> {% if app.user.getAllScientist() > 0 %}<span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.scientists'|trans }}">{{ app.user.getAllScientist()|number_format }} <img height="10" src="{{ asset('img/scientist.png') }}"></span>{% endif %}</div>
                         <div class="my-2">{{ 'info.soldier'|trans|raw }} <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.soldiers'|trans }}">{{ app.user.getAllSoldier()|number_format }} <img height="12" src="{{ asset('img/soldier.png') }}"></span>{% if app.user.getAllTank() > 0 %} et <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.tanks'|trans }}">{{ app.user.getAllTank()|number_format }} <img height="10" src="{{ asset('img/tanks.png') }}"></span></div>{% endif %}
                     </td>
                     <td class="center-cells text-left">
                         {% if app.user.getAlly() %}
-                            <div class="my-2">{{ 'info.ally'|trans|raw }} [{{ app.user.getAlly().getSigle() }}] {{ app.user.getAlly().getName() }}</div>
+                            <div class="my-2">{{ 'info.ally'|trans|raw }} <span><a data-toggle="modal" data-target="#allyModal"  href="{{ path('ally_profil_modal', {'allyUser': app.user.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">[{{ app.user.getAlly().getSigle() }}] {{ app.user.getAlly().getName() }}</a></span></div>
+                            <div class="my-2">{{ 'info.allyLevel'|trans|raw }} {{ app.user.getAlly().getLevel() }} / 10</div>
                             <div class="my-2">{{ 'info.allyMembers'|trans|raw }} {{ app.user.getAlly().getUsers()|length }} / {{ app.user.getAlly().getMaxMembers()}}</div>
                             <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxPlanetsAlly'|trans }}" class="my-2">{{ 'info.allyPlanets'|trans|raw }} {{ app.user.getAlly().getPlanets()|number_format }} / {{ (app.user.getAlly().getPlanetsMax())|number_format }} <img class="ml-2" height="15" src="{{ asset('img/planet9.png') }}"></div>
                             <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.bitcoinAlly'|trans }}" class="my-2">{{ 'info.allyBitcoin'|trans|raw }} {{ app.user.getAlly().getBitcoin()|number_format }} <img height="15" src="{{ asset('img/coin.png') }}"> {{ app.user.getAlly().getPdg()|number_format }} <img src="{{ asset('img/pdg.png') }}"></div>
@@ -212,6 +213,12 @@
     </div>
     <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content special">
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="allyModal" tabindex="-1" role="dialog" aria-labelledby="allyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content special">
             </div>
         </div>

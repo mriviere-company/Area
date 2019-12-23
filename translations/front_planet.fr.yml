@@ -2,7 +2,7 @@ title: Planète
 planet.name: Administration
 planet.niobium: Niobium
 planet.water: Eau
-planet.place: Défense
+planet.place: Défenses
 planet.worker: Travailleurs
 planet.soldier: Soldats
 planet.scientist: Scientifiques
@@ -17,8 +17,8 @@ worker: Travailleurs
 soldier: Soldats
 scientist: Scientifiques
 planet.image: Planète
-planet.production: Information
-planet.population: Population
+planet.production: Informations
+planet.population: Populations
 planet.ship: Vaisseaux
 position: 'Position :'
 planet.abandon: Abandonner

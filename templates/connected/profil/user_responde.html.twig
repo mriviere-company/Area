@@ -11,6 +11,8 @@
     {%- endblock -%}
     {%- block right_planet -%}
     {%- endblock -%}
+    {%- block footer -%}
+    {%- endblock -%}
     <div class="p-3">
         {{ form_start(form_message,{attr: { action: path('message_responde', {'usePlanet': usePlanet.getId(), 'id': id}) }}) }}
         <table class="table table-striped table-bordered table-dark">

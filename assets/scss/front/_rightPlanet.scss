@@ -12,11 +12,32 @@
   font-size: 0.9rem;
 }
 
+.bg-right-small {
+  color: white;
+  background-image: url("../public/img/back.jpg");
+  border-radius: 5px;
+  height: 45px;
+  width: 90px;
+  font-size: 0.9rem;
+}
+
 .bg-right-empty {
   background-image: url("../public/img/back.jpg");
   border-radius: 5px;
   height: 40px;
   font-size: 0.9rem;
+}
+
+.bg-right-empty-small {
+  background-image: url("../public/img/back.jpg");
+  border-radius: 5px;
+  height: 30px;
+  width: 90px;
+  font-size: 0.9rem;
+}
+
+.small-right-planet .col-6 {
+  margin-right: -1rem;
 }
 
 .constructFree {

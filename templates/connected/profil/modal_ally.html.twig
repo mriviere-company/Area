@@ -11,6 +11,8 @@
     {%- endblock -%}
     {%- block right_planet -%}
     {%- endblock -%}
+    {%- block footer -%}
+    {%- endblock -%}
     <div class="front-block allyPage text-center text-middle pt-3">
         <div class="my-4 text-more">[{{ ally.getSigle() }}] - {{ ally.getName() }} <span class="ml-4"><a href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'sigle': ally.getSigle()}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span></div>
         <h3 class="text-center text-or mb-4">{{ 'ally.level'|trans }}{{ ally.getLevel() }}</h3>

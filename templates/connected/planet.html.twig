@@ -118,11 +118,11 @@
                         </td>
                         <td width="100px" class="center-cells text-center cell-middle">
                             <div class="my-2" data-toggle="tooltip" data-placement="bottom" title="{{ 'tank'|trans }}">{{ planet.getTank()|number_format }}<span class="text-middle">/</span>500 <img height="15" src="{{ asset('img/tanks.png') }}"></div>
-                            <div class="my-2" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldier'|trans }}">{{ planet.getSoldier()|number_format }}<span class="text-middle">/</span>{{ planet.getSoldierMax()|number_format }} <img height="15" src="{{ asset('img/soldier.png') }}"></div>
+                            <div class="my-2" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldier'|trans }}">{% if planet.getSoldier() > 1000 %}{{ (planet.getSoldier() / 1000)|number_format }}K{% else %}{{ planet.getSoldier()|number_format }}{% endif %}<span class="text-middle">/</span>{% if planet.getSoldierMax() > 1000 %}{{ (planet.getSoldierMax() / 1000)|number_format }}K{% else %}{{ (planet.getSoldierMax())|number_format }}{% endif %} <img height="15" src="{{ asset('img/soldier.png') }}"></div>
                             <div {% if app.user.getTutorial() < 50 %}class="tutorial-hide" {% endif %}data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.ships'|trans }}"><span><a href="{{ path('spatial', {'usePlanet': planet.getId()}) }}">{{ planet.getShipOn() }} <img height="15" src="{{ asset('img/utility.png') }}"></a></span></div>
                         </td>
                         <td class="center-cells text-center cell-middle">
-                            <div class="my-3" data-toggle="tooltip" data-placement="bottom" title="{{ 'worker'|trans }}">{{ planet.getWorker()|number_format }}<span class="text-middle">/</span>{{ planet.getWorkerMax()|number_format }} <img height="15" src="{{ asset('img/worker.png') }}"></div>
+                            <div class="my-3" data-toggle="tooltip" data-placement="bottom" title="{{ 'worker'|trans }}">{% if planet.getWorker() > 1000 %}{{ (planet.getWorker() / 1000)|number_format }}K{% else %}{{ planet.getWorker()|number_format }}{% endif %}<span class="text-middle">/</span>{{ (planet.getWorkerMax() / 1000)|number_format }}K  <img height="15" src="{{ asset('img/worker.png') }}"></div>
                             <div class="my-3" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientist'|trans }}">{{ planet.getScientist()|number_format }}<span class="text-middle">/</span>{{ planet.getScientistMax()|number_format }} <img height="15" src="{{ asset('img/scientist.png') }}"></div>
                         </td>
                     </tr>
