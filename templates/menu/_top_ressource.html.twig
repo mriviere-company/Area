@@ -6,7 +6,7 @@
         <select class="planetChoice select2">
             <option value="{{ usePlanet.getId() }}">{{ usePlanet.getName() }} - {{ usePlanet.getSector().getGalaxy.getPosition() }}:{{ usePlanet.getSector().getPosition() }}:{{ usePlanet.getPosition() }}</option>
             {% for planet in allPlanets %}
-                {% if planet != usePlanet %}
+                {% if planet != usePlanet and planet.empty == false %}
                     <option value="{{ planet.getId() }}">{{ planet.getName() }} - {{ planet.getSector().getGalaxy.getPosition() }}:{{ planet.getSector().getPosition() }}:{{ planet.getPosition() }}</option>
                 {% endif %}
             {% endfor %}

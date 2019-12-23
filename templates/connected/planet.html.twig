@@ -32,7 +32,7 @@
                 <select class="planetChoice select2">
                     <option value="">{{ 'planetList.add'|trans }}</option>
                     {% for planet in planetsNoSell %}
-                        {% if planet.getOffensiveFleet(app.user) != 'ennemy' %}
+                        {% if planet.getOffensiveFleet(app.user) != 'ennemy' and planet.empty == false %}
                             <option value="{{ planet.getId() }}">{{ planet.getName() }}</option>
                         {% endif %}
                     {% endfor %}
