@@ -1330,6 +1330,286 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @return mixed
+     */
+    public function getWhichBuilding($building, $planet)
+    {
+        if('miner' == $building) {
+            return $planet->getMiner();
+        } elseif('extractor' == $building) {
+            return $planet->getExtractor();
+        } elseif ('niobiumStock' == $building) {
+            return $planet->getNiobiumStock();
+        } elseif ('waterStock' == $building) {
+            return $planet->getWaterStock();
+        } elseif ('centerSearch' == $building) {
+            return $planet->getCenterSearch();
+        } elseif ('city' == $building) {
+            return $planet->getCity();
+        } elseif ('metropole' == $building) {
+            return $planet->getMetropole();
+        } elseif ('caserne' == $building) {
+            return $planet->getCaserne();
+        } elseif ('bunker' == $building) {
+            return $planet->getBunker();
+        } elseif ('nuclearBase' == $building) {
+            return $planet->getNuclearBase();
+        } elseif ('spaceShip' == $building) {
+            return $planet->getSpaceShip();
+        } elseif ('lightUsine' == $building) {
+            return $planet->getLightUsine();
+        } elseif ('heavyUsine' == $building) {
+            return $planet->getHeavyUsine();
+        } elseif ('radar' == $building) {
+            return $planet->getRadar();
+        } elseif ('skyRadar' == $building) {
+            return $planet->getSkyRadar();
+        } elseif ('skyBrouilleur' == $building) {
+            return $planet->getSkyBrouilleur();
+        } elseif ('island' == $building) {
+            return $planet->getIsland();
+        } elseif ('orbital' == $building) {
+            return $planet->getOrbital();
+        }
+        return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuildingRestrict($building, $level, $usePlanet)
+    {
+        if('miner' == $building) {
+            return 'continue';
+        } elseif('extractor' == $building) {
+            return 'continue';
+        } elseif ('niobiumStock' == $building && $this->cargo >= 2) {
+            return 'continue';
+        } elseif ('waterStock' == $building && $this->cargo >= 2) {
+            return 'continue';
+        } elseif ('centerSearch' == $building) {
+            return 'continue';
+        } elseif ('city' == $building && $this->demography > 0) {
+            return 'continue';
+        } elseif ('metropole' == $building && $this->demography >= 5) {
+            return 'continue';
+        } elseif ('caserne' == $building && $this->discipline > 0) {
+            return 'continue';
+        } elseif ('bunker' == $building && $this->discipline >= 3) {
+            return 'continue';
+        } elseif ('nuclearBase' == $building) {
+            return 'continue';
+        } elseif ('spaceShip' == $building && $this->industry > 0) {
+            return 'continue';
+        } elseif ('lightUsine' == $building && $level <= 1 && $this->lightShip > 0 && $usePlanet->getSpaceShip()) {
+            return 'continue';
+        } elseif ('heavyUsine' == $building && $level <= 1 && $this->heavyShip > 0 && $usePlanet->getSpaceShip()) {
+            return 'continue';
+        } elseif ('radar' == $building && $this->onde > 0) {
+            return 'continue';
+        } elseif ('skyRadar' == $building && $this->onde >= 3) {
+            return 'continue';
+        } elseif ('skyBrouilleur' == $building && $this->onde >= 5) {
+            return 'continue';
+        } elseif ('island' == $building && $level <= 5 && $this->expansion > 0) {
+            return 'continue';
+        } elseif ('orbital' == $building && $level <= 5 && $this->expansion >= 2) {
+            return 'continue';
+        }
+        return null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuildingNiobium($building)
+    {
+        if('miner' == $building) {
+            return 450;
+        } elseif('extractor' == $building) {
+            return 200;
+        } elseif ('niobiumStock' == $building) {
+            return 150000;
+        } elseif ('waterStock' == $building) {
+            return 110000;
+        } elseif ('centerSearch' == $building) {
+            return 2850;
+        } elseif ('city' == $building) {
+            return 15000;
+        } elseif ('metropole' == $building) {
+            return 75000;
+        } elseif ('caserne' == $building) {
+            return 13000;
+        } elseif ('bunker' == $building) {
+            return 200000;
+        } elseif ('nuclearBase' == $building) {
+            return 1000000;
+        } elseif ('spaceShip' == $building) {
+            return 3000;
+        } elseif ('lightUsine' == $building) {
+            return 7000;
+        } elseif ('heavyUsine' == $building) {
+            return 83000;
+        } elseif ('radar' == $building) {
+            return 1200;
+        } elseif ('skyRadar' == $building) {
+            return 20000;
+        } elseif ('skyBrouilleur' == $building) {
+            return 51000;
+        }
+        return 0;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuildingWater($building)
+    {
+        if('miner' == $building) {
+            return 200;
+        } elseif('extractor' == $building) {
+            return 500;
+        } elseif ('niobiumStock' == $building) {
+            return 100000;
+        } elseif ('waterStock' == $building) {
+            return 180000;
+        } elseif ('centerSearch' == $building) {
+            return 3600;
+        } elseif ('city' == $building) {
+            return 11000;
+        } elseif ('metropole' == $building) {
+            return 55000;
+        } elseif ('caserne' == $building) {
+            return 19000;
+        } elseif ('bunker' == $building) {
+            return 190000;
+        } elseif ('spaceShip' == $building) {
+            return 2000;
+        } elseif ('lightUsine' == $building) {
+            return 3900;
+        } elseif ('heavyUsine' == $building) {
+            return 68000;
+        } elseif ('radar' == $building) {
+            return 650;
+        } elseif ('skyRadar' == $building) {
+            return 17200;
+        } elseif ('skyBrouilleur' == $building) {
+            return 32100;
+        }
+        return 0;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuildingGroundPlace($building)
+    {
+        if('miner' == $building) {
+            return 1;
+        } elseif('extractor' == $building) {
+            return 1;
+        } elseif ('niobiumStock' == $building) {
+            return 3;
+        } elseif ('waterStock' == $building) {
+            return 3;
+        } elseif ('centerSearch' == $building) {
+            return 5;
+        } elseif ('city' == $building) {
+            return 6;
+        } elseif ('metropole' == $building) {
+            return 6;
+        } elseif ('caserne' == $building) {
+            return 6;
+        } elseif ('bunker' == $building) {
+            return 10;
+        } elseif ('nuclearBase' == $building) {
+            return 2;
+        } elseif ('spaceShip' == $building) {
+            return 2;
+        } elseif ('lightUsine' == $building) {
+            return 6;
+        } elseif ('heavyUsine' == $building) {
+            return 12;
+        } elseif ('radar' == $building) {
+            return 2;
+        }
+        return 0;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuildingSkyPlace($building)
+    {
+        if ('metropole' == $building) {
+            return 6;
+        } elseif ('spaceShip' == $building) {
+            return 1;
+        } elseif ('skyRadar' == $building) {
+            return 2;
+        } elseif ('skyBrouilleur' == $building) {
+            return 4;
+        }
+        return 0;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuildingWarPoint($building)
+    {
+        if ('island' == $building || 'orbital' == $building) {
+            return 200000;
+        }
+        return 0;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBuildingTime($building)
+    {
+        if('miner' == $building) {
+            return 180;
+        } elseif('extractor' == $building) {
+            return 180;
+        } elseif ('niobiumStock' == $building) {
+            return 2160;
+        } elseif ('waterStock' == $building) {
+            return 2160;
+        } elseif ('centerSearch' == $building) {
+            return 900;
+        } elseif ('city' == $building) {
+            return 720;
+        } elseif ('metropole' == $building) {
+            return 2800;
+        } elseif ('caserne' == $building) {
+            return 2100;
+        } elseif ('bunker' == $building) {
+            return 4320;
+        } elseif ('nuclearBase' == $building) {
+            return 4320;
+        } elseif ('spaceShip' == $building) {
+            return 180;
+        } elseif ('lightUsine' == $building) {
+            return 2160;
+        } elseif ('heavyUsine' == $building) {
+            return 7200;
+        } elseif ('radar' == $building) {
+            return 220;
+        } elseif ('skyRadar' == $building) {
+            return 1440;
+        } elseif ('skyBrouilleur' == $building) {
+            return 3240;
+        } elseif ('island' == $building) {
+            return 1440;
+        } elseif ('orbital' == $building) {
+            return 1440;
+        }
+        return 0;
+    }
+
+    /**
      * @return int
      */
     public function getPriceShips($ships): int

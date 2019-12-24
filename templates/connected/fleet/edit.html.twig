@@ -120,7 +120,7 @@
                                 {{ 'fleet.cost'|trans }}
                             </td>
                             <td class="p-1 pl-3">
-                                {{ fleet.getNbrSignatures()|number_format  }} <img src="{{ asset('img/coin.png') }}">
+                                {{ (fleet.getNbrSignatures() * 5)|number_format  }} <img src="{{ asset('img/coin.png') }}">
                             </td>
                         </tr>
                         <tr>

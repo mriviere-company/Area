@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Building;
 
+use App\Entity\Construction;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -53,38 +54,51 @@ class BuildingController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $level = $user->getWhichBuilding($building) + 1;
+        $level = $user->getWhichBuilding($building, $usePlanet) + 1;
         $pdg = $user->getBuildingWarPoint($building);
-        $cost = $user->getBuildingCost($building);
         $time = $user->getBuildingTime($building);
         $niobium = $user->getBuildingNiobium($building);
         $water = $user->getBuildingWater($building);
-        $maxLevel = $user->getBuildingMaxLevel($building);
+        $restrict = $user->getBuildingRestrict($building, $level, $usePlanet);
         $usePlanetNb = $usePlanet->getNiobium();
         $usePlanetWt = $usePlanet->getWater();
-        $userBt = $user->getBitcoin();
         $userPdg = $user->getRank()->getWarPoint();
-        $newGround = $usePlanet->getGroundPlace() + $usePlanet->getBuildingGroundPlace();
-        $newSky = $usePlanet->getSkyPlace() + $usePlanet->getBuildingSkyPlace();
+        $newGround = $usePlanet->getGroundPlace() + $user->getBuildingGroundPlace($building);
+        $newSky = $usePlanet->getSkyPlace() + $user->getBuildingSkyPlace($building);
 
-        if(($userBt < ($level * $cost)) ||
-            ($level == $maxLevel || $user->setConstructAt() > $now) ||
-            $user->getWhichBuilding($building) === 0) {
+        if((!$restrict || $newGround > $usePlanet->getGround()) ||
+            ($newSky > $usePlanet->getSky() || $niobium > $usePlanetNb) ||
+            ($water > $usePlanetWt || $pdg > $userPdg)) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
-
-        $now->add(new DateInterval('PT' . round($level * $time) . 'S'));
-        $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
-        $usePlanet->setWater($usePlanetWt - ($level * $water));
-        $usePlanet->setGroundPlace($newGround);
-        $usePlanet->setSkyPlace($newSky);
-        $usePlanet->setConstruct($building);
-        $usePlanet->setConstructAt($now);
-        $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
-        $user->setBitcoin($userBt - ($level * $cost));
+        if ($usePlanet->getConstructAt() > $now) {
+            $level = $level + $usePlanet->getConstructionsLike($building);
+            $construction = new Construction();
+            $construction->setConstruct($building);
+            $construction->setConstructTime($level * $time);
+            $construction->setPlanet($usePlanet);
+            $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
+            $usePlanet->setWater($usePlanetWt - ($level * $water));
+            $usePlanet->setGroundPlace($newGround);
+            $usePlanet->setSkyPlace($newSky);
+            $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
+            $em->persist($construction);
+            if(($user->getTutorial() == 6)) {
+                $user->setTutorial(7);
+            }
+        } else {
+            $now->add(new DateInterval('PT' . round($level * $time) . 'S'));
+            $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
+            $usePlanet->setWater($usePlanetWt - ($level * $water));
+            $usePlanet->setGroundPlace($newGround);
+            $usePlanet->setSkyPlace($newSky);
+            $usePlanet->setConstruct($building);
+            $usePlanet->setConstructAt($now);
+            $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
+        }
         $em->flush();
 
-        return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
+        return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
     }
 
     /**
@@ -100,96 +114,16 @@ class BuildingController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $build = $cancelPlanet->getConstruct();
-        if ($build == 'destruct') {
+        $building = $cancelPlanet->getConstruct();
+        $level = $user->getWhichBuilding($building, $cancelPlanet) + 1;
+        if ($building == 'destruct') {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
-        } elseif ($build == 'miner') {
-            $level = $cancelPlanet->getMiner() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 225));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 100));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 1);
-        } elseif ($build == 'extractor') {
-            $level = $cancelPlanet->getExtractor() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 100));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 250));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 1);
-        } elseif ($build == 'niobiumStock') {
-            $level = $cancelPlanet->getNiobiumStock() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 75000));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 50000));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 3);
-        } elseif ($build == 'waterStock') {
-            $level = $cancelPlanet->getWaterStock() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 55000));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 90000));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 3);
-        } elseif ($build == 'city') {
-            $level = $cancelPlanet->getCity() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 7500));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 5500));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 6);
-        } elseif ($build == 'metropole') {
-            $level = $cancelPlanet->getMetropole() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 36500));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 27500));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 6);
-            $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - 6);
-        } elseif ($build == 'caserne') {
-            $level = $cancelPlanet->getCaserne() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 6500));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 9500));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 6);
-        } elseif ($build == 'bunker') {
-            $level = $cancelPlanet->getBunker() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 100000));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 95000));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 10);
-        } elseif ($build == 'centerSearch') {
-            $level = $cancelPlanet->getCenterSearch() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 1400));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 3500));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 5);
-        } elseif ($build == 'lightUsine') {
-            $level = $cancelPlanet->getLightUsine() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 3500));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 1900));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 6);
-        } elseif ($build == 'heavyUsine') {
-            $level = $cancelPlanet->getHeavyUsine() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 41500));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 34000));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 12);
-        } elseif ($build == 'spaceShip') {
-            $level = $cancelPlanet->getSpaceShip() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 1500));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 1000));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 2);
-            $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - 1);
-        } elseif ($build == 'radar') {
-            $level = $cancelPlanet->getRadar() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 600));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 300));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 2);
-        } elseif ($build == 'skyRadar') {
-            $level = $cancelPlanet->getSkyRadar() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 10000));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 8600));
-            $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - 2);
-        } elseif ($build == 'skyBrouilleur') {
-            $level = $cancelPlanet->getSkyBrouilleur() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 25500));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 16000));
-            $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - 4);
-        } elseif ($build == 'nuclearBase') {
-            $level = $cancelPlanet->getNuclearBase() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 1000000));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 2);
-        } elseif ($build == 'island') {
-            $level = $cancelPlanet->getIsland() + 1;
-            $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + ($level * 200000));
-        } elseif ($build == 'orbital') {
-            $level = $cancelPlanet->getOrbital() + 1;
-            $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + ($level * 200000));
+        } else {
+            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * $user->getBuildingNiobium($building)));
+            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * $user->getBuildingWater($building)));
+            $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + ($level * $user->getBuildingWarPoint($building)));
+            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - $user->getBuildingGroundPlace($building));
+            $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - $user->getBuildingSkyPlace($building));
         }
         if(count($cancelPlanet->getConstructions()) > 0) {
             $constructTime = new DateTime();
@@ -206,7 +140,7 @@ class BuildingController extends AbstractController
         }
         $em->flush();
 
-        if ($cancelPlanet == $cancelPlanet) {
+        if ($cancelPlanet == $usePlanet) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
@@ -222,20 +156,14 @@ class BuildingController extends AbstractController
         if ($usePlanet->getUser() != $user || $construction->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
-
-        $build = $construction->getConstruct();
         $cancelPlanet = $construction->getPlanet();
-        if ($build == 'miner') {
-            $level = $cancelPlanet->getMiner() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 225));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 100));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 1);
-        } elseif ($build == 'extractor') {
-            $level = $cancelPlanet->getExtractor() + 1;
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * 100));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * 250));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - 1);
-        }
+        $building = $cancelPlanet->getConstruct();
+        $level = $user->getWhichBuilding($building, $cancelPlanet) + 1;
+        $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * $user->getBuildingNiobium($building)));
+        $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * $user->getBuildingWater($building)));
+        $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + ($level * $user->getBuildingWarPoint($building)));
+        $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - $user->getBuildingGroundPlace($building));
+        $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - $user->getBuildingSkyPlace($building));
 
         $em->remove($construction);
         $em->flush();

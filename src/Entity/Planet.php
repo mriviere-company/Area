@@ -697,7 +697,7 @@ class Planet
     /**
      * @return int
      */
-    public function getNbrSignatures(): int
+    public function getNbrSignatures(): float
     {
         $sonde = $this->getSonde();
         $colonizer = $this->getColonizer() * 200;
