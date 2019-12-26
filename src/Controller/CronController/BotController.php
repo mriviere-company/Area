@@ -339,7 +339,7 @@ class BotController extends AbstractController
                 $message = new S_Content();
                 $messageSent = 0;
                 $message->setSalon($salon);
-                $allMessages = ['Salut', 'Plop', 'bonjour', 'bonjour', 'Salut','Salut','Salut','Salut','Salut','Salut','bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'Slt tlm', 'ca va ?', 'wesh', 'bj', 'bonjour', 'hellooo', 'hello', 'hello', 'hello', 'hello', 'hello', 'comment on fait pour coloniser ?', 'c\'est quoi les zombies ?', 'je me fais attaquer !!!!'];
+                $allMessages = ['Salut', 'Plop', 'bonjour', 'bonjour', 'ca va', 'Salut','Salut','Salut','Salut','Salut','Salut','bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'Slt tlm', 'ca va ?', 'wesh', 'bj', 'bonjour', 'hellooo', 'hello', 'hello', 'hello', 'hello', 'hello'];
                 $body = $allMessages[mt_rand(0, count($allMessages) - 1)];
                 $message->setMessage(nl2br($body));
                 $message->setSendAt($messageTime);

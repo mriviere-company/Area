@@ -6,6 +6,11 @@
 
 {% block body %}
 <div class="front-block editFleet">
+    {% for message in app.flashes('fail') %}
+        <div class="flash-notice my-5 alerte-flash-error text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
     {% if fleet.getUser() == app.user or (fleet.getAlly() == app.user.getAlly() and app.user.getGrade().getPlacement() == 1) %}
         <div class="pb-3 createFleet">
             <div class="row">

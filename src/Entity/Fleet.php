@@ -62,7 +62,7 @@ class Fleet
     protected $planet;
 
     /**
-     * @ORM\OneToOne(targetEntity="Destination", mappedBy="fleet", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Destination", mappedBy="fleet", fetch="EXTRA_LAZY", cascade={"persist"})
      */
     protected $destination;
 

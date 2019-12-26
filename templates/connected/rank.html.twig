@@ -27,7 +27,7 @@
             </tr>
             {% set x = 1 %}
             {% for user in users %}
-                <tr>
+                <tr{% if app.user.getId() == user.id %} class="constructFree"{% endif %}>
                     <th width="15px" class="tab-cells-name p-2">
                         {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> {{ x }}.{% else %}<div class="glyphicon glyphicon-star" hidden></div> {{ x }}.{% endif %}
                     </th>

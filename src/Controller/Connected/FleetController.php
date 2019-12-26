@@ -693,6 +693,11 @@ class FleetController  extends AbstractController
             }
         }
 
+        if (!$fleetGive->getFlightTime() && $fleetGive->getDestination()) {
+            $em->remove($fleetGive->getDestination());
+            $em->flush();
+        }
+
         $form_sendFleet = $this->createForm(FleetSendType::class, null, ["user" => $user->getId()]);
         $form_sendFleet->handleRequest($request);
 
