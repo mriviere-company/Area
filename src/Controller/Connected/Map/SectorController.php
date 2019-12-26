@@ -134,7 +134,7 @@ class SectorController extends AbstractController
             ->join('f.planet', 'p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->select('p.id as planet, f.id, f.name, f.fightAt, f.signature, u.id as user, u.username as username, a.sigle as alliance')
+            ->select('p.id as planet, f.id, f.name, f.fightAt, f.signature, u.id as user, u.username as username, a.sigle as alliance, a.id as allianceId')
             ->groupBy('f.id')
             ->where('s.position = :id')
             ->andWhere('g.position = :gal')
