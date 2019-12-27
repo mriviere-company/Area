@@ -43,7 +43,7 @@
                     <a{% if reportPage == 'move' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'move', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.move'|trans }} {% if app.user.getWhichViewsReport('move') %}<span class="text-vert">{{ app.user.getWhichViewsReport('move') }}</span>{% endif %}</a>
                 </li>
             </ul>
-            {% for report in reports %}
+            {% for report in reports|slice(0, 40) %}
                 <table class="table table-striped table-bordered table-dark">
                     <tbody>
                     <tr>

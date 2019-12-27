@@ -25,27 +25,9 @@ class ReportController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
-        $now->sub(new DateInterval('PT' . 480 . 'H'));
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
-
-        $removeReports = $em->getRepository('App:Report')
-            ->createQueryBuilder('r')
-            ->where('r.sendAt < :now')
-            ->setParameters(['now' => $now])
-            ->getQuery()
-            ->getResult();
-
-        if($removeReports) {
-            foreach($removeReports as $removeReport) {
-                $removeReport->setImageName(null);
-                $em->remove($removeReport);
-            }
-        }
-        $em->flush();
 
         if ($id == 'defaut') {
             $reports = $em->getRepository('App:Report')
