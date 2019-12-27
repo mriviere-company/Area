@@ -2,6 +2,7 @@
 
 namespace App\Controller\CronController;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\User;
@@ -214,6 +215,16 @@ class BotController extends AbstractController
 
         foreach ($bots as $bot) {
 
+            $cPlanet = $em->getRepository('App:Planet')
+                ->createQueryBuilder('p')
+                ->where('p.user = :user')
+                ->andWhere('p.groundPlace < p.ground')
+                ->andWhere('p.construct is null')
+                ->setParameters(['user' => $bot])
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+
             if (!$bot->getAlly()) {
                 $proposal = $em->getRepository('App:Proposal')
                     ->createQueryBuilder('p')
@@ -357,11 +368,70 @@ class BotController extends AbstractController
                 // créer une flotte et l'envoyer coloniser/envahir
                 $bot->setLastActivity($now);
             }
-            if (rand(1, 20) == 1) {
-                // construire bâtiment mais d'abord refacto controller building
-
-
-                $bot->setLastActivity($now);
+            if ($cPlanet) {
+                $cPlanet->setSoldier($cPlanet->getSoldierMax());
+                $construct = new Response ('false');
+                if ($cPlanet->getSpaceShip() < 1) {
+                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'spaceShip',
+                        'user' => $bot
+                    ]);
+                }
+                if ($cPlanet->getIsland() <= 5 && $construct && $construct->getContent() === 'false' && rand(1, 10) == 1) {
+                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'island',
+                        'user' => $bot
+                    ]);
+                }
+                if ($cPlanet->getLightUsine() < 1 && $construct && $construct->getContent() === 'false' && rand(1, 5) == 1) {
+                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'lightUsine',
+                        'user' => $bot
+                    ]);
+                }
+                if ($cPlanet->getHeavyUsine() < 1 && $construct && $construct->getContent() === 'false' && rand(1, 5) == 1) {
+                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'heavyUsine',
+                        'user' => $bot
+                    ]);
+                }
+                if ($cPlanet->getBunker() < 1 && $construct && $construct->getContent() === 'false' && rand(1, 4) == 1) {
+                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'bunker',
+                        'user' => $bot
+                    ]);
+                }
+                if ($construct && $construct->getContent() === 'false' && rand(1, 2) == 1) {
+                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'skyRadar',
+                        'user' => $bot
+                    ]);
+                } elseif ($construct && $construct->getContent() === 'false') {
+                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'skyBrouilleur',
+                        'user' => $bot
+                    ]);
+                }
+                if ($construct && $construct->getContent() === 'false' && rand(1, 2) == 1) {
+                    $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'miner',
+                        'user' => $bot
+                    ]);
+                } elseif ($construct && $construct->getContent() === 'false') {
+                    $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'extractor',
+                        'user' => $bot
+                    ]);
+                }
             }
             if (rand(1, 80) == 1) {
                 // coloniser planète

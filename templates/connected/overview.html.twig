@@ -102,7 +102,7 @@
                             <div class="my-2">{{ 'info.allyLevel'|trans|raw }} {{ app.user.getAlly().getLevel() }} / 10</div>
                             <div class="my-2">{{ 'info.allyMembers'|trans|raw }} {{ app.user.getAlly().getUsers()|length }} / {{ app.user.getAlly().getMaxMembers()}}</div>
                             <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxPlanetsAlly'|trans }}" class="my-2">{{ 'info.allyPlanets'|trans|raw }} {{ app.user.getAlly().getPlanets()|number_format }} / {{ (app.user.getAlly().getPlanetsMax())|number_format }} <img class="ml-2" height="15" src="{{ asset('img/planet9.png') }}"></div>
-                            <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.bitcoinAlly'|trans }}" class="my-2">{{ 'info.allyBitcoin'|trans|raw }} {{ app.user.getAlly().getBitcoin()|number_format }} <img height="15" src="{{ asset('img/coin.png') }}"> {{ app.user.getAlly().getPdg()|number_format }} <img src="{{ asset('img/pdg.png') }}"></div>
+                            <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.bitcoinAlly'|trans }}" class="my-2">{{ 'info.allyBitcoin'|trans|raw }} {{ app.user.getAlly().getBitcoin()|number_format }} <img height="15" src="{{ asset('img/coin.png') }}"> | {{ app.user.getAlly().getPdg()|number_format }} <img src="{{ asset('img/pdg.png') }}"></div>
                         {% else %}
                             <div class="my-2{% if app.user.getTutorial() < 18 %} tutorial-hide{% endif %}"><span><a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}">{{ 'info.allyMissing'|trans|raw }}</a></span></div>
                             <div class="my-2">{{ 'info.allyMissingBoost'|trans|raw }}</div>

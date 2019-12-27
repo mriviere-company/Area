@@ -3,10 +3,12 @@
 namespace App\Controller\Connected\Building;
 
 use App\Entity\Construction;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
+use App\Entity\User;
 use DateTime;
 use DateTimeZone;
 use Dateinterval;
@@ -43,13 +45,16 @@ class BuildingController extends AbstractController
 
     /**
      * @Route("/construire-batiment/{building}/{usePlanet}", name="build_building", requirements={"building"="\w+", "usePlanet"="\d+"})
+     * @Route("/construire-batiment/{building}/{usePlanet}/{user}", name="build_building_bot", requirements={"building"="\w+", "usePlanet"="\d+", "user"="\d+"})
      */
-    public function buildBuildingAction(Planet $usePlanet, $building)
+    public function buildBuildingAction(Planet $usePlanet, $building, User $user = NULL)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));
-        $user = $this->getUser();
+        if (!$user) {
+            $user = $this->getUser();
+        }
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -65,10 +70,19 @@ class BuildingController extends AbstractController
         $userPdg = $user->getRank()->getWarPoint();
         $newGround = $usePlanet->getGroundPlace() + $user->getBuildingGroundPlace($building);
         $newSky = $usePlanet->getSkyPlace() + $user->getBuildingSkyPlace($building);
+        if ($user->getBot() == 1) {
+            $userPdg = $user->getBuildingWarPoint($building) * 2;
+            $usePlanetNb = $user->getBuildingNiobium($building) * 2;
+            $usePlanetWt = $user->getBuildingWater($building) * 2;
+            $restrict = 'continue';
+        }
 
         if((!$restrict || $newGround > $usePlanet->getGround()) ||
             ($newSky > $usePlanet->getSky() || $niobium > $usePlanetNb) ||
             ($water > $usePlanetWt || $pdg > $userPdg)) {
+            if ($user->getBot() == 1) {
+                return new Response ('false');
+            }
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         if ($usePlanet->getConstructAt() > $now) {
@@ -98,6 +112,9 @@ class BuildingController extends AbstractController
         }
         $em->flush();
 
+        if ($user->getBot() == 1) {
+            return new Response ('true');
+        }
         return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
     }
 
