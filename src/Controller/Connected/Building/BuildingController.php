@@ -71,9 +71,9 @@ class BuildingController extends AbstractController
         $newGround = $usePlanet->getGroundPlace() + $user->getBuildingGroundPlace($building);
         $newSky = $usePlanet->getSkyPlace() + $user->getBuildingSkyPlace($building);
         if ($user->getBot() == 1) {
-            $userPdg = $user->getBuildingWarPoint($building) * 2;
-            $usePlanetNb = $user->getBuildingNiobium($building) * 2;
-            $usePlanetWt = $user->getBuildingWater($building) * 2;
+            $userPdg = $user->getBuildingWarPoint($building) + rand(500, 3000);
+            $usePlanetNb = $user->getBuildingNiobium($building) + 1;
+            $usePlanetWt = $user->getBuildingWater($building) + 1;
             $restrict = 'continue';
         }
 
