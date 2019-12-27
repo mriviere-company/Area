@@ -218,7 +218,7 @@ class BotController extends AbstractController
             $cPlanet = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
                 ->where('p.user = :user')
-                ->andWhere('p.groundPlace < p.ground')
+                ->andWhere('p.groundPlace < p.ground or p.island < 5')
                 ->andWhere('p.construct is null')
                 ->setParameters(['user' => $bot])
                 ->getQuery()
