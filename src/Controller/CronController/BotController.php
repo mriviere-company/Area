@@ -432,7 +432,7 @@ class BotController extends AbstractController
                         'user' => $bot
                     ]);
                 }
-            } elseif (rand(1, 40) == 1 && $bot->getTerraformation() < 26) {
+            } elseif (rand(1, 15) == 1 && $bot->getTerraformation() < 26) {
                 $bot->setTerraformation($bot->getTerraformation() + 1);
 
                 $newPlanet = $em->getRepository('App:Planet')
@@ -452,6 +452,25 @@ class BotController extends AbstractController
                     $newPlanet->setSoldier(50);
                     $newPlanet->setScientist(0);
                     $newPlanet->setNbColo(count($bot->getPlanets()) + 1);
+                } else {
+                    $newPlanet = $em->getRepository('App:Planet')
+                        ->createQueryBuilder('p')
+                        ->join('p.sector', 's')
+                        ->join('s.galaxy', 'g')
+                        ->where('p.user is null')
+                        ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
+                        ->setParameters(['gal' => rand(4, 10), 'sector' => rand(1, 100)])
+                        ->getQuery()
+                        ->setMaxResults(1)
+                        ->getOneOrNullResult();
+
+                    if ($newPlanet) {
+                        $newPlanet->setUser($bot);
+                        $newPlanet->setName('Colonie');
+                        $newPlanet->setSoldier(50);
+                        $newPlanet->setScientist(0);
+                        $newPlanet->setNbColo(count($bot->getPlanets()) + 1);
+                    }
                 }
             }
             if (rand(1, 80) == 1) {
