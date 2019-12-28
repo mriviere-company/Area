@@ -113,6 +113,8 @@ class UserEvent implements EventSubscriberInterface
                                 $user->setTank($user->getTank() + 1);
                             } elseif ($research == 'expansion') {
                                 $user->setExpansion($user->getExpansion() + 1);
+                            } elseif ($research == 'aeroponicFarm') {
+                                $user->setAeroponicFarm($user->getAeroponicFarm() + 1);
                             } elseif ($research == 'hyperespace') {
                                 $user->setHyperespace(1);
                             } elseif ($research == 'barge') {
@@ -281,6 +283,7 @@ class UserEvent implements EventSubscriberInterface
                         foreach ($user->getPlanets() as $planet) {
                             $nbProd = ($planet->getNbProduction() * $seconds) / 60;
                             $wtProd = ($planet->getWtProduction() * $seconds) / 60;
+                            $fdProd = ($planet->getFDProduction() * $seconds) / 60;
                             $workerMore = (($planet->getWorkerProduction() * $workerBonus * $seconds) / 60);
 
                             if ($seconds > 129600) {
@@ -303,13 +306,17 @@ class UserEvent implements EventSubscriberInterface
                                 if ($user->getPoliticProd() > 0) {
                                     $niobium = $planet->getNiobium() + ($nbProd * (1.2 + ($user->getPoliticProd() / 14)));
                                     $water = $planet->getWater() + ($wtProd * (1.2 + ($user->getPoliticProd() / 14)));
+                                    $food = $planet->getFood() + ($fdProd * (1.2 + ($user->getPoliticProd() / 14)));
+
                                 } else {
                                     $niobium = $planet->getNiobium() + ($nbProd * 1.2);
                                     $water = $planet->getWater() + ($wtProd * 1.2);
+                                    $food = $planet->getFood() + ($fdProd * 1.2);
                                 }
                             } else {
                                 $niobium = $planet->getNiobium() + $nbProd;
                                 $water = $planet->getWater() + $wtProd;
+                                $food = $planet->getFood() + $fdProd;
                             }
                             if ($planet->getNiobiumMax() > ($planet->getNiobium() + $niobium)) {
                                 $planet->setNiobium($niobium);
@@ -320,6 +327,11 @@ class UserEvent implements EventSubscriberInterface
                                 $planet->setWater($water);
                             } else {
                                 $planet->setWater($planet->getWaterMax());
+                            }
+                            if ($planet->getFoodMax() > ($planet->getFood() + $food)) {
+                                $planet->setFood($food);
+                            } else {
+                                $planet->setFood($planet->getFoodMax());
                             }
                             $this->em->flush($planet);
                         }

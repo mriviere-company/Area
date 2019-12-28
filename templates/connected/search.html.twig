@@ -23,7 +23,6 @@
         {% endif %}
         <div class="research">
             <div id="timeDefaut" hidden>{{ "now"|date("m/d/Y") }}</div>
-            <h1 class="float-right mr-3" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}">{{ 'bitcoin'|trans }} <span id="bitcoin">{{ app.user.getBitcoin()|number_format }}</span> <img src="{{ asset('img/coin.png') }}"></h1>
             <div class="block-title ml-4 mt-5"><h2>{{ 'research.titleUtility'|trans }}</h2></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
@@ -290,6 +289,35 @@
             <div class="block-title mt-5 ml-4"><h2>{{ 'research.titleEco'|trans }}</h2></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
+                <tr class="{% if app.user.getAeroponicFarm() == 1 %}finish-search{% else %}access-search-2{% endif %}">
+                    <th class="tab-cells-name">
+                        <img class="float-left building-img ml-3" src="{{ asset('img/aeroponic_farm.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans|raw }}">{{ 'title.aeroponicFarm'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if app.user.getAeroponicFarm() %}{{ app.user.getAeroponicFarm() }}{% else %}0{% endif %} / 1</button>
+                        {% if app.user.getAeroponicFarm() != 1 %}<div class="mt-4">{% if (app.user.getAeroponicFarm() + 1) * 16000 > app.user.getBitcoin() %}<span class="text-rouge">{{ ((app.user.getAeroponicFarm() + 1) * 16000)|number_format }}</span>{% else %}{{ ((app.user.getAeroponicFarm() + 1) * 16000)|number_format }}{% endif %} <img data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                    </th>
+                    {% if app.user.getAeroponicFarm() == 1 %}
+                        <td colspan="2" width="101px" class="center-cells cell-middle">
+                            <div class="text-vert text-more">{{ 'research.finish'|trans }}</div>
+                        </td>
+                    {% else %}
+                        <td class="center-cells cell-middle">
+                            {{ 'research.aeroponicFarm.desc'|trans }}
+                        </td>
+                        <td width="101px" class="center-cells cell-middle">
+                            {% if app.user.getSearch() == 'aeroponicFarm' %}
+                                <img width="30" src="{{ asset('img/search.gif') }}">
+                                <div class="timerArea" hidden>{{ app.user.getSearchAt()|date('Y/m/d H:i:s') }}</div>
+
+                            {% else %}
+                                {% if app.user.getBitcoin() >= ((app.user.getAeroponicFarm() + 1) * 8000) and app.user.getAeroponicFarm() < 1 and app.user.getSearchAt() < "now"|date("m/d/Y") %}
+                                    <div>{% if ((app.user.getAeroponicFarm() + 1) * app.user.getTimeConstruct(480)) < 3600 %}{{ ((app.user.getAeroponicFarm() + 1) * app.user.getTimeConstruct(480))|date('i:s') }}{% elseif ((app.user.getAeroponicFarm() + 1) * app.user.getTimeConstruct(480)) < 86400 %}{{  ((app.user.getAeroponicFarm() + 1) * app.user.getTimeConstruct(480)- 3600)|date('H:i:s') }}{% else %}{{  ((app.user.getAeroponicFarm() + 1) * app.user.getTimeConstruct(480)- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start" href="{{ path('research_aeroponic', {'usePlanet': usePlanet.getId()}) }}">{{ 'research.seek'|trans }}</a>
+                                {% else %}
+                                    <a class="btn btn-lg btn-secondary" disabled>{{ 'research.seek'|trans }}</a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                    {% endif %}
+                </tr>
                 <tr class="{% if app.user.getDemography() == 5 %}finish-search{% else %}access-search-2{% endif %}">
                     <th class="tab-cells-name">
                         <img class="float-left building-img ml-3" src="{{ asset('img/urbain.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.demography'|trans|raw }}">{{ 'title.demography'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if app.user.getDemography() %}{{ app.user.getDemography() }}{% else %}0{% endif %} / 5</button>

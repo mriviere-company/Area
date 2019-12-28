@@ -82,6 +82,9 @@ class SearchController extends AbstractController
         } elseif ($research == 'demography') {
             $level = $user->getDemography() + 1;
             $user->setBitcoin($user->getBitcoin() + ($level * 8000));
+        } elseif ($research == 'aeroponicFarm') {
+            $level = $user->getAeroponicFarm() + 1;
+            $user->setBitcoin($user->getBitcoin() + ($level * 16000));
         } elseif ($research == 'terraformation') {
             $level = $user->getTerraformation() + 1;
             $user->setBitcoin($user->getBitcoin() + ($level * 12000));

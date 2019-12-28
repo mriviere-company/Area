@@ -243,6 +243,11 @@ class Fleet
     protected $water;
 
     /**
+     * @ORM\Column(name="food",type="bigint", nullable=true)
+     */
+    protected $food;
+
+    /**
      * @ORM\Column(name="uranium",type="integer", nullable=true)
      */
     protected $uranium;
@@ -255,6 +260,7 @@ class Fleet
         $this->attack = false;
         $this->water = null;
         $this->niobium = null;
+        $this->food = null;
         $this->uranium = null;
         $this->scientist = null;
         $this->worker = null;
@@ -634,9 +640,10 @@ class Fleet
         $scientist = $this->getScientist();
         $niobium = $this->getNiobium();
         $water = $this->getWater();
+        $food = $this->getFood();
         $uranium = $this->getUranium();
 
-        $nbr = $worker + $soldier + $scientist + $niobium + $water + $uranium;
+        $nbr = $food + $worker + $soldier + $scientist + $niobium + $water + $uranium;
         return $nbr;
     }
 
@@ -1513,6 +1520,22 @@ class Fleet
     public function setWater($water): void
     {
         $this->water = $water;
+    }
+
+    /**
+     * @return null
+     */
+    public function getFood()
+    {
+        return $this->food;
+    }
+
+    /**
+     * @param null $food
+     */
+    public function setFood($food): void
+    {
+        $this->food = $food;
     }
 
     /**

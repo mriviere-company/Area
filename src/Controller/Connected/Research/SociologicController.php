@@ -17,6 +17,39 @@ use DateTimeZone;
 class SociologicController extends AbstractController
 {
     /**
+     * @Route("/rechercher-aeroponique/{usePlanet}", name="research_aeroponic", requirements={"usePlanet"="\d+"})
+     */
+    public function researchAeroponicAction(Planet $usePlanet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $user = $this->getUser();
+        if ($usePlanet->getUser() != $user) {
+            return $this->redirectToRoute('home');
+        }
+
+        $level = $user->getDemography() + 1;
+        $userBt = $user->getBitcoin();
+
+        if(($userBt < ($level * 16000)) ||
+            ($level == 1 || $user->getSearchAt() > $now)) {
+            return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
+        }
+
+        $now->add(new DateInterval('PT' . round(($level * 480 / $user->getScientistProduction())) . 'S'));
+        $user->setSearch('aeroponicFarm');
+        $user->setSearchAt($now);
+        $user->setBitcoin($userBt - ($level * 16000));
+        if(($user->getTutorial() == 8)) {
+            $user->setTutorial(9);
+        }
+        $em->flush();
+
+        return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
+    }
+
+    /**
      * @Route("/rechercher-demographie/{usePlanet}", name="research_demography", requirements={"usePlanet"="\d+"})
      */
     public function researchDemographyAction(Planet $usePlanet)

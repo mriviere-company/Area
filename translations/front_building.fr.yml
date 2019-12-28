@@ -7,6 +7,9 @@ building.buildList: Ajouter
 building.demolish: Detruire
 building.cancel: Annuler
 building.extract: 'Extracteur d''eau'
+building.farm: 'Champ agricole'
+building.aeroponicFarm: 'Ferme aéroponique'
+building.silos: 'Silo agricole'
 building.titleRessource: 'Production de ressources'
 building.titleShip: 'Infrastructures militaire'
 building.titleEco: 'Infrastructures économique'
@@ -35,7 +38,10 @@ waterImg: Eau
 groundImg: Terrain
 pdgImg: 'Points de Guerre'
 miner: 'Mine de niobium'
+farm: 'Champ agricole'
+aeroponicFarm: 'Ferme aéroponique'
 extractor: 'Extracteur d''eau'
+silos: 'Silo agricole'
 city: 'Grande ville'
 metropole: Metropole
 caserne: Caserne
@@ -54,6 +60,9 @@ building.Activated: Construit
 1: 1
 building.mining.desc: 'Plus votre mine de niobium sera élevé et mieux s''en portera votre empire.'
 building.extract.desc: 'Si le niobium est la principale ressource, l''eau n''en est pas moins autant indispensable.'
+building.farm.desc: 'Au cas ou vous ne le seriez pas, il faut bien nourrir votre Empire.'
+building.aeroponicFarm.desc: 'La place manque pour vos champs agricoles mais heureusement vous pouvez vous tourner vers l''espace.'
+building.silos.desc: 'Mais où mettre toute cette nourriture ! Faite des stocks si vous voulez pouvoir résister à un embargo.'
 building.search.desc: 'Vous débutez avec 100 scientifiques, mais vous iriez bien plus vite s''il y en avait plus...'
 building.city.desc: 'Une ville augmenterais le nombre de travailleurs chaque jour.'
 building.metropole.desc: 'Quand a une metropole, elle l''augmenterais grandement.'
@@ -70,6 +79,9 @@ building.nuclearBase.desc: 'N''avez vous jamais voulut déclencher une guerre nu
 popover.title: 'Prochain niveau'
 popover.miner: '<h5>Production de niobium : +%product%</h5>'
 popover.extract: '<h5>Production d''eau : +%product%</h5>'
+popover.farm: '<h5>Production alimentaire : +%product%</h5>'
+popover.aeroponicFarm: '<h5>Production alimentaire : +%product%</h5>'
+popover.aeroponicFarmBlocked: '<h5>Production alimentaire : +%product%</h5>'
 popover.search: '<h5>Capacitée scientifique : +500</h5>'
 popover.city: '<h5>Production de travailleurs : +8.000/j<br>Capacité travailleurs : +25.000</h5>'
 popover.metropole: '<h5>Production de travailleurs : +12.000/j<br>Capacité travailleurs : +75.000</h5>'
@@ -91,6 +103,7 @@ building.deleteSave: Détruire
 building.deleteCancel: Annuler
 building.destroyBuild: 'Une démolition est en cours : '
 popover.niobiumStock: '<h5>Stockage de niobium : +5.000.000</h5>'
+popover.silos: '<h5>Stockage de rations : +8.000.000</h5>'
 building.niobiumStock: 'Entrepôt de Niobium'
 building.niobiumStock.desc: 'Vous regardez votre production de niobium et vous dites "Mais ou vais-je mettre tout ça!" Et bien ici !'
 building.waterStock.desc: 'Si vous ne jurez que par le niobium, stockez tout de même votre eau... Cela pourrait servir.'
@@ -102,6 +115,8 @@ building.bunker.desc: 'Il pensait venir les mains dans les poches... Avec un for
 building.demolition.question: 'Souhaitez vous détruire ce bâtiment ?'
 building.niobiumStock.blocked: 'Requis : Gestion des cargaisons niveau 1'
 building.waterStock.blocked: 'Requis :  Gestion des cargaisons niveau 1'
+building.silos.blocked: 'Requis :  Agriculture aéroponique niveau 1'
+building.aeroponicFarm.blocked: 'Requis :  Agriculture aéroponique niveau 1'
 building.search.blocked: 'Requis : Développer industrie niveau 5'
 building.city.blocked: 'Requis : Redéfinition urbaine niveau 1'
 building.metropole.blocked: 'Requis : Redéfinition urbaine niveau 5'

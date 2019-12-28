@@ -1051,12 +1051,21 @@ class InstantController extends AbstractController
             } elseif ($build == 'extractor') {
                 $planet->setExtractor($planet->getExtractor() + 1);
                 $planet->setWtProduction($planet->getWtProduction() + ($planet->getExtractor() * 1.05));
+            } elseif ($build == 'farm') {
+                $planet->setFarm($planet->getFarm() + 1);
+                $planet->setFdProduction($planet->getFdProduction() + ($planet->getFarm() * 1.15));
+            } elseif ($build == 'aeroponicFarm') {
+                $planet->setAeroponicFarm($planet->getAeroponicFarm() + 1);
+                $planet->setFdProduction($planet->getFdProduction() + ($planet->getAeroponicFarm() * 1.20));
             } elseif ($build == 'niobiumStock') {
                 $planet->setNiobiumStock($planet->getNiobiumStock() + 1);
                 $planet->setNiobiumMax($planet->getNiobiumMax() + 5000000);
             } elseif ($build == 'waterStock') {
                 $planet->setWaterStock($planet->getWaterStock() + 1);
                 $planet->setWaterMax($planet->getWaterMax() + 5000000);
+            } elseif ($build == 'silos') {
+                $planet->setSilos($planet->getSilos() + 1);
+                $planet->setFoodMax($planet->getFoodMax() + 5000000);
             } elseif ($build == 'city') {
                 $planet->setCity($planet->getCity() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 5.56);

@@ -24,7 +24,7 @@
                 <div class="chat-defil">
                     <table class="table table-striped table-bordered table-dark">
                         <tbody class="messagesPost">
-                        {% for message in salon.getContents()|slice(0, 50) %}
+                        {% for message in salon.getContents() %}
                             <tr>
                                 <th class="tab-cells-name">
                                     <div>

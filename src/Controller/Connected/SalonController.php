@@ -137,6 +137,20 @@ class SalonController extends AbstractController
             $message->setSendAt($now);
             $message->setUser($user);
 
+            if(count($salon->getContents()) > 50) {
+                $removeMessage = $em->getRepository('App:S_Content')
+                    ->createQueryBuilder('sc')
+                    ->orderBy('sc.sendAt', 'ASC')
+                    ->where('sc.salon = :attachSalon')
+                    ->setParameters(['attachSalon' => $salon])
+                    ->setMaxResults('10')
+                    ->getQuery()
+                    ->getResult();
+                foreach($removeMessage as $oneMessage) {
+                    $em->remove($oneMessage);
+                }
+            }
+
             if($salon->getId() == 1) {
                 $userViews = $em->getRepository('App:User')
                     ->createQueryBuilder('u')

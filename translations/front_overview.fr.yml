@@ -90,6 +90,8 @@ metropole: Metropole
 caserne: Caserne
 destruct: Destruction
 centerSearch: 'Centre de recherche'
+farm: 'Champ agricole'
+silos: 'Silo agricole'
 lightUsine: 'Usine d''armement'
 island: 'Ville flottante'
 orbital: 'Station orbitale'
@@ -111,6 +113,7 @@ tank: 'Unitées blindées'
 terraformation: Terraformation
 cargo: 'Gestion des cargaisons'
 recycleur: 'Recyclage orbital'
+aeroponicFarm: 'Ferme aéroponique'
 armement: Armement
 missile: 'Arme missile'
 laser: 'Arme laser'

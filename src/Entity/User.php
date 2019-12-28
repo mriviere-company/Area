@@ -255,6 +255,11 @@ class User implements UserInterface, \Serializable
     protected $onde;
 
     /**
+     * @ORM\Column(name="aeroponicFarm",type="smallint", nullable=true)
+     */
+    protected $aeroponicFarm;
+
+    /**
      * @ORM\Column(name="industry",type="integer", nullable=true)
      */
     protected $industry;
@@ -529,6 +534,7 @@ class User implements UserInterface, \Serializable
         $this->gameOver = null;
         $this->imageFile = null;
         $this->onde = null;
+        $this->aeroponicFarm = null;
         $this->industry = null;
         $this->lightShip = null;
         $this->heavyShip = null;
@@ -1080,6 +1086,8 @@ class User implements UserInterface, \Serializable
             return $return;
         } elseif ($this->onde < 5) {
             return $return;
+        } elseif ($this->aeroponicFarm < 1) {
+            return $return;
         } elseif ($this->hyperespace < 1) {
             return $return;
         } elseif ($this->demography < 5) {
@@ -1338,10 +1346,16 @@ class User implements UserInterface, \Serializable
             return $planet->getMiner();
         } elseif('extractor' == $building) {
             return $planet->getExtractor();
+        } elseif('farm' == $building) {
+            return $planet->getFarm();
+        } elseif('aeroponicFarm' == $building) {
+            return $planet->getAeroponicFarm();
         } elseif ('niobiumStock' == $building) {
             return $planet->getNiobiumStock();
         } elseif ('waterStock' == $building) {
             return $planet->getWaterStock();
+        } elseif ('silos' == $building) {
+            return $planet->getSilos();
         } elseif ('centerSearch' == $building) {
             return $planet->getCenterSearch();
         } elseif ('city' == $building) {
@@ -1383,9 +1397,15 @@ class User implements UserInterface, \Serializable
             return 'continue';
         } elseif('extractor' == $building) {
             return 'continue';
+        } elseif('farm' == $building) {
+            return 'continue';
+        } elseif('aeroponicFarm' == $building && $this->aeroponicFarm > 0) {
+            return 'continue';
         } elseif ('niobiumStock' == $building && $this->cargo >= 2) {
             return 'continue';
         } elseif ('waterStock' == $building && $this->cargo >= 2) {
+            return 'continue';
+        } elseif ('silos' == $building && $this->cargo >= 2 && $this->aeroponicFarm > 0) {
             return 'continue';
         } elseif ('centerSearch' == $building) {
             return 'continue';
@@ -1428,10 +1448,16 @@ class User implements UserInterface, \Serializable
             return 450;
         } elseif('extractor' == $building) {
             return 200;
+        } elseif('farm' == $building) {
+            return 600;
+        } elseif('aeroponicFarm' == $building) {
+            return 6500;
         } elseif ('niobiumStock' == $building) {
             return 150000;
         } elseif ('waterStock' == $building) {
             return 110000;
+        } elseif ('silos' == $building) {
+            return 200000;
         } elseif ('centerSearch' == $building) {
             return 2850;
         } elseif ('city' == $building) {
@@ -1469,10 +1495,16 @@ class User implements UserInterface, \Serializable
             return 200;
         } elseif('extractor' == $building) {
             return 500;
+        } elseif('farm' == $building) {
+            return 900;
+        } elseif('aeroponicFarm' == $building) {
+            return 10000;
         } elseif ('niobiumStock' == $building) {
             return 100000;
         } elseif ('waterStock' == $building) {
             return 180000;
+        } elseif ('silos' == $building) {
+            return 200000;
         } elseif ('centerSearch' == $building) {
             return 3600;
         } elseif ('city' == $building) {
@@ -1508,10 +1540,14 @@ class User implements UserInterface, \Serializable
             return 1;
         } elseif('extractor' == $building) {
             return 1;
+        } elseif('farm' == $building) {
+            return 1;
         } elseif ('niobiumStock' == $building) {
             return 3;
         } elseif ('waterStock' == $building) {
             return 3;
+        } elseif ('silos' == $building) {
+            return 4;
         } elseif ('centerSearch' == $building) {
             return 5;
         } elseif ('city' == $building) {
@@ -1543,6 +1579,8 @@ class User implements UserInterface, \Serializable
     {
         if ('metropole' == $building) {
             return 6;
+        } elseif ('aeroponicFarm' == $building) {
+            return 1;
         } elseif ('spaceShip' == $building) {
             return 1;
         } elseif ('skyRadar' == $building) {
@@ -1573,10 +1611,16 @@ class User implements UserInterface, \Serializable
             return 180;
         } elseif('extractor' == $building) {
             return 180;
+        } elseif('farm' == $building) {
+            return 300;
+        } elseif ('aeroponicFarm' == $building) {
+            return 3100;
         } elseif ('niobiumStock' == $building) {
             return 2160;
         } elseif ('waterStock' == $building) {
             return 2160;
+        } elseif ('silos' == $building) {
+            return 2300;
         } elseif ('centerSearch' == $building) {
             return 900;
         } elseif ('city' == $building) {
@@ -2553,6 +2597,22 @@ class User implements UserInterface, \Serializable
     public function setOnde($onde): void
     {
         $this->onde = $onde;
+    }
+
+    /**
+     * @return null
+     */
+    public function getAeroponicFarm()
+    {
+        return $this->aeroponicFarm;
+    }
+
+    /**
+     * @param null $aeroponicFarm
+     */
+    public function setAeroponicFarm($aeroponicFarm): void
+    {
+        $this->aeroponicFarm = $aeroponicFarm;
     }
 
     /**

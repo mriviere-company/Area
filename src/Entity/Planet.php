@@ -56,6 +56,11 @@ class Planet
     protected $water;
 
     /**
+     * @ORM\Column(name="food",type="integer")
+     */
+    protected $food;
+
+    /**
      * @ORM\Column(name="uranium",type="integer", nullable=true)
      */
     protected $uranium;
@@ -101,6 +106,11 @@ class Planet
     protected $waterMax;
 
     /**
+     * @ORM\Column(name="foodMax",type="integer")
+     */
+    protected $foodMax;
+
+    /**
      * @ORM\Column(name="soldierMax",type="integer")
      */
     protected $soldierMax;
@@ -129,6 +139,11 @@ class Planet
      * @ORM\Column(name="wtProduction",type="decimal", precision=28, scale=5)
      */
     protected $wtProduction;
+
+    /**
+     * @ORM\Column(name="fdProduction",type="decimal", precision=28, scale=5)
+     */
+    protected $fdProduction;
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet", mappedBy="planet", fetch="EXTRA_LAZY")
@@ -224,6 +239,21 @@ class Planet
      * @ORM\Column(name="waterStock",type="smallint", nullable=true)
      */
     protected $waterStock;
+
+    /**
+     * @ORM\Column(name="farm",type="smallint", nullable=true)
+     */
+    protected $farm;
+
+    /**
+     * @ORM\Column(name="aeroponicFarm",type="smallint", nullable=true)
+     */
+    protected $aeroponicFarm;
+
+    /**
+     * @ORM\Column(name="silos",type="smallint", nullable=true)
+     */
+    protected $silos;
 
     /**
      * @ORM\Column(name="spaceShip",type="smallint", nullable=true)
@@ -532,22 +562,28 @@ class Planet
         $this->name = 'Inhabitée';
         $this->niobium = 20000;
         $this->water = 14000;
+        $this->food = 100000;
         $this->nbCdr = 0;
         $this->wtCdr = 0;
         $this->shipProduction = 1;
         $this->workerProduction = 11;
         $this->niobiumMax = 1300000;
         $this->waterMax = 1000000;
+        $this->foodMax = 1500000;
         $this->soldierMax = 200;
         $this->tank = null;
         $this->scientistMax = 0;
         $this->workerMax = 125000;
         $this->nbProduction = 6;
         $this->wtProduction = 5;
+        $this->fdProduction = 8;
         $this->miner = null;
         $this->niobiumStock = null;
         $this->extractor = null;
         $this->waterStock = null;
+        $this->farm = null;
+        $this->aeroponicFarm = null;
+        $this->silos = null;
         $this->spaceShip = null;
         $this->metropole = null;
         $this->city = null;
@@ -734,8 +770,11 @@ class Planet
     {
         $extractor = $this->getExtractor() * 15;
         $miner = $this->getMiner() * 15;
+        $farm = $this->getFarm() * 15;
+        $aeroponicFarm = $this->getAeroponicFarm() * 30;
         $niobiumStock = $this->getNiobiumStock() * 45;
         $waterStock = $this->getWaterStock() * 45;
+        $silos = $this->getSilos() * 45;
         $caserne = $this->getCaserne() * 25;
         $bunker = $this->getBunker() * 130;
         $center = $this->getCenterSearch() * 30;
@@ -751,7 +790,7 @@ class Planet
         $orbital = $this->getOrbital() * 2000;
         $island = $this->getIsland() * 2000;
 
-        $nbr = $extractor + $niobiumStock + $waterStock + $miner + $caserne + $bunker + $center + $city + $metropole + $light + $heavy + $space + $radar + $skyr + $brouilleur + $nuclear + $orbital + $island;
+        $nbr = $farm + $aeroponicFarm + $silos + $extractor + $niobiumStock + $waterStock + $miner + $caserne + $bunker + $center + $city + $metropole + $light + $heavy + $space + $radar + $skyr + $brouilleur + $nuclear + $orbital + $island;
         return $nbr;
     }
 
@@ -762,8 +801,11 @@ class Planet
     {
         $extractor = $this->getExtractor() * 15;
         $miner = $this->getMiner() * 15;
-        $niobiumStock = $this->getNiobiumStock() * 45;
-        $waterStock = $this->getWaterStock() * 45;
+        $farm = $this->getFarm() * 15;
+        $aeroponicFarm = $this->getAeroponicFarm() * 30;
+        $niobiumStock = $this->getNiobiumStock() * 450;
+        $waterStock = $this->getWaterStock() * 450;
+        $silos = $this->getSilos() * 450;
         $caserne = $this->getCaserne() * 1000;
         $bunker = $this->getBunker() * 12000;
         $center = $this->getCenterSearch() * 800;
@@ -779,7 +821,7 @@ class Planet
         $orbital = $this->getOrbital() * 5000;
         $island = $this->getIsland() * 5000;
 
-        $nbr = $extractor + $niobiumStock + $waterStock + $miner + $caserne + $bunker + $center + $city + $metropole + $light + $heavy + $space + $radar + $skyr + $brouilleur + $nuclear + $orbital + $island;
+        $nbr = $farm + $aeroponicFarm + $silos + $extractor + $niobiumStock + $waterStock + $miner + $caserne + $bunker + $center + $city + $metropole + $light + $heavy + $space + $radar + $skyr + $brouilleur + $nuclear + $orbital + $island;
         return $nbr;
     }
 
@@ -1176,6 +1218,38 @@ class Planet
     }
 
     /**
+     * @return int
+     */
+    public function getFood(): int
+    {
+        return $this->food;
+    }
+
+    /**
+     * @param int $food
+     */
+    public function setFood(int $food): void
+    {
+        $this->food = $food;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFoodMax(): int
+    {
+        return $this->foodMax;
+    }
+
+    /**
+     * @param int $foodMax
+     */
+    public function setFoodMax(int $foodMax): void
+    {
+        $this->foodMax = $foodMax;
+    }
+
+    /**
      * @return mixed
      */
     public function getFleets()
@@ -1512,6 +1586,54 @@ class Planet
     }
 
     /**
+     * @return null
+     */
+    public function getFarm()
+    {
+        return $this->farm;
+    }
+
+    /**
+     * @param null $farm
+     */
+    public function setFarm($farm): void
+    {
+        $this->farm = $farm;
+    }
+
+    /**
+     * @return null
+     */
+    public function getAeroponicFarm()
+    {
+        return $this->aeroponicFarm;
+    }
+
+    /**
+     * @param null $aeroponicFarm
+     */
+    public function setAeroponicFarm($aeroponicFarm): void
+    {
+        $this->aeroponicFarm = $aeroponicFarm;
+    }
+
+    /**
+     * @return null
+     */
+    public function getSilos()
+    {
+        return $this->silos;
+    }
+
+    /**
+     * @param null $silos
+     */
+    public function setSilos($silos): void
+    {
+        $this->silos = $silos;
+    }
+
+    /**
      * @return mixed
      */
     public function getSpaceShip()
@@ -1765,6 +1887,22 @@ class Planet
     public function setWtProduction($wtProduction): void
     {
         $this->wtProduction = $wtProduction;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFdProduction(): int
+    {
+        return $this->fdProduction;
+    }
+
+    /**
+     * @param int $fdProduction
+     */
+    public function setFdProduction(int $fdProduction): void
+    {
+        $this->fdProduction = $fdProduction;
     }
 
     /**
