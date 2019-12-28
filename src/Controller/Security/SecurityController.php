@@ -110,8 +110,8 @@ class SecurityController extends AbstractController
            $request->getSession()->set('_security_main', serialize($token));
 
            $event = new InteractiveLoginEvent($request, $token);
-            $dispatcher = new EventDispatcher();
-            $dispatcher->dispatch("security.interactive_login", $event);
+           $dispatcher = new EventDispatcher();
+           $dispatcher->dispatch($event, "security.interactive_login");
 
            return $this->redirectToRoute('login');
         }
@@ -176,7 +176,7 @@ class SecurityController extends AbstractController
 
         $event = new InteractiveLoginEvent($request, $token);
         $dispatcher = new EventDispatcher();
-        $dispatcher->dispatch("security.interactive_login", $event);
+        $dispatcher->dispatch($event, "security.interactive_login");
 
         return $this->redirectToRoute('login');
     }

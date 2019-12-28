@@ -39,7 +39,6 @@ class BuildingController extends AbstractController
 
         return $this->render('connected/building.html.twig', [
             'usePlanet' => $usePlanet,
-            'date' => $now,
         ]);
     }
 
@@ -109,6 +108,9 @@ class BuildingController extends AbstractController
             $usePlanet->setConstruct($building);
             $usePlanet->setConstructAt($now);
             $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
+            if(($user->getTutorial() == 5)) {
+                $user->setTutorial(6);
+            }
         }
         $em->flush();
 

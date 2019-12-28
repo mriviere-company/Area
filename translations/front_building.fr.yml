@@ -50,7 +50,6 @@ skyBrouilleur: 'Brouilleur de radar'
 skyImg: Espace
 building.canBe: 'x 0'
 building.Activated: Construit
-'': 0
 0: 0
 1: 1
 building.mining.desc: 'Plus votre mine de niobium sera élevé et mieux s''en portera votre empire.'

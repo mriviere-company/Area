@@ -24,7 +24,7 @@
         <div class="front-block-second">
             {% if app.user.getAlly() %}
             {% else %}
-                {% if app.user.getAllyBan() > now %}<h3 class="text-center text-orange mb-5">{{ 'ally.banAlly'|trans }} <span class="timerArea" hidden>{{ app.user.getAllyBan()|date('Y/m/d H:i:s') }}</span></h3>{% endif %}
+                {% if app.user.getAllyBan() > "now"|date("m/d/Y") %}<h3 class="text-center text-orange mb-5">{{ 'ally.banAlly'|trans }} <span class="timerArea" hidden>{{ app.user.getAllyBan()|date('Y/m/d H:i:s') }}</span></h3>{% endif %}
                 {{ form_start(form_ally) }}
                 <div class="row">
                     <div class="offset-1 col-4 form-group">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="offset-1 col-10 form-group">
                         {{ form_widget(form_ally.description) }}
-                        <div><span class="pull-left mt-3">{{ form_widget(form_ally.politic) }}</span><span class="{% if app.user.getTutorial() < 21 %}tutorial-hide{% endif %}">{{ form_widget(form_ally.sendForm) }}</span></div>
+                        <div><span class="pull-left mt-3"></span><span class="{% if app.user.getTutorial() < 21 %}tutorial-hide{% endif %}">{{ form_widget(form_ally.sendForm) }}</span></div>
                     </div>
                 </div>
                 {{ form_end(form_ally) }}

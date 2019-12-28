@@ -455,6 +455,7 @@ class BotController extends AbstractController
                 }
             }
             if (rand(1, 80) == 1) {
+                // envahir et lancer recherches
                 //$bot->setLastActivity($now);
             }
         }

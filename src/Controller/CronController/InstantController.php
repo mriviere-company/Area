@@ -1882,6 +1882,20 @@ class InstantController extends AbstractController
      */
     public function repareAction()
     {
+
+        $em = $this->getDoctrine()->getManager();
+        $bots = $em->getRepository('App:User')
+            ->createQueryBuilder('u')
+            ->where('u.bot = true')
+            ->getQuery()
+            ->getResult();
+
+        $date = new DateTime("first day of last month");
+        foreach ($bots as $bot) {
+            $bot->setCreatedAt($date->setDate(2019, rand(11, 12), rand(1, 30)));
+            $bot->setDailyConnect($date->setDate(2019, rand(11, 12), rand(1, 30)));
+        }
+        $em->flush();
         exit;
     }
 }

@@ -49,7 +49,6 @@ title.expansion: 'Expansion territoriale'
 research.canBe: Inactive
 research.Activated: Activée
 research.level: 'Niveau :'
-'': 0
 1: 1
 0: 0
 research.utility.desc: 'Cette recherche est la base pour la construction de vaisseaux utilitaires tel que cargo/barge/recycleur/colonisateur...'

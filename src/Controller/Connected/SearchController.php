@@ -44,7 +44,6 @@ class SearchController extends AbstractController
 
         return $this->render('connected/search.html.twig', [
             'usePlanet' => $usePlanet,
-            'date' => $now,
         ]);
     }
 

@@ -190,7 +190,6 @@ class ZombieController extends AbstractController
         return $this->render('connected/zombie.html.twig', [
             'usePlanet' => $usePlanet,
             'planet' => $planet,
-            'now' => $now,
             'form_missionZombie' => $form_missionZombie->createView(),
             'form_missionUranium' => $form_missionUranium->createView()
         ]);
