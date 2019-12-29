@@ -1203,8 +1203,11 @@ class InstantController extends AbstractController
                     $oldPlanet = $fleet->getPlanet();
                     $fleet->setFlightTime(null);
                     $fleet->setPlanet($newHome);
+                    $previousDestination = $fleet->getDestination();
                     if ($fleet->getFlightType() != '2') {
-                        $em->remove($fleet->getDestination());
+                        $previousDestination->setFleet(null);
+                        $previousDestination->setPlanet(null);
+                        $em->remove($previousDestination);
                     }
 
                     $user = $fleet->getUser();
@@ -1902,7 +1905,6 @@ class InstantController extends AbstractController
      */
     public function repareAction()
     {
-
         $em = $this->getDoctrine()->getManager();
         $bots = $em->getRepository('App:User')
             ->createQueryBuilder('u')

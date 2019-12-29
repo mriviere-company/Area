@@ -692,9 +692,11 @@ class FleetController  extends AbstractController
                 return $this->redirectToRoute('home');
             }
         }
-
-        if (!$fleetGive->getFlightTime() && $fleetGive->getDestination()) {
-            $em->remove($fleetGive->getDestination());
+        $previousDestination = $fleetGive->getDestination();
+        if (!$fleetGive->getFlightTime() && $previousDestination) {
+            $previousDestination->setFleet(null);
+            $previousDestination->setPlanet(null);
+            $em->remove($previousDestination);
             $em->flush();
         }
 
