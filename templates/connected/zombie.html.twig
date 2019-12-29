@@ -37,16 +37,21 @@
         <div class="front-block-game mt-4">
             {% if app.user.getStats()|length > 7 %}
                 {% set points = [] %}
+                {% set otherZombie = [] %}
                 {% set date = [] %}
+                {% for otherPoint in otherPoints %}
+                    {% set otherZombie = otherZombie|merge([(otherPoint['allZombie'] / otherPoint['numbers'])|round]) %}
+                {% endfor %}
                 {% for stat in app.user.getStats() %}
                     {% set points = points|merge([stat.getZombie()|round]) %}
                     {% set date = date|merge([stat.getDate()|date("m/d/Y")]) %}
                 {% endfor %}
+                <div id="zombiePoints" data-zombie-points="{{ points|json_encode }}"></div>
+                <div id="zombieOtherPoints" data-zombie-other-points="{{ otherZombie|json_encode }}"></div>
+                <div id="zombieDate" data-zombie-date="{{ date|json_encode }}"></div>
+                <canvas class="mb-5" id="zombieChart" height="100"></canvas>
+                <script src="{{ asset('build/zombieCharts.js') }}"></script>
             {% endif %}
-            <div id="zombiePoints" data-zombie-points="{{ points|json_encode }}"></div>
-            <div id="zombieDate" data-zombie-date="{{ date|json_encode }}"></div>
-            <canvas class="mb-5" id="zombieChart" height="100"></canvas>
-            <script src="{{ asset('build/zombieCharts.js') }}"></script>
             <h2 class="text-center mb-3">{{ 'zombie.mission'|trans }}</h2>
             <div class="text-center mb-4">{{ 'zombie.speech'|trans }}</div>
             <div class="row">

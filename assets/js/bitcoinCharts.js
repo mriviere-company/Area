@@ -1,6 +1,7 @@
 function manageBitcoinChart() {
     //line
     let bitcoinPoints = $('#bitcoinPoints').data("bitcoinPoints");
+    let bitcoinOtherPoints = $('#bitcoinOtherPoints').data("bitcoinOtherPoints");
     let bitcoinDate = $('#bitcoinDate').data("bitcoinDate");
     let ctxL = document.getElementById("bitcoinChart").getContext('2d');
     new Chart(ctxL, {
@@ -8,7 +9,7 @@ function manageBitcoinChart() {
         data: {
             labels: bitcoinDate,
             datasets: [{
-                label: "Courbe d'évolution de mes Bitcoins",
+                label: "Mes Bitcoins",
                 data: bitcoinPoints,
                 backgroundColor: [
                     'rgba(28, 185, 28, .2)',
@@ -17,7 +18,19 @@ function manageBitcoinChart() {
                     'rgba(32, 132, 232, 1)',
                 ],
                 borderWidth: 2
-            }]
+            },
+                {
+                    label: "Moyenne des Bitcoins (autres joueurs)",
+                    data: bitcoinOtherPoints,
+                    backgroundColor: [
+                        'rgba(235, 40, 40, .5)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 255, 255, .6)',
+                    ],
+                    borderWidth: 2
+                }
+            ]
         },
         options: {
             responsive: true

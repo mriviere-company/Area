@@ -1,13 +1,16 @@
 function manageAllyChart() {
     //line
+    let allyPoints = $('#allyPoints').data("allyPoints");
+    let allyOtherPoints = $('#allyOtherPoints').data("allyOtherPoints");
+    let allyDate = $('#allyDate').data("allyDate");
     let ctxL = document.getElementById("allyChart").getContext('2d');
     new Chart(ctxL, {
         type: 'line',
         data: {
-            labels: ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"],
+            labels: allyDate,
             datasets: [{
                 label: "Mon alliance (points)",
-                data: [0, 2, 6, 20, 24, 26, 30, 40, 40, 46, 50, 50, 52, 54],
+                data: allyPoints,
                 backgroundColor: [
                     'rgba(28, 185, 28, .2)',
                 ],
@@ -18,7 +21,7 @@ function manageAllyChart() {
             },
                 {
                     label: "Alliances (moyenne points)",
-                    data: [36, 36, 36, 38, 38, 36, 38, 40, 40, 40, 40, 42, 42, 41],
+                    data: allyOtherPoints,
                     backgroundColor: [
                         'rgba(235, 40, 40, .5)',
                     ],

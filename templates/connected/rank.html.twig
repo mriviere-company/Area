@@ -9,12 +9,17 @@
         {% if app.user.getStats()|length > 7 %}
             <div class="front-block-second">
                 {% set points = [] %}
+                {% set otherPdg = [] %}
                 {% set date = [] %}
+                {% for otherPoint in otherPoints %}
+                    {% set otherPdg = otherPdg|merge([(otherPoint['allPdg'] / otherPoint['numbers'])|round]) %}
+                {% endfor %}
                 {% for stat in app.user.getStats() %}
                     {% set points = points|merge([stat.getPdg()|round]) %}
                     {% set date = date|merge([stat.getDate()|date("m/d/Y")]) %}
                 {% endfor %}
                 <div id="pdgPoints" data-pdg-points="{{ points|json_encode }}"></div>
+                <div id="pdgOtherPoints" data-pdg-other-points="{{ otherPdg|json_encode }}"></div>
                 <div id="pdgDate" data-pdg-date="{{ date|json_encode }}"></div>
                 <canvas class="mb-5" id="pdgChart" height="100"></canvas>
                 <script src="{{ asset('build/pdgCharts.js') }}"></script>

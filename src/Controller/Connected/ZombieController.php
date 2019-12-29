@@ -187,9 +187,21 @@ class ZombieController extends AbstractController
             $em->flush();
         }
 
+        $otherPoints = $em->getRepository('App:Stats')
+            ->createQueryBuilder('s')
+            ->join('s.user', 'u')
+            ->select('count(s) as numbers, sum(DISTINCT s.zombie) as allZombie')
+            ->groupBy('s.date')
+            ->where('s.user != :user')
+            ->andWhere('u.bot = false')
+            ->setParameters(['user' => $user])
+            ->getQuery()
+            ->getResult();
+
         return $this->render('connected/zombie.html.twig', [
             'usePlanet' => $usePlanet,
             'planet' => $planet,
+            'otherPoints' => $otherPoints,
             'form_missionZombie' => $form_missionZombie->createView(),
             'form_missionUranium' => $form_missionUranium->createView()
         ]);

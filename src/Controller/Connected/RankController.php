@@ -36,9 +36,36 @@ class RankController extends AbstractController
             ->getQuery()
             ->getResult();
 
+        if ($user->getAlly()) {
+            $allyPoints = $em->getRepository('App:Stats')
+                ->createQueryBuilder('s')
+                ->join('s.user', 'u')
+                ->select('count(s) as numbers, sum(DISTINCT s.points) as ally, s.date')
+                ->groupBy('s.date')
+                ->where('u.ally = :ally')
+                ->setParameters(['ally' => $user->getAlly()])
+                ->getQuery()
+                ->getResult();
+
+            $otherPoints = $em->getRepository('App:Stats')
+                ->createQueryBuilder('s')
+                ->join('s.user', 'u')
+                ->select('count(s) as numbers, sum(DISTINCT s.points) as allAlly')
+                ->groupBy('s.date')
+                ->where('u.ally != :ally')
+                ->setParameters(['ally' => $user->getAlly()])
+                ->getQuery()
+                ->getResult();
+        } else {
+            $allyPoints = NULL;
+            $otherPoints = NULL;
+        }
+
         return $this->render('connected/ally/rank.html.twig', [
             'usePlanet' => $usePlanet,
-            'allAllys' => $allAllys
+            'allAllys' => $allAllys,
+            'allyPoints' => $allyPoints,
+            'otherPoints' => $otherPoints
         ]);
     }
 
@@ -68,9 +95,19 @@ class RankController extends AbstractController
             ->getQuery()
             ->getResult();
 
+        $otherPoints = $em->getRepository('App:Stats')
+            ->createQueryBuilder('s')
+            ->select('count(s) as numbers, sum(DISTINCT s.pdg) as allPdg')
+            ->groupBy('s.date')
+            ->where('s.user != :user')
+            ->setParameters(['user' => $user])
+            ->getQuery()
+            ->getResult();
+
         return $this->render('connected/rank.html.twig', [
             'usePlanet' => $usePlanet,
             'users' => $users,
+            'otherPoints' => $otherPoints
         ]);
     }
 

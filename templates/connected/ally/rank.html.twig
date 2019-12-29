@@ -6,10 +6,25 @@
 
 {% block body %}
     <div class="front-block">
-        <div class="front-block-second">
-            <canvas id="allyChart" height="100"></canvas>
-        </div>
-        <script src="{{ asset('build/allyCharts.js') }}"></script>
+        {% if app.user.getStats()|length > 7 %}
+            <div class="front-block-second">
+                {% set points = [] %}
+                {% set otherAlly = [] %}
+                {% set date = [] %}
+                {% for otherPoint in otherPoints %}
+                    {% set otherAlly = otherAlly|merge([(otherPoint['allAlly'] / otherPoint['numbers'])|round]) %}
+                {% endfor %}
+                {% for stat in allyPoints %}
+                    {% set points = points|merge([(stat['ally'])|round]) %}
+                    {% set date = date|merge([(stat['date']|date("m/d/Y"))]) %}
+                {% endfor %}
+                <div id="allyPoints" data-ally-points="{{ points|json_encode }}"></div>
+                <div id="allyOtherPoints" data-ally-other-points="{{ otherAlly|json_encode }}"></div>
+                <div id="allyDate" data-ally-date="{{ date|json_encode }}"></div>
+                <canvas id="allyChart" height="100"></canvas>
+                <script src="{{ asset('build/allyCharts.js') }}"></script>
+            </div>
+        {% endif %}
         <table class="table table-striped borderOverview table-dark text-center">
             <tbody>
             <tr>

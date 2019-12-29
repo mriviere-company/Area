@@ -30,6 +30,15 @@ class PlanetController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $otherPoints = $em->getRepository('App:Stats')
+            ->createQueryBuilder('s')
+            ->select('count(s) as numbers, sum(DISTINCT s.bitcoin) as allBitcoin')
+            ->groupBy('s.date')
+            ->where('s.user != :user')
+            ->setParameters(['user' => $user])
+            ->getQuery()
+            ->getResult();
+
         $planetsSeller = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.user = :user')
@@ -75,7 +84,8 @@ class PlanetController extends AbstractController
             'usePlanet' => $usePlanet,
             'formObject' => $form_manageRenamePlanet,
             'planetsSeller' => $planetsSeller,
-            'planetsNoSell' => $planetsNoSell
+            'planetsNoSell' => $planetsNoSell,
+            'otherPoints' => $otherPoints
         ]);
     }
 
