@@ -6,7 +6,10 @@
 
 {% block body %}
     <div class="front-block">
-        <div class="front-block-second"><canvas id="allyChart"></canvas></div>
+        <div class="front-block-second">
+            <canvas id="allyChart" height="100"></canvas>
+        </div>
+        <script src="{{ asset('build/allyCharts.js') }}"></script>
         <table class="table table-striped borderOverview table-dark text-center">
             <tbody>
             <tr>

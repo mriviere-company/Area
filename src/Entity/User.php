@@ -120,6 +120,11 @@ class User implements UserInterface, \Serializable
     protected $commander;
 
     /**
+     * @ORM\OneToMany(targetEntity="Stats", mappedBy="user", fetch="EXTRA_LAZY", cascade={"persist"})
+     */
+    protected $stats;
+
+    /**
      * @ORM\OneToOne(targetEntity="Ships", inversedBy="user", fetch="EXTRA_LAZY", cascade={"persist"})
      * @ORM\JoinColumn(name="ship_id", referencedColumnName="id")
      */
@@ -514,6 +519,7 @@ class User implements UserInterface, \Serializable
         $this->quests = new \Doctrine\Common\Collections\ArrayCollection();
         $this->fleetLists = new \Doctrine\Common\Collections\ArrayCollection();
         $this->views = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stats = new \Doctrine\Common\Collections\ArrayCollection();
         $this->scientistProduction = 1;
         $this->bitcoin = 25000;
         $this->cheat = 0;
@@ -3061,6 +3067,46 @@ class User implements UserInterface, \Serializable
     public function setCommander($commander): void
     {
         $this->commander = $commander;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStats()
+    {
+        return $this->stats;
+    }
+
+    /**
+     * @param mixed $stats
+     */
+    public function setStats($stats): void
+    {
+        $this->stats = $stats;
+    }
+
+    /**
+     * Add stats
+     *
+     * @param \App\Entity\Stats $stats
+     *
+     * @return Stats
+     */
+    public function addStats(\App\Entity\Stats $stats)
+    {
+        $this->stats[] = $stats;
+
+        return $this;
+    }
+
+    /**
+     * Remove stats
+     *
+     * @param \App\Entity\Stats $stats
+     */
+    public function removeGalaxy(\App\Entity\Stats $stats)
+    {
+        $this->stats->removeElement($stats);
     }
 
     /**

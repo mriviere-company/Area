@@ -70,7 +70,6 @@ class BuildingController extends AbstractController
         $newGround = $usePlanet->getGroundPlace() + $user->getBuildingGroundPlace($building);
         $newSky = $usePlanet->getSkyPlace() + $user->getBuildingSkyPlace($building);
         if ($user->getBot() == 1) {
-            $userPdg = $user->getBuildingWarPoint($building) + rand(500, 3000);
             $usePlanetNb = $user->getBuildingNiobium($building) + 1;
             $usePlanetWt = $user->getBuildingWater($building) + 1;
             $restrict = 'continue';
@@ -90,24 +89,32 @@ class BuildingController extends AbstractController
             $construction->setConstruct($building);
             $construction->setConstructTime($level * $time);
             $construction->setPlanet($usePlanet);
-            $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
-            $usePlanet->setWater($usePlanetWt - ($level * $water));
             $usePlanet->setGroundPlace($newGround);
             $usePlanet->setSkyPlace($newSky);
-            $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
+            if ($user->getBot() == 0) {
+                $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
+                $usePlanet->setWater($usePlanetWt - ($level * $water));
+                $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
+            } else {
+                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + rand(100, 3000));
+            }
             $em->persist($construction);
             if(($user->getTutorial() == 6)) {
                 $user->setTutorial(7);
             }
         } else {
             $now->add(new DateInterval('PT' . round($level * $time) . 'S'));
-            $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
-            $usePlanet->setWater($usePlanetWt - ($level * $water));
             $usePlanet->setGroundPlace($newGround);
             $usePlanet->setSkyPlace($newSky);
             $usePlanet->setConstruct($building);
             $usePlanet->setConstructAt($now);
-            $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
+            if ($user->getBot() == 0) {
+                $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
+                $usePlanet->setWater($usePlanetWt - ($level * $water));
+                $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
+            } else {
+                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + rand(100, 3000));
+            }
             if(($user->getTutorial() == 5)) {
                 $user->setTutorial(6);
             }

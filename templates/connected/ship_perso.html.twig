@@ -27,6 +27,8 @@
             </table>
         {% endif %}
         <div class="front-block-second">
+            {% set shipPoints = [app.user.getShip().getArmorPoints(), app.user.getShip().getShieldPoints(), app.user.getShip().getMissilePoints(), app.user.getShip().getLaserPoints(), app.user.getShip().getPlasmaPoints(), app.user.getShip().getPrecisionPoints()] %}
+            <div id="shipPoints" data-ship-points="{{ shipPoints|json_encode }}"></div>
             <div class="row">
                 <div class="col-12">
                     <div class="block-title mb-3"><h2>{{ 'ship.personalisation'|trans }}</h2></div>
@@ -1037,6 +1039,7 @@
                     {% if app.user.getShip().getMax() > 0 %}<div class="block-title mt-4"><h2>{{ 'ship.lastPoints'|trans({'%nbr%': app.user.getShip().getMax()}) }}</h2></div>{% else %}<div class="block-title mt-4"><h2>{{ 'ship.nextUpdate'|trans }} <span class="timerArea" hidden>{{ app.user.getShip().getLastUpdate()|date('Y/m/d H:i:s') }}</span></h2></div>{% endif %}
                 </div>
             </div>
+            <canvas class="mt-5" id="doughnutChart" height="150"></canvas><script src="{{ asset('build/shipsCharts.js') }}"></script>
         </div>
     </div>
 {% endblock %}

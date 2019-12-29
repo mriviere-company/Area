@@ -1525,4 +1525,52 @@ class Ships
     {
         return $this->id;
     }
+
+    /**
+     * @return int
+     */
+    public function getArmorPoints(): int
+    {
+        return $this->armorHunter + $this->armorHunterHeavy + $this->armorHunterWar + $this->armorCorvet + $this->armorCorvetLaser + $this->armorCorvetWar + $this->armorFregate + $this->armorFregatePlasma + $this->armorCroiser + $this->armorIronClad + $this->armorDestroyer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getShieldPoints(): int
+    {
+        return $this->shieldCorvet + $this->shieldCorvetWar + $this->shieldFregate + $this->shieldFregatePlasma + $this->shieldCroiser + $this->shieldIronClad + $this->shieldDestroyer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMissilePoints(): int
+    {
+        return$this->missileHunter + $this->missileHunterHeavy + $this->missileHunterWar + $this->missileCorvet + $this->missileCorvetLaser + $this->missileCorvetWar + $this->missileFregate + $this->missileFregatePlasma + $this->missileCroiser + $this->missileIronClad + $this->missileDestroyer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLaserPoints(): int
+    {
+        return $this->laserHunterWar + $this->laserCorvetLaser + $this->laserCorvetWar + $this->laserFregate + $this->laserFregatePlasma + $this->laserCroiser + $this->laserIronClad + $this->laserDestroyer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPlasmaPoints(): int
+    {
+        return $this->plasmaHunterWar + $this->plasmaFregatePlasma + $this->plasmaCroiser + $this->plasmaIronClad + $this->plasmaDestroyer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrecisionPoints(): int
+    {
+        return $this->accurateHunter + $this->accurateHunterHeavy + $this->accurateHunterWar + $this->accurateCorvet + $this->accurateCorvetLaser + $this->accurateCorvetWar + $this->accurateFregate + $this->accurateFregatePlasma + $this->accurateCroiser + $this->accurateIronClad + $this->accurateDestroyer;
+    }
 }

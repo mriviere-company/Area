@@ -12,6 +12,7 @@ fleet.commander: Commandant
 fleet.signature: Signature
 fleet.cost: Entretien
 fleet.speed: Vitesse
+fleet.tank: Tank
 fleet.share: Partage
 fleet.interact: Interaction
 fleet.shareInfo: 'Partager la flotte a l''alliance :'

@@ -6,6 +6,20 @@
 
 {% block body %}
     <div class="front-block">
+        {% if app.user.getStats()|length > 7 %}
+            <div class="front-block-second">
+                {% set points = [] %}
+                {% set date = [] %}
+                {% for stat in app.user.getStats() %}
+                    {% set points = points|merge([stat.getPdg()|round]) %}
+                    {% set date = date|merge([stat.getDate()|date("m/d/Y")]) %}
+                {% endfor %}
+                <div id="pdgPoints" data-pdg-points="{{ points|json_encode }}"></div>
+                <div id="pdgDate" data-pdg-date="{{ date|json_encode }}"></div>
+                <canvas class="mb-5" id="pdgChart" height="100"></canvas>
+                <script src="{{ asset('build/pdgCharts.js') }}"></script>
+            </div>
+        {% endif %}
         <table class="table table-striped borderOverview table-dark text-center">
             <tbody>
             <tr>

@@ -38,7 +38,7 @@ class RankController extends AbstractController
 
         return $this->render('connected/ally/rank.html.twig', [
             'usePlanet' => $usePlanet,
-            'allAllys' => $allAllys,
+            'allAllys' => $allAllys
         ]);
     }
 

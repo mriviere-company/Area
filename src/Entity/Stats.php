@@ -20,19 +20,30 @@ class Stats
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="stats", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="stats", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     protected $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="Ally", mappedBy="stats", fetch="EXTRA_LAZY")
+     * @ORM\Column(name="bitcoin",type="bigint")
      */
-    protected $ally;
+    protected $bitcoin;
 
     /**
      * @ORM\Column(name="points",type="bigint")
      */
     protected $points;
+
+    /**
+     * @ORM\Column(name="pdg",type="bigint")
+     */
+    protected $pdg;
+
+    /**
+     * @ORM\Column(name="zombie",type="bigint")
+     */
+    protected $zombie;
 
     /**
      * @ORM\Column(name="date",type="datetime")
@@ -63,22 +74,6 @@ class Stats
     /**
      * @return mixed
      */
-    public function getAlly()
-    {
-        return $this->ally;
-    }
-
-    /**
-     * @param mixed $ally
-     */
-    public function setAlly($ally): void
-    {
-        $this->ally = $ally;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getPoints()
     {
         return $this->points;
@@ -90,6 +85,54 @@ class Stats
     public function setPoints($points): void
     {
         $this->points = $points;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBitcoin()
+    {
+        return $this->bitcoin;
+    }
+
+    /**
+     * @param mixed $bitcoin
+     */
+    public function setBitcoin($bitcoin): void
+    {
+        $this->bitcoin = $bitcoin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPdg()
+    {
+        return $this->pdg;
+    }
+
+    /**
+     * @param mixed $pdg
+     */
+    public function setPdg($pdg): void
+    {
+        $this->pdg = $pdg;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getZombie()
+    {
+        return $this->zombie;
+    }
+
+    /**
+     * @param mixed $zombie
+     */
+    public function setZombie($zombie): void
+    {
+        $this->zombie = $zombie;
     }
 
     /**

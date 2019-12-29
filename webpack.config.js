@@ -20,6 +20,11 @@ Encore
     .autoProvidejQuery()
     .addStyleEntry('global', './assets/global.scss')
     .addEntry('main', './assets/main.js')
+    .addEntry('allyCharts', './assets/js/allyCharts.js')
+    .addEntry('shipsCharts', './assets/js/shipsCharts.js')
+    .addEntry('bitcoinCharts', './assets/js/bitcoinCharts.js')
+    .addEntry('pdgCharts', './assets/js/pdgCharts.js')
+    .addEntry('zombieCharts', './assets/js/zombieCharts.js')
     .enableForkedTypeScriptTypesChecking()
 ;
 

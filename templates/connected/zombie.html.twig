@@ -35,6 +35,18 @@
             <div class="text-more mb-3">{{ 'zombie.attack'|trans }} <span class="mt-5 timerArea text-rouge" hidden>{% if app.user.getZombieAt() %}{{ app.user.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span></div>
         </div>
         <div class="front-block-game mt-4">
+            {% if app.user.getStats()|length > 7 %}
+                {% set points = [] %}
+                {% set date = [] %}
+                {% for stat in app.user.getStats() %}
+                    {% set points = points|merge([stat.getZombie()|round]) %}
+                    {% set date = date|merge([stat.getDate()|date("m/d/Y")]) %}
+                {% endfor %}
+            {% endif %}
+            <div id="zombiePoints" data-zombie-points="{{ points|json_encode }}"></div>
+            <div id="zombieDate" data-zombie-date="{{ date|json_encode }}"></div>
+            <canvas class="mb-5" id="zombieChart" height="100"></canvas>
+            <script src="{{ asset('build/zombieCharts.js') }}"></script>
             <h2 class="text-center mb-3">{{ 'zombie.mission'|trans }}</h2>
             <div class="text-center mb-4">{{ 'zombie.speech'|trans }}</div>
             <div class="row">

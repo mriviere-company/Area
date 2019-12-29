@@ -8,6 +8,7 @@ use App\Entity\Report;
 use App\Entity\Fleet;
 use App\Entity\Destination;
 use App\Entity\Exchange;
+use App\Entity\Stats;
 use DateTime;
 use DateTimeZone;
 use Dateinterval;
@@ -250,6 +251,11 @@ class InstantController extends AbstractController
             $x = 1;
             foreach ($users as $user) {
 
+                $stats = new Stats();
+                $stats->setDate($now);
+                $stats->setZombie($user->getZombieAtt());
+                $stats->setUser($user);
+
                 $maxQuest = count($user->getWhichQuest()) - 1;
                 $first = rand(0, $maxQuest);
                 $second = $first;
@@ -378,6 +384,11 @@ class InstantController extends AbstractController
                 $user->getRank()->setOldPoint($user->getRank()->getPoint());
                 $user->getRank()->setPoint($point);
                 $user->setViewReport(false);
+
+                $stats->setPdg($user->getRank()->getWarPoint());
+                $stats->setPoints($point);
+                $stats->setBitcoin($user->getBitcoin());
+                $em->persist($stats);
 
                 if ($economicGO == 1) {
                     $report->setContent($report->getContent() . "<br>Votre réserve de Bitcoins passe en négatif et vous n'êtes plus en mesure d'entretenir votre armada.<br>Vous perdez tout les vaisseaux que contenait votre Empire et redémarrez avec 5.000 Bitcoins.");
