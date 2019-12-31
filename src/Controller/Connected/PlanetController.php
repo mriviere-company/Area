@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected;
 
+use App\Entity\Fleet;
+use App\Entity\Report;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -87,6 +89,51 @@ class PlanetController extends AbstractController
             'planetsNoSell' => $planetsNoSell,
             'otherPoints' => $otherPoints
         ]);
+    }
+
+    /**
+     * @Route("/colonisation-planete/{fleet}/", name="colonizer_planet", requirements={"fleet"="\d+"})
+     */
+    public function colonizeAction(Fleet $fleet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $user = $this->getUser();
+        $colonize = $em->getRepository('App:Fleet')->find(['id' => $fleet]);
+        $newPlanet = $colonize->getPlanet();
+
+        if($colonize->getColonizer() && $newPlanet->getUser() == null &&
+            $newPlanet->getEmpty() == false && $newPlanet->getMerchant() == false &&
+            $newPlanet->getCdr() == false && $colonize->getUser()->getColPlanets() < 26 &&
+            $colonize->getUser()->getColPlanets() <= ($user->getTerraformation() + 1 + $user->getPoliticColonisation())) {
+
+            $colonize->setColonizer($colonize->getColonizer() - 1);
+            $newPlanet->setUser($colonize->getUser());
+            $newPlanet->setName('Colonie');
+            $newPlanet->setSoldier(50);
+            $newPlanet->setScientist(0);
+            $newPlanet->setNbColo(count($fleet->getUser()->getPlanets()) + 1);
+            if($colonize->getNbrShips() == 0) {
+                $em->remove($colonize);
+            }
+            $reportColo = new Report();
+            $reportColo->setSendAt($now);
+            $reportColo->setUser($user);
+            $reportColo->setTitle("Colonisation de planète");
+            $reportColo->setImageName("colonize_report.jpg");
+            $reportColo->setContent("Vous venez de coloniser une planète inhabitée en : (" .  $newPlanet->getSector()->getgalaxy()->getPosition() . "." . $newPlanet->getSector()->getPosition() . "." . $newPlanet->getPosition() . ") . Cette planète fait désormais partit de votre Empire, pensez a la renommer sur la page Planètes.");
+            $user->setViewReport(false);
+            $em->persist($reportColo);
+            $quest = $user->checkQuests('colonize');
+            if($quest) {
+                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());
+                $user->removeQuest($quest);
+            }
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('building', ['usePlanet' => $newPlanet->getId()]);
     }
 
     /**

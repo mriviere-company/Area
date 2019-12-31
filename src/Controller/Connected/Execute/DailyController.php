@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Controller\CronController;
+namespace App\Controller\Connected\Execute;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use DateTime;
-use DateTimeZone;
+use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
-use App\Entity\Exchange;
+use App\Entity\Stats;
+use DateTimeZone;
+use DateTime;
 
 class DailyController extends AbstractController
 {
-    /**
-     * @Route("/dailyReport/", name="daily_load")
-     */
     public function dailyLoadAction()
     {
+
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $servers = $em->getRepository('App:Server')->findAll();
 
         $users = $em->getRepository('App:User')
             ->createQueryBuilder('u')
@@ -32,10 +31,16 @@ class DailyController extends AbstractController
         $x = 1;
         foreach ($users as $user) {
 
+            $stats = new Stats();
+            $stats->setDate($now);
+            $stats->setZombie($user->getZombieAtt());
+            $stats->setUser($user);
+
             $maxQuest = count($user->getWhichQuest()) - 1;
             $first = rand(0, $maxQuest);
             $second = $first;
             $third = $second;
+            $economicGO = 0;
             while ($second == $first) {
                 $second = rand(0, $maxQuest);
             }
@@ -60,24 +65,12 @@ class DailyController extends AbstractController
             $worker = 0;
             $planetPoint= 0;
             $buildingCost = 0;
-            if ($user->getPoliticWorker() > 0) {
-                $workerBonus = (1 + ($user->getPoliticWorker() / 5));
-            } else {
-                $workerBonus = 1;
-            }
             foreach ($user->getPlanets() as $planet) {
-                if($planet->getRadarAt() == null && $planet->getBrouilleurAt() == null) {
-                    if (($planet->getWorker() + $planet->getWorkerProduction() > $planet->getWorkerMax())) {
-                        $planet->setWorker($planet->getWorkerMax());
-                    } else {
-                        $planet->setWorker($planet->getWorker() + ($planet->getWorkerProduction() * $workerBonus));
-                    }
-                    $worker = $worker + $planet->getWorker();
-                    $planetPoint = $planetPoint + $planet->getBuildingPoint();
-                    $buildingCost = $buildingCost + $planet->getBuildingCost();
-                }
+                $worker = $worker + $planet->getWorker();
+                $planetPoint = $planetPoint + $planet->getBuildingPoint();
+                $buildingCost = $buildingCost + $planet->getBuildingCost();
             }
-            $gain = round($worker / 2);
+            $gain = round($worker / 3);
             $lose = null;
             if($ally) {
                 $user->addQuest($questTwo);
@@ -107,7 +100,7 @@ class DailyController extends AbstractController
                             $exchange->setAmount($lose);
                             $exchange->setName($user->getUserName());
                             $em->persist($exchange);
-                            $report->setContent($report->getContent() . " La paix que vous avez signé envoi directement <span class='text-rouge'>-" . number_format(round($lose)) . "</span> bitcoins à l'aliance [" . $otherAlly->getSigle() . "].<br>");
+                            $report->setContent($report->getContent() . " La paix que vous avez signé envoi directement <span class='text-rouge'>" . number_format(round($lose)) . "</span> bitcoins à l'aliance [" . $otherAlly->getSigle() . "].<br>");
                         }
                     }
                 }
@@ -115,7 +108,7 @@ class DailyController extends AbstractController
                 $taxe = (($ally->getTaxe() / 100) * $gain);
                 $gain = $gain - $taxe;
                 $user->setBitcoin($userBitcoin - $taxe);
-                $report->setContent(" Le montant envoyé dans les fonds de votre alliance s'élève à <span class='text-rouge'>-" . number_format(round($taxe)) . "</span> bitcoins.<br>");
+                $report->setContent(" Le montant envoyé dans les fonds de votre alliance s'élève à <span class='text-rouge'>" . number_format(round($taxe)) . "</span> bitcoins.<br>");
                 $allyBitcoin = $ally->getBitcoin();
                 $allyBitcoin = $allyBitcoin + $taxe;
                 $ally->setBitcoin($allyBitcoin);
@@ -130,7 +123,7 @@ class DailyController extends AbstractController
             $report->setContent($report->getContent() . " Le travaille fournit par vos travailleurs vous rapporte <span class='text-vert'>+" . number_format(round($gain)) . "</span> bitcoins.");
             $empireCost = $troops + $ship + $buildingCost;
             $cost = $cost - $empireCost + ($gain);
-            $report->setContent($report->getContent() . " L'entretien de votre empire vous coûte cependant <span class='text-rouge'>-" . number_format(round($empireCost)) . "</span> bitcoins.<br>");
+            $report->setContent($report->getContent() . " L'entretien de votre empire vous coûte cependant <span class='text-rouge'>" . number_format(round($empireCost)) . "</span> bitcoins.<br>");
             $point = round(round($worker / 100) + round($user->getAllShipsPoint() / 75) + round($troops / 75) + $planetPoint);
             $user->setBitcoin($cost);
             if ($user->getBitcoin() < 0) {
@@ -151,6 +144,7 @@ class DailyController extends AbstractController
                     $planet->setSoldier(0);
                     $planet->setScientist(0);
                 }
+                $economicGO = 1;
                 $user->setBitcoin(5000);
             }
             if ($gain - $empireCost > 0) {
@@ -171,6 +165,14 @@ class DailyController extends AbstractController
             $user->getRank()->setPoint($point);
             $user->setViewReport(false);
 
+            $stats->setPdg($user->getRank()->getWarPoint());
+            $stats->setPoints($point);
+            $stats->setBitcoin($user->getBitcoin());
+            $em->persist($stats);
+
+            if ($economicGO == 1) {
+                $report->setContent($report->getContent() . "<br>Votre réserve de Bitcoins passe en négatif et vous n'êtes plus en mesure d'entretenir votre armada.<br>Vous perdez tout les vaisseaux que contenait votre Empire et redémarrez avec 5.000 Bitcoins.");
+            }
             $em->persist($report);
             $x++;
         }
@@ -199,8 +201,13 @@ class DailyController extends AbstractController
             $ally->setRank($ally->getUsersPoint());
         }
 
+        $nowDaily = new DateTime();
+        $nowDaily->setTimezone(new DateTimeZone('Europe/Paris'));
+        $nowDaily->add(new DateInterval('PT' . round(86397 + rand(1,2)) . 'S'));
+        foreach ($servers as $server) {
+            $server->setDailyReport($nowDaily);
+        }
         $em->flush();
-
-        exit;
+        return new Response ('true');
     }
 }

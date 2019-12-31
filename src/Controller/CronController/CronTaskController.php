@@ -2,124 +2,59 @@
 
 namespace App\Controller\CronController;
 
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Destination;
 use App\Entity\Report;
 use App\Entity\Fleet;
-use App\Entity\Destination;
-use App\Entity\Exchange;
-use App\Entity\Stats;
-use DateTime;
 use DateTimeZone;
 use Dateinterval;
+use DateTime;
 
-class InstantController extends AbstractController
+class CronTaskController extends AbstractController
 {
     /**
-     * @Route("/construction/", name="build_fleet_load")
+     * @Route("/construction/", name="cron_task")
      */
-    public function buildFleetAction()
+    public function cronTaskAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $servers = $em->getRepository('App:Server')->findAll();
-        $nowAste = new DateTime();
-        $nowAste->setTimezone(new DateTimeZone('Europe/Paris'));
-
-        $asteroides = $em->getRepository('App:Planet')
-            ->createQueryBuilder('p')
-            ->where('p.cdr = true')
-            ->andWhere('p.recycleAt < :nowAste OR p.recycleAt IS NULL')
-            ->setParameters(['nowAste' => $nowAste])
-            ->getQuery()
-            ->getResult();
-
-        if($asteroides) {
-            $nowAste->add(new DateInterval('PT' . (25000 * rand(1, 4)) . 'S'));
-            foreach ($asteroides as $asteroide) {
-
-                $asteroide->setRecycleAt($nowAste);
-                $asteroide->setNbCdr($asteroide->getNbCdr() + rand(50000, 500000));
-                $asteroide->setWtCdr($asteroide->getWtCdr() + rand(40000, 400000));
-
-
-                if(rand(1, 50) == 50) {
-                    $asteroide->setCdr(false);
-                    $asteroide->setEmpty(true);
-                    $asteroide->setImageName(null);
-                    $asteroide->setRecycleAt(null);
-                    $asteroide->setName('Vide');
-                    $newAsteroides = $em->getRepository('App:Planet')
-                        ->createQueryBuilder('p')
-                        ->join('p.sector', 's')
-                        ->join('s.galaxy', 'g')
-                        ->where('p.empty = true')
-                        ->andWhere('s.position = :rand')
-                        ->andWhere('g.position = :galaxy')
-                        ->setParameters(['rand' => rand(1, 100), 'galaxy' => $asteroide->getSector()->getGalaxy()->getPosition()])
-                        ->setMaxResults(1)
-                        ->getQuery()
-                        ->getOneOrNullResult();
-
-                    if ($newAsteroides) {
-                        $newAsteroides->setEmpty(false);
-                        $newAsteroides->setCdr(true);
-                        $newAsteroides->setImageName('cdr.png');
-                        $newAsteroides->setName('Astéroïdes');
-                        $iaPlayer = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
-                        $planetZb = $em->getRepository('App:Planet')
-                            ->createQueryBuilder('p')
-                            ->where('p.user = :user')
-                            ->andWhere('p.radarAt is null and p.brouilleurAt is null')
-                            ->setParameters(['user' => $iaPlayer])
-                            ->orderBy('p.ground', 'ASC')
-                            ->getQuery()
-                            ->setMaxresults(1)
-                            ->getOneOrNullResult();
-
-                        $planetBis = $em->getRepository('App:Planet')
-                            ->createQueryBuilder('p')
-                            ->leftJoin('p.missions', 'm')
-                            ->where('p.user = :user')
-                            ->andWhere('p.radarAt is null and p.brouilleurAt is null and m.soldier is not null')
-                            ->setParameters(['user' => $iaPlayer])
-                            ->orderBy('p.ground', 'ASC')
-                            ->getQuery()
-                            ->setMaxresults(1)
-                            ->getOneOrNullResult();
-
-                        if ($planetBis) {
-                            $planetZb = $planetBis;
-                        }
-
-                        $timeAttAst = new DateTime();
-                        $timeAttAst->setTimezone(new DateTimeZone('Europe/Paris'));
-                        $timeAttAst->add(new DateInterval('PT' . 24 . 'H'));
-                        $fleet = new Fleet();
-                        $alea = rand(10, 100);
-                        $fleet->setHunterWar(300 * $alea);
-                        $fleet->setCorvetWar(50 * $alea);
-                        $fleet->setFregatePlasma(3 * $alea);
-                        $fleet->setDestroyer(1 * $alea);
-                        $fleet->setUser($iaPlayer);
-                        $fleet->setPlanet($planetZb);
-                        $destination = new Destination();
-                        $destination->setFleet($fleet);
-                        $destination->setPlanet($newAsteroides);
-                        $em->persist($destination);
-                        $fleet->setFlightTime($timeAttAst);
-                        $fleet->setAttack(1);
-                        $fleet->setName('Horde');
-                        $fleet->setSignature($fleet->getNbrSignatures());
-                        $em->persist($fleet);
-                    }
-                }
-            }
-            $em->flush();
-        }
-
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));
-        $now->add(new DateInterval('PT' . 1 . 'S'));
+
+        $this->forward('App\Controller\Connected\Execute\AsteroideController::AsteroideAction');
+
+        $dailyReport = $em->getRepository('App:Server')
+            ->createQueryBuilder('s')
+            ->where('s.dailyReport < :now')
+            ->setParameters(['now' => $now])
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if ($dailyReport) {
+            $this->forward('App\Controller\Connected\Execute\DailyController::dailyLoadAction');
+        }
+
+        while (1) {
+            $firstFleet = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->join('f.planet', 'p')
+                ->select('p.id')
+                ->where('f.fightAt < :now')
+                ->andWhere('f.flightTime is null')
+                ->setParameters(['now' => $now])
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+
+            if ($firstFleet) {
+                $this->forward('App\Controller\Connected\Execute\FightController::fightAction', [
+                    'firstFleet'  => $firstFleet
+                ]);
+            } else {
+                break;
+            }
+        }
 
         $planetSoldiers = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
@@ -230,205 +165,6 @@ class InstantController extends AbstractController
             ->andWhere('u.rank is not null')
             ->getQuery()
             ->getResult();
-
-        $dailyReport = $em->getRepository('App:Server')
-            ->createQueryBuilder('s')
-            ->where('s.dailyReport < :now')
-            ->setParameters(['now' => $now])
-            ->getQuery()
-            ->getOneOrNullResult();
-
-        if ($dailyReport) {
-            $users = $em->getRepository('App:User')
-                ->createQueryBuilder('u')
-                ->join('u.rank', 'r')
-                ->where('u.id != :one')
-                ->setParameters(['one' => 1])
-                ->orderBy('r.point', 'DESC')
-                ->getQuery()
-                ->getResult();
-
-            $x = 1;
-            foreach ($users as $user) {
-
-                $stats = new Stats();
-                $stats->setDate($now);
-                $stats->setZombie($user->getZombieAtt());
-                $stats->setUser($user);
-
-                $maxQuest = count($user->getWhichQuest()) - 1;
-                $first = rand(0, $maxQuest);
-                $second = $first;
-                $third = $second;
-                $economicGO = 0;
-                while ($second == $first) {
-                    $second = rand(0, $maxQuest);
-                }
-                while ($third == $first or $third == $second) {
-                    $third = rand(0, $maxQuest);
-                }
-                $questOne = $em->getRepository('App:Quest')->findOneByName($user->getWhichQuest()[$first]);
-                $questTwo = $em->getRepository('App:Quest')->findOneByName($user->getWhichQuest()[$second]);
-                $questTree = $em->getRepository('App:Quest')->findOneByName($user->getWhichQuest()[$third]);
-                $report = new Report();
-                $report->setType('economic');
-                $report->setTitle("Rapport de l'empire");
-                $report->setImageName("daily_report.jpg");
-                $report->setSendAt($now);
-                $report->setUser($user);
-                $ally = $user->getAlly();
-                $nbrQuests = count($user->getQuests());
-                foreach ($user->getQuests() as $quest) {
-                    $user->removeQuest($quest);
-                }
-                $user->addQuest($questOne);
-                $worker = 0;
-                $planetPoint= 0;
-                $buildingCost = 0;
-                foreach ($user->getPlanets() as $planet) {
-                    $worker = $worker + $planet->getWorker();
-                    $planetPoint = $planetPoint + $planet->getBuildingPoint();
-                    $buildingCost = $buildingCost + $planet->getBuildingCost();
-                }
-                $gain = round($worker / 3);
-                $lose = null;
-                if($ally) {
-                    $user->addQuest($questTwo);
-                    if($ally->getPeaces()) {
-                        foreach($ally->getPeaces() as $peace) {
-                            if($peace->getType() == false && $peace->getAccepted() == 1) {
-                                $otherAlly = $em->getRepository('App:Ally')
-                                    ->createQueryBuilder('a')
-                                    ->where('a.sigle = :sigle')
-                                    ->setParameter('sigle', $peace->getAllyTag())
-                                    ->getQuery()
-                                    ->getOneOrNullResult();
-
-                                $lose = (($peace->getTaxe() / 100) * $gain);
-                                if($lose < 0) {
-                                    $lose = (($peace->getTaxe() / 100) * $user->getBitcoin());
-                                }
-                                $gain = $gain - $lose;
-                                $user->setBitcoin($user->getBitcoin() - $lose);
-                                $otherAlly->setBitcoin($otherAlly->getBitcoin() + $lose);
-                                $exchange = new Exchange();
-                                $exchange->setAlly($otherAlly);
-                                $exchange->setCreatedAt($now);
-                                $exchange->setType(0);
-                                $exchange->setAccepted(1);
-                                $exchange->setContent("Taxe liée à la paix.");
-                                $exchange->setAmount($lose);
-                                $exchange->setName($user->getUserName());
-                                $em->persist($exchange);
-                                $report->setContent($report->getContent() . " La paix que vous avez signé envoi directement <span class='text-rouge'>" . number_format(round($lose)) . "</span> bitcoins à l'aliance [" . $otherAlly->getSigle() . "].<br>");
-                            }
-                        }
-                    }
-                    $userBitcoin = $user->getBitcoin();
-                    $taxe = (($ally->getTaxe() / 100) * $gain);
-                    $gain = $gain - $taxe;
-                    $user->setBitcoin($userBitcoin - $taxe);
-                    $report->setContent(" Le montant envoyé dans les fonds de votre alliance s'élève à <span class='text-rouge'>" . number_format(round($taxe)) . "</span> bitcoins.<br>");
-                    $allyBitcoin = $ally->getBitcoin();
-                    $allyBitcoin = $allyBitcoin + $taxe;
-                    $ally->setBitcoin($allyBitcoin);
-                } else {
-                    $questAlly = $em->getRepository('App:Quest')->findOneById(50);
-                    $user->addQuest($questAlly);
-                }
-                $user->addQuest($questTree);
-                $troops = $user->getAllTroops();
-                $ship = $user->getAllShipsCost();
-                $cost = $user->getBitcoin();
-                $report->setContent($report->getContent() . " Le travaille fournit par vos travailleurs vous rapporte <span class='text-vert'>+" . number_format(round($gain)) . "</span> bitcoins.");
-                $empireCost = $troops + $ship + $buildingCost;
-                $cost = $cost - $empireCost + ($gain);
-                $report->setContent($report->getContent() . " L'entretien de votre empire vous coûte cependant <span class='text-rouge'>" . number_format(round($empireCost)) . "</span> bitcoins.<br>");
-                $point = round(round($worker / 100) + round($user->getAllShipsPoint() / 75) + round($troops / 75) + $planetPoint);
-                $user->setBitcoin($cost);
-                if ($user->getBitcoin() < 0) {
-                    foreach ($user->getFleetLists() as $list) {
-                        foreach ($list->getFleets() as $fleetL) {
-                            $fleetL->setFleetList(null);
-                        }
-                        $em->remove($list);
-                    }
-                    foreach($user->getFleets() as $fleet) {
-                        if ($fleet->getDestination()) {
-                            $em->remove($fleet->getDestination());
-                        }
-                        $em->remove($fleet);
-                    }
-                    foreach ($user->getPlanets() as $planet) {
-                        $planet->setSignature(0);
-                        $planet->setSoldier(0);
-                        $planet->setScientist(0);
-                    }
-                    $economicGO = 1;
-                    $user->setBitcoin(5000);
-                }
-                if ($gain - $empireCost > 0) {
-                    $color = '<span class="text-vert">+';
-                } else {
-                    $color = '<span class="text-rouge">';
-                }
-                if ($nbrQuests == 0) {
-                    $report->setContent($report->getContent() . " Ce qui vous donne un revenu de " . $color . number_format(round($gain - $empireCost)) . "</span> bitcoins. Comme vous avez terminé toutes les quêtes vous recevez un bonus de 20.000 PDG ! Bonne journée suprême Commandant.");
-                    $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + 20000);
-                } else {
-                    $report->setContent($report->getContent() . " Ce qui vous donne un revenu de " . $color . number_format(round($gain - $empireCost)) . "</span> bitcoins.<br>Bonne journée Commandant.");
-                }
-                if ($point - $user->getRank()->getOldPoint() > 0) {
-                    $user->setExperience($user->getExperience() + ($point - $user->getRank()->getOldPoint()));
-                }
-                $user->getRank()->setOldPoint($user->getRank()->getPoint());
-                $user->getRank()->setPoint($point);
-                $user->setViewReport(false);
-
-                $stats->setPdg($user->getRank()->getWarPoint());
-                $stats->setPoints($point);
-                $stats->setBitcoin($user->getBitcoin());
-                $em->persist($stats);
-
-                if ($economicGO == 1) {
-                    $report->setContent($report->getContent() . "<br>Votre réserve de Bitcoins passe en négatif et vous n'êtes plus en mesure d'entretenir votre armada.<br>Vous perdez tout les vaisseaux que contenait votre Empire et redémarrez avec 5.000 Bitcoins.");
-                }
-                $em->persist($report);
-                $x++;
-            }
-
-            $em->flush();
-
-            $users = $em->getRepository('App:User')
-                ->createQueryBuilder('u')
-                ->join('u.rank', 'r')
-                ->where('u.id != :one')
-                ->setParameters(['one' => 1])
-                ->orderBy('r.point', 'DESC')
-                ->getQuery()
-                ->getResult();
-
-            $x = 1;
-            foreach ($users as $user) {
-                $user->getRank()->setOldPosition($user->getRank()->getPosition());
-                $user->getRank()->setPosition($x);
-                $x++;
-            }
-
-            $allys = $em->getRepository('App:Ally')->findAll();
-
-            foreach ($allys as $ally) {
-                $ally->setRank($ally->getUsersPoint());
-            }
-
-            $nowDaily = new DateTime();
-            $nowDaily->setTimezone(new DateTimeZone('Europe/Paris'));
-            $nowDaily->add(new DateInterval('PT' . round(86397 + rand(1,2)) . 'S'));
-            foreach ($servers as $server) {
-                $server->setDailyReport($nowDaily);
-            }
-            $em->flush();
-        }
 
         foreach ($userGOs as $userGO) {
             foreach ($userGO->getFleetLists() as $list) {
@@ -585,7 +321,6 @@ class InstantController extends AbstractController
             $userGO->setSalons(null);
 
         }
-        $now->sub(new DateInterval('PT' . 1 . 'S'));
 
         foreach ($zUsers as $zUser) {
             $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($zUser->getUsername());
