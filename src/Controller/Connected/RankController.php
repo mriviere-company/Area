@@ -29,10 +29,10 @@ class RankController extends AbstractController
             ->join('a.users', 'u')
             ->join('u.planets', 'p')
             ->join('u.rank', 'r')
-            ->select('a.id, a.sigle, a.imageName, a.name, count(DISTINCT u.id) as users, count(DISTINCT p) as planets, sum(DISTINCT r.warPoint) as pdg, a.maxMembers, a.createdAt, a.politic')
+            ->select('a.id, a.sigle, a.imageName, a.name, count(DISTINCT u.id) as users, count(DISTINCT p) as planets, sum(DISTINCT r.point) as point, a.maxMembers, a.createdAt, a.politic')
             ->groupBy('a.id')
             ->where('a.rank is not null')
-            ->orderBy('a.rank', 'DESC')
+            ->orderBy('point', 'DESC')
             ->getQuery()
             ->getResult();
 
@@ -83,7 +83,7 @@ class RankController extends AbstractController
         $users = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.planets', 'p')
-            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, u.id, u.username, r.warPoint as warPoint, u.createdAt, a.politic as politic')
+            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, u.id, u.username, r.point as point, r.warPoint as warPoint, u.createdAt, a.politic as politic')
             ->leftJoin('u.rank', 'r')
             ->leftJoin('u.ally', 'a')
             ->groupBy('u.id')
@@ -91,7 +91,7 @@ class RankController extends AbstractController
             ->andWhere('u.id != :one')
             ->andWhere('r.warPoint > :one')
             ->setParameters(['one' => 1])
-            ->orderBy('r.warPoint', 'DESC')
+            ->orderBy('point', 'DESC')
             ->getQuery()
             ->getResult();
 

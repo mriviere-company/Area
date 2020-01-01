@@ -199,6 +199,7 @@ class BotController extends AbstractController
         ->where('u.bot = true')
         ->getQuery()
         ->getResult();
+
         $merchant = $em->getRepository('App:User')->findOneBy(['merchant' => 1]);
         $planetMerchant = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
@@ -246,7 +247,7 @@ class BotController extends AbstractController
 
             $move->add(new DateInterval('PT' . rand(1, 60) . 'S'));
             $creation->add(new DateInterval('PT' . rand(1, 10) . 'M'));
-            if (rand(1, 400) == 1) {
+            if (rand(1, 400) == 401) {
                 $fPlanet = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
                     ->where('p.user = :user')
@@ -314,7 +315,7 @@ class BotController extends AbstractController
                 $bot->setLastActivity($now);
             }
 
-            if (rand(1, 300) == 1) {
+            if (rand(1, 600) == 1) {
                 $planetsSeller = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
                     ->where('p.user = :user')
@@ -432,7 +433,7 @@ class BotController extends AbstractController
                         'user' => $bot
                     ]);
                 }
-            } elseif (rand(1, 15) == 1 && $bot->getTerraformation() < 26) {
+            } elseif (rand(1, 2) == 1 && $bot->getTerraformation() < 26) {
                 $bot->setTerraformation($bot->getTerraformation() + 1);
 
                 $newPlanet = $em->getRepository('App:Planet')

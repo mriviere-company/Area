@@ -297,6 +297,56 @@ class CronTaskController extends AbstractController
      */
     public function repareAction()
     {
+        $em = $this->getDoctrine()->getManager();
+
+        $bots = $em->getRepository('App:User')
+            ->createQueryBuilder('u')
+            ->where('u.bot = true')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($bots as $bot) {
+            $bot->setTerraformation($bot->getTerraformation() + 1);
+
+            $newPlanet = $em->getRepository('App:Planet')
+                ->createQueryBuilder('p')
+                ->join('p.sector', 's')
+                ->join('s.galaxy', 'g')
+                ->where('p.user is null')
+                ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.id = :gal and s.position = :sector')
+                ->setParameters(['gal' => $bot->getFirstPlanetFleet()->getSector()->getGalaxy(), 'sector' => rand(1, 100)])
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+
+            if ($newPlanet) {
+                $newPlanet->setUser($bot);
+                $newPlanet->setName('Colonie');
+                $newPlanet->setSoldier(50);
+                $newPlanet->setScientist(0);
+                $newPlanet->setNbColo(count($bot->getPlanets()) + 1);
+            } else {
+                $newPlanet = $em->getRepository('App:Planet')
+                    ->createQueryBuilder('p')
+                    ->join('p.sector', 's')
+                    ->join('s.galaxy', 'g')
+                    ->where('p.user is null')
+                    ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
+                    ->setParameters(['gal' => rand(4, 10), 'sector' => rand(1, 100)])
+                    ->getQuery()
+                    ->setMaxResults(1)
+                    ->getOneOrNullResult();
+
+                if ($newPlanet) {
+                    $newPlanet->setUser($bot);
+                    $newPlanet->setName('Colonie');
+                    $newPlanet->setSoldier(50);
+                    $newPlanet->setScientist(0);
+                    $newPlanet->setNbColo(count($bot->getPlanets()) + 1);
+                }
+            }
+        }
+        $em->flush();
         exit;
     }
 }

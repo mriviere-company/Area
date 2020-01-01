@@ -2,6 +2,7 @@ title: 'Classement joueurs'
 rank.position: Position
 rank.user: Pseudo
 rank.points: Points
+rank.pdg: Pdg
 rank.planets: Planètes
 rank.createdAt: 'Crée le'
 democrat: 'Joueur Démocrate'

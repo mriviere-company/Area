@@ -75,7 +75,7 @@
                 {% endfor %}
                 {% for stat in app.user.getStats() %}
                     {% set points = points|merge([stat.getBitcoin()|round]) %}
-                    {% set date = date|merge([stat.getDate()|date("m/d/Y")]) %}
+                    {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
                 {% endfor %}
                 <div id="bitcoinPoints" data-bitcoin-points="{{ points|json_encode }}"></div>
                 <div id="bitcoinOtherPoints" data-bitcoin-other-points="{{ otherBitcoin|json_encode }}"></div>

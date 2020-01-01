@@ -53,9 +53,9 @@
                             <tr>
                                 <th class="tab-cells-name">{{ 'ally.memberGrade'|trans }}</th>
                                 <th class="tab-cells-name">{{ 'ally.memberName'|trans }}</th>
-                                <th class="tab-cells-name">{{ 'ally.memberDateJoin'|trans }}</th>
-                                <th class="tab-cells-name">{{ 'ally.memberPoint'|trans }}</th>
                                 <th class="tab-cells-name">{{ 'ally.memberConnected'|trans }}</th>
+                                <th class="tab-cells-name">{{ 'ally.memberPoint'|trans }}</th>
+                                <th class="tab-cells-name">{{ 'ally.memberDateJoin'|trans }}</th>
                                 {% if app.user.getGrade().getCanKick() == 1 and app.user.getAlly().getPolitic() != 'fascism' %}
                                     <th class="tab-cells-name">{{ 'ally.memberKick'|trans }}</th>
                                 {% endif %}
@@ -73,13 +73,13 @@
                                         <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'userPlanet': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getUsername() }}</a></span>
                                     </td>
                                     <td class="center-cells">
-                                        {{ user.getJoinAllyAt()|date('H:i d/m/Y') }}
+                                        {% if user.getLastActivity() %}{{ user.getLastActivity()|date('d/m/Y H:i') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}
                                     </td>
                                     <td class="center-cells">
                                         {{ user.getRank().getPoint() }}
                                     </td>
                                     <td class="center-cells">
-                                        {% if user.getLastActivity() %}{{ user.getLastActivity()|date('H:i d/m/Y') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}
+                                        {{ user.getJoinAllyAt()|date('d/m/Y') }}
                                     </td>
                                     {% if app.user.getGrade().getCanKick() == 1 and app.user.getAlly().getPolitic() != 'fascism' %}
                                         <td class="center-cells">

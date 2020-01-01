@@ -44,7 +44,7 @@
                 {% endfor %}
                 {% for stat in app.user.getStats() %}
                     {% set points = points|merge([stat.getZombie()|round]) %}
-                    {% set date = date|merge([stat.getDate()|date("m/d/Y")]) %}
+                    {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
                 {% endfor %}
                 <div id="zombiePoints" data-zombie-points="{{ points|json_encode }}"></div>
                 <div id="zombieOtherPoints" data-zombie-other-points="{{ otherZombie|json_encode }}"></div>
@@ -220,7 +220,7 @@
                                 {{ mission.getPercent() }}%
                             </td>
                             <td class="center-cells text-center p-1">
-                                {% if mission.getMissionAt() < "now"|date("m/d/Y") %}<div><span class="timerArea" hidden>{{ mission.getMissionAt()|date('Y/m/d H:i:s') }}</span></div>{% else %}<a class="badge badge-success p-2" href="{{ path('mission_finish', {'mission': mission.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'zombie.finish'|trans }}</span></a>{% endif %}
+                                {% if mission.getMissionAt()|date('Y/m/d H:i:s') > "now"|date('Y/m/d H:i:s') %}<div><span class="timerArea" hidden>{{ mission.getMissionAt()|date('Y/m/d H:i:s') }}</span></div>{% else %}<a class="badge badge-success p-2" href="{{ path('mission_finish', {'mission': mission.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'zombie.finish'|trans }}</span></a>{% endif %}
                             </td>
                         </tr>
                     {% endfor %}

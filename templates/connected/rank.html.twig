@@ -16,7 +16,7 @@
                 {% endfor %}
                 {% for stat in app.user.getStats() %}
                     {% set points = points|merge([stat.getPdg()|round]) %}
-                    {% set date = date|merge([stat.getDate()|date("m/d/Y")]) %}
+                    {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
                 {% endfor %}
                 <div id="pdgPoints" data-pdg-points="{{ points|json_encode }}"></div>
                 <div id="pdgOtherPoints" data-pdg-other-points="{{ otherPdg|json_encode }}"></div>
@@ -41,6 +41,9 @@
                     {{ 'rank.points'|trans }}
                 </th>
                 <th class="th-sm">
+                    {{ 'rank.pdg'|trans }}
+                </th>
+                <th class="th-sm">
                     {{ 'rank.createdAt'|trans }}
                 </th>
             </tr>
@@ -57,10 +60,13 @@
                         {{ user.planets|number_format }}
                     </th>
                     <th class="tab-cells-name p-2">
+                        {{ user.point|number_format }}
+                    </th>
+                    <th class="tab-cells-name p-2">
                         {{ user.warPoint|number_format }}
                     </th>
                     <th class="tab-cells-name p-2">
-                        {{ user.createdAt|date('H:i:s d/m/Y') }}
+                        {{ user.createdAt|date('d/m/Y') }}
                     </th>
                 </tr>
                 {% set x = x + 1 %}

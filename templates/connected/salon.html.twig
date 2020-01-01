@@ -34,7 +34,7 @@
                                         {% else %}
                                             <img height="15" width="15" src="{{ asset('img/avatar.png') }}">
                                         {% endif %}
-                                        {% if message.getUser().getAlly() %}<span class="text-orange nameSalon">[{{ message.getUser().getAlly().getSigle() }}] </span>{% endif %}<span class="text-orange nameSalon{% if message.getUser() == app.user %} text-vert{% endif %}">{{ message.getUser().getUserName() }}</span> :  <span class="ml-2 {% if app.user.getUsername() ~ ' >' in message.getMessage() or (app.user.getAlly() and app.user.getAlly().getSigle() ~ ' >' in  message.getMessage()) %} text-bleu{% endif %}">{{ message.getMessage()|raw }}</span>
+                                        {% if message.getUser().getAlly() %}<span class="text-orange nameSalon">[{{ message.getUser().getAlly().getSigle() }}] </span>{% endif %}<span class="text-orange nameSalon{% if message.getUser() == app.user %} text-vert{% endif %}">{{ message.getUser().getUserName() }}</span> :  <span class="ml-2 {% if app.user.getUsername() ~ ' >' in message.getMessage() or (app.user.getAlly() and '[' ~ app.user.getAlly().getSigle() ~ ']' in  message.getMessage()) %} text-bleu{% endif %}">{{ message.getMessage()|raw }}</span>
                                     </div>
                                 </th>
                             </tr>

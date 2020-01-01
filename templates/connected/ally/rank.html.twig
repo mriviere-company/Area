@@ -16,7 +16,7 @@
                 {% endfor %}
                 {% for stat in allyPoints %}
                     {% set points = points|merge([(stat['ally'])|round]) %}
-                    {% set date = date|merge([(stat['date']|date("m/d/Y"))]) %}
+                    {% set date = date|merge([(stat['date']|date("d/m/Y"))]) %}
                 {% endfor %}
                 <div id="allyPoints" data-ally-points="{{ points|json_encode }}"></div>
                 <div id="allyOtherPoints" data-ally-other-points="{{ otherAlly|json_encode }}"></div>
@@ -44,7 +44,7 @@
                     {{ 'rank.planets'|trans }}
                 </th>
                 <th class="tab-cells-name p-2">
-                    {{ 'rank.pdg'|trans }}
+                    {{ 'rank.point'|trans }}
                 </th>
                 <th class="tab-cells-name p-2">
                     {{ 'rank.createdAt'|trans }}
@@ -76,10 +76,10 @@
                        {{ ally.planets|number_format }}
                     </th>
                     <th class="tab-cells-name p-2">
-                        {{ ally.pdg|number_format }}
+                        {{ ally.point|number_format }}
                     </th>
                     <th class="tab-cells-name p-2">
-                        {{ ally.createdAt|date('H:i:s d/m/Y') }}
+                        {{ ally.createdAt|date('d/m/Y') }}
                     </th>
                     <th class="tab-cells-name p-2">
                         <span><a href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'sigle': ally.sigle}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span>
