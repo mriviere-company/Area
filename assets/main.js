@@ -69,7 +69,7 @@ function manageTime() {
         secondes = (secondes > 9) ? secondes : '0' + secondes;
         setInterval(function() {
             if (build < now) {
-                area.html("<a style='cursor: pointer;' onclick='window.location.reload(false)'>Terminée</a>");
+                area.html("<a onclick='setTimeout(\"window.location.reload();\",2000)' style='cursor: pointer;'  href='../../construction/1/' target='_blank'>Terminée</a>");
                 area.removeAttr('hidden');
                 setTimeout(function () {
                 }, 2000);
@@ -92,7 +92,7 @@ function manageTime() {
                     secondes = (secondes > 9) ? secondes : '0' + secondes;
                     if (secondes == 0 || secondes < 0) {
                         if (minutes == 0 && heures == 0 && jours == 0) {
-                            area.html("<a style='cursor: pointer;' onclick='window.location.reload(false)'>Terminée</a>");
+                            area.html("<a onclick='setTimeout(\"window.location.reload();\",2000)' style='cursor: pointer;'  href='../../construction/1/' target='_blank'>Terminée</a>");
                         } else {
                             secondes = 60;
                             minutes = minutes - 1;

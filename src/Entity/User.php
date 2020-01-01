@@ -1665,8 +1665,8 @@ class User implements UserInterface, \Serializable
     public function getPriceShips($ships): int
     {
         $ships['ppsignature'] = $ships['ppsignature'];
-        $ships['psignature'] = $ships['psignature'] / 2;
-        $ships['fsignature'] = $ships['fsignature'] * 5;
+        $ships['psignature'] = $ships['psignature'] / 4;
+        $ships['fsignature'] = $ships['fsignature'] * 6;
         $return = $ships['ppsignature'] + $ships['psignature'] + $ships['fsignature'];
 
         return $return;
@@ -1682,10 +1682,10 @@ class User implements UserInterface, \Serializable
             if($planet->getProduct()) {
                 $return = $return + $planet->getProduct()->getNbrSignatures();
             }
-            $return = $return + ($planet->getNbrSignatures() / 2);
+            $return = $return + ($planet->getNbrSignatures() / 4);
         }
         foreach($this->fleets as $fleet) {
-            $return = $return + ($fleet->getNbrSignatures() * 5);
+            $return = $return + ($fleet->getNbrSignatures() * 6);
         }
         return $return;
     }
@@ -1734,6 +1734,15 @@ class User implements UserInterface, \Serializable
         $return = 0;
         foreach($this->planets as $planet) {
             $return = $return + $planet->getTank();
+            if ($planet->getMissions()) {
+                foreach($planet->getMissions() as $mission) {
+                    $return = $return + $mission->getTank();
+                }
+            }
+        }
+
+        foreach($this->fleets as $fleet) {
+            $return = $return + $fleet->getTank();
         }
         return $return;
     }
@@ -1746,6 +1755,11 @@ class User implements UserInterface, \Serializable
         $return = 0;
         foreach($this->planets as $planet) {
             $return = $return + $planet->getSoldier();
+            if ($planet->getMissions()) {
+                foreach($planet->getMissions() as $mission) {
+                    $return = $return + $mission->getSoldier();
+                }
+            }
         }
         foreach($this->fleets as $fleet) {
             $return = $return + $fleet->getSoldier();
@@ -1766,11 +1780,11 @@ class User implements UserInterface, \Serializable
             $sPrices = 6;
         }
         if ($this->politicCostTank > 0) {
-            $tPrice = 80 / (1 + ($this->politicCostTank / 5));
-            $tPrices = 250 / (1 + ($this->politicCostTank / 5));
+            $tPrice = 8 / (1 + ($this->politicCostTank / 5));
+            $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
         } else {
-            $tPrice = 80;
-            $tPrices = 250;
+            $tPrice = 8;
+            $tPrices = 1000;
         }
         if ($this->politicCostScientist > 0) {
             $scPrice = 50 / (1 + ($this->politicCostScientist / 5));
@@ -1808,11 +1822,11 @@ class User implements UserInterface, \Serializable
             $sPrices = 6;
         }
         if ($this->politicCostTank > 0) {
-            $tPrice = 80 / (1 + ($this->politicCostTank / 5));
-            $tPrices = 500 / (1 + ($this->politicCostTank / 5));
+            $tPrice = 10 / (1 + ($this->politicCostTank / 5));
+            $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
         } else {
-            $tPrice = 80;
-            $tPrices = 250;
+            $tPrice = 10;
+            $tPrices = 1000;
         }
         if ($this->politicCostScientist > 0) {
             $scPrice = 100 / (1 + ($this->politicCostScientist / 5));
@@ -1838,6 +1852,7 @@ class User implements UserInterface, \Serializable
         foreach($this->fleets as $fleet) {
             $return = $return + ($fleet->getSoldier() * $sPrices);
             $return = $return + ($fleet->getScientist() * $scPrice);
+            $return = $return + ($fleet->getTank() * $tPrices);
         }
         return $return;
     }

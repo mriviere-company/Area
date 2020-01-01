@@ -6,19 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Exchange;
 use App\Entity\Report;
-use App\Entity\Fleet;
-use DateTimeZone;
-use DateTime;
 
 class FightController extends AbstractController
 {
-    public function fightAction(Fleet $firstFleet)
+    public function fightAction($firstFleet, $now, $em)
     {
-        $em = $this->getDoctrine()->getManager();
-
         $winner = null;
-        $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         $fleetsWars = $em->getRepository('App:Fleet')
             ->createQueryBuilder('f')
@@ -76,10 +69,10 @@ class FightController extends AbstractController
         $team2 = $tmpcount - 2;
 
         if ($isAttack[$team1] == true || $isAttack[$team2] == true) {
-            $winner = self::attackAction(${'oneBlock' . $team1}, ${'oneBlock' . $team2});
+            $winner = self::attackAction(${'oneBlock' . $team1}, ${'oneBlock' . $team2}, $now, $em);
         } else {
             while ($isAttack[$team2--] == true) {
-                $winner = self::attackAction(${'oneBlock' . $team1}, ${'oneBlock' . $team2});
+                $winner = self::attackAction(${'oneBlock' . $team1}, ${'oneBlock' . $team2}, $now, $em);
             }
         }
         if ($winner != null) {
@@ -101,7 +94,7 @@ class FightController extends AbstractController
 
         $team = $tmpcount - 2;
         while ($team > 0) {
-            $winner = self::attackAction(${'oneBlock' . $team1}, ${'oneBlock' . $team2});
+            $winner = self::attackAction(${'oneBlock' . $team1}, ${'oneBlock' . $team2}, $now, $em);
             $team--;
             if ($winner == ${'oneBlock' . $team1}) {
                 $team2 = $team2 - 1;
@@ -111,17 +104,16 @@ class FightController extends AbstractController
                 ${'oneBlock' . $team2} = $winner;
             }
         }
+        echo "Combat Spatial générés.<br/>";
+
         $em->flush();
+
         return new Response ('true');
       }
 
 
-    public function attackAction($blockAtt, $blockDef)
+    public function attackAction($blockAtt, $blockDef, $now, $em)
     {
-        $em = $this->getDoctrine()->getManager();
-        $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
-
         $armor = 0;
         $shield = 0;
         $missile = 0;

@@ -7,16 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
 use App\Entity\Stats;
 use DateTimeZone;
+use Dateinterval;
 use DateTime;
 
 class DailyController extends AbstractController
 {
-    public function dailyLoadAction()
+    public function dailyLoadAction($now, $em)
     {
-
-        $em = $this->getDoctrine()->getManager();
-        $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $servers = $em->getRepository('App:Server')->findAll();
 
         $users = $em->getRepository('App:User')
@@ -207,7 +204,10 @@ class DailyController extends AbstractController
         foreach ($servers as $server) {
             $server->setDailyReport($nowDaily);
         }
+        echo "Rapport quotidien générés.<br/>";
+
         $em->flush();
+
         return new Response ('true');
     }
 }
