@@ -191,6 +191,10 @@ class SecurityController extends AbstractController
         $user = $this->getUser();
 
         if($user) {
+            if ($user->getBot() == 1) {
+                $user->setBot(0);
+                $em->flush();
+            }
             if($user->getRoles()[0] == 'ROLE_PRIVATE') {
                 return $this->redirectToRoute('private_home');
             }

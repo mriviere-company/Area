@@ -195,10 +195,11 @@ class BotController extends AbstractController
             $em->flush();
         }
         $bots = $em->getRepository('App:User')
-        ->createQueryBuilder('u')
-        ->where('u.bot = true')
-        ->getQuery()
-        ->getResult();
+            ->createQueryBuilder('u')
+            ->join('u.rank', 'r')
+            ->where('u.bot = true')
+            ->getQuery()
+            ->getResult();
 
         $merchant = $em->getRepository('App:User')->findOneBy(['merchant' => 1]);
         $planetMerchant = $em->getRepository('App:Planet')

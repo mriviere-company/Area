@@ -5,6 +5,7 @@ namespace App\Controller\CronController;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use DateTimeZone;
+use DateInterval;
 use DateTime;
 
 class CronTaskController extends AbstractController
@@ -301,6 +302,7 @@ class CronTaskController extends AbstractController
 
         $bots = $em->getRepository('App:User')
             ->createQueryBuilder('u')
+            ->join('u.rank', 'r')
             ->where('u.bot = true')
             ->getQuery()
             ->getResult();
@@ -345,6 +347,32 @@ class CronTaskController extends AbstractController
                     $newPlanet->setNbColo(count($bot->getPlanets()) + 1);
                 }
             }
+        }
+        $em->flush();
+        exit;
+    }
+
+    /**
+     * @Route("/new-bot/", name="new_bot")
+     */
+    public function newBotAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $threeWeeks = new DateTime();
+        $threeWeeks->setTimezone(new DateTimeZone('Europe/Paris'));
+        $threeWeeks->sub(new DateInterval('PT' . 1814400 . 'S'));
+
+        $newBots = $em->getRepository('App:User')
+            ->createQueryBuilder('u')
+            ->join('u.rank', 'r')
+            ->where('u.bot = false')
+            ->andWhere('u.lastActivity < :three')
+            ->setParameters(['three' => $threeWeeks])
+            ->getQuery()
+            ->getResult();
+
+        foreach ($newBots as $newBot) {
+            $newBot->setBot(1);
         }
         $em->flush();
         exit;
