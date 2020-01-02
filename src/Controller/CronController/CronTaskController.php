@@ -4,6 +4,7 @@ namespace App\Controller\CronController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Fleet;
 use DateTimeZone;
 use DateInterval;
 use DateTime;
@@ -270,6 +271,7 @@ class CronTaskController extends AbstractController
             ->where('u.zombieAt < :now')
             ->andWhere('u.rank is not null')
             ->andWhere('u.bot = false')
+            ->andWhere('u.zombie = false')
             ->andWhere('p.id is not null')
             ->groupBy('u.id')
             ->having('count(p.id) >= 3')
@@ -375,6 +377,56 @@ class CronTaskController extends AbstractController
         foreach ($newBots as $newBot) {
             $newBot->setBot(1);
         }
+        $em->flush();
+        exit;
+    }
+
+    /**
+     * @Route("/regroupement/", name="horde_regroup")
+     */
+    public function HordeYesAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+
+        $planets = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->join('p.fleets', 'f')
+            ->join('f.user', 'u')
+            ->leftJoin('f.destination', 'd')
+            ->where('u.id = :user')
+            ->andWhere('d.id is null')
+            ->setParameters(['user' => $hydra->getId()])
+            ->getQuery()
+            ->getResult();
+
+        foreach ($planets as $planet) {
+            if (count($planet->getFleets()) > 1) {
+                $one = new Fleet();
+                $one->setUser($hydra);
+                $one->setPlanet($planet);
+                $one->setName('Horde V');
+                $one->setAttack(1);
+                foreach ($planet->getFleets() as $fleet) {
+                    if ($fleet->getUser() == $hydra) {
+                        $one->setBarge($one->getBarge() + $fleet->getBarge());
+                        $one->setHunter($one->getHunter() + $fleet->getHunter());
+                        $one->setHunterWar($one->getHunterWar() + $fleet->getHunterWar());
+                        $one->setCorvet($one->getCorvet() + $fleet->getCorvet());
+                        $one->setCorvetLaser($one->getCorvetLaser() + $fleet->getCorvetLaser());
+                        $one->setCorvetWar($one->getCorvetWar() + $fleet->getCorvetWar());
+                        $one->setFregate($one->getFregate() + $fleet->getFregate());
+                        $one->setFregatePlasma($one->getFregatePlasma() + $fleet->getFregatePlasma());
+                        $one->setDestroyer($one->getDestroyer() + $fleet->getDestroyer());
+                        $fleet->setUser(null);
+                        $em->remove($fleet);
+                    }
+                }
+                $one->setSignature($one->getNbrSignatures());
+                $em->persist($one);
+            }
+        }
+        echo "Horde finis.";
         $em->flush();
         exit;
     }

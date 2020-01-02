@@ -18,6 +18,7 @@ class ZombiesController extends AbstractController
         foreach ($zUsers as $zUser) {
             $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($zUser->getUsername());
             $zombie = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+
             $planetAtt = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
                 ->where('p.user = :user')
@@ -44,7 +45,9 @@ class ZombiesController extends AbstractController
             }
 
             if (!$planetAtt) {
-                // stopper serveur
+                echo "Attaques zombies impossible.<br/>";
+
+                return new Response ('true');
             }
 
             $planetZb = $em->getRepository('App:Planet')
