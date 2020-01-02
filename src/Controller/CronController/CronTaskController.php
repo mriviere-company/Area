@@ -279,7 +279,7 @@ class CronTaskController extends AbstractController
 
         if($zUsers) {
             $this->forward('App\Controller\Connected\Execute\ZombiesController::zombiesAction', [
-                '$zUsers'  => $zUsers,
+                'zUsers'  => $zUsers,
                 'now' => $now,
                 'em' => $em
             ]);
