@@ -198,6 +198,8 @@ class BotController extends AbstractController
             ->createQueryBuilder('u')
             ->join('u.rank', 'r')
             ->where('u.bot = true')
+            ->andWhere('u.merchant = false')
+            ->andWhere('u.zombie = false')
             ->getQuery()
             ->getResult();
 
