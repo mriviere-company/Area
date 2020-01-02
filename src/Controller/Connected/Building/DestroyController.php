@@ -75,6 +75,64 @@ class DestroyController extends AbstractController
     }
 
     /**
+     * @Route("/detruire-ferme/{usePlanet}", name="building_remove_farm", requirements={"usePlanet"="\d+"})
+     */
+    public function buildingRemoveFarmAction(Planet $usePlanet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $user = $this->getUser();
+        if ($usePlanet->getUser() != $user) {
+            return $this->redirectToRoute('home');
+        }
+
+        $level = $usePlanet->getFarm();
+        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('farm');
+        if($level == 0 || $usePlanet->getConstructAt() > $now) {
+            return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
+        }
+        $now->add(new DateInterval('PT' . 60 . 'S'));
+        $usePlanet->setFarm($level - 1);
+        $usePlanet->setFdProduction($usePlanet->getFdProduction() - ($level * 1.15));
+        $usePlanet->setGroundPlace($newGround);
+        $usePlanet->setConstruct('destruct');
+        $usePlanet->setConstructAt($now);
+        $em->flush();
+
+        return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
+    }
+
+    /**
+     * @Route("/detruire-ferme-aeroponique/{usePlanet}", name="building_remove_aeroponic_farm", requirements={"usePlanet"="\d+"})
+     */
+    public function buildingRemoveAeroponicFarmAction(Planet $usePlanet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $user = $this->getUser();
+        if ($usePlanet->getUser() != $user) {
+            return $this->redirectToRoute('home');
+        }
+
+        $level = $usePlanet->getAeroponicFarm();
+        $newSky = $usePlanet->getSkyPlace() - $user->getBuildingSkyPlace('aeroponicFarm');
+        if($level == 0 || $usePlanet->getConstructAt() > $now) {
+            return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
+        }
+        $now->add(new DateInterval('PT' . 60 . 'S'));
+        $usePlanet->setAeroponicFarm($level - 1);
+        $usePlanet->setFdProduction($usePlanet->getFdProduction() - ($level * 1.20));
+        $usePlanet->setSkyPlace($newSky);
+        $usePlanet->setConstruct('destruct');
+        $usePlanet->setConstructAt($now);
+        $em->flush();
+
+        return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
+    }
+
+    /**
      * @Route("/detruire-stockage-niobium/{usePlanet}", name="building_remove_niobiumStock", requirements={"usePlanet"="\d+"})
      */
     public function buildingRemoveNiobiumStockAction(Planet $usePlanet)
@@ -124,6 +182,35 @@ class DestroyController extends AbstractController
         $now->add(new DateInterval('PT' . 180 . 'S'));
         $usePlanet->setWaterMax($usePlanet->getWaterMax() - 5000000);
         $usePlanet->setWaterStock($level - 1);
+        $usePlanet->setGroundPlace($newGround);
+        $usePlanet->setConstruct('destruct');
+        $usePlanet->setConstructAt($now);
+        $em->flush();
+
+        return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
+    }
+
+    /**
+     * @Route("/detruire-silos/{usePlanet}", name="building_remove_silos", requirements={"usePlanet"="\d+"})
+     */
+    public function buildingRemoveSilosAction(Planet $usePlanet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $user = $this->getUser();
+        if ($usePlanet->getUser() != $user) {
+            return $this->redirectToRoute('home');
+        }
+
+        $level = $usePlanet->getSilos();
+        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('silos');
+        if($level == 0 || $usePlanet->getConstructAt() > $now) {
+            return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
+        }
+        $now->add(new DateInterval('PT' . 180 . 'S'));
+        $usePlanet->setFoodMax($usePlanet->getFoodMax() - 5000000);
+        $usePlanet->setSilos($level - 1);
         $usePlanet->setGroundPlace($newGround);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
