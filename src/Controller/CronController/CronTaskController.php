@@ -351,6 +351,7 @@ class CronTaskController extends AbstractController
                 }
             }
         }
+        echo "Nouvelle planète finis.";
         $em->flush();
         exit;
     }
@@ -377,6 +378,7 @@ class CronTaskController extends AbstractController
         foreach ($newBots as $newBot) {
             $newBot->setBot(1);
         }
+        echo "Nouveau bots finis.";
         $em->flush();
         exit;
     }
@@ -426,7 +428,7 @@ class CronTaskController extends AbstractController
                 $em->persist($one);
             }
         }
-        echo "Horde finis.";
+        echo "Horde regroupés finis.";
         $em->flush();
         exit;
     }

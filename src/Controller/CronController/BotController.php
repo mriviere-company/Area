@@ -2,6 +2,8 @@
 
 namespace App\Controller\CronController;
 
+use App\Entity\Construction;
+use App\Entity\Planet;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -118,10 +120,15 @@ class BotController extends AbstractController
         $messageTime->sub(new DateInterval('PT' . rand(1, 400) . 'S'));
         $messageSent = 1;
 
-        if (rand(1, 9) == 10) {
+        if (1 == 1) {
             $newBot = new DateTime();
             $newBot->setTimezone(new DateTimeZone('Europe/Paris'));
-            $nickeName = $em->getRepository('App:NickName')->setMaxResults(1)->getOneOrNullResult();
+            $nickeName = $em->getRepository('App:NickName')
+                ->createQueryBuilder('n')
+                ->setMaxResults(1)
+                ->getQuery()
+                ->getOneOrNullResult();
+
             $salon = $em->getRepository('App:Salon')
                 ->createQueryBuilder('s')
                 ->where('s.name = :name')
@@ -149,13 +156,30 @@ class BotController extends AbstractController
             $planet = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
                 ->join('p.sector', 's')
+                ->join('s.galaxy', 'g')
                 ->where('p.user is null')
                 ->andWhere('p.ground = :ground')
                 ->andWhere('p.sky = :sky')
-                ->setParameters(['ground' => 25, 'sky' => 5])
+                ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
+                ->setParameters(['gal' => rand(4, 10), 'sector' => rand(1, 100), 'ground' => 25, 'sky' => 5])
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();
+
+            if (!$planet) {
+                $planet = $em->getRepository('App:Planet')
+                    ->createQueryBuilder('p')
+                    ->join('p.sector', 's')
+                    ->join('s.galaxy', 'g')
+                    ->where('p.user is null')
+                    ->andWhere('p.ground = :ground')
+                    ->andWhere('p.sky = :sky')
+                    ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
+                    ->setParameters(['gal' => rand(4, 10), 'sector' => rand(1, 100), 'ground' => 25, 'sky' => 5])
+                    ->setMaxResults(1)
+                    ->getQuery()
+                    ->getOneOrNullResult();
+            }
 
             if($planet) {
                 $planet->setUser($user);
@@ -192,14 +216,14 @@ class BotController extends AbstractController
             $em->persist($rank);
             $user->setRank($rank);
             $salon->addUser($user);
+            echo "Création nouveau bot finis.";
             $em->flush();
         }
+
         $bots = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.rank', 'r')
-            ->where('u.bot = true')
-            ->andWhere('u.merchant = false')
-            ->andWhere('u.zombie = false')
+            ->where('u.bot = true and u.merchant = false and u.zombie = false')
             ->getQuery()
             ->getResult();
 
@@ -350,7 +374,7 @@ class BotController extends AbstractController
                 // créer une flotte et l'envoyer recyclage
                 $bot->setLastActivity($now);
             }
-            if (rand(1, 600) == 1 && $messageSent == 1) {
+            if (rand(1, 800) == 1 && $messageSent == 1) {
                 $message = new S_Content();
                 $messageSent = 0;
                 $message->setSalon($salon);
@@ -376,61 +400,61 @@ class BotController extends AbstractController
                 $cPlanet->setSoldier($cPlanet->getSoldierMax());
                 $construct = new Response ('false');
                 if ($cPlanet->getSpaceShip() < 1) {
-                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'spaceShip',
                         'user' => $bot
                     ]);
                 }
-                if ($cPlanet->getIsland() <= 5 && $construct && $construct->getContent() === 'false' && rand(1, 10) == 1) {
-                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                if ($cPlanet->getIsland() <= 5 && $construct && $construct->getContent() === 'false') {
+                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'island',
                         'user' => $bot
                     ]);
                 }
-                if ($cPlanet->getLightUsine() < 1 && $construct && $construct->getContent() === 'false' && rand(1, 5) == 1) {
-                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                if ($cPlanet->getLightUsine() < 1 && $construct && $construct->getContent() === 'false') {
+                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'lightUsine',
                         'user' => $bot
                     ]);
                 }
-                if ($cPlanet->getHeavyUsine() < 1 && $construct && $construct->getContent() === 'false' && rand(1, 5) == 1) {
-                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                if ($cPlanet->getHeavyUsine() < 1 && $construct && $construct->getContent() === 'false') {
+                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'heavyUsine',
                         'user' => $bot
                     ]);
                 }
-                if ($cPlanet->getBunker() < 1 && $construct && $construct->getContent() === 'false' && rand(1, 4) == 1) {
-                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                if ($cPlanet->getBunker() < 1 && $construct && $construct->getContent() === 'false') {
+                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'bunker',
                         'user' => $bot
                     ]);
                 }
                 if ($construct && $construct->getContent() === 'false' && rand(1, 2) == 1) {
-                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'skyRadar',
                         'user' => $bot
                     ]);
                 } elseif ($construct && $construct->getContent() === 'false') {
-                    $construct = $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'skyBrouilleur',
                         'user' => $bot
                     ]);
                 }
                 if ($construct && $construct->getContent() === 'false' && rand(1, 2) == 1) {
-                    $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                    $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'miner',
                         'user' => $bot
                     ]);
                 } elseif ($construct && $construct->getContent() === 'false') {
-                    $this->forward('App\Controller\Connected\Building\BuildingController::buildBuildingAction', [
+                    $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'extractor',
                         'user' => $bot
@@ -484,7 +508,46 @@ class BotController extends AbstractController
                 //$bot->setLastActivity($now);
             }
         }
+        echo "Bâtiment bot finis.";
         $em->flush();
         exit;
+    }
+
+    public function buildBuildingBotAction($usePlanet, $building, $user)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+
+        $level = $user->getWhichBuilding($building, $usePlanet) + 1;
+        $time = $user->getBuildingTime($building);
+        $newGround = $usePlanet->getGroundPlace() + $user->getBuildingGroundPlace($building);
+        $newSky = $usePlanet->getSkyPlace() + $user->getBuildingSkyPlace($building);
+
+        if(($newGround > $usePlanet->getGround()) ||
+            ($newSky > $usePlanet->getSky())) {
+            return new Response ('false');
+        }
+        if ($usePlanet->getConstructAt() > $now) {
+            $level = $level + $usePlanet->getConstructionsLike($building);
+            $construction = new Construction();
+            $construction->setConstruct($building);
+            $construction->setConstructTime($level * $time);
+            $construction->setPlanet($usePlanet);
+            $usePlanet->setGroundPlace($newGround);
+            $usePlanet->setSkyPlace($newSky);
+            $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + rand(100, 3000));
+            $em->persist($construction);
+        } else {
+            $now->add(new DateInterval('PT' . round($level * $time) . 'S'));
+            $usePlanet->setGroundPlace($newGround);
+            $usePlanet->setSkyPlace($newSky);
+            $usePlanet->setConstruct($building);
+            $usePlanet->setConstructAt($now);
+            $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + rand(100, 3000));
+        }
+        $em->flush();
+
+        return new Response ('true');
     }
 }

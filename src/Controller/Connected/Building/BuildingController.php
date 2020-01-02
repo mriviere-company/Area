@@ -44,16 +44,14 @@ class BuildingController extends AbstractController
 
     /**
      * @Route("/construire-batiment/{building}/{usePlanet}", name="build_building", requirements={"building"="\w+", "usePlanet"="\d+"})
-     * @Route("/construire-batiment/{building}/{usePlanet}/{user}", name="build_building_bot", requirements={"building"="\w+", "usePlanet"="\d+", "user"="\d+"})
      */
-    public function buildBuildingAction(Planet $usePlanet, $building, User $user = NULL)
+    public function buildBuildingAction(Planet $usePlanet, $building)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));
-        if (!$user) {
-            $user = $this->getUser();
-        }
+        $user = $this->getUser();
+
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
