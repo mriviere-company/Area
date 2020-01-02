@@ -3,7 +3,6 @@
 namespace App\Controller\CronController;
 
 use App\Entity\Construction;
-use App\Entity\Planet;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -216,7 +215,7 @@ class BotController extends AbstractController
             $em->persist($rank);
             $user->setRank($rank);
             $salon->addUser($user);
-            echo "Création nouveau bot finis.";
+            echo "Création nouveau bot finis.<br>";
             $em->flush();
         }
 
@@ -400,61 +399,61 @@ class BotController extends AbstractController
                 $cPlanet->setSoldier($cPlanet->getSoldierMax());
                 $construct = new Response ('false');
                 if ($cPlanet->getSpaceShip() < 1) {
-                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
+                    $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'spaceShip',
                         'user' => $bot
                     ]);
                 }
                 if ($cPlanet->getIsland() <= 5 && $construct && $construct->getContent() === 'false') {
-                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
+                    $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'island',
                         'user' => $bot
                     ]);
                 }
                 if ($cPlanet->getLightUsine() < 1 && $construct && $construct->getContent() === 'false') {
-                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
+                    $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'lightUsine',
                         'user' => $bot
                     ]);
                 }
                 if ($cPlanet->getHeavyUsine() < 1 && $construct && $construct->getContent() === 'false') {
-                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
+                    $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'heavyUsine',
                         'user' => $bot
                     ]);
                 }
                 if ($cPlanet->getBunker() < 1 && $construct && $construct->getContent() === 'false') {
-                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
+                    $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'bunker',
                         'user' => $bot
                     ]);
                 }
                 if ($construct && $construct->getContent() === 'false' && rand(1, 2) == 1) {
-                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
+                    $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'skyRadar',
                         'user' => $bot
                     ]);
                 } elseif ($construct && $construct->getContent() === 'false') {
-                    $construct = $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
+                    $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'skyBrouilleur',
                         'user' => $bot
                     ]);
                 }
                 if ($construct && $construct->getContent() === 'false' && rand(1, 2) == 1) {
-                    $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
+                    $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'miner',
                         'user' => $bot
                     ]);
                 } elseif ($construct && $construct->getContent() === 'false') {
-                    $this->forward('App\Controller\CronController\BuildingController::buildBuildingBotAction', [
+                    $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'extractor',
                         'user' => $bot

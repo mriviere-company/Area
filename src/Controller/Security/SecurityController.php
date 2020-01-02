@@ -271,6 +271,10 @@ class SecurityController extends AbstractController
         } else {
             $userIp = $_SERVER['REMOTE_ADDR'];
         }
+        if ($user->getBot() == 1) {
+            $user->setBot(0);
+            $em->flush();
+        }
 
         $userSameIp = $em->getRepository('App:User')
             ->createQueryBuilder('u')
