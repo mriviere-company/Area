@@ -909,7 +909,7 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('ally_page_bank', ['usePlanet' => $usePlanet->getId()]);
         }
         $array = $ally->getLevelCost();
-        if($user->getGrade()->getPlacement() == 1 && $ally->getBitcoin() >= $array[1] && $ally->getBitcoin() >= $array[2]) {
+        if($user->getGrade()->getPlacement() == 1 && $ally->getBitcoin() >= $array[1] && $ally->getPdg() >= $array[2]) {
             $ally->setLevel($ally->getLevel() + 1);
             $ally->setMaxMembers($array[0]);
             $ally->setBitcoin($ally->getBitcoin() - $array[1]);
