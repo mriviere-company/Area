@@ -48,19 +48,19 @@ class AlliancesController extends AbstractController
             $em->remove($pact);
         }
         $em->flush();
-        echo "Pactes supprimés.<br/>";
+        echo "Flush ";
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
     public function peacesAction($peaces, $em)
     {
         foreach ($peaces as $peace) {
             $em->remove($peace);
         }
-        echo "Paix supprimés.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 }

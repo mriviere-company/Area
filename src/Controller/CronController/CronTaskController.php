@@ -29,10 +29,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($userGOs) {
-            $this->forward('App\Controller\Connected\Execute\GameOverController::gameOverAction', [
+            echo "Game Over : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\GameOverController::gameOverCronAction', [
                 'userGOs'  => $userGOs,
                 'em' => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $asteroides = $em->getRepository('App:Planet')
@@ -44,10 +46,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if($asteroides) {
-            $this->forward('App\Controller\Connected\Execute\AsteroideController::AsteroideAction', [
+            echo "Astéroides : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\AsteroideController::AsteroideAction', [
                 'asteroides'  => $asteroides,
                 'em' => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $dailyReport = $em->getRepository('App:Server')
@@ -58,10 +62,12 @@ class CronTaskController extends AbstractController
             ->getOneOrNullResult();
 
         if ($dailyReport) {
-            $this->forward('App\Controller\Connected\Execute\DailyController::dailyLoadAction', [
+            echo "Rapport quotidien : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\DailyController::dailyLoadAction', [
                 'now'  => $now,
                 'em' => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         while (1) {
@@ -77,11 +83,13 @@ class CronTaskController extends AbstractController
                 ->getOneOrNullResult();
 
             if ($firstFleet) {
-                $this->forward('App\Controller\Connected\Execute\FightController::fightAction', [
+                echo "Combat spatial : ";
+                $cronValue = $this->forward('App\Controller\Connected\Execute\FightController::fightAction', [
                     'firstFleet'  => $firstFleet,
                     'now' => $now,
                     'em'  => $em
                 ]);
+                echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
             } else {
                 break;
             }
@@ -95,10 +103,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($planets) {
-            $this->forward('App\Controller\Connected\Execute\PlanetsController::buildingsAction', [
+            echo "Construction : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::buildingsAction', [
                 'planets'  => $planets,
                 'em' => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $planetSoldiers = $em->getRepository('App:Planet')
@@ -109,10 +119,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($planetSoldiers) {
-            $this->forward('App\Controller\Connected\Execute\PlanetsController::soldiersAction', [
+            echo "Soldats : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::soldiersAction', [
                 'planetSoldiers'  => $planetSoldiers,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $planetTanks = $em->getRepository('App:Planet')
@@ -123,10 +135,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($planetTanks) {
-            $this->forward('App\Controller\Connected\Execute\PlanetsController::tanksAction', [
+            echo "Tanks : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::tanksAction', [
                 'planetTanks'  => $planetTanks,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $planetNuclears = $em->getRepository('App:Planet')
@@ -137,10 +151,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($planetNuclears) {
-            $this->forward('App\Controller\Connected\Execute\PlanetsController::nuclearsAction', [
+            echo "Fabrication bombes nucléaires : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::nuclearsAction', [
                 'planetNuclear'  => $planetNuclears,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $planetScientists = $em->getRepository('App:Planet')
@@ -151,10 +167,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($planetScientists) {
-            $this->forward('App\Controller\Connected\Execute\PlanetsController::scientistsAction', [
+            echo "Scientifiques : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::scientistsAction', [
                 'planetScientists'  => $planetScientists,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $products = $em->getRepository('App:Product')
@@ -165,10 +183,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($products) {
-            $this->forward('App\Controller\Connected\Execute\PlanetsController::productsAction', [
+            echo "Production flottes : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::productsAction', [
                 'products'  => $products,
                 'em' => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $radars = $em->getRepository('App:Planet')
@@ -179,11 +199,13 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($radars) {
-            $this->forward('App\Controller\Connected\Execute\PlanetsController::radarsAction', [
+            echo "Radar/Brouilleur : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::radarsAction', [
                 'radars'  => $radars,
                 'now' => $now,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $fleets = $em->getRepository('App:Fleet')
@@ -195,11 +217,13 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($fleets) {
-            $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeFleetAction', [
+            echo "Flottes : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeFleetAction', [
                 'fleets'  => $fleets,
                 'now'  => $now,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $nukeBombs = $em->getRepository('App:Fleet')
@@ -211,11 +235,13 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($nukeBombs) {
-            $this->forward('App\Controller\Connected\Execute\FleetsController::nukeBombAction', [
+            echo "Impacts bombes nucléaires : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\FleetsController::nukeBombAction', [
                 'nukeBombs'  => $nukeBombs,
                 'now'  => $now,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $fleetCdrs = $em->getRepository('App:Fleet')
@@ -230,11 +256,13 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($fleetCdrs) {
-            $this->forward('App\Controller\Connected\Execute\FleetsController::recycleAction', [
+            echo "Recyclage : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\FleetsController::recycleAction', [
                 'fleetCdrs'  => $fleetCdrs,
                 'now'  => $now,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $pacts = $em->getRepository('App:Allied')
@@ -245,10 +273,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($pacts) {
-            $this->forward('App\Controller\Connected\Execute\AlliancesController::pactsAction', [
+            echo "Pactes : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\AlliancesController::pactsAction', [
                 'pacts'  => $pacts,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $peaces = $em->getRepository('App:Peace')
@@ -259,10 +289,12 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($peaces) {
-            $this->forward('App\Controller\Connected\Execute\AlliancesController::peacesAction', [
+            echo "Paix : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\AlliancesController::peacesAction', [
                 'peaces'  => $peaces,
                 'em'  => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $zUsers = $em->getRepository('App:User')
@@ -280,11 +312,13 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if($zUsers) {
-            $this->forward('App\Controller\Connected\Execute\ZombiesController::zombiesAction', [
+            echo "Zombies : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\ZombiesController::zombiesAction', [
                 'zUsers'  => $zUsers,
                 'now' => $now,
                 'em' => $em
             ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         if ($opened) {

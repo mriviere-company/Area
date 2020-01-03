@@ -200,14 +200,14 @@ class DailyController extends AbstractController
 
         $nowDaily = new DateTime();
         $nowDaily->setTimezone(new DateTimeZone('Europe/Paris'));
-        $nowDaily->add(new DateInterval('PT' . round(86397 + rand(1,2)) . 'S'));
+        $nowDaily->add(new DateInterval('PT' . round(86400) . 'S'));
         foreach ($servers as $server) {
             $server->setDailyReport($nowDaily);
         }
-        echo "Rapport quotidien générés.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 }

@@ -81,11 +81,11 @@ class FleetsController extends AbstractController
             $em->persist($reportNuclearAtt);
             $em->persist($reportNuclearDef);
         }
-        echo "Bombes nucléaires lâchées.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
     public function recycleAction($fleetCdrs, $now , $em)
@@ -167,10 +167,10 @@ class FleetsController extends AbstractController
                 $fleetCdr->getUser()->removeQuest($quest);
             }
         }
-        echo "Recyclage effectué.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 }
