@@ -97,7 +97,7 @@ class RankController extends AbstractController
 
         $otherPoints = $em->getRepository('App:Stats')
             ->createQueryBuilder('s')
-            ->select('count(s) as numbers, sum(DISTINCT s.pdg) as allPdg')
+            ->select('count(s) as numbers, sum(DISTINCT s.pdg) as allPdg, , sum(DISTINCT s.point) as allPoint')
             ->groupBy('s.date')
             ->where('s.user != :user')
             ->setParameters(['user' => $user])

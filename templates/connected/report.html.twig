@@ -51,7 +51,7 @@
                             {% if report.getImageName() %}<span><img class="border-dashed-img" src="{{ vich_uploader_asset(report, 'imageFile') }}"></span>{% endif %}<span class="ml-3{% if report.getTitle() == 'Rapport de combat : Défaite' %} text-rouge{% elseif report.getTitle() == 'Rapport de combat : Victoire' %} text-vert{% endif %}">{{ report.getTitle() }}</span>
                             <span class="float-right">
                                 <div>
-                                    {{ report.sendAt|date('Y/m/d H:i:s') }}
+                                    {{ report.sendAt|date('d/m/Y H:i:s') }}
                                 </div>
                                 <div class="mt-3">
                                     {% if report.getNewReport() == 1 %}<a class="btn-new" href="{{ path('report_view', {'report': report.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'newReport'|trans }}</a>{% endif %}

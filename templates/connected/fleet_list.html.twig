@@ -112,7 +112,7 @@
                                 <span class="tipProduct" data-placement="right" data-trigger="" title="{% for cargos in fleet.getCargosFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in cargos %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">{% if fleet.getCargoFull() > 1000000 %}({{ (fleet.getCargoFull() / 1000000)|number_format(1) }}M){% elseif fleet.getCargoFull() > 1000 %}({{ (fleet.getCargoFull() / 1000)|number_format }}K){% else %}({{ fleet.getCargoFull()|number_format }}){% endif %}</span>
                             </td>
                             {% if fleetList.getFlightTime() %}
-                                {% if fleet.cancelFlight() > date and fleet.getFlightTime() %}
+                                {% if fleet.cancelFlight()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') and fleet.getFlightTime() %}
                                     <td class="center-cells text-center">
                                         <a class="text-rouge" href="{{ path('cancel_fleet', {'usePlanet': usePlanet.getId(),'fleet': fleet.getId()}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.cancel'|trans }}"><span class="timerArea" hidden>{{ fleet.cancelFlight()|date('Y/m/d H:i:s') }}</span></a>
                                     </td>
@@ -202,7 +202,7 @@
                                 <span class="tipProduct" data-placement="right" data-trigger="" title="{% for cargos in fleet.getCargosFleet() %}<div class='my-3 text-left'>{% set x = 0 %}{% for info in cargos %} {% if x == 0 %}{{ info }}{% else %}{{ info|trans }}{% endif %}{% set x = x + 1 %} {% endfor %}</div>{% endfor %}" data-html="true">{% if fleet.getCargoFull() > 1000000 %}({{ (fleet.getCargoFull() / 1000000)|number_format(1) }}M){% elseif fleet.getCargoFull() > 1000 %}({{ (fleet.getCargoFull() / 1000)|number_format }}K){% else %}({{ fleet.getCargoFull()|number_format }}){% endif %}</span>
                             </td>
                             {% if app.user.getAlly().getFlightTime() and (app.user.getGrade().getPlacement() == 1 or app.user == fleet.getUser()) %}
-                                {% if fleet.cancelFlight() > date and fleet.getFlightTime() %}
+                                {% if fleet.cancelFlight()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') and fleet.getFlightTime() %}
                                     <td class="center-cells text-center">
                                         <a class="text-rouge" href="{{ path('cancel_fleet', {'usePlanet': usePlanet.getId(),'fleet': fleet.getId()}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.cancel'|trans }}"><span class="timerArea" hidden>{{ fleet.cancelFlight()|date('Y/m/d H:i:s') }}</span></a>
                                     </td>

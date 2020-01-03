@@ -9,17 +9,23 @@
         {% if app.user.getStats()|length > 7 %}
             <div class="front-block-second">
                 {% set points = [] %}
+                {% set pdg = [] %}
                 {% set otherPdg = [] %}
+                {% set otherAllPoints = [] %}
                 {% set date = [] %}
                 {% for otherPoint in otherPoints %}
                     {% set otherPdg = otherPdg|merge([(otherPoint['allPdg'] / otherPoint['numbers'])|round]) %}
+                    {% set otherAllPoints = otherAllPoints|merge([(otherPoint['allPoint'] / otherPoint['numbers'])|round]) %}
                 {% endfor %}
                 {% for stat in app.user.getStats() %}
-                    {% set points = points|merge([stat.getPdg()|round]) %}
+                    {% set pdg = pdg|merge([stat.getPdg()|round]) %}
+                    {% set points = points|merge([stat.getPoint()|round]) %}
                     {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
                 {% endfor %}
-                <div id="pdgPoints" data-pdg-points="{{ points|json_encode }}"></div>
+                <div id="pdgPoints" data-pdg-points="{{ pdg|json_encode }}"></div>
+                <div id="playerPoints" data-player-points="{{ points|json_encode }}"></div>
                 <div id="pdgOtherPoints" data-pdg-other-points="{{ otherPdg|json_encode }}"></div>
+                <div id="pointOtherPoints" data-point-other-points="{{ otherAllPoints|json_encode }}"></div>
                 <div id="pdgDate" data-pdg-date="{{ date|json_encode }}"></div>
                 <canvas class="mb-5" id="pdgChart" height="100"></canvas>
                 <script src="{{ asset('build/pdgCharts.js') }}"></script>

@@ -41,7 +41,7 @@
                                     </span>
                                     <span class="float-right">
                                         {% if message.getNewMessage() == true %}<a class="btn-new" href="{{ path('message_view', {'usePlanet': usePlanet.getId(), 'id': message.getId()}) }}">{{ 'NewMessage'|trans }}</a>{% endif %}
-                                        {{ message.getSendAt()|date('Y/m/d H:i:s') }}
+                                        {{ message.getSendAt()|date('d/m/Y H:i:s') }}
                                     </span>
                                 </th>
                             </tr>

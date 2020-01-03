@@ -37,8 +37,6 @@ class FleetController  extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');
@@ -100,7 +98,6 @@ class FleetController  extends AbstractController
         }
 
         return $this->render('connected/fleet.html.twig', [
-            'date' => $now,
             'usePlanet' => $usePlanet,
             'fleetMove' => $fleetGiveMove,
             'fleetOther' => $fleetOther,
@@ -116,8 +113,6 @@ class FleetController  extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');
@@ -167,7 +162,6 @@ class FleetController  extends AbstractController
         }
 
         return $this->render('connected/fleet_list.html.twig', [
-            'date' => $now,
             'usePlanet' => $usePlanet,
             'fleetLists' => $fleetLists,
             'form_listCreate' => $form_listCreate->createView()

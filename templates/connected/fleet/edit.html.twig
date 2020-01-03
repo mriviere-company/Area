@@ -85,7 +85,7 @@
                                 </td>
                             </tr>
                         {% endif %}
-                        {% if fleet.getFlightTime() %}
+                        {% if fleet.getFlightTime() and fleet.cancelFlight()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %}
                             <tr>
                                 <td class="p-1 pl-3">
                                     {{ 'fleet.cancelFleet'|trans }}
@@ -125,7 +125,7 @@
                                 {{ 'fleet.cost'|trans }}
                             </td>
                             <td class="p-1 pl-3">
-                                {{ (fleet.getNbrSignatures() * 5)|number_format  }} <img src="{{ asset('img/coin.png') }}">
+                                {{ (fleet.getNbrSignatures() * 6)|number_format  }} <img src="{{ asset('img/coin.png') }}">
                             </td>
                         </tr>
                         <tr>
