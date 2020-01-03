@@ -3,6 +3,7 @@
 namespace App\Controller\CronController;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Fleet;
 use DateTimeZone;
@@ -13,7 +14,7 @@ class CronTaskController extends AbstractController
 {
     /**
      * @Route("/construction/", name="cron_task")
-     * @Route("/construction/{opened}/", name="cron_task_user", requirements={"opened"="\d+", "id"="\d+"})
+     * @Route("/construction/{opened}/", name="cron_task_user", requirements={"opened"="\d+"})
      */
     public function cronTaskAction($opened = NULL)
     {
@@ -327,6 +328,7 @@ class CronTaskController extends AbstractController
             echo "Cron terminé.";
             exit;
         }
+        return new Response ("true");
     }
 
     /**
