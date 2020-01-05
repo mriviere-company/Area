@@ -45,9 +45,9 @@ class ZombiesController extends AbstractController
             }
 
             if (!$planetAtt) {
-                echo "Attaques zombies impossible.<br/>";
+                echo "Attaques zombies impossible - ";
 
-                return new Response ('true');
+                return new Response ("KO<br/>");
             }
 
             $planetZb = $em->getRepository('App:Planet')
@@ -218,10 +218,10 @@ class ZombiesController extends AbstractController
             $fleetZb->setFlightType(1);
             $em->persist($fleetZb);
         }
-        echo "Attaques zombies.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 }

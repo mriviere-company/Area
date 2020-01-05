@@ -104,11 +104,11 @@ class FightController extends AbstractController
                 ${'oneBlock' . $team2} = $winner;
             }
         }
-        echo "Combat Spatial générés.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
       }
 
 

@@ -106,11 +106,11 @@ class PlanetsController extends AbstractController
                 $planet->setConstructAt(null);
             }
         }
-        echo "Bâtiments construits.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
     public function soldiersAction($planetSoldiers, $em)
@@ -126,11 +126,11 @@ class PlanetsController extends AbstractController
                 $soldierAt->setSoldierAtNbr(null);
             }
         }
-        echo "Soldats entraînés.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
     public function tanksAction($planetTanks, $em)
@@ -146,11 +146,11 @@ class PlanetsController extends AbstractController
                 $tankAt->setTankAtNbr(null);
             }
         }
-        echo "Tanks entraînés.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
     public function nuclearsAction($planetNuclears, $em)
@@ -166,11 +166,11 @@ class PlanetsController extends AbstractController
                 $nuclear->setNuclearAtNbr(null);
             }
         }
-        echo "Bombes nucléaires fabriquées.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
     public function scientistsAction($planetScientists, $em)
@@ -188,11 +188,11 @@ class PlanetsController extends AbstractController
                 $scientistAt->setScientistAtNbr(null);
             }
         }
-        echo "Scientifiques recrutés.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
     public function productsAction($products, $em)
@@ -224,11 +224,11 @@ class PlanetsController extends AbstractController
             $planetProduct->setSignature($planetProduct->getNbrSignatures());
             $em->remove($product);
         }
-        echo "Production vaisseaux.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
     public function radarsAction($radars, $now, $em)
@@ -257,10 +257,10 @@ class PlanetsController extends AbstractController
                 $radar->setRadarAt(null);
             }
         }
-        echo "Fin de brouilleur/radar.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 }

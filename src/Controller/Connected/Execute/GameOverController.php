@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class GameOverController extends AbstractController
 {
-    public function gameOverAction($userGOs, $em)
+    public function gameOverCronAction($userGOs, $em)
     {
         foreach ($userGOs as $userGO) {
             foreach ($userGO->getFleetLists() as $list) {
@@ -163,10 +163,10 @@ class GameOverController extends AbstractController
             $salon->removeUser($userGO);
             $userGO->setSalons(null);
         }
-        echo "Game Over appliqué.<br/>";
+        echo "Flush ";
 
         $em->flush();
 
-        return new Response ('true');
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 }
