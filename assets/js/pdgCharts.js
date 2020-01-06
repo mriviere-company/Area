@@ -22,7 +22,7 @@ function managePdgChart() {
                 borderWidth: 2
             },
                 {
-                    label: "Moyenne des PDG (autres joueurs)",
+                    label: "Moyenne des points (autres joueurs)",
                     data: otherAllPoints,
                     backgroundColor: [
                         'rgba(235, 40, 40, .5)',
