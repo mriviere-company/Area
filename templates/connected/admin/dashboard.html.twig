@@ -6,29 +6,74 @@
 
 {% block body %}
     <div class="front-block">
-        {% if app.user.getStats()|length > 100 %}
-            <div class="front-block-second">
-                {% set points = [] %}
-                {% set pdg = [] %}
-                {% set otherPdg = [] %}
-                {% set otherAllPoints = [] %}
-                {% set date = [] %}
-                {% for otherPoint in otherPoints %}
-                    {% set otherPdg = otherPdg|merge([(otherPoint['allPdg'] / otherPoint['numbers'])|round]) %}
-                    {% set otherAllPoints = otherAllPoints|merge([(otherPoint['allPoint'] / otherPoint['numbers'])|round]) %}
-                {% endfor %}
-                {% for stat in app.user.getStats() %}
-                    {% set pdg = pdg|merge([stat.getPdg()|round]) %}
-                    {% set points = points|merge([stat.getPoints()|round]) %}
-                    {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
-                {% endfor %}
-                <div id="pdgPoints" data-pdg-points="{{ pdg|json_encode }}"></div>
-                <div id="playerPoints" data-player-points="{{ points|json_encode }}"></div>
-                <div id="pdgOtherPoints" data-pdg-other-points="{{ otherPdg|json_encode }}"></div>
-                <div id="pointOtherPoints" data-point-other-points="{{ otherAllPoints|json_encode }}"></div>
-                <div id="pdgDate" data-pdg-date="{{ date|json_encode }}"></div>
-                <canvas class="mb-5" id="pdgChart" height="100"></canvas>
-                <script src="{{ asset('build/pdgCharts.js') }}"></script>
-            </div>
-        {% endif %}
+        <div class="front-block-second">
+            {% set referersTab = [] %}
+            {% set referersNbrTab = [] %}
+            {% set browsersTab = [] %}
+            {% set browsersNbrTab = [] %}
+            {% set pagesTab = [] %}
+            {% set pagesNbrTab = [] %}
+            {% set hostsTab = [] %}
+            {% set hostsNbrTab = [] %}
+            {% set ipsTab = [] %}
+            {% set ipsNbrTab = [] %}
+            {% set usernamesTab = [] %}
+            {% set usernamesNbrTab = [] %}
+            {% for username in usernames %}
+                {% if username['username'] != null %}
+                    {% set usernamesTab = usernamesTab|merge([(username['username'])]) %}
+                    {% set usernamesNbrTab = usernamesNbrTab|merge([(username['nbrUsername'])]) %}
+                {% endif %}
+            {% endfor %}
+            {% for referer in referers %}
+                {% if referer['previousPage'] != null %}
+                    {% set referersTab = referersTab|merge([(referer['previousPage'])]) %}
+                    {% set referersNbrTab = referersNbrTab|merge([(referer['nbrPreviousPage'])]) %}
+                {% endif %}
+            {% endfor %}
+            {% for browser in browsers %}
+                {% if browser['browser'] != null %}
+                    {% set browsersTab = browsersTab|merge([(browser['browser'])]) %}
+                    {% set browsersNbrTab = browsersNbrTab|merge([(browser['nbrBrowser'])]) %}
+                {% endif %}
+            {% endfor %}
+            {% for page in pages %}
+                {% if page['page'] != null %}
+                    {% set pagesTab = pagesTab|merge([(page['page'])]) %}
+                    {% set pagesNbrTab = pagesNbrTab|merge([(page['nbrPage'])]) %}
+                {% endif %}
+            {% endfor %}
+            {% for host in hosts %}
+                {% if host['host'] != null %}
+                    {% set hostsTab = hostsTab|merge([(host['host'])]) %}
+                    {% set hostsNbrTab = hostsNbrTab|merge([(host['nbrHost'])]) %}
+                {% endif %}
+            {% endfor %}
+            {% for ip in ips %}
+                {% if ip['ip'] != null %}
+                    {% set ipsTab = ipsTab|merge([(ip['ip'])]) %}
+                    {% set ipsNbrTab = ipsNbrTab|merge([(ip['nbrIp'])]) %}
+                {% endif %}
+            {% endfor %}
+            <div id="usernamesChart" data-usernames-chart="{{ usernamesTab|json_encode }}"></div>
+            <div id="usernamesNbrChart" data-usernames-nbr-chart="{{ usernamesNbrTab|json_encode }}"></div>
+            <div id="referersChart" data-referers-chart="{{ referersTab|json_encode }}"></div>
+            <div id="referersNbrChart" data-referers-nbr-chart="{{ referersNbrTab|json_encode }}"></div>
+            <div id="browsersChart" data-browsers-chart="{{ browsersTab|json_encode }}"></div>
+            <div id="browsersNbrChart" data-browsers-nbr-chart="{{ browsersNbrTab|json_encode }}"></div>
+            <div id="pagesChart" data-pages-chart="{{ pagesTab|json_encode }}"></div>
+            <div id="pagesNbrChart" data-pages-nbr-chart="{{ pagesNbrTab|json_encode }}"></div>
+            <div id="hostsChart" data-hosts-chart="{{ hostsTab|json_encode }}"></div>
+            <div id="hostsNbrChart" data-hosts-nbr-chart="{{ hostsNbrTab|json_encode }}"></div>
+            <div id="ipsChart" data-ips-chart="{{ ipsTab|json_encode }}"></div>
+            <div id="ipsNbrChart" data-ips-nbr-chart="{{ ipsNbrTab|json_encode }}"></div>
+            <canvas class="mb-5" id="usernameChart" height="100"></canvas>
+            <canvas class="mb-5" id="browserChart" height="100"></canvas>
+            <canvas class="mb-5" id="pageChart" height="100"></canvas>
+            <canvas class="mb-5" id="hostChart" height="100"></canvas>
+            <canvas class="mb-5" id="ipChart" height="100"></canvas>
+            <canvas class="mb-5" id="refererChart" height="100"></canvas>
+            <script src="{{ asset('build/admin.js') }}"></script>
+        </div>
+    </div>
 {% endblock %}

@@ -5,6 +5,9 @@ namespace App\Controller\Connected;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Planet;
+use DateTime;
+use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -18,6 +21,10 @@ class AdminController extends AbstractController
     public function adminDashboardAction(Planet $usePlanet, $date = NULL)
     {
         $em = $this->getDoctrine()->getManager();
+        if (!$date) {
+            $date = new DateTime();
+            $date->setTimezone(new DateTimeZone('Europe/Paris'));
+        }
         $user = $this->getUser();
         if ($user->getUsername() != 'Dev') {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
@@ -25,9 +32,9 @@ class AdminController extends AbstractController
 
         $referers = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
-            ->select('DISTINCT(previousPage), count(previousPage) as nbrPreviousPage')
-            ->groupBy('t.username')
-            ->where('t.date = :date')
+            ->select('DISTINCT(t.previousPage) as previousPage, count(t.previousPage) as nbrPreviousPage')
+            ->groupBy('t.previousPage')
+            ->where('t.date < :date')
             ->setParameters(['date' => $date])
             ->orderBy('nbrPreviousPage', 'DESC')
             ->getQuery()
@@ -35,9 +42,9 @@ class AdminController extends AbstractController
 
         $browsers = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
-            ->select('DISTINCT(browser), count(browser) as nbrBrowser')
-            ->groupBy('t.username')
-            ->where('t.date = :date')
+            ->select('DISTINCT(t.browser) as browser, count(t.browser) as nbrBrowser')
+            ->groupBy('t.browser')
+            ->where('t.date < :date')
             ->setParameters(['date' => $date])
             ->orderBy('nbrBrowser', 'DESC')
             ->getQuery()
@@ -45,9 +52,9 @@ class AdminController extends AbstractController
 
         $pages = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
-            ->select('DISTINCT(page), count(page) as nbrPage')
-            ->groupBy('t.username')
-            ->where('t.date = :date')
+            ->select('DISTINCT(t.page) as page, count(t.page) as nbrPage')
+            ->groupBy('t.page')
+            ->where('t.date < :date')
             ->setParameters(['date' => $date])
             ->orderBy('nbrPage', 'DESC')
             ->getQuery()
@@ -55,9 +62,9 @@ class AdminController extends AbstractController
 
         $hosts = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
-            ->select('DISTINCT(host), count(host) as nbrHost')
-            ->groupBy('t.username')
-            ->where('t.date = :date')
+            ->select('DISTINCT(t.host) as host, count(t.host) as nbrHost')
+            ->groupBy('t.host')
+            ->where('t.date < :date')
             ->setParameters(['date' => $date])
             ->orderBy('nbrHost', 'DESC')
             ->getQuery()
@@ -65,9 +72,9 @@ class AdminController extends AbstractController
 
         $ips = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
-            ->select('DISTINCT(ip), count(ip) as nbrIp')
-            ->groupBy('t.username')
-            ->where('t.date = :date')
+            ->select('DISTINCT(t.ip) as ip, count(t.ip) as nbrIp')
+            ->groupBy('t.ip')
+            ->where('t.date < :date')
             ->setParameters(['date' => $date])
             ->orderBy('nbrIp', 'DESC')
             ->getQuery()
@@ -75,15 +82,17 @@ class AdminController extends AbstractController
 
         $usernames = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
-            ->select('DISTINCT(username), count(username) as nbrUsername')
-            ->groupBy('t.id')
-            ->where('t.date = :date')
+            ->select('DISTINCT(t.username) as username, count(t.username) as nbrUsername')
+            ->groupBy('t.username')
+            ->where('t.date < :date')
             ->setParameters(['date' => $date])
             ->orderBy('nbrUsername', 'DESC')
             ->getQuery()
+            ->setMaxResults(10)
             ->getResult();
 
         return $this->render('connected/admin/dashboard.html.twig', [
+            'usePlanet' => $usePlanet,
             'referers' => $referers,
             'browsers' => $browsers,
             'pages' => $pages,

@@ -20,32 +20,32 @@ class Track
     private $id;
 
     /**
-     * @ORM\Column(name="user",type="string", length=25, nullable=true)
+     * @ORM\Column(name="user",type="string", length=40, nullable=true)
      */
     protected $username;
 
     /**
-     * @ORM\Column(name="page",type="string", length=25, nullable=true)
+     * @ORM\Column(name="page",type="string", length=150, nullable=true)
      */
     protected $page;
 
     /**
-     * @ORM\Column(name="ip",type="string", length=25, nullable=true)
+     * @ORM\Column(name="ip",type="string", length=40, nullable=true)
      */
     protected $ip;
 
     /**
-     * @ORM\Column(name="host",type="string", length=25, nullable=true)
+     * @ORM\Column(name="host",type="string", length=40, nullable=true)
      */
     protected $host;
 
     /**
-     * @ORM\Column(name="browser",type="string", length=25, nullable=true)
+     * @ORM\Column(name="browser",type="string", length=250, nullable=true)
      */
     protected $browser;
 
     /**
-     * @ORM\Column(name="previous_page",type="string", length=25, nullable=true)
+     * @ORM\Column(name="previous_page",type="string", length=150, nullable=true)
      */
     protected $previousPage;
 

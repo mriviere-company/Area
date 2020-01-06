@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Connected\Execute;
+namespace App\Controller\Track;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,12 +12,7 @@ class TrackController extends AbstractController
 {
     public function trackAction()
     {
-        $em = $this->getDoctrine()->getManager();
-        $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
-        $track = new Track();
-
-        $track->setDate($now);
+        $user = $this->getUser();
         if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif(isset($_SERVER['HTTP_CLIENT_IP'])) {
@@ -25,6 +20,19 @@ class TrackController extends AbstractController
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
+        if ($user && $user->getUsername() == 'Dev' || $ip == '77.141.214.214') {
+            return new Response ("");
+        }
+        $em = $this->getDoctrine()->getManager();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $track = new Track();
+
+        if ($user) {
+            $track->setUsername($this->getUser()->getUserName());
+        }
+
+        $track->setDate($now);
         $track->setIp($ip);
 
         $host = gethostbyaddr($ip);
@@ -33,7 +41,7 @@ class TrackController extends AbstractController
         $track->setBrowser($_SERVER['HTTP_USER_AGENT']);
 
         if (isset($_SERVER['HTTP_REFERER'])) {
-            if (preg_match($_SERVER['HTTP_HOST'], $_SERVER['HTTP_REFERER'])) {
+            if (preg_match('/' . $_SERVER['HTTP_HOST'] . '/', $_SERVER['HTTP_REFERER'])) {
                 $referer ='';
             }
             else {
@@ -45,18 +53,17 @@ class TrackController extends AbstractController
         }
         $track->setPreviousPage($referer);
 
-        if ($_SERVER['QUERY_STRING'] == "") {
+        if(isset($_SERVER['QUERY_STRING'])) {
+            if ($_SERVER['QUERY_STRING'] == "") {
+                $page_courante = $_SERVER['PHP_SELF'];
+            } else {
+                $page_courante = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+            }
+        } else {
             $page_courante = $_SERVER['PHP_SELF'];
-        }
-        else {
-            $page_courante = $_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING'];
         }
 
         $track->setPage($page_courante);
-
-        if ($this->getUser()) {
-            $track->setUsername($this->getUser()->getUserName());
-        }
 
         $em->persist($track);
         $em->flush();

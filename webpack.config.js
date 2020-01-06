@@ -20,6 +20,7 @@ Encore
     .autoProvidejQuery()
     .addStyleEntry('global', './assets/global.scss')
     .addEntry('main', './assets/main.js')
+    .addEntry('admin', './assets/js/adminCharts.js')
     .addEntry('allyCharts', './assets/js/allyCharts.js')
     .addEntry('shipsCharts', './assets/js/shipsCharts.js')
     .addEntry('bitcoinCharts', './assets/js/bitcoinCharts.js')

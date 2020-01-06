@@ -281,7 +281,7 @@ class UserEvent implements EventSubscriberInterface
                             $workerBonus = 1;
                         }
                         foreach ($user->getPlanets() as $planet) {
-                            if ($planet->getRadar() == false and $planet->getSkyBrouilleur() == false and $planet->getMoon() == false) {
+                            if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and $planet->getMoon() == false) {
                                 $nbProd = ($planet->getNbProduction() * $seconds) / 60;
                                 $wtProd = ($planet->getWtProduction() * $seconds) / 60;
                                 $fdProd = ($planet->getFdProduction() * $seconds) / 60;
