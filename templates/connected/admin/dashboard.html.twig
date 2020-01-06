@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'front_admin' %}
+
+{% block title %}{{ 'title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="front-block">
+        {% if app.user.getStats()|length > 100 %}
+            <div class="front-block-second">
+                {% set points = [] %}
+                {% set pdg = [] %}
+                {% set otherPdg = [] %}
+                {% set otherAllPoints = [] %}
+                {% set date = [] %}
+                {% for otherPoint in otherPoints %}
+                    {% set otherPdg = otherPdg|merge([(otherPoint['allPdg'] / otherPoint['numbers'])|round]) %}
+                    {% set otherAllPoints = otherAllPoints|merge([(otherPoint['allPoint'] / otherPoint['numbers'])|round]) %}
+                {% endfor %}
+                {% for stat in app.user.getStats() %}
+                    {% set pdg = pdg|merge([stat.getPdg()|round]) %}
+                    {% set points = points|merge([stat.getPoints()|round]) %}
+                    {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
+                {% endfor %}
+                <div id="pdgPoints" data-pdg-points="{{ pdg|json_encode }}"></div>
+                <div id="playerPoints" data-player-points="{{ points|json_encode }}"></div>
+                <div id="pdgOtherPoints" data-pdg-other-points="{{ otherPdg|json_encode }}"></div>
+                <div id="pointOtherPoints" data-point-other-points="{{ otherAllPoints|json_encode }}"></div>
+                <div id="pdgDate" data-pdg-date="{{ date|json_encode }}"></div>
+                <canvas class="mb-5" id="pdgChart" height="100"></canvas>
+                <script src="{{ asset('build/pdgCharts.js') }}"></script>
+            </div>
+        {% endif %}
+{% endblock %}

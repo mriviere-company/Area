@@ -16,6 +16,11 @@
     <div class="btn-left{% if app.request.attributes.get('_route') == 'overview' %} currentRoute{% endif %}">
         <a href="{{ path('overview', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'globalView'|trans }}</span></a>
     </div>
+    {% if app.user.getUsername() == 'Dev' %}
+        <div class="btn-left{% if app.request.attributes.get('_route') == 'admin_dashboard' %} currentRoute{% endif %}">
+            <a href="{{ path('admin_dashboard', {'usePlanet': usePlanet.getId(), 'date': "now"|date('Y/m/d')}) }}"><span class="text-orange">{{ 'admin'|trans }}</span></a>
+        </div>
+    {% endif %}
     {% if app.user.getQuests()|length > 0 %}
         <div class="btn-left{% if app.request.attributes.get('_route') == 'market' %} currentRoute{% endif %}{% if allTuto < 16 %} tutorial-hide{% elseif allTuto == 16 %} tutorial-show{% endif %}">
             <a href="{{ path('market', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'quest'|trans }} {{ app.user.getQuests()|length }}/3</span></a>

@@ -4,6 +4,7 @@ mriviere: 'Développé par mriviere'
 media: Medias
 easyadmin: 'Pannel Admin'
 adminMail: 'Mail global'
+admin: 'Pannel Admin'
 serveur.activate: 'Activer'
 serveur.deactivate: 'Désactiver'
 serveur.createBig: 'Créer Univers'

@@ -962,7 +962,7 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('ally_page_admin', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        return $this->render('connected/ally/admin.html.twig', [
+        return $this->render('connected/ally/dashboard.html.twig', [
             'usePlanet' => $usePlanet,
             'form_allyGrade' => $form_allyGrade->createView(),
             'form_allyDefcon' => $form_allyDecon->createView()
