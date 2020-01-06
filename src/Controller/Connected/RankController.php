@@ -89,15 +89,15 @@ class RankController extends AbstractController
             ->groupBy('u.id')
             ->where('u.rank is not null')
             ->andWhere('u.id != :one')
-            ->andWhere('r.warPoint > :one')
-            ->setParameters(['one' => 1])
+            ->andWhere('r.point > :one')
+            ->setParameters(['one' => 200])
             ->orderBy('point', 'DESC')
             ->getQuery()
             ->getResult();
 
         $otherPoints = $em->getRepository('App:Stats')
             ->createQueryBuilder('s')
-            ->select('count(s) as numbers, sum(DISTINCT s.pdg) as allPdg, , sum(DISTINCT s.point) as allPoint')
+            ->select('count(s) as numbers, sum(DISTINCT s.pdg) as allPdg, sum(DISTINCT s.points) as allPoint')
             ->groupBy('s.date')
             ->where('s.user != :user')
             ->setParameters(['user' => $user])

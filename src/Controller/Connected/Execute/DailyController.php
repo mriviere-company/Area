@@ -6,16 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
 use App\Entity\Stats;
-use DateTimeZone;
 use Dateinterval;
+use DateTimeZone;
 use DateTime;
+
 
 class DailyController extends AbstractController
 {
     public function dailyLoadAction($now, $em)
     {
-        $servers = $em->getRepository('App:Server')->findAll();
-
         $users = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.rank', 'r')
@@ -198,10 +197,12 @@ class DailyController extends AbstractController
             $ally->setRank($ally->getUsersPoint());
         }
 
-        $nowDaily = new DateTime();
-        $nowDaily->setTimezone(new DateTimeZone('Europe/Paris'));
-        $nowDaily->add(new DateInterval('PT' . round(86400) . 'S'));
+        $servers = $em->getRepository('App:Server')->findAll();
+
         foreach ($servers as $server) {
+            $nowDaily = clone $server->getDailyReport();
+            $nowDaily->add(new DateInterval('P1D'));
+
             $server->setDailyReport($nowDaily);
         }
         echo "Flush ";

@@ -1,7 +1,9 @@
 function managePdgChart() {
     //line
     let pdgPoints = $('#pdgPoints').data("pdgPoints");
+    let playerPoints = $('#playerPoints').data("playerPoints");
     let pdgOtherPoints = $('#pdgOtherPoints').data("pdgOtherPoints");
+    let otherAllPoints = $('#pointOtherPoints').data("pointOtherPoints");
     let pdgDate = $('#pdgDate').data("pdgDate");
     let ctxL = document.getElementById("pdgChart").getContext('2d');
     new Chart(ctxL, {
@@ -9,8 +11,8 @@ function managePdgChart() {
         data: {
             labels: pdgDate,
             datasets: [{
-                label: "Mes Points de Guerre",
-                data: pdgPoints,
+                label: "Mes Points",
+                data: playerPoints,
                 backgroundColor: [
                     'rgba(28, 185, 28, .2)',
                 ],
@@ -21,7 +23,7 @@ function managePdgChart() {
             },
                 {
                     label: "Moyenne des PDG (autres joueurs)",
-                    data: pdgOtherPoints,
+                    data: otherAllPoints,
                     backgroundColor: [
                         'rgba(235, 40, 40, .5)',
                     ],

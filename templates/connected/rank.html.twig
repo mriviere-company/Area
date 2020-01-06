@@ -19,7 +19,7 @@
                 {% endfor %}
                 {% for stat in app.user.getStats() %}
                     {% set pdg = pdg|merge([stat.getPdg()|round]) %}
-                    {% set points = points|merge([stat.getPoint()|round]) %}
+                    {% set points = points|merge([stat.getPoints()|round]) %}
                     {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
                 {% endfor %}
                 <div id="pdgPoints" data-pdg-points="{{ pdg|json_encode }}"></div>
