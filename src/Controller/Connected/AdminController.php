@@ -40,10 +40,20 @@ class AdminController extends AbstractController
             ->getQuery()
             ->getResult();
 
+        $computers = $em->getRepository('App:Track')
+            ->createQueryBuilder('t')
+            ->select('DISTINCT(t.computer) as computer, count(t.computer) as nbrComputer')
+            ->groupBy('computer')
+            ->where('t.date < :date')
+            ->setParameters(['date' => $date])
+            ->orderBy('nbrComputer', 'DESC')
+            ->getQuery()
+            ->getResult();
+
         $browsers = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
             ->select('DISTINCT(t.browser) as browser, count(t.browser) as nbrBrowser')
-            ->groupBy('t.browser')
+            ->groupBy('browser')
             ->where('t.date < :date')
             ->setParameters(['date' => $date])
             ->orderBy('nbrBrowser', 'DESC')
@@ -63,11 +73,10 @@ class AdminController extends AbstractController
         $ip = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
             ->select('count(DISTINCT t.ip) as nbrIp')
-            ->groupBy('nbrIp')
             ->where('t.date < :date')
             ->setParameters(['date' => $date])
             ->getQuery()
-            ->getScalarResult();
+            ->getSingleScalarResult();
 
         $usernames = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
@@ -84,6 +93,7 @@ class AdminController extends AbstractController
             'usePlanet' => $usePlanet,
             'referers' => $referers,
             'browsers' => $browsers,
+            'computers' => $computers,
             'pages' => $pages,
             'ip' => $ip,
             'usernames' => $usernames

@@ -16,6 +16,14 @@
             {% set pagesNbrTab = [] %}
             {% set usernamesTab = [] %}
             {% set usernamesNbrTab = [] %}
+            {% set computersTab = [] %}
+            {% set computersNbrTab = [] %}
+            {% for computer in computers %}
+                {% if computer['computer'] != null %}
+                    {% set computersTab = computersTab|merge([(computer['computer'])]) %}
+                    {% set computersNbrTab = computersNbrTab|merge([(computer['nbrComputer'])]) %}
+                {% endif %}
+            {% endfor %}
             {% for username in usernames %}
                 {% if username['username'] != null %}
                     {% set usernamesTab = usernamesTab|merge([(username['username'])]) %}
@@ -48,10 +56,13 @@
             <div id="browsersNbrChart" data-browsers-nbr-chart="{{ browsersNbrTab|json_encode }}"></div>
             <div id="pagesChart" data-pages-chart="{{ pagesTab|json_encode }}"></div>
             <div id="pagesNbrChart" data-pages-nbr-chart="{{ pagesNbrTab|json_encode }}"></div>
-            <canvas class="mb-5" id="usernameChart" height="100"></canvas>
-            <canvas class="mb-5" id="browserChart" height="100"></canvas>
-            <canvas class="mb-5" id="pageChart" height="100"></canvas>
-            <canvas class="mb-5" id="refererChart" height="100"></canvas>
+            <div id="computersChart" data-computers-chart="{{ computersTab|json_encode }}"></div>
+            <div id="computersNbrChart" data-computers-nbr-chart="{{ computersNbrTab|json_encode }}"></div>
+            <canvas class="mb-5" id="usernameChart" height="250"></canvas>
+            <canvas class="mb-5" id="pageChart" height="250"></canvas>
+            <canvas class="mb-5" id="computerChart" height="250"></canvas>
+            <canvas class="mb-5" id="refererChart" height="250"></canvas>
+            <canvas class="mb-5" id="browserChart" height="250"></canvas>
             <script src="{{ asset('build/admin.js') }}"></script>
         </div>
     </div>

@@ -40,6 +40,11 @@ class Track
     protected $browser;
 
     /**
+     * @ORM\Column(name="computer",type="string", length=50, nullable=true)
+     */
+    protected $computer;
+
+    /**
      * @ORM\Column(name="previous_page",type="string", length=150, nullable=true)
      */
     protected $previousPage;
@@ -148,5 +153,21 @@ class Track
     public function setDate($date): void
     {
         $this->date = $date;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComputer()
+    {
+        return $this->computer;
+    }
+
+    /**
+     * @param mixed $computer
+     */
+    public function setComputer($computer): void
+    {
+        $this->computer = $computer;
     }
 }
