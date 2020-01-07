@@ -28,7 +28,7 @@
                 <tr>
                     <td>
                         <span class="mx-5">{{ 'server'|trans }} {{ server.id }}</span>
-                        <img class="galaxy-block mr-4 mb-4" src="{{ asset('img/server.png') }}">
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" src="{{ asset('img/server.png') }}">
                         {% if server.open == 1 %}
                             {{ 'server.open'|trans }}
                         {% else %}
@@ -53,7 +53,7 @@
                 <tr>
                         {% endif %}
                         <td class="text-center">
-                            <a href="{{ path('connect_server', {'id': galaxy.id}) }}"><span><img class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
+                            <a href="{{ path('connect_server', {'id': galaxy.id}) }}"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
                         </td>
                         {% set x = x + 1 %}
                     {% endfor %}
@@ -62,7 +62,7 @@
             </table>
         {% endfor %}
        {# {% for galaxy in galaxys %}
-            <a href="{{ path('connect_server', {'id': galaxy.position}) }}"><span><img class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
+            <a href="{{ path('connect_server', {'id': galaxy.position}) }}"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
         {% endfor %}#}
         <div>
         </div>

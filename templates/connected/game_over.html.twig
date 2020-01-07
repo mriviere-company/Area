@@ -22,7 +22,7 @@
                 <tr>
                     <td>
                         <span class="mx-5">{{ 'server'|trans }} {{ server.id }}</span>
-                        <img class="galaxy-block mr-4 mb-4" src="{{ asset('img/server.png') }}">
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" src="{{ asset('img/server.png') }}">
                         {% if server.open == 1 %}
                             {{ 'server.open'|trans }}
                         {% else %}
@@ -42,7 +42,7 @@
                 <tr>
                     {% for galaxy in galaxys|filter(galaxy => galaxy.server == server.id) %}
                         <td class="text-center">
-                            <a href="{{ path('connect_server', {'id': galaxy.id}) }}"><span><img class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
+                            <a href="{{ path('connect_server', {'id': galaxy.id}) }}"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
                         </td>
                     {% endfor %}
                 </tr>
@@ -50,6 +50,6 @@
             </table>
         {% endfor %}
         <div><a class="my-4" href="{{ path('disconnect_me') }}"><button class="text-rouge m-5 text-more p-3">{{ 'disconnect'|trans }}</button></a></div>
-    <div class="mt-3"><img src="{{ asset('img/go.jpg') }}"></div>
+    <div class="mt-3"><img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/go.jpg') }}"></div>
     </div>
 {% endblock %}

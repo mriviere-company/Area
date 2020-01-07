@@ -6,7 +6,7 @@
         {% if allPlanets|length > 2 %}
             {% if allTuto > 22 %}<a href="{{ path('zombie', {'usePlanet': usePlanet.getId()}) }}">{% endif %}
             <div data-toggle="tooltip" data-placement="left" title="{{ 'tooltip.zombie'|trans }}" class="mb-4 bg-right px-4 py-2 zombie-right{% if allTuto == 51 %} tutorial-show{% endif %}">
-                <div class="pt-2 float-left"><img height="32" width="32" src="{{ asset('img/zombie_indic.gif') }}"></div>
+                <div class="pt-2 float-left"><img alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ asset('img/zombie_indic.gif') }}"></div>
                 <div class="float-right">
                     <div class="mt-2">
                         {{ 'zombie.indic'|trans }} {{ app.user.getZombieAtt() }}
@@ -19,20 +19,20 @@
             {% if allTuto > 22 %}</a>{% endif %}
         {% endif %}
         <div {% if usePlanet.getOffensiveFleet(app.user) == 'ennemy' %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-4 bg-right px-4 py-2{% if usePlanet.getOffensiveFleet(app.user) == 'ennemy' %} planetFull{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} constructFree{% endif %}">
-            <div class="pt-2 float-left"><a href="{{ usePlanet.getId() }}"><img height="32" width="32" src="{{ vich_uploader_asset(usePlanet, 'imageFile') }}"></a></div>
+            <div class="pt-2 float-left"><a href="{{ usePlanet.getId() }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ vich_uploader_asset(usePlanet, 'imageFile') }}"></a></div>
             <div class="float-right">
                 <div class="mt-2{% if allTuto < 14 %} tutorial-hide{% endif %}">
                     {% if usePlanet.getOffensiveFleet(app.user) == 'neutre' %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'fleetNoAlly'|trans }}" class="text-rouge">{{ usePlanet.getName() }}</span>{% else %}{% if usePlanet.getMoon() %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'moonPlanet'|trans }}" class="text-jaune">{{ usePlanet.getName() }}</span>{% else %}{{ usePlanet.getName() }}{% endif %}{% endif %} - <span><a href="{{ path('map', {'sector': usePlanet.getSector().getId(), 'gal': usePlanet.getSector().getGalaxy().getId(), 'usePlanet': usePlanet.getId()}) }}">({{ usePlanet.getSector().getGalaxy.getPosition() }}.{{ usePlanet.getSector().getPosition() }}.{{ usePlanet.getPosition() }})</a></span>
                 </div>
                 <div class="ml-2">
-                    <span data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}">{{ usePlanet.getGroundPlace() }}/{{ usePlanet.getGround() }} <img src="{{ asset('img/ground.png') }}"></span> <span data-toggle="tooltip" data-placement="bottom" title="{{ 'SkyImg'|trans }}">{{ usePlanet.getSkyPlace() }}/{{ usePlanet.getSky() }} <img src="{{ asset('img/sky.png') }}"></span>
+                    <span data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}">{{ usePlanet.getGroundPlace() }}/{{ usePlanet.getGround() }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/ground.png') }}"></span> <span data-toggle="tooltip" data-placement="bottom" title="{{ 'SkyImg'|trans }}">{{ usePlanet.getSkyPlace() }}/{{ usePlanet.getSky() }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/sky.png') }}"></span>
                 </div>
                 <div class="ml-2">
                     {% if usePlanet.getSignature() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.ships'|trans }}">{% if usePlanet.getSignature() > 1000000 %}({{ (usePlanet.getSignature() / 1000000)|number_format(1) }}M){% elseif usePlanet.getSignature() > 1000 %}({{ (usePlanet.getSignature() / 1000)|number_format }}K){% else %}({{ usePlanet.getSignature()|number_format }}){% endif %} <span class="glyphicon glyphicon-plane"></span></span>{% endif %}
-                    {% if (usePlanet.getCaserne() > 0 or usePlanet.getBunker() > 0) and usePlanet.getLightUsine() > 0 and app.user.getTank() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.tanks'|trans }}"><img height="10" src="{{ asset('img/tanks.png') }}"></span>{% endif %}
-                    {% if usePlanet.getCaserne() > 0 or usePlanet.bunker > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.caserne'|trans }}"><img height="12" src="{{ asset('img/soldier.png') }}"></span>{% endif %}
-                    {% if usePlanet.getCenterSearch() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.scientists'|trans }}"><img height="10" src="{{ asset('img/scientist.png') }}"></span>{% endif %}
-                    {% if usePlanet.getUranium() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.uranium'|trans }}"><img height="10" src="{{ asset('img/uranium.png') }}"></span>{% endif %}
+                    {% if (usePlanet.getCaserne() > 0 or usePlanet.getBunker() > 0) and usePlanet.getLightUsine() > 0 and app.user.getTank() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.tanks'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/tanks.png') }}"></span>{% endif %}
+                    {% if usePlanet.getCaserne() > 0 or usePlanet.bunker > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.caserne'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/soldier.png') }}"></span>{% endif %}
+                    {% if usePlanet.getCenterSearch() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.scientists'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/scientist.png') }}"></span>{% endif %}
+                    {% if usePlanet.getUranium() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.uranium'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/uranium.png') }}"></span>{% endif %}
                 </div>
             </div>
         </div>
@@ -40,7 +40,7 @@
             {% if planet.id != usePlanet.getId() %}
                 {% if planet.empty == true %}
                     <div class="mb-4 bg-right-empty px-4 py-2">
-                        <div class="pt-1 float-left"><a class="ml-2" href="{{ path('map', {'sector': planet.idSector, 'gal': planet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}"><img height="15" src="{{ asset('img/vradar.png') }}"></a></div>
+                        <div class="pt-1 float-left"><a class="ml-2" href="{{ path('map', {'sector': planet.idSector, 'gal': planet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="15" src="{{ asset('img/vradar.png') }}"></a></div>
                         <div class="float-right">
                             <div class="mt-2">
                                 {{ planet.name }} - <span><a href="{{ path('map', {'sector': planet.idSector, 'gal': planet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}">({{ planet.galaxy }}.{{ planet.sector }}.{{ planet.position }})</a></span>
@@ -51,20 +51,20 @@
                     </div>
                     {% else %}
                         {#planet.getOffensiveFleet(app.user)#}<div{% if 'offensive' == 'ennemy' %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-4 bg-right px-4 py-2{% if 'offensive' == 'ennemy' %} planetFull{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} constructFree{% endif %}">  {#or planet.getSkyPlace() != planet.getSky()#}
-                            <div class="pt-2 float-left"><a href="{{ planet.id }}"><img height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}"></a></div>
+                            <div class="pt-2 float-left"><a href="{{ planet.id }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}"></a></div>
                             <div class="float-right">
                                 <div class="mt-2{% if allTuto < 14 %} tutorial-hide{% endif %}">
                                     {% if 'offensive' == 'neutre' %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'fleetNoAlly'|trans }}" class="text-rouge">{{ planet.name }}</span>{% else %}{% if planet.moon %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'moonPlanet'|trans }}" class="text-jaune">{{ planet.name }}</span>{% else %}{{ planet.name }}{% endif %}{% endif %} - <span><a href="{{ path('map', {'sector': planet.idSector, 'gal': planet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ planet.galaxy }}:{{ planet.sector }}:{{ planet.position }}</a></span>
                                 </div>
                                 <div class="ml-2">
-                                    <span data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}">{{ planet.groundPlace }}/{{ planet.ground }} <img src="{{ asset('img/ground.png') }}"></span> <span data-toggle="tooltip" data-placement="bottom" title="{{ 'SkyImg'|trans }}">{{ planet.skyPlace }}/{{ planet.sky }} <img src="{{ asset('img/sky.png') }}"></span>
+                                    <span data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}">{{ planet.groundPlace }}/{{ planet.ground }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/ground.png') }}"></span> <span data-toggle="tooltip" data-placement="bottom" title="{{ 'SkyImg'|trans }}">{{ planet.skyPlace }}/{{ planet.sky }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/sky.png') }}"></span>
                                 </div>
                                 <div class="ml-2">
                                     {% if planet.signature > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.ships'|trans }}">{% if planet.signature > 1000000 %}({{ (planet.signature / 1000000)|number_format(1) }}M){% elseif planet.signature > 1000 %}({{ (planet.signature / 1000)|number_format }}K){% else %}({{ planet.signature|number_format }}){% endif %} <span class="glyphicon glyphicon-plane"></span></span>{% endif %}
-                                    {% if (planet.caserne > 0 or planet.bunker > 0) and planet.lightUsine > 0 and app.user.getTank() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.tanks'|trans }}"><img height="10" src="{{ asset('img/tanks.png') }}"></span>{% endif %}
-                                    {% if planet.caserne > 0 or planet.bunker > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.caserne'|trans }}"><img height="12" src="{{ asset('img/soldier.png') }}"></span>{% endif %}
-                                    {% if planet.centerSearch > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.scientists'|trans }}"><img height="10" src="{{ asset('img/scientist.png') }}"></span>{% endif %}
-                                    {% if planet.uranium > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.uranium'|trans }}"><img height="10" src="{{ asset('img/uranium.png') }}"></span>{% endif %}
+                                    {% if (planet.caserne > 0 or planet.bunker > 0) and planet.lightUsine > 0 and app.user.getTank() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.tanks'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/tanks.png') }}"></span>{% endif %}
+                                    {% if planet.caserne > 0 or planet.bunker > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.caserne'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/soldier.png') }}"></span>{% endif %}
+                                    {% if planet.centerSearch > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.scientists'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/scientist.png') }}"></span>{% endif %}
+                                    {% if planet.uranium > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.uranium'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/uranium.png') }}"></span>{% endif %}
                                 </div>
                             </div>
                         </div>
@@ -76,13 +76,13 @@
             <div class="col-6">
                 <a href="{{ path('zombie', {'usePlanet': usePlanet.getId()}) }}">
                     <div data-toggle="tooltip" data-placement="left" title="{{ 'tooltip.zombie'|trans }}" class="mb-2 bg-right-small px-2 py-1 zombie-right{% if allTuto == 51 %} tutorial-show{% endif %}">
-                        <div class="pt-1 float-left"><img class="mr-2" height="32" width="32" src="{{ asset('img/zombie_indic.gif') }}">{{ 'zombie.info'|trans }}</div>
+                        <div class="pt-1 float-left"><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ asset('img/zombie_indic.gif') }}">{{ 'zombie.info'|trans }}</div>
                     </div>
                 </a>
             </div>
             <div class="col-6">
                 <div {% if usePlanet.getOffensiveFleet(app.user) == 'ennemy' %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-2 bg-right-small px-2 py-1{% if usePlanet.getOffensiveFleet(app.user) == 'ennemy' %} planetFull{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} constructFree{% endif %}">
-                    <div class="pt-1 float-left"><span><a href="{{ usePlanet.getId() }}"><img class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(usePlanet, 'imageFile') }}">{{ usePlanet.getName() }}</a></span></div>
+                    <div class="pt-1 float-left"><span><a href="{{ usePlanet.getId() }}"><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(usePlanet, 'imageFile') }}">{{ usePlanet.getName() }}</a></span></div>
                 </div>
             </div>
         </div>
@@ -93,13 +93,13 @@
                         {% if planet.empty == true %}
                             <div class="col-6 my-auto">
                                 <div class="mb-2 bg-right-empty-small px-4 py-2">
-                                    <div class="pt-1 float-left"><span><a class="ml-1" href="{{ path('map', {'sector': planet.idSector, 'gal': planet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}"><img class="mr-2" height="15" src="{{ asset('img/vradar.png') }}">({{ planet.galaxy }}.{{ planet.sector }}.{{ planet.position }})</a></span></div>
+                                    <div class="pt-1 float-left"><span><a class="ml-1" href="{{ path('map', {'sector': planet.idSector, 'gal': planet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}"><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="15" src="{{ asset('img/vradar.png') }}">({{ planet.galaxy }}.{{ planet.sector }}.{{ planet.position }})</a></span></div>
                                 </div>
                             </div>
                         {% else %}
                             <div class="col-6">
                                 <div{% if 'offensive' == 'ennemy' %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-2 bg-right-small px-2 py-2{% if 'offensive' == 'ennemy' %} planetFull{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} constructFree{% endif %}">
-                                    <div class="pt-1 float-left"><span><a href="{{ planet.id }}"><img class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">{% if planet.moon %}<span class="text-jaune">{{ planet.name }}{% else %}{{ planet.name }}{% endif %}</a></span></div>
+                                    <div class="pt-1 float-left"><span><a href="{{ planet.id }}"><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">{% if planet.moon %}<span class="text-jaune">{{ planet.name }}{% else %}{{ planet.name }}{% endif %}</a></span></div>
                                 </div>
                             </div>
                         {% endif %}

@@ -63,9 +63,9 @@
                                 <tr>
                                     <td class="center-cells">
                                         {% if proposal.getUser().getImageName() %}
-                                            <img height="15" width="15" src="{{ vich_uploader_asset(proposal.getUser(), 'imageFile') }}">
+                                            <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ vich_uploader_asset(proposal.getUser(), 'imageFile') }}">
                                         {% else %}
-                                            <img height="15" width="15" src="{{ asset('img/avatar.png') }}">
+                                            <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ asset('img/avatar.png') }}">
                                         {% endif %}
                                         <span><a href="{{ path('user_profil', {'userPlanet': proposal.getUser().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ proposal.getUser().getUserName() }}</a></span>
                                     </td>
@@ -102,9 +102,9 @@
                             <tr>
                                 <th class="tab-cells-name borderAlly p-0">
                                     {% if user.imageName %}
-                                        <img height="30" width="30" src="{{ vich_uploader_asset(user, 'imageFile', 'App\\Entity\\User') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" height="30" width="30" src="{{ vich_uploader_asset(user, 'imageFile', 'App\\Entity\\User') }}">
                                     {% else %}
-                                        <img height="30" width="30" src="{{ asset('img/avatar.png') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" height="30" width="30" src="{{ asset('img/avatar.png') }}">
                                     {% endif %}
                                 </th>
                                 <th class="tab-cells-name p-2">

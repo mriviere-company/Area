@@ -20,7 +20,7 @@
                     <tbody>
                     <tr>
                         <th class="tab-cells-name">
-                            {% if report.getImageName() %}<span><img class="border-dashed-img" src="{{ vich_uploader_asset(report, 'imageFile') }}"></span>{% endif %}<span class="ml-3{% if report.getTitle() == 'Rapport de combat : Défaite' %} text-rouge{% elseif report.getTitle() == 'Rapport de combat : Victoire' %} text-vert{% endif %}">{{ report.getTitle() }}</span>
+                            {% if report.getImageName() %}<span><img alt="{{ 'image'|trans({},'front_global') }}" class="border-dashed-img" src="{{ vich_uploader_asset(report, 'imageFile') }}"></span>{% endif %}<span class="ml-3{% if report.getTitle() == 'Rapport de combat : Défaite' %} text-rouge{% elseif report.getTitle() == 'Rapport de combat : Victoire' %} text-vert{% endif %}">{{ report.getTitle() }}</span>
                             <span class="float-right">
                                 <div>
                                     {{ report.sendAt|date('Y/m/d H:i:s') }}

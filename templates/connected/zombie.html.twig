@@ -27,11 +27,11 @@
             </table>
         {% endif %}
         <div class="front-block-second text-center">
-            <img class="float-left" src="{{ asset('img/zombie_indic.gif') }}">
-            <img class="float-right mt-4" src="{{ vich_uploader_asset(planet, 'imageFile') }}">
+            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left" src="{{ asset('img/zombie_indic.gif') }}">
+            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-right mt-4" src="{{ vich_uploader_asset(planet, 'imageFile') }}">
             <div class="text-more mt-5">{{ 'zombie.planet'|trans }} «{{ planet.getName() }}» <span><a href="{{ path('map', {'sector': planet.getSector().getId(), 'gal': planet.getSector().getGalaxy().getId(), 'usePlanet': planet.getId()}) }}">{{ planet.getSector().getGalaxy.getPosition() }}:{{ planet.getSector().getPosition() }}:{{ planet.getPosition() }}</a></span> {{ 'zombie.infected'|trans }}</div>
             <div class="text-more">{{ 'zombie.menace'|trans }} <span class="zombieIndicator text-rouge">{{ app.user.getZombieAtt() }}</span></div>
-            <div class="text-more">{{ 'zombie.available.defense'|trans }} {{ planet.getSoldier() }}/{{ planet.getSoldierMax() }} <img class="mr-3" src="{{ asset('img/soldier.png') }}"> {{ planet.getTank() }}/500 <img class="mr-3" src="{{ asset('img/tanks.png') }}"></div>
+            <div class="text-more">{{ 'zombie.available.defense'|trans }} {{ planet.getSoldier() }}/{{ planet.getSoldierMax() }} <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-3" src="{{ asset('img/soldier.png') }}"> {{ planet.getTank() }}/500 <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-3" src="{{ asset('img/tanks.png') }}"></div>
             <div class="text-more mb-3">{{ 'zombie.attack'|trans }} <span class="mt-5 timerArea text-rouge" hidden>{% if app.user.getZombieAt() %}{{ app.user.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span></div>
         </div>
         <div class="front-block-game mt-4">
@@ -93,7 +93,7 @@
                                     {{ form_widget(form_missionZombie.time) }}
                                 </td>
                                 <td class="center-cells text-center">
-                                    <span class="zombieGain">0</span> <img width="12" src="{{ asset('img/zombie_indic.gif') }}">
+                                    <span class="zombieGain">0</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">
                                 </td>
                                 <td class="center-cells text-center">
                                     <span class="zombiePercent">0%</span>
@@ -109,7 +109,7 @@
                                     {{ form_widget(form_missionZombie.time,{attr: { disabled: 'disabled' }}) }}
                                 </td>
                                 <td class="center-cells text-center">
-                                    <span class="zombieGain">0</span> <img width="12" src="{{ asset('img/zombie_indic.gif') }}">
+                                    <span class="zombieGain">0</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">
                                 </td>
                                 <td class="center-cells text-center">
                                     <span class="zombiePercent">0%</span>
@@ -162,7 +162,7 @@
                                 {{ form_widget(form_missionUranium.time) }}
                             </td>
                             <td class="center-cells text-center">
-                                <span class="uraniumGain">0</span> <img width="12" src="{{ asset('img/uranium.png') }}">
+                                <span class="uraniumGain">0</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">
                             </td>
                             <td class="center-cells text-center">
                                 <span class="uraniumPercent">0%</span>
@@ -205,13 +205,13 @@
                     {% for mission in planet.getMissions() %}
                         <tr>
                             <td class="center-cells">
-                                {{ mission.getSoldier() }} <img width="7" src="{{ asset('img/soldier.png') }}">
+                                {{ mission.getSoldier() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="7" src="{{ asset('img/soldier.png') }}">
                             </td>
                             <td class="center-cells">
-                                {{ mission.getTank() }} <img width="18" src="{{ asset('img/tanks.png') }}">
+                                {{ mission.getTank() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="18" src="{{ asset('img/tanks.png') }}">
                             </td>
                             <td class="center-cells">
-                                {% if mission.getType() == 1 %}<span class="text-vert">+{{ mission.getGain() }}</span> <img width="12" src="{{ asset('img/uranium.png') }}">{% else %}<span class="text-vert">-{{ mission.getGain() }}</span> <img width="12" src="{{ asset('img/zombie_indic.gif') }}">{% endif %}
+                                {% if mission.getType() == 1 %}<span class="text-vert">+{{ mission.getGain() }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">{% else %}<span class="text-vert">-{{ mission.getGain() }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">{% endif %}
                             </td>
                             <td class="center-cells text-center">
                                 {% if mission.getType() == 1 %}{{ 'zombie.uranium'|trans }}{% else %}{{ 'zombie.zombie'|trans }}{% endif %}

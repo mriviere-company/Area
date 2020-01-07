@@ -223,9 +223,9 @@
                         <tr>
                             <th class="tab-cells-name borderAlly p-0">
                                 {% if ally.getImageName() %}
-                                    <img height="30" width="45" src="{{ vich_uploader_asset(ally, 'imageFile') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" height="30" width="45" src="{{ vich_uploader_asset(ally, 'imageFile') }}">
                                 {% else %}
-                                    <img height="30" width="45" src="{{ asset('img/ally.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" height="30" width="45" src="{{ asset('img/ally.jpg') }}">
                                 {% endif %}
                             </th>
                             <th class="tab-cells-name p-2">

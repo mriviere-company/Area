@@ -36,25 +36,25 @@
                         <tbody>
                         <tr>
                             <th width="74" class="p-0 hunterClick">
-                                <img width="74" src="{{ asset('img/hunter.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunter.jpg') }}">
                             </th>
                             <td class="text-center hunterClick">
                                 {{ 'ship.hunter'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointHunter() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointHunter() }}</span>
                             </td>
                             <th width="74" class="p-0 hunterHeavyClick">
-                                <img width="74" src="{{ asset('img/hunterHeavy.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunterHeavy.jpg') }}">
                             </th>
                             <td class="text-center hunterHeavyClick">
                                 {{ 'ship.hunterHeavy'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointHunterHeavy() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointHunterHeavy() }}</span>
                             </td>
                             <th width="74" class="p-0 hunterWarClick">
-                                <img width="74" src="{{ asset('img/hunterWar.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunterWar.jpg') }}">
                             </th>
                             <td class="text-center hunterWarClick">
                                 {{ 'ship.hunterWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointHunterWar() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointHunterWar() }}</span>
                             </td>
                             <th width="74" class="p-0 corvetClick">
-                                <img width="74" src="{{ asset('img/corvet.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/corvet.jpg') }}">
                             </th>
                             <td class="text-center corvetClick">
                                 {{ 'ship.corvet'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointCorvet() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointCorvet() }}</span>
@@ -62,25 +62,25 @@
                         </tr>
                         <tr>
                             <th width="74" class="p-0 corvetLaserClick">
-                                <img width="74" src="{{ asset('img/corvetLaser.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/corvetLaser.jpg') }}">
                             </th>
                             <td class="text-center corvetLaserClick">
                                 {{ 'ship.corvetLaser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointCorvetLaser() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointCorvetLaser() }}</span>
                             </td>
                             <th width="74" class="p-0 corvetWarClick">
-                                <img width="74" src="{{ asset('img/corvetWar.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/corvetWar.jpg') }}">
                             </th>
                             <td class="text-center corvetWarClick">
                                 {{ 'ship.corvetWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointCorvetWar() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointCorvetWar() }}</span>
                             </td>
                             <th width="74" class="p-0 fregateClick">
-                                <img width="74" src="{{ asset('img/fregate.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/fregate.jpg') }}">
                             </th>
                             <td class="text-center fregateClick">
                                 {{ 'ship.fregate'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointFregate() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointFregate() }}</span>
                             </td>
                             <th width="74" class="p-0 fregatePlasmaClick">
-                                <img width="74" src="{{ asset('img/fregatePlasma.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/fregatePlasma.jpg') }}">
                             </th>
                             <td class="text-center fregatePlasmaClick">
                                 {{ 'ship.fregatePlasma'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointFregatePlasma() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointFregatePlasma() }}</span>
@@ -88,19 +88,19 @@
                         </tr>
                         <tr>
                             <th width="74" class="p-0 croiserClick">
-                                <img width="74" src="{{ asset('img/croiser.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/croiser.jpg') }}">
                             </th>
                             <td class="text-center croiserClick">
                                 {{ 'ship.croiser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointCroiser() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointCroiser() }}</span>
                             </td>
                             <th width="74" class="p-0 ironCladClick">
-                                <img width="74" src="{{ asset('img/ironClad.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/ironClad.jpg') }}">
                             </th>
                             <td class="text-center ironCladClick">
                                 {{ 'ship.ironClad'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointIronClad() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointIronClad() }}</span>
                             </td>
                             <th width="74" class="p-0 destroyerClick">
-                                <img width="74" src="{{ asset('img/destroyer.jpg') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/destroyer.jpg') }}">
                             </th>
                             <td class="text-center destroyerClick">
                                 {{ 'ship.destroyer'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointDestroyer() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointDestroyer() }}</span>
@@ -113,7 +113,7 @@
                         {% if app.user.getShip().getPointHunter() == 0 %}
                             <tr name="hunter" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/hunter.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/hunter.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.hunter'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -142,7 +142,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="hunter" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/hunter.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunter.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'hunter' }}) }}
@@ -197,7 +197,7 @@
                         {% if app.user.getShip().getPointHunterHeavy() == 0 %}
                             <tr name="hunterHeavy" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/hunterHeavy.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/hunterHeavy.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.hunterHeavy'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -226,7 +226,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="hunterHeavy" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/hunterHeavy.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunterHeavy.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'hunterHeavy' }}) }}
@@ -281,7 +281,7 @@
                         {% if app.user.getShip().getPointHunterWar() == 0 %}
                             <tr name="hunterWar" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/hunterWar.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/hunterWar.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.hunterWar'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -310,7 +310,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="hunterWar" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/hunterWar.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunterWar.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'hunterWar' }}) }}
@@ -365,7 +365,7 @@
                         {% if app.user.getShip().getPointCorvet() == 0 %}
                             <tr name="corvet" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/corvet.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/corvet.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.corvet'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -394,7 +394,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="corvet" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/corvet.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/corvet.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'corvet' }}) }}
@@ -449,7 +449,7 @@
                         {% if app.user.getShip().getPointCorvetLaser() == 0 %}
                             <tr name="corvetLaser" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/corvetLaser.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/corvetLaser.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.corvetLaser'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -478,7 +478,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="corvetLaser" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/corvetLaser.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/corvetLaser.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'corvetLaser' }}) }}
@@ -533,7 +533,7 @@
                         {% if app.user.getShip().getPointCorvetWar() == 0 %}
                             <tr name="corvetWar" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/corvetWar.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/corvetWar.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.corvetWar'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -562,7 +562,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="corvetWar" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/corvetWar.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/corvetWar.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'corvetWar' }}) }}
@@ -617,7 +617,7 @@
                         {% if app.user.getShip().getPointFregate() == 0 %}
                             <tr name="fregate" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/fregate.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/fregate.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.fregate'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -646,7 +646,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="fregate" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/fregate.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/fregate.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'fregate' }}) }}
@@ -701,7 +701,7 @@
                         {% if app.user.getShip().getPointFregatePlasma() == 0 %}
                             <tr name="fregatePlasma" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/fregatePlasma.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/fregatePlasma.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.fregatePlasma'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -730,7 +730,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="fregatePlasma" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/fregatePlasma.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/fregatePlasma.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'fregatePlasma' }}) }}
@@ -785,7 +785,7 @@
                         {% if app.user.getShip().getPointCroiser() == 0 %}
                             <tr name="croiser" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/croiser.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/croiser.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.croiser'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -814,7 +814,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="croiser" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/croiser.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/croiser.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'croiser' }}) }}
@@ -869,7 +869,7 @@
                         {% if app.user.getShip().getPointIronClad() == 0 %}
                             <tr name="ironClad" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/ironClad.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/ironClad.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.ironClad'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -898,7 +898,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="ironClad" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/ironClad.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/ironClad.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'ironClad' }}) }}
@@ -953,7 +953,7 @@
                         {% if app.user.getShip().getPointDestroyer() == 0 %}
                             <tr name="destroyer" class="hidden">
                                 <th width="32" class="p-0 text-center">
-                                    <img width="32" src="{{ asset('img/destroyer.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/destroyer.jpg') }}">
                                 </th>
                                 <td class="text-center p-0">
                                     {{ 'ship.destroyer'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
@@ -982,7 +982,7 @@
                             {{ form_start(form_shipPerso) }}
                             <tr name="destroyer" class="hidden">
                                 <th width="74" rowspan="2" class="p-0">
-                                    <img width="74" src="{{ asset('img/destroyer.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/destroyer.jpg') }}">
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'destroyer' }}) }}

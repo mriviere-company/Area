@@ -63,7 +63,7 @@
                                         {{ form_end(form_manageAttackFleet) }}
                                     </div>
                                     <div class="col-9{% if fleet.getMissile() == 0 and fleet.getLaser() == 0 and fleet.getPlasma() == 0 %} pt-1 ml-4{% else %} pt-1{% endif %}">
-                                        {% if fleet.getAttack() == 1 %}<img src="{{ asset('img/stance_attack.gif') }}">{% else %}<img src="{{ asset('img/stance_defend.gif') }}">{% endif %} {{ 'fleet.attackMode'|trans }}
+                                        {% if fleet.getAttack() == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/stance_attack.gif') }}">{% else %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/stance_defend.gif') }}">{% endif %} {{ 'fleet.attackMode'|trans }}
                                     </div>
                                 </div>
                             </td>
@@ -125,7 +125,7 @@
                                 {{ 'fleet.cost'|trans }}
                             </td>
                             <td class="p-1 pl-3">
-                                {{ (fleet.getNbrSignatures() * 6)|number_format  }} <img src="{{ asset('img/coin.png') }}">
+                                {{ (fleet.getNbrSignatures() * 6)|number_format  }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/coin.png') }}">
                             </td>
                         </tr>
                         <tr>
@@ -219,7 +219,7 @@
                                 {{ 'fleet.costMove'|trans }}
                             </td>
                             <td colspan="4">
-                                <span id="flightCost">0</span> <img src="{{ asset('img/coin.png') }}">
+                                <span id="flightCost">0</span> <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/coin.png') }}">
                             </td>
                         </tr>
                         <tr>
@@ -265,7 +265,7 @@
                             </tr>
                             <tr{% if fleet.getPlanet().getNiobium() == 0 and fleet.getNiobium() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
-                                    {{ fleet.getNiobium()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}">
+                                    {{ fleet.getNiobium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.lessNiobium,{attr: { max: fleet.getNiobium()}}) }}
@@ -274,7 +274,7 @@
                                     <span class="maxInputR">max</span>
                                 </td>
                                 <th class="text-center p-1">
-                                    {{ fleet.getPlanet().getNiobium()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}">
+                                    {{ fleet.getPlanet().getNiobium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.moreNiobium,{attr: { max: fleet.getPlanet().getNiobium()}}) }}
@@ -285,7 +285,7 @@
                             </tr>
                             <tr{% if fleet.getPlanet().getWater() == 0 and fleet.getWater() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
-                                    {{ fleet.getWater()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}">
+                                    {{ fleet.getWater()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.lessWater,{attr: { max: fleet.getWater()}}) }}
@@ -294,7 +294,7 @@
                                     <span class="maxInputR">max</span>
                                 </td>
                                 <th class="text-center p-1">
-                                    {{ fleet.getPlanet().getWater()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}">
+                                    {{ fleet.getPlanet().getWater()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.moreWater,{attr: { max: fleet.getPlanet().getWater()}}) }}
@@ -305,7 +305,7 @@
                             </tr>
                             <tr{% if fleet.getPlanet().getUranium() == 0 and fleet.getUranium() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
-                                    {{ fleet.getUranium()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'uraniumImg'|trans }}" src="{{ asset('img/uranium.png') }}">
+                                    {{ fleet.getUranium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'uraniumImg'|trans }}" src="{{ asset('img/uranium.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.lessUranium,{attr: { max: fleet.getUranium()}}) }}
@@ -314,7 +314,7 @@
                                     <span class="maxInputR">max</span>
                                 </td>
                                 <th class="text-center p-1">
-                                    {{ fleet.getPlanet().getUranium()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'uraniumImg'|trans }}" src="{{ asset('img/uranium.png') }}">
+                                    {{ fleet.getPlanet().getUranium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'uraniumImg'|trans }}" src="{{ asset('img/uranium.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.moreUranium,{attr: { max: fleet.getPlanet().getUranium()}}) }}
@@ -325,7 +325,7 @@
                             </tr>
                             <tr{% if fleet.getPlanet().getSoldier() == 0 and fleet.getSoldier() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
-                                    {{ fleet.getSoldier()|number_format }} <img width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldierImg'|trans }}" src="{{ asset('img/soldier.png') }}">
+                                    {{ fleet.getSoldier()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldierImg'|trans }}" src="{{ asset('img/soldier.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.lessSoldier,{attr: { max: fleet.getSoldier()}}) }}
@@ -334,7 +334,7 @@
                                     <span class="maxInputR">max</span>
                                 </td>
                                 <th class="text-center p-1">
-                                    {{ fleet.getPlanet().getSoldier()|number_format }} <img width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldierImg'|trans }}" src="{{ asset('img/soldier.png') }}">
+                                    {{ fleet.getPlanet().getSoldier()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldierImg'|trans }}" src="{{ asset('img/soldier.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.moreSoldier,{attr: { max: fleet.getPlanet().getSoldier()}}) }}
@@ -345,7 +345,7 @@
                             </tr>
                             <tr{% if fleet.getPlanet().getTank() == 0 and fleet.getTank() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
-                                    {{ fleet.getTank()|number_format }} <img width="18" data-toggle="tooltip" data-placement="bottom" title="{{ 'tankImg'|trans }}" src="{{ asset('img/tanks.png') }}">
+                                    {{ fleet.getTank()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="18" data-toggle="tooltip" data-placement="bottom" title="{{ 'tankImg'|trans }}" src="{{ asset('img/tanks.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.lessTank,{attr: { max: fleet.getTank()}}) }}
@@ -354,7 +354,7 @@
                                     <span class="maxInputR">max</span>
                                 </td>
                                 <th class="text-center p-1">
-                                    {{ fleet.getPlanet().getTank()|number_format }} <img width="18" data-toggle="tooltip" data-placement="bottom" title="{{ 'tankImg'|trans }}" src="{{ asset('img/tanks.png') }}">
+                                    {{ fleet.getPlanet().getTank()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="18" data-toggle="tooltip" data-placement="bottom" title="{{ 'tankImg'|trans }}" src="{{ asset('img/tanks.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.moreTank,{attr: { max: fleet.getPlanet().getTank()}}) }}
@@ -365,7 +365,7 @@
                             </tr>
                             <tr{% if fleet.getPlanet().getWorker() == 0 and fleet.getWorker() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
-                                    {{ fleet.getWorker()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'workerImg'|trans }}" src="{{ asset('img/worker.png') }}">
+                                    {{ fleet.getWorker()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'workerImg'|trans }}" src="{{ asset('img/worker.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.lessWorker,{attr: { max: fleet.getWorker()}}) }}
@@ -374,7 +374,7 @@
                                     <span class="maxInputR">max</span>
                                 </td>
                                 <th class="text-center p-1">
-                                    {{ fleet.getPlanet().getWorker()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'workerImg'|trans }}" src="{{ asset('img/worker.png') }}">
+                                    {{ fleet.getPlanet().getWorker()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'workerImg'|trans }}" src="{{ asset('img/worker.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.moreWorker,{attr: { max: (fleet.getPlanet().getWorker() - 10000)}}) }}
@@ -385,7 +385,7 @@
                             </tr>
                             <tr{% if fleet.getPlanet().getScientist() == 0 and fleet.getScientist() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
-                                    {{ fleet.getScientist()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientistImg'|trans }}" src="{{ asset('img/scientist.png') }}">
+                                    {{ fleet.getScientist()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientistImg'|trans }}" src="{{ asset('img/scientist.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.lessScientist,{attr: { max: fleet.getScientist()}}) }}
@@ -394,7 +394,7 @@
                                     <span class="maxInputR">max</span>
                                 </td>
                                 <th class="text-center p-1">
-                                    {{ fleet.getPlanet().getScientist()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientistImg'|trans }}" src="{{ asset('img/scientist.png') }}">
+                                    {{ fleet.getPlanet().getScientist()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientistImg'|trans }}" src="{{ asset('img/scientist.png') }}">
                                 </th>
                                 <td class="center-cells p-1 px-4">
                                     {{ form_widget(form_manageFleet.moreScientist,{attr: { max: fleet.getPlanet().getScientist()}}) }}
@@ -421,49 +421,49 @@
                                 {% if fleet.getNiobium() > 0 %}
                                     <tr>
                                         <th class="tab-cells-name p-2 pl-4">
-                                            {{ 'fleet.niobium'|trans }} x {{ fleet.getNiobium()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_niobium', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
+                                            {{ 'fleet.niobium'|trans }} x {{ fleet.getNiobium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_niobium', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
                                         </th>
                                     </tr>
                                 {% endif %}
                                 {% if fleet.getWater() > 0 %}
                                     <tr>
                                         <th class="tab-cells-name p-2 pl-4">
-                                            {{ 'fleet.water'|trans }} x {{ fleet.getWater()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_water', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
+                                            {{ 'fleet.water'|trans }} x {{ fleet.getWater()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_water', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
                                         </th>
                                     </tr>
                                 {% endif %}
                                 {% if fleet.getUranium() > 0 %}
                                     <tr>
                                         <th class="tab-cells-name p-2 pl-4">
-                                            {{ 'fleet.uranium'|trans }} x {{ fleet.getUranium()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'uraniumImg'|trans }}" src="{{ asset('img/uranium.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
+                                            {{ 'fleet.uranium'|trans }} x {{ fleet.getUranium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'uraniumImg'|trans }}" src="{{ asset('img/uranium.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
                                         </th>
                                     </tr>
                                 {% endif %}
                                 {% if fleet.getSoldier() > 0 %}
                                     <tr>
                                         <th class="tab-cells-name p-2 pl-4">
-                                            {{ 'fleet.soldier'|trans }} x {{ fleet.getSoldier()|number_format }} <img width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldierImg'|trans }}" src="{{ asset('img/soldier.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_soldier', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
+                                            {{ 'fleet.soldier'|trans }} x {{ fleet.getSoldier()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldierImg'|trans }}" src="{{ asset('img/soldier.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_soldier', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
                                         </th>
                                     </tr>
                                 {% endif %}
                                 {% if fleet.getTank() > 0 %}
                                     <tr>
                                         <th class="tab-cells-name p-2 pl-4">
-                                            {{ 'fleet.tank'|trans }} x {{ fleet.getTank()|number_format }} <img width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'tankImg'|trans }}" src="{{ asset('img/tanks.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
+                                            {{ 'fleet.tank'|trans }} x {{ fleet.getTank()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'tankImg'|trans }}" src="{{ asset('img/tanks.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
                                         </th>
                                     </tr>
                                 {% endif %}
                                 {% if fleet.getWorker() > 0 %}
                                     <tr>
                                         <th class="tab-cells-name p-2 pl-4">
-                                            {{ 'fleet.worker'|trans }} x {{ fleet.getWorker()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'workerImg'|trans }}" src="{{ asset('img/worker.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_worker', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
+                                            {{ 'fleet.worker'|trans }} x {{ fleet.getWorker()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'workerImg'|trans }}" src="{{ asset('img/worker.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_worker', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
                                         </th>
                                     </tr>
                                 {% endif %}
                                 {% if fleet.getScientist() > 0 %}
                                     <tr>
                                         <th class="tab-cells-name p-2 pl-4">
-                                            {{ 'fleet.scientist'|trans }} x {{ fleet.getScientist()|number_format }} <img width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientistImg'|trans }}" src="{{ asset('img/scientist.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_scientist', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
+                                            {{ 'fleet.scientist'|trans }} x {{ fleet.getScientist()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientistImg'|trans }}" src="{{ asset('img/scientist.png') }}">{% if (fleet.getPlanet().getUser() or fleet.getPlanet().getMerchant() == true) and fleet.getFightAt() is null and fleet.flightTime() is null %} <span class="float-right"><a href="{{ path('discharge_fleet_scientist', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId() }) }}">{{ 'fleet.discharge'|trans }}</a></span>{% endif %}
                                         </th>
                                     </tr>
                                 {% endif %}
@@ -478,9 +478,9 @@
                             <tbody>
                                 <tr>
                                     <th class="tab-cells-name p-2 text-center">
-                                        {% if fleet.getPlanet().getEmpty() != 1 %}<a href="{{ path('map', {'sector': fleet.getPlanet().getSector().getId(), 'gal': fleet.getPlanet().getSector().getGalaxy.getId(), 'usePlanet': usePlanet.getId()}) }}"><img height="45" src="{{ vich_uploader_asset(fleet.getPlanet(), 'imageFile') }}"></a>{% endif %}
-                                        <div class="mt-2">{{ fleet.getPlanet().getNbCdr()|number_format }} <img width="15" src="{{ asset('img/niobium.png') }}"></div>
-                                        <div>{{ fleet.getPlanet().getWtCdr()|number_format }} <img width="15" src="{{ asset('img/water.png') }}"></div>
+                                        {% if fleet.getPlanet().getEmpty() != 1 %}<a href="{{ path('map', {'sector': fleet.getPlanet().getSector().getId(), 'gal': fleet.getPlanet().getSector().getGalaxy.getId(), 'usePlanet': usePlanet.getId()}) }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="45" src="{{ vich_uploader_asset(fleet.getPlanet(), 'imageFile') }}"></a>{% endif %}
+                                        <div class="mt-2">{{ fleet.getPlanet().getNbCdr()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" src="{{ asset('img/niobium.png') }}"></div>
+                                        <div>{{ fleet.getPlanet().getWtCdr()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" src="{{ asset('img/water.png') }}"></div>
                                     </th>
                                 </tr>
                             </tbody>

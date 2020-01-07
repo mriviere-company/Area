@@ -10,9 +10,9 @@
         <h3 class="text-center text-or mb-4">{{ 'ally.level'|trans }}{{ ally.getLevel() }}</h3>
         <div class="my-3"><span class="glyphicon glyphicon-bullhorn text-jaune mr-3"></span> {{ ally.getPolitic()|trans }} : '{{ ally.getSlogan() }}'</div>
         {% if ally.imageName %}
-            <div class="text-center"><img height="300" width="450" src="{{ vich_uploader_asset(ally, 'imageFile') }}"></div>
+            <div class="text-center"><img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ vich_uploader_asset(ally, 'imageFile') }}"></div>
         {% else %}
-            <div class="text-center"><img height="300" width="450" src="{{ asset('img/ally.jpg') }}"></div>
+            <div class="text-center"><img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ asset('img/ally.jpg') }}"></div>
         {% endif %}
         <div class="ml-5 my-4 text-left">« {{ ally.getDescription() }} »</div>
         <div class="my-3">

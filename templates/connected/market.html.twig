@@ -48,7 +48,7 @@
                         {% for quest in quests %}
                                 <tr class="text-center">
                                     <td>{{ quest.name|trans|raw }}</td>
-                                    <td>{{ quest.gain|number_format }} <img src="{{ asset('img/pdg.png') }}"></td>
+                                    <td>{{ quest.gain|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.png') }}"></td>
                                     <td>
                                         {% if quest.gain == 2500 %}
                                             <div class="text-or glyphicon glyphicon-star"></div>
@@ -78,7 +78,7 @@
                     </table>
                 {% endif %}
                 {{ form_start(form_market) }}
-                <img class="float-left" src="{{ asset('img/market.jpg') }}">
+                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left" src="{{ asset('img/market.jpg') }}">
                 <div class="row">
                     <div class="col-12 mb-5">
                         {{ 'market.text'|trans }}
@@ -111,7 +111,7 @@
                         {{ form_widget(form_market.sendForm) }}
                     </div>
                     <div class="col-12 mt-5">
-                        {{ 'market.pdg'|trans }} {{ app.user.getRank().getWarPoint()|number_format }} <img src="{{ asset('img/pdg.png') }}"> {{ 'market.pdgs'|trans }}
+                        {{ 'market.pdg'|trans }} {{ app.user.getRank().getWarPoint()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.png') }}"> {{ 'market.pdgs'|trans }}
                     </div>
                 </div>
                 {{ form_end(form_market) }}

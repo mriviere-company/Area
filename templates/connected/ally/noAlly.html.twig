@@ -66,9 +66,9 @@
                         <tr>
                             <td class="center-cells">
                                 {% if proposal.getAlly().getImageName() %}
-                                    <img height="10" width="15" src="{{ vich_uploader_asset(proposal.getAlly(), 'imageFile') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" height="10" width="15" src="{{ vich_uploader_asset(proposal.getAlly(), 'imageFile') }}">
                                 {% else %}
-                                    <img height="10" width="15" src="{{ asset('img/ally.jpg') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" height="10" width="15" src="{{ asset('img/ally.jpg') }}">
                                 {% endif %}
                                 <span><a href="{{ path('ally_profil', {'allyUser': proposal.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ proposal.getAlly().getName() }}</a></span>
                             </td>
@@ -92,13 +92,13 @@
             <h1 class="mb-5 text-or">{{ 'ally.advantagesPolitic'|trans }}</h1>
             <div class="row">
                 <div class="col-4">
-                    <img width="150" class="politic-border" data-toggle="tooltip" data-html="true" data-placement="top" title="{{ 'tooltip.communism'|trans }}" src="{{ asset('img/communism.jpg') }}">
+                    <img alt="{{ 'image'|trans({},'front_global') }}" width="150" class="politic-border" data-toggle="tooltip" data-html="true" data-placement="top" title="{{ 'tooltip.communism'|trans }}" src="{{ asset('img/communism.jpg') }}">
                 </div>
                 <div class="col-4">
-                    <img width="150" class="politic-border" data-toggle="tooltip" data-html="true" data-placement="top" title="{{ 'tooltip.democrat'|trans }}" src="{{ asset('img/democrat.jpg') }}">
+                    <img alt="{{ 'image'|trans({},'front_global') }}" width="150" class="politic-border" data-toggle="tooltip" data-html="true" data-placement="top" title="{{ 'tooltip.democrat'|trans }}" src="{{ asset('img/democrat.jpg') }}">
                 </div>
                 <div class="col-4">
-                    <img width="150" class="politic-border" data-toggle="tooltip" data-html="true" data-placement="top" title="{{ 'tooltip.fascism'|trans }}" src="{{ asset('img/fascism.jpg') }}">
+                    <img alt="{{ 'image'|trans({},'front_global') }}" width="150" class="politic-border" data-toggle="tooltip" data-html="true" data-placement="top" title="{{ 'tooltip.fascism'|trans }}" src="{{ asset('img/fascism.jpg') }}">
                 </div>
             </div>
             <div class="row">

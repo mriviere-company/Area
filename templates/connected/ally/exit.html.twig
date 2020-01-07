@@ -11,9 +11,9 @@
                 <h1 class="text-center text-orange mb-4">{{ app.user.getAlly().getName() }}<small> - [{{ app.user.getAlly().getSigle() }}]</small></h1>
                 <div class="text-center modify-allyImage">
                     {% if app.user.getAlly().getImageName() %}
-                        <img height="300" width="450" src="{{ vich_uploader_asset(app.user.getAlly(), 'imageFile') }}">
+                        <img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ vich_uploader_asset(app.user.getAlly(), 'imageFile') }}">
                     {% else %}
-                        <img height="300" width="450" src="{{ asset('img/ally.jpg') }}">
+                        <img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ asset('img/ally.jpg') }}">
                     {% endif %}
                 </div>
                 {{ form_start(form_allyImage,{attr: { hidden: 'hidden'}}) }}
