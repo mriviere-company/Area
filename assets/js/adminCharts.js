@@ -82,53 +82,9 @@ function managePageChart() {
     });
 }
 
-function manageHostChart() {
-    //doughnut
-    let host = $('#hostsChart').data("hostsChart");
-    let hostNbr = $('#hostsNbrChart').data("hostsNbrChart");
-    let ctxD = document.getElementById("hostChart").getContext('2d');
-    let myLineChart = new Chart(ctxD, {
-        type: 'doughnut',
-        data: {
-            labels: host,
-            datasets: [{
-                data: hostNbr,
-                backgroundColor: ["#41abb5", "#688e94", "#c48a02", "#c9001b", "#78136c", "#125c12", "#a35622", "#d9bb34", "#70b82e", "#d93866", "#b8b2b2", "#131414"],
-                hoverBackgroundColor: ["#d1cbcb", "#91c0c7", "#e3a005", "#e6001f", "#961787", "#1a7d1a", "#a34e15", "#917b17", "#599c1c", "#9e193f", "#238f99", "#2d3333"]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-}
-
-function manageIpChart() {
-    //doughnut
-    let ip = $('#ipsChart').data("ipsChart");
-    let ipNbr = $('#ipsNbrChart').data("ipsNbrChart");
-    let ctxD = document.getElementById("ipChart").getContext('2d');
-    let myLineChart = new Chart(ctxD, {
-        type: 'doughnut',
-        data: {
-            labels: ip,
-            datasets: [{
-                data: ipNbr,
-                backgroundColor: ["#41abb5", "#688e94", "#c48a02", "#c9001b", "#78136c", "#125c12", "#a35622", "#d9bb34", "#70b82e", "#d93866", "#b8b2b2", "#131414"],
-                hoverBackgroundColor: ["#d1cbcb", "#91c0c7", "#e3a005", "#e6001f", "#961787", "#1a7d1a", "#a34e15", "#917b17", "#599c1c", "#9e193f", "#238f99", "#2d3333"]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-}
-
 $(document).ready(function() {
     manageUsernameChart();
     manageRefererChart();
     manageBrowserChart();
     managePageChart();
-    manageHostChart();
-    manageIpChart();
 });

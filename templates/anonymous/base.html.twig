@@ -15,7 +15,7 @@
         {% include 'menu/_top_menu.html.twig' %}
     {%- endblock -%}
 
-    {{ render(controller('App\\Controller\\Track\\TrackController::trackAction')) }}
+    {{ render(controller('App\\Controller\\Track\\TrackController::trackAction', {'currentPage': app.request.attributes.get('_route')})) }}
         {% block body %}{% endblock %}
 
 

@@ -35,11 +35,6 @@ class Track
     protected $ip;
 
     /**
-     * @ORM\Column(name="host",type="string", length=40, nullable=true)
-     */
-    protected $host;
-
-    /**
      * @ORM\Column(name="browser",type="string", length=250, nullable=true)
      */
     protected $browser;
@@ -105,22 +100,6 @@ class Track
     public function setIp($ip): void
     {
         $this->ip = $ip;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getHost()
-    {
-        return $this->host;
-    }
-
-    /**
-     * @param mixed $host
-     */
-    public function setHost($host): void
-    {
-        $this->host = $host;
     }
 
     /**

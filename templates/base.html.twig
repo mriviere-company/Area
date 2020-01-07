@@ -25,7 +25,7 @@
             {{ render(controller('App\\Controller\\Connected\\AllPlanetsController::allPlanetsAction', {'usePlanet': usePlanet.getId(), 'id': 1})) }}
         {%- endblock -%}
 
-        {{ render(controller('App\\Controller\\Track\\TrackController::trackAction')) }}
+        {{ render(controller('App\\Controller\\Track\\TrackController::trackAction', {'currentPage': app.request.attributes.get('_route')})) }}
         {% block body %}{% endblock %}
 
         {%- block footer -%}

@@ -7,16 +7,13 @@
 {% block body %}
     <div class="front-block">
         <div class="front-block-second">
+            {{ ip }} {{ 'nbr.connect'|trans }}
             {% set referersTab = [] %}
             {% set referersNbrTab = [] %}
             {% set browsersTab = [] %}
             {% set browsersNbrTab = [] %}
             {% set pagesTab = [] %}
             {% set pagesNbrTab = [] %}
-            {% set hostsTab = [] %}
-            {% set hostsNbrTab = [] %}
-            {% set ipsTab = [] %}
-            {% set ipsNbrTab = [] %}
             {% set usernamesTab = [] %}
             {% set usernamesNbrTab = [] %}
             {% for username in usernames %}
@@ -43,18 +40,6 @@
                     {% set pagesNbrTab = pagesNbrTab|merge([(page['nbrPage'])]) %}
                 {% endif %}
             {% endfor %}
-            {% for host in hosts %}
-                {% if host['host'] != null %}
-                    {% set hostsTab = hostsTab|merge([(host['host'])]) %}
-                    {% set hostsNbrTab = hostsNbrTab|merge([(host['nbrHost'])]) %}
-                {% endif %}
-            {% endfor %}
-            {% for ip in ips %}
-                {% if ip['ip'] != null %}
-                    {% set ipsTab = ipsTab|merge([(ip['ip'])]) %}
-                    {% set ipsNbrTab = ipsNbrTab|merge([(ip['nbrIp'])]) %}
-                {% endif %}
-            {% endfor %}
             <div id="usernamesChart" data-usernames-chart="{{ usernamesTab|json_encode }}"></div>
             <div id="usernamesNbrChart" data-usernames-nbr-chart="{{ usernamesNbrTab|json_encode }}"></div>
             <div id="referersChart" data-referers-chart="{{ referersTab|json_encode }}"></div>
@@ -63,15 +48,9 @@
             <div id="browsersNbrChart" data-browsers-nbr-chart="{{ browsersNbrTab|json_encode }}"></div>
             <div id="pagesChart" data-pages-chart="{{ pagesTab|json_encode }}"></div>
             <div id="pagesNbrChart" data-pages-nbr-chart="{{ pagesNbrTab|json_encode }}"></div>
-            <div id="hostsChart" data-hosts-chart="{{ hostsTab|json_encode }}"></div>
-            <div id="hostsNbrChart" data-hosts-nbr-chart="{{ hostsNbrTab|json_encode }}"></div>
-            <div id="ipsChart" data-ips-chart="{{ ipsTab|json_encode }}"></div>
-            <div id="ipsNbrChart" data-ips-nbr-chart="{{ ipsNbrTab|json_encode }}"></div>
             <canvas class="mb-5" id="usernameChart" height="100"></canvas>
             <canvas class="mb-5" id="browserChart" height="100"></canvas>
             <canvas class="mb-5" id="pageChart" height="100"></canvas>
-            <canvas class="mb-5" id="hostChart" height="100"></canvas>
-            <canvas class="mb-5" id="ipChart" height="100"></canvas>
             <canvas class="mb-5" id="refererChart" height="100"></canvas>
             <script src="{{ asset('build/admin.js') }}"></script>
         </div>

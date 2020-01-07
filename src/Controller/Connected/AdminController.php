@@ -60,25 +60,14 @@ class AdminController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $hosts = $em->getRepository('App:Track')
+        $ip = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
-            ->select('DISTINCT(t.host) as host, count(t.host) as nbrHost')
-            ->groupBy('t.host')
+            ->select('count(DISTINCT t.ip) as nbrIp')
+            ->groupBy('nbrIp')
             ->where('t.date < :date')
             ->setParameters(['date' => $date])
-            ->orderBy('nbrHost', 'DESC')
             ->getQuery()
-            ->getResult();
-
-        $ips = $em->getRepository('App:Track')
-            ->createQueryBuilder('t')
-            ->select('DISTINCT(t.ip) as ip, count(t.ip) as nbrIp')
-            ->groupBy('t.ip')
-            ->where('t.date < :date')
-            ->setParameters(['date' => $date])
-            ->orderBy('nbrIp', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->getScalarResult();
 
         $usernames = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
@@ -96,8 +85,7 @@ class AdminController extends AbstractController
             'referers' => $referers,
             'browsers' => $browsers,
             'pages' => $pages,
-            'hosts' => $hosts,
-            'ips' => $ips,
+            'ip' => $ip,
             'usernames' => $usernames
         ]);
     }

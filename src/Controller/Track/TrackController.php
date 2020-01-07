@@ -10,7 +10,7 @@ use DateTime;
 
 class TrackController extends AbstractController
 {
-    public function trackAction()
+    public function trackAction($currentPage)
     {
         $user = $this->getUser();
         if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -20,7 +20,7 @@ class TrackController extends AbstractController
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        if ($user && $user->getUsername() == 'Dev' || $ip == '77.141.214.214') {
+        if ($user && $user->getUsername() == 'Dev' || $ip == '77.141.214.214' || $ip == '92.154.96.135') {
             return new Response ("");
         }
         $em = $this->getDoctrine()->getManager();
@@ -34,9 +34,6 @@ class TrackController extends AbstractController
 
         $track->setDate($now);
         $track->setIp($ip);
-
-        $host = gethostbyaddr($ip);
-        $track->setHost($host);
 
         $track->setBrowser($_SERVER['HTTP_USER_AGENT']);
 
@@ -53,7 +50,7 @@ class TrackController extends AbstractController
         }
         $track->setPreviousPage($referer);
 
-        if(isset($_SERVER['QUERY_STRING'])) {
+/*        if(isset($_SERVER['QUERY_STRING'])) {
             if ($_SERVER['QUERY_STRING'] == "") {
                 $page_courante = $_SERVER['PHP_SELF'];
             } else {
@@ -61,9 +58,9 @@ class TrackController extends AbstractController
             }
         } else {
             $page_courante = $_SERVER['PHP_SELF'];
-        }
+        }*/
 
-        $track->setPage($page_courante);
+        $track->setPage($currentPage);
 
         $em->persist($track);
         $em->flush();
