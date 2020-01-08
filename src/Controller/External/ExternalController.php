@@ -111,20 +111,21 @@ class ExternalController extends AbstractController
         $users = $em->getRepository('App:User')->findAll();
 
         foreach($users as $user) {
-            $message = (new \Swift_Message('Nouveau serveur Exile'))
-                ->setFrom('support@areauniverse.eu')
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView(
-                        'emails/new_email.html.twig',
-                        [
-                            'username' => $user->getUsername(),
-                            'key' => $user->getId() //fixmr encrypt
-                        ]
-                    ),
-                    'text/html'
-                );
-            $mailer->send($message);
+            if (stripos(strtoupper($user->getEmail()), 'FAKE') == FALSE) {
+                $message = (new \Swift_Message('Area Universe de retour en 2020'))
+                    ->setFrom('support@areauniverse.eu')
+                    ->setTo($user->getEmail())
+                    ->setBody(
+                        $this->renderView(
+                            'emails/new_server.html.twig',
+                            [
+                                'username' => $user->getUsername()
+                            ]
+                        ),
+                        'text/html'
+                    );
+                $mailer->send($message);
+            }
         }
 
         return $this->redirectToRoute('home');

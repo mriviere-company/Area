@@ -1,13 +1,13 @@
 <div style="margin-top: 2rem;margin-left: 3rem;"><img alt="{{ 'image'|trans({},'front_global') }}" src="{{ absolute_url(asset('img/logo.png')) }}"></div>
 
-<h3>Bonjour {{ username }} l'équipe d'Area Universe vous annonce l'ouverture d'un nouveau serveur !</h3>
+<h3>Bonne année {{ username }} !</h3>
 
-<div>Vous pouvez dès à présent rejoindre le serveur et profiter des dernières mises à jours.</div>
+<div>Dix galaxies et 409 joueurs n'attendent que toi ! Arrivera tu à t'y imposer ?</div>
 
-<div>Pour jouer cliquez <a href="{{ url('home') }}">ici</a>.</div>
+<div><a href="{{ url('home') }}">Rendez vous sur le jeu !</a></div>
 
-<div>Si vous avez oublié votre mot de passe <a href="{{ url('recoveryPw', {'key': id}) }}">cliquez ici</a> pour en obtenir un nouveau.</div>
+<div>Si tu as oublié ton mot de passe <a href="{{ url('recoveryPw', {'key': id}) }}">clique ici</a> pour en obtenir un nouveau.</div>
 
 <div>Area Universe.</div>
 
-<small><a href="{{ url('deactivate_newletter', {'key': key}) }}">Cliquer ici pour ne plus recevoir de mail.</a></small>
+<small><a href="{{ url('home') }}">Clique ici pour ne plus recevoir de mail.</a></small>
