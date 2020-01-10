@@ -57,70 +57,61 @@
             {{ form_end(form_navigate) }}
             <table class="table sector-table text-center sector">
                 {% if planets|length > 1 %}
-                <tbody>
+                    <tbody>
+                        <tr>
+                            <td class="special-cell"></td>
+                            <td class="special-cell"></td>
+                            <td class="special-cell"></td>
+                            <td class="special-cell">
+                                <span><a href="{{ path('map', {'sector':topSector}) }}"><span class="glyphicon glyphicon-chevron-up"></span></a></span>
+                            </td>
+                        </tr>
+                        {% set x = 1 %}
+                        {% for planet in planets %}
+                            {% if x == 1 %}
+                                <tr>
+                                    {% if planet.position != 11 %}
+                                        <td class="special-cell"></td>
+                                    {% endif %}
+                            {% endif %}
+                        {% if planet.position == 11 %}
+                            <td class="special-cell">
+                                <span><a href="{{ path('map', {'sector':leftSector, 'gal': gal}) }}"><span class="glyphicon glyphicon-chevron-left"></span></a></span>
+                            </td>
+                    {% endif %}
+                    {% if planet.empty == false %}
+                    <td class="center-cells pt-4">
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.planet'|trans({'%name%': planet.name }) }}" height="64" width="64" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">
+                        <div class="text-left ml-4{% if planet.cdr %} pp-cdr{% elseif planet.merchant %} pp-ia{% endif %} pp-enemy">{% if planet.user and planet.zombie == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/special.gif') }}">{% endif %} {{ 'map.planetHostile'|trans }} <span class="text-blanc text-middle">({{ planet.position }})</span></div>{% else %}">{% if planet.user and planet.zombie == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/special.gif') }}">{% endif %} <span class="pp-col">{{ planet.name }}</span> <span class="text-blanc text-middle">({{ planet.position }})</span></div>{% endif %}
+                    </td>
+                    {% else %}
+                {% else %}
+                <td class="center-cells">
+                    <div class="planet-position-empty">({{ planet.position }})</div>
+                </td>
+                {% endif %}
+                {% endif %}
+                {% if planet.position == 15 %}
+                    <td class="special-cell">
+                        <span><a href="{{ path('map', {'sector':rightSector, 'gal': gal}) }}"><span class="glyphicon glyphicon-chevron-right"></span></a></span>
+                    </td>
+                {% endif %}
+                {% set x = x + 1 %}
+                {% if x == 6 %}
+                {% set x = 1 %}
+                </tr>
+                {% endif %}
+                {% endfor %}
                 <tr>
                     <td class="special-cell"></td>
                     <td class="special-cell"></td>
                     <td class="special-cell"></td>
                     <td class="special-cell">
-                        <span><a href="{{ path('map', {'sector':topSector}) }}"><span class="glyphicon glyphicon-chevron-up"></span></a></span>
+                        <span><a href="{{ path('map', {'sector':bottomSector, 'gal': gal}) }}"><span class="glyphicon glyphicon-chevron-down"></span></a></span>
                     </td>
                 </tr>
-                {% set x = 1 %}
-                {% for planet in planets %}
-                {% set fleetPresent = 0 %}
-                {% if viewFleets %}
-                    {% for viewFleet in viewFleets %}
-                        {% if viewFleet.id == planet.id %}
-                            {% set fleetPresent = 1 %}
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
-                {% if x == 1 %}
-                <tr>
-                    {% if planet.position != 11 %}
-                        <td class="special-cell"></td>
-                    {% endif %}
-                    {% endif %}
-                    {% if planet.position == 11 %}
-                        <td class="special-cell">
-                            <span><a href="{{ path('map', {'sector':leftSector, 'gal': gal}) }}"><span class="glyphicon glyphicon-chevron-left"></span></a></span>
-                        </td>
-                    {% endif %}
-                    {% if planet.empty == false %}
-                    <td class="center-cells pt-4">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.planet'|trans({'%name%': planet.name }) }}" height="64" width="64" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">
-                        <div class="text-left ml-4{% if planet.cdr %} pp-cdr{% elseif planet.merchant %} pp-ia{% endif %}{% if planet.user %}{% if planet.user == app.user.getId() %} pp-mine{% elseif (app.user.getAlly() and planet.sigle == app.user.getAlly().getSigle()) and planet.alliance != null  or app.user.getOurAllyPact(planet.sigle) %} pp-ally{% else %} pp-enemy{% endif %}">{% if planet.user and planet.zombie == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/special.gif') }}">{% endif %} {{ 'map.planetHostile'|trans }} <span class="text-blanc text-middle">({{ planet.position }})</span></div>{% else %}">{% if planet.user and planet.zombie == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/special.gif') }}">{% endif %} <span class="pp-col">{{ planet.name }}</span> <span class="text-blanc text-middle">({{ planet.position }})</span></div>{% endif %}
-                    </td>
-                    {% else %}
-        {% else %}
-        <td class="center-cells">
-            <div class="planet-position-empty">({{ planet.position }})</div>
-        </td>
-        {% endif %}
-        {% endif %}
-        {% if planet.position == 15 %}
-        <td class="special-cell">
-            <span><a href="{{ path('map', {'sector':rightSector, 'gal': gal}) }}"><span class="glyphicon glyphicon-chevron-right"></span></a></span>
-        </td>
-        {% else %}
-        {% endif %}
-        {% set x = x + 1 %}
-        {% if x == 6 %}
-        {% set x = 1 %}
-        </tr>
-        {% endif %}
-        {% endfor %}
-        <tr>
-            <td class="special-cell"></td>
-            <td class="special-cell"></td>
-            <td class="special-cell"></td>
-            <td class="special-cell">
-                <span><a href="{{ path('map', {'sector':bottomSector, 'gal': gal}) }}"><span class="glyphicon glyphicon-chevron-down"></span></a></span>
-            </td>
-        </tr>
-        </tbody>
-        {% endif %}
+                </tbody>
+            {% endif %}
         </table>
     </div>
         <div class="mt-5 sector-info">
