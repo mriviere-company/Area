@@ -1,0 +1,199 @@
+{% extends 'anonymous/base.html.twig' %}
+
+{% trans_default_domain 'front_map' %}
+
+{% block title %}{{ 'title'|trans }}{% endblock %}
+
+{% block body %}
+    {%- block top_menu -%}
+    {%- endblock -%}
+    {% set topSector = id - 10 %}
+    {% if topSector < 0 %}
+        {% set topSector = id + 90 %}
+    {% endif %}
+    {% set rightSector = id + 1 %}
+    {% if rightSector == 101 %}
+        {% set rightSector = 1 %}
+    {% endif %}
+    {% set bottomSector = id + 10 %}
+    {% if bottomSector > 100 %}
+        {% set bottomSector = id - 90 %}
+    {% endif %}
+    {% set leftSector = id - 1 %}
+    {% if leftSector == 0 %}
+        {% set leftSector = 100 %}
+    {% endif %}
+    <div class="front-block galaxy">
+        {% if app.user.getTutorial() == 15 or app.user.getTutorial() == 16 %}
+        <table class="table table-striped borderOverview tutorial">
+            <tbody>
+            <tr>
+                <th class="tab-cells-name p-3 tutorial">
+                    <div class="row">
+                        <div class="col-12 py-1">
+                            {% if app.user.getTutorial() == 15  %}{{ 'sector.tutorial'|trans|raw }}{% elseif app.user.getTutorial() == 16  %}{{ 'sector.tutorialBis'|trans|raw }}{% endif %}
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            </tbody>
+        </table>
+        {% endif %}
+        <div class="map-block-sector">
+            {{ form_start(form_navigate) }}
+            <div class="row mb-2 navigate">
+                <div class="col-2 pt-1 text-more text-right">{{ form_label(form_navigate.galaxy) }}</div>
+                <div class="col-1">
+                    {{ form_widget(form_navigate.galaxy) }}
+                </div>
+                <div class="col-2 pt-1 text-more text-right">{{ form_label(form_navigate.sector) }}</div>
+                <div class="col-1">
+                    {{ form_widget(form_navigate.sector) }}
+                </div>
+                <div class="col-1">
+                    {{ form_widget(form_navigate.sendForm) }}
+                </div>
+            </div>
+            {{ form_end(form_navigate) }}
+            <table class="table sector-table text-center sector">
+                {% if planets|length > 1 %}
+                <tbody>
+                <tr>
+                    <td class="special-cell"></td>
+                    <td class="special-cell"></td>
+                    <td class="special-cell"></td>
+                    <td class="special-cell">
+                        <span><a href="{{ path('map', {'sector':topSector}) }}"><span class="glyphicon glyphicon-chevron-up"></span></a></span>
+                    </td>
+                </tr>
+                {% set x = 1 %}
+                {% for planet in planets %}
+                {% set fleetPresent = 0 %}
+                {% if viewFleets %}
+                    {% for viewFleet in viewFleets %}
+                        {% if viewFleet.id == planet.id %}
+                            {% set fleetPresent = 1 %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                {% if x == 1 %}
+                <tr>
+                    {% if planet.position != 11 %}
+                        <td class="special-cell"></td>
+                    {% endif %}
+                    {% endif %}
+                    {% if planet.position == 11 %}
+                        <td class="special-cell">
+                            <span><a href="{{ path('map', {'sector':leftSector, 'gal': gal}) }}"><span class="glyphicon glyphicon-chevron-left"></span></a></span>
+                        </td>
+                    {% endif %}
+                    {% if planet.empty == false %}
+                    <td class="center-cells pt-4">
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.planet'|trans({'%name%': planet.name }) }}" height="64" width="64" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">
+                        <div class="text-left ml-4{% if planet.cdr %} pp-cdr{% elseif planet.merchant %} pp-ia{% endif %}{% if planet.user %}{% if planet.user == app.user.getId() %} pp-mine{% elseif (app.user.getAlly() and planet.sigle == app.user.getAlly().getSigle()) and planet.alliance != null  or app.user.getOurAllyPact(planet.sigle) %} pp-ally{% else %} pp-enemy{% endif %}">{% if planet.user and planet.zombie == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/special.gif') }}">{% endif %} {{ 'map.planetHostile'|trans }} <span class="text-blanc text-middle">({{ planet.position }})</span></div>{% else %}">{% if planet.user and planet.zombie == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/special.gif') }}">{% endif %} <span class="pp-col">{{ planet.name }}</span> <span class="text-blanc text-middle">({{ planet.position }})</span></div>{% endif %}
+                    </td>
+                    {% else %}
+        {% else %}
+        <td class="center-cells">
+            <div class="planet-position-empty">({{ planet.position }})</div>
+        </td>
+        {% endif %}
+        {% endif %}
+        {% if planet.position == 15 %}
+        <td class="special-cell">
+            <span><a href="{{ path('map', {'sector':rightSector, 'gal': gal}) }}"><span class="glyphicon glyphicon-chevron-right"></span></a></span>
+        </td>
+        {% else %}
+        {% endif %}
+        {% set x = x + 1 %}
+        {% if x == 6 %}
+        {% set x = 1 %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+        <tr>
+            <td class="special-cell"></td>
+            <td class="special-cell"></td>
+            <td class="special-cell"></td>
+            <td class="special-cell">
+                <span><a href="{{ path('map', {'sector':bottomSector, 'gal': gal}) }}"><span class="glyphicon glyphicon-chevron-down"></span></a></span>
+            </td>
+        </tr>
+        </tbody>
+        {% endif %}
+        </table>
+    </div>
+        <div class="mt-5 sector-info">
+            <div class="block-title"><h2>{{ 'map.current'|trans }} <span class="glyphicon glyphicon-question-sign text-orange text-middle" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.fleetHere'|trans }}"></span></h2></div>
+            <table class="table table-striped table-bordered table-dark">
+                <tbody>
+                <tr>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.fleetName'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.name'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.from'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.goTo'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.time'|trans }}
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-2 sector-info">
+            <div class="block-title"><h2>{{ 'map.coming'|trans }} <span class="glyphicon glyphicon-question-sign text-orange text-middle" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.fleetEntrance'|trans }}"></span></h2></div>
+            <table class="table table-striped table-bordered table-dark">
+                <tbody>
+                <tr>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.fleetName'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.name'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.from'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.goTo'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.time'|trans }}
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="mt-2 sector-info">
+            <div class="block-title"><h2>{{ 'map.out'|trans }} <span class="glyphicon glyphicon-question-sign text-orange text-middle" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.fleetQuit'|trans }}"></span></h2></div>
+            <table class="table table-striped table-bordered table-dark">
+                <tbody>
+                <tr>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.fleetName'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.name'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.from'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.goTo'|trans }}
+                    </th>
+                    <th class="tab-cells-name text-center">
+                        {{ 'map.time'|trans }}
+                    </th>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

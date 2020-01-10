@@ -50,16 +50,6 @@ class AdminController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $browsers = $em->getRepository('App:Track')
-            ->createQueryBuilder('t')
-            ->select('DISTINCT(t.browser) as browser, count(t.browser) as nbrBrowser')
-            ->groupBy('browser')
-            ->where('t.date < :date')
-            ->setParameters(['date' => $date])
-            ->orderBy('nbrBrowser', 'DESC')
-            ->getQuery()
-            ->getResult();
-
         $pages = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
             ->select('DISTINCT(t.page) as page, count(t.page) as nbrPage')
@@ -92,7 +82,6 @@ class AdminController extends AbstractController
         return $this->render('connected/admin/dashboard.html.twig', [
             'usePlanet' => $usePlanet,
             'referers' => $referers,
-            'browsers' => $browsers,
             'computers' => $computers,
             'pages' => $pages,
             'ip' => $ip,

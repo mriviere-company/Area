@@ -40,27 +40,6 @@ function manageRefererChart() {
     });
 }
 
-function manageBrowserChart() {
-    //doughnut
-    let browser = $('#browsersChart').data("browsersChart");
-    let browserNbr = $('#browsersNbrChart').data("browsersNbrChart");
-    let ctxD = document.getElementById("browserChart").getContext('2d');
-    let myLineChart = new Chart(ctxD, {
-        type: 'doughnut',
-        data: {
-            labels: browser,
-            datasets: [{
-                data: browserNbr,
-                backgroundColor: ["#41abb5", "#688e94", "#c48a02", "#c9001b", "#78136c", "#125c12", "#a35622", "#d9bb34", "#70b82e", "#d93866", "#b8b2b2", "#131414"],
-                hoverBackgroundColor: ["#d1cbcb", "#91c0c7", "#e3a005", "#e6001f", "#961787", "#1a7d1a", "#a34e15", "#917b17", "#599c1c", "#9e193f", "#238f99", "#2d3333"]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-}
-
 function managePageChart() {
     //doughnut
     let page = $('#pagesChart').data("pagesChart");
@@ -106,7 +85,6 @@ function manageComputerChart() {
 $(document).ready(function() {
     manageUsernameChart();
     manageRefererChart();
-    manageBrowserChart();
     managePageChart();
     manageComputerChart();
 });

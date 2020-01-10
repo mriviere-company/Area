@@ -10,8 +10,6 @@
             {{ ip }} {{ 'nbr.connect'|trans }}
             {% set referersTab = [] %}
             {% set referersNbrTab = [] %}
-            {% set browsersTab = [] %}
-            {% set browsersNbrTab = [] %}
             {% set pagesTab = [] %}
             {% set pagesNbrTab = [] %}
             {% set usernamesTab = [] %}
@@ -36,12 +34,6 @@
                     {% set referersNbrTab = referersNbrTab|merge([(referer['nbrPreviousPage'])]) %}
                 {% endif %}
             {% endfor %}
-            {% for browser in browsers %}
-                {% if browser['browser'] != null %}
-                    {% set browsersTab = browsersTab|merge([(browser['browser'])]) %}
-                    {% set browsersNbrTab = browsersNbrTab|merge([(browser['nbrBrowser'])]) %}
-                {% endif %}
-            {% endfor %}
             {% for page in pages %}
                 {% if page['page'] != null %}
                     {% set pagesTab = pagesTab|merge([(page['page'])]) %}
@@ -52,8 +44,6 @@
             <div id="usernamesNbrChart" data-usernames-nbr-chart="{{ usernamesNbrTab|json_encode }}"></div>
             <div id="referersChart" data-referers-chart="{{ referersTab|json_encode }}"></div>
             <div id="referersNbrChart" data-referers-nbr-chart="{{ referersNbrTab|json_encode }}"></div>
-            <div id="browsersChart" data-browsers-chart="{{ browsersTab|json_encode }}"></div>
-            <div id="browsersNbrChart" data-browsers-nbr-chart="{{ browsersNbrTab|json_encode }}"></div>
             <div id="pagesChart" data-pages-chart="{{ pagesTab|json_encode }}"></div>
             <div id="pagesNbrChart" data-pages-nbr-chart="{{ pagesNbrTab|json_encode }}"></div>
             <div id="computersChart" data-computers-chart="{{ computersTab|json_encode }}"></div>
@@ -62,7 +52,6 @@
             <canvas class="mb-5" id="pageChart" height="250"></canvas>
             <canvas class="mb-5" id="computerChart" height="250"></canvas>
             <canvas class="mb-5" id="refererChart" height="250"></canvas>
-            <canvas class="mb-5" id="browserChart" height="250"></canvas>
             <script src="{{ asset('build/admin.js') }}"></script>
         </div>
     </div>
