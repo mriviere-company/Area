@@ -29,9 +29,9 @@
         <div class="building">
             <div id="timeDefaut" hidden>{{ "now"|date("d/m/Y") }}</div>
             {% if usePlanet.getConstruct() == 'destruct' %}
-            <div class="block-title text-rouge text-center p-4"><h2>{{ 'building.destroyBuild'|trans }}<span class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</span></h2></div>
+            <div class="text-rouge text-center p-2"><h2>{{ 'building.destroyBuild'|trans }}<span class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</span></h2></div>
             {% endif %}
-            <div class="block-title ml-4"><h2>{{ 'building.titleRessource'|trans }}</h2></div>
+            <div class="block-title"><h1>{{ 'building.titleRessource'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 {%  if usePlanet.getMoon() == false %}
@@ -357,7 +357,7 @@
                     {% set x = x + 1 %}
                 {% endfor %}
             </div>
-            <div class="block-title mt-5 ml-4"><h2>{{ 'building.titleEco'|trans }}</h2></div>
+            <div class="block-title"><h1>{{ 'building.titleEco'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 <tr class="access-build">
@@ -490,7 +490,7 @@
                 {% endif %}
                 </tbody>
             </table>
-            <div class="block-title mt-5 ml-4"><h2>{{ 'building.titleShip'|trans }}</h2></div>
+            <div class="block-title"><h1>{{ 'building.titleShip'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 {% if app.user.getDiscipline() <= 0 and usePlanet.getCaserne() == 0 %}
@@ -785,7 +785,7 @@
                 {% endif %}
                 </tbody>
             </table>
-            <div class="block-title mt-5 ml-4"><h2>{{ 'building.titleSpy'|trans }}</h2></div>
+            <div class="block-title"><h1>{{ 'building.titleSpy'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 {% if app.user.getOnde() <= 0 and usePlanet.getRadar() == 0 %}
@@ -932,7 +932,7 @@
                 </tbody>
             </table>
             {% if app.user.getZombie() == 0 %}
-                <div class="block-title ml-4"><h2>{{ 'building.titleExtra'|trans }}</h2></div>
+                <div class="block-title"><h1>{{ 'building.titleExtra'|trans }}</h1></div>
                 <table class="table table-striped table-bordered table-dark text-center">
                     <tbody>
                     {% if app.user.getExpansion() <= 0 and usePlanet.getIsland() == 0 %}

@@ -86,7 +86,7 @@ class Planet
     protected $shipProduction;
 
     /**
-     * @ORM\OneToOne(targetEntity="Product", mappedBy="planet", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Product", mappedBy="planet", fetch="EXTRA_LAZY", cascade={"persist"})
      */
     protected $product;
 

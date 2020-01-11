@@ -23,7 +23,7 @@
         {% endif %}
         <div class="research">
             <div id="timeDefaut" hidden>{{ "now"|date('Y/m/d H:i:s') }}</div>
-            <div class="block-title ml-4 mt-5"><h2>{{ 'research.titleUtility'|trans }}</h2></div>
+            <div class="block-title"><h1>{{ 'research.titleUtility'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 <tr class="{% if app.user.getUtility() == 3 %}finish-search{% else %}access-search{% endif %}">
@@ -286,7 +286,7 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="block-title mt-5 ml-4"><h2>{{ 'research.titleEco'|trans }}</h2></div>
+            <div class="block-title"><h1>{{ 'research.titleEco'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 <tr class="{% if app.user.getAeroponicFarm() == 1 %}finish-search{% else %}access-search-2{% endif %}">
@@ -521,7 +521,7 @@
                 {% endif %}
                 </tbody>
             </table>
-            <div class="block-title mt-5 ml-4"><h2>{{ 'research.titleArm'|trans }}</h2></div>
+            <div class="block-title"><h1>{{ 'research.titleArm'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 <tr class="{% if app.user.getArmement() == 5 %}finish-search{% else %}access-search{% endif %}">
@@ -684,7 +684,7 @@
                 {% endif %}
                 </tbody>
             </table>
-            <div class="block-title mt-5 ml-4"><h2>{{ 'research.titleWar'|trans }}</h2></div>
+            <div class="block-title"><h1>{{ 'research.titleWar'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 <tr class="{% if app.user.getIndustry() == 5 %}finish-search{% else %}access-search{% endif %}">
@@ -804,7 +804,7 @@
                 {% endif %}
                 </tbody>
             </table>
-            <div class="block-title mt-5 ml-4"><h2>{{ 'research.titleAlly'|trans }}</h2></div>
+            <div class="block-title"><h1>{{ 'research.titleAlly'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 {% if app.user.getAlly() == null %}

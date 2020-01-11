@@ -432,9 +432,8 @@ class CronTaskController extends AbstractController
             ->createQueryBuilder('p')
             ->join('p.fleets', 'f')
             ->join('f.user', 'u')
-            ->leftJoin('f.destination', 'd')
             ->where('u.id = :user')
-            ->andWhere('d.id is null')
+            ->andWhere('f.flightTime is null')
             ->setParameters(['user' => $hydra->getId()])
             ->getQuery()
             ->getResult();
@@ -463,6 +462,48 @@ class CronTaskController extends AbstractController
                 }
                 $one->setSignature($one->getNbrSignatures());
                 $em->persist($one);
+            }
+        }
+        echo "Horde regroupés finis.";
+        $em->flush();
+        exit;
+    }
+
+    /**
+     * @Route("/test/", name="test")
+     */
+    public function testAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+
+        $planets = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->join('p.fleets', 'f')
+            ->join('f.user', 'u')
+            ->where('u.id = :user')
+            ->andWhere('f.flightTime is null')
+            ->setParameters(['user' => $hydra->getId()])
+            ->getQuery()
+            ->getResult();
+        $newFleet = NULL;
+        foreach ($planets as $planet) {
+            if (count($planet->getFleets()) > 1) {
+                foreach ($planet->getFleets() as $fleet) {
+                    if ($fleet->getUser() == $hydra) {
+                        if ($newFleet != $fleet) {
+                            $newFleet = clone $fleet;
+                            $one = (object)(array_merge((array)$newFleet, (array)$fleet));
+                            var_dump($one); exit;
+                            $one = new Fleet();
+                        }
+                        $fleet->setUser(null);
+                        $em->remove($fleet);
+                    }
+                }
+                $one->setSignature($one->getNbrSignatures());
+                $em->persist($one);
+                var_dump($one->getNbrSignatures());
             }
         }
         echo "Horde regroupés finis.";
