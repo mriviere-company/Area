@@ -1036,7 +1036,7 @@
                         {% endif %}
                         </tbody>
                     </table>
-                    {% if app.user.getShip().getMax() > 0 %}<div class="block-title mt-4"><h2>{{ 'ship.lastPoints'|trans({'%nbr%': app.user.getShip().getMax()}) }}</h2></div>{% else %}<div class="block-title mt-4"><h2>{{ 'ship.nextUpdate'|trans }} <span class="timerArea" hidden>{{ app.user.getShip().getLastUpdate()|date('Y/m/d H:i:s') }}</span></h2></div>{% endif %}
+                    {% if app.user.getShip().getRemainingPoints() > 0 %}{% if app.user.getShip().getMax() > 0  %}<div class="block-title mt-4"><h2>{{ 'ship.lastPoints'|trans({'%nbr%': app.user.getShip().getMax()}) }}</h2></div>{% else %}<div class="block-title mt-4"><h2>{{ 'ship.nextUpdate'|trans }} <span class="timerArea" hidden>{{ app.user.getShip().getLastUpdate()|date('Y/m/d H:i:s') }}</span></h2></div>{% endif %}{% endif %}
                 </div>
             </div>
             <canvas class="mt-5" id="doughnutChart" height="150"></canvas><script src="{{ asset('build/shipsCharts.js') }}"></script>

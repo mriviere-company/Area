@@ -249,7 +249,7 @@ class CronTaskController extends AbstractController
         $fleetCdrs = $em->getRepository('App:Fleet')
             ->createQueryBuilder('f')
             ->join('f.planet', 'p')
-            ->where('f.recycleAt < :now or f.recycleAt is null')
+            ->where('f.recycleAt < :now')
             ->andWhere('f.recycleur > :zero')
             ->andWhere('f.flightTime is null')
             ->andWhere('p.nbCdr > :zero or p.wtCdr > :zero')

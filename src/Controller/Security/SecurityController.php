@@ -265,7 +265,7 @@ class SecurityController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
-        if (!$user->getSpecUsername()) {
+        if ($user->getUsername() != 'admin' && !$user->getSpecUsername()) {
         if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } else {
@@ -290,7 +290,9 @@ class SecurityController extends AbstractController
         }
         } else {
             $userIp = null;
-            $user->setIpAddress(null);
+            if ($user->getUsername() != 'admin') {
+                $user->setIpAddress(null);
+            }
         }
 
         if ($this->getUser()->getRoles()[0] == 'ROLE_USER') {

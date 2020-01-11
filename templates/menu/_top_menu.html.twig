@@ -5,6 +5,9 @@
         <span class="btn-top dropdown-toggle" data-toggle="dropdown">{{ 'game'|trans }}</span>
         <ul class="dropdown-menu menu-home" role="menu">
             <li>
+                <a class="btn-menu" href="{{ path('medias') }}">{{ 'media'|trans }}</a>
+            </li>
+            <li>
                 <a class="btn-menu" href="{{ path('point_game') }}">{{ 'objective'|trans }}</a>
             </li>
             <li>
@@ -12,8 +15,8 @@
             </li>
         </ul>
     </div>
-    <a class="btn-top" href="{{ path('medias') }}">{{ 'media'|trans }}</a>
-    <a class="btn-top" target="_blank" href="http://area-control.forumactif.com/">{{ 'forum'|trans }}</a>
+    <a class="btn-top" href="{{ path('universe_unconnected') }}">{{ 'univers'|trans }}</a>
+    <a class="btn-top" href="{{ path('contact_noSlash') }}">{{ 'rank'|trans }}</a>
     <div>
         <a href="{{ path('home') }}"><img alt="{{ 'image'|trans({},'front_global') }}" width="80" src="{{ asset('img/logo.png') }}">
             <span class="uni-title">UNIVERSE</span>
@@ -26,34 +29,6 @@
     </div>
     {% if is_granted('ROLE_ADMIN') %}
         <a class="btn-top" href="{{ path('administration') }}">{{ 'easyadmin'|trans }}</a>
-        {#<div class="btn-group">
-            <ul class="dropdown-menu menu-home" role="menu">
-                <li>
-                    <a class="btn-menu" href="{{ path('active_server') }}" target="_blank">{{ 'serveur.activate'|trans }}</a>
-                </li>
-                <li>
-                    <a class="btn-menu" href="{{ path('deactive_server') }}" target="_blank">{{ 'serveur.deactivate'|trans }}</a>
-                </li>
-                <li>
-                    <a class="btn-menu" href="{{ path('create') }}" target="_blank">{{ 'serveur.createBig'|trans }}</a>
-                </li>
-                <li>
-                    <a class="btn-menu" href="{{ path('create_little') }}" target="_blank">{{ 'serveur.createLittle'|trans }}</a>
-                </li>
-                <li>
-                    <a class="btn-menu" href="{{ path('destroy_sectors') }}" target="_blank">{{ 'serveur.kill.sector'|trans }}</a>
-                </li>
-                <li>
-                    <a class="btn-menu" href="{{ path('destroy') }}" target="_blank">{{ 'serveur.kill.serveur'|trans }}</a>
-                </li>
-                <li>
-                    <a class="btn-menu" href="{{ path('mail_while') }}">{{ 'adminMail'|trans }}</a>
-                </li>
-                <li>
-                    <a class="btn-menu" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>
-                </li>
-            </ul>
-        </div>#}
     {% endif %}
     {% if is_granted('ROLE_USER') %}
         <a class="btn-top" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>

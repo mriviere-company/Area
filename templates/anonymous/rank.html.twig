@@ -1,8 +1,73 @@
 {% extends 'anonymous/base.html.twig' %}
 
-{% trans_default_domain 'front_rank' %}
+{% trans_default_domain 'front_user_rank' %}
+
+{% block title %}{{ 'title'|trans }}{% endblock %}
 
 {% block body %}
-    {%- block top_menu -%}
-    {%- endblock -%}
+    <div class="front-block">
+        <div class="front-block-second">
+            {% set otherPdg = [] %}
+            {% set otherAllPoints = [] %}
+            {% set date = [] %}
+            {% for otherPoint in otherPoints %}
+                {% set otherPdg = otherPdg|merge([(otherPoint['allPdg'] / otherPoint['numbers'])|round]) %}
+                {% set otherAllPoints = otherAllPoints|merge([(otherPoint['allPoint'] / otherPoint['numbers'])|round]) %}
+                {% set date = date|merge([otherPoint['date']|date("d/m/Y")]) %}
+            {% endfor %}
+            <div id="pdgOtherPoints" data-pdg-other-points="{{ otherPdg|json_encode }}"></div>
+            <div id="pointOtherPoints" data-point-other-points="{{ otherAllPoints|json_encode }}"></div>
+            <div id="pdgDate" data-pdg-date="{{ date|json_encode }}"></div>
+            <canvas class="mb-5" id="publicChart" height="100"></canvas>
+            <script src="{{ asset('build/publicCharts.js') }}"></script>
+        </div>
+        <table class="table table-striped borderOverview table-dark text-center">
+            <tbody>
+            <tr>
+                <th width="15px" class="th-sm">
+                    {{ 'rank.position'|trans }}
+                </th>
+                <th class="th-sm text-left">
+                    {{ 'rank.user'|trans }}
+                </th>
+                <th class="th-sm">
+                    {{ 'rank.planets'|trans }}
+                </th>
+                <th class="th-sm">
+                    {{ 'rank.points'|trans }}
+                </th>
+                <th class="th-sm">
+                    {{ 'rank.pdg'|trans }}
+                </th>
+                <th class="th-sm">
+                    {{ 'rank.createdAt'|trans }}
+                </th>
+            </tr>
+            {% set x = 1 %}
+            {% for user in users %}
+                <tr>
+                    <th width="15px" class="tab-cells-name p-2">
+                        {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> {{ x }}.{% else %}<div class="glyphicon glyphicon-star" hidden></div> {{ x }}.{% endif %}
+                    </th>
+                    <th class="tab-cells-name p-2 text-left">
+                        {% if user.alliance %}<span><a href="{{ path('home') }}">[{{ user.sigle }}]</a></span> {% endif %}<span><a href="{{ path('home') }}">{{ user.username }}</a>{% if user.politic == 'democrat' %}<div class="ml-2 text-vert glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="top" title="{{ 'democrat'|trans }}"></div>{% elseif user.politic == 'communism' %}<div class="ml-2 text-rouge glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="top" title="{{ 'communism'|trans }}"></div>{% elseif user.politic == 'fascism' %}<div class="ml-2 text-blanc glyphicon glyphicon-flash" data-toggle="tooltip" data-placement="top" title="{{ 'fascism'|trans }}"></div>{% endif %}</span>
+                    </th>
+                    <th class="tab-cells-name p-2">
+                        {{ user.planets|number_format }}
+                    </th>
+                    <th class="tab-cells-name p-2">
+                        {{ user.point|number_format }}
+                    </th>
+                    <th class="tab-cells-name p-2">
+                        {{ user.warPoint|number_format }}
+                    </th>
+                    <th class="tab-cells-name p-2">
+                        {{ user.createdAt|date('d/m/Y') }}
+                    </th>
+                </tr>
+                {% set x = x + 1 %}
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

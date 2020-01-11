@@ -8,3 +8,7 @@ galaxy.players: '%players% joueurs'
 server: Serveur
 galaxy.destroy: Détruire
 galaxy.create: Créer
+logout: Déconnexion
+serveur:
+  kill:
+    serveur: Détruire

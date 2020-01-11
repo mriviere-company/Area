@@ -117,4 +117,40 @@ class TopMenuController extends AbstractController
             'form_contact' => $form_contact->createView(),
         ]);
     }
+
+    /**
+     * @Route("/classement-joueurs/{_locale}", name="contact", defaults={"_locale" = "fr"}, requirements={"_locale" = "fr|en|de"})
+     * @Route("/classement-joueurs", name="contact_noSlash")
+     */
+    public function rankUserUncoAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $users = $em->getRepository('App:User')
+            ->createQueryBuilder('u')
+            ->join('u.planets', 'p')
+            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, u.id, u.username, r.point as point, r.warPoint as warPoint, u.createdAt, a.politic as politic')
+            ->leftJoin('u.rank', 'r')
+            ->leftJoin('u.ally', 'a')
+            ->groupBy('u.id')
+            ->where('u.rank is not null')
+            ->andWhere('u.id != :one')
+            ->andWhere('r.point > :one')
+            ->setParameters(['one' => 200])
+            ->orderBy('point', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        $otherPoints = $em->getRepository('App:Stats')
+            ->createQueryBuilder('s')
+            ->select('count(s) as numbers, sum(DISTINCT s.pdg) as allPdg, sum(DISTINCT s.points) as allPoint, s.date')
+            ->groupBy('s.date')
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('anonymous/rank.html.twig', [
+            'users' => $users,
+            'otherPoints' => $otherPoints
+        ]);
+    }
 }

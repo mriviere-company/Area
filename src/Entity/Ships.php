@@ -1573,4 +1573,12 @@ class Ships
     {
         return $this->accurateHunter + $this->accurateHunterHeavy + $this->accurateHunterWar + $this->accurateCorvet + $this->accurateCorvetLaser + $this->accurateCorvetWar + $this->accurateFregate + $this->accurateFregatePlasma + $this->accurateCroiser + $this->accurateIronClad + $this->accurateDestroyer;
     }
+
+    /**
+     * @return int
+     */
+    public function getRemainingPoints(): int
+    {
+        return $this->pointHunter + $this->pointHunterHeavy + $this->pointHunterWar + $this->pointCorvet + $this->pointCorvetLaser + $this->pointCorvetWar + $this->pointFregate + $this->pointFregatePlasma + $this->pointCroiser + $this->pointIronClad + $this->pointDestroyer;
+    }
 }

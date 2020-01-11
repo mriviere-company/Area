@@ -1481,6 +1481,7 @@ class FleetController  extends AbstractController
             $planetTake->setMoonMaker($moonMaker);
             $planetTake->setRadarShip($radarShip);
             $planetTake->setBrouilleurShip($brouilleurShip);
+            $planetTake->setMotherShip($motherShip);
             $planetTake->setSonde($sonde);
             $planetTake->setHunter($hunter);
             $planetTake->setHunterHeavy($hunterHeavy);

@@ -5,14 +5,12 @@
 {% block title %}{{ 'title'|trans }}{% endblock %}
 
 {% block body %}
-    {%- block top_menu -%}
-    {%- endblock -%}
-    <div class="front-block">
+    <div class="front-block-spatial-unco">
         {% for galaxy in galaxys %}
-            <a href="{{ path('galaxy', {'id': galaxy.position}) }}"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
+            <a href="{{ path('home') }}"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
         {% endfor %}
         <div class="mt-3 galaxy-info text-center">
-            {{ 'universe.domination'|trans }}{% if zombies %}<span class="ml-2">(<a href="{{ path('user_profil', {'userPlanet': zombies.id}) }}">[{{ 'universe.zombie'|trans }}]</a></span> <span class="{% if (zombies.number * 100 / totalPlanet) > 1 %}text-rouge{% else %}text-vert{% endif %}">{{ (zombies.number * 100 / totalPlanet) }}%</span>){% endif %}{% for dom in doms %}<span class="ml-3">(<a href="{{ path('ally_profil', {'allyUser': dom.id}) }}">[{{ dom.alliance }}]</a></span> {{ (dom.number * 100 / totalPlanet ) }}%){% endfor %}
+            {{ 'universe.domination'|trans }}{% if zombies %}<span class="ml-2">(<a href="{{ path('home') }}">[{{ 'universe.zombie'|trans }}]</a></span> <span class="{% if (zombies.number * 100 / totalPlanet) > 1 %}text-rouge{% else %}text-vert{% endif %}">{{ (zombies.number * 100 / totalPlanet) }}%</span>){% endif %}{% for dom in doms %}<span class="ml-3">(<a href="{{ path('home') }}">[{{ dom.alliance }}]</a></span> {{ (dom.number * 100 / totalPlanet ) }}%){% endfor %}
         </div>
     </div>
 {% endblock %}

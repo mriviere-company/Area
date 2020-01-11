@@ -7,20 +7,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
 
-/**
- * @Route("/connect")
- * @Security("is_granted('ROLE_USER')")
- */
 class UniverseController extends AbstractController
 {
     /**
+     * @Route("/univers/", name="universe_unconnected")
      * @Route("/univers/{usePlanet}", name="universe", requirements={"usePlanet"="\d+"})
      */
-    public function universeAction(Planet $usePlanet)
+    public function universeAction(Planet $usePlanet = NULL)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet && $usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
 
@@ -65,6 +62,16 @@ class UniverseController extends AbstractController
             ->groupBy('s.id')
             ->getQuery()
             ->getSingleScalarResult();
+
+
+        if (!$usePlanet) {
+            return $this->render('anonymous/universe.html.twig', [
+                'galaxys' => $galaxys,
+                'doms' => $doms,
+                'zombies' => $zombies,
+                'totalPlanet' => $totalPlanet
+            ]);
+        }
 
         return $this->render('connected/map/universe.html.twig', [
             'galaxys' => $galaxys,
