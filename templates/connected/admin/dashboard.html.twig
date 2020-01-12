@@ -12,6 +12,8 @@
             {% set referersNbrTab = [] %}
             {% set pagesTab = [] %}
             {% set pagesNbrTab = [] %}
+            {% set uniquePagesTab = [] %}
+            {% set uniquePagesNbrTab = [] %}
             {% set usernamesTab = [] %}
             {% set usernamesNbrTab = [] %}
             {% set computersTab = [] %}
@@ -40,16 +42,25 @@
                     {% set pagesNbrTab = pagesNbrTab|merge([(page['nbrPage'])]) %}
                 {% endif %}
             {% endfor %}
+            {% for uniquePage in uniquePages %}
+                {% if uniquePage['uniquePage'] != null %}
+                    {% set uniquePagesTab = uniquePagesTab|merge([(uniquePage['uniquePage'])]) %}
+                    {% set uniquePagesNbrTab = uniquePagesNbrTab|merge([(uniquePage['nbrPage'])]) %}
+                {% endif %}
+            {% endfor %}
             <div id="usernamesChart" data-usernames-chart="{{ usernamesTab|json_encode }}"></div>
             <div id="usernamesNbrChart" data-usernames-nbr-chart="{{ usernamesNbrTab|json_encode }}"></div>
             <div id="referersChart" data-referers-chart="{{ referersTab|json_encode }}"></div>
             <div id="referersNbrChart" data-referers-nbr-chart="{{ referersNbrTab|json_encode }}"></div>
+            <div id="uniquePagesChart" data-unique-pages-chart="{{ uniquePagesTab|json_encode }}"></div>
+            <div id="uniquePagesNbrChart" data-unique-pages-nbr-chart="{{ uniquePagesNbrTab|json_encode }}"></div>
             <div id="pagesChart" data-pages-chart="{{ pagesTab|json_encode }}"></div>
             <div id="pagesNbrChart" data-pages-nbr-chart="{{ pagesNbrTab|json_encode }}"></div>
             <div id="computersChart" data-computers-chart="{{ computersTab|json_encode }}"></div>
             <div id="computersNbrChart" data-computers-nbr-chart="{{ computersNbrTab|json_encode }}"></div>
             <canvas class="mb-5" id="usernameChart" height="250"></canvas>
             <canvas class="mb-5" id="pageChart" height="250"></canvas>
+            <canvas class="mb-5" id="uniquePageChart" height="250"></canvas>
             <canvas class="mb-5" id="computerChart" height="250"></canvas>
             <canvas class="mb-5" id="refererChart" height="250"></canvas>
             <script src="{{ asset('build/admin.js') }}"></script>

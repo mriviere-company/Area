@@ -32,7 +32,7 @@ class AdminController extends AbstractController
 
         $referers = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
-            ->select('DISTINCT(t.previousPage) as previousPage, count(t.previousPage) as nbrPreviousPage')
+            ->select('DISTINCT(t.previousPage) as previousPage, count(DISTINCT CONCAT(t.previousPage, t.ip)) as nbrPreviousPage')
             ->groupBy('previousPage')
             ->where('t.date < :date')
             ->setParameters(['date' => $date])
@@ -42,7 +42,7 @@ class AdminController extends AbstractController
 
         $computers = $em->getRepository('App:Track')
             ->createQueryBuilder('t')
-            ->select('DISTINCT(t.computer) as computer, count(t.computer) as nbrComputer')
+            ->select('DISTINCT(t.computer) as computer, count(DISTINCT CONCAT(t.computer, t.ip)) as nbrComputer')
             ->groupBy('computer')
             ->where('t.date < :date')
             ->setParameters(['date' => $date])
@@ -54,6 +54,16 @@ class AdminController extends AbstractController
             ->createQueryBuilder('t')
             ->select('DISTINCT(t.page) as page, count(t.page) as nbrPage')
             ->groupBy('page')
+            ->where('t.date < :date')
+            ->setParameters(['date' => $date])
+            ->orderBy('nbrPage', 'DESC')
+            ->getQuery()
+            ->getResult();
+
+        $uniquePages = $em->getRepository('App:Track')
+            ->createQueryBuilder('t')
+            ->select('DISTINCT(t.page) as uniquePage, count(DISTINCT CONCAT(t.page, t.ip)) as nbrPage')
+            ->groupBy('uniquePage')
             ->where('t.date < :date')
             ->setParameters(['date' => $date])
             ->orderBy('nbrPage', 'DESC')
@@ -84,6 +94,7 @@ class AdminController extends AbstractController
             'referers' => $referers,
             'computers' => $computers,
             'pages' => $pages,
+            'uniquePages' => $uniquePages,
             'ip' => $ip,
             'usernames' => $usernames
         ]);

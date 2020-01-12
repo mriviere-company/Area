@@ -475,7 +475,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @Assert\File(
-     *     maxSize="1000k",
+     *     maxSize="600k",
      *     mimeTypes={"image/png", "image/jpeg", "image/bmp"}
      * )
      * @Vich\UploadableField(mapping="user_img", fileNameProperty="imageName", size="imageSize" )

@@ -341,7 +341,7 @@ class BotController extends AbstractController
                 $bot->setLastActivity($now);
             }
 
-            if (rand(1, 600) == 1) {
+            if (rand(1, 1000) == 1) {
                 $planetsSeller = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
                     ->where('p.user = :user')
@@ -373,7 +373,7 @@ class BotController extends AbstractController
                 // créer une flotte et l'envoyer recyclage
                 $bot->setLastActivity($now);
             }
-            if (rand(1, 800) == 1 && $messageSent == 1) {
+            if (rand(1, 1500) == 1 && $messageSent == 1) {
                 $message = new S_Content();
                 $messageSent = 0;
                 $message->setSalon($salon);
