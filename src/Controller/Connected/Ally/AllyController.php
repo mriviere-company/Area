@@ -59,6 +59,7 @@ class AllyController extends AbstractController
         $form_vote->handleRequest($request);
 
         if ($form_allyImage->isSubmitted() && $form_allyImage->isValid()) {
+            $ally->setImageName(null);
             $em->flush();
         }
 

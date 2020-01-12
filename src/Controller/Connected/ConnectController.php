@@ -124,6 +124,7 @@ class ConnectController extends AbstractController
         $nextZombie->add(new DateInterval('PT' . 144 . 'H'));
         $user->setZombieAt($nextZombie);
         $user->setGameOver(null);
+        $salon->removeUser($user);
         $salon->addUser($user);
         foreach ($user->getQuests() as $quest) {
             $user->removeQuest($quest);

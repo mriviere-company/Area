@@ -1,5 +1,5 @@
 {% trans_default_domain 'front_menu' %}
 
 <div class="footer">
-    <a class="footer-left" href="https://www.mriviere.eu/" target="_blank">{{ 'mriviere'|trans }}</a>
+    <a class="footer-left" href="https://www.mriviere.eu/" target="_blank">{{ 'mriviere'|trans }}{% if 'maj.mriviere.eu' in app.request.uri %} - <span class="text-orange">{{ 'under.maj'|trans }}</span>{% endif %}</a>
 </div>
