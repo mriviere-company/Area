@@ -170,6 +170,7 @@ a:focus {
 
 a:hover {
   color: orangered!important;
+  text-decoration: none;
 }
 
 #planet_rename_name {
@@ -379,6 +380,45 @@ a:hover {
 
 span a {
   color: orange;
+}
+
+.navbar-left a div span {
+  color: white;
+}
+
+.navbar-left a div span:hover {
+  color: #FC7F23;
+  text-decoration: none;
+}
+
+.navbar-left a:hover {
+  color: #FC7F23;
+  text-decoration: none;
+  div span {
+    color: #FC7F23;
+    text-decoration: none;
+  }
+}
+
+.navbar-left a:focus {
+  color: #FC7F23;
+  text-decoration: none;
+  div span {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.right-link-planet a div span {
+    color: orange;
+    text-decoration: none;
+}
+
+.right-link-planet a:hover {
+    div span {
+      color: #FC7F23;
+      text-decoration: none;
+  }
 }
 
 li a {

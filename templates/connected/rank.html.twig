@@ -79,6 +79,9 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="front-block-second">
+        <div class="text-center text-vert">{{ 'rank.nbrPlayers'|trans({'%nbrPlayer%': nbrPlayers|number_format})|raw }}</div>
+        </div>
     </div>
     <div class="modal fade" id="allyModal" tabindex="-1" role="dialog" aria-labelledby="allyModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

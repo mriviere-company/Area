@@ -93,7 +93,14 @@ class RankController extends AbstractController
             ->setParameters(['one' => 200])
             ->orderBy('point', 'DESC')
             ->getQuery()
+            ->setMaxResults(100)
             ->getResult();
+
+        $nbrPlayers = $em->getRepository('App:Rank')
+            ->createQueryBuilder('r')
+            ->select('count(r.id) as nbrPlayer')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         $otherPoints = $em->getRepository('App:Stats')
             ->createQueryBuilder('s')
@@ -107,6 +114,7 @@ class RankController extends AbstractController
         return $this->render('connected/rank.html.twig', [
             'usePlanet' => $usePlanet,
             'users' => $users,
+            'nbrPlayers' => $nbrPlayers - 100,
             'otherPoints' => $otherPoints
         ]);
     }
