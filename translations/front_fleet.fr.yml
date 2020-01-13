@@ -173,6 +173,7 @@ tooltip.destroy: 'Supprimer la Cohorte de flottes ?'
 tooltip.invade: 'Cliquez pour envahir cette planète.'
 tooltip.colonize: 'Cliquez pour coloniser cette planète.'
 tooltip.recycle: 'Temps avant prochain recyclage.'
+tooltip.combat: 'Bataille spatiale en cours'
 fleet.deleteList: Supprimer
 sonde: Sondes
 nuclearBomb: 'Missile nucléaire'

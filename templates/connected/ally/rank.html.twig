@@ -70,10 +70,18 @@
                         <span><a data-toggle="modal" data-target="#allyModal" href="{{ path('ally_profil_modal', {'allyUser': ally.id, 'usePlanet': usePlanet.getId()}) }}">[{{ ally.sigle }}] {{ ally.name }}</a>{% if ally.politic == 'democrat' %}<div class="ml-2 text-vert glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="top" title="{{ 'democrat'|trans }}"></div>{% elseif ally.politic == 'communism' %}<div class="ml-2 text-rouge glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="top" title="{{ 'communism'|trans }}"></div>{% else %}<div class="ml-2 text-blanc glyphicon glyphicon-flash" data-toggle="tooltip" data-placement="top" title="{{ 'fascism'|trans }}"></div>{% endif %}</span>
                     </th>
                     <th class="tab-cells-name p-2">
-                        {{ ally.users }} / {{ ally.maxMembers }}
+                        {% if ally.politic == 'communism' or ally.politic == 'fascism' %}
+                        ?? / {{ ally.maxMembers }}
+                        {% else %}
+                            {{ ally.users }} / {{ ally.maxMembers }}
+                        {% endif %}
                     </th>
                     <th class="tab-cells-name p-2">
-                       {{ ally.planets|number_format }}
+                        {% if ally.politic == 'communism' or ally.politic == 'fascism' %}
+                            ???
+                        {% else %}
+                            {{ ally.planets|number_format }}
+                        {% endif %}
                     </th>
                     <th class="tab-cells-name p-2">
                         {{ ally.point|number_format }}

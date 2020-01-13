@@ -63,7 +63,11 @@
                         {% if user.alliance %}<span><a data-toggle="modal" data-target="#allyModal"  href="{{ path('ally_profil_modal', {'allyUser': user.alliance, 'usePlanet': usePlanet.getId()}) }}">[{{ user.sigle }}]</a></span> {% endif %}<span><a data-toggle="modal" data-target="#userModal"  href="{{ path('user_profil_modal', {'userPlanet': user.id, 'usePlanet': usePlanet.getId()}) }}">{{ user.username }}</a>{% if user.politic == 'democrat' %}<div class="ml-2 text-vert glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="top" title="{{ 'democrat'|trans }}"></div>{% elseif user.politic == 'communism' %}<div class="ml-2 text-rouge glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="top" title="{{ 'communism'|trans }}"></div>{% elseif user.politic == 'fascism' %}<div class="ml-2 text-blanc glyphicon glyphicon-flash" data-toggle="tooltip" data-placement="top" title="{{ 'fascism'|trans }}"></div>{% endif %}</span>
                     </th>
                     <th class="tab-cells-name p-2">
-                        {{ user.planets|number_format }}
+                        {% if user.politic == 'communism' or user.politic == 'fascism' %}
+                            ??
+                        {% else %}
+                            {{ user.planets|number_format }}
+                        {% endif %}
                     </th>
                     <th class="tab-cells-name p-2">
                         {{ user.point|number_format }}

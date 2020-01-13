@@ -81,6 +81,10 @@ class TrackController extends AbstractController
             $track->setPreviousPage('Google');
         } elseif (stripos(strtoupper($referer), 'JEUXVIDEO') !== FALSE) {
             $track->setPreviousPage('JeuxVideo');
+        } elseif (stripos(strtoupper($referer), 'BING') !== FALSE) {
+            $track->setPreviousPage('Bing');
+        } elseif (stripos(strtoupper($referer), 'MRIVIERE') !== FALSE) {
+            $track->setPreviousPage('Mriviere');
         } else {
             $track->setPreviousPage($referer);
         }

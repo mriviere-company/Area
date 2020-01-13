@@ -382,7 +382,7 @@ span a {
   color: orange;
 }
 
-.navbar-left a div span {
+.navbar-left a div span:not(.text-vert) {
   color: white;
 }
 
@@ -394,7 +394,7 @@ span a {
 .navbar-left a:hover {
   color: #FC7F23;
   text-decoration: none;
-  div span {
+  div span:not(.text-vert) {
     color: #FC7F23;
     text-decoration: none;
   }
