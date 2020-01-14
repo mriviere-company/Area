@@ -475,39 +475,38 @@ class CronTaskController extends AbstractController
     public function testAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
 
-        $planets = $em->getRepository('App:Planet')
-            ->createQueryBuilder('p')
-            ->join('p.fleets', 'f')
+        $demoFleets = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
             ->join('f.user', 'u')
             ->where('u.id = :user')
             ->andWhere('f.flightTime is null')
-            ->setParameters(['user' => $hydra->getId()])
+            ->setParameters(['user' => 1])
+            ->orderBy('f.attack', 'ASC')
             ->getQuery()
             ->getResult();
-        $newFleet = NULL;
-        foreach ($planets as $planet) {
-            if (count($planet->getFleets()) > 1) {
-                foreach ($planet->getFleets() as $fleet) {
-                    if ($fleet->getUser() == $hydra) {
-                        if ($newFleet != $fleet) {
-                            $newFleet = clone $fleet;
-                            $one = (object)(array_merge((array)$newFleet, (array)$fleet));
-                            var_dump($one); exit;
-                            $one = new Fleet();
-                        }
-                        $fleet->setUser(null);
-                        $em->remove($fleet);
-                    }
-                }
-                $one->setSignature($one->getNbrSignatures());
-                $em->persist($one);
-                var_dump($one->getNbrSignatures());
+
+        foreach ($demoFleets as $demoFleet) {
+            $fleetRegroups = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->where('f.planet = :planet')
+                ->andWhere('f.flightTime is null')
+                ->andWhere('f.user = :user')
+                ->setParameters(['planet' => $demoFleet->getPlanet(), 'user' => $demoFleet->getUser()])
+                ->orderBy('f.signature', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+            if (count($fleetRegroups) > 1) {
+                echo "Regroupement Flottes : ";
+                $cronValue = $this->forward('App\Controller\Connected\Execute\FleetsController::oneFleetAction', [
+                    'fleetRegroups' => $fleetRegroups,
+                    'demoFleet' => $demoFleet,
+                    'em' => $em
+                ]);
+                echo $cronValue->getContent() ? $cronValue->getContent() : "<span style='color:#FF0000'>KO<span><br/>";
             }
         }
-        echo "Horde regroupés finis.";
-        $em->flush();
         exit;
     }
 }

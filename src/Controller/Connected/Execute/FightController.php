@@ -13,6 +13,39 @@ class FightController extends AbstractController
     {
         $winner = null;
 
+        $demoFleets = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->join('f.planet', 'p')
+            ->where('p.id = :id')
+            ->andWhere('f.flightTime is null')
+            ->setParameters(['id' => $firstFleet['id']])
+            ->orderBy('f.attack', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($demoFleets as $demoFleet) {
+            $fleetRegroups = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->join('f.planet', 'p')
+                ->where('p.id = :id')
+                ->andWhere('f.flightTime is null')
+                ->andWhere('f.user = :user')
+                ->setParameters(['id' => $firstFleet['id'], 'user' => $demoFleet->getUser()])
+                ->orderBy('f.signature', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+            if (count($fleetRegroups) > 1) {
+                echo "Regroupement Flottes : ";
+                $cronValue = $this->forward('App\Controller\Connected\Execute\FleetsController::oneFleetAction', [
+                    'fleetRegroups'  => $fleetRegroups,
+                    'demoFleet'  => $demoFleet,
+                    'em'  => $em
+                ]);
+                echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            }
+        }
+
         $fleetsWars = $em->getRepository('App:Fleet')
             ->createQueryBuilder('f')
             ->join('f.planet', 'p')

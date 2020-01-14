@@ -57,7 +57,7 @@ class MarketController extends AbstractController
             if(!$planetBuy) {
                 $planetBuy = $usePlanet;
             }
-            $cost = (abs($form_market->get('bitcoin')->getData()) / 5) + (abs($form_market->get('soldier')->getData()) * 5) + (abs($form_market->get('worker')->getData()) * 2);
+            $cost = (abs($form_market->get('bitcoin')->getData())) + (abs($form_market->get('soldier')->getData())) + (abs($form_market->get('worker')->getData()));
             $cost = ceil($cost);
             if(($cost > $user->getRank()->getWarPoint() ||
                 ($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData())) > $planetBuy->getSoldierMax()) ||
@@ -74,9 +74,9 @@ class MarketController extends AbstractController
                 return $this->redirectToRoute('market', ['usePlanet' => $usePlanet->getId()]);
             }
 
-            $user->setBitcoin($user->getBitcoin() + abs($form_market->get('bitcoin')->getData()));
+            $user->setBitcoin($user->getBitcoin() + abs($form_market->get('bitcoin')->getData() / 5));
             $planetBuy->setSoldier($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData()));
-            $planetBuy->setWorker($planetBuy->getWorker() + abs($form_market->get('worker')->getData()));
+            $planetBuy->setWorker($planetBuy->getWorker() + abs($form_market->get('worker')->getData() * 2));
             $user->getRank()->setWarPoint($user->getRank()->getWarPoint() - $cost);
             $quest = $user->checkQuests('pdg');
             if($quest) {

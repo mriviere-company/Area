@@ -5,6 +5,7 @@ namespace App\Controller\Connected\Execute;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
+use App\Entity\Fleet;
 use DateTimeZone;
 use DateInterval;
 use DateTime;
@@ -167,6 +168,62 @@ class FleetsController extends AbstractController
                 $fleetCdr->getUser()->removeQuest($quest);
             }
         }
+        echo "Flush ";
+
+        $em->flush();
+
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
+    }
+
+    public function oneFleetAction($fleetRegroups, $demoFleet)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $one = new Fleet();
+        $one->setUser($demoFleet->getUser());
+        $one->setPlanet($demoFleet->getPlanet());
+        $one->setName($demoFleet->getName());
+        $one->setAttack($demoFleet->getAttack());
+        $one->setFightAt($demoFleet->getFightAt());
+        $one->setAlly($demoFleet->getAlly());
+        $one->setFleetList($demoFleet->getFleetList());
+        foreach ($fleetRegroups as $fleetRegroup) {
+            $one->setSonde($one->getSonde() + $fleetRegroup->getSonde());
+            $one->setCargoI($one->getCargoI() + $fleetRegroup->getCargoI());
+            $one->setCargoV($one->getCargoV() + $fleetRegroup->getCargoV());
+            $one->setCargoX($one->getCargoX() + $fleetRegroup->getCargoX());
+            $one->setColonizer($one->getColonizer() + $fleetRegroup->getColonizer());
+            $one->setRecycleur($one->getRecycleur() + $fleetRegroup->getRecycleur());
+            $one->setBarge($one->getBarge() + $fleetRegroup->getBarge());
+            $one->setMoonMaker($one->getMoonMaker() + $fleetRegroup->getMoonMaker());
+            $one->setRadarShip($one->getRadarShip() + $fleetRegroup->getRadarShip());
+            $one->setBrouilleurShip($one->getBrouilleurShip() + $fleetRegroup->getBrouilleurShip());
+            $one->setMotherShip($one->getMotherShip() + $fleetRegroup->getMotherShip());
+            $one->setHunter($one->getHunter() + $fleetRegroup->getHunter());
+            $one->setHunterHeavy($one->getHunterHeavy() + $fleetRegroup->getHunterHeavy());
+            $one->setHunterWar($one->getHunterWar() + $fleetRegroup->getHunterWar());
+            $one->setCorvet($one->getCorvet() + $fleetRegroup->getCorvet());
+            $one->setCorvetLaser($one->getCorvetLaser() + $fleetRegroup->getCorvetLaser());
+            $one->setCorvetWar($one->getCorvetWar() + $fleetRegroup->getCorvetWar());
+            $one->setFregate($one->getFregate() + $fleetRegroup->getFregate());
+            $one->setFregatePlasma($one->getFregatePlasma() + $fleetRegroup->getFregatePlasma());
+            $one->setCroiser($one->getCroiser() + $fleetRegroup->getCroiser());
+            $one->setIronClad($one->getIronClad() + $fleetRegroup->getIronClad());
+            $one->setDestroyer($one->getDestroyer() + $fleetRegroup->getDestroyer());
+            $one->setSoldier($one->getSoldier() + $fleetRegroup->getSoldier());
+            $one->setTank($one->getTank() + $fleetRegroup->getTank());
+            $one->setWorker($one->getWorker() + $fleetRegroup->getWorker());
+            $one->setScientist($one->getScientist() + $fleetRegroup->getScientist());
+            $one->setNiobium($one->getNiobium() + $fleetRegroup->getNiobium());
+            $one->setWater($one->getWater() + $fleetRegroup->getWater());
+            $one->setFood($one->getFood() + $fleetRegroup->getFood());
+            $one->setUranium($one->getUranium() + $fleetRegroup->getUranium());
+            $one->setNuclearBomb($one->getNuclearBomb() + $fleetRegroup->getNuclearBomb());
+            $fleetRegroup->setUser(null);
+            $em->remove($fleetRegroup);
+        }
+        $one->setSignature($one->getNbrSignatures());
+        $em->persist($one);
         echo "Flush ";
 
         $em->flush();
