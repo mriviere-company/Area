@@ -306,16 +306,24 @@ class Fleet
     /**
      * @return string
      */
-    public function getFleetTags(): string
+    public function getFleetTags($usePlanet): string
     {
         $attack = '';
         if($this->getAttack() == 1) {
             $attack = "<span class='text-rouge'> [Attaque]</span>";
         }
-        if($this->getUser()->getAlly()) {
-            $return = "<span class='text-orange'>[" . $this->getUser()->getAlly()->getSigle() . "]" . " " . $this->getUser()->getAlly()->getName() . "</span> - " . $this->getUser()->getUserName() . " -> " . $this->getName() . $attack;
+        if ($usePlanet) {
+            if($this->getUser()->getAlly()) {
+                $return = "<span class='text-bleu'>[" . $this->getUser()->getAlly()->getSigle() . "] " . $this->getUser()->getAlly()->getName() . "</span> - " . "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getUser()->getUserName() . " -> "  . $this->getName() . $attack . "</a></span>";
+            } else {
+                $return = "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getUser()->getUserName() . " -> "  . $this->getName() . $attack . "</a></span>";
+            }
         } else {
-            $return = $this->getUser()->getUserName();
+            if($this->getUser()->getAlly()) {
+                $return = "<span class='text-bleu'>[" . $this->getUser()->getAlly()->getSigle() . "]" . " " . $this->getUser()->getAlly()->getName() . "</span> - " . $this->getUser()->getUserName() . " -> " . $this->getName() . $attack;
+            } else {
+                $return = $this->getUser()->getUserName() . " -> "  . $this->getName() . $attack;
+            }
         }
         return $return;
     }

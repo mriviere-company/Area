@@ -30,13 +30,12 @@ class FightController extends AbstractController
                 ->where('p.id = :id')
                 ->andWhere('f.flightTime is null')
                 ->andWhere('f.user = :user')
-                ->having('count(f.id) >= 2')
                 ->setParameters(['id' => $firstFleet['id'], 'user' => $demoFleet->getUser()])
                 ->orderBy('f.signature', 'DESC')
                 ->getQuery()
                 ->getResult();
 
-            if ($fleetRegroups) {
+            if (count($fleetRegroups) > 1) {
                 echo "Regroupement Flottes : ";
                 $cronValue = $this->forward('App\Controller\Connected\Execute\FleetsController::oneFleetAction', [
                     'fleetRegroups'  => $fleetRegroups,
@@ -328,11 +327,11 @@ class FightController extends AbstractController
         }
 
         if ($zombie == 1) {
-            $warPointA = round((($armorSaveA - $armor > 0 ? $armor : 0) / 100) / $nbrBlockDef);
-            $warPointB = round((($armorSaveD - $armorD > 0 ? $armorD : 0) / 100) / $nbrBlockAtt);
+            $warPointA = round((($armorSaveA - ($armor > 1 ? $armor : 0)) / 100) / $nbrBlockDef);
+            $warPointB = round((($armorSaveD - ($armorD > 1 ? $armorD : 0)) / 100) / $nbrBlockAtt);
         } else {
-            $warPointA = round((($armorSaveA - $armor > 0 ? $armor : 0) / 20) / $nbrBlockDef);
-            $warPointB = round((($armorSaveD - $armorD > 0 ? $armorD : 0) / 20) / $nbrBlockAtt);
+            $warPointA = round((($armorSaveA - ($armor > 1 ? $armor : 0)) / 20) / $nbrBlockDef);
+            $warPointB = round((($armorSaveD - ($armorD > 1 ? $armorD : 0)) / 20) / $nbrBlockAtt);
         }
 
         if ($armorD > $armor) {
@@ -343,6 +342,7 @@ class FightController extends AbstractController
                 $armorD = $armorSaveD / 20;
             }
             foreach($blockDef as $defenderWin) {
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($defenderWin->getUser()->getUsername());
                 $reportWinDef = new Report();
                 $reportWinDef->setType('fight');
                 $reportWinDef->setSendAt($now);
@@ -350,7 +350,7 @@ class FightController extends AbstractController
                 $reportWinDef->setTitle("Rapport de combat : Victoire");
                 $reportWinDef->setUser($defenderWin->getUser());
                 foreach ($blockDef as $fleetA) {
-                    $player = $fleetA->getFleetTags();
+                    $player = $fleetA->getFleetTags($usePlanet);
                     if($armorSaveD != $armorD) {
                         $percentArmor = ($fleetA->getArmor() * 100) / $armorSaveD;
                         $newArmor = round($fleetA->getArmor() - (round($percentArmor * $armorD) / 100));
@@ -362,12 +362,12 @@ class FightController extends AbstractController
                 }
                 $reportWinDef->setContent($reportWinDef->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 2</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSAtt . " tir(s) pour percer les boucliers</th></tr>");
                 foreach ($blockAtt as $fleetB) {
-                    $player = $fleetB->getFleetTags();
+                    $player = $fleetB->getFleetTags(NULL);
                     $lose = $fleetB->getShipsLoseReport();
                     $reportWinDef->setContent($reportWinDef->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $lose . "</th></tr>");
                 }
                 $reportWinDef->setContent($reportWinDef->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $countShot . " rounds de combat.</th></tr></tbody></table>");
-                $reportWinDef->setContent($reportWinDef->getContent() . "Vous avez gagné le combat en ("  . $defenderWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $defenderWin->getPlanet()->getSector()->getPosition() . "." . $defenderWin->getPlanet()->getPosition() . ") , vous remportez " . number_format($warPointA) . " points de Guerre");
+                $reportWinDef->setContent($reportWinDef->getContent() . "Vous avez gagné le combat en (" . "<span><a href='/connect/carte-spatiale/" . $defenderWin->getPlanet()->getSector()->getPosition() . "/" . $defenderWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defenderWin->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $defenderWin->getPlanet()->getSector()->getPosition() . ":" . $defenderWin->getPlanet()->getPosition() . "</a></span>) , vous remportez <span class='text-vert'>+" . number_format($warPointA) . "</span> points de Guerre");
                 $reportWinDef->setImageName("fight_win_report.jpg");
                 $defenderWin->getUser()->setViewReport(false);
                 $quest = $defenderWin->getUser()->checkQuests('destroy_fleet');
@@ -378,6 +378,7 @@ class FightController extends AbstractController
                 $em->persist($reportWinDef);
             }
             foreach($blockAtt as $attackerLose) {
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($attackerLose->getUser()->getUsername());
                 $reportLoseA = new Report();
                 $reportLoseA->setType('fight');
                 $reportLoseA->setSendAt($now);
@@ -386,13 +387,13 @@ class FightController extends AbstractController
                 $reportLoseA->setImageName("fight_lose_report.jpg");
                 $reportLoseA->setUser($attackerLose->getUser());
                 foreach ($blockAtt as $fleetB) {
-                    $player = $fleetB->getFleetTags();
+                    $player = $fleetB->getFleetTags(NULL);
                     $lose = $fleetB->getShipsLoseReport();
                     $reportLoseA->setContent($reportLoseA->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $lose . "</th></tr>");
                 }
                 $reportLoseA->setContent($reportLoseA->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 2</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSDef . " tir(s) pour percer les boucliers</th></tr>");
                 foreach ($blockDef as $fleetA) {
-                    $player = $fleetA->getFleetTags();
+                    $player = $fleetA->getFleetTags($usePlanet);
                     if($armorSaveD != $armorD) {
                         $percentArmor = ($fleetA->getArmor() * 100) / $armorSaveD;
                         $newArmor = $fleetA->getArmor() - (round($percentArmor * $armorD) / 100);
@@ -403,21 +404,14 @@ class FightController extends AbstractController
                     $reportLoseA->setContent($reportLoseA->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $ships . "</th></tr>");
                 }
                 $reportLoseA->setContent($reportLoseA->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $countShot . " rounds de combat.</th></tr></tbody></table>");
-                $reportLoseA->setContent($reportLoseA->getContent() . "Vous avez perdu le combat en (" . $attackerLose->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $attackerLose->getPlanet()->getSector()->getPosition() . "." . $attackerLose->getPlanet()->getPosition() . ") , vos adversaires remportent " . number_format($warPointA) . " points de Guerre.");
+                $reportLoseA->setContent($reportLoseA->getContent() . "Vous avez perdu le combat en (" . "<span><a href='/connect/carte-spatiale/" . $attackerLose->getPlanet()->getSector()->getPosition() . "/" . $attackerLose->getPlanet()->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $attackerLose->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $attackerLose->getPlanet()->getSector()->getPosition() . ":" . $attackerLose->getPlanet()->getPosition() . "</a></span>) , vos adversaires remportent " . number_format($warPointA) . " points de Guerre.");
                 $attackerLose->getUser()->setViewReport(false);
                 $planet = $attackerLose->getPlanet();
 
-                $loseArm = $attackerLose->getLaser() + $attackerLose->getMissile() + $attackerLose->getPlasma();
-                /*$percentWarPoint = ($loseArm * 100) / $armeSaveA;
-                $warPointB = ($warPointB - ($armorD / 80)) / 10;
-                $newWarPoint = round(($percentWarPoint * $warPointB) / 10);*/
                 $newWarPoint = $warPointB;
                 if ($attackerLose->getUser()->getPoliticPdg() > 0) {
                     $newWarPoint = round($newWarPoint * (1 + ($attackerLose->getUser()->getPoliticPdg() / 10)));
                 }
-                /*if($newWarPoint < 0) {
-                    $newWarPoint = $newWarPoint * -1;
-                }*/
                 if($attackerLose->getUser()->getPeaces()) {
                     $peace = $attackerLose->getUser()->getPeaces();
                     if ($peace->getPdg() > 0) {
@@ -440,10 +434,12 @@ class FightController extends AbstractController
                         $exchangeLoseA->setContent("Taxe liée à la paix.");
                         $exchangeLoseA->setName($attackerLose->getUser()->getUserName());
                         $em->persist($exchangeLoseA);
-                        $reportLoseA->setContent($reportLoseA->getContent() . " Votre accord de paix ayant envoyé " . number_format($pdgPeace) . " points de Guerre à l'alliance [" . $otherAlly->getSigle() . "].");
+                        $reportLoseA->setContent($reportLoseA->getContent() . " Votre accord de paix ayant envoyé <span class='text-rouge'>-" . number_format($pdgPeace) . "</span> points de Guerre à l'alliance [" . $otherAlly->getSigle() . "].");
                     }
                 }
-                $reportLoseA->setContent($reportLoseA->getContent() . " Mais vous remportez vous même " . number_format($newWarPoint) . " points de Guerre !");
+                if ($newWarPoint > 0) {
+                    $reportLoseA->setContent($reportLoseA->getContent() . " Mais vous remportez vous même <span class='text-vert'>+" . number_format($newWarPoint) . "</span> points de Guerre !");
+                }
                 if($attackerLose->getUser()->getRank()) {
                     $attackerLose->getUser()->getRank()->setWarPoint($attackerLose->getUser()->getRank()->getWarPoint() + $newWarPoint);
                 }
@@ -451,9 +447,6 @@ class FightController extends AbstractController
                 $em->remove($attackerLose);
             }
             foreach($blockDef as $defenderWin) {
-                $defArm = $defenderWin->getLaser() + $defenderWin->getMissile() + $defenderWin->getPlasma();
-                /*$percentWarPoint = ($defArm * 100) / $armeSaveB;
-                $newWarPoint = round(($percentWarPoint * $warPointA) / 10);*/
                 $newWarPoint = $warPointA;
                 if ($defenderWin->getUser()->getPoliticPdg() > 0) {
                     $newWarPoint = round($newWarPoint * (1 + ($defenderWin->getUser()->getPoliticPdg() / 10)));
@@ -507,6 +500,7 @@ class FightController extends AbstractController
                 $armor = $armorSaveA / 20;
             }
             foreach($blockAtt as $attackerWin) {
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($attackerWin->getUser()->getUsername());
                 $reportWinAtt = new Report();
                 $reportWinAtt->setType('fight');
                 $reportWinAtt->setSendAt($now);
@@ -515,13 +509,13 @@ class FightController extends AbstractController
                 $reportWinAtt->setImageName("fight_win_report.jpg");
                 $reportWinAtt->setUser($attackerWin->getUser());
                 foreach ($blockDef as $fleetA) {
-                    $player = $fleetA->getFleetTags();
+                    $player = $fleetA->getFleetTags(NULL);
                     $lose = $fleetA->getShipsLoseReport();
                     $reportWinAtt->setContent($reportWinAtt->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $lose . "</th></tr>");
                 }
                 $reportWinAtt->setContent($reportWinAtt->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 2</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSAtt . " tir(s) pour percer les boucliers</th></tr>");
                 foreach ($blockAtt as $fleetB) {
-                    $player = $fleetB->getFleetTags();
+                    $player = $fleetB->getFleetTags($usePlanet);
                     if($armorSaveA != $armor) {
                         $percentArmor = ($fleetB->getArmor() * 100) / $armorSaveA;
                         $newArmor = $fleetB->getArmor() - (round($percentArmor * $armor) / 100);
@@ -532,7 +526,7 @@ class FightController extends AbstractController
                     $reportWinAtt->setContent($reportWinAtt->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $ships . "</th></tr>");
                 }
                 $reportWinAtt->setContent($reportWinAtt->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $countShot . " rounds de combat.</th></tr></tbody></table>");
-                $reportWinAtt->setContent($reportWinAtt->getContent() . "Vous avez gagné le combat en ("  . $attackerWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $attackerWin->getPlanet()->getSector()->getPosition() . "." . $attackerWin->getPlanet()->getPosition() . ") , vous remportez " . number_format($warPointB) . " points de Guerre");
+                $reportWinAtt->setContent($reportWinAtt->getContent() . "Vous avez gagné le combat en (" . "<span><a href='/connect/carte-spatiale/" . $attackerWin->getPlanet()->getSector()->getPosition() . "/" . $attackerWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $attackerWin->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $attackerWin->getPlanet()->getSector()->getPosition() . ":" . $attackerWin->getPlanet()->getPosition() . "</a></span>) , vous remportez <span class='text-vert'>+" . number_format($warPointB) . "</span> points de Guerre");
                 $attackerWin->getUser()->setViewReport(false);
                 $em->persist($reportWinAtt);
                 $quest = $attackerWin->getUser()->checkQuests('destroy_fleet');
@@ -542,6 +536,7 @@ class FightController extends AbstractController
                 }
             }
             foreach($blockDef as $defenderLose) {
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($defenderLose->getUser()->getUsername());
                 $reportLoseB = new Report();
                 $reportLoseB->setType('fight');
                 $reportLoseB->setSendAt($now);
@@ -550,7 +545,7 @@ class FightController extends AbstractController
                 $reportLoseB->setImageName("fight_lose_report.jpg");
                 $reportLoseB->setUser($defenderLose->getUser());
                 foreach ($blockAtt as $fleetB) {
-                    $player = $fleetB->getFleetTags();
+                    $player = $fleetB->getFleetTags(NULL);
                     if($armorSaveA != $armor) {
                         $percentArmor = ($fleetB->getArmor() * 100) / $armorSaveA;
                         $newArmor = $fleetB->getArmor() - (round($percentArmor * $armor) / 100);
@@ -562,25 +557,18 @@ class FightController extends AbstractController
                 }
                 $reportLoseB->setContent($reportLoseB->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 2</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSDef . " tir(s) pour percer les boucliers</th></tr>");
                 foreach ($blockDef as $fleetA) {
-                    $player = $fleetA->getFleetTags();
+                    $player = $fleetA->getFleetTags(NULL);
                     $lose = $fleetA->getShipsLoseReport();
                     $reportLoseB->setContent($reportLoseB->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $lose . "</th></tr>");
                 }
                 $reportLoseB->setContent($reportLoseB->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $countShot . " rounds de combat.</th></tr></tbody></table>");
-                $reportLoseB->setContent($reportLoseB->getContent() . "Vous avez perdu le combat en (" . $defenderLose->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $defenderLose->getPlanet()->getSector()->getPosition() . "." . $defenderLose->getPlanet()->getPosition() . ") , vos adversaires remportent " . number_format($warPointB) . " points de Guerre.");
+                $reportLoseB->setContent($reportLoseB->getContent() . "Vous avez perdu le combat en (" . "<span><a href='/connect/carte-spatiale/" . $defenderLose->getPlanet()->getSector()->getPosition() . "/" . $defenderLose->getPlanet()->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defenderLose->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $defenderLose->getPlanet()->getSector()->getPosition() . ":" . $defenderLose->getPlanet()->getPosition() . "</a></span>) , vos adversaires remportent " . number_format($warPointB) . " points de Guerre.");
                 $defenderLose->getUser()->setViewReport(false);
                 $planet = $defenderLose->getPlanet();
-                /*$loseArm = $defenderLose->getLaser() + $defenderLose->getMissile() + $defenderLose->getPlasma();
-                $percentWarPoint = ($loseArm * 100) / $armeSaveB;
-                $warPointA = ($warPointA - ($armor / 80)) / 10;
-                $newWarPoint = round(($percentWarPoint * $warPointA) / 10);*/
                 $newWarPoint = $warPointA;
                 if ($defenderLose->getUser()->getPoliticPdg() > 0) {
                     $newWarPoint = round($newWarPoint * (1 + ($defenderLose->getUser()->getPoliticPdg() / 10)));
                 }
-              /*  if($newWarPoint < 0) {
-                    $newWarPoint = $newWarPoint * -1;
-                }*/
                 if($defenderLose->getUser()->getPeaces()) {
                     $peace = $defenderLose->getUser()->getPeaces();
                     if ($peace->getPdg() > 0) {
@@ -602,10 +590,12 @@ class FightController extends AbstractController
                         $exchangeLoseB->setContent("Taxe liée à la paix.");
                         $exchangeLoseB->setName($defenderLose->getUser()->getUserName());
                         $em->persist($exchangeLoseB);
-                        $reportLoseB->setContent($reportLoseB->getContent() . " Votre accord de paix ayant envoyé " . number_format($pdgPeace) . " points de Guerre à l'alliance [" . $otherAlly->getSigle() . "].");
+                        $reportLoseB->setContent($reportLoseB->getContent() . " Votre accord de paix ayant envoyé <span class='text-rouge'>-" . number_format($pdgPeace) . "</span> points de Guerre à l'alliance [" . $otherAlly->getSigle() . "].");
                     }
                 }
-                $reportLoseB->setContent($reportLoseB->getContent() . " Mais vous remportez vous même " . number_format($newWarPoint) . " points de Guerre !");
+                if ($newWarPoint > 0) {
+                    $reportLoseB->setContent($reportLoseB->getContent() . " Mais vous remportez vous même <span class='text-vert'>+" . number_format($newWarPoint) . "</span> points de Guerre !");
+                }
                 if($defenderLose->getUser()->getRank()) {
                     $defenderLose->getUser()->getRank()->setWarPoint($defenderLose->getUser()->getRank()->getWarPoint() + $newWarPoint);
                 }
@@ -613,9 +603,6 @@ class FightController extends AbstractController
                 $em->remove($defenderLose);
             }
             foreach($blockAtt as $attackerWin) {
-                $attArm = $attackerWin->getLaser() + $attackerWin->getMissile() + $attackerWin->getPlasma();
-                /*$percentWarPoint = ($attArm * 100) / $armeSaveA;
-                $newWarPoint = round(($percentWarPoint * $warPointB) / 10);*/
                 $newWarPoint = $warPointB;
                 if ($attackerWin->getUser()->getPoliticPdg() > 0) {
                     $newWarPoint = round($newWarPoint * (1 + ($attackerWin->getUser()->getPoliticPdg() / 10)));
