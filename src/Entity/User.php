@@ -956,10 +956,10 @@ class User implements UserInterface, \Serializable
     /**
      * @return mixed
      */
-    public function getFirstPlanet()
+    public function getFirstPlanet($usePlanet)
     {
         foreach ($this->planets as $planet) {
-            return "(" . $planet->getSector()->getGalaxy()->getPosition() . "." . $planet->getSector()->getPosition() . "." . $planet->getPosition() . ")";
+            return "(<span><a href='/connect/carte-spatiale/" . $planet->getSector()->getPosition() . "/" . $planet->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planet->getSector()->getGalaxy()->getPosition() . ":" . $planet->getSector()->getPosition() . ":" . $planet->getPosition() . "</a></span>)";
         }
         return 'Game over';
     }

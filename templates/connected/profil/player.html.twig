@@ -27,7 +27,7 @@
                 {% if user.getAlly %}
                     {% if user.getAlly().getPolitic() != 'fascism' %}
                         <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.planet'|trans }} {{ user.getAllPlanets() }}</div>
-                        {% if user.getAlly().getPolitic() == 'democrat' %}<div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.first.planet'|trans }} {{ user.getFirstPlanet() }}</div>{% endif %}
+                        {% if user.getAlly().getPolitic() == 'democrat' %}<div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.first.planet'|trans }} {{ user.getFirstPlanet(usePlanet)|raw  }}</div>{% endif %}
                         <div class="my-2">
                             <span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.galaxy'|trans }}
                             {% set x = 1 %}
