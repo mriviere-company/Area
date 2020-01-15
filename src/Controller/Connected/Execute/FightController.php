@@ -19,7 +19,7 @@ class FightController extends AbstractController
             ->where('p.id = :id')
             ->andWhere('f.flightTime is null')
             ->setParameters(['id' => $firstFleet['id']])
-            ->orderBy('f.attack', 'ASC')
+            ->orderBy('f.signature', 'DESC')
             ->getQuery()
             ->getResult();
 
@@ -187,7 +187,7 @@ class FightController extends AbstractController
             $shield = $shield + $attacker->getShield();
             $debrisAtt = $debrisAtt + $attacker->getNbrSignatures() + $attacker->getCargoFull();
             $armeSaveA = $missile + $laser + $plasma;
-            if ($attacker->getUser()->getZombie() == 1) {
+            if ($attacker->getUser()->getId() == 1) {
                 $zombie = 1;
             }
         }
@@ -200,7 +200,7 @@ class FightController extends AbstractController
                     $armorD = $armorD + $defender->getArmor();
                 }
                 if ($defender->getUser()->getPoliticArmement() > 0) {
-                    $missileD = $missileD + ($defender->getUser()->getMissile() * (1 + ($defender->getUser()->getPoliticArmement() / 10)));
+                    $missileD = $missileD + ($defender->getMissile() * (1 + ($defender->getUser()->getPoliticArmement() / 10)));
                     $laserD = $laserD + ($defender->getLaser() * (1 + ($defender->getUser()->getPoliticArmement() / 10)));
                 } else {
                     $missileD = $missileD + $defender->getMissile();
@@ -215,7 +215,7 @@ class FightController extends AbstractController
             $plasmaD = $plasmaD + $defender->getPlasma();
             $debrisDef = $debrisDef + $defender->getNbrSignatures() + $defender->getCargoFull();
             $armeSaveB = $laserD + $plasmaD + $missileD;
-            if ($defender->getUser()->getZombie() == 1) {
+            if ($defender->getUser()->getId() == 1) {
                 $zombie = 1;
             }
         }
@@ -253,8 +253,8 @@ class FightController extends AbstractController
             $warPointA = round($armor / 800);
             $warPointB = round($armorD / 800);
         } else {
-            $warPointA = round($armor / 80);
-            $warPointB = round($armorD / 80);
+            $warPointA = round($armor / 100);
+            $warPointB = round($armorD / 100);
         }
         $attAll = $missile + $laser + $plasma;
         $defAll = $missileD + $laserD + $plasmaD;
@@ -269,65 +269,16 @@ class FightController extends AbstractController
             $em->flush();
             return($blockAtt);
         }
-
-        if($attAll > 0 && $defAll <= 0) {
-            foreach($blockDef as $removeOne) {
-                $reportLoseUtilA = new Report();
-                $reportLoseUtilA->setType('fight');
-                $reportLoseUtilA->setSendAt($now);
-                $reportLoseUtilA->setImageName("f_lose_report.jpg");
-                $reportLoseUtilA->setContent("Votre flotte utilitaire " . $removeOne->getName() . " ne dispose pas des technologies nécessaires à l'identification des vaisseaux ennemis en (" . $removeOne->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $removeOne->getPlanet()->getSector()->getPosition() . "." . $removeOne->getPlanet()->getPosition() . ") .");
-                $reportLoseUtilA->setTitle("Rapport de combat : Défaite");
-                $reportLoseUtilA->setUser($removeOne->getUser());
-                $removeOne->getUser()->setViewReport(false);
-                $em->persist($reportLoseUtilA);
-                $em->remove($removeOne);
-            }
-            foreach($blockAtt as $reportWin) {
-                $reportWinUtilA = new Report();
-                $reportWinUtilA->setType('fight');
-                $reportWinUtilA->setSendAt($now);
-                $reportWinUtilA->setImageName("f_win_report.jpg");
-                $reportWinUtilA->setContent("Vous venez de détruire une flotte utilitaire en (" . $reportWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $reportWin->getPlanet()->getSector()->getPosition() . "." . $reportWin->getPlanet()->getPosition() . ") .");
-                $reportWinUtilA->setTitle("Rapport de combat : Victoire");
-                $reportWin->getUser()->setViewReport(false);
-                $reportWinUtilA->setUser($reportWin->getUser());
-                $em->persist($reportWinUtilA);
-                $planet = $reportWin->getPlanet();
-            }
-            $planet->setNbCdr($planet->getNbCdr() + ($debrisDef * rand(30,40)));
-            $planet->setWtCdr($planet->getWtCdr() + $debrisDef * rand(20,30));
-            $em->flush();
+        if($attAll > 0 && $defAll < 1) {
+            echo "BA Util Win : ";
+            $cronValue = self::utilitFightAction($blockDef, $blockAtt, $debrisDef, $now, $em);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
             return($blockAtt);
         }
-        if($defAll > 0 && $attAll <= 0) {
-            foreach($blockAtt as $removeTwo) {
-                $reportLoseUtilB = new Report();
-                $reportLoseUtilB->setType('fight');
-                $reportLoseUtilB->setSendAt($now);
-                $reportLoseUtilB->setImageName("f_lose_report.jpg");
-                $reportLoseUtilB->setContent("Votre flotte utilitaire " . $removeTwo->getName() . " ne dispose pas des technologies nécessaires à l'identification des vaisseaux ennemis (" . $removeTwo->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $removeTwo->getPlanet()->getSector()->getPosition() . "." . $removeTwo->getPlanet()->getPosition() . ") .");
-                $reportLoseUtilB->setTitle("Rapport de combat : Défaite");
-                $reportLoseUtilB->setUser($removeTwo->getUser());
-                $removeTwo->getUser()->setViewReport(false);
-                $em->persist($reportLoseUtilB);
-                $em->remove($removeTwo);
-            }
-            foreach($blockDef as $reportWin) {
-                $reportWinUtilB = new Report();
-                $reportWinUtilB->setType('fight');
-                $reportWinUtilB->setSendAt($now);
-                $reportWinUtilB->setImageName("f_win_report.jpg");
-                $reportWinUtilB->setContent("Vous venez de détruire une flotte utilitaire en (" . $reportWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $reportWin->getPlanet()->getSector()->getPosition() . "." . $reportWin->getPlanet()->getPosition() . ") .");
-                $reportWinUtilB->setTitle("Rapport de combat : Victoire");
-                $reportWinUtilB->setUser($reportWin->getUser());
-                $reportWin->getUser()->setViewReport(false);
-                $em->persist($reportWinUtilB);
-                $planet = $reportWin->getPlanet();
-            }
-            $planet->setNbCdr($planet->getNbCdr() + ($debrisAtt * rand(30,40)));
-            $planet->setWtCdr($planet->getWtCdr() + $debrisAtt * rand(20,30));
-            $em->flush();
+        if($defAll > 0 && $attAll < 1) {
+            echo "BB Util Win : ";
+            $cronValue = self::utilitFightAction(${'blockA' . $blockAtt}, ${'blockB' . $blockDef}, ${'debris' . $debrisAtt}, $now, $em);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
             return($blockDef);
         }
 
@@ -378,7 +329,7 @@ class FightController extends AbstractController
             }
         }
 
-        if ($armorD > $armor || $shieldD > 0) {
+        if ($armorD > $armor) {
             if($armorD * 1.1 < $armorSaveD) {
                 $armorD = $armorD * (rand(11, 13) / 10);
             }
@@ -386,12 +337,12 @@ class FightController extends AbstractController
                 $armorD = $armorSaveD / 20;
             }
             foreach($blockDef as $defenderWin) {
-                $reportWinA = new Report();
-                $reportWinA->setType('fight');
-                $reportWinA->setSendAt($now);
-                $reportWinA->setContent("<table class=\"table table-striped table-bordered table-dark\"><tbody><tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 1</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSDef . " tir(s) pour percer les boucliers</th></tr>");
-                $reportWinA->setTitle("Rapport de combat : Victoire");
-                $reportWinA->setUser($defenderWin->getUser());
+                $reportWinDef = new Report();
+                $reportWinDef->setType('fight');
+                $reportWinDef->setSendAt($now);
+                $reportWinDef->setContent("<table class=\"table table-striped table-bordered table-dark\"><tbody><tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 1</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSDef . " tir(s) pour percer les boucliers</th></tr>");
+                $reportWinDef->setTitle("Rapport de combat : Victoire");
+                $reportWinDef->setUser($defenderWin->getUser());
                 foreach ($blockDef as $fleetA) {
                     $player = $fleetA->getFleetTags();
                     if($armorSaveD != $armorD) {
@@ -401,24 +352,24 @@ class FightController extends AbstractController
                     } else {
                         $ships = $fleetA->getShipsReportNoLost();
                     }
-                    $reportWinA->setContent($reportWinA->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $ships . "</th></tr>");
+                    $reportWinDef->setContent($reportWinDef->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $ships . "</th></tr>");
                 }
-                $reportWinA->setContent($reportWinA->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 2</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSAtt . " tir(s) pour percer les boucliers</th></tr>");
+                $reportWinDef->setContent($reportWinDef->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 2</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSAtt . " tir(s) pour percer les boucliers</th></tr>");
                 foreach ($blockAtt as $fleetB) {
                     $player = $fleetB->getFleetTags();
                     $lose = $fleetB->getShipsLoseReport();
-                    $reportWinA->setContent($reportWinA->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $lose . "</th></tr>");
+                    $reportWinDef->setContent($reportWinDef->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $lose . "</th></tr>");
                 }
-                $reportWinA->setContent($reportWinA->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $countShot . " rounds de combat.</th></tr></tbody></table>");
-                $reportWinA->setContent($reportWinA->getContent() . "Vous avez gagné le combat en ("  . $defenderWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $defenderWin->getPlanet()->getSector()->getPosition() . "." . $defenderWin->getPlanet()->getPosition() . ") , vous remportez " . number_format($warPointA * 10) . " points de Guerre");
-                $reportWinA->setImageName("fight_win_report.jpg");
+                $reportWinDef->setContent($reportWinDef->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $countShot . " rounds de combat.</th></tr></tbody></table>");
+                $reportWinDef->setContent($reportWinDef->getContent() . "Vous avez gagné le combat en ("  . $defenderWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $defenderWin->getPlanet()->getSector()->getPosition() . "." . $defenderWin->getPlanet()->getPosition() . ") , vous remportez " . number_format($warPointA * 10) . " points de Guerre");
+                $reportWinDef->setImageName("fight_win_report.jpg");
                 $defenderWin->getUser()->setViewReport(false);
                 $quest = $defenderWin->getUser()->checkQuests('destroy_fleet');
                 if($quest) {
                     $defenderWin->getUser()->getRank()->setWarPoint($defenderWin->getUser()->getRank()->getWarPoint() + $quest->getGain());
                     $defenderWin->getUser()->removeQuest($quest);
                 }
-                $em->persist($reportWinA);
+                $em->persist($reportWinDef);
             }
             foreach($blockAtt as $attackerLose) {
                 $reportLoseA = new Report();
@@ -530,9 +481,14 @@ class FightController extends AbstractController
                 }
                 $defenderWin->setFightAt(null);
                 $defenderWin->setSignature($defenderWin->getNbrSignatures());
+                if ($zombie == 1) {
+                    $zombieDebris = 40;
+                } else {
+                    $zombieDebris = 1;
+                }
             }
-            $planet->setNbCdr($planet->getNbCdr() + ($debrisAtt * rand(30,40)));
-            $planet->setWtCdr($planet->getWtCdr() + $debrisAtt * rand(20,30));
+            $planet->setNbCdr(round($planet->getNbCdr() + ($debrisAtt * rand(30,40) / $zombieDebris)));
+            $planet->setWtCdr(round($planet->getWtCdr() + $debrisAtt * rand(20,30) / $zombieDebris));
             $em->flush();
             return($blockDef);
         } else {
@@ -543,19 +499,19 @@ class FightController extends AbstractController
                 $armor = $armorSaveA / 20;
             }
             foreach($blockAtt as $attackerWin) {
-                $reportWinB = new Report();
-                $reportWinB->setType('fight');
-                $reportWinB->setSendAt($now);
-                $reportWinB->setContent("<table class=\"table table-striped table-bordered table-dark\"><tbody><tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 1</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSDef . " tir(s) pour percer les boucliers</th></tr>");
-                $reportWinB->setTitle("Rapport de combat : Victoire");
-                $reportWinB->setImageName("fight_win_report.jpg");
-                $reportWinB->setUser($attackerWin->getUser());
+                $reportWinAtt = new Report();
+                $reportWinAtt->setType('fight');
+                $reportWinAtt->setSendAt($now);
+                $reportWinAtt->setContent("<table class=\"table table-striped table-bordered table-dark\"><tbody><tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 1</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSDef . " tir(s) pour percer les boucliers</th></tr>");
+                $reportWinAtt->setTitle("Rapport de combat : Victoire");
+                $reportWinAtt->setImageName("fight_win_report.jpg");
+                $reportWinAtt->setUser($attackerWin->getUser());
                 foreach ($blockDef as $fleetA) {
                     $player = $fleetA->getFleetTags();
                     $lose = $fleetA->getShipsLoseReport();
-                    $reportWinB->setContent($reportWinB->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $lose . "</th></tr>");
+                    $reportWinAtt->setContent($reportWinAtt->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $lose . "</th></tr>");
                 }
-                $reportWinB->setContent($reportWinB->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 2</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSAtt . " tir(s) pour percer les boucliers</th></tr>");
+                $reportWinAtt->setContent($reportWinAtt->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 2</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSAtt . " tir(s) pour percer les boucliers</th></tr>");
                 foreach ($blockAtt as $fleetB) {
                     $player = $fleetB->getFleetTags();
                     if($armorSaveA != $armor) {
@@ -565,12 +521,12 @@ class FightController extends AbstractController
                     } else {
                         $ships = $fleetB->getShipsReportNoLost();
                     }
-                    $reportWinB->setContent($reportWinB->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $ships . "</th></tr>");
+                    $reportWinAtt->setContent($reportWinAtt->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $player . "</th><th class=\"tab-cells-name p-1 ml-2\">" . $ships . "</th></tr>");
                 }
-                $reportWinB->setContent($reportWinB->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $countShot . " rounds de combat.</th></tr></tbody></table>");
-                $reportWinB->setContent($reportWinB->getContent() . "Vous avez gagné le combat en ("  . $attackerWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $attackerWin->getPlanet()->getSector()->getPosition() . "." . $attackerWin->getPlanet()->getPosition() . ") , vous remportez " . number_format($warPointB * 10) . " points de Guerre");
+                $reportWinAtt->setContent($reportWinAtt->getContent() . "<tr><th class=\"tab-cells-name p-1 ml-2\">" . $countShot . " rounds de combat.</th></tr></tbody></table>");
+                $reportWinAtt->setContent($reportWinAtt->getContent() . "Vous avez gagné le combat en ("  . $attackerWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $attackerWin->getPlanet()->getSector()->getPosition() . "." . $attackerWin->getPlanet()->getPosition() . ") , vous remportez " . number_format($warPointB * 10) . " points de Guerre");
                 $attackerWin->getUser()->setViewReport(false);
-                $em->persist($reportWinB);
+                $em->persist($reportWinAtt);
                 $quest = $attackerWin->getUser()->checkQuests('destroy_fleet');
                 if($quest) {
                     $attackerWin->getUser()->getRank()->setWarPoint($attackerWin->getUser()->getRank()->getWarPoint() + $quest->getGain());
@@ -637,10 +593,10 @@ class FightController extends AbstractController
                         $exchangeLoseB->setContent("Taxe liée à la paix.");
                         $exchangeLoseB->setName($defenderLose->getUser()->getUserName());
                         $em->persist($exchangeLoseB);
-                        $reportLoseB->setContent($reportWinB->getContent() . " Votre accord de paix ayant envoyé " . number_format($pdgPeace) . " points de Guerre à l'alliance [" . $otherAlly->getSigle() . "].");
+                        $reportLoseB->setContent($reportLoseB->getContent() . " Votre accord de paix ayant envoyé " . number_format($pdgPeace) . " points de Guerre à l'alliance [" . $otherAlly->getSigle() . "].");
                     }
                 }
-                $reportLoseB->setContent($reportWinB->getContent() . " Mais vous remportez vous même " . number_format($newWarPoint) . " points de Guerre !");
+                $reportLoseB->setContent($reportLoseB->getContent() . " Mais vous remportez vous même " . number_format($newWarPoint) . " points de Guerre !");
                 if($defenderLose->getUser()->getRank()) {
                     $defenderLose->getUser()->getRank()->setWarPoint($defenderLose->getUser()->getRank()->getWarPoint() + $newWarPoint);
                 }
@@ -686,12 +642,53 @@ class FightController extends AbstractController
                 }
                 $attackerWin->setFightAt(null);
                 $attackerWin->setSignature($attackerWin->getNbrSignatures());
+                if ($zombie == 1) {
+                    $zombieDebris = 40;
+                } else {
+                    $zombieDebris = 1;
+                }
             }
-            $planet->setNbCdr($planet->getNbCdr() + ($debrisDef * rand(30,40)));
-            $planet->setWtCdr($planet->getWtCdr() + $debrisDef * rand(20,30));
+            $planet->setNbCdr(round($planet->getNbCdr() + ($debrisDef * rand(30,40) / $zombieDebris)));
+            $planet->setWtCdr(round($planet->getWtCdr() + ($debrisDef * rand(20,30) / $zombieDebris)));
             $em->flush();
             return($blockAtt);
         }
         return NULL;
+    }
+
+    public function utilitFightAction($blockA, $blockB, $debris, $now, $em)
+    {
+        foreach($blockA as $removeTwo) {
+            $reportLoseUtilB = new Report();
+            $reportLoseUtilB->setType('fight');
+            $reportLoseUtilB->setSendAt($now);
+            $reportLoseUtilB->setImageName("f_lose_report.jpg");
+            $reportLoseUtilB->setContent("Votre flotte utilitaire " . $removeTwo->getName() . " ne dispose pas des technologies nécessaires à l'identification des vaisseaux ennemis (" . $removeTwo->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $removeTwo->getPlanet()->getSector()->getPosition() . "." . $removeTwo->getPlanet()->getPosition() . ") .");
+            $reportLoseUtilB->setTitle("Rapport de combat : Défaite");
+            $reportLoseUtilB->setUser($removeTwo->getUser());
+            $removeTwo->getUser()->setViewReport(false);
+            $em->persist($reportLoseUtilB);
+            $em->remove($removeTwo);
+        }
+        foreach($blockB as $reportWin) {
+            $reportWinUtilB = new Report();
+            $reportWinUtilB->setType('fight');
+            $reportWinUtilB->setSendAt($now);
+            $reportWinUtilB->setImageName("f_win_report.jpg");
+            $reportWinUtilB->setContent("Vous venez de détruire une flotte utilitaire en (" . $reportWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $reportWin->getPlanet()->getSector()->getPosition() . "." . $reportWin->getPlanet()->getPosition() . ") .");
+            $reportWinUtilB->setTitle("Rapport de combat : Victoire");
+            $reportWinUtilB->setUser($reportWin->getUser());
+            $reportWin->getUser()->setViewReport(false);
+            $em->persist($reportWinUtilB);
+            $planet = $reportWin->getPlanet();
+        }
+        $planet->setNbCdr($planet->getNbCdr() + ($debris * rand(30,40)));
+        $planet->setWtCdr($planet->getWtCdr() + $debris * rand(20,30));
+
+        echo "Flush ";
+
+        $em->flush();
+
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 }

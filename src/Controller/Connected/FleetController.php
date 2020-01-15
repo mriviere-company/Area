@@ -57,13 +57,10 @@ class FleetController  extends AbstractController
 
         $fleetUsePlanet = $em->getRepository('App:Fleet')
             ->createQueryBuilder('f')
-            ->join('f.planet', 'p')
-            ->join('p.sector', 's')
-            ->where('f.user = :user')
             ->andWhere('f.flightTime is null')
             ->andWhere('f.planet = :planet')
-            ->setParameters(['user' => $user, 'planet' => $usePlanet])
-            ->orderBy('s.position, p.position')
+            ->setParameters(['planet' => $usePlanet])
+            ->orderBy('f.user')
             ->getQuery()
             ->getResult();
 

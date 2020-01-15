@@ -482,7 +482,7 @@ class CronTaskController extends AbstractController
             ->where('u.id = :user')
             ->andWhere('f.flightTime is null')
             ->setParameters(['user' => 1])
-            ->orderBy('f.attack', 'ASC')
+            ->orderBy('f.signature', 'DESC')
             ->getQuery()
             ->getResult();
 
