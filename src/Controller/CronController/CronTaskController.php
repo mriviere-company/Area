@@ -492,6 +492,7 @@ class CronTaskController extends AbstractController
                 ->where('f.planet = :planet')
                 ->andWhere('f.flightTime is null')
                 ->andWhere('f.user = :user')
+                ->having('count(f.id) >= 2')
                 ->setParameters(['planet' => $demoFleet->getPlanet(), 'user' => $demoFleet->getUser()])
                 ->orderBy('f.signature', 'DESC')
                 ->getQuery()
