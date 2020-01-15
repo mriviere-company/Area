@@ -43,6 +43,7 @@ class MoveFleetController extends AbstractController
                         $previousDestination->setFleet(null);
                         $previousDestination->setPlanet(null);
                         $em->remove($previousDestination);
+                        $fleet->setRecycleAt($nowReport);
                     }
 
                     $user = $fleet->getUser();
