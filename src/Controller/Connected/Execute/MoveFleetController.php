@@ -43,7 +43,11 @@ class MoveFleetController extends AbstractController
                         $previousDestination->setFleet(null);
                         $previousDestination->setPlanet(null);
                         $em->remove($previousDestination);
-                        $fleet->setRecycleAt($nowReport);
+                        if ($newHome->getNbCdr() || $newHome->getWtCdr()) {
+                            $fleet->setRecycleAt($nowReport);
+                        } else {
+                            $fleet->setRecycleAt(null);
+                        }
                     }
 
                     $user = $fleet->getUser();
