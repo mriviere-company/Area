@@ -460,7 +460,7 @@ class BotController extends AbstractController
                     ]);
                 }
             } elseif (rand(1, 2) == 1 && $bot->getTerraformation() < 26) {
-                $bot->setTerraformation($bot->getTerraformation() + 1);
+                $bot->setTerraformation(count($bot->getPlanets()) + 1);
 
                 if ($bot->getFirstPlanetFleet()) {
                     $newPlanet = $em->getRepository('App:Planet')
