@@ -75,7 +75,7 @@
                             <td class="p-1 pl-3">
                             </td>
                         </tr>
-                        {% if fleet.getRecycleur() and fleet.getFlightTime() is null and fleet.getFightAt() is null %}
+                        {% if fleet.getRecycleur() and fleet.getFlightTime() is null and fleet.getFightAt() is null and (fleet.getPlanet().getNbCdr() > 0 or fleet.getPlanet().getWtCdr() > 0) %}
                             <tr>
                                 <td class="p-1 pl-3">
                                     {{ 'fleet.rec'|trans }}

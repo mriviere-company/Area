@@ -74,9 +74,9 @@ class MarketController extends AbstractController
                 return $this->redirectToRoute('market', ['usePlanet' => $usePlanet->getId()]);
             }
 
-            $user->setBitcoin($user->getBitcoin() + abs($form_market->get('bitcoin')->getData() / 5));
-            $planetBuy->setSoldier($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData()));
-            $planetBuy->setWorker($planetBuy->getWorker() + abs($form_market->get('worker')->getData() * 2));
+            $user->setBitcoin($user->getBitcoin() + abs($form_market->get('bitcoin')->getData()));
+            $planetBuy->setSoldier($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() / 25));
+            $planetBuy->setWorker($planetBuy->getWorker() + abs($form_market->get('worker')->getData() / 5));
             $user->getRank()->setWarPoint($user->getRank()->getWarPoint() - $cost);
             $quest = $user->checkQuests('pdg');
             if($quest) {
@@ -192,7 +192,7 @@ class MarketController extends AbstractController
                 } else {
                     $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * 0.75);
                 }
-                $newWarPointS = $newWarPointS + round((($planet->getWater() / 3) + ($planet->getNiobium() / 6)) / 1000);
+                $newWarPointS = $newWarPointS + round((($planet->getWater() / 3) + ($planet->getNiobium() / 6)) / 5000);
                 $planet->setNiobium(0);
                 $planet->setWater(0);
                 if ($gain > 0) {
