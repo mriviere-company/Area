@@ -659,6 +659,8 @@ class Ally
         foreach($this->getGrades() as $grade) {
             if($grade->getPlacement() == 5) {
                 $return = $grade;
+            } elseif ($grade->getName() == 'Camarade' && $this->politic() == 'communism') {
+                $return = $grade;
             }
         }
         return $return;
