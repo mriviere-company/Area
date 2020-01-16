@@ -71,7 +71,7 @@ class MoveFleetController extends AbstractController
                     if ($user->getAlly()) {
                         $allyF = $user->getAlly();
                     } else {
-                        $allyF = 'war';
+                        $allyF = 'wedontexistsok';
                     }
 
                     $warFleets = $em->getRepository('App:Fleet')
@@ -102,12 +102,11 @@ class MoveFleetController extends AbstractController
 
                     $fleetFight = $em->getRepository('App:Fleet')
                         ->createQueryBuilder('f')
-                        ->join('f.user', 'u')
-                        ->leftJoin('u.ally', 'a')
                         ->where('f.planet = :planet')
+                        ->andWhere('f.user != :user')
                         ->andWhere('f.fightAt is not null')
                         ->andWhere('f.flightTime is null')
-                        ->setParameters(['planet' => $newHome])
+                        ->setParameters(['planet' => $newHome, 'user' => $user])
                         ->getQuery()
                         ->setMaxResults(1)
                         ->getOneOrNullResult();
@@ -133,7 +132,6 @@ class MoveFleetController extends AbstractController
                         }
                         $allFleets = $em->getRepository('App:Fleet')
                             ->createQueryBuilder('f')
-                            ->join('f.user', 'u')
                             ->where('f.planet = :planet')
                             ->andWhere('f.flightTime is null')
                             ->setParameters(['planet' => $newHome])

@@ -333,7 +333,7 @@ class SpatialController extends AbstractController
             if($user->getAlly()) {
                 $allyF = $user->getAlly();
             } else {
-                $allyF = 'war';
+                $allyF = 'wedontexistsok';
             }
 
             $fleets = $em->getRepository('App:Fleet')
@@ -352,12 +352,11 @@ class SpatialController extends AbstractController
 
             $fleetFight = $em->getRepository('App:Fleet')
                 ->createQueryBuilder('f')
-                ->join('f.user', 'u')
-                ->leftJoin('u.ally', 'a')
                 ->where('f.planet = :planet')
+                ->andWhere('f.user != :user')
                 ->andWhere('f.fightAt is not null')
                 ->andWhere('f.flightTime is null')
-                ->setParameters(['planet' => $usePlanet])
+                ->setParameters(['planet' => $usePlanet, 'user' => $user])
                 ->getQuery()
                 ->setMaxResults(1)
                 ->getOneOrNullResult();
@@ -383,7 +382,6 @@ class SpatialController extends AbstractController
                 }
                 $allFleets = $em->getRepository('App:Fleet')
                     ->createQueryBuilder('f')
-                    ->join('f.user', 'u')
                     ->where('f.planet = :planet')
                     ->andWhere('f.flightTime is null')
                     ->setParameters(['planet' => $usePlanet])
