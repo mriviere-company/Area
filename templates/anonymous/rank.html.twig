@@ -24,7 +24,7 @@
         <table class="table table-striped borderOverview table-dark text-center">
             <tbody>
             <tr>
-                <th width="15px" class="th-sm">
+                <th width="85px" class="th-sm">
                     {{ 'rank.position'|trans }}
                 </th>
                 <th class="th-sm text-left">
@@ -46,17 +46,21 @@
             {% set x = 1 %}
             {% for user in users %}
                 <tr>
-                    <th width="15px" class="tab-cells-name p-2">
-                        {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> {{ x }}.{% else %}<div class="glyphicon glyphicon-star" hidden></div> {{ x }}.{% endif %}
+                    <th width="85px" class="tab-cells-name p-2">
+                        {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% else %}<div class="glyphicon glyphicon-star" hidden></div> <span class="float-left ml-3">{{ x }}</span>{% endif %}{% if user.position > user.oldPosition %}<span class="rank-bad-border text-rouge float-right">-{{ user.position - user.oldPosition }}</span>{% else %}<span class="rank-good-border text-vert float-right">+{{ user.oldPosition - user.position }}</span>{% endif %}
                     </th>
                     <th class="tab-cells-name p-2 text-left">
                         {% if user.alliance %}<span><a href="{{ path('home') }}">[{{ user.sigle }}]</a></span> {% endif %}<span><a href="{{ path('home') }}">{{ user.username }}</a>{% if user.politic == 'democrat' %}<div class="ml-2 text-vert glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="top" title="{{ 'democrat'|trans }}"></div>{% elseif user.politic == 'communism' %}<div class="ml-2 text-rouge glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="top" title="{{ 'communism'|trans }}"></div>{% elseif user.politic == 'fascism' %}<div class="ml-2 text-blanc glyphicon glyphicon-flash" data-toggle="tooltip" data-placement="top" title="{{ 'fascism'|trans }}"></div>{% endif %}</span>
                     </th>
                     <th class="tab-cells-name p-2">
-                        {{ user.planets|number_format }}
+                        {% if user.politic == 'communism' or user.politic == 'fascism' %}
+                            ??
+                        {% else %}
+                            {{ user.planets|number_format }}
+                        {% endif %}
                     </th>
                     <th class="tab-cells-name p-2">
-                        {{ user.point|number_format }}
+                        {{ user.point|number_format }}{% if user.point > user.oldPoint %}<span class="rank-good-border text-vert">+{{ (user.point - user.oldPoint)|number_format }}</span>{% else %}<span class="rank-bad-border text-rouge">-{{ (user.oldPoint - user.point)|number_format }}</span>{% endif %}
                     </th>
                     <th class="tab-cells-name p-2">
                         {{ user.warPoint|number_format }}
@@ -69,5 +73,8 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="front-block-second">
+            <div class="text-center text-vert">{{ 'rank.nbrPlayers'|trans({'%nbrPlayer%': nbrPlayers|number_format})|raw }}</div>
+        </div>
     </div>
 {% endblock %}

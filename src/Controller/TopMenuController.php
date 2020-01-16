@@ -129,7 +129,7 @@ class TopMenuController extends AbstractController
         $users = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.planets', 'p')
-            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, u.id, u.username, r.point as point, r.warPoint as warPoint, u.createdAt, a.politic as politic')
+            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, u.id, u.username, r.point as point, r.oldPoint as oldPoint, r.position as position, r.oldPosition as oldPosition, r.warPoint as warPoint, u.createdAt, a.politic as politic')
             ->leftJoin('u.rank', 'r')
             ->leftJoin('u.ally', 'a')
             ->groupBy('u.id')
@@ -139,7 +139,14 @@ class TopMenuController extends AbstractController
             ->setParameters(['one' => 200])
             ->orderBy('point', 'DESC')
             ->getQuery()
+            ->setMaxResults(100)
             ->getResult();
+
+        $nbrPlayers = $em->getRepository('App:Rank')
+            ->createQueryBuilder('r')
+            ->select('count(r.id) as nbrPlayer')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         $otherPoints = $em->getRepository('App:Stats')
             ->createQueryBuilder('s')
@@ -150,6 +157,7 @@ class TopMenuController extends AbstractController
 
         return $this->render('anonymous/rank.html.twig', [
             'users' => $users,
+            'nbrPlayers' => $nbrPlayers - 100,
             'otherPoints' => $otherPoints
         ]);
     }
