@@ -6,9 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
 use App\Entity\Stats;
+use App\Entity\Exchange;
 use Dateinterval;
-use DateTimeZone;
-use DateTime;
 
 
 class DailyController extends AbstractController
