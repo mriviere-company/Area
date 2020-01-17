@@ -36,8 +36,6 @@ class PlanetController extends AbstractController
             ->createQueryBuilder('s')
             ->select('count(s) as numbers, sum(DISTINCT s.bitcoin) as allBitcoin')
             ->groupBy('s.date')
-            ->where('s.user != :user')
-            ->setParameters(['user' => $user])
             ->getQuery()
             ->getResult();
 
