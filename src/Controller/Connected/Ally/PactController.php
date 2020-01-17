@@ -292,14 +292,17 @@ class PactController extends AbstractController
         $war = $em->getRepository('App:War')
             ->createQueryBuilder('w')
             ->where('w.ally = :ally')
+            ->andWhere('w.allyTag = :sigle')
             ->setParameter('ally', $ally)
+            ->setParameters(['ally' => $ally, 'sigle' => $otherAlly->getSigle()])
             ->getQuery()
             ->getOneOrNullResult();
 
         $war2 = $em->getRepository('App:War')
             ->createQueryBuilder('w')
             ->where('w.ally = :ally')
-            ->setParameter('ally', $otherAlly)
+            ->andWhere('w.allyTag = :sigle')
+            ->setParameters(['ally' => $otherAlly, 'sigle' => $ally->getSigle()])
             ->getQuery()
             ->getOneOrNullResult();
 

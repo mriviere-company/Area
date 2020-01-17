@@ -128,44 +128,40 @@ class BotController extends AbstractController
                 ->getQuery()
                 ->getOneOrNullResult();
 
-            $salon = $em->getRepository('App:Salon')
-                ->createQueryBuilder('s')
-                ->where('s.name = :name')
-                ->setParameters(['name' => 'Public'])
+            $alreadyName = $em->getRepository('App:User')
+                ->createQueryBuilder('u')
+                ->where('u.username = :name')
+                ->setParameters(['name' => $nickeName->getPseudo()])
                 ->getQuery()
-                ->getOneOrNullResult();
+                ->getResult();
 
-            $nick = ucfirst ($nickeName->getPseudo());
-            $em->remove($nickeName);
-            $user = new User();
-            $newBot->add(new DateInterval('PT' . rand(1, 1000) . 'H'));
-            $user->setUsername($nick);
-            $user->setEmail($nick . '@fake.com');
-            $user->setCreatedAt($newBot);
-            $user->setPassword(password_hash($nick . 'bot', PASSWORD_BCRYPT));
-            $user->setTutorial(60);
-            $user->setBot(true);
-            $user->setDailyConnect($now);
-            $user->setLastActivity($now);
-            $user->setNewletter(false);
-            // image de profil
-            $em->persist($user);
-            $em->flush();
+            if ($alreadyName) {
+                $em->remove($nickeName);
+            } else {
+                $salon = $em->getRepository('App:Salon')
+                    ->createQueryBuilder('s')
+                    ->where('s.name = :name')
+                    ->setParameters(['name' => 'Public'])
+                    ->getQuery()
+                    ->getOneOrNullResult();
 
-            $planet = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.sector', 's')
-                ->join('s.galaxy', 'g')
-                ->where('p.user is null')
-                ->andWhere('p.ground = :ground')
-                ->andWhere('p.sky = :sky')
-                ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
-                ->setParameters(['gal' => rand(4, 10), 'sector' => rand(1, 100), 'ground' => 25, 'sky' => 5])
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
+                $nick = ucfirst ($nickeName->getPseudo());
+                $em->remove($nickeName);
+                $user = new User();
+                $newBot->add(new DateInterval('PT' . rand(1, 1000) . 'H'));
+                $user->setUsername($nick);
+                $user->setEmail($nick . '@fake.com');
+                $user->setCreatedAt($newBot);
+                $user->setPassword(password_hash($nick . 'bot', PASSWORD_BCRYPT));
+                $user->setTutorial(60);
+                $user->setBot(true);
+                $user->setDailyConnect($now);
+                $user->setLastActivity($now);
+                $user->setNewletter(false);
+                // image de profil
+                $em->persist($user);
+                $em->flush();
 
-            if (!$planet) {
                 $planet = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
                     ->join('p.sector', 's')
@@ -178,43 +174,58 @@ class BotController extends AbstractController
                     ->setMaxResults(1)
                     ->getQuery()
                     ->getOneOrNullResult();
-            }
 
-            if($planet) {
-                $planet->setUser($user);
-                $planet->setName('Terra Nova');
-                $planet->setSonde(10);
-                $planet->setRadar(2);
-                $planet->setGroundPlace(10);
-                $planet->setSkyPlace(1);
-                $planet->setMiner(3);
-                $planet->setNbProduction(12.6);
-                $planet->setWtProduction(11.54);
-                $planet->setExtractor(3);
-                $planet->setSpaceShip(1);
-                $planet->setHunter(500);
-                $planet->setNiobium(150000);
-                $planet->setWater(100000);
-                $planet->setFregate(20);
-                $planet->setWorker(100000);
-                $planet->setSoldier(200);
-                $planet->setColonizer(1);
-                $user->addPlanet($planet);
-                foreach ($planet->getFleets() as $fleet) {
-                    if ($fleet->getUser()->getZombie() == 1) {
-                        $em->remove($fleet);
-                    } else {
-                        $fleet->setPlanet($fleet->getUser()->getFirstPlanetFleet());
+                if (!$planet) {
+                    $planet = $em->getRepository('App:Planet')
+                        ->createQueryBuilder('p')
+                        ->join('p.sector', 's')
+                        ->join('s.galaxy', 'g')
+                        ->where('p.user is null')
+                        ->andWhere('p.ground = :ground')
+                        ->andWhere('p.sky = :sky')
+                        ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
+                        ->setParameters(['gal' => rand(4, 10), 'sector' => rand(1, 100), 'ground' => 25, 'sky' => 5])
+                        ->setMaxResults(1)
+                        ->getQuery()
+                        ->getOneOrNullResult();
+                }
+
+                if($planet) {
+                    $planet->setUser($user);
+                    $planet->setName('Terra Nova');
+                    $planet->setSonde(10);
+                    $planet->setRadar(2);
+                    $planet->setGroundPlace(10);
+                    $planet->setSkyPlace(1);
+                    $planet->setMiner(3);
+                    $planet->setNbProduction(12.6);
+                    $planet->setWtProduction(11.54);
+                    $planet->setExtractor(3);
+                    $planet->setSpaceShip(1);
+                    $planet->setHunter(500);
+                    $planet->setNiobium(150000);
+                    $planet->setWater(100000);
+                    $planet->setFregate(20);
+                    $planet->setWorker(100000);
+                    $planet->setSoldier(200);
+                    $planet->setColonizer(1);
+                    $user->addPlanet($planet);
+                    foreach ($planet->getFleets() as $fleet) {
+                        if ($fleet->getUser()->getZombie() == 1) {
+                            $em->remove($fleet);
+                        } else {
+                            $fleet->setPlanet($fleet->getUser()->getFirstPlanetFleet());
+                        }
                     }
                 }
+                $ships = new Ships();
+                $user->setShip($ships);
+                $em->persist($ships);
+                $rank = new Rank();
+                $em->persist($rank);
+                $user->setRank($rank);
+                $salon->addUser($user);
             }
-            $ships = new Ships();
-            $user->setShip($ships);
-            $em->persist($ships);
-            $rank = new Rank();
-            $em->persist($rank);
-            $user->setRank($rank);
-            $salon->addUser($user);
             echo "Création nouveau bot finis.<br>";
             $em->flush();
         }

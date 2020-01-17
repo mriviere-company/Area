@@ -825,9 +825,9 @@ class FleetController  extends AbstractController
         
         if($planetTake->getMerchant() == true) {
             if ($user->getPoliticPdg() > 0) {
-                $newWarPointS = round((($fleetGive->getNiobium() / 6) / 1000) * (1 + ($user->getPoliticPdg() / 10)));
+                $newWarPointS = round((($fleetGive->getNiobium() / 6) / 5000) * (1 + ($user->getPoliticPdg() / 10)));
             } else {
-                $newWarPointS = round(($fleetGive->getNiobium() / 6) / 1000);
+                $newWarPointS = round(($fleetGive->getNiobium() / 6) / 5000);
             }
             $reportSell = new Report();
             $reportSell->setType('economic');
@@ -886,9 +886,9 @@ class FleetController  extends AbstractController
         }
         if($planetTake->getMerchant() == true) {
             if ($user->getPoliticPdg() > 0) {
-                $newWarPointS = round((($fleetGive->getWater() / 3) / 1000) * (1 + ($user->getPoliticPdg() / 10)));
+                $newWarPointS = round((($fleetGive->getWater() / 3) / 5000) * (1 + ($user->getPoliticPdg() / 10)));
             } else {
-                $newWarPointS = round(($fleetGive->getWater() / 3) / 1000);
+                $newWarPointS = round(($fleetGive->getWater() / 3) / 5000);
             }
             $reportSell = new Report();
             $reportSell->setType('economic');
@@ -947,9 +947,9 @@ class FleetController  extends AbstractController
         }
         if($planetTake->getMerchant() == true) {
             if ($user->getPoliticPdg() > 0) {
-                $newWarPointS = round((($fleetGive->getSoldier() * 10) / 1000) * (1 + ($user->getPoliticPdg() / 10)));
+                $newWarPointS = round((($fleetGive->getSoldier() * 10) / 5000) * (1 + ($user->getPoliticPdg() / 10)));
             } else {
-                $newWarPointS = round(($fleetGive->getSoldier() * 10) / 1000);
+                $newWarPointS = round(($fleetGive->getSoldier() * 10) / 5000);
             }
             $reportSell = new Report();
             $reportSell->setType('economic');
@@ -1008,9 +1008,9 @@ class FleetController  extends AbstractController
         }
         if($planetTake->getMerchant() == true) {
             if ($user->getPoliticPdg() > 0) {
-                $newWarPointS = round((($fleetGive->getWorker() * 50) / 1000) * (1 + ($user->getPoliticPdg() / 10)));
+                $newWarPointS = round((($fleetGive->getWorker() * 50) / 5000) * (1 + ($user->getPoliticPdg() / 10)));
             } else {
-                $newWarPointS = round(($fleetGive->getWorker() * 50) / 1000);
+                $newWarPointS = round(($fleetGive->getWorker() * 50) / 5000);
             }
             $reportSell = new Report();
             $reportSell->setType('economic');
@@ -1069,9 +1069,9 @@ class FleetController  extends AbstractController
         }
         if($planetTake->getMerchant() == true) {
             if ($user->getPoliticPdg() > 0) {
-                $newWarPointS = round((($fleetGive->getScientist() * 100) / 1000) * (1 + ($user->getPoliticPdg() / 10)));
+                $newWarPointS = round((($fleetGive->getScientist() * 100) / 5000) * (1 + ($user->getPoliticPdg() / 10)));
             } else {
-                $newWarPointS = round(($fleetGive->getScientist() * 100) / 1000);
+                $newWarPointS = round(($fleetGive->getScientist() * 100) / 5000);
             }
             $reportSell = new Report();
             $reportSell->setType('economic');
@@ -1136,9 +1136,9 @@ class FleetController  extends AbstractController
             $reportSell->setTitle("Vente aux marchands");
             $reportSell->setImageName("sell_report.jpg");
             if ($user->getPoliticPdg() > 0) {
-                $newWarPointS = round((((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6)) / 1000)) * (1 + ($user->getPoliticPdg() / 10)));
+                $newWarPointS = round((((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6)) / 5000)) * (1 + ($user->getPoliticPdg() / 10)));
             } else {
-                $newWarPointS = round((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6)) / 1000);
+                $newWarPointS = round((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6)) / 5000);
             }
             if ($user->getPoliticMerchant() > 0) {
                 $gainSell = round((($fleetGive->getWater() * 0.25) + ($fleetGive->getSoldier() * 80) + ($fleetGive->getWorker() * 5) + ($fleetGive->getScientist() * 300) + ($fleetGive->getNiobium() * 0.10)) * (1 + ($user->getPoliticMerchant() / 20)));
