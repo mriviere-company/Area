@@ -192,9 +192,7 @@ class ZombieController extends AbstractController
             ->join('s.user', 'u')
             ->select('count(s) as numbers, sum(DISTINCT s.zombie) as allZombie')
             ->groupBy('s.date')
-            ->where('s.user != :user')
             ->andWhere('u.bot = false')
-            ->setParameters(['user' => $user])
             ->getQuery()
             ->getResult();
 

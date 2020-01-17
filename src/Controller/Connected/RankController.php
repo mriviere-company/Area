@@ -106,8 +106,6 @@ class RankController extends AbstractController
             ->createQueryBuilder('s')
             ->select('count(s) as numbers, sum(DISTINCT s.pdg) as allPdg, sum(DISTINCT s.points) as allPoint')
             ->groupBy('s.date')
-            ->where('s.user != :user')
-            ->setParameters(['user' => $user])
             ->getQuery()
             ->getResult();
 
