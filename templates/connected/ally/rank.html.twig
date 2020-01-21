@@ -55,7 +55,7 @@
             </tr>
             {% set x = 1 %}
             {% for ally in allAllys %}
-                <tr{% if app.user.getAlly().getSigle() == ally.sigle %} class="constructFree"{% endif %}>
+                <tr{% if app.user.getAlly() and app.user.getAlly().getSigle() == ally.sigle %} class="currentRoute"{% elseif  app.user.getAlly() and ally.sigle in app.user.getAllyFriendsTag() %} class="constructFree"{% elseif app.user.getAlly() and ally.sigle in app.user.getAllyEnnemyTag() %} class="planetFull"{% endif %}>
                     <th width="15px" class="tab-cells-name p-2">
                         {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> {{ x }}.{% else %}<div class="glyphicon glyphicon-star" hidden></div> {{ x }}.{% endif %}
                     </th>
@@ -89,9 +89,14 @@
                     <th class="tab-cells-name p-2">
                         {{ ally.createdAt|date('d/m/Y') }}
                     </th>
-                    <th class="tab-cells-name p-2">
-                        <span><a href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'sigle': ally.sigle}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span>
-                    </th>
+                    {% if app.user.getAlly() and app.user.getAlly().getSigle() == ally.sigle %}
+                        <th class="tab-cells-name p-2">
+                        </th>
+                    {% else %}
+                        <th class="tab-cells-name p-2">
+                            <span><a href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'sigle': ally.sigle}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span>
+                        </th>
+                    {% endif %}
                 </tr>
                 {% set x = x + 1 %}
             {% endfor %}

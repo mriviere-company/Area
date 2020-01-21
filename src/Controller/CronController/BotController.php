@@ -385,7 +385,7 @@ class BotController extends AbstractController
                 // créer une flotte et l'envoyer recyclage
                 $bot->setLastActivity($now);
             }
-            if (rand(1, 1500) == 1 && $messageSent == 1) {
+            if (rand(1, 2000) == 1 && $messageSent == 1) {
                 $message = new S_Content();
                 $messageSent = 0;
                 $message->setSalon($salon);

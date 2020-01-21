@@ -807,6 +807,24 @@ class User implements UserInterface, \Serializable
     /**
      * @return mixed
      */
+    public function getAllyEnnemyTag()
+    {
+        if($this->ally) {
+            $warAlly = [];
+            $x = 0;
+            foreach ($this->ally->getWars() as $tmp) {
+                $warAlly[$x] = $tmp->getAllyTag();
+                $x++;
+            }
+            return $warAlly;
+        } else {
+            return [];
+        }
+    }
+
+    /**
+     * @return mixed
+     */
     public function getWhichQuest()
     {
         $return = ['private_message', 'salon_message', 'pdg', 'spy_planet', 'sell', 'cohort', 'destroy_fleet', 'recycle', 'invade', 'soldier', 'scientist', 'ships'];
@@ -982,6 +1000,24 @@ class User implements UserInterface, \Serializable
     {
         if($this->getAlly()) {
             return $this->getAlly()->getAllieds();
+        } else {
+            return [];
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAllyFriendsTag()
+    {
+        if($this->getAlly()) {
+            $friendAlly = [];
+            $x = 0;
+            foreach ($this->getAlly()->getAllieds() as $tmp) {
+                $friendAlly[$x] = $tmp->getAllyTag();
+                $x++;
+            }
+            return $friendAlly;
         } else {
             return [];
         }
