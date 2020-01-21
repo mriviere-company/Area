@@ -24,7 +24,7 @@
         <table class="table table-striped borderOverview table-dark text-center">
             <tbody>
             <tr>
-                <th width="85px" class="th-sm">
+                <th class="th-sm">
                     {{ 'rank.position'|trans }}
                 </th>
                 <th class="th-sm text-left">
@@ -46,7 +46,7 @@
             {% set x = 1 %}
             {% for user in users %}
                 <tr>
-                    <th width="85px" class="tab-cells-name p-2">
+                    <th width="100px" class="tab-cells-name p-2">
                         {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% else %}<div class="glyphicon glyphicon-star" hidden></div> <span class="float-left ml-3">{{ x }}</span>{% endif %}{% if user.position > user.oldPosition %}<span class="rank-bad-border text-rouge float-right">-{{ user.position - user.oldPosition }}</span>{% else %}<span class="rank-good-border text-vert float-right">+{{ user.oldPosition - user.position }}</span>{% endif %}
                     </th>
                     <th class="tab-cells-name p-2 text-left">
