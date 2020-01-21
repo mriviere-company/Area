@@ -232,6 +232,7 @@ class BotController extends AbstractController
 
         $bots = $em->getRepository('App:User')
             ->createQueryBuilder('u')
+            ->join('u.planets', 'p')
             ->join('u.rank', 'r')
             ->where('u.bot = true and u.merchant = false and u.zombie = false')
             ->getQuery()

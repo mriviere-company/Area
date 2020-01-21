@@ -80,7 +80,7 @@ class ZombiesController extends AbstractController
                 $reportDef->setType('invade');
                 $reportDef->setSendAt($now);
                 $reportDef->setUser($zUser);
-                if ($zUser->getZombieAtt() == 1 && $zUser->getTutorial() == 50) {
+                if ($zUser->getZombieAtt() >= 1 && $zUser->getTutorial() == 50) {
                     $zUser->setTutorial(51);
                 }
 
@@ -98,8 +98,8 @@ class ZombiesController extends AbstractController
                     $dWorker = $dWorker * (1 + ($zUser->getPoliticWorkerDef() / 5));
                 }
                 $dMilitary = $dWorker + $dSoldier + $dTanks;
-                $aMilitary = (500 * (($zUser->getZombieAtt() / 6) + 1) * 2 * round(1 + ($zUser->getTerraformation()) / 5));
-                $soldierAtmp = (500 * (($zUser->getZombieAtt() / 6) + 1));
+                $aMilitary = (500 * (($zUser->getZombieAtt() / 3) + 1) * 2 * round(1 + ($zUser->getTerraformation()) / 5));
+                $soldierAtmp = (500 * (($zUser->getZombieAtt() / 3) + 1));
 
                 if ($dMilitary > $aMilitary) {
                     if ($zUser->getAlly()) {
@@ -111,7 +111,7 @@ class ZombiesController extends AbstractController
                     } else {
                         $zUser->setZombieAtt($zUser->getZombieAtt() + 1);
                     }
-                    $warPointDef = round($aMilitary);
+                    $warPointDef = round($aMilitary / 10);
                     $zUser->getRank()->setWarPoint($zUser->getRank()->getWarPoint() + $warPointDef);
                     $aMilitary = $dSoldier - $aMilitary;
                     $reportDef->setType("zombie");

@@ -103,7 +103,7 @@ class OverviewController extends AbstractController
             ->join('d.planet', 'dp')
             ->join('dp.sector', 'ds')
             ->join('ds.galaxy', 'dg')
-            ->select('f.attack, f.name, f.signature, p.name as pName, p.position as position, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, dp.name as dName, dp.position as dPosition, ds.position as dSector, dg.position as dGalaxy, ds.id as dIdSector, dg.id as dIdGalaxy, f.flightTime')
+            ->select('f.id, f.attack, f.name, f.signature, p.name as pName, p.position as position, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, dp.name as dName, dp.position as dPosition, ds.position as dSector, dg.position as dGalaxy, ds.id as dIdSector, dg.id as dIdGalaxy, f.flightTime')
             ->where('f.user = :user')
             ->andWhere('f.flightTime < :time')
             ->setParameters(['user' => $user, 'time' => $oneHour])

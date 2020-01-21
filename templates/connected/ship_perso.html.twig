@@ -27,7 +27,7 @@
             </table>
         {% endif %}
         <div class="front-block-second">
-            {% set shipPoints = [app.user.getShip().getArmorPoints(), app.user.getShip().getShieldPoints(), app.user.getShip().getMissilePoints(), app.user.getShip().getLaserPoints(), app.user.getShip().getPlasmaPoints(), app.user.getShip().getPrecisionPoints()] %}
+            {% set shipPoints = [app.user.getShip().getArmorPoints() - 5115, app.user.getShip().getShieldPoints() - 161, app.user.getShip().getMissilePoints() - 272, app.user.getShip().getLaserPoints() - 30, app.user.getShip().getPlasmaPoints() - 25, app.user.getShip().getPrecisionPoints()] %}
             <div id="shipPoints" data-ship-points="{{ shipPoints|json_encode }}"></div>
             <div class="row">
                 <div class="col-12">
