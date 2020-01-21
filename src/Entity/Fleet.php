@@ -93,162 +93,162 @@ class Fleet
     protected $recycleAt;
 
     /**
-     * @ORM\Column(name="signature",type="bigint")
+     * @ORM\Column(name="signature",type="bigint", options={"unsigned":true})
      */
     protected $signature;
 
     /**
-     * @ORM\Column(name="sonde",type="bigint", nullable=true)
+     * @ORM\Column(name="sonde",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $sonde;
 
     /**
-     * @ORM\Column(name="cargoI",type="integer", nullable=true)
+     * @ORM\Column(name="cargoI",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $cargoI;
 
     /**
-     * @ORM\Column(name="cargoV",type="integer", nullable=true)
+     * @ORM\Column(name="cargoV",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $cargoV;
 
     /**
-     * @ORM\Column(name="cargoX",type="bigint", nullable=true)
+     * @ORM\Column(name="cargoX",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $cargoX;
 
     /**
-     * @ORM\Column(name="colonizer",type="smallint", nullable=true)
+     * @ORM\Column(name="colonizer",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $colonizer;
 
     /**
-     * @ORM\Column(name="recycleur",type="integer", nullable=true)
+     * @ORM\Column(name="recycleur",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $recycleur;
 
     /**
-     * @ORM\Column(name="barge",type="integer", nullable=true)
+     * @ORM\Column(name="barge",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $barge;
 
     /**
-     * @ORM\Column(name="moonMaker",type="smallint", nullable=true)
+     * @ORM\Column(name="moonMaker",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $moonMaker;
 
     /**
-     * @ORM\Column(name="radarShip",type="integer", nullable=true)
+     * @ORM\Column(name="radarShip",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $radarShip;
 
     /**
-     * @ORM\Column(name="brouilleurShip",type="integer", nullable=true)
+     * @ORM\Column(name="brouilleurShip",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $brouilleurShip;
 
     /**
-     * @ORM\Column(name="motherShip",type="smallint", nullable=true)
+     * @ORM\Column(name="motherShip",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $motherShip;
 
     /**
-     * @ORM\Column(name="hunter",type="bigint", nullable=true)
+     * @ORM\Column(name="hunter",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $hunter;
 
     /**
-     * @ORM\Column(name="hunterHeavy",type="bigint", nullable=true)
+     * @ORM\Column(name="hunterHeavy",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $hunterHeavy;
 
     /**
-     * @ORM\Column(name="hunterWar",type="bigint", nullable=true)
+     * @ORM\Column(name="hunterWar",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $hunterWar;
 
     /**
-     * @ORM\Column(name="corvet",type="bigint", nullable=true)
+     * @ORM\Column(name="corvet",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $corvet;
 
     /**
-     * @ORM\Column(name="corvetLaser",type="bigint", nullable=true)
+     * @ORM\Column(name="corvetLaser",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $corvetLaser;
 
     /**
-     * @ORM\Column(name="corvetWar",type="bigint", nullable=true)
+     * @ORM\Column(name="corvetWar",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $corvetWar;
 
     /**
-     * @ORM\Column(name="fregate",type="bigint", nullable=true)
+     * @ORM\Column(name="fregate",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $fregate;
 
     /**
-     * @ORM\Column(name="fregatePlasma",type="bigint", nullable=true)
+     * @ORM\Column(name="fregatePlasma",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $fregatePlasma;
 
     /**
-     * @ORM\Column(name="croiser",type="bigint", nullable=true)
+     * @ORM\Column(name="croiser",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $croiser;
 
     /**
-     * @ORM\Column(name="ironClad",type="bigint", nullable=true)
+     * @ORM\Column(name="ironClad",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $ironClad;
 
     /**
-     * @ORM\Column(name="destroyer",type="bigint", nullable=true)
+     * @ORM\Column(name="destroyer",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $destroyer;
 
     /**
-     * @ORM\Column(name="soldier",type="integer", nullable=true)
+     * @ORM\Column(name="soldier",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $soldier;
 
     /**
-     * @ORM\Column(name="tank",type="smallint", nullable=true)
+     * @ORM\Column(name="tank",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $tank;
 
     /**
-     * @ORM\Column(name="worker",type="integer", nullable=true)
+     * @ORM\Column(name="worker",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $worker;
 
     /**
-     * @ORM\Column(name="scientist",type="smallint", nullable=true)
+     * @ORM\Column(name="scientist",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $scientist;
 
     /**
-     * @ORM\Column(name="nuclear_bomb",type="smallint", nullable=true)
+     * @ORM\Column(name="nuclear_bomb",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $nuclearBomb;
 
     /**
-     * @ORM\Column(name="niobium",type="bigint", nullable=true)
+     * @ORM\Column(name="niobium",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $niobium;
 
     /**
-     * @ORM\Column(name="water",type="bigint", nullable=true)
+     * @ORM\Column(name="water",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $water;
 
     /**
-     * @ORM\Column(name="food",type="bigint", nullable=true)
+     * @ORM\Column(name="food",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $food;
 
     /**
-     * @ORM\Column(name="uranium",type="integer", nullable=true)
+     * @ORM\Column(name="uranium",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $uranium;
 

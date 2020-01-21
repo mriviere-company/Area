@@ -45,7 +45,7 @@ class User implements UserInterface, \Serializable
     protected $email;
 
     /**
-     * @ORM\Column(name="experience",type="integer", nullable=true)
+     * @ORM\Column(name="experience",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $experience;
 
@@ -57,7 +57,7 @@ class User implements UserInterface, \Serializable
     protected $ipAddress;
 
     /**
-     * @ORM\Column(name="cheat",type="smallint")
+     * @ORM\Column(name="cheat",type="smallint", options={"unsigned":true})
      */
     protected $cheat;
 
@@ -206,13 +206,13 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * @ORM\Column(name="tutorial",type="smallint")
+     * @ORM\Column(name="tutorial",type="smallint", options={"unsigned":true})
      */
     protected $tutorial;
 
 
     /**
-     * @ORM\Column(name="vote_ally",type="smallint")
+     * @ORM\Column(name="vote_ally",type="smallint", options={"unsigned":true})
      */
     protected $voteAlly;
 
@@ -250,201 +250,201 @@ class User implements UserInterface, \Serializable
     protected $bitcoin;
 
     /**
-     * @ORM\Column(name="scientistProduction",type="decimal", precision=28, scale=5)
+     * @ORM\Column(name="scientistProduction",type="decimal", precision=28, scale=5, options={"unsigned":true})
      */
     protected $scientistProduction;
 
     /**
-     * @ORM\Column(name="onde",type="smallint", nullable=true)
+     * @ORM\Column(name="onde",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $onde;
 
     /**
-     * @ORM\Column(name="aeroponicFarm",type="smallint", nullable=true)
+     * @ORM\Column(name="aeroponicFarm",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $aeroponicFarm;
 
     /**
-     * @ORM\Column(name="industry",type="integer", nullable=true)
+     * @ORM\Column(name="industry",type="integer", nullable=true, options={"unsigned":true})
      */
     protected $industry;
 
     /**
-     * @ORM\Column(name="lightShip",type="smallint", nullable=true)
+     * @ORM\Column(name="lightShip",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $lightShip;
 
     /**
-     * @ORM\Column(name="heavyShip",type="smallint", nullable=true)
+     * @ORM\Column(name="heavyShip",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $heavyShip;
 
     /**
-     * @ORM\Column(name="discipline",type="smallint", nullable=true)
+     * @ORM\Column(name="discipline",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $discipline;
 
     /**
-     * @ORM\Column(name="hyperespace",type="smallint", nullable=true)
+     * @ORM\Column(name="hyperespace",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $hyperespace;
 
     /**
-     * @ORM\Column(name="barge",type="smallint", nullable=true)
+     * @ORM\Column(name="barge",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $barge;
 
     /**
-     * @ORM\Column(name="utility",type="smallint", nullable=true)
+     * @ORM\Column(name="utility",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $utility;
 
     /**
-     * @ORM\Column(name="demography",type="smallint", nullable=true)
+     * @ORM\Column(name="demography",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $demography;
 
     /**
-     * @ORM\Column(name="barbed",type="smallint", nullable=true)
+     * @ORM\Column(name="barbed",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $barbed;
 
     /**
-     * @ORM\Column(name="tank",type="smallint", nullable=true)
+     * @ORM\Column(name="tank",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $tank;
 
     /**
-     * @ORM\Column(name="expansion",type="smallint", nullable=true)
+     * @ORM\Column(name="expansion",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $expansion;
     /**
-     * @ORM\Column(name="terraformation",type="smallint", nullable=true)
+     * @ORM\Column(name="terraformation",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $terraformation;
 
     /**
-     * @ORM\Column(name="cargo",type="smallint", nullable=true)
+     * @ORM\Column(name="cargo",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $cargo;
 
     /**
-     * @ORM\Column(name="recycleur",type="smallint", nullable=true)
+     * @ORM\Column(name="recycleur",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $recycleur;
 
     /**
-     * @ORM\Column(name="armement",type="smallint", nullable=true)
+     * @ORM\Column(name="armement",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $armement;
 
     /**
-     * @ORM\Column(name="missile",type="smallint", nullable=true)
+     * @ORM\Column(name="missile",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $missile;
 
     /**
-     * @ORM\Column(name="laser",type="smallint", nullable=true)
+     * @ORM\Column(name="laser",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $laser;
 
     /**
-     * @ORM\Column(name="plasma",type="smallint", nullable=true)
+     * @ORM\Column(name="plasma",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $plasma;
 
     /**
-     * @ORM\Column(name="politic_cargo",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_cargo",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicCargo;
 
     /**
-     * @ORM\Column(name="politic_recycleur",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_recycleur",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicRecycleur;
 
     /**
-     * @ORM\Column(name="politic_worker",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_worker",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicWorker;
 
     /**
-     * @ORM\Column(name="politic_prod",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_prod",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicProd;
 
     /**
-     * @ORM\Column(name="politic_cost_soldier",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_cost_soldier",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicCostSoldier;
 
     /**
-     * @ORM\Column(name="politic_cost_scientist",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_cost_scientist",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicCostScientist;
 
     /**
-     * @ORM\Column(name="politic_cost_tank",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_cost_tank",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicCostTank;
 
     /**
-     * @ORM\Column(name="politic_worker_def",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_worker_def",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicWorkerDef;
 
     /**
-     * @ORM\Column(name="politic_tank_def",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_tank_def",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicTankDef;
 
     /**
-     * @ORM\Column(name="politic_soldier_att",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_soldier_att",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicSoldierAtt;
 
     /**
-     * @ORM\Column(name="politic_armement",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_armement",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicArmement;
 
     /**
-     * @ORM\Column(name="politic_armor",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_armor",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicArmor;
 
     /**
-     * @ORM\Column(name="politic_colonisation",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_colonisation",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicColonisation;
 
     /**
-     * @ORM\Column(name="politic_invade",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_invade",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicInvade;
 
     /**
-     * @ORM\Column(name="politic_merchant",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_merchant",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicMerchant;
 
     /**
-     * @ORM\Column(name="politic_search",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_search",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicSearch;
 
     /**
-     * @ORM\Column(name="politic_soldier_sale",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_soldier_sale",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicSoldierSale;
 
     /**
-     * @ORM\Column(name="politic_barge",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_barge",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicBarge;
 
     /**
-     * @ORM\Column(name="politic_pdg",type="smallint", nullable=true)
+     * @ORM\Column(name="politic_pdg",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $politicPdg;
 
@@ -1999,6 +1999,16 @@ class User implements UserInterface, \Serializable
             $return = 14;
         } elseif ($this->experience < 2000000) {
             $return = 15;
+        } elseif ($this->experience < 3000000) {
+            $return = 16;
+        } elseif ($this->experience < 5000000) {
+            $return = 17;
+        } elseif ($this->experience < 7000000) {
+            $return = 18;
+        } elseif ($this->experience < 9000000) {
+            $return = 19;
+        } elseif ($this->experience < 12000000) {
+            $return = 20;
         }
 
         return $return;

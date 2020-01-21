@@ -58,7 +58,7 @@ class Message
     protected $content;
 
     /**
-     * @ORM\Column(name="bitcoin",type="bigint")
+     * @ORM\Column(name="bitcoin",type="bigint", options={"unsigned":true})
      */
     protected $bitcoin;
 

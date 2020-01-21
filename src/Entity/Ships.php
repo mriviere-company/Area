@@ -25,327 +25,327 @@ class Ships
     protected $user;
 
     /**
-     * @ORM\Column(name="pointHunter",type="smallint")
+     * @ORM\Column(name="pointHunter",type="smallint", options={"unsigned":true})
      */
     protected $pointHunter;
 
     /**
-     * @ORM\Column(name="armorHunter",type="smallint")
+     * @ORM\Column(name="armorHunter",type="smallint", options={"unsigned":true})
      */
     protected $armorHunter;
 
     /**
-     * @ORM\Column(name="accurateHunter",type="smallint")
+     * @ORM\Column(name="accurateHunter",type="smallint", options={"unsigned":true})
      */
     protected $accurateHunter;
 
     /**
-     * @ORM\Column(name="missileHunter",type="smallint")
+     * @ORM\Column(name="missileHunter",type="smallint", options={"unsigned":true})
      */
     protected $missileHunter;
 
     /**
-     * @ORM\Column(name="pointHunterHeavy",type="smallint")
+     * @ORM\Column(name="pointHunterHeavy",type="smallint", options={"unsigned":true})
      */
     protected $pointHunterHeavy;
 
     /**
-     * @ORM\Column(name="armorHunterHeavy",type="smallint")
+     * @ORM\Column(name="armorHunterHeavy",type="smallint", options={"unsigned":true})
      */
     protected $armorHunterHeavy;
 
     /**
-     * @ORM\Column(name="accurateHunterHeavy",type="smallint")
+     * @ORM\Column(name="accurateHunterHeavy",type="smallint", options={"unsigned":true})
      */
     protected $accurateHunterHeavy;
 
     /**
-     * @ORM\Column(name="missileHunterHeavy",type="smallint")
+     * @ORM\Column(name="missileHunterHeavy",type="smallint", options={"unsigned":true})
      */
     protected $missileHunterHeavy;
 
     /**
-     * @ORM\Column(name="pointHunterWar",type="smallint")
+     * @ORM\Column(name="pointHunterWar",type="smallint", options={"unsigned":true})
      */
     protected $pointHunterWar;
 
     /**
-     * @ORM\Column(name="armorHunterWar",type="smallint")
+     * @ORM\Column(name="armorHunterWar",type="smallint", options={"unsigned":true})
      */
     protected $armorHunterWar;
 
     /**
-     * @ORM\Column(name="accurateHunterWar",type="smallint")
+     * @ORM\Column(name="accurateHunterWar",type="smallint", options={"unsigned":true})
      */
     protected $accurateHunterWar;
 
     /**
-     * @ORM\Column(name="missileHunterWar",type="smallint")
+     * @ORM\Column(name="missileHunterWar",type="smallint", options={"unsigned":true})
      */
     protected $missileHunterWar;
 
     /**
-     * @ORM\Column(name="laserHunterWar",type="smallint")
+     * @ORM\Column(name="laserHunterWar",type="smallint", options={"unsigned":true})
      */
     protected $laserHunterWar;
 
     /**
-     * @ORM\Column(name="plasmaHunterWar",type="smallint")
+     * @ORM\Column(name="plasmaHunterWar",type="smallint", options={"unsigned":true})
      */
     protected $plasmaHunterWar;
 
     /**
-     * @ORM\Column(name="pointCorvet",type="smallint")
+     * @ORM\Column(name="pointCorvet",type="smallint", options={"unsigned":true})
      */
     protected $pointCorvet;
 
     /**
-     * @ORM\Column(name="armorCorvet",type="smallint")
+     * @ORM\Column(name="armorCorvet",type="smallint", options={"unsigned":true})
      */
     protected $armorCorvet;
 
     /**
-     * @ORM\Column(name="accurateCorvet",type="smallint")
+     * @ORM\Column(name="accurateCorvet",type="smallint", options={"unsigned":true})
      */
     protected $accurateCorvet;
 
     /**
-     * @ORM\Column(name="missileCorvet",type="smallint")
+     * @ORM\Column(name="missileCorvet",type="smallint", options={"unsigned":true})
      */
     protected $missileCorvet;
 
     /**
-     * @ORM\Column(name="shieldCorvet",type="smallint")
+     * @ORM\Column(name="shieldCorvet",type="smallint", options={"unsigned":true})
      */
     protected $shieldCorvet;
 
     /**
-     * @ORM\Column(name="pointCorvetLaser",type="smallint")
+     * @ORM\Column(name="pointCorvetLaser",type="smallint", options={"unsigned":true})
      */
     protected $pointCorvetLaser;
 
     /**
-     * @ORM\Column(name="armorCorvetLaser",type="smallint")
+     * @ORM\Column(name="armorCorvetLaser",type="smallint", options={"unsigned":true})
      */
     protected $armorCorvetLaser;
 
     /**
-     * @ORM\Column(name="accurateCorveLasert",type="smallint")
+     * @ORM\Column(name="accurateCorveLasert",type="smallint", options={"unsigned":true})
      */
     protected $accurateCorvetLaser;
 
     /**
-     * @ORM\Column(name="missileCorvetLaser",type="smallint")
+     * @ORM\Column(name="missileCorvetLaser",type="smallint", options={"unsigned":true})
      */
     protected $missileCorvetLaser;
 
     /**
-     * @ORM\Column(name="laserCorvetLaser",type="smallint")
+     * @ORM\Column(name="laserCorvetLaser",type="smallint", options={"unsigned":true})
      */
     protected $laserCorvetLaser;
 
     /**
-     * @ORM\Column(name="shieldCorvetLaser",type="smallint")
+     * @ORM\Column(name="shieldCorvetLaser",type="smallint", options={"unsigned":true})
      */
     protected $shieldCorvetLaser;
 
     /**
-     * @ORM\Column(name="pointCorvetWar",type="smallint")
+     * @ORM\Column(name="pointCorvetWar",type="smallint", options={"unsigned":true})
      */
     protected $pointCorvetWar;
 
     /**
-     * @ORM\Column(name="armorCorvetWar",type="smallint")
+     * @ORM\Column(name="armorCorvetWar",type="smallint", options={"unsigned":true})
      */
     protected $armorCorvetWar;
 
     /**
-     * @ORM\Column(name="accurateCorvetWar",type="smallint")
+     * @ORM\Column(name="accurateCorvetWar",type="smallint", options={"unsigned":true})
      */
     protected $accurateCorvetWar;
 
     /**
-     * @ORM\Column(name="missileCorvetWar",type="smallint")
+     * @ORM\Column(name="missileCorvetWar",type="smallint", options={"unsigned":true})
      */
     protected $missileCorvetWar;
 
     /**
-     * @ORM\Column(name="laserCorvetWar",type="smallint")
+     * @ORM\Column(name="laserCorvetWar",type="smallint", options={"unsigned":true})
      */
     protected $laserCorvetWar;
 
     /**
-     * @ORM\Column(name="shieldCorvetWar",type="smallint")
+     * @ORM\Column(name="shieldCorvetWar",type="smallint", options={"unsigned":true})
      */
     protected $shieldCorvetWar;
 
     /**
-     * @ORM\Column(name="pointFregate",type="smallint")
+     * @ORM\Column(name="pointFregate",type="smallint", options={"unsigned":true})
      */
     protected $pointFregate;
 
     /**
-     * @ORM\Column(name="armorFregate",type="smallint")
+     * @ORM\Column(name="armorFregate",type="smallint", options={"unsigned":true})
      */
     protected $armorFregate;
 
     /**
-     * @ORM\Column(name="accurateFregate",type="smallint")
+     * @ORM\Column(name="accurateFregate",type="smallint", options={"unsigned":true})
      */
     protected $accurateFregate;
 
     /**
-     * @ORM\Column(name="missileFregate",type="smallint")
+     * @ORM\Column(name="missileFregate",type="smallint", options={"unsigned":true})
      */
     protected $missileFregate;
 
     /**
-     * @ORM\Column(name="laserFregate",type="smallint")
+     * @ORM\Column(name="laserFregate",type="smallint", options={"unsigned":true})
      */
     protected $laserFregate;
 
     /**
-     * @ORM\Column(name="shieldFregate",type="smallint")
+     * @ORM\Column(name="shieldFregate",type="smallint", options={"unsigned":true})
      */
     protected $shieldFregate;
 
     /**
-     * @ORM\Column(name="pointFregatePlasma",type="smallint")
+     * @ORM\Column(name="pointFregatePlasma",type="smallint", options={"unsigned":true})
      */
     protected $pointFregatePlasma;
 
     /**
-     * @ORM\Column(name="armorFregatePlasma",type="smallint")
+     * @ORM\Column(name="armorFregatePlasma",type="smallint", options={"unsigned":true})
      */
     protected $armorFregatePlasma;
 
     /**
-     * @ORM\Column(name="accurateFregatePlasma",type="smallint")
+     * @ORM\Column(name="accurateFregatePlasma",type="smallint", options={"unsigned":true})
      */
     protected $accurateFregatePlasma;
 
     /**
-     * @ORM\Column(name="missileFregatePlasma",type="smallint")
+     * @ORM\Column(name="missileFregatePlasma",type="smallint", options={"unsigned":true})
      */
     protected $missileFregatePlasma;
 
     /**
-     * @ORM\Column(name="laserFregatePlasma",type="smallint")
+     * @ORM\Column(name="laserFregatePlasma",type="smallint", options={"unsigned":true})
      */
     protected $laserFregatePlasma;
 
     /**
-     * @ORM\Column(name="shieldFregatePlasma",type="smallint")
+     * @ORM\Column(name="shieldFregatePlasma",type="smallint", options={"unsigned":true})
      */
     protected $shieldFregatePlasma;
 
     /**
-     * @ORM\Column(name="plasmaFregatePlasma",type="smallint")
+     * @ORM\Column(name="plasmaFregatePlasma",type="smallint", options={"unsigned":true})
      */
     protected $plasmaFregatePlasma;
 
     /**
-     * @ORM\Column(name="pointCroiser",type="smallint")
+     * @ORM\Column(name="pointCroiser",type="smallint", options={"unsigned":true})
      */
     protected $pointCroiser;
 
     /**
-     * @ORM\Column(name="armorCroiser",type="smallint")
+     * @ORM\Column(name="armorCroiser",type="smallint", options={"unsigned":true})
      */
     protected $armorCroiser;
 
     /**
-     * @ORM\Column(name="accurateCroiser",type="smallint")
+     * @ORM\Column(name="accurateCroiser",type="smallint", options={"unsigned":true})
      */
     protected $accurateCroiser;
 
     /**
-     * @ORM\Column(name="missileCroiser",type="smallint")
+     * @ORM\Column(name="missileCroiser",type="smallint", options={"unsigned":true})
      */
     protected $missileCroiser;
 
     /**
-     * @ORM\Column(name="laserCroiser",type="smallint")
+     * @ORM\Column(name="laserCroiser",type="smallint", options={"unsigned":true})
      */
     protected $laserCroiser;
 
     /**
-     * @ORM\Column(name="shieldCroiser",type="smallint")
+     * @ORM\Column(name="shieldCroiser",type="smallint", options={"unsigned":true})
      */
     protected $shieldCroiser;
 
     /**
-     * @ORM\Column(name="plasmaCroiser",type="smallint")
+     * @ORM\Column(name="plasmaCroiser",type="smallint", options={"unsigned":true})
      */
     protected $plasmaCroiser;
 
     /**
-     * @ORM\Column(name="pointIronClad",type="smallint")
+     * @ORM\Column(name="pointIronClad",type="smallint", options={"unsigned":true})
      */
     protected $pointIronClad;
 
     /**
-     * @ORM\Column(name="armorIronClad",type="smallint")
+     * @ORM\Column(name="armorIronClad",type="smallint", options={"unsigned":true})
      */
     protected $armorIronClad;
 
     /**
-     * @ORM\Column(name="accurateIronClad",type="smallint")
+     * @ORM\Column(name="accurateIronClad",type="smallint", options={"unsigned":true})
      */
     protected $accurateIronClad;
 
     /**
-     * @ORM\Column(name="missileIronClad",type="smallint")
+     * @ORM\Column(name="missileIronClad",type="smallint", options={"unsigned":true})
      */
     protected $missileIronClad;
 
     /**
-     * @ORM\Column(name="laserIronClad",type="smallint")
+     * @ORM\Column(name="laserIronClad",type="smallint", options={"unsigned":true})
      */
     protected $laserIronClad;
 
     /**
-     * @ORM\Column(name="shieldIronClad",type="smallint")
+     * @ORM\Column(name="shieldIronClad",type="smallint", options={"unsigned":true})
      */
     protected $shieldIronClad;
 
     /**
-     * @ORM\Column(name="plasmaIronClad",type="smallint")
+     * @ORM\Column(name="plasmaIronClad",type="smallint", options={"unsigned":true})
      */
     protected $plasmaIronClad;
 
     /**
-     * @ORM\Column(name="pointDestroyer",type="smallint")
+     * @ORM\Column(name="pointDestroyer",type="smallint", options={"unsigned":true})
      */
     protected $pointDestroyer;
 
     /**
-     * @ORM\Column(name="armorDestroyer",type="smallint")
+     * @ORM\Column(name="armorDestroyer",type="smallint", options={"unsigned":true})
      */
     protected $armorDestroyer;
 
     /**
-     * @ORM\Column(name="accurateDestroyer",type="smallint")
+     * @ORM\Column(name="accurateDestroyer",type="smallint", options={"unsigned":true})
      */
     protected $accurateDestroyer;
 
     /**
-     * @ORM\Column(name="missileDestroyer",type="smallint")
+     * @ORM\Column(name="missileDestroyer",type="smallint", options={"unsigned":true})
      */
     protected $missileDestroyer;
 
     /**
-     * @ORM\Column(name="laserDestroyer",type="smallint")
+     * @ORM\Column(name="laserDestroyer",type="smallint", options={"unsigned":true})
      */
     protected $laserDestroyer;
 
     /**
-     * @ORM\Column(name="shieldDestroyer",type="smallint")
+     * @ORM\Column(name="shieldDestroyer",type="smallint", options={"unsigned":true})
      */
     protected $shieldDestroyer;
 
     /**
-     * @ORM\Column(name="plasmaDestroyer",type="smallint")
+     * @ORM\Column(name="plasmaDestroyer",type="smallint", options={"unsigned":true})
      */
     protected $plasmaDestroyer;
 
@@ -355,7 +355,7 @@ class Ships
     protected $lastUpdate;
 
     /**
-     * @ORM\Column(name="max",type="smallint")
+     * @ORM\Column(name="max",type="smallint", options={"unsigned":true})
      */
     protected $max;
 

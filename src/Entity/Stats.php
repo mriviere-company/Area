@@ -31,12 +31,12 @@ class Stats
     protected $bitcoin;
 
     /**
-     * @ORM\Column(name="points",type="bigint")
+     * @ORM\Column(name="points",type="bigint", options={"unsigned":true})
      */
     protected $points;
 
     /**
-     * @ORM\Column(name="pdg",type="bigint")
+     * @ORM\Column(name="pdg",type="bigint", options={"unsigned":true})
      */
     protected $pdg;
 

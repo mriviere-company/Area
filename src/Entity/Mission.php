@@ -31,22 +31,22 @@ class Mission
     protected $missionAt;
 
     /**
-     * @ORM\Column(name="soldier", type="integer", nullable=true)
+     * @ORM\Column(name="soldier", type="integer", nullable=true, options={"unsigned":true})
      */
     protected $soldier;
 
     /**
-     * @ORM\Column(name="tank", type="integer", nullable=true)
+     * @ORM\Column(name="tank", type="integer", nullable=true, options={"unsigned":true})
      */
     protected $tank;
 
     /**
-     * @ORM\Column(name="gain", type="smallint")
+     * @ORM\Column(name="gain", type="smallint", options={"unsigned":true})
      */
     protected $gain;
 
     /**
-     * @ORM\Column(name="percent", type="smallint")
+     * @ORM\Column(name="percent", type="smallint", options={"unsigned":true})
      */
     protected $percent;
 

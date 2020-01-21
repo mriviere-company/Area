@@ -24,27 +24,27 @@ class Rank
     protected $user;
 
     /**
-     * @ORM\Column(name="warPoint",type="bigint")
+     * @ORM\Column(name="warPoint",type="bigint", options={"unsigned":true})
      */
     protected $warPoint;
 
     /**
-     * @ORM\Column(name="point",type="bigint")
+     * @ORM\Column(name="point",type="bigint", options={"unsigned":true})
      */
     protected $point;
 
     /**
-     * @ORM\Column(name="oldPoint",type="bigint")
+     * @ORM\Column(name="oldPoint",type="bigint", options={"unsigned":true})
      */
     protected $oldPoint;
 
     /**
-     * @ORM\Column(name="position",type="smallint")
+     * @ORM\Column(name="position",type="smallint", options={"unsigned":true})
      */
     protected $position;
 
     /**
-     * @ORM\Column(name="oldPosition",type="smallint")
+     * @ORM\Column(name="oldPosition",type="smallint", options={"unsigned":true})
      */
     protected $oldPosition;
 

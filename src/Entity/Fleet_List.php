@@ -39,7 +39,7 @@ class Fleet_List
     protected $fleets;
 
     /**
-     * @ORM\Column(name="priority",type="smallint")
+     * @ORM\Column(name="priority",type="smallint", options={"unsigned":true})
      */
     protected $priority;
 

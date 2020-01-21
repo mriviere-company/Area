@@ -73,12 +73,12 @@ class Ally
     protected $description;
 
     /**
-     * @ORM\Column(name="level",type="smallint")
+     * @ORM\Column(name="level",type="smallint", options={"unsigned":true})
      */
     protected $level;
 
     /**
-     * @ORM\Column(name="max_members",type="smallint")
+     * @ORM\Column(name="max_members",type="smallint", options={"unsigned":true})
      */
     protected $maxMembers;
 
@@ -88,7 +88,7 @@ class Ally
     protected $grades;
 
     /**
-     * @ORM\Column(name="defcon",type="smallint")
+     * @ORM\Column(name="defcon",type="smallint", options={"unsigned":true})
      */
     protected $defcon;
 
@@ -98,17 +98,17 @@ class Ally
     protected $salons;
 
     /**
-     * @ORM\Column(name="rank",type="bigint", nullable=true)
+     * @ORM\Column(name="rank",type="bigint", nullable=true, options={"unsigned":true})
      */
     protected $rank;
 
     /**
-     * @ORM\Column(name="bitcoin",type="bigint")
+     * @ORM\Column(name="bitcoin",type="bigint", options={"unsigned":true})
      */
     protected $bitcoin;
 
     /**
-     * @ORM\Column(name="pdg",type="bigint")
+     * @ORM\Column(name="pdg",type="bigint", options={"unsigned":true})
      */
     protected $pdg;
 
@@ -118,7 +118,7 @@ class Ally
     protected $exchanges;
 
     /**
-     * @ORM\Column(name="taxe",type="smallint")
+     * @ORM\Column(name="taxe",type="smallint", options={"unsigned":true})
      */
     protected $taxe;
 

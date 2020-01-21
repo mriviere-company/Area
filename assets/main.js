@@ -209,24 +209,30 @@ function manageFlightTime(){
         newPosition = newPosition.toString();
         let planete = $('#planeteFleet').text();
         let newPlanete = $('#fleet_send_planete').val();
+        let base;
+        let price;
+        let x1;
+        let x2;
+        let y1;
+        let y2;
         newPlanete = newPlanete.toString();
         if (galaxy != newGalaxy) {
-            let base = 18;
-            let price = 25;
+            base = 18;
+            price = 25;
         } else {
             if (position == newPosition) {
-                let x1 = (planete - 1) % 5;
-                let x2 = (newPlanete - 1) % 5;
-                let y1 = (planete - 1) / 5;
-                let y2 = (newPlanete - 1) / 5;
+                x1 = (planete - 1) % 5;
+                x2 = (newPlanete - 1) % 5;
+                y1 = (planete - 1) / 5;
+                y2 = (newPlanete - 1) / 5;
             } else {
-                let x1 = ((position - 1) % 10) * 3;
-                let x2 = ((newPosition - 1) % 10) * 3;
-                let y1 = ((position - 1) / 10) * 3;
-                let y2 = ((newPosition - 1) / 10) * 3;
+                x1 = ((position - 1) % 10) * 3;
+                x2 = ((newPosition - 1) % 10) * 3;
+                y1 = ((position - 1) / 10) * 3;
+                y2 = ((newPosition - 1) / 10) * 3;
             }
-            let base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-            let price = base / 3;
+            base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+            price = base / 3;
         }
         carburant = Math.round(price * ($('#signatureFleet').text() / 200));
         let travel = new Date();
@@ -236,16 +242,16 @@ function manageFlightTime(){
         let heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
         let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
         let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
-        if (jours > 0) {
-            $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + 'secondes');
+            if (jours > 0) {
+            $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (heures > 0)
         {
-            $('#flightTime').text(heures + ' heures ' + minutes + ' mins ' + secondes + 'secondes');
+            $('#flightTime').text(heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (minutes > 0)
         {
-            $('#flightTime').text(minutes + ' mins ' + secondes + 'secondes');
+            $('#flightTime').text(minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (secondes > 0)
         {
@@ -260,24 +266,30 @@ function manageFlightTime(){
         newPosition = newPosition.toString();
         let planete = $('#planeteFleet').text();
         let newPlanete = $('#fleet_send_planete').val();
+        let base;
+        let price;
+        let x1;
+        let x2;
+        let y1;
+        let y2;
         newPlanete = newPlanete.toString();
         if (galaxy != newGalaxy) {
-            let base = 18;
-            let price = 25;
+            base = 18;
+            price = 25;
         } else {
             if (position == newPosition) {
-                let x1 = (planete - 1) % 5;
-                let x2 = (newPlanete - 1) % 5;
-                let y1 = (planete - 1) / 5;
-                let y2 = (newPlanete - 1) / 5;
+                x1 = (planete - 1) % 5;
+                x2 = (newPlanete - 1) % 5;
+                y1 = (planete - 1) / 5;
+                y2 = (newPlanete - 1) / 5;
             } else {
-                let x1 = ((position - 1) % 10) * 3;
-                let x2 = ((newPosition - 1) % 10) * 3;
-                let y1 = ((position - 1) / 10) * 3;
-                let y2 = ((newPosition - 1) / 10) * 3;
+                x1 = ((position - 1) % 10) * 3;
+                x2 = ((newPosition - 1) % 10) * 3;
+                y1 = ((position - 1) / 10) * 3;
+                y2 = ((newPosition - 1) / 10) * 3;
             }
-            let base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-            let price = base / 3;
+            base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+            price = base / 3;
         }
         carburant = Math.round(price * ($('#signatureFleet').text() / 200));
         let travel = new Date();
@@ -288,15 +300,15 @@ function manageFlightTime(){
         let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
         let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
         if (jours > 0) {
-            $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + 'secondes');
+            $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (heures > 0)
         {
-            $('#flightTime').text(heures + ' heures ' + minutes + ' mins ' + secondes + 'secondes');
+            $('#flightTime').text(heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (minutes > 0)
         {
-            $('#flightTime').text(minutes + ' mins ' + secondes + 'secondes');
+            $('#flightTime').text(minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (secondes > 0)
         {
@@ -312,23 +324,30 @@ function manageFlightTime(){
         let planete = $('#planeteFleet').text();
         let newPlanete = $('#fleet_send_planete').val();
         newPlanete = newPlanete.toString();
+        let base;
+        let price;
+        let x1;
+        let x2;
+        let y1;
+        let y2;
+
         if (galaxy != newGalaxy) {
-            let base = 18;
-            let price = 25;
+            base = 18;
+            price = 25;
         } else {
             if (position == newPosition) {
-                let x1 = (planete - 1) % 5;
-                let x2 = (newPlanete - 1) % 5;
-                let y1 = (planete - 1) / 5;
-                let y2 = (newPlanete - 1) / 5;
+                x1 = (planete - 1) % 5;
+                x2 = (newPlanete - 1) % 5;
+                y1 = (planete - 1) / 5;
+                y2 = (newPlanete - 1) / 5;
             } else {
-                let x1 = ((position - 1) % 10) * 3;
-                let x2 = ((newPosition - 1) % 10) * 3;
-                let y1 = ((position - 1) / 10) * 3;
-                let y2 = ((newPosition - 1) / 10) * 3;
+                x1 = ((position - 1) % 10) * 3;
+                x2 = ((newPosition - 1) % 10) * 3;
+                y1 = ((position - 1) / 10) * 3;
+                y2 = ((newPosition - 1) / 10) * 3;
             }
-            let base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
-            let price = base / 3;
+            base = Math.sqrt(Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2));
+            price = base / 3;
         }
         carburant = Math.round(price * ($('#signatureFleet').text() / 200)) > 0 ? Math.round(price * ($('#signatureFleet').text() / 200)) : 1;
         let travel = new Date();
@@ -339,15 +358,15 @@ function manageFlightTime(){
         let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
         let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
         if (jours > 0) {
-            $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + 'secondes');
+            $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (heures > 0)
         {
-            $('#flightTime').text(heures + ' heures ' + minutes + ' mins ' + secondes + 'secondes');
+            $('#flightTime').text(heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (minutes > 0)
         {
-            $('#flightTime').text(minutes + ' mins ' + secondes + 'secondes');
+            $('#flightTime').text(minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (secondes > 0)
         {

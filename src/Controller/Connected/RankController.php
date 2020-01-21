@@ -29,7 +29,7 @@ class RankController extends AbstractController
             ->join('a.users', 'u')
             ->join('u.planets', 'p')
             ->join('u.rank', 'r')
-            ->select('a.id, a.sigle, a.imageName, a.name, count(DISTINCT u.id) as users, count(DISTINCT p) as planets, sum(DISTINCT r.point) as point, a.maxMembers, a.createdAt, a.politic')
+            ->select('a.id, a.sigle, a.imageName, a.name, count(DISTINCT u.id) as users, count(DISTINCT p) as planets, sum(DISTINCT r.point) as point, sum(DISTINCT r.oldPoint) as oldPoint, a.maxMembers, a.createdAt, a.politic')
             ->groupBy('a.id')
             ->where('a.rank is not null')
             ->orderBy('point', 'DESC')

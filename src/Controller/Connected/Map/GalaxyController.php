@@ -82,6 +82,7 @@ class GalaxyController extends AbstractController
             ->createQueryBuilder('g')
             ->join('g.sectors', 's')
             ->join('s.planets', 'p')
+            ->join('p.user', 'u')
             ->select('count(p) as number')
             ->groupBy('g.id')
             ->where('g.position = :id')

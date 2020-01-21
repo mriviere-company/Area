@@ -58,6 +58,7 @@ class UniverseController extends AbstractController
             ->join('s.galaxys', 'g')
             ->join('g.sectors', 'se')
             ->join('se.planets', 'p')
+            ->join('p.user', 'u')
             ->select('count(p) as number')
             ->groupBy('s.id')
             ->getQuery()

@@ -31,7 +31,7 @@ class Grade
     protected $users;
 
     /**
-     * @ORM\Column(name="placement",type="smallint")
+     * @ORM\Column(name="placement",type="smallint", options={"unsigned":true})
      */
     protected $placement;
 

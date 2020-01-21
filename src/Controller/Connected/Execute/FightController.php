@@ -189,7 +189,6 @@ class FightController extends AbstractController
             $plasma = $plasma + $attacker->getPlasma();
             $shield = $shield + $attacker->getShield();
             $debrisAtt = $debrisAtt + $attacker->getNbrSignatures() + $attacker->getCargoFull();
-            $armeSaveA = $missile + $laser + $plasma;
             if ($attacker->getUser()->getId() == 1) {
                 $zombie = 1;
             }
@@ -218,7 +217,6 @@ class FightController extends AbstractController
             $shieldD = $shieldD + $defender->getShield();
             $plasmaD = $plasmaD + $defender->getPlasma();
             $debrisDef = $debrisDef + $defender->getNbrSignatures() + $defender->getCargoFull();
-            $armeSaveB = $laserD + $plasmaD + $missileD;
             if ($defender->getUser()->getId() == 1) {
                 $zombie = 1;
             }

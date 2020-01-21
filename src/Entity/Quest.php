@@ -24,7 +24,7 @@ class Quest
     protected $users;
 
     /**
-     * @ORM\Column(name="gain",type="integer")
+     * @ORM\Column(name="gain",type="integer", options={"unsigned":true})
      */
     protected $gain;
 

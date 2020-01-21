@@ -32,7 +32,7 @@ class Sector
     protected $galaxy;
 
     /**
-     * @ORM\Column(name="position",type="smallint")
+     * @ORM\Column(name="position",type="smallint", options={"unsigned":true})
      * @Assert\NotBlank(message = "required")
      */
     protected $position;

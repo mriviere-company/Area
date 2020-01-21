@@ -47,67 +47,67 @@ class Commander
     protected $name;
 
     /**
-     * @ORM\Column(name="cost",type="integer")
+     * @ORM\Column(name="cost",type="integer", options={"unsigned":true})
      */
     protected $cost;
 
     /**
-     * @ORM\Column(name="level",type="smallint")
+     * @ORM\Column(name="level",type="smallint", options={"unsigned":true})
      */
     protected $level;
 
     /**
-     * @ORM\Column(name="speed",type="smallint")
+     * @ORM\Column(name="speed",type="smallint", options={"unsigned":true})
      */
     protected $speed;
 
     /**
-     * @ORM\Column(name="shield",type="smallint")
+     * @ORM\Column(name="shield",type="smallint", options={"unsigned":true})
      */
     protected $shield;
 
     /**
-     * @ORM\Column(name="armor",type="smallint")
+     * @ORM\Column(name="armor",type="smallint", options={"unsigned":true})
      */
     protected $armor;
 
     /**
-     * @ORM\Column(name="laser",type="smallint")
+     * @ORM\Column(name="laser",type="smallint", options={"unsigned":true})
      */
     protected $laser;
 
     /**
-     * @ORM\Column(name="missile",type="smallint")
+     * @ORM\Column(name="missile",type="smallint", options={"unsigned":true})
      */
     protected $missile;
 
     /**
-     * @ORM\Column(name="plasma",type="smallint")
+     * @ORM\Column(name="plasma",type="smallint", options={"unsigned":true})
      */
     protected $plasma;
 
     /**
-     * @ORM\Column(name="niobium",type="smallint")
+     * @ORM\Column(name="niobium",type="smallint", options={"unsigned":true})
      */
     protected $niobium;
 
     /**
-     * @ORM\Column(name="water",type="smallint")
+     * @ORM\Column(name="water",type="smallint", options={"unsigned":true})
      */
     protected $water;
 
     /**
-     * @ORM\Column(name="bitcoin",type="smallint")
+     * @ORM\Column(name="bitcoin",type="smallint", options={"unsigned":true})
      */
     protected $bitcoin;
 
     /**
-     * @ORM\Column(name="worker",type="smallint")
+     * @ORM\Column(name="worker",type="smallint", options={"unsigned":true})
      */
     protected $worker;
 
     /**
-     * @ORM\Column(name="soldier",type="smallint")
+     * @ORM\Column(name="soldier",type="smallint", options={"unsigned":true})
      */
     protected $soldier;
 

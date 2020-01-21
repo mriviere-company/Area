@@ -486,8 +486,8 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if ($ally->getPolitic() != 'fascism') {
-            if ($user->getGrade()->getCanKick() == 0 || $kicked->getAlly() != $user->getAlly()) {
+        if ($user->getGrade()->getCanKick() == 1) {
+            if ($user->getGrade()->getCanKick() == 0 || $kicked->getAlly() != $user->getAlly() || ($ally->getPolitic() == 'fascism' and count($ally->getWars()) > 0 or count($ally->getPeaces()) > 0)) {
                 return $this->redirectToRoute('ally', ['usePlanet' => $usePlanet->getId()]);
             }
             $kicked->setPoliticArmement(0);

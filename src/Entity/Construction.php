@@ -30,7 +30,7 @@ class Construction
     protected $construct;
 
     /**
-     * @ORM\Column(name="constructTime",type="integer")
+     * @ORM\Column(name="constructTime",type="integer", options={"unsigned":true})
      */
     protected $constructTime;
 
