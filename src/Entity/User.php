@@ -1838,10 +1838,108 @@ class User implements UserInterface, \Serializable
         $troops['msoldier'] = $troops['msoldier'] * $sPrices;
         $troops['mtank'] = $troops['mtank'] * $tPrices;
         $troops['fsoldier'] = $troops['fsoldier'] * $sPrices;
-        $troops['ftank'] = $troops['ftank'] * $scPrice;
-        $return = $troops['soldier'] + $troops['soldierAtNbr'] + $troops['tank'] + $troops['tankAtNbr'] + $troops['scientist'] + $troops['scientistAtNbr'] + $troops['msoldier'] + $troops['mtank'] + $troops['fsoldier'] + $troops['ftank'];
+        $troops['ftank'] = $troops['ftank'] * $tPrices;
+        $troops['fscientist'] = $troops['fscientist'] * $scPrices;
+        $return = $troops['soldier'] + $troops['soldierAtNbr'] + $troops['tank'] + $troops['tankAtNbr'] + $troops['scientist'] + $troops['scientistAtNbr'] + $troops['msoldier'] + $troops['mtank'] + $troops['fsoldier'] + $troops['ftank'] + $troops['fscientist'];
 
         return $return;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriceTroopsProduct($troops): int
+    {
+        if ($this->politicCostTank > 0) {
+            $tPrice = 8 / (1 + ($this->politicCostTank / 5));
+        } else {
+            $tPrice = 8;
+        }
+        if ($this->politicCostScientist > 0) {
+            $scPrices = 100 / (1 + ($this->politicCostScientist / 5));
+        } else {
+            $scPrices = 200;
+        }
+        $troops['soldierAtNbr'] = $troops['soldierAtNbr'];
+        $troops['tankAtNbr'] = $troops['tankAtNbr'] * $tPrice;
+        $troops['scientistAtNbr'] = $troops['scientistAtNbr'] * $scPrices;
+
+        return $troops['soldierAtNbr'] + $troops['tankAtNbr'] + $troops['scientistAtNbr'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriceTroopsPlanet($troops): int
+    {
+        if ($this->politicCostSoldier > 0) {
+            $sPrice = 1 / (1 + ($this->politicCostSoldier / 10));
+        } else {
+            $sPrice = 1;
+        }
+        if ($this->politicCostTank > 0) {
+            $tPrice = 8 / (1 + ($this->politicCostTank / 5));
+        } else {
+            $tPrice = 8;
+        }
+        if ($this->politicCostScientist > 0) {
+            $scPrice = 50 / (1 + ($this->politicCostScientist / 5));
+        } else {
+            $scPrice = 100;
+        }
+        $troops['soldier'] = $troops['soldier'] * $sPrice;
+        $troops['tank'] = $troops['tank'] * $tPrice;
+        $troops['scientist'] = $troops['scientist'] * $scPrice;
+
+        return $troops['soldier'] + $troops['tank'] + $troops['scientist'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriceTroopsMission($troops): int
+    {
+        if ($this->politicCostSoldier > 0) {
+            $sPrices = 6 / ( 1 + ($this->politicCostSoldier / 10));
+        } else {
+            $sPrices = 6;
+        }
+        if ($this->politicCostTank > 0) {
+            $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
+        } else {
+            $tPrices = 1000;
+        }
+        $troops['msoldier'] = $troops['msoldier'] * $sPrices;
+        $troops['mtank'] = $troops['mtank'] * $tPrices;
+
+        return $troops['msoldier'] + $troops['mtank'];
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriceTroopsFleet($troops): int
+    {
+        if ($this->politicCostSoldier > 0) {
+            $sPrices = 6 / ( 1 + ($this->politicCostSoldier / 10));
+        } else {
+            $sPrices = 6;
+        }
+        if ($this->politicCostTank > 0) {
+            $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
+        } else {
+            $tPrices = 1000;
+        }
+        if ($this->politicCostScientist > 0) {
+            $scPrices = 100 / (1 + ($this->politicCostScientist / 5));
+        } else {
+            $scPrices = 200;
+        }
+        $troops['fsoldier'] = $troops['fsoldier'] * $sPrices;
+        $troops['ftank'] = $troops['ftank'] * $tPrices;
+        $troops['fscientist'] = $troops['fscientist'] * $scPrices;
+
+        return $troops['fsoldier'] + $troops['ftank'] + $troops['fscientist'];
     }
 
     /**

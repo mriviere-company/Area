@@ -1028,13 +1028,16 @@ class AllyController extends AbstractController
                 $em->persist($pna);
                 $ally->addAllyPna($pna);
             } elseif($form_allyPact->get('pactType')->getData() == 1  && $user->getGrade()->getCanPeace() == 1) {
-                if ($ally->getPolitic() == $allyPact->getPolitic() || $ally->getPolitic() == 'democrat') {
+                if ($ally->getPolitic() == $allyPact->getPolitic() || $ally->getPolitic() == 'democrat' || $allyPact->getPolitic() == 'democrat') {
                     $allied = new Allied();
                     $allied->setAlly($ally);
                     $allied->setAllyTag($allyPact->getSigle());
                     $allied->setSignedAt($now);
                     $em->persist($allied);
                     $ally->addAllyAllied($allied);
+                } else {
+                    $this->addFlash("fail", "La politique de cette alliance vous est hostile.");
+                    return $this->redirectToRoute('ally_page_pacts', ['usePlanet' => $usePlanet->getId()]);
                 }
             } elseif($form_allyPact->get('pactType')->getData() == 3 && $user->getGrade()->getCanWar() == 1) {
                 $war = new War();

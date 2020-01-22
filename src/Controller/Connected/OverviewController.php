@@ -40,7 +40,7 @@ class OverviewController extends AbstractController
             ->leftJoin('p.missions', 'm')
             ->leftJoin('p.product', 'pp')
             ->leftJoin('u.fleets', 'f')
-            ->select('sum(DISTINCT p.soldier) as soldier, sum(DISTINCT p.soldierAtNbr) as soldierAtNbr, sum(DISTINCT p.tank) as tank, sum(DISTINCT p.tankAtNbr) as tankAtNbr, sum(DISTINCT p.scientist) as scientist, sum(DISTINCT p.scientistAtNbr) as scientistAtNbr, sum(DISTINCT m.soldier) as msoldier, sum(DISTINCT m.tank) as mtank, sum(DISTINCT f.soldier) as fsoldier, sum(DISTINCT f.tank) as ftank, sum(DISTINCT p.signature) as psignature, sum(DISTINCT f.signature) as fsignature, sum(DISTINCT pp.signature) as ppsignature')
+            ->select('sum(DISTINCT p.soldier) as soldier, sum(DISTINCT p.soldierAtNbr) as soldierAtNbr, sum(DISTINCT p.tank) as tank, sum(DISTINCT p.tankAtNbr) as tankAtNbr, sum(DISTINCT p.scientist) as scientist, sum(DISTINCT p.scientistAtNbr) as scientistAtNbr, sum(DISTINCT m.soldier) as msoldier, sum(DISTINCT m.tank) as mtank, sum(DISTINCT f.soldier) as fsoldier, sum(DISTINCT f.scientist) as fscientist, sum(DISTINCT f.tank) as ftank, sum(DISTINCT p.signature) as psignature, sum(DISTINCT f.signature) as fsignature, sum(DISTINCT pp.signature) as ppsignature')
             ->groupBy('u.id')
             ->where('p.user = :user')
             ->setParameters(['user' => $user])
@@ -48,8 +48,15 @@ class OverviewController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        $allShips = $user->getPriceShips($allTroops);
-        $allTroops = $user->getPriceTroops($allTroops);
+        $allShipsProduct = $allTroops['ppsignature'];
+        $allShipsPlanet = round($allTroops['psignature'] / 4);
+        $allShipsFleet = $allTroops['fsignature'] * 6;
+        $allShips = $allShipsProduct + $allShipsPlanet + $allShipsFleet;
+        $allTroopsProduct = $user->getPriceTroopsProduct($allTroops);
+        $allTroopsPlanet = $user->getPriceTroopsPlanet($allTroops);
+        $allTroopsFleet = $user->getPriceTroopsFleet($allTroops);
+        $allTroopsMission = $user->getPriceTroopsMission($allTroops);
+        $allTroops = $allTroopsProduct + $allTroopsPlanet + $allTroopsFleet + $allTroopsMission;
 
         $allBuildings = $em->getRepository('App:User')
             ->createQueryBuilder('u')
@@ -160,6 +167,13 @@ class OverviewController extends AbstractController
             'allShips' => $allShips,
             'allBuildings' => $allBuilding,
             'allWorkers' => $allWorkers,
+            'allShipsProduct' => $allShipsProduct,
+            'allShipsPlanet' => $allShipsPlanet,
+            'allShipsFleet' => $allShipsFleet,
+            'allTroopsProduct' => $allTroopsProduct,
+            'allTroopsPlanet' => $allTroopsPlanet,
+            'allTroopsFleet' => $allTroopsFleet,
+            'allTroopsMission' => $allTroopsMission,
             'myPlanets' => $myPlanets,
             'allWorkersProd' => $allWorkersProd
         ]);
