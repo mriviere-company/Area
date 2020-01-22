@@ -7,9 +7,9 @@
 {% block body %}
     {% set cost = allTroops + allShips + allBuildings %}
     {% if app.user.getAlly() %}
-        {% set totalgain = (allWorkers / 3) / ( 1 + app.user.getAlly().getTaxe() / 100) %}
+        {% set totalgain = (allWorkers) / ( 1 + app.user.getAlly().getTaxe() / 100) %}
     {% else %}
-        {% set totalgain = allWorkers / 3 %}
+        {% set totalgain = allWorkers %}
     {% endif %}
     <div class="front-block">
         <table class="table table-striped borderOverview table-dark text-center back-banner hideForLittle">

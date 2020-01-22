@@ -43,7 +43,7 @@ class FleetsController extends AbstractController
             $em->remove($nukeBomb);
             if ($newHome->getMetropole() > 0) {
                 $newHome->setMetropole($newHome->getMetropole() - 1);
-                $newHome->setWorkerMax($newHome->getWorkerMax() - 75000);
+                $newHome->setWorkerMax($newHome->getWorkerMax() - 400000);
                 $newHome->setWorkerProduction($newHome->getWorkerProduction() - 8.32);
                 if ($newHome->getWorker() > $newHome->getWorkerMax()) {
                     $newHome->setWorker($newHome->getWorkerMax());
@@ -52,7 +52,7 @@ class FleetsController extends AbstractController
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Une métropole a été détruite.");
             } elseif ($newHome->getCity() > 0) {
                 $newHome->setCity($newHome->getCity() - 1);
-                $newHome->setWorkerMax($newHome->getWorkerMax() - 25000);
+                $newHome->setWorkerMax($newHome->getWorkerMax() - 125000);
                 $newHome->setWorkerProduction($newHome->getWorkerProduction() - 5.56);
                 if ($newHome->getWorker() > $newHome->getWorkerMax()) {
                     $newHome->setWorker($newHome->getWorkerMax());
@@ -224,6 +224,18 @@ class FleetsController extends AbstractController
         }
         $one->setSignature($one->getNbrSignatures());
         $em->persist($one);
+        echo "Flush ";
+
+        $em->flush();
+
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
+    }
+
+    public function destinationDeleteAction($dests, $em)
+    {
+        foreach ($dests as $dest) {
+            $em->remove($dest);
+        }
         echo "Flush ";
 
         $em->flush();

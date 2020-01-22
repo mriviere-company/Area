@@ -573,7 +573,7 @@ class Planet
         $this->soldierMax = 200;
         $this->tank = null;
         $this->scientistMax = 0;
-        $this->workerMax = 125000;
+        $this->workerMax = 250000;
         $this->nbProduction = 6;
         $this->wtProduction = 5;
         $this->fdProduction = 8;

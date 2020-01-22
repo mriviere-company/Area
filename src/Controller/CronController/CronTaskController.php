@@ -323,6 +323,36 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
+        $dests = $em->getRepository('App:Destination')
+            ->createQueryBuilder('d')
+            ->where('d.fleet is null')
+            ->getQuery()
+            ->getResult();
+
+        if($dests) {
+            echo "Suppression destinations : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\FleetsController::destinationDeleteAction', [
+                'dests'  => $dests,
+                'em' => $em
+            ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+        }
+
+        $prods = $em->getRepository('App:Product')
+            ->createQueryBuilder('p')
+            ->where('p.planet is null')
+            ->getQuery()
+            ->getResult();
+
+        if($prods) {
+            echo "Suppression Products : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::productionDeleteAction', [
+                'prods'  => $prods,
+                'em' => $em
+            ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+        }
+
         if ($opened) {
             echo "<script>window.close();</script>";
         } else {
@@ -476,37 +506,17 @@ class CronTaskController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $demoFleets = $em->getRepository('App:Fleet')
-            ->createQueryBuilder('f')
-            ->join('f.user', 'u')
-            ->where('u.id = :user')
-            ->andWhere('f.flightTime is null')
-            ->setParameters(['user' => 1])
-            ->orderBy('f.signature', 'DESC')
+        $plas = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->where('p.metropole > 0 or p.city > 0')
             ->getQuery()
             ->getResult();
 
-        foreach ($demoFleets as $demoFleet) {
-            $fleetRegroups = $em->getRepository('App:Fleet')
-                ->createQueryBuilder('f')
-                ->where('f.planet = :planet')
-                ->andWhere('f.flightTime is null')
-                ->andWhere('f.user = :user')
-                ->setParameters(['planet' => $demoFleet->getPlanet(), 'user' => $demoFleet->getUser()])
-                ->orderBy('f.signature', 'DESC')
-                ->getQuery()
-                ->getResult();
-
-            if (count($fleetRegroups) > 1) {
-                echo "Regroupement Flottes : ";
-                $cronValue = $this->forward('App\Controller\Connected\Execute\FleetsController::oneFleetAction', [
-                    'fleetRegroups' => $fleetRegroups,
-                    'demoFleet' => $demoFleet,
-                    'em' => $em
-                ]);
-                echo $cronValue->getContent() ? $cronValue->getContent() : "<span style='color:#FF0000'>KO<span><br/>";
-            }
+        foreach ($plas as $pla) {
+            $pla->setWorkerMax(250000 + ($pla->getCity() * 125000) + ($pla->getMetropole() * 400000));
         }
+        $em->flush();
+        echo "<span style='color:#FF0000'>KO<span><br/>";
         exit;
     }
 }

@@ -39,7 +39,7 @@ class PlanetsController extends AbstractController
             } elseif ($build == 'city') {
                 $planet->setCity($planet->getCity() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 5.56);
-                $planet->setWorkerMax($planet->getWorkerMax() + 25000);
+                $planet->setWorkerMax($planet->getWorkerMax() + 125000);
                 $quest = $planet->getUser()->checkQuests('build_city');
                 if($quest) {
                     $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
@@ -48,7 +48,7 @@ class PlanetsController extends AbstractController
             } elseif ($build == 'metropole') {
                 $planet->setMetropole($planet->getMetropole() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 8.32);
-                $planet->setWorkerMax($planet->getWorkerMax() + 75000);
+                $planet->setWorkerMax($planet->getWorkerMax() + 400000);
                 $quest = $planet->getUser()->checkQuests('build_metro');
                 if($quest) {
                     $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
@@ -256,6 +256,18 @@ class PlanetsController extends AbstractController
                 $radar->setSkyRadar(0);
                 $radar->setRadarAt(null);
             }
+        }
+        echo "Flush ";
+
+        $em->flush();
+
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
+    }
+
+    public function productionDeleteAction($prods, $em)
+    {
+        foreach ($prods as $prod) {
+            $em->remove($prod);
         }
         echo "Flush ";
 

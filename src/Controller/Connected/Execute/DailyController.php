@@ -65,7 +65,7 @@ class DailyController extends AbstractController
                 $planetPoint = $planetPoint + $planet->getBuildingPoint();
                 $buildingCost = $buildingCost + $planet->getBuildingCost();
             }
-            $gain = round($worker / 3);
+            $gain = $worker;
             $lose = null;
             if($ally) {
                 $user->addQuest($questTwo);
@@ -139,9 +139,45 @@ class DailyController extends AbstractController
                     $em->remove($fleet);
                 }
                 foreach ($user->getPlanets() as $planet) {
+                    $product = $planet->getProduct();
+                    $planet->setSonde(0);
+                    $planet->setCargoI(0);
+                    $planet->setCargoV(0);
+                    $planet->setCargoX(0);
+                    $planet->setColonizer(0);
+                    $planet->setRecycleur(0);
+                    $planet->setBarge(0);
+                    $planet->setMoonMaker(0);
+                    $planet->setRadarShip(0);
+                    $planet->setBrouilleurShip(0);
+                    $planet->setMotherShip(0);
+                    $planet->setHunter(0);
+                    $planet->setHunterHeavy(0);
+                    $planet->setHunterWar(0);
+                    $planet->setCorvet(0);
+                    $planet->setCorvetLaser(0);
+                    $planet->setCorvetWar(0);
+                    $planet->setFregate(0);
+                    $planet->setFregatePlasma(0);
+                    $planet->setCroiser(0);
+                    $planet->setIronClad(0);
+                    $planet->setDestroyer(0);
+                    $planet->setNuclearBomb(0);
                     $planet->setSignature(0);
                     $planet->setSoldier(0);
+                    $planet->setTank(0);
                     $planet->setScientist(0);
+                    $planet->getSoldierAtNbr(0);
+                    $planet->getTankAtNbr(0);
+                    if($product) {
+                        $product->setPlanet(null);
+                        $em->remove($product);
+                    }
+                    if ($planet->getMissions()) {
+                        foreach($planet->getMissions() as $mission) {
+                            $em->remove($mission);
+                        }
+                    }
                 }
                 $economicGO = 1;
                 $user->setBitcoin(5000);

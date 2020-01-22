@@ -274,7 +274,7 @@ class DestroyController extends AbstractController
         $now->add(new DateInterval('PT' . 180 . 'S'));
         $usePlanet->setCity($level - 1);
         $usePlanet->setGroundPlace($newGround);
-        $usePlanet->setWorkerMax($usePlanet->getWorkerMax() - 25000);
+        $usePlanet->setWorkerMax($usePlanet->getWorkerMax() - 125000);
         $usePlanet->setWorkerProduction($usePlanet->getWorkerProduction() - 5.56);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
@@ -307,7 +307,7 @@ class DestroyController extends AbstractController
         $now->add(new DateInterval('PT' . 180 . 'S'));
         $usePlanet->setMetropole($level - 1);
         $usePlanet->setGroundPlace($newGround);
-        $usePlanet->setWorkerMax($usePlanet->getWorkerMax() - 75000);
+        $usePlanet->setWorkerMax($usePlanet->getWorkerMax() - 400000);
         $usePlanet->setWorkerProduction($usePlanet->getWorkerProduction() - 8.32);
         $usePlanet->setSkyPlace($newSky);
         $usePlanet->setConstruct('destruct');

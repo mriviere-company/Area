@@ -74,7 +74,7 @@ class OverviewController extends AbstractController
         $allBuilding = $allBuildings['centerSearch'] + $allBuildings['miner'] + $allBuildings['extractor'] + $allBuildings['niobiumStock'] + $allBuildings['waterStock'] + $allBuildings['city'] + $allBuildings['metropole'] + $allBuildings['bunker'] + $allBuildings['caserne'] + $allBuildings['spaceShip'] + $allBuildings['lightUsine'] + $allBuildings['heavyUsine'] + $allBuildings['radar'] + $allBuildings['skyRadar'] + $allBuildings['skyBrouilleur'] + $allBuildings['nuclearBase'] + $allBuildings['orbital'] + $allBuildings['island'];
 
         if ($user->getPoliticWorker() > 0) {
-            $allWorkers = $allWorkers * (1 + ($user->getPoliticWorker() / 5));
+            $allWorkersProd = $allWorkersProd * (1 + ($user->getPoliticWorker() / 5));
         }
 
         $attackFleets = $em->getRepository('App:Fleet')
