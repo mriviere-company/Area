@@ -414,14 +414,13 @@ class FleetController  extends AbstractController
                     ->andWhere('f.attack = true OR a.sigle in (:ally)')
                     ->andWhere('f.user != :user')
                     ->andWhere('f.flightTime is null')
-                    ->setParameters(['planet' => $usePlanet, 'ally' => $warAlly, 'user' => $user])
+                    ->setParameters(['planet' => $planetTake, 'ally' => $warAlly, 'user' => $user])
                     ->getQuery()
                     ->getResult();
 
                 if (($fleetGive->getAttack() == true && $planetTake->getFleetNoFriends($user)) || $fleetGives) {
                     $allFleets = $em->getRepository('App:Fleet')
                         ->createQueryBuilder('f')
-                        ->join('f.user', 'u')
                         ->where('f.planet = :planet')
                         ->andWhere('f.id != :id')
                         ->andWhere('f.flightTime is null')
