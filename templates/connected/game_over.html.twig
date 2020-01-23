@@ -17,21 +17,21 @@
         {% if app.user.getGameOver() == 'Zombie' %}<h1 class="text-orange m-5 p-5">Se faire poutrer par un bot c'est quand même un peu la honte... <br><br>Bon on va dire que vous n'étiez pas 'investit' dans la partie hein ?</h1>{% else %}<h1 class="text-orange m-5 p-5">On dirait bien que {{ app.user.getGameOver() }} n'a pas eu pitié de vous... Un poutrage en bonne et due forme <3 <br><br>(Oups non c'est vrai c'est le jeu qui est pourri et pis d'abord l'autre c'est un tricheur c'est sûr! Personne n'est meilleur que vous)</h1>{% endif %}
         <div class="text-more my-3">Tu veux retenter ta chance ou tu préfère partir la queue entre les jambes ?</div>
         {% for server in servers %}
-            <table class="table table-striped table-bordered table-dark text-left">
+            <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 <tr>
                     <td>
-                        <span class="mx-5">{{ 'server'|trans }} {{ server.id }}</span>
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" src="{{ asset('img/server.png') }}">
+                        <span class="mr-5">{{ 'server'|trans }} {{ server.id }}</span>
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4" src="{{ asset('img/server.png') }}">
                         {% if server.open == 1 %}
-                            {{ 'server.open'|trans }}
+                            <span class="text-vert">{{ 'server.open'|trans }}</span> -
                         {% else %}
-                            {{ 'server.closed'|trans }}
+                            <span class="text-rouge">{{ 'server.closed'|trans }}</span> -
                         {% endif %}
                         {% if server.pvp == 1 %}
-                            {{ 'server.pvp'|trans }}
+                            <span class="text-orange">{{ 'server.pvp'|trans }}</span>
                         {% else %}
-                            {{ 'server.pve'|trans }}
+                            <span class="text-bleu">{{ 'server.pve'|trans }}</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -40,10 +40,16 @@
             <table class="table table-striped table-bordered table-dark text-left">
                 <tbody>
                 <tr>
+                    {% set x = 1 %}
                     {% for galaxy in galaxys|filter(galaxy => galaxy.server == server.id) %}
-                        <td class="text-center">
-                            <a href="{{ path('connect_server', {'id': galaxy.id}) }}"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
-                        </td>
+                    {% if (x - 1) % 5 == 0 %}
+                </tr>
+                <tr>
+                    {% endif %}
+                    <td class="text-center">
+                        <a href="{{ path('connect_server', {'id': galaxy.id}) }}"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span></a>
+                    </td>
+                    {% set x = x + 1 %}
                     {% endfor %}
                 </tr>
                 </tbody>

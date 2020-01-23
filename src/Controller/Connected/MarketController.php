@@ -180,19 +180,17 @@ class MarketController extends AbstractController
             ->getOneOrNullResult();
 
         $gain = 0;
-        $newWarPointS = 0;
         foreach ($planetsSeller as $planet) {
             if ($planet->getOffensiveFleet($user) != 'ennemy') {
                 if ($user->getAlly() && $user->getAlly()->getPolitic() == 'democrat') {
                     if ($user->getPoliticMerchant() > 0) {
-                        $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * (1 + ($user->getPoliticMerchant() / 20)));
+                        $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * (1 + ($user->getPoliticMerchant() / 20)) * 0.75);
                     } else {
-                        $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)));
+                        $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * 0.75);
                     }
                 } else {
                     $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * 0.75);
                 }
-                $newWarPointS = $newWarPointS + round((($planet->getWater() / 3) + ($planet->getNiobium() / 6)) / 5000);
                 $planet->setNiobium(0);
                 $planet->setWater(0);
                 if ($gain > 0) {
@@ -222,12 +220,9 @@ class MarketController extends AbstractController
             $reportSell->setUser($user);
             $reportSell->setTitle("Vente aux marchands");
             $reportSell->setImageName("sell_report.jpg");
-            $reportSell->setContent("Votre vente aux marchands vous a rapporté <span class='text-vert'>+" . number_format($gain) . "</span> bitcoins. Et <span class='text-vert'>+" . number_format($newWarPointS) . "</span> points de Guerre.");
+            $reportSell->setContent("Votre vente aux marchands vous a rapporté <span class='text-vert'>+" . number_format($gain) . "</span> bitcoins. Vous ne gagnez pas de points de Guerre dans les ventes automatiques, pour en gagner vendez directement aux Marchands.");
             $em->persist($reportSell);
             $user->setBitcoin($user->getBitcoin() + $gain);
-            if ($user->getZombie() == 0) {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $newWarPointS);
-            }
             $user->setViewReport(false);
             $quest = $user->checkQuests('sell');
             if($quest) {

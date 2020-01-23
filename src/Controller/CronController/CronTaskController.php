@@ -34,6 +34,7 @@ class CronTaskController extends AbstractController
             echo "Game Over : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\GameOverController::gameOverCronAction', [
                 'userGOs'  => $userGOs,
+                'now'  => $now,
                 'em' => $em
             ]);
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";

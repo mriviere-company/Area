@@ -36,7 +36,7 @@ class DestroyController extends AbstractController
         }
         $now->add(new DateInterval('PT' . 60 . 'S'));
         $usePlanet->setMiner($level - 1);
-        $usePlanet->setNbProduction($usePlanet->getNbProduction() - ($level * 1.06));
+        $usePlanet->setNbProduction($usePlanet->getMiner() * 15);
         $usePlanet->setGroundPlace($newGround);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
@@ -65,7 +65,7 @@ class DestroyController extends AbstractController
         }
         $now->add(new DateInterval('PT' . 60 . 'S'));
         $usePlanet->setExtractor($level - 1);
-        $usePlanet->setWtProduction($usePlanet->getWtProduction() - ($level * 1.05));
+        $usePlanet->setWtProduction($usePlanet->getExtractor() * 10);
         $usePlanet->setGroundPlace($newGround);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
@@ -94,7 +94,7 @@ class DestroyController extends AbstractController
         }
         $now->add(new DateInterval('PT' . 60 . 'S'));
         $usePlanet->setFarm($level - 1);
-        $usePlanet->setFdProduction($usePlanet->getFdProduction() - ($level * 1.15));
+        $usePlanet->setFdProduction($usePlanet->getFarm() * 18);
         $usePlanet->setGroundPlace($newGround);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
@@ -123,7 +123,7 @@ class DestroyController extends AbstractController
         }
         $now->add(new DateInterval('PT' . 60 . 'S'));
         $usePlanet->setAeroponicFarm($level - 1);
-        $usePlanet->setFdProduction($usePlanet->getFdProduction() - ($level * 1.20));
+        $usePlanet->setFdProduction($usePlanet->getAeroponicFarm() * 25);
         $usePlanet->setSkyPlace($newSky);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);

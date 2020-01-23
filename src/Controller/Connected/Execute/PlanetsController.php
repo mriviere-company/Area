@@ -17,16 +17,16 @@ class PlanetsController extends AbstractController
             if($build == 'destruct') {
             } elseif ($build == 'miner') {
                 $planet->setMiner($planet->getMiner() + 1);
-                $planet->setNbProduction(6 + ($planet->getMiner() * 11));
+                $planet->setNbProduction(($planet->getMiner() * 15));
             } elseif ($build == 'extractor') {
                 $planet->setExtractor($planet->getExtractor() + 1);
-                $planet->setWtProduction(4 + ($planet->getExtractor() * 10));
+                $planet->setWtProduction(($planet->getExtractor() * 10));
             } elseif ($build == 'farm') {
                 $planet->setFarm($planet->getFarm() + 1);
-                $planet->setFdProduction(8 + ($planet->getFarm() * 15));
+                $planet->setFdProduction(($planet->getFarm() * 18));
             } elseif ($build == 'aeroponicFarm') {
                 $planet->setAeroponicFarm($planet->getAeroponicFarm() + 1);
-                $planet->setFdProduction(8 + ($planet->getAeroponicFarm() * 20));
+                $planet->setFdProduction(($planet->getAeroponicFarm() * 25));
             } elseif ($build == 'niobiumStock') {
                 $planet->setNiobiumStock($planet->getNiobiumStock() + 1);
                 $planet->setNiobiumMax($planet->getNiobiumMax() + 5000000);

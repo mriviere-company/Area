@@ -227,6 +227,11 @@ class InvadeController extends AbstractController
                 if($userDefender->getColPlanets() == 0) {
                     $userDefender->setGameOver($user->getUserName());
                     $userDefender->setGrade(null);
+                    $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $userDefender->getRank()->getWarPoint());
+                    $user->setBitcoin($user->getBitcoin() + $userDefender->getBitcoin());
+                    $reportInv->setContent($reportInv->getContent() . "<br>Vous avez totalement anéanti l'Empire de " . $userDefender->getUsername() . " et gagnez ses PDG : <span class='text-vert'>+" . number_format($userDefender->getRank()->getWarPoint()) . "</span>, ainsi que ses Bitcoins : <span class='text-vert'>+" . number_format($userDefender->getBitcoin()) . " .</span>");
+                    $userDefender->getRank()->setWarPoint(1);
+                    $userDefender->setBitcoin(1);
                     foreach($userDefender->getFleets() as $tmpFleet) {
                         $tmpFleet->setUser($user);
                         $tmpFleet->setFleetList(null);

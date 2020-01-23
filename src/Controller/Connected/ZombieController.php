@@ -79,6 +79,7 @@ class ZombieController extends AbstractController
             $zombie = abs($user->getZombieAtt()) * 75;
             $zombieTotal = $zombie;
             $zombie = $zombie - $soldier - $tank;
+            $gain = null;
             $alea = rand(1, 100) == 100 ? 2 : 1;
             if ($zombie <= 1) {
                 $zombie = 1;
@@ -98,9 +99,9 @@ class ZombieController extends AbstractController
                 $percent = ROUND(30 / $zombie);
                 $gain = 15;
             }
-            if ($soldier > $planet->getSoldier() || $tank > $planet->getTank() || !$gain || ($soldier == 0 && $tank == 0) || count($planet->getMissions()) >= 3) {
-                if (count($planet->getMissions()) >= 3) {
-                    $this->addFlash("fail", "Maximum 3 missions.");
+            if ($soldier > $planet->getSoldier() || $tank > $planet->getTank() || !$gain || ($soldier == 0 && $tank == 0) || count($planet->getMissions()) >= 10) {
+                if (count($planet->getMissions()) >= 10) {
+                    $this->addFlash("fail", "Maximum 10 missions.");
                 } elseif ($soldier == 0 && $tank == 0) {
                     $this->addFlash("fail", "Vous n'avez pas suffisament de soldats/tanks.");
                 } else {
@@ -133,6 +134,7 @@ class ZombieController extends AbstractController
             $tank = abs($form_missionUranium->get('tank')->getData());
             $time = abs($form_missionUranium->get('time')->getData());
             $zombie = $user->getZombieAtt() * 75;
+            $gain = null;
             if ($zombie <= 0) {
                 $zombie = 1;
             }
@@ -157,8 +159,14 @@ class ZombieController extends AbstractController
                 $percent = ROUND(30 / $zombie);
                 $gain = 15;
             }
-            if ($soldier > $planet->getSoldier() || $tank > $planet->getTank() || !$gain || ($soldier == 0 && $tank == 0) || count($planet->getMissions()) >= 3) {
-                $this->addFlash("fail", "Maximum 3 missions.");
+            if ($soldier > $planet->getSoldier() || $tank > $planet->getTank() || !$gain || ($soldier == 0 && $tank == 0) || count($planet->getMissions()) >= 10) {
+                if (count($planet->getMissions()) >= 10) {
+                    $this->addFlash("fail", "Maximum 10 missions.");
+                } elseif ($soldier == 0 && $tank == 0) {
+                    $this->addFlash("fail", "Vous n'avez pas suffisament de soldats/tanks.");
+                } else {
+                    $this->addFlash("fail", "Vous n'avez pas toutes les conditions requises.");
+                }
                 return $this->redirectToRoute('zombie', ['usePlanet' => $usePlanet->getId()]);
             } else {
                 $nowMission->add(new DateInterval('PT' . $time . 'H'));

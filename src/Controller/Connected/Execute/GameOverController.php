@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class GameOverController extends AbstractController
 {
-    public function gameOverCronAction($userGOs, $em)
+    public function gameOverCronAction($userGOs, $now, $em)
     {
         foreach ($userGOs as $userGO) {
             foreach ($userGO->getFleetLists() as $list) {
@@ -33,7 +33,7 @@ class GameOverController extends AbstractController
             $userGO->setArmement(0);
             $userGO->setIndustry(0);
             $userGO->setTerraformation(round($userGO->getTerraformation(0) / 2));
-            /*$userGO->setPlasma(0);
+            $userGO->setPlasma(0);
             $userGO->setLaser(0);
             $userGO->setMissile(0);
             $userGO->setRecycleur(0);
@@ -42,13 +42,14 @@ class GameOverController extends AbstractController
             $userGO->setHyperespace(0);
             $userGO->setDiscipline(0);
             $userGO->setHeavyShip(0);
+            $userGO->setAeroponicFarm(0);
             $userGO->setLightShip(0);
             $userGO->setOnde(0);
             $userGO->setHyperespace(0);
             $userGO->setDiscipline(0);
             $userGO->setBarbed(0);
             $userGO->setTank(0);
-            $userGO->setExpansion(0);*/
+            $userGO->setExpansion(0);
             $userGO->setPoliticArmement(0);
             $userGO->setPoliticCostScientist(0);
             $userGO->setPoliticArmor(0);
