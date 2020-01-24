@@ -14,7 +14,7 @@
                 {% else %}
                     <div class="text-center mt-2 ml-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="90" width="90" src="{{ asset('img/avatar.png') }}"></div>
                 {% endif %}
-                {% if user.getAlly %}
+                {% if user.getAlly() %}
                     {% if user.getAlly.imageName %}
                         <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="120" width="120" src="{{ vich_uploader_asset(user.getAlly, 'imageFile') }}"></div>
                     {% else %}
@@ -24,7 +24,7 @@
             </div>
             <div class="col-8">
                 <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.name'|trans }} {{ user.getUserName() }}</div>
-                {% if user.getAlly %}
+                {% if user.getAlly() %}
                     {% if user.getAlly().getPolitic() != 'fascism' %}
                         <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.planet'|trans }} {{ user.getAllPlanets() }}</div>
                         {% if user.getAlly().getPolitic() == 'democrat' %}<div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.first.planet'|trans }} {{ user.getFirstPlanet(usePlanet)|raw  }}</div>{% endif %}
@@ -47,6 +47,12 @@
                             {% set x = x + 1 %}
                         {% endfor %}
                     </div>
+                {% endif %}
+                {% if user.getNbrInvade() %}
+                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.invade'|trans }} {{ user.getNbrInvade() }}</div>
+                {% endif %}
+                {% if user.getExecution() %}
+                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.execution'|trans }} {{ user.getExecution() }}</div>
                 {% endif %}
                 <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.ally'|trans }} {% if user.getAlly() %}<span><a data-toggle="modal" data-target="#allyModal" href="{{ path('ally_profil_modal', {'allyUser': user.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getAlly().getName() }}</a></span>{% else %}{{ 'user.allyNone'|trans }}{% endif %}</div>
                 {% if user.getAlly() %}<div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.politic'|trans }} {{ user.getAlly().getPolitic()|trans }}</div>{% endif %}

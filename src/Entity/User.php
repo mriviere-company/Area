@@ -474,6 +474,16 @@ class User implements UserInterface, \Serializable
     protected $gameOver;
 
     /**
+     * @ORM\Column(name="execution",type="string", nullable=true)
+     */
+    protected $execution;
+
+    /**
+     * @ORM\Column(name="nbrInvade",type="integer", nullable=true, options={"unsigned":true})
+     */
+    protected $nbrInvade;
+
+    /**
      * @Assert\File(
      *     maxSize="600k",
      *     mimeTypes={"image/png", "image/jpeg", "image/bmp"}
@@ -529,6 +539,8 @@ class User implements UserInterface, \Serializable
         $this->tutorial = 1;
         $this->confirmed = 1;
         $this->salonAt = null;
+        $this->execution = null;
+        $this->nbrInvade = null;
         $this->salonBan = null;
         $this->joinAllyAt = null;
         $this->allyBan = null;
@@ -3794,5 +3806,37 @@ class User implements UserInterface, \Serializable
     public function setAllyBan($allyBan): void
     {
         $this->allyBan = $allyBan;
+    }
+
+    /**
+     * @return null
+     */
+    public function getExecution()
+    {
+        return $this->execution;
+    }
+
+    /**
+     * @param null $execution
+     */
+    public function setExecution($execution): void
+    {
+        $this->execution = $execution;
+    }
+
+    /**
+     * @return null
+     */
+    public function getNbrInvade()
+    {
+        return $this->nbrInvade;
+    }
+
+    /**
+     * @param null $nbrInvade
+     */
+    public function setNbrInvade($nbrInvade): void
+    {
+        $this->nbrInvade = $nbrInvade;
     }
 }

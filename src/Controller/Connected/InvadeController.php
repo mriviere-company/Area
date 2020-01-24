@@ -172,6 +172,11 @@ class InvadeController extends AbstractController
                     $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $warPointAtt);
                     $defender->setUser($user);
                     $em->flush();
+                    if ($user->getNbrInvade()) {
+                        $user->setNbrInvade($user->getNbrInvade() + 1);
+                    } else {
+                        $user->setNbrInvade(1);
+                    }
                     $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
                     $reportDef->setImageName("defend_lose_report.jpg");
                     $reportDef->setContent("Mais QUI ? QUI !!! Vous as donné un commandant si médiocre " . $defender->getUser()->getUserName() . " n'a pas eu a faire grand chose pour prendre votre planète " . $defender->getName() . " - (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) .  " . number_format(round($soldierAtmp)) . " soldats ennemis sont tout de même éliminé. C'est toujours ça de gagner. Vos <span class='text-rouge'>-" . number_format($soldierDtmp) . "</span> soldats, <span class='text-rouge'>-" . number_format($tankDtmp) ."</span> tanks et <span class='text-rouge'>-" . number_format($workerDtmp) . "</span> travailleurs sont tous mort. Votre empire en a prit un coup, mais il vous reste des planètes, il est l'heure de la revanche !");
@@ -227,6 +232,11 @@ class InvadeController extends AbstractController
                 if($userDefender->getColPlanets() == 0) {
                     $userDefender->setGameOver($user->getUserName());
                     $userDefender->setGrade(null);
+                    if ($user->getExecution()) {
+                        $user->setExecution($user->getExecution() . ', ' . $userDefender->getUsername());
+                    } else {
+                        $user->setExecution($userDefender->getUsername());
+                    }
                     $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $userDefender->getRank()->getWarPoint());
                     $user->setBitcoin($user->getBitcoin() + $userDefender->getBitcoin());
                     $reportInv->setContent($reportInv->getContent() . "<br>Vous avez totalement anéanti l'Empire de " . $userDefender->getUsername() . " et gagnez ses PDG : <span class='text-vert'>+" . number_format($userDefender->getRank()->getWarPoint()) . "</span>, ainsi que ses Bitcoins : <span class='text-vert'>+" . number_format($userDefender->getBitcoin()) . " .</span>");
