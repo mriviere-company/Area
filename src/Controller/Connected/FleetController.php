@@ -789,9 +789,9 @@ class FleetController  extends AbstractController
                 $carburant = $carburant * 2;
             } elseif($form_sendFleet->get('flightType')->getData() == '3' && $planetTake->getUser() == null) {
                 $fleetGive->setFlightType(3);
-            } elseif($form_sendFleet->get('flightType')->getData() == '4' && $planetTake->getUser()) {
+            } elseif($form_sendFleet->get('flightType')->getData() == '4' && $planetTake->getUser() && $fleetGive->getSoldier() > 0 && $fleetGive->getBarge() > 0) {
                 $fleetGive->setFlightType(4);
-            } elseif($form_sendFleet->get('flightType')->getData() == '5' && $planetTake->getUser()) {
+            } elseif($form_sendFleet->get('flightType')->getData() == '5' && $planetTake->getUser() && $fleetGive->getSoldier() > 0 && $fleetGive->getBarge() > 0) {
                 $fleetGive->setFlightType(5);
             } else {
                 $fleetGive->setFlightType(1);
