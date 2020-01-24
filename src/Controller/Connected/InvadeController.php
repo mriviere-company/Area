@@ -54,7 +54,7 @@ class InvadeController extends AbstractController
         }
 
         $defender = $invader->getPlanet();
-        $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser()->getUserName());
+        $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser());
         $userDefender= $invader->getPlanet()->getUser();
         $barbed = $userDefender->getBarbedAdv();
         $dSoldier = $defender->getSoldier() > 0 ? ($defender->getSoldier() * 6) * $barbed : 0;
@@ -170,8 +170,8 @@ class InvadeController extends AbstractController
 
                 if($invader->getUser()->getColPlanets() <= ($invader->getUser()->getTerraformation() + 1 + $user->getPoliticInvade()) && $userDefender->getZombie() == 0) {
                     $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $warPointAtt);
-                    $defender->setUser($user);
                     $em->flush();
+                    $defender->setUser($user);
                     if ($user->getNbrInvade()) {
                         $user->setNbrInvade($user->getNbrInvade() + 1);
                     } else {
@@ -188,7 +188,12 @@ class InvadeController extends AbstractController
                     $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $warPointAtt);
                     $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
                     if ($userDefender->getZombie() == 0) {
-                        $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser()->getUserName());
+                        if ($user->getNbrInvade()) {
+                            $user->setNbrInvade($user->getNbrInvade() + 1);
+                        } else {
+                            $user->setNbrInvade(1);
+                        }
+                        $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser());
                         $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
                         $reportDef->setImageName("defend_lose_report.jpg");
                         $reportDef->setContent("Mais QUI ? QUI !!! Vous as donné un commandant si médiocre " . $defender->getUser()->getUserName() . " n'a pas eu a faire grand chose pour prendre votre planète " . $defender->getName() . " - (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $usePlanetDef->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>).  " . number_format(round($soldierAtmp)) . " soldats ennemis sont tout de même éliminé. C'est toujours ça de gagner. Vos <span class='text-rouge'>-" . number_format($soldierDtmp) . "</span> soldats, <span class='text-rouge'>-" . number_format($tankDtmp) ."</span> tanks et <span class='text-rouge'>-" . number_format($workerDtmp) . "</span> travailleurs sont tous mort. Votre empire en a prit un coup, mais il vous reste des planètes, il est l'heure de la revanche !");
@@ -331,7 +336,7 @@ class InvadeController extends AbstractController
         if ($userDefender->getAlly()) {
             $dSigle = $userDefender->getAlly()->getSigle();
         }
-        $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser()->getUserName());
+        $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser());
 
         if ($raider->getPlanet()->getUser() && $raider->getAllianceUser() && $raider->getUser()->getSigleAllied($dSigle) == NULL && $userDefender->getZombie() == 0) {
             if($dMilitary >= $aMilitary) {

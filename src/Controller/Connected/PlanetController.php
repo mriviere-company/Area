@@ -206,7 +206,7 @@ class PlanetController extends AbstractController
             return $this->redirectToRoute('game_over');
         }
         if ($usePlanet == $abandonPlanet) {
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user->getUsername());
+            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
         }
 
         return $this->redirectToRoute('planet', ['usePlanet' => $usePlanet->getId()]);

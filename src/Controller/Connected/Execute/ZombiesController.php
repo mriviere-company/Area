@@ -16,7 +16,7 @@ class ZombiesController extends AbstractController
     public function zombiesAction($zUsers, $now, $em)
     {
         foreach ($zUsers as $zUser) {
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($zUser->getUsername());
+            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($zUser);
             $zombie = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
 
             $planetAtt = $em->getRepository('App:Planet')

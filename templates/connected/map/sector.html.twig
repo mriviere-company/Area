@@ -5,6 +5,11 @@
 {% block title %}{{ 'title'|trans }}{% endblock %}
 
 {% block body %}
+    {% for message in app.flashes('fail') %}
+        <div class="flash-notice mt-5 alerte-flash-error text-center">
+            {{ message }}
+        </div>
+    {% endfor %}
 
     {% set topSector = id - 10 %}
     {% if topSector < 0 %}

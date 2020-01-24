@@ -340,7 +340,7 @@ class FightController extends AbstractController
                 $armorD = $armorSaveD / 20;
             }
             foreach($blockDef as $defenderWin) {
-                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($defenderWin->getUser()->getUsername());
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($defenderWin->getUser());
                 $reportWinDef = new Report();
                 $reportWinDef->setType('fight');
                 $reportWinDef->setSendAt($now);
@@ -376,7 +376,7 @@ class FightController extends AbstractController
                 $em->persist($reportWinDef);
             }
             foreach($blockAtt as $attackerLose) {
-                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($attackerLose->getUser()->getUsername());
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($attackerLose->getUser());
                 $reportLoseA = new Report();
                 $reportLoseA->setType('fight');
                 $reportLoseA->setSendAt($now);
@@ -498,7 +498,7 @@ class FightController extends AbstractController
                 $armor = $armorSaveA / 20;
             }
             foreach($blockAtt as $attackerWin) {
-                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($attackerWin->getUser()->getUsername());
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($attackerWin->getUser());
                 $reportWinAtt = new Report();
                 $reportWinAtt->setType('fight');
                 $reportWinAtt->setSendAt($now);
@@ -534,7 +534,7 @@ class FightController extends AbstractController
                 }
             }
             foreach($blockDef as $defenderLose) {
-                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($defenderLose->getUser()->getUsername());
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($defenderLose->getUser());
                 $reportLoseB = new Report();
                 $reportLoseB->setType('fight');
                 $reportLoseB->setSendAt($now);

@@ -330,6 +330,20 @@ class SectorController extends AbstractController
             $destination->setFleet($fleet);
             $destination->setPlanet($planet);
             $em->persist($destination);
+            if(($form_sendFleet->get('flightType')->getData() == '4' || $form_sendFleet->get('flightType')->getData() == '5') &&
+                (!$planet->getUser() || $fleet->getSoldier() == 0 || $fleet->getBarge() == 0 || $fleet->getSoldier() == NULL ||
+                    $fleet->getBarge() == NULL)) {
+                if(!$planet->getUser()) {
+                    $this->addFlash("fail", "Cette planète est inoccupée.");
+                }
+                if($fleet->getSoldier() == 0 || $fleet->getSoldier() == NULL) {
+                    $this->addFlash("fail", "Vous n'avez pas de soldats sur votre flotte.");
+                }
+                if($fleet->getBarge() == 0 || $fleet->getBarge() == NULL) {
+                    $this->addFlash("fail", "Vous ne disposez pas de barges d'invasions.");
+                }
+                return $this->redirectToRoute('map', ['usePlanet' => $usePlanet->getId(), 'sector' => $planet->getSector()->getId(), 'gal' => $planet->getSector()->getGalaxy()->getId()]);
+            }
             $fleet->setFlightType($form_sendFleet->get('flightType')->getData());
             $fleet->setCancelFlight($moreNow);
             $user->setBitcoin($user->getBitcoin() - $carburant);

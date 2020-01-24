@@ -27,7 +27,7 @@ class ConnectController extends AbstractController
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
-        $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user->getUsername());
+        $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
 
         if($usePlanet) {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);

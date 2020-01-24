@@ -56,14 +56,14 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-                {% if user.getNbrInvade() %}
-                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.invade'|trans }} {{ user.getNbrInvade() }}</div>
-                {% endif %}
-                {% if user.getExecution() %}
-                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.execution'|trans }} {{ user.getExecution() }}</div>
-                {% endif %}
                 <div class="my-2 text-middle"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.ally'|trans }} {% if user.getAlly() %}<span><a href="{{ path('ally_profil', {'allyUser': user.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getAlly().getName() }}</a></span>{% else %}{{ 'user.allyNone'|trans }}{% endif %}</div>
                 {% if user.getAlly() %}<div class="my-2 text-middle"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.politic'|trans }} {{ user.getAlly().getPolitic()|trans }}</div>{% endif %}
+                {% if user.getNbrInvade() %}
+                    <div class="my-2 text-middle"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.invade'|trans }} {{ user.getNbrInvade() }}</div>
+                {% endif %}
+                {% if user.getExecution() %}
+                    <div class="my-2 text-middle"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.execution'|trans }} {{ user.getExecution() }}</div>
+                {% endif %}
             </div>
         </div>
         <div class="my-4 text-center pb-3"><a class="confirm-button" href="{{ path('message_responde', {'id': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'responde'|trans }}</a></div>

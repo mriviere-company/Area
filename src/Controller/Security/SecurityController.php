@@ -203,7 +203,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('game_over');
             }
 
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user->getUsername());
+            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
 
             if($usePlanet) {
                 return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
@@ -284,7 +284,7 @@ class SecurityController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        if($userSameIp && $this->getUser()->getRoles()[0] == 'ROLE_USER') {
+        if($userSameIp && $user->getRoles()[0] == 'ROLE_USER') {
             $this->addFlash("fail", "Vous avez déjà le compte : " . $userSameIp->getUsername());
             return $this->redirectToRoute('home');
         }
@@ -295,7 +295,7 @@ class SecurityController extends AbstractController
             }
         }
 
-        if ($this->getUser()->getRoles()[0] == 'ROLE_USER') {
+        if ($user->getRoles()[0] == 'ROLE_USER') {
             $em = $this->getDoctrine()->getManager();
             $now = new DateTime();
             $now->setTimezone(new DateTimeZone('Europe/Paris'));
@@ -303,7 +303,7 @@ class SecurityController extends AbstractController
             if($user->getGameOver()) {
                 return $this->redirectToRoute('game_over');
             }
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($this->getUser()->getUsername());
+            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
 
             $user->setIpAddress($userIp);
             $user->setLastActivity($now);

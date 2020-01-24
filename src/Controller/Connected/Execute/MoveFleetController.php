@@ -21,7 +21,7 @@ class MoveFleetController extends AbstractController
                 $em->remove($fleet->getDestination());
                 $em->remove($fleet);
             } else {
-                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user->getUsername());
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
                 if (!$usePlanet) {
                     $em->remove($fleet);
                 } else {
@@ -396,8 +396,8 @@ class MoveFleetController extends AbstractController
                                 $dTanks = $dTanks * (1 + ($userDefender->getPoliticTankDef() / 10));
                             }
                             $dMilitary = $dSoldier + $dTanks;
-                            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user->getUsername());
-                            $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser()->getUserName());
+                            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
+                            $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser());
 
                             $reportLoot = new Report();
                             $reportLoot->setType('invade');
@@ -535,8 +535,8 @@ class MoveFleetController extends AbstractController
                             }
 
                             $defender = $fleet->getPlanet();
-                            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user->getUsername());
-                            $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser()->getUserName());
+                            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
+                            $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser());
                             $userDefender= $fleet->getPlanet()->getUser();
                             $barbed = $userDefender->getBarbedAdv();
                             $dSoldier = $defender->getSoldier() > 0 ? ($defender->getSoldier() * 6) * $barbed : 0;
@@ -670,6 +670,11 @@ class MoveFleetController extends AbstractController
                                         $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $warPointAtt);
                                         $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
                                         if ($userDefender->getZombie() == 0) {
+                                            if ($user->getNbrInvade()) {
+                                                $user->setNbrInvade($user->getNbrInvade() + 1);
+                                            } else {
+                                                $user->setNbrInvade(1);
+                                            }
                                             $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
                                             $reportDef->setImageName("defend_lose_report.jpg");
                                             $reportDef->setContent("Mais QUI ? QUI !!! Vous as donné un commandant si médiocre " . $defender->getUser()->getUserName() . " n'a pas eu a faire grand chose pour prendre votre planète " . $defender->getName() . " - (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>)  " . number_format(round($soldierAtmp)) . " soldats ennemis sont tout de même éliminé. C'est toujours ça de gagner. Vos <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-rouge'>" . number_format($tankDtmp) ."</span> tanks et <span class='text-rouge'>" . number_format($workerDtmp) . "</span> travailleurs sont tous mort. Votre empire en a prit un coup, mais il vous reste des planètes, il est l'heure de la revanche !");

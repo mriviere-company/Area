@@ -787,15 +787,33 @@ class FleetController  extends AbstractController
             if($form_sendFleet->get('flightType')->getData() == '2' && ($planetTake->getUser() || $planetTake->getMerchant() == true)) {
                 $fleetGive->setFlightType(2);
                 $carburant = $carburant * 2;
-            } elseif($form_sendFleet->get('flightType')->getData() == '3' && $planetTake->getUser() == null) {
-                $fleetGive->setFlightType(3);
-            } elseif($form_sendFleet->get('flightType')->getData() == '4' && $planetTake->getUser() && $fleetGive->getSoldier() > 0 && $fleetGive->getBarge() > 0) {
-                $fleetGive->setFlightType(4);
-            } elseif($form_sendFleet->get('flightType')->getData() == '5' && $planetTake->getUser() && $fleetGive->getSoldier() > 0 && $fleetGive->getBarge() > 0) {
-                $fleetGive->setFlightType(5);
-            } else {
-                $fleetGive->setFlightType(1);
             }
+            if($form_sendFleet->get('flightType')->getData() == '3' && ($planetTake->getUser() || $fleetGive->getColonizer() == 0 || $fleetGive->getColonizer() == NULL)) {
+                if($planetTake->getUser()) {
+                    $this->addFlash("fail", "Cette planète a déjà un occupant.");
+                }
+                if($fleetGive->getColonizer() == 0 || $fleetGive->getColonizer() == NULL) {
+                    $this->addFlash("fail", "Ajoutez un colonisateur a votre flotte.");
+                }
+                return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
+            }
+
+            if(($form_sendFleet->get('flightType')->getData() == '4' || $form_sendFleet->get('flightType')->getData() == '5') &&
+                (!$planetTake->getUser() || $fleetGive->getSoldier() == 0 || $fleetGive->getBarge() == 0 || $fleetGive->getSoldier() == NULL
+                || $fleetGive->getBarge() == NULL)) {
+                if(!$planetTake->getUser()) {
+                    $this->addFlash("fail", "Cette planète est inoccupée.");
+                }
+                if($fleetGive->getSoldier() == 0 || $fleetGive->getSoldier() == NULL) {
+                    $this->addFlash("fail", "Vous n'avez pas de soldats sur votre flotte.");
+                }
+                if($fleetGive->getBarge() == 0 || $fleetGive->getBarge() == NULL) {
+                    $this->addFlash("fail", "Vous ne disposez pas de barges d'invasions.");
+                }
+                return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
+            }
+
+            $fleetGive->setFlightType($form_sendFleet->get('flightType')->getData());
             $user->setBitcoin($user->getBitcoin() - $carburant);
 
             $em->flush();

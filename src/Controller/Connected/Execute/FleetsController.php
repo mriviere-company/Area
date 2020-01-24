@@ -27,7 +27,7 @@ class FleetsController extends AbstractController
                 ->getQuery()
                 ->getOneOrNullResult();
 
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($newHome->getUser()->getUsername());
+            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($newHome->getUser());
             $reportNuclearAtt = new Report();
             $reportNuclearAtt->setType('fight');
             $reportNuclearAtt->setTitle("Votre missile nucléaire a touché sa cible !");
@@ -128,7 +128,7 @@ class FleetsController extends AbstractController
                         $reportRec->setImageName("recycle_report.jpg");
                         $reportRec->setSendAt($now);
                         $reportRec->setUser($fleetCdr->getUser());
-                        $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser()->getUsername());
+                        $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
                         $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
                         $em->persist($reportRec);
                         $fleetCdr->getUser()->setViewReport(false);
