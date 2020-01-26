@@ -208,14 +208,14 @@ class MoveFleetController extends AbstractController
                                 $reportSell->setTitle("Vente aux marchands");
                                 $reportSell->setImageName("sell_report.jpg");
                                 if ($user->getPoliticPdg() > 0) {
-                                    $newWarPointS = round((((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6)) / 5000)) * (1 + ($user->getPoliticPdg() / 10)));
+                                    $newWarPointS = round((((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6) + ($fleet->getTank() * 5) + ($fleet->getUranium() * 10)) / 5000)) * (1 + ($user->getPoliticPdg() / 10)));
                                 } else {
-                                    $newWarPointS = round((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6)) / 5000);
+                                    $newWarPointS = round((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6) + ($fleet->getTank() * 5) + ($fleet->getUranium() * 10)) / 5000);
                                 }
                                 if ($user->getPoliticMerchant() > 0) {
-                                    $gainSell = (($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10)) * (1 + ($user->getPoliticMerchant() / 20));
+                                    $gainSell = (($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10) + ($fleet->getTank() * 2500) + ($fleet->getUranium() * 5000)) * (1 + ($user->getPoliticMerchant() / 20));
                                 } else {
-                                    $gainSell = ($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10);
+                                    $gainSell = ($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10) + ($fleet->getTank() * 2500) + ($fleet->getUranium() * 5000);
                                 }
                                 $reportSell->setContent("Votre vente aux marchands vous a rapporté <span class='text-vert'>+" . number_format(round($gainSell)) . "</span> bitcoins. Et <span class='text-vert'>+" . number_format($newWarPointS) . "</span> points de Guerre. Votre flotte " . $fleet->getName() . " est sur le chemin du retour.");
                                 $em->persist($reportSell);
@@ -223,7 +223,9 @@ class MoveFleetController extends AbstractController
                                 $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $newWarPointS);
                                 $fleet->setNiobium(0);
                                 $fleet->setWater(0);
+                                $fleet->setUranium(0);
                                 $fleet->setSoldier(0);
+                                $fleet->setTank(0);
                                 $fleet->setWorker(0);
                                 $fleet->setScientist(0);
                                 $quest = $user->checkQuests('sell');
@@ -256,12 +258,21 @@ class MoveFleetController extends AbstractController
                                     $fleet->setWater($fleet->getWater() - ($newPlanet->getWaterMax() - $newPlanet->getWater()));
                                     $newPlanet->setWater($newPlanet->getWaterMax());
                                 }
+                                $newPlanet->setUranium($fleet->getUranium());
+                                $fleet->setUranium(0);
                                 if ($newPlanet->getSoldier() + $fleet->getSoldier() <= $newPlanet->getSoldierMax()) {
                                     $newPlanet->setSoldier($newPlanet->getSoldier() + $fleet->getSoldier());
                                     $fleet->setSoldier(0);
                                 } else {
                                     $fleet->setSoldier($fleet->getSoldier() - ($newPlanet->getSoldierMax() - $newPlanet->getSoldier()));
                                     $newPlanet->setSoldier($newPlanet->getSoldierMax());
+                                }
+                                if ($newPlanet->getTank() + $fleet->getTank() <= 500) {
+                                    $newPlanet->setTank($newPlanet->getTank() + $fleet->getTank());
+                                    $fleet->setTank(0);
+                                } else {
+                                    $fleet->setTank($fleet->getTank() - (500 - $newPlanet->getTank()));
+                                    $newPlanet->setTank(500);
                                 }
                                 if ($newPlanet->getWorker() + $fleet->getWorker() <= $newPlanet->getWorkerMax()) {
                                     $newPlanet->setWorker($newPlanet->getWorker() + $fleet->getWorker());

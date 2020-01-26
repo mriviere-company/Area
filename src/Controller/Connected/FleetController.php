@@ -652,6 +652,8 @@ class FleetController  extends AbstractController
         $planetTake->setNiobium($planetTake->getNiobium() + $fleetGive->getNiobium());
         $planetTake->setWater($planetTake->getWater() + $fleetGive->getWater());
         $planetTake->setSoldier($planetTake->getSoldier() + $fleetGive->getSoldier());
+        $planetTake->setTank($planetTake->getTank() + $fleetGive->getTank());
+        $planetTake->setUranium($planetTake->getUranium() + $fleetGive->getUranium());
         $planetTake->setWorker($planetTake->getWorker() + $fleetGive->getWorker());
         $planetTake->setScientist($planetTake->getScientist() + $fleetGive->getScientist());
         $planetTake->setSignature($planetTake->getNbrSignatures());
@@ -1153,14 +1155,14 @@ class FleetController  extends AbstractController
             $reportSell->setTitle("Vente aux marchands");
             $reportSell->setImageName("sell_report.jpg");
             if ($user->getPoliticPdg() > 0) {
-                $newWarPointS = round((((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6)) / 5000)) * (1 + ($user->getPoliticPdg() / 10)));
+                $newWarPointS = round((((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6) + ($fleetGive->getTank() * 5) + ($fleetGive->getUranium() * 10)) / 5000)) * (1 + ($user->getPoliticPdg() / 10)));
             } else {
-                $newWarPointS = round((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6)) / 5000);
+                $newWarPointS = round((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6) + ($fleetGive->getTank() * 5) + ($fleetGive->getUranium() * 10)) / 5000);
             }
             if ($user->getPoliticMerchant() > 0) {
-                $gainSell = round((($fleetGive->getWater() * 0.25) + ($fleetGive->getSoldier() * 80) + ($fleetGive->getWorker() * 5) + ($fleetGive->getScientist() * 300) + ($fleetGive->getNiobium() * 0.10)) * (1 + ($user->getPoliticMerchant() / 20)));
+                $gainSell = round((($fleetGive->getWater() * 0.25) + ($fleetGive->getSoldier() * 80) + ($fleetGive->getWorker() * 5) + ($fleetGive->getScientist() * 300) + ($fleetGive->getNiobium() * 0.10) + ($fleetGive->getTank() * 2500) + ($fleetGive->getUranium() * 5000)) * (1 + ($user->getPoliticMerchant() / 20)));
             } else {
-                $gainSell = round(($fleetGive->getWater() * 0.25) + ($fleetGive->getSoldier() * 80) + ($fleetGive->getWorker() * 5) + ($fleetGive->getScientist() * 300) + ($fleetGive->getNiobium() * 0.10));
+                $gainSell = round(($fleetGive->getWater() * 0.25) + ($fleetGive->getSoldier() * 80) + ($fleetGive->getWorker() * 5) + ($fleetGive->getScientist() * 300) + ($fleetGive->getNiobium() * 0.10) + ($fleetGive->getTank() * 2500) + ($fleetGive->getUranium() * 5000));
             }
             $reportSell->setContent("Votre vente aux marchands vous a rapporté <span class='text-vert'>+" . number_format($gainSell) . "</span> bitcoins. Et <span class='text-vert'>+" . number_format($newWarPointS) . "</span> points de Guerre.");
             $em->persist($reportSell);
@@ -1173,7 +1175,9 @@ class FleetController  extends AbstractController
             $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $newWarPointS);
             $fleetGive->setScientist(0);
             $fleetGive->setNiobium(0);
+            $fleetGive->setUranium(0);
             $fleetGive->setSoldier(0);
+            $fleetGive->setTank(0);
             $fleetGive->setWorker(0);
             $fleetGive->setWater(0);
             $quest = $user->checkQuests('sell');
@@ -1182,32 +1186,49 @@ class FleetController  extends AbstractController
                 $user->removeQuest($quest);
             }
         }
-        if(($planetTake->getScientist() + $fleetGive->getScientist()) <= $planetTake->getScientistMax() &&
-            ($planetTake->getWorker() + $fleetGive->getWorker()) <= $planetTake->getWorkerMax() &&
-            ($planetTake->getSoldier() + $fleetGive->getSoldier()) <= $planetTake->getSoldierMax() &&
-            ($planetTake->getWater() + $fleetGive->getWater()) <= $planetTake->getWaterMax() &&
-            ($planetTake->getNiobium() + $fleetGive->getNiobium()) <= $planetTake->getNiobiumMax()) {
-            $planetTake->setScientist($planetTake->getScientist() + $fleetGive->getScientist());
-            $planetTake->setWorker($planetTake->getWorker() + $fleetGive->getWorker());
-            $planetTake->setSoldier($planetTake->getSoldier() + $fleetGive->getSoldier());
-            $planetTake->setWater($planetTake->getWater() + $fleetGive->getWater());
+        if ($planetTake->getNiobium() + $fleetGive->getNiobium() <= $planetTake->getNiobiumMax()) {
             $planetTake->setNiobium($planetTake->getNiobium() + $fleetGive->getNiobium());
             $fleetGive->setNiobium(0);
+        } else {
+            $fleetGive->setNiobium($fleetGive->getNiobium() - ($planetTake->getNiobiumMax() - $planetTake->getNiobium()));
+            $planetTake->setNiobium($planetTake->getNiobiumMax());
+        }
+        if ($planetTake->getWater() + $fleetGive->getWater() <= $planetTake->getWaterMax()) {
+            $planetTake->setWater($planetTake->getWater() + $fleetGive->getWater());
             $fleetGive->setWater(0);
+        } else {
+            $fleetGive->setWater($fleetGive->getWater() - ($planetTake->getWaterMax() - $planetTake->getWater()));
+            $planetTake->setWater($planetTake->getWaterMax());
+        }
+        $planetTake->setUranium($fleetGive->getUranium());
+        $fleetGive->setUranium(0);
+        if ($planetTake->getSoldier() + $fleetGive->getSoldier() <= $planetTake->getSoldierMax()) {
+            $planetTake->setSoldier($planetTake->getSoldier() + $fleetGive->getSoldier());
             $fleetGive->setSoldier(0);
+        } else {
+            $fleetGive->setSoldier($fleetGive->getSoldier() - ($planetTake->getSoldierMax() - $planetTake->getSoldier()));
+            $planetTake->setSoldier($planetTake->getSoldierMax());
+        }
+        if ($planetTake->getTank() + $fleetGive->getTank() <= 500) {
+            $planetTake->setTank($planetTake->getTank() + $fleetGive->getTank());
+            $fleetGive->setTank(0);
+        } else {
+            $fleetGive->setTank($fleetGive->getTank() - (500 - $planetTake->getTank()));
+            $planetTake->setTank(500);
+        }
+        if ($planetTake->getWorker() + $fleetGive->getWorker() <= $planetTake->getWorkerMax()) {
+            $planetTake->setWorker($planetTake->getWorker() + $fleetGive->getWorker());
             $fleetGive->setWorker(0);
+        } else {
+            $fleetGive->setWorker($fleetGive->getWorker() - ($planetTake->getWorkerMax() - $planetTake->getWorker()));
+            $planetTake->setWorker($planetTake->getWorkerMax());
+        }
+        if ($planetTake->getScientist() + $fleetGive->getScientist() <= $planetTake->getScientistMax()) {
+            $planetTake->setScientist($planetTake->getScientist() + $fleetGive->getScientist());
             $fleetGive->setScientist(0);
         } else {
+            $fleetGive->setScientist($fleetGive->getScientist() - ($planetTake->getScientistMax() - $planetTake->getScientist()));
             $planetTake->setScientist($planetTake->getScientistMax());
-            $fleetGive->setScientist(($planetTake->getScientist() + $fleetGive->getScientist()) - $planetTake->getScientistMax());
-            $planetTake->setNiobium($planetTake->getNiobiumMax());
-            $fleetGive->setNiobium(($planetTake->getNiobium() + $fleetGive->getNiobium()) - $planetTake->getNiobiumMax());
-            $planetTake->setWater($planetTake->getWaterMax());
-            $fleetGive->setWater(($planetTake->getWater() + $fleetGive->getWater()) - $planetTake->getWaterMax());
-            $planetTake->setSoldier($planetTake->getSoldierMax());
-            $fleetGive->setSoldier(($planetTake->getSoldier() + $fleetGive->getSoldier()) - $planetTake->getSoldierMax());
-            $planetTake->setWorker($planetTake->getWorkerMax());
-            $fleetGive->setWorker(($planetTake->getWorker() + $fleetGive->getWorker()) - $planetTake->getWorkerMax());
         }
         $user->setViewReport(false);
 
@@ -1254,6 +1275,8 @@ class FleetController  extends AbstractController
         $fleetTake->setWater($fleetTake->getWater() + $fleetGive->getWater());
         $fleetTake->setSoldier($fleetTake->getSoldier() + $fleetGive->getSoldier());
         $fleetTake->setWorker($fleetTake->getWorker() + $fleetGive->getWorker());
+        $fleetTake->setTank($fleetTake->getTank() + $fleetGive->getTank());
+        $fleetTake->setUranium($fleetTake->getUranium() + $fleetGive->getUranium());
         $fleetTake->setScientist($fleetTake->getScientist() + $fleetGive->getScientist());
         $fleetTake->setSignature($fleetTake->getNbrSignatures());
         if ($fleetGive->getRecycleAt() && $fleetTake->getRecycleAt()) {

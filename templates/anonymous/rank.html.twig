@@ -45,7 +45,7 @@
             </tr>
             {% set x = 1 %}
             {% for user in users %}
-                <tr{% if app.user and app.user.getId() == user.id %} class="currentRoute"{% elseif app.user and app.user.getAlly() and app.user.getAlly().getId() == user.alliance %} class="constructFree"{% elseif app.user and app.user.getAlly() and user.sigle in app.user.getAllyEnnemyTag() and user.sigle is not null %} class="planetFull"{% endif %}>
+                <tr{% if app.user and app.user.getId() == user.id %} class="currentRank"{% elseif app.user and app.user.getAlly() and app.user.getAlly().getId() == user.alliance %} class="constructFree"{% elseif app.user and app.user.getAlly() and user.sigle in app.user.getAllyEnnemyTag() and user.sigle is not null %} class="planetFull"{% endif %}>
                     <th width="100px" class="tab-cells-name p-2">
                         {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% else %}<div class="glyphicon glyphicon-star" hidden></div> <span class="float-left ml-3">{{ x }}</span>{% endif %}{% if user.position > user.oldPosition %}<span class="rank-bad-border text-rouge float-right">-{{ user.position - user.oldPosition }}</span>{% else %}<span class="rank-good-border text-vert float-right">+{{ user.oldPosition - user.position }}</span>{% endif %}
                     </th>

@@ -464,7 +464,27 @@ class BotController extends AbstractController
                         'building' => 'miner',
                         'user' => $bot
                     ]);
+                    $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'miner',
+                        'user' => $bot
+                    ]);
+                    $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'miner',
+                        'user' => $bot
+                    ]);
                 } elseif ($construct && $construct->getContent() === 'false') {
+                    $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'extractor',
+                        'user' => $bot
+                    ]);
+                    $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
+                        'usePlanet'  => $cPlanet,
+                        'building' => 'extractor',
+                        'user' => $bot
+                    ]);
                     $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                         'usePlanet'  => $cPlanet,
                         'building' => 'extractor',

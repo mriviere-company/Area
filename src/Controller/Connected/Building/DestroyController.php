@@ -491,7 +491,7 @@ class DestroyController extends AbstractController
         $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('nuclearBase');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
-            $usePlanet->getSoldier() > $usePlanet->getNuclearMax() - 1) {
+            $usePlanet->getNuclearBomb() > $usePlanet->getNuclearBase() - 1) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         $now->add(new DateInterval('PT' . 180 . 'S'));

@@ -8,7 +8,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
-use App\Entity\User;
 use DateTime;
 use DateTimeZone;
 use Dateinterval;
@@ -171,13 +170,16 @@ class BuildingController extends AbstractController
     }
 
     /**
-     * @Route("/annuler-construction-liste/{construction}/{usePlanet}", name="building_listCancel", requirements={"usePlanet"="\d+", "construction"="\d+"})
+     * @Route("/annuler-construction-liste/{construction}/{usePlanet}", name="building_listCancel", requirements={"construction"="\d+", "usePlanet"="\d+"})
      */
-    public function buildingListCancelAction(Planet $usePlanet, Planet $construction)
+    public function buildingListCancelAction(Construction $construction, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user || $construction->getUser() != $user) {
+        if ($usePlanet->getUser() != $user || $construction->getPlanet() != $usePlanet) {
+            var_dump($user->getId());
+            var_dump($construction->getUser()->getId());
+            exit;
             return $this->redirectToRoute('home');
         }
         $cancelPlanet = $construction->getPlanet();
