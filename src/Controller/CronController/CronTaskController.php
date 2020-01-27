@@ -156,7 +156,7 @@ class CronTaskController extends AbstractController
         if ($planetNuclears) {
             echo "Fabrication bombes nucléaires : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::nuclearsAction', [
-                'planetNuclear'  => $planetNuclears,
+                'planetNuclears'  => $planetNuclears,
                 'em'  => $em
             ]);
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
