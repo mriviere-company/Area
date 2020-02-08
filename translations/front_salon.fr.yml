@@ -3,3 +3,4 @@ form.content: 'Attention nous rappelons que les insultes/menaces seront sanction
 form.sendMessage: envoyer
 salon.close: 'Fermer ce salon'
 logout: Disconnect
+online: 'En ligne :'

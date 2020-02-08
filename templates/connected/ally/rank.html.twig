@@ -84,7 +84,7 @@
                         {% endif %}
                     </th>
                     <th class="tab-cells-name p-2">
-                        {{ ally.point|number_format }}{% if ally.point > ally.oldPoint %}<span class="rank-good-border text-vert">+{{ (ally.point - ally.oldPoint)|number_format }}</span>{% else %}<span class="rank-bad-border text-rouge">-{{ (ally.oldPoint - ally.point)|number_format }}</span>{% endif %}
+                        {{ ally.point|number_format }}{% if ally.point > ally.oldPoint %}<span class="rank-good-border text-vert">+{{ (ally.point - ally.oldPoint)|number_format }}</span>{% elseif ally.point < ally.oldPoint %}<span class="rank-bad-border text-rouge">-{{ (ally.oldPoint - ally.point)|number_format }}</span>{% else %}<span class="rank-bad-border text-mini">&#x25cf</span>{% endif %}
                     </th>
                     <th class="tab-cells-name p-2">
                         {{ ally.createdAt|date('d/m/Y') }}

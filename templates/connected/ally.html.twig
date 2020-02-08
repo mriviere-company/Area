@@ -77,7 +77,7 @@
                                         {% if user.getLastActivity()|date('d/m/Y') > "now"|date('d/m/Y') %}{{ user.getLastActivity()|date('H:i') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}
                                     </td>
                                     <td class="center-cells">
-                                        {{ user.getRank().getPoint() }}{% if user.getRank().getPoint() > user.getRank().getOldPoint() %}<span class="rank-good-border text-vert">+{{ (user.getRank().getPoint() - user.getRank().getOldPoint())|number_format }}</span>{% else %}<span class="rank-bad-border text-rouge">-{{ (user.getRank().getOldPoint() - user.getRank().getPoint())|number_format }}</span>{% endif %}
+                                        {{ user.getRank().getPoint() }}{% if user.getRank().getPoint() > user.getRank().getOldPoint() %}<span class="rank-good-border text-vert">+{{ (user.getRank().getPoint() - user.getRank().getOldPoint())|number_format }}</span>{% elseif user.getRank().getPoint() < user.getRank().getOldPoint() %}<span class="rank-bad-border text-rouge">-{{ (user.getRank().getOldPoint() - user.getRank().getPoint())|number_format }}</span>{% else %}<span class="rank-bad-border text-mini">&#x25cf</span>{% endif %}
                                     </td>
                                     <td class="center-cells">
                                         {{ user.getJoinAllyAt()|date('d/m/Y') }}

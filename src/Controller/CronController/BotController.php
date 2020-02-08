@@ -119,7 +119,7 @@ class BotController extends AbstractController
         $messageTime->sub(new DateInterval('PT' . rand(1, 400) . 'S'));
         $messageSent = 1;
 
-        if (1 == 1) {
+        if (1 == 2) {
             $newBot = new DateTime();
             $newBot->setTimezone(new DateTimeZone('Europe/Paris'));
             $nickeName = $em->getRepository('App:NickName')
