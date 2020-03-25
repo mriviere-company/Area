@@ -26,7 +26,7 @@ title.fleet: Flotte
 cell.fleet: 'Aucune flotte en vol'
 cell.constructName: 'Construction terminée dans '
 cell.searchName: 'Recherche effectuée dans '
-info.rank: 'Rang :'
+info.rank: 'Rang'
 info.planet: 'Colonies :'
 info.moon: 'Lunes :'
 info.fleet: 'Nombre de flotte :'
