@@ -89,6 +89,8 @@ class TrackController extends AbstractController
             $track->setPreviousPage('AreaUniverse');
         } elseif (stripos(strtoupper($referer), 'INSTAGRAM') !== FALSE) {
             $track->setPreviousPage('Instagram');
+        } elseif (stripos(strtoupper($referer), '.XYZ') !== FALSE) {
+            $track->setPreviousPage('Xyz');
         } else {
             $track->setPreviousPage($referer);
         }

@@ -214,7 +214,7 @@ class DailyController extends AbstractController
 
         $em->flush();
 
-        $users = $em->getRepository('App:User')
+        $usersUp = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.rank', 'r')
             ->where('u.id != :one')
@@ -224,7 +224,7 @@ class DailyController extends AbstractController
             ->getResult();
 
         $x = 1;
-        foreach ($users as $user) {
+        foreach ($usersUp as $user) {
             $user->getRank()->setOldPosition($user->getRank()->getPosition());
             $user->getRank()->setPosition($x);
             $x++;

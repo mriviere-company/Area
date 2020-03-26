@@ -257,6 +257,7 @@ class Fleet
      */
     public function __construct()
     {
+        $this->name = 'Flotte';
         $this->attack = false;
         $this->water = null;
         $this->niobium = null;

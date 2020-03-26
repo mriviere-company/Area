@@ -75,8 +75,10 @@
             {% endfor %}
             </tbody>
         </table>
-        <div class="front-block-second">
-            <div class="text-center text-vert">{{ 'rank.nbrPlayers'|trans({'%nbrPlayer%': nbrPlayers|number_format})|raw }}</div>
-        </div>
+        {% if nbrPlayers > 0 %}
+            <div class="front-block-second">
+                <div class="text-center text-vert">{{ 'rank.nbrPlayers'|trans({'%nbrPlayer%': nbrPlayers|number_format})|raw }}</div>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

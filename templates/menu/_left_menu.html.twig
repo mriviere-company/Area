@@ -34,11 +34,13 @@
             </div>
         </a>
     {% endif %}
-    <a href="{{ path('zombie', {'usePlanet': usePlanet.getId()}) }}">
-        <div class="btn-left{% if app.request.attributes.get('_route') == 'zombie' %} currentRoute{% endif %} hideForBig">
-            <span>{{ 'zombie'|trans }} <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ asset('img/zombie_indic.gif') }}"></span>
-        </div>
-    </a>
+    {% if allPlanets|length > 2 and allTuto > 22 %}
+        <a href="{{ path('zombie', {'usePlanet': usePlanet.getId()}) }}">
+            <div class="btn-left{% if app.request.attributes.get('_route') == 'zombie' %} currentRoute{% endif %} hideForBig">
+                <span>{{ 'zombie'|trans }} <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ asset('img/zombie_indic.gif') }}"></span>
+            </div>
+        </a>
+    {% endif %}
     <div class="btn-left{% if app.request.attributes.get('_route') == 'fleet' or app.request.attributes.get('_route') == 'fleet_list' %} currentRoute{% endif %}{% if allTuto < 9 %} tutorial-hide{% elseif allTuto == 9 or allTuto == 11 %} tutorial-show{% endif %}">
         <a href="{{ path('fleet', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'fleet'|trans }}</span></a> - <a{% if allTuto < 10 %} class="tutorial-hide"{% endif %} href="{{ path('fleet_list', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'fleetList'|trans }}</span></a>
     </div>
@@ -117,11 +119,6 @@
     <a href="{{ path('report', {'usePlanet': usePlanet.getId()}) }}">
         <div class="btn-left{% if app.request.attributes.get('_route') == 'report' %} currentRoute{% endif %}{% if allTuto == 1 or allTuto == 23 %} tutorial-show{% endif %}">
             {% if app.user.getWhichViewsReport('all') %}<span class="text-vert">{{ app.user.getWhichViewsReport('all') }}</span> {% endif %}<span>{{ 'report'|trans }}</span>
-        </div>
-    </a>
-    <a href="{{ path('rank_ally', {'usePlanet': usePlanet.getId()}) }}">
-        <div class="btn-left{% if app.request.attributes.get('_route') == 'rank_ally' %} currentRoute{% endif %}{% if allTuto < 50 %} tutorial-hide{% endif %}">
-            <span>{{ 'rank'|trans }}</span>
         </div>
     </a>
     <div class="btn-left separate"></div>

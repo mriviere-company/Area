@@ -29,7 +29,7 @@ class SpatialFleetType extends AbstractType
                         'minlength' => '2',
                         'autocomplete' => 'off',
                     ),
-                    'required' => true,
+                    'required' => false,
                 )
             )
             ->add(

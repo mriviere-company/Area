@@ -551,7 +551,7 @@ class Ally
                 $return = $return + $user->getRank()->getPoint();
             }
         }
-        return round($return / count($this->getUsers()));
+        return round($return / (count($this->getUsers()) > 0 ? count($this->getUsers()) : 1));
     }
 
     /**

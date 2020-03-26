@@ -492,8 +492,14 @@ class ServerController extends AbstractController
             $em->remove($galaxy);
         }
 
-        $server = $em->getRepository('App:Server')->find(['id' => $serverId]);
-        $em->remove($server);
+        $stats = $em->getRepository('App:Stats')->findAll();
+
+        foreach ($stats as $stat) {
+            $em->remove($stat);
+        }
+
+        //$server = $em->getRepository('App:Server')->find(['id' => $serverId]);
+        //$em->remove($server);
 
         $em->flush();
 

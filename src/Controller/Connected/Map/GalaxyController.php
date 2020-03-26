@@ -38,7 +38,7 @@ class GalaxyController extends AbstractController
 
         $planets = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
-            ->select('p.merchant, p.cdr, p.empty, s.position as sector, g.position as galaxy, u.username as username, a.sigle as alliance, s.destroy as destroy, u.zombie as zombie')
+            ->select('p.merchant, p.cdr, p.empty, s.position as sector, s.id as sectorId, g.id as galaxy, u.username as username, a.sigle as alliance, s.destroy as destroy, u.zombie as zombie')
             ->leftJoin('p.user', 'u')
             ->leftJoin('u.ally', 'a')
             ->join('p.sector', 's')
@@ -78,6 +78,7 @@ class GalaxyController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
+
         $totalPlanet = $em->getRepository('App:Galaxy')
             ->createQueryBuilder('g')
             ->join('g.sectors', 's')
@@ -89,7 +90,24 @@ class GalaxyController extends AbstractController
             ->where('g.position = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getOneOrNullResult();
+
+        if ($totalPlanet) {
+            $totalPlanet = $em->getRepository('App:Galaxy')
+                ->createQueryBuilder('g')
+                ->join('g.sectors', 's')
+                ->join('s.planets', 'p')
+                ->join('p.user', 'u')
+                ->join('u.ally', 'a')
+                ->select('count(p) as number')
+                ->groupBy('g.id')
+                ->where('g.position = :id')
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getSingleScalarResult();
+        } else {
+            $totalPlanet = 1;
+        }
 
         return $this->render('connected/map/galaxy.html.twig', [
             'form_navigate' => $form_navigate->createView(),

@@ -52,7 +52,9 @@ class SpatialController extends AbstractController
                 $now->add(new DateInterval('PT' . 10 . 'S'));
                 $product = new Product();
                 $product->setPlanet($usePlanet);
-                $product->setDestroyer(5);
+                $product->setHunterWar(10);
+                $product->setCorvetWar(5);
+                $product->setDestroyer(1);
                 $product->setProductAt($now);
                 $em->persist($product);
                 $iaPlayer = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
@@ -399,7 +401,9 @@ class SpatialController extends AbstractController
 
             $fleet->setUser($user);
             $fleet->setPlanet($usePlanet);
-            $fleet->setName($form_createFleet->get('name')->getData());
+            if ($form_createFleet->get('name')->getData()) {
+                $fleet->setName($form_createFleet->get('name')->getData());
+            }
             $fleet->setSignature($fleet->getNbrSignatures());
             $em->persist($fleet);
             $usePlanet->setCargoI($cargoI);
@@ -432,10 +436,12 @@ class SpatialController extends AbstractController
                 $fleet->setFregate($usePlanet->getFregate());
                 $fleet->setCorvetWar($usePlanet->getCorvetWar());
                 $fleet->setHunterWar($usePlanet->getHunterWar());
+                $fleet->setDestroyer($usePlanet->getDestroyer());
                 $usePlanet->setHunter(0);
                 $usePlanet->setFregate(0);
                 $usePlanet->setCorvetWar(0);
                 $usePlanet->setHunterWar(0);
+                $usePlanet->setDestroyer(0);
             }
 
             if(($user->getTutorial() == 10)) {

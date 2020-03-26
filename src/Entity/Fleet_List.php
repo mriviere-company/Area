@@ -50,6 +50,7 @@ class Fleet_List
     {
         $this->fleets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->priority = 0;
+        $this->name = 'Cohorte';
     }
 
     /**

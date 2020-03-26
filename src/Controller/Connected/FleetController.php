@@ -130,7 +130,9 @@ class FleetController  extends AbstractController
             }
 
             $fleetList = new Fleet_List();
-            $fleetList->setName($form_listCreate->get('name')->getData());
+            if ($form_listCreate->get('name')->getData()) {
+                $fleetList->setName($form_listCreate->get('name')->getData());
+            }
             $fleetList->setPriority($form_listCreate->get('priority')->getData());
             $fleetList->setUser($user);
             $em->persist($fleetList);
@@ -373,7 +375,7 @@ class FleetController  extends AbstractController
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
 
-        if ($form_manageRenameFleet->isSubmitted()) {
+        if ($form_manageRenameFleet->isSubmitted() && $form_manageRenameFleet->get('name')->getData()) {
             $fleetGive->setName($form_manageRenameFleet->get('name')->getData());
             $em->flush();
         }
@@ -1678,7 +1680,9 @@ class FleetController  extends AbstractController
             }
             $fleet->setUser($user);
             $fleet->setPlanet($oldFleet->getPlanet());
-            $fleet->setName($form_spatialShip->get('name')->getData());
+            if ($form_spatialShip->get('name')->getData()) {
+                $fleet->setName($form_spatialShip->get('name')->getData());
+            }
             $em->persist($fleet);
             $oldFleet->setCargoI($cargoI);
             $oldFleet->setCargoV($cargoV);

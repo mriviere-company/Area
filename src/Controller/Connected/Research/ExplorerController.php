@@ -70,7 +70,7 @@ class ExplorerController extends AbstractController
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 360) / $user->getScientistProduction()) . 'S')); // X100 NORMAL GAME
+        $now->add(new DateInterval('PT' . round(($level * 10800) / $user->getScientistProduction()) . 'S')); // X100 NORMAL GAME
         $user->setSearch('terraformation');
         $user->setSearchAt($now);
         $user->setBitcoin($userBt - ($level * 12000));

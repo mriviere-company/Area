@@ -32,7 +32,7 @@
                         {% set x = 0 %}
                     {% endif %}
                     {% if y % 25 == 0 %}
-                        <td class="center-cells{% if planet.destroy == true %} red-border{% endif %}"><a data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.sector'|trans({'%position%': planet.sector}) }}" href="{{ path('map', {'sector':planet.sector, 'gal': planet.galaxy, 'usePlanet': usePlanet.getId()}) }}">
+                        <td class="center-cells{% if planet.destroy == true %} red-border{% endif %}"><a data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.sector'|trans({'%position%': planet.sector}) }}" href="{{ path('map', {'sector':planet.sectorId, 'gal': planet.galaxy, 'usePlanet': usePlanet.getId()}) }}">
                     {% endif %}
                     <span class="{% if planet.empty == true %}pp-no2{% endif %}{% if planet.username == app.user.getUsername() %}pp-mine2{% elseif app.user.getAlly() and planet.alliance == app.user.getAlly().getSigle() and planet.alliance != null or app.user.getOurAllyPact(planet.alliance) %}pp-ally2{% elseif planet.username %}pp-enemy2{% elseif planet.cdr == true %}pp-cdr2{% elseif planet.merchant == true %}pp-ia2{% endif %}">{% if planet.zombie %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/special-mini.gif') }}">{% else %}&#x25A0{% endif %}</span>
                     {% set y = y + 1 %}

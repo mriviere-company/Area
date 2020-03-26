@@ -58,6 +58,7 @@ class AdminController extends AbstractController
             ->setParameters(['date' => $date])
             ->orderBy('nbrPage', 'DESC')
             ->getQuery()
+            ->setMaxResults(10)
             ->getResult();
 
         $uniquePages = $em->getRepository('App:Track')
@@ -68,6 +69,7 @@ class AdminController extends AbstractController
             ->setParameters(['date' => $date])
             ->orderBy('nbrPage', 'DESC')
             ->getQuery()
+            ->setMaxResults(10)
             ->getResult();
 
         $ip = $em->getRepository('App:Track')
