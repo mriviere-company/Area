@@ -29,10 +29,10 @@ class Lexer
      */
     public function tokenize($expression)
     {
-        $expression = str_replace(array("\r", "\n", "\t", "\v", "\f"), ' ', $expression);
+        $expression = str_replace(["\r", "\n", "\t", "\v", "\f"], ' ', $expression);
         $cursor = 0;
-        $tokens = array();
-        $brackets = array();
+        $tokens = [];
+        $brackets = [];
         $end = \strlen($expression);
 
         while ($cursor < $end) {
@@ -42,7 +42,7 @@ class Lexer
                 continue;
             }
 
-            if (preg_match('/[0-9]+(?:\.[0-9]+)?/A', $expression, $match, 0, $cursor)) {
+            if (preg_match('/[0-9]+(?:\.[0-9]+)?([Ee][\+\-][0-9]+)?/A', $expression, $match, 0, $cursor)) {
                 // numbers
                 $number = (float) $match[0];  // floats
                 if (preg_match('/^[0-9]+$/', $match[0]) && $number <= PHP_INT_MAX) {
@@ -52,7 +52,7 @@ class Lexer
                 $cursor += \strlen($match[0]);
             } elseif (false !== strpos('([{', $expression[$cursor])) {
                 // opening bracket
-                $brackets[] = array($expression[$cursor], $cursor);
+                $brackets[] = [$expression[$cursor], $cursor];
 
                 $tokens[] = new Token(Token::PUNCTUATION_TYPE, $expression[$cursor], $cursor + 1);
                 ++$cursor;
@@ -73,7 +73,7 @@ class Lexer
                 // strings
                 $tokens[] = new Token(Token::STRING_TYPE, stripcslashes(substr($match[0], 1, -1)), $cursor + 1);
                 $cursor += \strlen($match[0]);
-            } elseif (preg_match('/not in(?=[\s(])|\!\=\=|not(?=[\s(])|and(?=[\s(])|\=\=\=|\>\=|or(?=[\s(])|\<\=|\*\*|\.\.|in(?=[\s(])|&&|\|\||matches|\=\=|\!\=|\*|~|%|\/|\>|\||\!|\^|&|\+|\<|\-/A', $expression, $match, 0, $cursor)) {
+            } elseif (preg_match('/(?<=^|[\s(])not in(?=[\s(])|\!\=\=|(?<=^|[\s(])not(?=[\s(])|(?<=^|[\s(])and(?=[\s(])|\=\=\=|\>\=|(?<=^|[\s(])or(?=[\s(])|\<\=|\*\*|\.\.|(?<=^|[\s(])in(?=[\s(])|&&|\|\||(?<=^|[\s(])matches|\=\=|\!\=|\*|~|%|\/|\>|\||\!|\^|&|\+|\<|\-/A', $expression, $match, 0, $cursor)) {
                 // operators
                 $tokens[] = new Token(Token::OPERATOR_TYPE, $match[0], $cursor + 1);
                 $cursor += \strlen($match[0]);

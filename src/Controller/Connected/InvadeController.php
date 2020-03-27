@@ -170,8 +170,8 @@ class InvadeController extends AbstractController
 
                 if($invader->getUser()->getColPlanets() <= ($invader->getUser()->getTerraformation() + 1 + $user->getPoliticInvade()) && $userDefender->getZombie() == 0) {
                     $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $warPointAtt);
-                    $em->flush();
                     $defender->setUser($user);
+                    $em->flush();
                     if ($user->getNbrInvade()) {
                         $user->setNbrInvade($user->getNbrInvade() + 1);
                     } else {
