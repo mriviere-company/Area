@@ -59,11 +59,13 @@ class AllyController extends AbstractController
         $form_vote->handleRequest($request);
 
         if ($form_allyImage->isSubmitted() && $form_allyImage->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $ally->setImageName(null);
             $em->flush();
         }
 
         if ($form_vote->isSubmitted() && $form_vote->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if ($user->getVoteName()) {
                 $unVoteUser = $em->getRepository('App:User')->findOneBy(['username' => $user->getVoteName()]);
                 $unVoteUser->setVoteAlly($unVoteUser->getVoteAlly() - 1);
@@ -156,6 +158,7 @@ class AllyController extends AbstractController
         $form_userAttrGrade->handleRequest($request);
 
         if (($form_userAttrGrade->isSubmitted() && $form_userAttrGrade->isValid())) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if ($ally->getPolitic() == 'fascism' && $form_userAttrGrade->get('grade')->getData()->getPlacement() == 1) {
             } else {
                 if (($user->getGrade()->getPlacement() == 1 && $newGradeUser->getId() == $user->getId()) && $form_userAttrGrade->get('grade')->getData()->getPlacement() != 1) {
@@ -202,6 +205,7 @@ class AllyController extends AbstractController
         $form_ally->handleRequest($request);
 
         if ($form_ally->isSubmitted() && $form_ally->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if($user->getAllyBan() > $now) {
                 return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
             }
@@ -616,6 +620,7 @@ class AllyController extends AbstractController
             $form_allyImage->handleRequest($request);
 
             if ($form_allyImage->isSubmitted() && $form_allyImage->isValid()) {
+                $this->get("security.csrf.token_manager")->refreshToken("task_item");
                 $user->setPoliticArmement(0);
                 $user->setPoliticCostScientist(0);
                 $user->setPoliticArmor(0);
@@ -680,6 +685,7 @@ class AllyController extends AbstractController
         $form_exchange->handleRequest($request);
 
         if ($form_exchange->isSubmitted() && $form_exchange->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $amountExchange = abs($form_exchange->get('amount')->getData());
             if ($form_exchange->get('valueType')->getData() == 1) {
                 if ($form_exchange->get('exchangeType')->getData() == 1) {
@@ -841,6 +847,7 @@ class AllyController extends AbstractController
         $form_allyAdd->handleRequest($request);
 
         if (($form_allyAdd->isSubmitted() && $form_allyAdd->isValid()) && $user->getGrade()->getCanRecruit() == 1) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if($maxMembers >= $ally->getMaxMembers()) {
                 $this->addFlash("fail", "Vous avez atteint le nombre maximum d'invitations.");
                 return $this->redirectToRoute('ally_page_add', ['usePlanet' => $usePlanet->getId()]);
@@ -949,10 +956,12 @@ class AllyController extends AbstractController
         $form_allyGrade->handleRequest($request);
 
         if (($form_allyDecon->isSubmitted() && $form_allyDecon->isValid())) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $em->flush();
         }
 
         if (($form_allyGrade->isSubmitted() && $form_allyGrade->isValid()) && $ally->getPolitic() != 'fascism') {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if ($user->getAlly()->getPolitic() == 'communism') {
                 $grade->setPlacement(1);
             }
@@ -1010,6 +1019,7 @@ class AllyController extends AbstractController
 
 
         if (($form_allyPact->isSubmitted() && $form_allyPact->isValid())) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $allyPact = $em->getRepository('App:Ally', ['usePlanet' => $usePlanet->getId()])
                 ->createQueryBuilder('a')
                 ->where('a.sigle = :sigle')

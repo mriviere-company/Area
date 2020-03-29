@@ -172,7 +172,7 @@
                                 <tr>
                                     {% for pna in waitingPna %}
                                         <td class="center-cells">
-                                            {{ pna.getAllytag() }}
+                                            [{{ pna.getAlly().getSigle() }}]{{ pna.getAlly().getName() }}
                                         </td>
                                         <td class="center-cells">
                                             {{ pna.getSignedAt()|date('d/m/Y H:i') }}
@@ -184,7 +184,7 @@
                                     {% endfor %}
                                     {% for allied in waitingAllied %}
                                         <td class="center-cells">
-                                            {{ allied.getAllytag() }}
+                                            [{{ allied.getAlly().getSigle() }}]{{ allied.getAlly().getName() }}
                                         </td>
                                         <td class="center-cells">
                                             {{ allied.getSignedAt()|date('d/m/Y H:i') }}

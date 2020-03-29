@@ -73,6 +73,7 @@ class ZombieController extends AbstractController
         $form_missionZombie->handleRequest($request);
 
         if ($form_missionZombie->isSubmitted() && $form_missionZombie->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $soldier = abs($form_missionZombie->get('soldier')->getData());
             $tank = abs($form_missionZombie->get('tank')->getData());
             $time = abs($form_missionZombie->get('time')->getData());
@@ -130,6 +131,7 @@ class ZombieController extends AbstractController
         }
 
         if ($form_missionUranium->isSubmitted() && $form_missionUranium->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $soldier = abs($form_missionUranium->get('soldier')->getData());
             $tank = abs($form_missionUranium->get('tank')->getData());
             $time = abs($form_missionUranium->get('time')->getData());

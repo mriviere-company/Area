@@ -43,6 +43,7 @@ class SpatialController extends AbstractController
         $form_spatialShip->handleRequest($request);
 
         if ($form_spatialShip->isSubmitted() && $form_spatialShip->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if($usePlanet->getSpaceShip() == 0) {
                 return $this->redirectToRoute('spatial', ['usePlanet' => $usePlanet->getId()]);
             }
@@ -230,7 +231,7 @@ class SpatialController extends AbstractController
 
         return $this->render('connected/spatial.html.twig', [
             'usePlanet' => $usePlanet,
-            'form_spatialShip' => $form_spatialShip->createView(),
+            'form_spatialShip' => $form_spatialShip->createView()
         ]);
     }
 
@@ -255,6 +256,7 @@ class SpatialController extends AbstractController
         $form_createFleet->handleRequest($request);
 
         if ($form_createFleet->isSubmitted() && $form_createFleet->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $cargoI = $usePlanet->getCargoI() - abs($form_createFleet->get('cargoI')->getData());
             $cargoV = $usePlanet->getCargoV() - abs($form_createFleet->get('cargoV')->getData());
             $cargoX = $usePlanet->getCargoX() - abs($form_createFleet->get('cargoX')->getData());

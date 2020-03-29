@@ -427,6 +427,7 @@ class ServerController extends AbstractController
         $products = $em->getRepository('App:Product')->findAll();
 
         foreach ($products as $product) {
+            $product->setPlanet(null);
             $em->remove($product);
         }
 

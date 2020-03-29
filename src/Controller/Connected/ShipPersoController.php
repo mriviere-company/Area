@@ -46,6 +46,7 @@ class ShipPersoController extends AbstractController
         }
 
         if ($form_shipPerso->isSubmitted() && $form_shipPerso->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $points = abs($form_shipPerso->get('armor')->getData()) + abs($form_shipPerso->get('shield')->getData()) + abs($form_shipPerso->get('accurate')->getData()) + abs($form_shipPerso->get('missile')->getData()) + abs($form_shipPerso->get('laser')->getData()) + abs($form_shipPerso->get('plasma')->getData());
             $armor = abs($form_shipPerso->get('armor')->getData()) * 5;
             $shield = abs($form_shipPerso->get('shield')->getData());

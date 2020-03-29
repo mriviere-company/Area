@@ -45,6 +45,9 @@ class SalonType extends AbstractType
             [
                 'data_class'         => null,
                 'translation_domain' => 'front_salon',
+                'csrf_protection' => true,
+                'csrf_field_name' => '_token',
+                'csrf_token_id'   => 'task_item'
             ]
         );
     }

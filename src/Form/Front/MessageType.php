@@ -117,6 +117,9 @@ class MessageType extends AbstractType
             [
                 'data_class'         => 'App\Entity\Message',
                 'translation_domain' => 'front_message',
+                'csrf_protection' => true,
+                'csrf_field_name' => '_token',
+                'csrf_token_id'   => 'task_item'
             ]
         );
     }

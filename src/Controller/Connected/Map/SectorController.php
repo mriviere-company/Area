@@ -38,6 +38,7 @@ class SectorController extends AbstractController
         $form_navigate->handleRequest($request);
 
         if ($form_navigate->isSubmitted() && $form_navigate->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if ($form_navigate->get('sector')->getData() && $form_navigate->get('galaxy')->getData()) {
                 return $this->redirectToRoute('map', ['sector' => $form_navigate->get('sector')->getData(), 'gal' => $form_navigate->get('galaxy')->getData(), 'usePlanet' => $usePlanet->getId()]);
             }
@@ -284,6 +285,7 @@ class SectorController extends AbstractController
             return $this->redirectToRoute('map', ['usePlanet' => $usePlanet->getId(), 'sector' => $planet->getSector()->getId(), 'gal' => $planet->getSector()->getGalaxy()->getId()]);
         }
         if ($form_sendFleet->isSubmitted() && $form_sendFleet->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $fleet = $form_sendFleet->get('list')->getData();
             $sFleet= $fleet->getPlanet()->getSector()->getPosition();
             $sector = $planet->getSector()->getPosition();

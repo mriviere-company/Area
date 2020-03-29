@@ -222,6 +222,7 @@ class PlanetsController extends AbstractController
             $planetProduct->setIronClad($planetProduct->getIronClad() + $product->getIronClad());
             $planetProduct->setDestroyer($planetProduct->getDestroyer() + $product->getDestroyer());
             $planetProduct->setSignature($planetProduct->getNbrSignatures());
+            $product->setPlanet(null);
             $em->remove($product);
         }
         echo "Flush ";

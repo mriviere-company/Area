@@ -127,6 +127,7 @@ class SalonController extends AbstractController
         }
 
         if ($form_message->isSubmitted() && $form_message->isValid() && ($user->getSalonBan() > $now || $user->getSalonBan() == null)) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $message = new S_Content();
             $message->setSalon($salon);
             if (substr($form_message->get('content')->getData(), 0, 8) == 'https://' || substr($form_message->get('content')->getData(), 0, 7) == 'http://') {

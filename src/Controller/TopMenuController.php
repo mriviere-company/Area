@@ -97,6 +97,7 @@ class TopMenuController extends AbstractController
         $form_contact->handleRequest($request);
 
         if ($form_contact->isSubmitted()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $message = (new \Swift_Message('Reclamation joueur'))
                 ->setFrom('support@areauniverse.eu')
                 ->setTo('areauniverse.game@gmail.com')

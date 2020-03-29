@@ -30,6 +30,7 @@ class GalaxyController extends AbstractController
         $form_navigate->handleRequest($request);
 
         if ($form_navigate->isSubmitted() && $form_navigate->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if ($form_navigate->get('sector')->getData() && $form_navigate->get('galaxy')->getData()) {
                 return $this->redirectToRoute('map', ['sector' => $form_navigate->get('sector')->getData(), 'gal' => $form_navigate->get('galaxy')->getData(), 'usePlanet' => $usePlanet->getId()]);
             }

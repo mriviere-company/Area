@@ -37,6 +37,7 @@ class SoldierController extends AbstractController
         $form_caserneRecruit->handleRequest($request);
 
         if ($form_caserneRecruit->isSubmitted() && $form_caserneRecruit->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if ($form_caserneRecruit->get('soldier')->getData()) {
                 $now = new DateTime();
                 $now->setTimezone(new DateTimeZone('Europe/Paris'));

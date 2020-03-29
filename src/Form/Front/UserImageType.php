@@ -42,6 +42,9 @@ class UserImageType extends AbstractType
             [
                 'data_class'         => 'App\Entity\User',
                 'translation_domain' => 'front_index',
+                'csrf_protection' => true,
+                'csrf_field_name' => '_token',
+                'csrf_token_id'   => 'task_item'
             ]
         );
     }

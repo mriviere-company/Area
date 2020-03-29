@@ -149,6 +149,7 @@ class OverviewController extends AbstractController
         $form_image->handleRequest($request);
 
         if ($form_image->isSubmitted()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $quest = $user->checkQuests('logo');
             if($quest) {
                 $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());

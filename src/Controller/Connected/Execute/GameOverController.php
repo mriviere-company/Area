@@ -18,7 +18,9 @@ class GameOverController extends AbstractController
             }
             $ship = $userGO->getShip();
             $userGO->setShip(null);
-            $em->remove($ship);
+            if ($ship) {
+                $em->remove($ship);
+            }
             $userGO->setBitcoin(25000);
             $userGO->setSearch(null);
             $em->remove($userGO->getRank(null));

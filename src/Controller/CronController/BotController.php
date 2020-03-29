@@ -122,25 +122,14 @@ class BotController extends AbstractController
                 ->createQueryBuilder('u')
                 ->where('u.bot = true')
                 ->andWhere('u.rank is null')
+                ->andWhere('u.zombie = false')
+                ->andWhere('u.merchant = false')
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();
 
 
             if ($user) {
-                $salon = $em->getRepository('App:Salon')
-                    ->createQueryBuilder('s')
-                    ->where('s.name = :name')
-                    ->setParameters(['name' => 'Public'])
-                    ->getQuery()
-                    ->getOneOrNullResult();
-
-                $user->setTutorial(60);
-                $user->setDailyConnect($now);
-                $user->setLastActivity($now);
-                // image de profil
-                $em->persist($user);
-                $em->flush();
 
                 $planet = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
@@ -150,7 +139,7 @@ class BotController extends AbstractController
                     ->andWhere('p.ground = :ground')
                     ->andWhere('p.sky = :sky')
                     ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
-                    ->setParameters(['gal' => rand(1, 20), 'sector' => rand(1, 100), 'ground' => 25, 'sky' => 5])
+                    ->setParameters(['gal' => rand(1, 25), 'sector' => rand(1, 100), 'ground' => 25, 'sky' => 5])
                     ->setMaxResults(1)
                     ->getQuery()
                     ->getOneOrNullResult();
@@ -164,7 +153,7 @@ class BotController extends AbstractController
                         ->andWhere('p.ground = :ground')
                         ->andWhere('p.sky = :sky')
                         ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
-                        ->setParameters(['gal' => rand(1, 20), 'sector' => rand(1, 100), 'ground' => 25, 'sky' => 5])
+                        ->setParameters(['gal' => rand(1, 25), 'sector' => rand(1, 100), 'ground' => 25, 'sky' => 5])
                         ->setMaxResults(1)
                         ->getQuery()
                         ->getOneOrNullResult();
@@ -197,14 +186,18 @@ class BotController extends AbstractController
                             $fleet->setPlanet($fleet->getUser()->getFirstPlanetFleet());
                         }
                     }
+                    $user->setTutorial(60);
+                    $user->setDailyConnect($now);
+                    $user->setLastActivity($now);
+
+                    $ships = new Ships();
+                    $user->setShip($ships);
+                    $em->persist($ships);
+
+                    $rank = new Rank();
+                    $em->persist($rank);
+                    $user->setRank($rank);
                 }
-                $ships = new Ships();
-                $user->setShip($ships);
-                $em->persist($ships);
-                $rank = new Rank();
-                $em->persist($rank);
-                $user->setRank($rank);
-                $salon->addUser($user);
             }
             echo "Ajout nouveau bot finis.<br>";
             $em->flush();
@@ -389,9 +382,9 @@ class BotController extends AbstractController
                 }
                 if ($cPlanet) {
                     $cPlanet->setSoldier($cPlanet->getSoldierMax());
-                    $cPlanet->setHunter($cPlanet->getHunter() + rand(5, 50));
-                    $cPlanet->setCorvet($cPlanet->getCorvet() + rand(2, 20));
-                    $cPlanet->setFregate($cPlanet->getFregate() + rand(1, 10));
+                    $cPlanet->setHunter($cPlanet->getHunter() + rand(20, 75));
+                    $cPlanet->setCorvet($cPlanet->getCorvet() + rand(10, 50));
+                    $cPlanet->setFregate($cPlanet->getFregate() + rand(5, 25));
                     $construct = new Response ('false');
                     if ($cPlanet->getSpaceShip() < 1) {
                         $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
@@ -400,7 +393,7 @@ class BotController extends AbstractController
                             'user' => $bot
                         ]);
                     }
-                    if ($cPlanet->getIsland() <= 5 && $construct && $construct->getContent() === 'false') {
+                    if ($cPlanet->getIsland() < 5 && $construct && $construct->getContent() === 'false') {
                         $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                             'usePlanet' => $cPlanet,
                             'building' => 'island',
@@ -502,7 +495,7 @@ class BotController extends AbstractController
                                 ->join('s.galaxy', 'g')
                                 ->where('p.user is null')
                                 ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
-                                ->setParameters(['gal' => rand(10, 20), 'sector' => rand(1, 100)])
+                                ->setParameters(['gal' => rand(10, 25), 'sector' => rand(1, 100)])
                                 ->getQuery()
                                 ->setMaxResults(1)
                                 ->getOneOrNullResult();

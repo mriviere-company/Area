@@ -231,6 +231,7 @@ class PactController extends AbstractController
         $form_peace->handleRequest($request);
 
         if (($form_peace->isSubmitted() && $form_peace->isValid())) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $peace = new Peace();
             $peace->setAlly($ally);
             $peace->setAllyTag($war->getAllyTag());

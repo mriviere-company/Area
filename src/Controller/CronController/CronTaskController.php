@@ -373,53 +373,29 @@ class CronTaskController extends AbstractController
         $bots = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.rank', 'r')
-            ->where('u.bot = true')
+            ->andWhere('r.point =:zero')
+            ->setParameters(['zero' => 0])
             ->getQuery()
             ->getResult();
 
         foreach ($bots as $bot) {
-            $bot->setTerraformation($bot->getTerraformation() + 1);
-            if ($bot->getFirstPlanetFleet()) {
-                $newPlanet = $em->getRepository('App:Planet')
-                    ->createQueryBuilder('p')
-                    ->join('p.sector', 's')
-                    ->join('s.galaxy', 'g')
-                    ->where('p.user is null')
-                    ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.id = :gal and s.position = :sector')
-                    ->setParameters(['gal' => $bot->getFirstPlanetFleet()->getSector()->getGalaxy(), 'sector' => rand(1, 100)])
-                    ->getQuery()
-                    ->setMaxResults(1)
-                    ->getOneOrNullResult();
-
-                if ($newPlanet) {
-                    $newPlanet->setUser($bot);
-                    $newPlanet->setName('Colonie');
-                    $newPlanet->setSoldier(50);
-                    $newPlanet->setScientist(0);
-                    $newPlanet->setNbColo(count($bot->getPlanets()) + 1);
-                } else {
-                    $newPlanet = $em->getRepository('App:Planet')
-                        ->createQueryBuilder('p')
-                        ->join('p.sector', 's')
-                        ->join('s.galaxy', 'g')
-                        ->where('p.user is null')
-                        ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
-                        ->setParameters(['gal' => rand(4, 10), 'sector' => rand(1, 100)])
-                        ->getQuery()
-                        ->setMaxResults(1)
-                        ->getOneOrNullResult();
-
-                    if ($newPlanet) {
-                        $newPlanet->setUser($bot);
-                        $newPlanet->setName('Colonie');
-                        $newPlanet->setSoldier(50);
-                        $newPlanet->setScientist(0);
-                        $newPlanet->setNbColo(count($bot->getPlanets()) + 1);
-                    }
-                }
-            }
+            $bot->setRank(NULL);
         }
-        echo "Nouvelle planète finis.";
+
+        $em->flush();
+
+        $ranks = $em->getRepository('App:Rank')
+            ->createQueryBuilder('r')
+            ->where('r.point =:zero')
+            ->setParameters(['zero' => 0])
+            ->getQuery()
+            ->getResult();
+
+        foreach ($ranks as $rank) {
+            $em->remove($rank);
+        }
+
+        echo "Rank nettoyé.";
         $em->flush();
         exit;
     }

@@ -62,6 +62,7 @@ spatial.timeProduct: 'Temps restant'
 spatial.timeProductBlock: 'En construction'
 spatial.hunterWar: 'Chasseur a plasma'
 pdgImg: 'Points de Guerre'
+spatial.costShips: 'L''entretien des vaisseaux est divisé par 4 lorsqu''ils sont au sol, et multiplier par 6 dans une flotte.'
 spatial.corvetWar: 'Corvette de combat'
 popover.moonMaker: '<h5>Signature thermique : 50.000<br>Vitesse : 5/lm<hr>Création de lune</h5>'
 spatial.moonMaker: Lunar

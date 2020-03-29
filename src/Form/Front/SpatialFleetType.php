@@ -362,6 +362,9 @@ class SpatialFleetType extends AbstractType
             [
                 'data_class'         => null,
                 'translation_domain' => 'front_spatial',
+                'csrf_protection' => true,
+                'csrf_field_name' => '_token',
+                'csrf_token_id'   => 'task_item'
             ]
         );
     }

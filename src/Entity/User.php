@@ -2004,6 +2004,66 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @return int
+     */
+    public function getSoldierPrice($cat): int
+    {
+        if ($this->politicCostSoldier > 0) {
+            $sPrice = 1 / (1 + ($this->politicCostSoldier / 10));
+            $sPrices = 6 / ( 1 + ($this->politicCostSoldier / 10));
+        } else {
+            $sPrice = 1;
+            $sPrices = 6;
+        }
+        if ($cat == 1) {
+            return $sPrice;
+        } elseif ($cat == 2) {
+            return $sPrices;
+        }
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTankPrice($cat): int
+    {
+        if ($this->politicCostTank > 0) {
+            $tPrice = 10 / (1 + ($this->politicCostTank / 5));
+            $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
+        } else {
+            $tPrice = 10;
+            $tPrices = 1000;
+        }
+        if ($cat == 1) {
+            return $tPrice;
+        } elseif ($cat == 2) {
+            return $tPrices;
+        }
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getScientistPrice($cat): int
+    {
+        if ($this->politicCostScientist > 0) {
+            $scPrice = 100 / (1 + ($this->politicCostScientist / 5));
+            $scPrices = 200 / (1 + ($this->politicCostScientist / 5));
+        } else {
+            $scPrice = 100;
+            $scPrices = 200;
+        }
+        if ($cat == 1) {
+            return $scPrice;
+        } elseif ($cat == 2) {
+            return $scPrices;
+        }
+        return 0;
+    }
+
+    /**
      * @return mixed
      */
     public function getAllPlanets()

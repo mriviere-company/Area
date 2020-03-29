@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\Front\PlanetRenameType;
 use App\Entity\Planet;
+use DateTime;
+use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -59,6 +61,7 @@ class PlanetController extends AbstractController
         $form_manageRenamePlanet->handleRequest($request);
 
         if ($form_manageRenamePlanet->isSubmitted() && $form_manageRenamePlanet->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $renamePlanet = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
                 ->where('p.id = :id')

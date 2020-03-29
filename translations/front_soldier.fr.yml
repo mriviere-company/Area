@@ -7,10 +7,10 @@ uraniumImg: Uranium
 bitcoin: 'Bitcoins :'
 niobiumImg: Niobium
 scientist.recruit: 'Engager des scientifiques'
-caserner.scientist: 'Scientifiques dans les centres'
+caserner.scientist: 'Scientifiques en centres'
 tank.recruit: 'Construire des tanks'
 nuclear.recruit: 'Fabriquer des bombes nucléaires'
-caserner.tank: 'Tanks dans nos hangars'
+caserner.tank: 'Tanks en hangars'
 form.nbr: 0
 form.recruitCaserne: Lancer
 workerImg: Travailleurs
@@ -24,3 +24,15 @@ caserner.noScientist: 'Requis : Centre de recherche'
 caserner.noTank: 'Requis : Unitées blindées - Usine d''armement + Caserne ou Bunker'
 caserner.noNuclear: 'Requis : Base nucléaire'
 caserner.totalProduct: 'Total :'
+soldier:
+  costGroundProduct: 'Entretien en caserne/en production :'
+  costFleetMission: 'Entretien en mission et sur une flotte :'
+scientist:
+  costGroundProduct: 'Entretien en centre et sur une flotte :'
+  costFleetMission: 'Entretien en production :'
+tank:
+  costGroundProduct: 'Entretien en usine/en production :'
+  costFleetMission: 'Entretien en mission et sur une flotte :'
+bomb:
+  costGroundProduct: 'Entretien au sol :'
+  costFleetMission: 'Entretien en vol :'

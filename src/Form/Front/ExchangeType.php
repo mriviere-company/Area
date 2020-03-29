@@ -39,7 +39,7 @@ class ExchangeType extends AbstractType
                     'attr'  => [
                         'placeholder' => 'form.num',
                         'class' => 'game-input text-right',
-                        'min' => '0',
+                        'min' => 1,
                         'autocomplete' => 'off',
                     ],
                     'required' => true,
@@ -71,7 +71,7 @@ class ExchangeType extends AbstractType
                         'minlength' => '1',
                         'autocomplete' => 'off',
                     ],
-                    'required' => true,
+                    'required' => false,
                 ]
             )
             ->add('sendForm', SubmitType::class, ['label' => 'form.transfert', 'attr' => ['class' => 'confirm-button']]);
@@ -104,6 +104,9 @@ class ExchangeType extends AbstractType
             [
                 'data_class'         => null,
                 'translation_domain' => 'front_ally',
+                'csrf_protection' => true,
+                'csrf_field_name' => '_token',
+                'csrf_token_id'   => 'task_item'
             ]
         );
     }

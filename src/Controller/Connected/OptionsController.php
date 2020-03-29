@@ -34,6 +34,7 @@ class OptionsController extends AbstractController
         $form_password->handleRequest($request);
 
         if ($form_password->isSubmitted() && $form_password->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if(password_verify($form_password->get('oldPassword')->getData(), $user->getPassword())) {
                 if(count($form_password->get('password')->getData()) == 1 && $form_password->get('password')->getData() == $form_password->get('confirmPassword')->getData()) {
                     $user->setPassword(password_hash($form_password->get('password')->getData(), PASSWORD_BCRYPT));

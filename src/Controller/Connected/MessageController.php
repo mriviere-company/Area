@@ -80,6 +80,7 @@ class MessageController extends AbstractController
 
         if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $user->getBitcoin() &&
             ($user->getSalonBan() > $now || $user->getSalonBan() == null)) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $recever = $form_message->get('user')->getData();
             if ($form_message->get('anonymous')->getData() == false) {
                 $message->setSender($user->getUsername());
@@ -137,6 +138,7 @@ class MessageController extends AbstractController
         $form_message->handleRequest($request);
 
         if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $user->getBitcoin()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $userRecever = $em->getRepository('App:User')->find(['id' => $id]);
 
             if ($form_message->get('anonymous')->getData() == false) {

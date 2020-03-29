@@ -38,6 +38,7 @@ class ConfirmController extends AbstractController
         $form_confirm->handleRequest($request);
 
         if ($form_confirm->isSubmitted() && $form_confirm->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $user->setConfirmed(1);
             $em->flush();
 

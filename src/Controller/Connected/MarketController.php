@@ -47,6 +47,7 @@ class MarketController extends AbstractController
         $form_market->handleRequest($request);
 
         if ($form_market->isSubmitted() && $form_market->isValid()) {
+            $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $planetBuy = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
                 ->where('p.id = :id')
