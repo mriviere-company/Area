@@ -194,9 +194,9 @@ class MoveFleetController extends AbstractController
                                 $fleet->setCorvetLaser($fleet->getCorvetLaser() + $zbRegroup->getCorvetLaser());
                                 $fleet->setCorvetWar($fleet->getCorvetWar() + $zbRegroup->getCorvetWar());
                                 $fleet->setFregate($fleet->getFregate() + $zbRegroup->getFregate());
-                                $fleet->setSignature($fleet->getSignature() + $zbRegroup->getSignature());
                                 $em->remove($zbRegroup);
                             }
+                            $fleet->setSignature($fleet->getNbrSignatures());
                         }
                         if ($fleet->getFlightType() == '1' && $user->getZombie() == 0) {
                             $em->persist($report);
