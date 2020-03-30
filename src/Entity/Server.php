@@ -42,11 +42,18 @@ class Server
     protected $galaxys;
 
     /**
+     * @ORM\Column(name="speed",type="decimal", precision=28, scale=3)
+     * @Assert\NotBlank(message = "required")
+     */
+    protected $speed;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->open = false;
+        $this->speed = 0.1;
         $this->pvp = false;
         $this->dailyReport = null;
         $this->galaxys = new \Doctrine\Common\Collections\ArrayCollection();
@@ -139,6 +146,22 @@ class Server
     public function setDailyReport($dailyReport): void
     {
         $this->dailyReport = $dailyReport;
+    }
+
+    /**
+     * @return float
+     */
+    public function getSpeed(): float
+    {
+        return $this->speed;
+    }
+
+    /**
+     * @param float $speed
+     */
+    public function setSpeed(float $speed): void
+    {
+        $this->speed = $speed;
     }
 
     public function getId()

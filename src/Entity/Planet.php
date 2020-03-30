@@ -766,6 +766,38 @@ class Planet
     /**
      * @return int
      */
+    public function getNbrSignaturesRegroup(): float
+    {
+        $sonde = $this->getSonde();
+        $colonizer = $this->getColonizer() * 200;
+        $recycleur = $this->getRecycleur() * 80;
+        $cargoI = $this->getCargoI() * 50;
+        $cargoV = $this->getCargoV() * 120;
+        $cargoX = $this->getCargoX() * 250;
+        $barge = $this->getBarge() * 50;
+        $moonMaker = $this->getMoonMaker() * 50000;
+        $radarShip = $this->getRadarShip() * 500;
+        $brouilleurShip = $this->getBrouilleurShip() * 1000;
+        $motherShip = $this->getMotherShip() * 20000;
+        $hunter = $this->getHunter() * 5;
+        $hunterHeavy = $this->getHunterHeavy() * 8;
+        $hunterWar = $this->getHunterWar() * 15;
+        $corvet = $this->getCorvet() * 25;
+        $corvetLaser = $this->getCorvetLaser() * 40;
+        $corvetWar = $this->getCorvetWar() * 45;
+        $fregate = $this->getFregate() * 60;
+        $fregatePlasma = $this->getFregatePlasma() * 150;
+        $croiser = $this->getCroiser() * 300;
+        $ironClad = $this->getIronClad() * 700;
+        $destroyer = $this->getDestroyer() * 1500;
+
+        $nbr = $corvetWar + $hunterWar + $motherShip + $brouilleurShip + $radarShip + $radarShip + $moonMaker + $fregate + $colonizer + $barge + $hunter + $recycleur + $sonde + $cargoI + $cargoV + $cargoX + $hunterHeavy + $corvet + $corvetLaser + $fregatePlasma + $croiser + $ironClad + $destroyer;
+        return $nbr;
+    }
+
+    /**
+     * @return int
+     */
     public function getBuildingPoint(): int
     {
         $extractor = $this->getExtractor() * 15;

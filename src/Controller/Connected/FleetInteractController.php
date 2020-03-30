@@ -37,6 +37,10 @@ class FleetInteractController  extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $moreNow = new DateTime();
+        $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
+        $moreNow->add(new DateInterval('PT' . 120 . 'S'));
+        $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');
@@ -51,10 +55,62 @@ class FleetInteractController  extends AbstractController
             ->where('f.user = :user')
             ->andWhere('f.flightTime is null')
             ->andWhere('f.fightAt is null')
-            ->setParameters(['user' => $user])
-            ->orderBy('f.flightTime')
+            ->andWhere('f.planet != :planet')
+            ->setParameters(['user' => $user, 'planet' => $usePlanet])
             ->getQuery()
             ->getResult();
+
+        foreach ($allFleets as $allFleet) {
+            $now = new DateTime();
+            $now->setTimezone(new DateTimeZone('Europe/Paris'));
+
+            $galaxy = $usePlanet->getSector()->getGalaxy()->getPosition();
+            $sector = $usePlanet->getSector()->getPosition();
+            $planetTakee = $usePlanet->getPosition();
+
+            $sFleet = $allFleet->getPlanet()->getSector()->getPosition();
+            if($allFleet->getPlanet()->getSector()->getGalaxy()->getPosition() != $galaxy) {
+                $base = 18;  // 86400 MODE NORMAL
+                $price = 25;
+            } else {
+                $pFleet = $allFleet->getPlanet()->getPosition();
+                if ($sFleet == $sector) {
+                    $x1 = ($pFleet - 1) % 5;
+                    $x2 = ($planetTakee - 1) % 5;
+                    $y1 = ($pFleet - 1) / 5;
+                    $y2 = ($planetTakee - 1) / 5;
+                } else {
+                    $x1 = (($sFleet - 1) % 10) * 3;
+                    $x2 = (($sector - 1) % 10) * 3;
+                    $y1 = (($sFleet - 1) / 10) * 3;
+                    $y2 = (($sector - 1) / 10) * 3;
+                }
+                $base = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
+                $price = $base / 3;
+            }
+            $carburant = round($price * ($allFleet->getNbrSignatures() / 200));
+            if($carburant > $user->getBitcoin()) {
+                return $this->redirectToRoute('manage_fleet', ['fleetGive' => $allFleet->getId(), 'usePlanet' => $usePlanet->getId()]);
+            }
+            if($allFleet->getMotherShip()) {
+                $speed = $allFleet->getSpeed() - ($allFleet->getSpeed() * 0.10);
+            } else {
+                $speed = $allFleet->getSpeed();
+            }
+            $distance = $speed * $base * 1000 * $server->getSpeed();
+            $now->add(new DateInterval('PT' . round($distance) . 'S'));
+            $destination = new Destination();
+            $destination->setFleet($allFleet);
+            $destination->setPlanet($usePlanet);
+            $em->persist($destination);
+            $allFleet->setFlightTime($now);
+            $allFleet->setCancelFlight($moreNow);
+            $allFleet->setSignature($allFleet->getNbrSignatures());
+
+            $allFleet->setFlightType(7);
+            $user->setBitcoin($user->getBitcoin() - $carburant);
+        }
+        $em->flush();
 
         return $this->redirectToRoute('fleet', ['usePlanet' => $usePlanet->getId()]);
     }
@@ -66,6 +122,10 @@ class FleetInteractController  extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $moreNow = new DateTime();
+        $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
+        $moreNow->add(new DateInterval('PT' . 120 . 'S'));
+        $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');
@@ -76,13 +136,119 @@ class FleetInteractController  extends AbstractController
         }
 
         $allPlanets = $em->getRepository('App:Planet')
-            ->createQueryBuilder('f')
-            ->where('f.user = :user')
-            ->andWhere('f.flightTime is not null')
-            ->setParameters(['user' => $user])
-            ->orderBy('f.flightTime')
+            ->createQueryBuilder('p')
+            ->where('p.user = :user')
+            ->andWhere('p.signature >:zero')
+            ->setParameters(['user' => $user, 'zero' => 0 ])
             ->getQuery()
             ->getResult();
+
+        foreach ($allPlanets as $allPlanet) {
+            if ($allPlanet->getNbrSignaturesRegroup() > 0) {
+                $one = new Fleet();
+                $one->setUser($user);
+                $one->setPlanet($allPlanet);
+                $one->setName('Ralliement');
+                $one->setAttack(0);
+                $one->setSonde($one->getSonde() + $allPlanet->getSonde());
+                $one->setCargoI($one->getCargoI() + $allPlanet->getCargoI());
+                $one->setCargoV($one->getCargoV() + $allPlanet->getCargoV());
+                $one->setCargoX($one->getCargoX() + $allPlanet->getCargoX());
+                $one->setColonizer($one->getColonizer() + $allPlanet->getColonizer());
+                $one->setRecycleur($one->getRecycleur() + $allPlanet->getRecycleur());
+                $one->setBarge($one->getBarge() + $allPlanet->getBarge());
+                $one->setMoonMaker($one->getMoonMaker() + $allPlanet->getMoonMaker());
+                $one->setRadarShip($one->getRadarShip() + $allPlanet->getRadarShip());
+                $one->setBrouilleurShip($one->getBrouilleurShip() + $allPlanet->getBrouilleurShip());
+                $one->setMotherShip($one->getMotherShip() + $allPlanet->getMotherShip());
+                $one->setHunter($one->getHunter() + $allPlanet->getHunter());
+                $one->setHunterHeavy($one->getHunterHeavy() + $allPlanet->getHunterHeavy());
+                $one->setHunterWar($one->getHunterWar() + $allPlanet->getHunterWar());
+                $one->setCorvet($one->getCorvet() + $allPlanet->getCorvet());
+                $one->setCorvetLaser($one->getCorvetLaser() + $allPlanet->getCorvetLaser());
+                $one->setCorvetWar($one->getCorvetWar() + $allPlanet->getCorvetWar());
+                $one->setFregate($one->getFregate() + $allPlanet->getFregate());
+                $one->setFregatePlasma($one->getFregatePlasma() + $allPlanet->getFregatePlasma());
+                $one->setCroiser($one->getCroiser() + $allPlanet->getCroiser());
+                $one->setIronClad($one->getIronClad() + $allPlanet->getIronClad());
+                $one->setDestroyer($one->getDestroyer() + $allPlanet->getDestroyer());
+                $one->setSignature($one->getNbrSignatures());
+                $allPlanet->setSonde(0);
+                $allPlanet->setCargoI(0);
+                $allPlanet->setCargoV(0);
+                $allPlanet->setCargoX(0);
+                $allPlanet->setColonizer(0);
+                $allPlanet->setRecycleur(0);
+                $allPlanet->setBarge(0);
+                $allPlanet->setMoonMaker(0);
+                $allPlanet->setRadarShip(0);
+                $allPlanet->setBrouilleurShip(0);
+                $allPlanet->setMotherShip(0);
+                $allPlanet->setHunter(0);
+                $allPlanet->setHunterHeavy(0);
+                $allPlanet->setHunterWar(0);
+                $allPlanet->setCorvet(0);
+                $allPlanet->setCorvetLaser(0);
+                $allPlanet->setCorvetWar(0);
+                $allPlanet->setFregate(0);
+                $allPlanet->setFregatePlasma(0);
+                $allPlanet->setCroiser(0);
+                $allPlanet->setIronClad(0);
+                $allPlanet->setDestroyer(0);
+                $allPlanet->setSignature(0);
+                $em->persist($one);
+
+                $now = new DateTime();
+                $now->setTimezone(new DateTimeZone('Europe/Paris'));
+
+                $galaxy = $usePlanet->getSector()->getGalaxy()->getPosition();
+                $sector = $usePlanet->getSector()->getPosition();
+                $planetTakee = $usePlanet->getPosition();
+
+                $sFleet = $one->getPlanet()->getSector()->getPosition();
+                if($one->getPlanet()->getSector()->getGalaxy()->getPosition() != $galaxy) {
+                    $base = 18;  // 86400 MODE NORMAL
+                    $price = 25;
+                } else {
+                    $pFleet = $one->getPlanet()->getPosition();
+                    if ($sFleet == $sector) {
+                        $x1 = ($pFleet - 1) % 5;
+                        $x2 = ($planetTakee - 1) % 5;
+                        $y1 = ($pFleet - 1) / 5;
+                        $y2 = ($planetTakee - 1) / 5;
+                    } else {
+                        $x1 = (($sFleet - 1) % 10) * 3;
+                        $x2 = (($sector - 1) % 10) * 3;
+                        $y1 = (($sFleet - 1) / 10) * 3;
+                        $y2 = (($sector - 1) / 10) * 3;
+                    }
+                    $base = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
+                    $price = $base / 3;
+                }
+                $carburant = round($price * ($one->getNbrSignatures() / 200));
+                if($carburant > $user->getBitcoin()) {
+                    return $this->redirectToRoute('manage_fleet', ['fleetGive' => $one->getId(), 'usePlanet' => $usePlanet->getId()]);
+                }
+                if($one->getMotherShip()) {
+                    $speed = $one->getSpeed() - ($one->getSpeed() * 0.10);
+                } else {
+                    $speed = $one->getSpeed();
+                }
+                $distance = $speed * $base * 1000 * $server->getSpeed();
+                $now->add(new DateInterval('PT' . round($distance) . 'S'));
+                $destination = new Destination();
+                $destination->setFleet($one);
+                $destination->setPlanet($usePlanet);
+                $em->persist($destination);
+                $one->setFlightTime($now);
+                $one->setCancelFlight($moreNow);
+                $one->setSignature($one->getNbrSignatures());
+
+                $one->setFlightType(7);
+                $user->setBitcoin($user->getBitcoin() - $carburant);
+            }
+        }
+        $em->flush();
 
         return $this->redirectToRoute('fleet', ['usePlanet' => $usePlanet->getId()]);
     }
@@ -104,22 +270,31 @@ class FleetInteractController  extends AbstractController
         }
 
         $allPlanets = $em->getRepository('App:Planet')
-            ->createQueryBuilder('f')
-            ->where('f.user = :user')
-            ->andWhere('f.flightTime is not null')
-            ->setParameters(['user' => $user])
-            ->orderBy('f.flightTime')
+            ->createQueryBuilder('p')
+            ->where('p.user = :user')
+            ->andWhere('p.signature is not null or p.signature >:zero')
+            ->setParameters(['user' => $user, 'zero' => 0])
             ->getQuery()
             ->getResult();
 
         $allFleets = $em->getRepository('App:Planet')
             ->createQueryBuilder('f')
             ->where('f.user = :user')
-            ->andWhere('f.flightTime is not null')
+            ->andWhere('f.flightTime is null')
+            ->andWhere('f.fightAt is null')
             ->setParameters(['user' => $user])
-            ->orderBy('f.flightTime')
             ->getQuery()
             ->getResult();
+
+
+        foreach ($allPlanets as $allPlanet) {
+            $allPlanet;
+        }
+
+
+        foreach ($allFleets as $allFleet) {
+            $allFleet;
+        }
 
         return $this->redirectToRoute('fleet', ['usePlanet' => $usePlanet->getId()]);
     }

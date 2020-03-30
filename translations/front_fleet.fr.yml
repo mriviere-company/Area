@@ -1,6 +1,8 @@
 title: Flotte
 fleet.onThisPlanet: 'Sur %planet%'
 fleet.createFlotte: 'Créer une nouvelle flotte'
+fleet.regroupFleets: 'Ralliement des flottes'
+fleet.regroupShips: 'Ralliement des vaisseaux'
 fleet.fleetName: Nom
 fleet.fleetShips: 'Vaisseaux : ST'
 fleet.fleetSignature: Signature

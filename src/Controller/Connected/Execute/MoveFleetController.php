@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Execute;
 
+use App\Entity\Fleet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
@@ -759,6 +760,42 @@ class MoveFleetController extends AbstractController
                                     $em->persist($reportDef);
                                 }
                             }
+                        } elseif ($fleet->getFlightType() == '7') {
+                            $planetGround = $fleet->getPlanet();
+                            $planetGround->setSonde($planetGround->getSonde() + $fleet->getSonde());
+                            $planetGround->setCargoI($planetGround->getCargoI() + $fleet->getCargoI());
+                            $planetGround->setCargoV($planetGround->getCargoV() + $fleet->getCargoV());
+                            $planetGround->setCargoX($planetGround->getCargoX() + $fleet->getCargoX());
+                            $planetGround->setColonizer($planetGround->getColonizer() + $fleet->getColonizer());
+                            $planetGround->setRecycleur($planetGround->getRecycleur() + $fleet->getRecycleur());
+                            $planetGround->setBarge($planetGround->getBarge() + $fleet->getBarge());
+                            $planetGround->setMoonMaker($planetGround->getMoonMaker() + $fleet->getMoonMaker());
+                            $planetGround->setRadarShip($planetGround->getRadarShip() + $fleet->getRadarShip());
+                            $planetGround->setBrouilleurShip($planetGround->getBrouilleurShip() + $fleet->getBrouilleurShip());
+                            $planetGround->setMotherShip($planetGround->getMotherShip() + $fleet->getMotherShip());
+                            $planetGround->setHunter($planetGround->getHunter() + $fleet->getHunter());
+                            $planetGround->setHunterHeavy($planetGround->getHunterHeavy() + $fleet->getHunterHeavy());
+                            $planetGround->setHunterWar($planetGround->getHunterWar() + $fleet->getHunterWar());
+                            $planetGround->setCorvet($planetGround->getCorvet() + $fleet->getCorvet());
+                            $planetGround->setCorvetLaser($planetGround->getCorvetLaser() + $fleet->getCorvetLaser());
+                            $planetGround->setCorvetWar($planetGround->getCorvetWar() + $fleet->getCorvetWar());
+                            $planetGround->setFregate($planetGround->getFregate() + $fleet->getFregate());
+                            $planetGround->setFregatePlasma($planetGround->getFregatePlasma() + $fleet->getFregatePlasma());
+                            $planetGround->setCroiser($planetGround->getCroiser() + $fleet->getCroiser());
+                            $planetGround->setIronClad($planetGround->getIronClad() + $fleet->getIronClad());
+                            $planetGround->setDestroyer($planetGround->getDestroyer() + $fleet->getDestroyer());
+                            $planetGround->setSoldier($planetGround->getSoldier() + $fleet->getSoldier());
+                            $planetGround->setTank($planetGround->getTank() + $fleet->getTank());
+                            $planetGround->setWorker($planetGround->getWorker() + $fleet->getWorker());
+                            $planetGround->setScientist($planetGround->getScientist() + $fleet->getScientist());
+                            $planetGround->setNiobium($planetGround->getNiobium() + $fleet->getNiobium());
+                            $planetGround->setWater($planetGround->getWater() + $fleet->getWater());
+                            $planetGround->setFood($planetGround->getFood() + $fleet->getFood());
+                            $planetGround->setUranium($planetGround->getUranium() + $fleet->getUranium());
+                            $planetGround->setNuclearBomb($planetGround->getNuclearBomb() + $fleet->getNuclearBomb());
+                            $fleet->setUser(null);
+                            $em->remove($fleet);
+                            $planetGround->setSignature($planetGround->getNbrSignatures());
                         }
                     } else {
                         if ($user->getZombie() == 0) {
