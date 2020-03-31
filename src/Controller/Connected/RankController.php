@@ -53,6 +53,7 @@ class RankController extends AbstractController
                 ->select('count(s) as numbers, sum(DISTINCT s.points) as allAlly')
                 ->groupBy('s.date')
                 ->where('u.ally != :ally')
+                ->andWhere('u.bot = false')
                 ->setParameters(['ally' => $user->getAlly()])
                 ->getQuery()
                 ->getResult();

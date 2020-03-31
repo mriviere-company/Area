@@ -226,7 +226,6 @@ class BotController extends AbstractController
             ->getOneOrNullResult();
 
         foreach ($bots as $bot) {
-            $bot->setBitcoin($bot->getBitcoin() * 1.05);
             if (rand(1, 2) == 2) {
                 $cPlanet = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')

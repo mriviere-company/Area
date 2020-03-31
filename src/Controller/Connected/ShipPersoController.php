@@ -183,7 +183,7 @@ class ShipPersoController extends AbstractController
         $ship = $user->getShip();
 
         if ($ship->getRetry() > 0) {
-            $nextMax = 1175 - $ship->getRemainingPoints();
+            $nextMax = 1175 - $ship->getRemainingPoints() + $ship->getMax();
             $nextRetry = $ship->getRetry() - 1;
             $user->setShip(null);
             $em->remove($ship);

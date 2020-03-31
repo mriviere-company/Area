@@ -26,10 +26,12 @@ class DailyController extends AbstractController
         $x = 1;
         foreach ($users as $user) {
 
-            $stats = new Stats();
-            $stats->setDate($now);
-            $stats->setZombie($user->getZombieAtt());
-            $stats->setUser($user);
+            if ($user->getBot() == false) {
+                $stats = new Stats();
+                $stats->setDate($now);
+                $stats->setZombie($user->getZombieAtt());
+                $stats->setUser($user);
+            }
 
             $maxQuest = count($user->getWhichQuest()) - 1;
             $first = rand(0, $maxQuest);
@@ -84,7 +86,9 @@ class DailyController extends AbstractController
                                 $lose = (($peace->getTaxe() / 100) * $user->getBitcoin());
                             }
                             $gain = $gain - $lose;
-                            $user->setBitcoin($user->getBitcoin() - $lose);
+                            if ($user->getBot() == false) {
+                                $user->setBitcoin($user->getBitcoin() - $lose);
+                            }
                             $otherAlly->setBitcoin($otherAlly->getBitcoin() + $lose);
                             $exchange = new Exchange();
                             $exchange->setAlly($otherAlly);
@@ -102,7 +106,9 @@ class DailyController extends AbstractController
                 $userBitcoin = $user->getBitcoin();
                 $taxe = (($ally->getTaxe() / 100) * $gain);
                 $gain = $gain - $taxe;
-                $user->setBitcoin($userBitcoin - $taxe);
+                if ($user->getBot() == false) {
+                    $user->setBitcoin($userBitcoin - $taxe);
+                }
                 $report->setContent(" Le montant envoyé dans les fonds de votre alliance s'élève à <span class='text-rouge'>" . number_format(round($taxe)) . "</span> bitcoins.<br>");
                 $allyBitcoin = $ally->getBitcoin();
                 $allyBitcoin = $allyBitcoin + $taxe;
@@ -122,8 +128,6 @@ class DailyController extends AbstractController
             $point = round(round($worker / 100) + round($user->getAllShipsPoint() / 75) + round($troops / 75) + $planetPoint);
             if ($user->getBot() == false) {
                 $user->setBitcoin($cost);
-            } else {
-                $user->setBitcoin(round($user->getBitcoin() + $point));
             }
             if ($user->getBitcoin() < 0) {
                 foreach ($user->getFleetLists() as $list) {
@@ -200,10 +204,12 @@ class DailyController extends AbstractController
             $user->getRank()->setPoint($point);
             $user->setViewReport(false);
 
-            $stats->setPdg($user->getRank()->getWarPoint());
-            $stats->setPoints($point);
-            $stats->setBitcoin($user->getBitcoin());
-            $em->persist($stats);
+            if ($user->getBot() == false) {
+                $stats->setPdg($user->getRank()->getWarPoint());
+                $stats->setPoints($point);
+                $stats->setBitcoin($user->getBitcoin());
+                $em->persist($stats);
+            }
 
             if ($economicGO == 1) {
                 $report->setContent($report->getContent() . "<br>Votre réserve de Bitcoins passe en négatif et vous n'êtes plus en mesure d'entretenir votre armada.<br>Vous perdez tout les vaisseaux que contenait votre Empire et redémarrez avec 5.000 Bitcoins.");

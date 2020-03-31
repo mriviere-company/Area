@@ -24,6 +24,7 @@ ship.missile: 'Missile :'
 ship.laser: 'Laser :'
 ship.plasma: 'Plasma :'
 ship.retry: 'Réinitialiser : %retry%'
+tooltip.shipRetry: 'Réinitialiser tout vos points de vaisseaux.'
 form.nbr: 0
 ship.personalisation: 'Améliorez vos vaisseaux !'
 ship.lastPoints: 'Vous pouvez encore dépensez %nbr% points aujourd''hui.'

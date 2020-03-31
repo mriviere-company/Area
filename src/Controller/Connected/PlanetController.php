@@ -36,8 +36,10 @@ class PlanetController extends AbstractController
 
         $otherPoints = $em->getRepository('App:Stats')
             ->createQueryBuilder('s')
+            ->join('s.user', 'u')
             ->select('count(s) as numbers, sum(DISTINCT s.bitcoin) as allBitcoin')
             ->groupBy('s.date')
+            ->andWhere('u.bot = false')
             ->getQuery()
             ->getResult();
 
