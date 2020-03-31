@@ -360,6 +360,11 @@ class Ships
     protected $max;
 
     /**
+     * @ORM\Column(name="retry",type="smallint", options={"unsigned":true})
+     */
+    protected $retry;
+
+    /**
      * User constructor.
      */
     public function __construct()
@@ -431,6 +436,7 @@ class Ships
         $this->plasmaDestroyer = 0;
         $this->lastUpdate = null;
         $this->max = 40;
+        $this->retry = 3;
     }
 
     /**
@@ -1580,5 +1586,21 @@ class Ships
     public function getRemainingPoints(): int
     {
         return $this->pointHunter + $this->pointHunterHeavy + $this->pointHunterWar + $this->pointCorvet + $this->pointCorvetLaser + $this->pointCorvetWar + $this->pointFregate + $this->pointFregatePlasma + $this->pointCroiser + $this->pointIronClad + $this->pointDestroyer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRetry(): int
+    {
+        return $this->retry;
+    }
+
+    /**
+     * @param int $retry
+     */
+    public function setRetry(int $retry): void
+    {
+        $this->retry = $retry;
     }
 }

@@ -406,15 +406,15 @@ class CronTaskController extends AbstractController
     public function newBotAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $threeWeeks = new DateTime();
-        $threeWeeks->setTimezone(new DateTimeZone('Europe/Paris'));
-        $threeWeeks->sub(new DateInterval('PT' . 1814400 . 'S'));
+        $fiveWeeks = new DateTime();
+        $fiveWeeks->setTimezone(new DateTimeZone('Europe/Paris'));
+        $fiveWeeks->sub(new DateInterval('PT' . 3888000 . 'S'));
 
         $newBots = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->where('u.bot = false')
-            ->andWhere('u.lastActivity < :three')
-            ->setParameters(['three' => $threeWeeks])
+            ->andWhere('u.lastActivity < :five')
+            ->setParameters(['five' => $fiveWeeks])
             ->getQuery()
             ->getResult();
 

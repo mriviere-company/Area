@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected;
 
+use App\Entity\Ships;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -21,7 +22,7 @@ class ShipPersoController extends AbstractController
     /**
      * @Route("/vaisseaux-personalisation/{usePlanet}", name="ship_perso", requirements={"usePlanet"="\d+"})
      */
-    public function spatialAction(Request $request, Planet $usePlanet)
+    public function shipAction(Request $request, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
@@ -55,7 +56,7 @@ class ShipPersoController extends AbstractController
             $laser = abs($form_shipPerso->get('laser')->getData()) * 2;
             $plasma = abs($form_shipPerso->get('plasma')->getData());
 
-            if ($ship->getMax() - $points >= 0 && $ship->getLastUpdate() < $now) {
+            if ($ship->getMax() - $points >= 0 && $ship->getLastUpdate() < $now && $user->getShip()->getRemainingPoints() > 0) {
                 if ($form_shipPerso->get('ship')->getData() == 'hunter' && $points <= $ship->getPointHunter()) {
                     $ship->setArmorHunter($ship->getArmorHunter() + $armor);
                     $ship->setMissileHunter($ship->getMissileHunter() + $missile);
@@ -168,5 +169,35 @@ class ShipPersoController extends AbstractController
             'usePlanet' => $usePlanet,
             'formObject' => $form_shipPerso,
         ]);
+    }
+
+    /**
+     * @Route("/vaisseaux-reinitialisation/{usePlanet}", name="ship_retry", requirements={"usePlanet"="\d+"})
+     */
+    public function shipRetryAction(Planet $usePlanet)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+        $now = new DateTime();
+        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $ship = $user->getShip();
+
+        if ($ship->getRetry() > 0) {
+            $nextMax = 1175 - $ship->getRemainingPoints();
+            $nextRetry = $ship->getRetry() - 1;
+            $user->setShip(null);
+            $em->remove($ship);
+            $ships = new Ships();
+            if ($nextMax < 40) {
+                $nextMax = 40;
+            }
+            $ships->setMax($nextMax);
+            $ships->setRetry($nextRetry);
+            $user->setShip($ships);
+            $em->persist($ships);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('ship_perso', ['usePlanet' => $usePlanet->getId()]);
     }
 }
