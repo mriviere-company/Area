@@ -783,7 +783,8 @@ class FleetController  extends AbstractController
             } else {
                 $speed = $fleetGive->getSpeed();
             }
-            $distance = $speed * $base * 100; // 1000 MODE NORMAL
+            $server = $em->getRepository('App:Server')->find(['id' => 1]);
+            $distance = $speed * $base * 1000 * $server->getSpeed(); // 1000 MODE NORMAL
             $now->add(new DateInterval('PT' . round($distance) . 'S'));
             $destination = new Destination();
             $destination->setFleet($fleetGive);

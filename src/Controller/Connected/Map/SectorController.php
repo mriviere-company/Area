@@ -322,7 +322,8 @@ class SectorController extends AbstractController
             } else {
                 $speed = $fleet->getSpeed();
             }
-            $distance = $speed * $base * 100;
+            $server = $em->getRepository('App:Server')->find(['id' => 1]);
+            $distance = $speed * $base * 1000 * $server->getSpeed();
             $now->add(new DateInterval('PT' . round($distance) . 'S'));
             $moreNow = new DateTime();
             $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
@@ -427,7 +428,8 @@ class SectorController extends AbstractController
         $fleet->setSignature($fleet->getNbrSignatures());
         $fPlanet->setSonde($fPlanet->getSonde() - 1);
         $speed = $fleet->getSpeed();
-        $distance = $speed * $base * 100;
+        $server = $em->getRepository('App:Server')->find(['id' => 1]);
+        $distance = $speed * $base * 1000 * $server->getSpeed();
         $now->add(new DateInterval('PT' . round($distance) . 'S'));
         $moreNow = new DateTime();
         $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));

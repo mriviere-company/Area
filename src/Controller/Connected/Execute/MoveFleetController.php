@@ -322,7 +322,8 @@ class MoveFleetController extends AbstractController
                                 } else {
                                     $speed = $fleet->getSpeed();
                                 }
-                                $distance = $speed * $base * 100;
+                                $server = $em->getRepository('App:Server')->find(['id' => 1]);
+                                $distance = $speed * $base * 1000 * $server->getSpeed();
                                 $moreNow = new DateTime();
                                 $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
                                 $moreNow->add(new DateInterval('PT' . 120 . 'S'));

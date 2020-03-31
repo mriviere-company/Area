@@ -144,8 +144,61 @@ class FleetInteractController  extends AbstractController
             ->getQuery()
             ->getResult();
 
+        $eAlly = $user->getAllyEnnemy();
+        $warAlly = [];
+        $x = 0;
+        foreach ($eAlly as $tmp) {
+            $warAlly[$x] = $tmp->getAllyTag();
+            $x++;
+        }
+
+        $fAlly = $user->getAllyFriends();
+        $friendAlly = [];
+        $x = 0;
+        foreach ($fAlly as $tmp) {
+            if($tmp->getAccepted() == 1) {
+                $friendAlly[$x] = $tmp->getAllyTag();
+                $x++;
+            }
+        }
+        if(!$friendAlly) {
+            $friendAlly = ['impossible', 'personne'];
+        }
+
+        if($user->getAlly()) {
+            $allyF = $user->getAlly();
+        } else {
+            $allyF = 'wedontexistsok';
+        }
+
         foreach ($allPlanets as $allPlanet) {
-            if ($allPlanet->getNbrSignaturesRegroup() > 0) {
+
+            $fleets = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->join('f.user', 'u')
+                ->leftJoin('u.ally', 'a')
+                ->where('f.planet = :planet')
+                ->andWhere('f.attack = true OR a.sigle in (:ally)')
+                ->andWhere('f.user != :user')
+                ->andWhere('f.flightTime is null')
+                ->andWhere('u.ally is null OR a.sigle not in (:friend)')
+                ->andWhere('u.ally is null OR u.ally != :myAlly')
+                ->setParameters(['planet' => $allPlanet, 'ally' => $warAlly, 'user' => $user, 'friend' => $friendAlly, 'myAlly' => $allyF])
+                ->getQuery()
+                ->getResult();
+
+            $fleetFight = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->where('f.planet = :planet')
+                ->andWhere('f.user != :user')
+                ->andWhere('f.fightAt is not null')
+                ->andWhere('f.flightTime is null')
+                ->setParameters(['planet' => $allPlanet, 'user' => $user])
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+
+            if ($allPlanet->getNbrSignaturesRegroup() > 0 and !$fleetFight and !$fleets) {
                 $one = new Fleet();
                 $one->setUser($user);
                 $one->setPlanet($allPlanet);
@@ -250,52 +303,6 @@ class FleetInteractController  extends AbstractController
             }
         }
         $em->flush();
-
-        return $this->redirectToRoute('fleet', ['usePlanet' => $usePlanet->getId()]);
-    }
-
-    /**
-     * @Route("/regroupement-total/{usePlanet}", name="total_regroup", requirements={"usePlanet"="\d+"})
-     */
-    public function totalRegroupAction(Planet $usePlanet)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
-
-        if($user->getGameOver()) {
-            return $this->redirectToRoute('game_over');
-        }
-
-        if ($usePlanet->getUser() != $user) {
-            return $this->redirectToRoute('home');
-        }
-
-        $allPlanets = $em->getRepository('App:Planet')
-            ->createQueryBuilder('p')
-            ->where('p.user = :user')
-            ->andWhere('p.signature is not null or p.signature >:zero')
-            ->setParameters(['user' => $user, 'zero' => 0])
-            ->getQuery()
-            ->getResult();
-
-        $allFleets = $em->getRepository('App:Planet')
-            ->createQueryBuilder('f')
-            ->where('f.user = :user')
-            ->andWhere('f.flightTime is null')
-            ->andWhere('f.fightAt is null')
-            ->setParameters(['user' => $user])
-            ->getQuery()
-            ->getResult();
-
-
-        foreach ($allPlanets as $allPlanet) {
-            $allPlanet;
-        }
-
-
-        foreach ($allFleets as $allFleet) {
-            $allFleet;
-        }
 
         return $this->redirectToRoute('fleet', ['usePlanet' => $usePlanet->getId()]);
     }

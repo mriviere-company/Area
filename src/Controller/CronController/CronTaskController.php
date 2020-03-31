@@ -412,7 +412,6 @@ class CronTaskController extends AbstractController
 
         $newBots = $em->getRepository('App:User')
             ->createQueryBuilder('u')
-            ->join('u.rank', 'r')
             ->where('u.bot = false')
             ->andWhere('u.lastActivity < :three')
             ->setParameters(['three' => $threeWeeks])

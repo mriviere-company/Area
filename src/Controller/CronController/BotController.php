@@ -309,7 +309,8 @@ class BotController extends AbstractController
                         $sonde->setName('Auto Sonde');
                         $sonde->setSignature($sonde->getNbrSignatures());
                         $speed = $sonde->getSpeed();
-                        $distance = $speed * $base * 100;
+                        $server = $em->getRepository('App:Server')->find(['id' => 1]);
+                        $distance = $speed * $base * 1000 * $server->getSpeed();
                         $move->add(new DateInterval('PT' . round($distance) . 'S'));
                         $moreNow = new DateTime();
                         $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
