@@ -240,7 +240,7 @@
                                 {{ ally.getPolitic()|trans }}
                             </th>
                             <th class="tab-cells-name p-2">
-                                {{ ally.getUsers()|length }} / 20
+                                {{ ally.getUsers()|length }} / {{ ally.maxMembers }}
                             </th>
                             <th class="tab-cells-name p-2">
                                 {{ ally.getCreatedAt()|date('d/m/Y') }}

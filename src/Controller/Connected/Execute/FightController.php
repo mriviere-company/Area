@@ -152,13 +152,15 @@ class FightController extends AbstractController
         $missile = 0;
         $laser = 0;
         $plasma = 0;
-        $debrisAtt = 0;
+        $debrisAttNiobium = 0;
+        $debrisAttWater = 0;
         $armorD = 0;
         $shieldD = 0;
         $missileD = 0;
         $laserD = 0;
         $plasmaD = 0;
-        $debrisDef = 0;
+        $debrisDefNiobium = 0;
+        $debrisDefWater = 0;
         $politicA = null;
         $politicB = null;
         $zombie = 0;
@@ -188,7 +190,8 @@ class FightController extends AbstractController
             }
             $plasma = $plasma + $attacker->getPlasma();
             $shield = $shield + $attacker->getShield();
-            $debrisAtt = $debrisAtt + $attacker->getNbrSignatures() + $attacker->getCargoFull();
+            $debrisAttNiobium = $debrisAttNiobium + ($attacker->getNbrSignatures() * rand(15,20)) + $attacker->getCargoFull();
+            $debrisAttWater = $debrisAttWater + ($attacker->getNbrSignatures() * rand(10,15)) + $attacker->getCargoFull();
             if ($attacker->getUser()->getId() == 1) {
                 $zombie = 1;
             }
@@ -216,7 +219,8 @@ class FightController extends AbstractController
             }
             $shieldD = $shieldD + $defender->getShield();
             $plasmaD = $plasmaD + $defender->getPlasma();
-            $debrisDef = $debrisDef + $defender->getNbrSignatures() + $defender->getCargoFull();
+            $debrisDefNiobium = $debrisDefNiobium + ($defender->getNbrSignatures() * rand(15,20)) + $defender->getNiobium();
+            $debrisDefWater = $debrisDefWater + ($defender->getNbrSignatures() * rand(10,15)) + $defender->getWater();
             if ($defender->getUser()->getId() == 1) {
                 $zombie = 1;
             }
@@ -266,13 +270,13 @@ class FightController extends AbstractController
         }
         if($attAll > 0 && $defAll < 1) {
             echo "BA Util Win : ";
-            $cronValue = self::utilitFightAction($blockDef, $blockAtt, $debrisDef, $now, $em);
+            $cronValue = self::utilitFightAction($blockDef, $blockAtt, $debrisDefNiobium, $debrisDefWater, $now, $em);
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
             return($blockAtt);
         }
         if($defAll > 0 && $attAll < 1) {
             echo "BB Util Win : ";
-            $cronValue = self::utilitFightAction(${'blockA' . $blockAtt}, ${'blockB' . $blockDef}, ${'debris' . $debrisAtt}, $now, $em);
+            $cronValue = self::utilitFightAction($blockDef, $blockAtt, $debrisAttNiobium, $debrisAttWater, $now, $em);
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
             return($blockDef);
         }
@@ -486,8 +490,8 @@ class FightController extends AbstractController
                     $zombieDebris = 1;
                 }
             }
-            $planet->setNbCdr(round($planet->getNbCdr() + ($debrisAtt * rand(30,40) / $zombieDebris)));
-            $planet->setWtCdr(round($planet->getWtCdr() + $debrisAtt * rand(20,30) / $zombieDebris));
+            $planet->setNbCdr(round($planet->getNbCdr() + ($debrisDefNiobium / $zombieDebris)));
+            $planet->setWtCdr(round($planet->getWtCdr() + ($debrisDefWater / $zombieDebris)));
             $em->flush();
             return($blockDef);
         } else {
@@ -643,15 +647,15 @@ class FightController extends AbstractController
                     $zombieDebris = 1;
                 }
             }
-            $planet->setNbCdr(round($planet->getNbCdr() + ($debrisDef * rand(30,40) / $zombieDebris)));
-            $planet->setWtCdr(round($planet->getWtCdr() + ($debrisDef * rand(20,30) / $zombieDebris)));
+            $planet->setNbCdr(round($planet->getNbCdr() + ($debrisDefNiobium / $zombieDebris)));
+            $planet->setWtCdr(round($planet->getWtCdr() + ($debrisDefWater / $zombieDebris)));
             $em->flush();
             return($blockAtt);
         }
         return NULL;
     }
 
-    public function utilitFightAction($blockA, $blockB, $debris, $now, $em)
+    public function utilitFightAction($blockA, $blockB, $debrisNb, $debrisWt, $now, $em)
     {
         foreach($blockA as $removeTwo) {
             $reportLoseUtilB = new Report();
@@ -677,8 +681,8 @@ class FightController extends AbstractController
             $em->persist($reportWinUtilB);
             $planet = $reportWin->getPlanet();
         }
-        $planet->setNbCdr($planet->getNbCdr() + ($debris * rand(30,40)));
-        $planet->setWtCdr($planet->getWtCdr() + $debris * rand(20,30));
+        $planet->setNbCdr($planet->getNbCdr() + $debrisNb);
+        $planet->setWtCdr($planet->getWtCdr() + $debrisWt);
 
         echo "Flush ";
 
