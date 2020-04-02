@@ -248,7 +248,7 @@ class ZombieController extends AbstractController
                 $em->remove($mission);
                 $reportMission->setTitle("Mission d'élimination zombies");
                 $reportMission->setImageName("zombie_win_report.jpg");
-                $reportMission->setContent("L'escouade militaire envoyé en mission est de retour, son capitaine vous fait son rapport :<br> <span class='text-vert'>-" . number_format($mission->getGain()) . "</span> menace zombie sur la planète.<br><span class='text-rouge'>" . number_format($soldier) . "</span> soldats meurent dans la mission ainsi que <span class='text-rouge'>" . number_format($tank) . "</span> tanks.");
+                $reportMission->setContent("L'escouade militaire envoyée en mission est de retour, son capitaine vous fait son rapport :<br> <span class='text-vert'>-" . number_format($mission->getGain()) . "</span> menace zombie sur la planète.<br><span class='text-rouge'>" . number_format($soldier) . "</span> soldats meurent dans la mission ainsi que <span class='text-rouge'>" . number_format($tank) . "</span> tanks.");
             } else {
                 $reportMission->setTitle("Échec mission");
                 $reportMission->setImageName("zombie_lose_report.jpg");
@@ -258,7 +258,7 @@ class ZombieController extends AbstractController
                 }
                 $planet->setSoldier($planet->getSoldier() + round($mission->getSoldier() / 2));
                 $planet->setTank($planet->getTank() + round($mission->getTank() / 2));
-                $reportMission->setContent("Des hommes de l'escouade militaire envoyée reviennent progressivement par petit groupe.<br>Ils ne s'attendaient pas a une telle résistance... <span class='text-rouge'>" . number_format($mission->getSoldier() / 2) . "</span> soldats sont morts durant la mission ainsi que <span class='text-rouge'>" . number_format($mission->getTank() / 2) . "</span> tanks.");
+                $reportMission->setContent("Des hommes de l'escouade militaire envoyée reviennent progressivement par petit groupe.<br>Ils ne s'attendaient pas à une telle résistance... <span class='text-rouge'>" . number_format($mission->getSoldier() / 2) . "</span> soldats sont morts durant la mission ainsi que <span class='text-rouge'>" . number_format($mission->getTank() / 2) . "</span> tanks.");
                 $em->remove($mission);
             }
         } else {
@@ -276,7 +276,7 @@ class ZombieController extends AbstractController
                 $user->setZombieAtt($user->getZombieAtt() + 1);
                 $reportMission->setTitle("Mission de récupération d'uranium");
                 $reportMission->setImageName("uranium_win_report.jpg");
-                $reportMission->setContent("L'escouade militaire envoyé en mission est de retour, son capitaine vous fait son rapport :<br> <span class='text-vert'>+" . number_format($mission->getGain()) . "</span> uranium ont été récupérés en zone zombie.<br><span class='text-rouge'>" . number_format($soldier) . "</span> soldats meurent dans la mission ainsi que <span class='text-rouge'>" . number_format($tank) . "</span> tanks.<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+1</span>.");
+                $reportMission->setContent("L'escouade militaire envoyée en mission est de retour, son capitaine vous fait son rapport :<br> <span class='text-vert'>+" . number_format($mission->getGain()) . "</span> uranium ont été récupérés en zone zombie.<br><span class='text-rouge'>" . number_format($soldier) . "</span> soldats meurent dans la mission ainsi que <span class='text-rouge'>" . number_format($tank) . "</span> tanks.<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+1</span>.");
                 $em->remove($mission);
             } else {
                 $lose = round($mission->getPercent() / 10);
@@ -289,7 +289,7 @@ class ZombieController extends AbstractController
                 }
                 $planet->setSoldier($planet->getSoldier() + round($mission->getSoldier() / 2));
                 $planet->setTank($planet->getTank() + round($mission->getTank() / 2));
-                $reportMission->setContent("Des hommes de l'escouade militaire envoyée reviennent progressivement par petit groupe.<br>Ils ne s'attendaient pas a une telle résistance... <span class='text-rouge'>" . number_format($mission->getSoldier() / 2) . "</span> soldats sont morts durant la mission ainsi que <span class='text-rouge'>" . number_format($mission->getTank() / 2) . "</span> tanks.<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+". $lose ."</span>.");
+                $reportMission->setContent("Des hommes de l'escouade militaire envoyée reviennent progressivement par petit groupe.<br>Ils ne s'attendaient pas à une telle résistance... <span class='text-rouge'>" . number_format($mission->getSoldier() / 2) . "</span> soldats sont morts durant la mission ainsi que <span class='text-rouge'>" . number_format($mission->getTank() / 2) . "</span> tanks.<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+". $lose ."</span>.");
                 $em->remove($mission);
             }
         }

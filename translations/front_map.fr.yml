@@ -15,9 +15,9 @@ tooltip.cdr: '<h4 class="text-blanc">Ressources</h4>%niobium% Niobium  <img clas
 tooltip.brouillage: Brouillage
 map.current: 'Mouvement de flotte dans le secteur'
 sector.number: Secteur
-tooltip.fleetHere: 'Les flottes qui transit au sein même de ce secteur sont affiché ici.'
+tooltip.fleetHere: 'Les flottes qui transit au sein même de ce secteur sont affichées ici.'
 tooltip.signature: 'Ici nous parlons de signature thermique, il serait trop facile que tout le monde sache ce qu''il y a dans la composition de votre flotte, ainsi la signature donne un ordre de grandeur sans rentrer dans le détails de la flotte.'
-tooltip.fleetEntrance: 'Les flottes qui viennent d''un autre secteur sont représenté là.'
+tooltip.fleetEntrance: 'Les flottes qui viennent d''un autre secteur sont représentées là.'
 tooltip.fleetQuit: 'Ce cadre vous montre les flottes qui sortent de ce secteur.'
 sector.profilUser: 'voir profil'
 sector.manageFleet: gestion

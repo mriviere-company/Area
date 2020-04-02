@@ -6,8 +6,8 @@ zombie.infected: 'est infectée'
 zombie.menace: 'Le niveau de menace zombies est a'
 zombie.attack: 'La prochaine attaque est prévue dans'
 zombie.available.defense: 'Vos troupes en défense '
-zombie.speech: 'Commandant voici les infos a notre disposition : Les zombies se sont implantés sur notre planète et ne s''arrêteront sûrement pas à celle-ci si nous ne les combattons pas. Nous devons les affaiblir avant leur prochaine attaque, une mission d''élimination nous y aiderait grandement ! Nous pouvons aussi aller dans les zones qu''ils contrôlent, nos scientifiques ont découverts que de l''uranium y était présent. Attention cela risque de faire monter notre menace zombie.'
-tooltip.zombie: 'Lancer cette mission pour faire baisser le niveau de menace zombie en éliminant les zombies présent sur votre planète.'
+zombie.speech: 'Commandant, voici les infos à notre disposition : Les zombies se sont implantés sur notre planète et ne s''arrêteront sûrement pas à celle-ci si nous ne les combattons pas. Nous devons les affaiblir avant leur prochaine attaque, une mission d''élimination nous y aiderait grandement ! Nous pouvons aussi aller dans les zones qu''ils contrôlent, nos scientifiques ont découvert que de l''uranium y était présent. Attention cela risque de faire monter notre menace zombie.'
+tooltip.zombie: 'Lancer cette mission pour faire baisser le niveau de menace zombie en éliminant les zombies présents sur votre planète.'
 zombie.soldier: Soldats
 zombie.tank: Tanks
 zombie.time: Temps

@@ -17,7 +17,7 @@ fleet.speed: Vitesse
 fleet.tank: Tank
 fleet.share: Partage
 fleet.interact: Interaction
-fleet.shareInfo: 'Partager la flotte a l''alliance :'
+fleet.shareInfo: 'Partager la flotte avec l''alliance :'
 fleet.cargos: Cargaison
 fleet.unity: unités
 fleet.raid: Piller
@@ -93,10 +93,10 @@ fleetList.tutorialBis: 'Votre Cohorte est crée vous pouvez y ajouter votre flot
 fleetList.tutorialTer: 'On y est presque, votre flotte a rejoint la Cohorte. Maintenant rendons nous sur la page «Carte Spatiale» pour l''utiliser.'
 tooltip.fleetOnPlanet: 'Dans ce cadre vous pouvez voir les flottes que vous avez sur votre planète actuelle.'
 tooltip.cargo: 'Il s''agit de la place que votre flotte a en soute pour vos transports de ressources(niobium, eau) ou humains(soldat, travailleur, scientique).'
-tooltip.signature: 'ST signifie signature thermique, il serait trop facile que tout le monde sache ce qu''il y a dans la composition de votre flotte, ainsi la signature donne un ordre de grandeur sans rentrer dans le détails de la flotte.'
-tooltip.fleetMove: 'Toutes vos flottes qui sont en mouvement d''une planète vers une autre s''affiche ici.'
+tooltip.signature: 'ST signifie signature thermique. Il serait trop simple que tout le monde connaisse la composition précise de votre flotte, ainsi la signature donne un ordre de grandeur sans entrer dans le détail de la flotte.'
+tooltip.fleetMove: 'Toutes vos flottes qui sont en mouvement d''une planète vers une autre s''affichent ici.'
 tooltip.fleetOtherPlanet: 'Ici sont les flottes que vous avez sur vos autres planètes.'
-tooltip.fleetNoMyPlanet: 'Et enfin les flottes qui sont sur aucune de vos planètes.'
+tooltip.fleetNoMyPlanet: 'Et enfin les flottes qui ne sont sur aucune de vos planètes.'
 tooltip.allyFleet: 'Vous pouvez partager vos flottes avec les membres de votre alliance, seuls les dirigeants de votre alliance pourront les utiliser.'
 fleet.combat: 'en combat'
 fleet.cargoI: 'Cargo I'

@@ -36,7 +36,7 @@ class FleetsController extends AbstractController
             $reportNuclearAtt->setUser($nukeBomb->getUser());
             $reportNuclearDef = new Report();
             $reportNuclearDef->setType('fight');
-            $reportNuclearDef->setTitle("Un missile nucléaire vous a frapper !");
+            $reportNuclearDef->setTitle("Un missile nucléaire vous a frappé !");
             $reportNuclearDef->setImageName("nuclear_attack.png");
             $reportNuclearDef->setSendAt($now);
             $reportNuclearDef->setUser($newHome->getUser());
@@ -51,7 +51,7 @@ class FleetsController extends AbstractController
                 if ($newHome->getWorker() > $newHome->getWorkerMax()) {
                     $newHome->setWorker($newHome->getWorkerMax());
                 }
-                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Une métropole a été détruite. Il provenait du Dirigeant " . $nukeBomb->getUser()->getUsername() . ".");
+                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Une métropole a été détruite, ses terrain et ses espaces sont désormais radioactif. Il provenait du Dirigeant " . $nukeBomb->getUser()->getUsername() . ".");
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Une métropole a été détruite.");
             } elseif ($newHome->getCity() > 0) {
                 $newHome->setCity($newHome->getCity() - 1);
@@ -60,7 +60,7 @@ class FleetsController extends AbstractController
                 if ($newHome->getWorker() > $newHome->getWorkerMax()) {
                     $newHome->setWorker($newHome->getWorkerMax());
                 }
-                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Une ville a été détruite. Il provenait du Dirigeant " . $nukeBomb->getUser()->getUsername() . ".");
+                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Une ville a été détruite, ses terrains sont désormais radioactif. Il provenait du Dirigeant " . $nukeBomb->getUser()->getUsername() . ".");
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Une ville a été détruite.");
             } elseif ($newHome->getBunker() > 0) {
                 $newHome->setBunker($newHome->getBunker() - 1);
@@ -68,7 +68,7 @@ class FleetsController extends AbstractController
                 if ($newHome->getSoldier() > $newHome->getSoldierMax()) {
                     $newHome->setSoldier($newHome->getSoldierMax());
                 }
-                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Un bunker a été détruit. Il provenait du Dirigeant " . $nukeBomb->getUser()->getUsername() . ".");
+                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Un bunker a été détruit, ses terrains sont désormais radioactif. Il provenait du Dirigeant " . $nukeBomb->getUser()->getUsername() . ".");
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Un bunker a été détruit.");
             } elseif ($newHome->getCaserne() > 0) {
                 $newHome->setCaserne($newHome->getCaserne() - 1);
@@ -76,7 +76,7 @@ class FleetsController extends AbstractController
                 if ($newHome->getSoldier() > $newHome->getSoldierMax()) {
                     $newHome->setSoldier($newHome->getSoldierMax());
                 }
-                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span> Une caserne a été détruite. Il provenait du Dirigeant " . $nukeBomb->getUser()->getUsername() . ".");
+                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span> Une caserne a été détruite, ses terrains sont désormais radioactif. Il provenait du Dirigeant " . $nukeBomb->getUser()->getUsername() . ".");
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Une caserne a été détruite.");
             } else {
                 $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() ."/" . $newHome->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span> Par chance votre planète n'avait aucune infrastructures ciblées. Il provenait du Dirigeant " . $nukeBomb->getUser()->getUsername() . ".");
