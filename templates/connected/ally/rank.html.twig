@@ -102,6 +102,31 @@
             {% endfor %}
             </tbody>
         </table>
+        <div class="front-block-game mt-4 mb-5 text-center">
+            <h1 class="mb-5 text-or">{{ 'ally.advantagesPolitic'|trans }}</h1>
+            <div class="row">
+                <div class="col-4">
+                    <img alt="{{ 'image'|trans({},'front_global') }}" width="150" class="politic-border" data-toggle="tooltip" data-html="true" data-placement="top" title="{{ 'tooltip.communism'|trans }}" src="{{ asset('img/communism.jpg') }}">
+                </div>
+                <div class="col-4">
+                    <img alt="{{ 'image'|trans({},'front_global') }}" width="150" class="politic-border" data-toggle="tooltip" data-html="true" data-placement="top" title="{{ 'tooltip.democrat'|trans }}" src="{{ asset('img/democrat.jpg') }}">
+                </div>
+                <div class="col-4">
+                    <img alt="{{ 'image'|trans({},'front_global') }}" width="150" class="politic-border" data-toggle="tooltip" data-html="true" data-placement="top" title="{{ 'tooltip.fascism'|trans }}" src="{{ asset('img/fascism.jpg') }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    {{ 'advice.communism'|trans }}
+                </div>
+                <div class="col-4">
+                    {{ 'advice.democrat'|trans }}
+                </div>
+                <div class="col-4">
+                    {{ 'advice.fascism'|trans }}
+                </div>
+            </div>
+        </div>
     </div>
     <div class="modal fade" id="allyModal" tabindex="-1" role="dialog" aria-labelledby="allyModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

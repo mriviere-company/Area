@@ -258,7 +258,7 @@ class AllyController extends AbstractController
                 $ally->setImageName('communism.jpg');
                 $ally->setBitcoin(0);
                 $ally->setPdg(250);
-                $ally->setTaxe(50);
+                $ally->setTaxe(75);
             }
             $grade->addUser($user);
             $grade->setPlacement(1);

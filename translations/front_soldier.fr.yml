@@ -21,7 +21,7 @@ caserner.scientistProd: ' scientifiques en production'
 caserner.tankProd: ' tanks en production'
 caserner.nuclearProd: ' bombes nucléaires en production'
 caserner.noScientist: 'Requis : Centre de recherche'
-caserner.noTank: 'Requis : Unitées blindées - Usine d''armement + Caserne ou Bunker'
+caserner.noTank: 'Requis : Unitées blindées - Usine d''armement + Caserne ou Fort défensif'
 caserner.noNuclear: 'Requis : Base nucléaire'
 caserner.totalProduct: 'Total :'
 soldier:

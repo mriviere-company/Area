@@ -3,7 +3,7 @@ zombie.mission: 'Missions sur la planète infectée :'
 zombie.zombie: 'Mission d''élimination zombies'
 zombie.planet: 'Votre planète'
 zombie.infected: 'est infectée'
-zombie.menace: 'Le niveau de menace zombies est a'
+zombie.menace: 'Le niveau de menace zombies est à'
 zombie.attack: 'La prochaine attaque est prévue dans'
 zombie.available.defense: 'Vos troupes en défense '
 zombie.speech: 'Commandant, voici les infos à notre disposition : Les zombies se sont implantés sur notre planète et ne s''arrêteront sûrement pas à celle-ci si nous ne les combattons pas. Nous devons les affaiblir avant leur prochaine attaque, une mission d''élimination nous y aiderait grandement ! Nous pouvons aussi aller dans les zones qu''ils contrôlent, nos scientifiques ont découvert que de l''uranium y était présent. Attention cela risque de faire monter notre menace zombie.'
@@ -15,7 +15,7 @@ zombie.succed: Réussite
 zombie.gain: Gain
 zombie.type: Type
 zombie.finish: 'Récupérer rapport'
-zombie.uranium: 'Mission de récupèration d''uranium'
+zombie.uranium: 'Mission de récupération d''uranium'
 tooltip.uranium: 'Lancer cette mission pour récupérer de l''uranium dans les zones infectées par les zombies.'
 form.nbr: 0
 form.one: 1h

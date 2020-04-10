@@ -173,11 +173,12 @@ class ServerController extends AbstractController
                 ->getOneOrNullResult();
 
             $iaPlanet->setUser($iaPlayer);
-            $iaPlanet->setWorker(500000);
-            $iaPlanet->setWorkerMax(500000);
-            $iaPlanet->setSoldier(150000);
-            $iaPlanet->setSoldierMax(150000);
-            $iaPlanet->setCaserne(500);
+            $iaPlanet->setWorker(1000000);
+            $iaPlanet->setWorkerMax(1000000);
+            $iaPlanet->setSoldier(1000000);
+            $iaPlanet->setSoldierMax(1000000);
+            $iaPlanet->setBunker(50);
+            $iaPlanet->setGroundPlace(500);
             $iaPlanet->setGround(1300);
             $iaPlanet->setSky(180);
             $iaPlanet->setImageName('hydra_planet.png');

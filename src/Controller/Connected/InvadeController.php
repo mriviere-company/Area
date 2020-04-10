@@ -73,9 +73,7 @@ class InvadeController extends AbstractController
             $dWorker = $dWorker * (1 + ($userDefender->getPoliticWorkerDef() / 5));
         }
         if ($userDefender->getZombie() == 1) {
-            $dWorker = $dWorker / 10;
-            $dSoldier = $dSoldier / 5;
-            $dTanks = $dTanks / 2;
+            $dTanks = 0;
         }
         $dMilitary = $dWorker + $dSoldier + $dTanks;
 
@@ -184,7 +182,7 @@ class InvadeController extends AbstractController
                     $reportInv->setImageName("invade_win_report.jpg");
                     $reportInv->setContent("Vous débarquez après que la planète ait été prise et vous installez sur le trône de " . $userDefender->getUserName() . ". Qu'il est bon d'entendre ses pleurs lointains... La planète " . $defender->getName() . " - (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) est désormais votre! Il est temps de remettre de l'ordre dans la galaxie. <span class='text-rouge'>" . number_format(round($soldierAtmp)) . "</span> de vos soldats ont péri dans l'invasion. Mais les défenseurs ont aussi leurs pertes : <span class='text-vert'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-vert'>" . number_format($tankDtmp) ."</span> tanks et <span class='text-vert'>" . number_format($workerDtmp) . "</span> travailleurs ont péri. Cependant vous épargnez 2000 travailleurs dans votre bonté (surtout pour faire tourner la planète).<br>Et vous remportez <span class='text-vert'>+" . number_format($warPointAtt) . "</span> points de Guerre.");
                 } else {
-                    $warPointAtt = $warPointAtt * 2;
+                    $warPointAtt = $warPointAtt / 5;
                     $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $warPointAtt);
                     $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
                     if ($userDefender->getZombie() == 0) {
@@ -203,7 +201,7 @@ class InvadeController extends AbstractController
                     } else {
                         $reportInv->setTitle("Rapport contre attaque : Victoire");
                         $reportInv->setImageName("zombie_win_report.jpg");
-                        $reportInv->setContent("Vos soldats débarquent sur la planète zombie et sorte l'artillerie lourde ! Les rues s'enlisent de mort mais l'entraînement prévaut sur la peur et vous purgez cette planète de cette peste macabre.<br> La planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) est désormais libre. Et votre indice d'attaque zombie est divisé par 10. Lors de l'assaut vous dénombrez <span class='text-rouge'>" . number_format(round($soldierAtmp)) . "</span> pertes parmis vos soldats. Mais vous avez exterminé <span class='text-vert'>" . number_format(round($soldierDtmp + ($workerDtmp / 6) + ($tankDtmp * 3000))) . "</span> zombies ! <br>Et vous remportez <span class='text-vert'>+" . number_format($warPointAtt) . "</span> points de Guerre.");
+                        $reportInv->setContent("Vos soldats débarquent sur la planète zombie et sortent l'artillerie lourde ! Les rues s'emplissent de morts mais l'entraînement prévaut sur la peur et vous purgez cette planète de cette peste macabre.<br> La planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) est désormais libre. Et votre indice d'attaque zombie est divisé par 10. Lors de l'assaut vous dénombrez <span class='text-rouge'>" . number_format(round($soldierAtmp)) . "</span> pertes parmis vos soldats. Mais vous avez exterminé <span class='text-vert'>" . number_format(round($soldierDtmp + ($workerDtmp / 6) + ($tankDtmp * 3000))) . "</span> zombies ! <br>Et vous remportez <span class='text-vert'>+" . number_format($warPointAtt) . "</span> points de Guerre.");
                     }
                     if ($userDefender->getZombie() == 1) {
                         $image = [
@@ -216,8 +214,18 @@ class InvadeController extends AbstractController
                         ];
                         $defender->setUser(null);
                         $em->flush();
-                        $user->setZombieAtt(round($user->getZombieAtt() / 10));
-                        $defender->setName('Inhabitée');
+                        if ($user->getZombieAtt() > 9) {
+                            $user->setZombieAtt(round($user->getZombieAtt() / 10));
+                        }
+                        if($invader->getCargoPlace() > $invader->getCargoFull()) {
+                            $place = $invader->getCargoPlace() - $invader->getCargoFull();
+                            if ($place > 10) {
+                                $invader->setUranium($invader->getUranium() + 10);
+                            } else {
+                                $invader->setUranium($invader->getUranium() + $place);
+                            }
+                        }
+                        $defender->setRestartAll();
                         $defender->setImageName($image[rand(0, 32)]);
                     } else {
                         $defender->setUser($hydra);
@@ -266,7 +274,14 @@ class InvadeController extends AbstractController
                 $em->persist($reportDef);
             }
             $em->flush();
-        }
+        } else {
+            if (!$invader->getAllianceUser() || $user->getSigleAllied($dSigle)) {
+                    $this->addFlash("fail", "Vous ne pouvez pas envahir une planète alliée.");
+                } elseif (!$invader->getPlanet()->getUser()) {
+                    $this->addFlash("fail", "Vous ne pouvez pas envahir une planète sans joueur.");
+                }
+                return $this->redirectToRoute('manage_fleet', ['fleetGive' => $invader->getId(), 'usePlanet' => $usePlanet->getId()]);
+            }
 
         return $this->redirectToRoute('report', ['usePlanet' => $usePlanet->getId()]);
     }
@@ -338,7 +353,7 @@ class InvadeController extends AbstractController
         }
         $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($defender->getUser());
 
-        if ($raider->getPlanet()->getUser() && $raider->getAllianceUser() && $raider->getUser()->getSigleAllied($dSigle) == NULL && $userDefender->getZombie() == 0) {
+        if ($raider->getPlanet()->getUser() && $raider->getAllianceUser() && $raider->getUser()->getSigleAllied($dSigle) == NULL && $raider->getFightAt() == null && $raider->getFlightTime() == null && $userDefender->getZombie() == 0) {
             if($dMilitary >= $aMilitary) {
                 $warPointDef = round($aMilitary);
                 if ($userDefender->getPoliticPdg() > 0) {
@@ -432,12 +447,18 @@ class InvadeController extends AbstractController
             }
             $em->persist($reportLoot);
             $em->persist($reportDef);
+
+            $em->flush();
         } else {
-            $this->addFlash("fail", "Vous ne pouvez pas piller une planète Zombie.");
+            if ($userDefender->getZombie() == 1) {
+                $this->addFlash("fail", "Vous ne pouvez pas piller une planète Zombie.");
+            } elseif (!$raider->getAllianceUser() || $raider->getUser()->getSigleAllied($dSigle)) {
+                $this->addFlash("fail", "Vous ne pouvez pas piller une planète alliée.");
+            } elseif (!$raider->getPlanet()->getUser()) {
+                $this->addFlash("fail", "Vous ne pouvez pas piller une planète sans joueur.");
+            }
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $raider->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-
-        $em->flush();
 
         return $this->redirectToRoute('report', ['usePlanet' => $usePlanet->getId()]);
     }

@@ -809,6 +809,7 @@ function manageFocusSalon() {
     $('.nameSalon').off('click').on('click',function(e){
         if ($('#salon_content').val().indexOf($(this).text() + " > ") == -1) {
             $('#salon_content').val($(this).text() + " > "  + $('#salon_content').val());
+            $('#salon_content').focus();
         }
     });
 }

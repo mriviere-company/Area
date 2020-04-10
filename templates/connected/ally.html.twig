@@ -71,7 +71,7 @@
                                         {% endif %}
                                     </td>
                                     <td class="center-cells">
-                                        <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'userPlanet': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getUsername() }}</a></span>
+                                        <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'userPlanet': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getUsername() }}</a>{% if user.getBot() %}²{% endif %}</span>
                                     </td>
                                     <td class="center-cells">
                                         {% if user.getLastActivity()|date('d/m/Y') > "now"|date('d/m/Y') %}{{ user.getLastActivity()|date('H:i') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}

@@ -370,33 +370,20 @@ class CronTaskController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $bots = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->join('u.rank', 'r')
-            ->andWhere('r.point =:zero')
-            ->setParameters(['zero' => 0])
+        $stats = $em->getRepository('App:Stats')
+            ->createQueryBuilder('s')
+            ->join('s.user', 'u')
+            ->andWhere('u.bot = true')
             ->getQuery()
             ->getResult();
 
-        foreach ($bots as $bot) {
-            $bot->setRank(NULL);
+        foreach ($stats as $stat) {
+            $em->remove($stat);
         }
 
+        echo "Stats nettoyé.";
         $em->flush();
 
-        $ranks = $em->getRepository('App:Rank')
-            ->createQueryBuilder('r')
-            ->where('r.point =:zero')
-            ->setParameters(['zero' => 0])
-            ->getQuery()
-            ->getResult();
-
-        foreach ($ranks as $rank) {
-            $em->remove($rank);
-        }
-
-        echo "Rank nettoyé.";
-        $em->flush();
         exit;
     }
 

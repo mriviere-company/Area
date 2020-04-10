@@ -75,6 +75,7 @@ fleet.cargo: 'Cargaison'
 fleet.soute: Soute
 fleet.sendCoord: ordre
 fleet.invade: Envahir
+fleet.eradicate: Éradiquer
 fleet.colonize: Coloniser
 fleet.niobium: Niobium
 fleet.water: Eau
@@ -165,7 +166,6 @@ form.normal: Normal
 form.discharge: 'Décharger et revenir'
 form.col: Coloniser
 form.num: 0
-form.invade: Envahir
 form.loot: Piller
 fleet.st: ST
 tooltip.remove: 'Supprimer flotte de la Cohorte ?'

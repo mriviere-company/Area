@@ -99,7 +99,7 @@
       </trans-unit>
       <trans-unit id="MEP_oTc" resname="caserner.noTank">
         <source>caserner.noTank</source>
-        <target>Requis : Unitées blindées - Usine d'armement + Caserne ou Bunker</target>
+        <target>Requis : Unitées blindées - Usine d'armement + Caserne ou Fort défensif</target>
       </trans-unit>
       <trans-unit id="8YnA2AI" resname="caserner.noNuclear">
         <source>caserner.noNuclear</source>

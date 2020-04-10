@@ -660,15 +660,16 @@ class FleetInteractController  extends AbstractController
             $planetTake->setSoldier($planetTake->getSoldier() + $fleetGive->getSoldier());
             $planetTake->setWater($planetTake->getWater() + $fleetGive->getWater());
             $planetTake->setNiobium($planetTake->getNiobium() + $fleetGive->getNiobium());
+            $planetTake->setUranium($planetTake->getUranium() + $fleetGive->getUranium());
             $user->setBitcoin($user->getBitcoin() + $gainSell);
             $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $newWarPointS);
             $fleetGive->setScientist(0);
             $fleetGive->setNiobium(0);
+            $fleetGive->setWater(0);
             $fleetGive->setUranium(0);
             $fleetGive->setSoldier(0);
             $fleetGive->setTank(0);
             $fleetGive->setWorker(0);
-            $fleetGive->setWater(0);
             $quest = $user->checkQuests('sell');
             if($quest) {
                 $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());

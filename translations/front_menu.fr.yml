@@ -49,7 +49,7 @@ soldiers: Soldats
 tanks: Tanks
 groundImg: Terrain
 tooltip.ships: 'Signature vaisseaux au sol'
-tooltip.caserne: 'Caserne/bunker sur la planète'
+tooltip.caserne: 'Caserne/Fort défensif sur la planète'
 tooltip.tanks: 'Construction de tanks'
 tooltip.scientists: 'Centre de recherche'
 tooltip.uranium: 'Uranium présent sur la planète'

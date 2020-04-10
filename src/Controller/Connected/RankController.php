@@ -84,7 +84,7 @@ class RankController extends AbstractController
         $users = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.planets', 'p')
-            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, u.id, u.username, r.point as point, r.oldPoint as oldPoint, r.position as position, r.oldPosition as oldPosition, r.warPoint as warPoint, u.createdAt, a.politic as politic')
+            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, u.id, u.username, r.point as point, r.oldPoint as oldPoint, r.position as position, r.oldPosition as oldPosition, r.warPoint as warPoint, u.createdAt, a.politic as politic, u.bot')
             ->leftJoin('u.rank', 'r')
             ->leftJoin('u.ally', 'a')
             ->groupBy('u.id')

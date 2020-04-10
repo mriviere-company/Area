@@ -646,13 +646,14 @@ class Fleet
     {
         $worker = $this->getWorker();
         $soldier = $this->getSoldier();
+        $tank = $this->getTank();
         $scientist = $this->getScientist();
         $niobium = $this->getNiobium();
         $water = $this->getWater();
         $food = $this->getFood();
         $uranium = $this->getUranium();
 
-        $nbr = $food + $worker + $soldier + $scientist + $niobium + $water + $uranium;
+        $nbr = $food + $worker + $soldier + $scientist + $niobium + $water + $uranium + $tank;
         return $nbr;
     }
 

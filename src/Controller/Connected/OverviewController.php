@@ -49,7 +49,7 @@ class OverviewController extends AbstractController
             ->getOneOrNullResult();
 
         $allShipsProduct = $allTroops['ppsignature'];
-        $allShipsPlanet = round($allTroops['psignature'] / 4);
+        $allShipsPlanet = round($allTroops['psignature'] / 2);
         $allShipsFleet = $allTroops['fsignature'] * 6;
         $allShips = $allShipsProduct + $allShipsPlanet + $allShipsFleet;
         $allTroopsProduct = $user->getPriceTroopsProduct($allTroops);
@@ -93,7 +93,7 @@ class OverviewController extends AbstractController
             ->andWhere('dp.user = :user')
             ->setParameters(['user' => $user])
             ->orderBy('f.flightTime')
-            ->setMaxResults(5)
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult();
 
@@ -115,7 +115,7 @@ class OverviewController extends AbstractController
             ->andWhere('f.flightTime < :time')
             ->setParameters(['user' => $user, 'time' => $oneHour])
             ->orderBy('f.flightTime')
-            ->setMaxResults(8)
+            ->setMaxResults(4)
             ->getQuery()
             ->getResult();
 

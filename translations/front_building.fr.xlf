@@ -283,7 +283,7 @@
       </trans-unit>
       <trans-unit id="rTv5wGX" resname="building.nuclearBase.desc">
         <source>building.nuclearBase.desc</source>
-        <target>N'avez vous jamais voulut déclencher une guerre nucléaire ?</target>
+        <target>N'avez vous jamais voulu déclencher une guerre nucléaire ?</target>
       </trans-unit>
       <trans-unit id="Iv4I0Pd" resname="popover.title">
         <source>popover.title</source>

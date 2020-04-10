@@ -1730,7 +1730,7 @@ class User implements UserInterface, \Serializable
             if($planet->getProduct()) {
                 $return = $return + $planet->getProduct()->getNbrSignatures();
             }
-            $return = $return + ($planet->getNbrSignatures() / 4);
+            $return = $return + ($planet->getNbrSignatures() / 2);
         }
         foreach($this->fleets as $fleet) {
             $return = $return + ($fleet->getNbrSignatures() * 6);

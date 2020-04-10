@@ -75,7 +75,7 @@ building.skyRadar.desc: 'Si votre planète manque de place, un radar en orbite v
 building.brouilleur.desc: 'Besoin d''intimité ? Ce brouilleur cachera toutes les informations compromettantes.'
 building.island.desc: 'Grâce à notre technologie de pointe nous pouvons désormais construire sur l''eau !'
 building.orbital.desc: 'Quand la place manque, que les océans se remplissent, tournons le regard vers les cieux.'
-building.nuclearBase.desc: 'N''avez vous jamais voulut déclencher une guerre nucléaire ?'
+building.nuclearBase.desc: 'N''avez-vous jamais voulu déclencher une guerre nucléaire ?'
 popover.title: 'Prochain niveau'
 popover.miner: '<h5>Nouvelle production de niobium : +%product%/h</h5>'
 popover.extract: '<h5>Nouvelle production d''eau : +%product%/h</h5>'

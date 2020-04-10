@@ -665,6 +665,50 @@ class Planet
         return $this->id;
     }
 
+    public function setRestartAll(): void
+    {
+        $this->centerSearch = null;
+        $this->name = 'Inhabitée';
+        $this->niobium = 20000;
+        $this->water = 14000;
+        $this->food = 100000;
+        $this->shipProduction = 1;
+        $this->workerProduction = 11;
+        $this->niobiumMax = 1300000;
+        $this->waterMax = 1000000;
+        $this->foodMax = 1500000;
+        $this->soldierMax = 200;
+        $this->tank = null;
+        $this->scientistMax = 0;
+        $this->workerMax = 250000;
+        $this->nbProduction = 6;
+        $this->wtProduction = 5;
+        $this->fdProduction = 8;
+        $this->miner = null;
+        $this->niobiumStock = null;
+        $this->extractor = null;
+        $this->waterStock = null;
+        $this->farm = null;
+        $this->aeroponicFarm = null;
+        $this->silos = null;
+        $this->spaceShip = null;
+        $this->metropole = null;
+        $this->city = null;
+        $this->caserne = null;
+        $this->bunker = null;
+        $this->island = null;
+        $this->orbital = null;
+        $this->radar = null;
+        $this->nuclearBase = null;
+        $this->skyRadar = null;
+        $this->skyBrouilleur = null;
+        $this->lightUsine = null;
+        $this->heavyUsine = null;
+        $this->scientist = null;
+        $this->groundPlace = 0;
+        $this->skyPlace = 0;
+    }
+
     /**
      * @return int
      */

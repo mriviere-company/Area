@@ -3,7 +3,7 @@ planet.name: Administration
 planet.niobium: Niobium
 planet.water: Eau
 planet.place: Défenses
-planet.worker: Travailleurs
+planet.worker: 'Production de travailleur : %product%/h'
 planet.soldier: Soldats
 planet.scientist: Scientifiques
 planet.fleet: Flottes
@@ -17,10 +17,9 @@ worker: Travailleurs
 soldier: Soldats
 scientist: Scientifiques
 planet.image: Planète
-planet.production: Informations
+planet.production: Productions
 planet.population: Populations
 planet.ship: Vaisseaux
-position: 'Position :'
 planet.abandon: Abandonner
 planet.abandon.question: 'Souhaitez vous abandonner la planète ?'
 tooltip.ships: 'Les vaisseaux qui sont posés sur votre planète.'
@@ -28,7 +27,7 @@ tooltip.planet: 'Infrastructures de la planète'
 tank: Tanks
 planetList.add: Ajouter
 market.autoSell: 'Vente aux marchands '
-tooltip.autoSell: 'Selectionnez des planètes et vendez en un clic toutes les ressources de celle-ci aux marchands ! (25% de gains en moins qu''en se déplaçant soit même aux marchands)'
+tooltip.autoSell: 'Sélectionnez des planètes et vendez en un clic toutes les ressources de celles-ci aux marchands ! (25% de gains en moins qu''en se déplaçant soi-même aux marchands)'
 tooltip.remove: 'Retirer de la liste de planète'
 market.sellAll: 'Vendre les ressources'
 planet.sellPrice: 'Prix unitaire :'

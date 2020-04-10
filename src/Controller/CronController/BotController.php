@@ -188,7 +188,7 @@ class BotController extends AbstractController
                     }
                     $user->setTutorial(60);
                     $user->setDailyConnect($now);
-                    $user->setLastActivity($now);
+                    //$user->setLastActivity($now);
 
                     $ships = new Ships();
                     $user->setShip($ships);
@@ -226,7 +226,7 @@ class BotController extends AbstractController
             ->getOneOrNullResult();
 
         foreach ($bots as $bot) {
-            if (rand(1, 2) == 2) {
+            if (rand(1, 5) == 2) {
                 $cPlanet = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
                     ->where('p.user = :user')
@@ -323,10 +323,10 @@ class BotController extends AbstractController
                         $sonde->setCancelFlight($moreNow);
                         $em->persist($sonde);
                     }
-                    $bot->setLastActivity($now);
+                    //$bot->setLastActivity($now);
                 }
 
-                if (rand(1, 1500) == 1) {
+                if (rand(1, 1500) == 1501) {
                     $planetsSeller = $em->getRepository('App:Planet')
                         ->createQueryBuilder('p')
                         ->where('p.user = :user')
@@ -356,9 +356,9 @@ class BotController extends AbstractController
                         }
                     }
                     // créer une flotte et l'envoyer recyclage
-                    $bot->setLastActivity($now);
+                    //$bot->setLastActivity($now);
                 }
-                if (rand(1, 8000) == 1 && $messageSent == 1) {
+                if (rand(1, 8000) == 8001 && $messageSent == 1) {
                     $message = new S_Content();
                     $messageSent = 0;
                     $message->setSalon($salon);
@@ -378,7 +378,7 @@ class BotController extends AbstractController
                     }
                     // Alliance création/rejoindre/inviter
                     // créer une flotte et l'envoyer coloniser/envahir
-                    $bot->setLastActivity($now);
+                    //$bot->setLastActivity($now);
                 }
                 if ($cPlanet) {
                     $cPlanet->setSoldier($cPlanet->getSoldierMax());
