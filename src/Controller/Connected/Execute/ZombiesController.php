@@ -50,31 +50,6 @@ class ZombiesController extends AbstractController
                 return new Response ("KO<br/>");
             }
 
-            $planetZb = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->where('p.user = :user')
-                ->setParameters(['user' => $zombie])
-                ->orderBy('p.ground', 'ASC')
-                ->andWhere('p.radarAt is null and p.brouilleurAt is null')
-                ->getQuery()
-                ->setMaxresults(1)
-                ->getOneOrNullResult();
-
-            $planetBis = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->leftJoin('p.missions', 'm')
-                ->where('p.user = :user')
-                ->andWhere('p.radarAt is null and p.brouilleurAt is null and m.soldier is not null')
-                ->setParameters(['user' => $zombie])
-                ->orderBy('p.ground', 'ASC')
-                ->getQuery()
-                ->setMaxresults(1)
-                ->getOneOrNullResult();
-
-            if ($planetBis) {
-                $planetZb = $planetBis;
-            }
-
             if ($zUser->getZombieAtt() > 0) {
                 $reportDef = new Report();
                 $reportDef->setType('invade');
@@ -207,7 +182,7 @@ class ZombiesController extends AbstractController
             $fleetZb->setCorvetWar(1 + round(($zUser->getAllShipsPoint() / (7 * rand(1, 5))) / 5));
             $fleetZb->setFregate(1 + round(($zUser->getAllShipsPoint() / (8 * rand(1, 5))) / 5));
             $fleetZb->setUser($zombie);
-            $fleetZb->setPlanet($planetZb);
+            $fleetZb->setPlanet($planetAtt);
             $fleetZb->setSignature($fleetZb->getNbrSignatures());
             $destination = new Destination();
             $destination->setFleet($fleetZb);

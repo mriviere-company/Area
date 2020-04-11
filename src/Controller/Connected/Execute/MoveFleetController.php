@@ -260,7 +260,7 @@ class MoveFleetController extends AbstractController
                                     $fleet->setWater($fleet->getWater() - ($newPlanet->getWaterMax() - $newPlanet->getWater()));
                                     $newPlanet->setWater($newPlanet->getWaterMax());
                                 }
-                                $newPlanet->setUranium($fleet->getUranium());
+                                $newPlanet->setUranium($newPlanet->getUranium() + $fleet->getUranium());
                                 $fleet->setUranium(0);
                                 if ($newPlanet->getSoldier() + $fleet->getSoldier() <= $newPlanet->getSoldierMax()) {
                                     $newPlanet->setSoldier($newPlanet->getSoldier() + $fleet->getSoldier());
