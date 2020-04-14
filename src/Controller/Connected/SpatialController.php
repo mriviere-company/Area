@@ -406,6 +406,19 @@ class SpatialController extends AbstractController
             if ($form_createFleet->get('name')->getData()) {
                 $fleet->setName($form_createFleet->get('name')->getData());
             }
+            if(($user->getTutorial() == 22)) {
+                $user->setTutorial(23);
+                $fleet->setHunter($usePlanet->getHunter());
+                $fleet->setFregate($usePlanet->getFregate());
+                $fleet->setCorvetWar($usePlanet->getCorvetWar());
+                $fleet->setHunterWar($usePlanet->getHunterWar());
+                $fleet->setDestroyer($usePlanet->getDestroyer());
+                $usePlanet->setHunter(0);
+                $usePlanet->setFregate(0);
+                $usePlanet->setCorvetWar(0);
+                $usePlanet->setHunterWar(0);
+                $usePlanet->setDestroyer(0);
+            }
             $fleet->setSignature($fleet->getNbrSignatures());
             $em->persist($fleet);
             $usePlanet->setCargoI($cargoI);
@@ -431,20 +444,6 @@ class SpatialController extends AbstractController
             $usePlanet->setIronClad($ironClad);
             $usePlanet->setDestroyer($destroyer);
             $usePlanet->addFleet($fleet);
-
-            if(($user->getTutorial() == 22)) {
-                $user->setTutorial(23);
-                $fleet->setHunter($usePlanet->getHunter());
-                $fleet->setFregate($usePlanet->getFregate());
-                $fleet->setCorvetWar($usePlanet->getCorvetWar());
-                $fleet->setHunterWar($usePlanet->getHunterWar());
-                $fleet->setDestroyer($usePlanet->getDestroyer());
-                $usePlanet->setHunter(0);
-                $usePlanet->setFregate(0);
-                $usePlanet->setCorvetWar(0);
-                $usePlanet->setHunterWar(0);
-                $usePlanet->setDestroyer(0);
-            }
 
             if(($user->getTutorial() == 10)) {
                 $fleet->setColonizer(1);

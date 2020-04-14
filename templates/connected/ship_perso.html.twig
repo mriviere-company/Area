@@ -38,7 +38,7 @@
                             <th width="74" class="p-0 hunterClick">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunter.jpg') }}">
                             </th>
-                            <td class="text-center hunterClick">
+                            <td class="text-center hunterClick{% if app.user.getTutorial() == 19 %} tutorial-show{% endif %}">
                                 {{ 'ship.hunter'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if app.user.getShip().getPointHunter() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ app.user.getShip().getPointHunter() }}</span>
                             </td>
                             <th width="74" class="p-0 hunterHeavyClick">
@@ -152,7 +152,11 @@
                                     {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ app.user.getShip().getArmorHunter() }}</span> <span class="basis" hidden>{{ app.user.getShip().getArmorHunter() }}</span>
                                 </td>
                                 <td class="center-cells">
-                                    {{ form_widget(form_shipPerso.armor) }}
+                                    {% if app.user.getTutorial() == 19 %}
+                                        {{ form_widget(form_shipPerso.armor,{attr: { class: 'game-input tutorial-show' }}) }}
+                                    {% else %}
+                                        {{ form_widget(form_shipPerso.armor) }}
+                                    {% endif %}
                                 </td>
                                 <td>
                                     {{ 'ship.shield'|trans|raw }} 0
@@ -172,7 +176,11 @@
                                     {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ app.user.getShip().getMissileHunter() }}</span> <span class="basis" hidden>{{ app.user.getShip().getMissileHunter() }}</span>
                                 </td>
                                 <td class="center-cells">
-                                    {{ form_widget(form_shipPerso.missile) }}
+                                    {% if app.user.getTutorial() == 19 %}
+                                        {{ form_widget(form_shipPerso.missile,{attr: { class: 'game-input tutorial-show' }}) }}
+                                    {% else %}
+                                        {{ form_widget(form_shipPerso.missile) }}
+                                    {% endif %}
                                 </td>
                                 <td>
                                     {{ 'ship.laser'|trans|raw }} 0
