@@ -48,7 +48,7 @@ class AlliancesController extends AbstractController
             $em->remove($pact);
         }
         $em->flush();
-        echo "Flush ";
+        echo "Flush -> " . count($pacts) . " ";
 
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
@@ -57,7 +57,7 @@ class AlliancesController extends AbstractController
         foreach ($peaces as $peace) {
             $em->remove($peace);
         }
-        echo "Flush ";
+        echo "Flush -> " . count($peaces) . " ";
 
         $em->flush();
 

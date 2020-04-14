@@ -56,7 +56,7 @@
                     </td>
                 </tr>
             {% endif %}#}
-            {% if planet.getUser() and (app.user.getWhereRadar(planet.getSector().getPosition(), planet.getSector().getGalaxy().getPosition()) or planet.getOurFleet(app.user)) %}
+            {% if planet.getUser() and (render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': planet.getSector().getPosition(), 'gal': planet.getSector().getGalaxy().getPosition()})) > planet.getSkyBrouilleur() or planet.getOurFleet(app.user)) %}
                 <tr>
                     <td colspan="3" class="center-cells">
                         <span><a data-toggle="modal" data-target="#userpModal" href="{{ path('user_profil_modal', {'userPlanet': planet.getUser().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.seeProfil'|trans }} {{ planet.getUser().getUserName() }}</a></span>

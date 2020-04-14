@@ -67,7 +67,7 @@
       </trans-unit>
       <trans-unit id="QG6B7Sj" resname="quest.tutorial">
         <source>quest.tutorial</source>
-        <target><![CDATA[Tout les jours à 18h00 vous recevez votre rapport d'Empire avec ses bitcoins quotidien et 3 quêtes a accomplir en 24h, si celle-ci ne sont pas remplie elles seront supprimées. Un conseil : Ne les loupez pas ! Les points de Guerre que vous y gagnerez vous seront très utile à échanger contre des soldats, travailleurs, bitcoins ou même des vaisseaux d'élites.<br>Continuons sur la page «Alliance».]]></target>
+        <target><![CDATA[Tous les jours à 18h00 vous recevez votre rapport d'Empire avec ses bitcoins quotidien et 3 quêtes a accomplir en 24h, si celle-ci ne sont pas remplie elles seront supprimées. Un conseil : Ne les loupez pas ! Les points de Guerre que vous y gagnerez vous seront très utile à échanger contre des soldats, travailleurs, bitcoins ou même des vaisseaux d'élites.<br>Continuons sur la page «Alliance».]]></target>
       </trans-unit>
       <trans-unit id="t_ANXb7" resname="private_message">
         <source>private_message</source>

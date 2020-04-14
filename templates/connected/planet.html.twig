@@ -10,6 +10,7 @@
     {% else %}
         {% set bonus = 1 %}
     {% endif %}
+    {% set needAttacker = render(controller('App\\Service\\PlanetService::planetsAttackedAction')) %}
     <div class="front-block">
         {% if app.user.getTutorial() == 3 or app.user.getTutorial() == 4 %}
             <table class="table table-striped borderOverview tutorial">
@@ -32,7 +33,12 @@
                 <select class="planetChoice select2">
                     <option value="">{{ 'planetList.add'|trans }}</option>
                     {% for planet in planetsNoSell %}
-                        {% if planet.getOffensiveFleet(app.user) != 'ennemy' and planet.empty == false %}
+                        {% if needAttacker %}
+                            {% set attacker = render(controller('App\\Service\\PlanetService::planetAttackedAction', {'planet': planet.id})) %}
+                        {% else %}
+                            {% set attacker = false %}
+                        {% endif %}
+                        {% if attacker == false and planet.empty == false %}
                             <option value="{{ planet.getId() }}">{{ planet.getName() }}</option>
                         {% endif %}
                     {% endfor %}
@@ -44,10 +50,15 @@
                 <tr>
                     {% set x = 0 %}
                     {% for planet in planetsSeller %}
+                    {% if needAttacker %}
+                        {% set attacker = render(controller('App\\Service\\PlanetService::planetAttackedAction', {'planet': planet.id})) %}
+                    {% else %}
+                        {% set attacker = false %}
+                    {% endif %}
                     {% if x % 5 == 0 %}
                 <tr>
                     {% endif %}
-                    <td width="160" class="center-cells text-center">
+                    <td width="160" class="center-cells text-center{% if attacker %} planetFull{% endif %}">
                         <a class="text-or glyphicon glyphicon-remove" href="{{ path('planet_seller_sub', {'planet': planet.getId(), 'usePlanet': usePlanet.getId()}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.remove'|trans }}"></a> <span{% if planet.getNiobium() >= planet.getNiobiumMax() or planet.getWater() >= planet.getWaterMax() %} class="text-rouge"{% endif %}>{{ planet.getName() }}</span>
                     </td>
                     {% set x = x + 1 %}

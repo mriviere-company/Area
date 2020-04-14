@@ -271,7 +271,7 @@
                             {% if fleet.user == app.user.getId() %}<span><a href="{{ path('manage_fleet', {'fleetGive': fleet.id, 'usePlanet': usePlanet.getId()}) }}">{{  fleet.name }}</a></span>{% else %}<span class="{% if (app.user.getAlly() and fleet.alliance == app.user.getAlly().getId()) or fleet.merchant == 1 %}text-vert{% else %}text-rouge{% endif %}">{{  fleet.name }}</span>{% endif %} ({{ fleet.signature|number_format }})
                         </td>
                         <td class="center-cells text-center">
-                            {% if app.user.getWhereRadar(fleet.sector, gal) or fleet.user == app.user.getId() %}<span><a href="{{ path('map', {'sector': fleet.sector, 'gal': fleet.galaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.planetname }} ({{ fleet.galaxy }}.{{ fleet.sector }}.{{ fleet.position }})</a></span>{% else %}<span class="text-rouge">???</span>{% endif %}
+                            {% if render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': fleet.sector, 'gal': gal})) > fleet.skyBrouilleur or fleet.user == app.user.getId() %}<span><a href="{{ path('map', {'sector': fleet.sector, 'gal': fleet.galaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.planetname }} ({{ fleet.galaxy }}.{{ fleet.sector }}.{{ fleet.position }})</a></span>{% else %}<span class="text-rouge">???</span>{% endif %}
                         </td>
                         <td class="tab-cells-name text-center">
                             <span class="{% if fleet.duser == app.user.getId() %}text-bleu{% elseif (app.user.getAlly() and fleet.dalliance == app.user.getAlly().getId()) %}text-vert{% elseif fleet.duser %}text-rouge{% endif %}">{{ fleet.dname }} ({{ fleet.dgalaxy }}.{{ fleet.dsector }}.{{ fleet.dposition }})</span>
@@ -317,7 +317,7 @@
                             <span class="{% if fleet.user == app.user.getId() %}text-bleu{% elseif (app.user.getAlly() and fleet.alliance == app.user.getAlly().getId()) %}text-vert{% elseif fleet.duser %}text-rouge{% endif %}">{{ fleet.name }} ({{ fleet.galaxy }}.{{ fleet.sector }}.{{ fleet.position }})</span>
                         </td>
                         <td class="tab-cells-name text-center">
-                            {% if app.user.getWhereRadar(fleet.dsector, gal) or fleet.duser == app.user.getId() %}<span><a href="{{ path('map', {'sector': fleet.dsector, 'gal': fleet.dgalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.dname }} ({{ fleet.dgalaxy }}.{{ fleet.dsector }}.{{ fleet.dposition }})</a></span>{% else %}<span class="text-rouge">???</span>{% endif %}
+                            {% if render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': fleet.dsector, 'gal': gal})) > fleet.skyBrouilleur or fleet.duser == app.user.getId() %}<span><a href="{{ path('map', {'sector': fleet.dsector, 'gal': fleet.dgalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.dname }} ({{ fleet.dgalaxy }}.{{ fleet.dsector }}.{{ fleet.dposition }})</a></span>{% else %}<span class="text-rouge">???</span>{% endif %}
                         </td>
                         <td class="center-cells text-center">
                             <span class="timerArea" hidden>{{ fleet.flightTime|date('Y/m/d H:i:s') }}</span>

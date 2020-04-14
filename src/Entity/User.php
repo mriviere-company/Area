@@ -1835,8 +1835,8 @@ class User implements UserInterface, \Serializable
             $tPrices = 1000;
         }
         if ($this->politicCostScientist > 0) {
-            $scPrice = 50 / (1 + ($this->politicCostScientist / 5));
-            $scPrices = 100 / (1 + ($this->politicCostScientist / 5));
+            $scPrice = 100 / (1 + ($this->politicCostScientist / 5));
+            $scPrices = 200 / (1 + ($this->politicCostScientist / 5));
         } else {
             $scPrice = 100;
             $scPrices = 200;
@@ -1862,6 +1862,11 @@ class User implements UserInterface, \Serializable
      */
     public function getPriceTroopsProduct($troops): int
     {
+        if ($this->politicCostSoldier > 0) {
+            $sPrice = 1 / (1 + ($this->politicCostSoldier / 10));
+        } else {
+            $sPrice = 1;
+        }
         if ($this->politicCostTank > 0) {
             $tPrice = 8 / (1 + ($this->politicCostTank / 5));
         } else {
@@ -1872,7 +1877,7 @@ class User implements UserInterface, \Serializable
         } else {
             $scPrices = 200;
         }
-        $troops['soldierAtNbr'] = $troops['soldierAtNbr'];
+        $troops['soldierAtNbr'] = $troops['soldierAtNbr'] * $sPrice;
         $troops['tankAtNbr'] = $troops['tankAtNbr'] * $tPrice;
         $troops['scientistAtNbr'] = $troops['scientistAtNbr'] * $scPrices;
 
@@ -1895,9 +1900,9 @@ class User implements UserInterface, \Serializable
             $tPrice = 8;
         }
         if ($this->politicCostScientist > 0) {
-            $scPrice = 50 / (1 + ($this->politicCostScientist / 5));
+            $scPrice = 100 / (1 + ($this->politicCostScientist / 5));
         } else {
-            $scPrice = 100;
+            $scPrice = 200;
         }
         $troops['soldier'] = $troops['soldier'] * $sPrice;
         $troops['tank'] = $troops['tank'] * $tPrice;
@@ -1968,10 +1973,10 @@ class User implements UserInterface, \Serializable
             $sPrices = 6;
         }
         if ($this->politicCostTank > 0) {
-            $tPrice = 10 / (1 + ($this->politicCostTank / 5));
+            $tPrice = 8 / (1 + ($this->politicCostTank / 5));
             $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
         } else {
-            $tPrice = 10;
+            $tPrice = 8;
             $tPrices = 1000;
         }
         if ($this->politicCostScientist > 0) {
@@ -2029,10 +2034,10 @@ class User implements UserInterface, \Serializable
     public function getTankPrice($cat): int
     {
         if ($this->politicCostTank > 0) {
-            $tPrice = 10 / (1 + ($this->politicCostTank / 5));
+            $tPrice = 8 / (1 + ($this->politicCostTank / 5));
             $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
         } else {
-            $tPrice = 10;
+            $tPrice = 8;
             $tPrices = 1000;
         }
         if ($cat == 1) {
@@ -2262,29 +2267,6 @@ class User implements UserInterface, \Serializable
         }
         foreach($this->planets as $planet) {
             $return = $return + ($planet->getWtProduction() * 60) * $bonus;
-        }
-        return $return;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getWhereRadar($sector, $gal)
-    {
-        $return = null;
-
-        foreach($this->getPlanets() as $planet) {
-            if ($planet->getSector()->getPosition() == $sector && $planet->getSector()->getGalaxy()->getPosition() == $gal) {
-                $radar = $planet->getRadar() + $planet->getSkyRadar();
-                if($radar > $return || $return == null) {
-                    $return = $radar;
-                }
-            }
-        }
-        if ($this->getAlly()) {
-            if ($this->getAlly()->getRadarAlliance($sector, $gal) > $return || $return == null) {
-                $return = $this->getAlly()->getRadarAlliance($sector, $gal);
-            }
         }
         return $return;
     }

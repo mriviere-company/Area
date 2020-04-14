@@ -182,7 +182,7 @@ class MarketController extends AbstractController
 
         $gain = 0;
         foreach ($planetsSeller as $planet) {
-            if ($planet->getOffensiveFleet($user) != 'ennemy') {
+            if ($this->forward('App\Service\PlanetService::planetAttackedAction', ['planet'  => $planet->getId()])) {
                 if ($user->getAlly() && $user->getAlly()->getPolitic() == 'democrat') {
                     if ($user->getPoliticMerchant() > 0) {
                         $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * (1 + ($user->getPoliticMerchant() / 20)) * 0.75);

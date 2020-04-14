@@ -948,40 +948,6 @@ class Planet
     }
 
     /**
-     * @param $user
-     * @return null|string
-     */
-    public function getOffensiveFleet($user)
-    {
-        $return = null;
-        foreach($this->getFleets() as $fleet) {
-            if ($fleet->getFlightTime() == null) {
-                if ($fleet->getAttack() == 1) {
-                    $return = 'ennemy';
-                } else {
-                    $return = 'neutre';
-                }
-                if ($fleet->getUser() == $user) {
-                    $return = null;
-                }
-                if ($fleet->getUser()->getAlly() == $user->getAlly() && $user->getAlly()) {
-                    $return = null;
-                }
-                if ($fleet->getUser()->getAlly() && $user->getAlly()) {
-                    if (count($fleet->getUser()->getAlly()->getAllieds()) > 0) {
-                        foreach ($fleet->getUser()->getAlly()->getAllieds() as $allied) {
-                            if ($allied->getAllyTag() == $user->getAlly()->getSigle() && $allied->getAccepted() == 1) {
-                                $return = null;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return $return;
-    }
-
-    /**
      * @return int
      */
     public function getFleetsAbandon($user): int

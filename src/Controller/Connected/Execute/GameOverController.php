@@ -166,7 +166,7 @@ class GameOverController extends AbstractController
             $salon->removeUser($userGO);
             $userGO->setSalons(null);
         }
-        echo "Flush ";
+        echo "Flush -> " . count($userGOs) . " ";
 
         $em->flush();
 

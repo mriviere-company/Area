@@ -13,7 +13,7 @@ quest.name: Quête à accomplir
 quest.gain: Récompense
 quest.star: Rareté
 quest.info: 'Chaque jour lors du rapport de l''Empire vous recevez aléatoirement trois quêtes a finir avant le prochain rapport :'
-quest.tutorial: 'Tout les jours à 18h00 vous recevez votre rapport d''Empire avec ses bitcoins quotidien et 3 quêtes a accomplir en 24h, si celle-ci ne sont pas remplie elles seront supprimées. Un conseil : Ne les loupez pas ! Les points de Guerre que vous y gagnerez vous seront très utile à échanger contre des soldats, travailleurs, bitcoins ou même des vaisseaux d''élites.<br>Continuons sur la page «Alliance».'
+quest.tutorial: 'Tous les jours à 18h00 vous recevez votre rapport d''Empire avec ses bitcoins quotidien et 3 quêtes a accomplir en 24h, si celle-ci ne sont pas remplie elles seront supprimées. Un conseil : Ne les loupez pas ! Les points de Guerre que vous y gagnerez vous seront très utile à échanger contre des soldats, travailleurs, bitcoins ou même des vaisseaux d''élites.<br>Continuons sur la page «Alliance».'
 private_message: 'Envoyer un message privé'
 salon_message: 'Écrire un message dans le salon'
 spy_planet: 'Sonder la planète d''un joueur'

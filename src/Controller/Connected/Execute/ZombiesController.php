@@ -40,6 +40,15 @@ class ZombiesController extends AbstractController
                 ->setMaxresults(1)
                 ->getOneOrNullResult();
 
+            $planetZb = $em->getRepository('App:Planet')
+                ->createQueryBuilder('p')
+                ->where('p.user = :user')
+                ->setParameters(['user' => $zombie])
+                ->orderBy('p.ground', 'DESC')
+                ->getQuery()
+                ->setMaxresults(1)
+                ->getOneOrNullResult();
+
             if ($planetBis) {
                 $planetAtt = $planetBis;
             }
@@ -102,7 +111,7 @@ class ZombiesController extends AbstractController
                             $planetAtt->setTank(0);
                             $planetAtt->setWorker($planetAtt->getWorker() + ($aMilitary / (1 + ($zUser->getPoliticWorkerDef() / 5))));
                             $workerDtmp = $workerDtmp - $planetAtt->getWorker();
-                            $reportDef->setContent("«Au secours !» des civils crient et cours dans tout les sens sur " . $planetAtt->getName() . " en <span><a href='/connect/carte-spatiale/" . $planetAtt->getSector()->getPosition() . "/" . $planetAtt->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetAtt->getSector()->getGalaxy()->getPosition() . ":" . $planetAtt->getSector()->getPosition() . ":" . $planetAtt->getPosition() . "</a></span>.<br>Vous n'aviez pas prévu suffisament de soldats et tanks pour faire face a la menace et des zombies envahissent les villes. Heureusement pour vous les travailleurs se réunissent et parviennent exterminer les zombies mais ce n'est pas grâce a vous.<br>" . number_format($soldierAtmp) . " zombies sont tués. <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> de vos soldats succombent aux mâchoires de ces infamies et <span class='text-rouge'>" . number_format($tankDtmp) . "</span> tanks sont mit hors de service. <span class='text-rouge'>" . number_format($workerDtmp) . "</span> de vos travailleurs sont retrouvés morts.<br>Vous ne remportez aucun points de Guerre pour avoir sacrifié vos civils.");
+                            $reportDef->setContent("«Au secours !» des civils crient et cours dans tous les sens sur " . $planetAtt->getName() . " en <span><a href='/connect/carte-spatiale/" . $planetAtt->getSector()->getPosition() . "/" . $planetAtt->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetAtt->getSector()->getGalaxy()->getPosition() . ":" . $planetAtt->getSector()->getPosition() . ":" . $planetAtt->getPosition() . "</a></span>.<br>Vous n'aviez pas prévu suffisament de soldats et tanks pour faire face a la menace et des zombies envahissent les villes. Heureusement pour vous les travailleurs se réunissent et parviennent exterminer les zombies mais ce n'est pas grâce a vous.<br>" . number_format($soldierAtmp) . " zombies sont tués. <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> de vos soldats succombent aux mâchoires de ces infamies et <span class='text-rouge'>" . number_format($tankDtmp) . "</span> tanks sont mit hors de service. <span class='text-rouge'>" . number_format($workerDtmp) . "</span> de vos travailleurs sont retrouvés morts.<br>Vous ne remportez aucun points de Guerre pour avoir sacrifié vos civils.");
                             $em->persist($reportDef);
                         } else {
                             $diviser = (1 + ($zUser->getPoliticTankDef() / 10)) * 3000;
@@ -182,7 +191,7 @@ class ZombiesController extends AbstractController
             $fleetZb->setCorvetWar(1 + round(($zUser->getAllShipsPoint() / (7 * rand(1, 5))) / 5));
             $fleetZb->setFregate(1 + round(($zUser->getAllShipsPoint() / (8 * rand(1, 5))) / 5));
             $fleetZb->setUser($zombie);
-            $fleetZb->setPlanet($planetAtt);
+            $fleetZb->setPlanet($planetZb);
             $fleetZb->setSignature($fleetZb->getNbrSignatures());
             $destination = new Destination();
             $destination->setFleet($fleetZb);
@@ -193,7 +202,7 @@ class ZombiesController extends AbstractController
             $fleetZb->setFlightType(1);
             $em->persist($fleetZb);
         }
-        echo "Flush ";
+        echo "Flush -> " . count($zUsers) . " ";
 
         $em->flush();
 

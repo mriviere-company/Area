@@ -814,7 +814,7 @@ class MoveFleetController extends AbstractController
                 }
             }
         }
-        echo "Flush ";
+        echo "Flush -> " . count($fleets) . " ";
 
         $em->flush();
 

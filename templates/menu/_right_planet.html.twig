@@ -1,28 +1,35 @@
 {% trans_default_domain 'front_menu' %}
 
     {% set allTuto = app.user.getTutorial() %}
+    {% set needAttacker = render(controller('App\\Service\\PlanetService::planetsAttackedAction')) %}
+    {% if needAttacker %}
+        {% set attacker = render(controller('App\\Service\\PlanetService::planetAttackedAction', {'planet': usePlanet.getId()})) %}
+    {% else %}
+        {% set attacker = false %}
+    {% endif %}
+    {% set missionEnded = render(controller('App\\Service\\ZombieService::zombieIndicatorAction')) %}
 <nav class="navbar-right text-center pr-4 hideForLittle">
     {% if allPlanets|length <= 12 %}
         {% if allPlanets|length > 2 %}
             {% if allTuto > 22 %}<a href="{{ path('zombie', {'usePlanet': usePlanet.getId()}) }}">{% endif %}
-            <div data-toggle="tooltip" data-placement="left" title="{{ 'tooltip.zombie'|trans }}" class="mb-4 bg-right px-4 py-2 zombie-right{% if allTuto == 51 %} tutorial-show{% endif %}">
+            <div data-toggle="tooltip" data-placement="left" {% if missionEnded %}title="{{ 'tooltip.missions'|trans }}"{% else %}title="{{ 'tooltip.zombie'|trans }}"{% endif %} class="mb-4 bg-right px-4 py-2 zombie-right{% if allTuto == 51 %} tutorial-show{% endif %}">
                 <div class="pt-2 float-left"><img alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ asset('img/zombie_indic.gif') }}"></div>
                 <div class="float-right">
                     <div class="mt-2">
-                        {{ 'zombie.indic'|trans }} {{ app.user.getZombieAtt() }}
+                        {{ 'zombie.indic'|trans }} {{ app.user.getZombieAtt() }}{% if missionEnded %}*{% endif %}
                     </div>
                     <div class="mt-2">
-                        <span class="mt-5 timerArea" hidden>{% if app.user.getZombieAt() %}{{ app.user.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span>{#{% if mission.getMissionAt()|date('Y/m/d H:i:s') < "now"|date('Y/m/d H:i:s') %}<span class="glyphicon glyphicon-ok-sign text-vert" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.missions'|trans }}"></span>{% endif %} en attente#}
+                        <span class="mt-5 timerArea" hidden>{% if app.user.getZombieAt() %}{{ app.user.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span>
                     </div>
                 </div>
             </div>
             {% if allTuto > 22 %}</a>{% endif %}
         {% endif %}
-        <div {% if usePlanet.getOffensiveFleet(app.user) == 'ennemy' %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-4 bg-right px-4 py-2{% if usePlanet.getOffensiveFleet(app.user) == 'ennemy' %} planetFull{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} constructFree{% endif %}">
+        <div {% if attacker %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-4 bg-right px-4 py-2{% if attacker %} planetFull{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} constructFree{% endif %}">
             <div class="pt-2 float-left"><img alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ vich_uploader_asset(usePlanet, 'imageFile') }}"></div>
             <div class="float-right">
                 <div class="mt-2{% if allTuto < 14 %} tutorial-hide{% endif %}">
-                    {% if usePlanet.getOffensiveFleet(app.user) == 'neutre' %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'fleetNoAlly'|trans }}" class="text-rouge">{{ usePlanet.getName() }}</span>{% else %}{% if usePlanet.getMoon() %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'moonPlanet'|trans }}" class="text-jaune">{{ usePlanet.getName() }}</span>{% else %}{{ usePlanet.getName() }}{% endif %}{% endif %} - <span><a href="{{ path('map', {'sector': usePlanet.getSector().getId(), 'gal': usePlanet.getSector().getGalaxy().getId(), 'usePlanet': usePlanet.getId()}) }}">({{ usePlanet.getSector().getGalaxy.getPosition() }}.{{ usePlanet.getSector().getPosition() }}.{{ usePlanet.getPosition() }})</a></span>
+                    {% if attacker == false %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'fleetNoAlly'|trans }}" class="text-rouge">{{ usePlanet.getName() }}</span>{% else %}{% if usePlanet.getMoon() %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'moonPlanet'|trans }}" class="text-jaune">{{ usePlanet.getName() }}</span>{% else %}{{ usePlanet.getName() }}{% endif %}{% endif %} - <span><a href="{{ path('map', {'sector': usePlanet.getSector().getId(), 'gal': usePlanet.getSector().getGalaxy().getId(), 'usePlanet': usePlanet.getId()}) }}">({{ usePlanet.getSector().getGalaxy.getPosition() }}.{{ usePlanet.getSector().getPosition() }}.{{ usePlanet.getPosition() }})</a></span>
                 </div>
                 <div class="ml-2">
                     <span data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}">{{ usePlanet.getGroundPlace() }}/{{ usePlanet.getGround() }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/ground.png') }}"></span> <span data-toggle="tooltip" data-placement="bottom" title="{{ 'SkyImg'|trans }}">{{ usePlanet.getSkyPlace() }}/{{ usePlanet.getSky() }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/sky.png') }}"></span>
@@ -50,11 +57,16 @@
                         </div>
                     </div>
                     {% else %}
-                        {#planet.getOffensiveFleet(app.user)#}<div{% if 'offensive' == 'ennemy' %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-4 bg-right px-4 py-2{% if 'offensive' == 'ennemy' %} planetFull{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} constructFree{% endif %}">  {#or planet.getSkyPlace() != planet.getSky()#}
+                        {% if needAttacker %}
+                            {% set attackerBis = render(controller('App\\Service\\PlanetService::planetAttackedAction', {'planet': planet.id})) %}
+                        {% else %}
+                            {% set attackerBis = false %}
+                        {% endif %}
+                        <div{% if attackerBis %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-4 bg-right px-4 py-2{% if attackerBis %} planetFull{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} constructFree{% endif %}">  {#or planet.getSkyPlace() != planet.getSky()#}
                             <div class="pt-2 float-left"><a href="{{ planet.id }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}"></a></div>
                             <div class="float-right">
                                 <div class="mt-2{% if allTuto < 14 %} tutorial-hide{% endif %}">
-                                    {% if 'offensive' == 'neutre' %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'fleetNoAlly'|trans }}" class="text-rouge">{{ planet.name }}</span>{% else %}{% if planet.moon %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'moonPlanet'|trans }}" class="text-jaune">{{ planet.name }}</span>{% else %}{{ planet.name }}{% endif %}{% endif %} - <span><a href="{{ path('map', {'sector': planet.idSector, 'gal': planet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ planet.galaxy }}:{{ planet.sector }}:{{ planet.position }}</a></span>
+                                    {% if attackerBis == false %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'fleetNoAlly'|trans }}" class="text-rouge">{{ planet.name }}</span>{% else %}{% if planet.moon %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'moonPlanet'|trans }}" class="text-jaune">{{ planet.name }}</span>{% else %}{{ planet.name }}{% endif %}{% endif %} - <span><a href="{{ path('map', {'sector': planet.idSector, 'gal': planet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ planet.galaxy }}:{{ planet.sector }}:{{ planet.position }}</a></span>
                                 </div>
                                 <div class="ml-2">
                                     <span data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}">{{ planet.groundPlace }}/{{ planet.ground }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/ground.png') }}"></span> <span data-toggle="tooltip" data-placement="bottom" title="{{ 'SkyImg'|trans }}">{{ planet.skyPlace }}/{{ planet.sky }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/sky.png') }}"></span>
@@ -75,13 +87,13 @@
         <div class="row small-right-planet">
             <div class="col-6 right-link-planet">
                 <a href="{{ path('zombie', {'usePlanet': usePlanet.getId()}) }}">
-                    <div data-toggle="tooltip" data-placement="left" title="{{ 'tooltip.zombie'|trans }}" class="mb-2 bg-right-small px-2 py-1 zombie-right{% if allTuto == 51 %} tutorial-show{% endif %}">
-                        <div class="pt-1 float-left"><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ asset('img/zombie_indic.gif') }}"><span>{{ 'zombie.info'|trans }}</span></div>
+                    <div data-toggle="tooltip" data-placement="left" {% if missionEnded %}title="{{ 'tooltip.missions'|trans }}"{% else %}title="{{ 'tooltip.zombie'|trans }}"{% endif %} class="mb-2 bg-right-small px-2 py-1 zombie-right{% if allTuto == 51 %} tutorial-show{% endif %}">
+                        <div class="pt-1 float-left"><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ asset('img/zombie_indic.gif') }}"><span>{{ 'zombie.info'|trans }}</span>{% if missionEnded %}*{% endif %}</div>
                     </div>
                 </a>
             </div>
             <div class="col-6">
-                <div {% if usePlanet.getOffensiveFleet(app.user) == 'ennemy' %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-2 bg-right-small px-2 py-1{% if usePlanet.getOffensiveFleet(app.user) == 'ennemy' %} planetFull{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} constructFree{% endif %}">
+                <div {% if attacker %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-2 bg-right-small px-2 py-1{% if attacker %} planetFull{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} constructFree{% endif %}">
                     <div class="pt-1 float-left"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(usePlanet, 'imageFile') }}">{{ usePlanet.getName() }}</span></div>
                 </div>
             </div>
@@ -97,10 +109,15 @@
                                 </div>
                             </div>
                         {% else %}
+                            {% if needAttacker %}
+                                {% set attackerBis = render(controller('App\\Service\\PlanetService::planetAttackedAction', {'planet': planet.id})) %}
+                            {% else %}
+                                {% set attackerBis = false %}
+                            {% endif %}
                             <div class="col-6 right-link-planet">
                                 <a href="{{ planet.id }}">
-                                    <div{% if 'offensive' == 'ennemy' %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-2 bg-right-small px-2 py-2{% if 'offensive' == 'ennemy' %} planetFull{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} constructFree{% endif %}">
-                                        <div class="pt-1 float-left"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">{% if planet.moon %}<span class="text-jaune">{{ planet.name }}{% else %}{{ planet.name }}{% endif %}</span></div>
+                                    <div{% if attackerBis %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-2 bg-right-small px-2 py-2{% if attackerBis %} planetFull{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} constructFree{% endif %}">
+                                        <div class="pt-1 float-left"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">{% if planet.moon %}<span class="text-jaune">{{ planet.name }}</span>{% else %}{{ planet.name }}{% endif %}</div>
                                     </div>
                                 </a>
                             </div>

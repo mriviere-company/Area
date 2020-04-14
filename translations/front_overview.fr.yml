@@ -13,7 +13,7 @@ tooltip.pseudo: 'Le nom de votre Commandant.'
 tooltip.maxPlanets: 'Votre nombre de planètes ainsi que la limite maximum.'
 tooltip.ships: 'Total de vos vaisseaux'
 tooltip.shipsAlly: 'Total des vaisseaux de l''alliance'
-tooltip.maxPlanetsAlly: 'Le nombre de planètes que tout les membres de l''alliance ont ensemble.'
+tooltip.maxPlanetsAlly: 'Le nombre de planètes que tous les membres de l''alliance ont ensemble.'
 tooltip.bitcoinAlly: 'Les bitcoins dans la banque de votre Alliance.'
 tooltip.pdg: 'Pour gagner des Points de Guerre : Accomplissez les Objectifs, vendez des ressources aux marchands ou encore combattez d''autres joueurs!'
 title.batiment: Bâtiment

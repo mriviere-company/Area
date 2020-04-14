@@ -335,7 +335,7 @@ class BotController extends AbstractController
                         ->getResult();
 
                     foreach ($planetsSeller as $planet) {
-                        if ($planet->getOffensiveFleet($bot) != 'ennemy') {
+                        if ($this->forward('App\Service\PlanetService::planetAttackedAction', ['planet'  => $planet->getId()])) {
                             $sellTime = new DateTime();
                             $sellTime->setTimezone(new DateTimeZone('Europe/Paris'));
                             $sellTime->add(new DateInterval('PT' . 1200 . 'S'));

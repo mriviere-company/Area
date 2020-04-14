@@ -106,7 +106,7 @@ class PlanetsController extends AbstractController
                 $planet->setConstructAt(null);
             }
         }
-        echo "Flush ";
+        echo "Flush -> " . count($planets) . " ";
 
         $em->flush();
 
@@ -126,7 +126,7 @@ class PlanetsController extends AbstractController
                 $soldierAt->setSoldierAtNbr(null);
             }
         }
-        echo "Flush ";
+        echo "Flush -> " . count($planetSoldiers) . " ";
 
         $em->flush();
 
@@ -146,7 +146,7 @@ class PlanetsController extends AbstractController
                 $tankAt->setTankAtNbr(null);
             }
         }
-        echo "Flush ";
+        echo "Flush -> " . count($planetTanks) . " ";
 
         $em->flush();
 
@@ -166,7 +166,7 @@ class PlanetsController extends AbstractController
                 $nuclear->setNuclearAtNbr(null);
             }
         }
-        echo "Flush ";
+        echo "Flush -> " . count($planetNuclears) . " ";
 
         $em->flush();
 
@@ -188,7 +188,7 @@ class PlanetsController extends AbstractController
                 $scientistAt->setScientistAtNbr(null);
             }
         }
-        echo "Flush ";
+        echo "Flush -> " . count($planetScientists) . " ";
 
         $em->flush();
 
@@ -225,7 +225,7 @@ class PlanetsController extends AbstractController
             $product->setPlanet(null);
             $em->remove($product);
         }
-        echo "Flush ";
+        echo "Flush -> " . count($products) . " ";
 
         $em->flush();
 
@@ -258,7 +258,7 @@ class PlanetsController extends AbstractController
                 $radar->setRadarAt(null);
             }
         }
-        echo "Flush ";
+        echo "Flush -> " . count($radars) . " ";
 
         $em->flush();
 
@@ -270,7 +270,7 @@ class PlanetsController extends AbstractController
         foreach ($prods as $prod) {
             $em->remove($prod);
         }
-        echo "Flush ";
+        echo "Flush -> " . count($prods) . " ";
 
         $em->flush();
 

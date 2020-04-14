@@ -104,8 +104,9 @@ class DailyController extends AbstractController
                     }
                 }
                 $userBitcoin = $user->getBitcoin();
-                $taxe = (($ally->getTaxe() / 100) * $gain);
-                $gain = $gain - $taxe;
+                $newGain = $gain /  (1 + $ally->getTaxe() / 100);
+                $taxe = $gain - $newGain;
+                $gain = $newGain;
                 if ($user->getBot() == false) {
                     $user->setBitcoin($userBitcoin - $taxe);
                 }
@@ -212,7 +213,7 @@ class DailyController extends AbstractController
             }
 
             if ($economicGO == 1) {
-                $report->setContent($report->getContent() . "<br>Votre réserve de Bitcoins passe en négatif et vous n'êtes plus en mesure d'entretenir votre armada.<br>Vous perdez tout les vaisseaux que contenait votre Empire et redémarrez avec 5.000 Bitcoins.");
+                $report->setContent($report->getContent() . "<br>Votre réserve de Bitcoins passe en négatif et vous n'êtes plus en mesure d'entretenir votre armada.<br>Vous perdez tous les vaisseaux que contenait votre Empire et redémarrez avec 5.000 Bitcoins.");
             }
             $em->persist($report);
             $x++;
@@ -250,7 +251,7 @@ class DailyController extends AbstractController
 
             $server->setDailyReport($nowDaily);
         }
-        echo "Flush ";
+        echo "Flush -> " . count($users) . " ";
 
         $em->flush();
 

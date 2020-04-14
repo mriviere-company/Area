@@ -85,7 +85,7 @@ class FleetsController extends AbstractController
             $em->persist($reportNuclearAtt);
             $em->persist($reportNuclearDef);
         }
-        echo "Flush ";
+        echo "Flush -> " . count($nukeBombs) . " ";
 
         $em->flush();
 
@@ -171,7 +171,7 @@ class FleetsController extends AbstractController
                 $fleetCdr->getUser()->removeQuest($quest);
             }
         }
-        echo "Flush ";
+        echo "Flush -> " . count($fleetCdrs) . " ";
 
         $em->flush();
 
@@ -227,7 +227,7 @@ class FleetsController extends AbstractController
         }
         $one->setSignature($one->getNbrSignatures());
         $em->persist($one);
-        echo "Flush ";
+        echo "Flush -> " . count($fleetRegroups) . " ";
 
         $em->flush();
 
@@ -239,7 +239,7 @@ class FleetsController extends AbstractController
         foreach ($dests as $dest) {
             $em->remove($dest);
         }
-        echo "Flush ";
+        echo "Flush -> " . count($dests) . " ";
 
         $em->flush();
 

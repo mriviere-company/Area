@@ -97,7 +97,7 @@ class AsteroideController extends AbstractController
                 }
             }
         }
-        echo "Flush ";
+        echo "Flush -> " . count($asteroides) . " ";
 
         $em->flush();
 

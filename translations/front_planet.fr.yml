@@ -27,7 +27,7 @@ tooltip.planet: 'Infrastructures de la planète'
 tank: Tanks
 planetList.add: Ajouter
 market.autoSell: 'Vente aux marchands '
-tooltip.autoSell: 'Sélectionnez des planètes et vendez en un clic toutes les ressources de celles-ci aux marchands ! (25% de gains en moins qu''en se déplaçant soi-même aux marchands)'
+tooltip.autoSell: 'Sélectionnez des planètes et vendez en un clic toutes les ressources de celles-ci aux marchands ! (25% de gains supplémentaires en se déplaçant soi-même aux marchands)'
 tooltip.remove: 'Retirer de la liste de planète'
 market.sellAll: 'Vendre les ressources'
 planet.sellPrice: 'Prix unitaire :'

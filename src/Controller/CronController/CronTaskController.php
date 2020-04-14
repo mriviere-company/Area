@@ -370,14 +370,15 @@ class CronTaskController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $stats = $em->getRepository('App:Stats')
-            ->createQueryBuilder('s')
-            ->join('s.user', 'u')
+        $stats = $em->getRepository('App:Report')
+            ->createQueryBuilder('r')
+            ->join('r.user', 'u')
             ->andWhere('u.bot = true')
             ->getQuery()
             ->getResult();
 
         foreach ($stats as $stat) {
+            $stat->setImageName(null);
             $em->remove($stat);
         }
 
@@ -408,7 +409,7 @@ class CronTaskController extends AbstractController
         foreach ($newBots as $newBot) {
             $newBot->setBot(1);
         }
-        echo "Nouveau bots finis.";
+        echo count($newBots) . " Nouveau bots finis.";
         $em->flush();
         exit;
     }
@@ -420,14 +421,14 @@ class CronTaskController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+        $count = 0;
 
         $planets = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->join('p.fleets', 'f')
-            ->join('f.user', 'u')
-            ->where('u.id = :user')
+            ->where('f.user = :user')
             ->andWhere('f.flightTime is null')
-            ->setParameters(['user' => $hydra->getId()])
+            ->setParameters(['user' => $hydra])
             ->getQuery()
             ->getResult();
 
@@ -439,7 +440,7 @@ class CronTaskController extends AbstractController
                 $one->setName('Horde V');
                 $one->setAttack(1);
                 foreach ($planet->getFleets() as $fleet) {
-                    if ($fleet->getUser() == $hydra) {
+                    if ($fleet->getUser() == $hydra && !$fleet->getDestination()) {
                         $one->setBarge($one->getBarge() + $fleet->getBarge());
                         $one->setHunter($one->getHunter() + $fleet->getHunter());
                         $one->setHunterWar($one->getHunterWar() + $fleet->getHunterWar());
@@ -451,13 +452,14 @@ class CronTaskController extends AbstractController
                         $one->setDestroyer($one->getDestroyer() + $fleet->getDestroyer());
                         $fleet->setUser(null);
                         $em->remove($fleet);
+                        $count = $count + 1;
                     }
                 }
                 $one->setSignature($one->getNbrSignatures());
                 $em->persist($one);
             }
         }
-        echo "Horde regroupés finis.";
+        echo $count . " Horde regroupés finis.";
         $em->flush();
         exit;
     }

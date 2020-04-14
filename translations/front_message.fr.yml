@@ -17,7 +17,7 @@ message.anonymousSender: Anonyme
 message.sendTo: 'Envoyé à : '
 message.sendAnonym: 'En anonyme'
 responde: Répondre
-AllNewView: 'Marquer tout les messages comme lus'
+AllNewView: 'Marquer tous les messages comme lus'
 NewMessage: Nouveau
 share: 'Générer lien de partage'
 to: 'à'
