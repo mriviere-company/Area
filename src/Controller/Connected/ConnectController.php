@@ -54,8 +54,8 @@ class ConnectController extends AbstractController
             $planet->setGroundPlace(10);
             $planet->setSkyPlace(1);
             $planet->setMiner(3);
-            $planet->setNbProduction(12.6);
-            $planet->setWtProduction(11.54);
+            $planet->setNbProduction(66);
+            $planet->setWtProduction(45);
             $planet->setExtractor(3);
             $planet->setSpaceShip(1);
             $planet->setHunter(5);

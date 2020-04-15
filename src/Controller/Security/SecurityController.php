@@ -191,12 +191,39 @@ class SecurityController extends AbstractController
         $user = $this->getUser();
 
         if($user) {
+            if ($user->getRoles()[0] == 'ROLE_MODO' || $user->getRoles()[0] == 'ROLE_ADMIN') {
+                return $this->redirectToRoute('administration');
+            }
             if ($user->getBot() == 1) {
                 $user->setBot(0);
                 $em->flush();
             }
-            if($user->getRoles()[0] == 'ROLE_PRIVATE') {
-                return $this->redirectToRoute('private_home');
+
+            if (!$user->getSpecUsername()) {
+                if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+                    $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
+                } else {
+                    $userIp = $_SERVER['REMOTE_ADDR'];
+                }
+
+                $userSameIp = $em->getRepository('App:User')
+                    ->createQueryBuilder('u')
+                    ->where('u.ipAddress = :ip')
+                    ->andWhere('u.username != :user')
+                    ->setParameters(['user' => $user->getUsername(), 'ip' => $userIp])
+                    ->getQuery()
+                    ->getOneOrNullResult();
+
+                if($userSameIp && !$user->getSpecUsername()) {
+                    $this->addFlash("fail", "Vous avez déjà le compte : " . $userSameIp->getUsername());
+                    return $this->redirectToRoute('home');
+                }
+            } else {
+                $userIp = null;
+                if ($user->getUsername() != 'admin') {
+                    $user->setIpAddress(null);
+                    $em->flush();
+                }
             }
 
             if($user->getGameOver()) {
@@ -245,103 +272,5 @@ class SecurityController extends AbstractController
      */
     public function logoutAction()
     {
-    }
-
-    /**
-     * @Route("/deconnexion", name="disconnect_me")
-     * @Route("/deconnexion/", name="disconnect_me_noSlash")
-     */
-    public function disconnectMeAction()
-    {
-        return $this->redirectToRoute('logout');
-    }
-
-    /**
-     * @Route("/login-redirect", name="login_redirect")
-     * @Route("/login-redirect/", name="login_redirect_noSlash")
-     */
-    public function loginRedirectAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $user = $this->getUser();
-
-        if ($user->getUsername() != 'admin' && !$user->getSpecUsername()) {
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $userIp = $_SERVER['REMOTE_ADDR'];
-        }
-        if ($user->getBot() == 1) {
-            $user->setBot(0);
-            $em->flush();
-        }
-
-        $userSameIp = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->where('u.ipAddress = :ip')
-            ->andWhere('u.username != :user')
-            ->setParameters(['user' => $user->getUsername(), 'ip' => $userIp])
-            ->getQuery()
-            ->getOneOrNullResult();
-
-        if($userSameIp && $user->getRoles()[0] == 'ROLE_USER') {
-            $this->addFlash("fail", "Vous avez déjà le compte : " . $userSameIp->getUsername());
-            return $this->redirectToRoute('home');
-        }
-        } else {
-            $userIp = null;
-            if ($user->getUsername() != 'admin') {
-                $user->setIpAddress(null);
-            }
-        }
-
-        if ($user->getRoles()[0] == 'ROLE_USER') {
-            $em = $this->getDoctrine()->getManager();
-            $now = new DateTime();
-            $now->setTimezone(new DateTimeZone('Europe/Paris'));
-
-            if($user->getGameOver()) {
-                return $this->redirectToRoute('game_over');
-            }
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
-
-            $user->setIpAddress($userIp);
-            $user->setLastActivity($now);
-            $em->flush();
-
-            if($usePlanet) {
-                return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
-            } else {
-
-                $servers = $em->getRepository('App:Server')
-                    ->createQueryBuilder('s')
-                    ->select('s.id, s.open, s.pvp')
-                    ->groupBy('s.id')
-                    ->orderBy('s.id', 'ASC')
-                    ->getQuery()
-                    ->getResult();
-
-                $galaxys = $em->getRepository('App:Galaxy')
-                    ->createQueryBuilder('g')
-                    ->join('g.server', 'ss')
-                    ->join('g.sectors', 's')
-                    ->join('s.planets', 'p')
-                    ->leftJoin('p.user', 'u')
-                    ->select('g.id, g.position, count(DISTINCT u.id) as users, ss.id as server')
-                    ->groupBy('g.id')
-                    ->orderBy('g.position', 'ASC')
-                    ->getQuery()
-                    ->getResult();
-
-                return $this->render('connected/play.html.twig', [
-                    'galaxys' => $galaxys,
-                    'servers' => $servers
-                ]);
-            }
-        }
-        if ($this->getUser()->getRoles()[0] == 'ROLE_MODO' || $this->getUser()->getRoles()[0] == 'ROLE_ADMIN') {
-            return $this->redirectToRoute('administration');
-        }
-        return $this->redirectToRoute('logout');
     }
 }

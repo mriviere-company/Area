@@ -574,9 +574,9 @@ class Planet
         $this->tank = null;
         $this->scientistMax = 0;
         $this->workerMax = 250000;
-        $this->nbProduction = 6;
-        $this->wtProduction = 5;
-        $this->fdProduction = 8;
+        $this->nbProduction = 7;
+        $this->wtProduction = 6;
+        $this->fdProduction = 9;
         $this->miner = null;
         $this->niobiumStock = null;
         $this->extractor = null;

@@ -29,5 +29,6 @@ services:
         tags:
             - { name: twig.extension }
 
+    Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider: ~
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

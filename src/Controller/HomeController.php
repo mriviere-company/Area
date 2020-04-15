@@ -17,9 +17,6 @@ class HomeController extends AbstractController
         $user = $this->getUser();
 
         if($user) {
-            if($user->getRoles()[0] == 'ROLE_PRIVATE') {
-                return $this->redirectToRoute('private_home');
-            }
 
             $usePlanet = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')

@@ -55,7 +55,7 @@
                 </tbody>
             </table>
         {% endfor %}
-        <div><a class="my-4" href="{{ path('disconnect_me') }}"><button class="text-rouge m-5 text-more p-3">{{ 'disconnect'|trans }}</button></a></div>
+        <div><a class="my-4" href="{{ path('logout') }}"><button class="text-rouge m-5 text-more p-3">{{ 'disconnect'|trans }}</button></a></div>
     <div class="mt-3"><img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/go.jpg') }}"></div>
     </div>
 {% endblock %}

@@ -364,9 +364,41 @@ class CronTaskController extends AbstractController
     }
 
     /**
-     * @Route("/repare/", name="repare_it")
+     * @Route("/make-miner/", name="make_miner")
      */
-    public function repareAction()
+    public function makeMinerAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $planets = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->andWhere('p.miner > 0 or p.extractor > 0')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($planets as $planet) {
+            if ($planet->getMiner()) {
+                $planet->setNbProduction($planet->getMiner() * 22);
+            } else {
+                $planet->setNbProduction(7);
+            }
+            if ($planet->getExtractor()) {
+                $planet->setWtProduction($planet->getExtractor() * 15);
+            } else {
+                $planet->setWtProduction(6);
+            }
+        }
+
+        echo "Planète stats -> " . count($planets);
+        $em->flush();
+
+        exit;
+    }
+
+    /**
+     * @Route("/delete-reports/", name="delete_reportss")
+     */
+    public function deleteReportAction()
     {
         $em = $this->getDoctrine()->getManager();
 

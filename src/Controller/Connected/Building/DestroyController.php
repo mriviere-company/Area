@@ -36,7 +36,7 @@ class DestroyController extends AbstractController
         }
         $now->add(new DateInterval('PT' . 60 . 'S'));
         $usePlanet->setMiner($level - 1);
-        $usePlanet->setNbProduction($usePlanet->getMiner() * 15);
+        $usePlanet->setNbProduction($usePlanet->getMiner() * 22);
         $usePlanet->setGroundPlace($newGround);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
@@ -65,7 +65,7 @@ class DestroyController extends AbstractController
         }
         $now->add(new DateInterval('PT' . 60 . 'S'));
         $usePlanet->setExtractor($level - 1);
-        $usePlanet->setWtProduction($usePlanet->getExtractor() * 10);
+        $usePlanet->setWtProduction($usePlanet->getExtractor() * 15);
         $usePlanet->setGroundPlace($newGround);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);

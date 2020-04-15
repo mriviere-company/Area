@@ -281,8 +281,8 @@ class FightController extends AbstractController
             return($blockDef);
         }
 
-        $firstBlood = (($missile / 4) + ($plasma * 2) + ($laser * 1.5));
-        $firstBloodD = (($missileD / 4) + ($plasmaD * 2) + ($laserD * 1.5));
+        $firstBlood = (($missile / 7) + ($plasma * 4) + ($laser * 2));
+        $firstBloodD = (($missileD / 7) + ($plasmaD * 4) + ($laserD * 2));
         $countSAtt = 0;
         $countSDef = 0;
         if(($firstBlood > 0) && $shieldD > 0) {
@@ -305,15 +305,15 @@ class FightController extends AbstractController
             $countSAtt = 1;
             $armor = $armor - $firstBloodD;
         }
-        $secondShot = (($missile * 2) + ($plasma / 4) + ($laser * 1.5));
-        $secondShotD = (($missileD * 2) + ($plasmaD / 4) + ($laserD * 1.5));
+        $secondShot = ($missile + ($plasma / 2) + ($laser * 2));
+        $secondShotD = ($missileD + ($plasmaD / 2) + ($laserD * 2));
         if($countSDef - $countSAtt > 0) {
             $armorD = $armorD - ($secondShot * ($countSDef - $countSAtt));
-            $secondShotD = (($missileD * 2) + ($plasmaD / 4) + ($laserD * 1.5));
+            $secondShotD = ($missileD + ($plasmaD / 2) + ($laserD * 2));
         }
         if($countSAtt - $countSDef > 0) {
             $armor = $armor - ($secondShot * ($countSAtt - $countSDef));
-            $secondShot = (($missile * 2) + ($plasma / 4) + ($laser * 1.5));
+            $secondShot = ($missile + ($plasma / 3) + ($laser * 2));
         }
         $countShot = 0;
         while($armorD > 0 && $armor > 0 && $countShot < 100) {
@@ -329,11 +329,11 @@ class FightController extends AbstractController
         }
 
         if ($zombie == 1) {
-            $warPointA = round((($armorSaveA - ($armor > 1 ? $armor : 0)) / 100) / $nbrBlockDef);
-            $warPointB = round((($armorSaveD - ($armorD > 1 ? $armorD : 0)) / 100) / $nbrBlockAtt);
+            $warPointA = round((($armorSaveA - ($armor > 1 ? $armor : 0)) / 65) / $nbrBlockDef);
+            $warPointB = round((($armorSaveD - ($armorD > 1 ? $armorD : 0)) / 65) / $nbrBlockAtt);
         } else {
-            $warPointA = round((($armorSaveA - ($armor > 1 ? $armor : 0)) / 20) / $nbrBlockDef);
-            $warPointB = round((($armorSaveD - ($armorD > 1 ? $armorD : 0)) / 20) / $nbrBlockAtt);
+            $warPointA = round((($armorSaveA - ($armor > 1 ? $armor : 0)) / 10) / $nbrBlockDef);
+            $warPointB = round((($armorSaveD - ($armorD > 1 ? $armorD : 0)) / 10) / $nbrBlockAtt);
         }
 
         if ($armorD > $armor) {
@@ -478,7 +478,7 @@ class FightController extends AbstractController
                 }
                 $percentArmor = ($defenderWin->getArmor() * 100) / $armorSaveD;
                 $newArmor = $defenderWin->getArmor() - (round($percentArmor * $armorD) / 100);
-                $defenderWin->setFleetWinRatio($newArmor);
+                $defenderWin->setFleetWinRatio(abs($newArmor));
                 if($defenderWin->getUser()->getRank()) {
                     $defenderWin->getUser()->getRank()->setWarPoint($defenderWin->getUser()->getRank()->getWarPoint() + $newWarPoint);
                 }
@@ -635,7 +635,7 @@ class FightController extends AbstractController
                 }
                 $percentArmor = ($attackerWin->getArmor() * 100) / $armorSaveA;
                 $newArmor = $attackerWin->getArmor() - (round($percentArmor * $armor) / 100);
-                $attackerWin->setFleetWinRatio($newArmor);
+                $attackerWin->setFleetWinRatio(abs($newArmor));
                 if($attackerWin->getUser()->getRank()) {
                     $attackerWin->getUser()->getRank()->setWarPoint($attackerWin->getUser()->getRank()->getWarPoint() + $newWarPoint);
                 }

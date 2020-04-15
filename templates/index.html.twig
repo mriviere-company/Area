@@ -14,7 +14,7 @@
         <div class="row mt-5">
             <div class="offset-3 col-6 text-center">
                 <div id="connect-register">
-                    <a href="{{ path('login_redirect') }}"><img alt="{{ 'image'|trans({},'front_global') }}" style="border-radius:20px;" src="{{ asset('img/play.png') }}"></a>
+                    <a href="{{ path('overview', {'usePlanet': usePlanet.getId()}) }}"><img alt="{{ 'image'|trans({},'front_global') }}" style="border-radius:20px;" src="{{ asset('img/play.png') }}"></a>
                 </div>
             </div>
         </div>
@@ -36,6 +36,7 @@
                              <div>
                                  <input class="login-input" type="email" minlength="5" placeholder="{{ 'email'|trans }}" maxlength="30" id="email" name="_email" hidden/>
                              </div>
+                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                              <div>
                                  {#<a class="recovery-button" href="{{ path('recoveryPw') }}" data-toggle="modal" data-target="#openModal">{{ 'recoveryPw'|trans }}</a>#}
                                  <button class="confirm-button" type="submit">{{ 'login'|trans }}</button>

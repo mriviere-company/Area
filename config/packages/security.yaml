@@ -4,7 +4,6 @@ security:
         App\Entity\Admin:
             algorithm: plaintext
         Symfony\Component\Security\Core\User\User: auto
-    # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     role_hierarchy:
         ROLE_ADMIN: [ ROLE_MODO ]
     providers:
@@ -33,19 +32,23 @@ security:
                 login_path: login
                 check_path: login
                 remember_me: true
-                default_target_path: login_redirect
+                default_target_path: login
                 always_use_default_target_path: true
+                csrf_token_generator: security.csrf.token_manager
+                failure_path: home
             logout:
                 path: logout
                 target: home
-                invalidate_session: true
+                invalidate_session: false
             access_denied_handler: App\Security\AccessDeniedHandler
-
-            # activate different ways to authenticate
-            # http_basic: true
-            # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-            # form_login: true
-            # https://symfony.com/doc/current/security/form_login_setup.html
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 31104000
+                samesite: 'none'
+                path:     /
+                always_remember_me: true
+                secure: true
+                token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used

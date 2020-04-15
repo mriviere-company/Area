@@ -17,10 +17,10 @@ class PlanetsController extends AbstractController
             if($build == 'destruct') {
             } elseif ($build == 'miner') {
                 $planet->setMiner($planet->getMiner() + 1);
-                $planet->setNbProduction(($planet->getMiner() * 15));
+                $planet->setNbProduction(($planet->getMiner() * 22));
             } elseif ($build == 'extractor') {
                 $planet->setExtractor($planet->getExtractor() + 1);
-                $planet->setWtProduction(($planet->getExtractor() * 10));
+                $planet->setWtProduction(($planet->getExtractor() * 15));
             } elseif ($build == 'farm') {
                 $planet->setFarm($planet->getFarm() + 1);
                 $planet->setFdProduction(($planet->getFarm() * 18));

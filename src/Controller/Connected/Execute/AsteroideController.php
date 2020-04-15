@@ -21,8 +21,8 @@ class AsteroideController extends AbstractController
         foreach ($asteroides as $asteroide) {
 
             $asteroide->setRecycleAt($nowAste);
-            $asteroide->setNbCdr($asteroide->getNbCdr() + rand(50000, 500000));
-            $asteroide->setWtCdr($asteroide->getWtCdr() + rand(40000, 400000));
+            $asteroide->setNbCdr($asteroide->getNbCdr() + rand(400000, 8000000));
+            $asteroide->setWtCdr($asteroide->getWtCdr() + rand(300000, 600000));
 
 
             if (rand(1, 50) == 50) {
