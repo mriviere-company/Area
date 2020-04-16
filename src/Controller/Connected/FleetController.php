@@ -677,6 +677,98 @@ class FleetController  extends AbstractController
         if ($usePlanet->getUser() != $user || $fleetGive->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
+        $eAlly = $user->getAllyEnnemy();
+        $warAlly = [];
+        $x = 0;
+        foreach ($eAlly as $tmp) {
+            $warAlly[$x] = $tmp->getAllyTag();
+            $x++;
+        }
+
+        $fAlly = $user->getAllyFriends();
+        $friendAlly = [];
+        $x = 0;
+        foreach ($fAlly as $tmp) {
+            if($tmp->getAccepted() == 1) {
+                $friendAlly[$x] = $tmp->getAllyTag();
+                $x++;
+            }
+        }
+        if(!$friendAlly) {
+            $friendAlly = ['impossible', 'personne'];
+        }
+
+        if($user->getAlly()) {
+            $allyF = $user->getAlly();
+        } else {
+            $allyF = 'wedontexistsok';
+        }
+
+        $fleets = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->join('f.user', 'u')
+            ->leftJoin('u.ally', 'a')
+            ->where('f.planet = :planet')
+            ->andWhere('f.attack = true OR a.sigle in (:ally)')
+            ->andWhere('f.user != :user')
+            ->andWhere('f.flightTime is null')
+            ->andWhere('u.ally is null OR a.sigle not in (:friend)')
+            ->andWhere('u.ally is null OR u.ally != :myAlly')
+            ->setParameters(['planet' => $fleetGive->getPlanet(), 'ally' => $warAlly, 'user' => $user, 'friend' => $friendAlly, 'myAlly' => $allyF])
+            ->getQuery()
+            ->getResult();
+
+        $fleetFight = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->where('f.planet = :planet')
+            ->andWhere('f.user != :user')
+            ->andWhere('f.fightAt is not null')
+            ->andWhere('f.flightTime is null')
+            ->setParameters(['planet' => $fleetGive->getPlanet(), 'user' => $user])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+
+        if($fleetFight) {
+            $fleetGive->setFightAt($fleetFight->getFightAt());
+        } elseif ($fleets) {
+            foreach ($fleets as $setWar) {
+                if($setWar->getUser()->getAlly()) {
+                    $fleetArm = $fleetGive->getMissile() + $fleetGive->getLaser() + $fleetGive->getPlasma();
+                    if($fleetArm > 0) {
+                        $fleetGive->setAttack(1);
+                    }
+                    foreach ($eAlly as $tmp) {
+                        if ($setWar->getUser()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                            $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
+                            if($fleetArm > 0) {
+                                $setWar->setAttack(1);
+                            }
+                        }
+                    }
+                }
+            }
+            $allFleets = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->where('f.planet = :planet')
+                ->andWhere('f.flightTime is null')
+                ->setParameters(['planet' => $fleetGive->getPlanet()])
+                ->getQuery()
+                ->getResult();
+
+            $now = new DateTime();
+            $now->setTimezone(new DateTimeZone('Europe/Paris'));
+            $now->add(new DateInterval('PT' . 300 . 'S'));
+
+            foreach ($allFleets as $updateF) {
+                $updateF->setFightAt($now);
+            }
+            $fleetGive->setFightAt($now);
+        }
+        if ($fleetGive->getFightAt()) {
+            $em->flush();
+            return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
+        }
 
         $planetTake = $fleetGive->getPlanet();
         if($fleetGive && $usePlanet &&
@@ -899,6 +991,99 @@ class FleetController  extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $eAlly = $user->getAllyEnnemy();
+        $warAlly = [];
+        $x = 0;
+        foreach ($eAlly as $tmp) {
+            $warAlly[$x] = $tmp->getAllyTag();
+            $x++;
+        }
+
+        $fAlly = $user->getAllyFriends();
+        $friendAlly = [];
+        $x = 0;
+        foreach ($fAlly as $tmp) {
+            if($tmp->getAccepted() == 1) {
+                $friendAlly[$x] = $tmp->getAllyTag();
+                $x++;
+            }
+        }
+        if(!$friendAlly) {
+            $friendAlly = ['impossible', 'personne'];
+        }
+
+        if($user->getAlly()) {
+            $allyF = $user->getAlly();
+        } else {
+            $allyF = 'wedontexistsok';
+        }
+
+        $fleets = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->join('f.user', 'u')
+            ->leftJoin('u.ally', 'a')
+            ->where('f.planet = :planet')
+            ->andWhere('f.attack = true OR a.sigle in (:ally)')
+            ->andWhere('f.user != :user')
+            ->andWhere('f.flightTime is null')
+            ->andWhere('u.ally is null OR a.sigle not in (:friend)')
+            ->andWhere('u.ally is null OR u.ally != :myAlly')
+            ->setParameters(['planet' => $fleetGive->getPlanet(), 'ally' => $warAlly, 'user' => $user, 'friend' => $friendAlly, 'myAlly' => $allyF])
+            ->getQuery()
+            ->getResult();
+
+        $fleetFight = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->where('f.planet = :planet')
+            ->andWhere('f.user != :user')
+            ->andWhere('f.fightAt is not null')
+            ->andWhere('f.flightTime is null')
+            ->setParameters(['planet' => $fleetGive->getPlanet(), 'user' => $user])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+
+        if($fleetFight) {
+            $fleetGive->setFightAt($fleetFight->getFightAt());
+        } elseif ($fleets) {
+            foreach ($fleets as $setWar) {
+                if($setWar->getUser()->getAlly()) {
+                    $fleetArm = $fleetGive->getMissile() + $fleetGive->getLaser() + $fleetGive->getPlasma();
+                    if($fleetArm > 0) {
+                        $fleetGive->setAttack(1);
+                    }
+                    foreach ($eAlly as $tmp) {
+                        if ($setWar->getUser()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                            $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
+                            if($fleetArm > 0) {
+                                $setWar->setAttack(1);
+                            }
+                        }
+                    }
+                }
+            }
+            $allFleets = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->where('f.planet = :planet')
+                ->andWhere('f.flightTime is null')
+                ->setParameters(['planet' => $fleetGive->getPlanet()])
+                ->getQuery()
+                ->getResult();
+
+            $now = new DateTime();
+            $now->setTimezone(new DateTimeZone('Europe/Paris'));
+            $now->add(new DateInterval('PT' . 300 . 'S'));
+
+            foreach ($allFleets as $updateF) {
+                $updateF->setFightAt($now);
+            }
+            $fleetGive->setFightAt($now);
+        }
+        if ($fleetGive->getFightAt()) {
+            $em->flush();
+            return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
+        }
+
         $fleetTake->setColonizer($fleetTake->getColonizer() + $fleetGive->getColonizer());
         $fleetTake->setCargoI($fleetTake->getCargoI() + $fleetGive->getCargoI());
         $fleetTake->setCargoV($fleetTake->getCargoV() + $fleetGive->getCargoV());
@@ -948,6 +1133,99 @@ class FleetController  extends AbstractController
 
         if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
             return $this->redirectToRoute('home');
+        }
+
+        $eAlly = $user->getAllyEnnemy();
+        $warAlly = [];
+        $x = 0;
+        foreach ($eAlly as $tmp) {
+            $warAlly[$x] = $tmp->getAllyTag();
+            $x++;
+        }
+
+        $fAlly = $user->getAllyFriends();
+        $friendAlly = [];
+        $x = 0;
+        foreach ($fAlly as $tmp) {
+            if($tmp->getAccepted() == 1) {
+                $friendAlly[$x] = $tmp->getAllyTag();
+                $x++;
+            }
+        }
+        if(!$friendAlly) {
+            $friendAlly = ['impossible', 'personne'];
+        }
+
+        if($user->getAlly()) {
+            $allyF = $user->getAlly();
+        } else {
+            $allyF = 'wedontexistsok';
+        }
+
+        $fleets = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->join('f.user', 'u')
+            ->leftJoin('u.ally', 'a')
+            ->where('f.planet = :planet')
+            ->andWhere('f.attack = true OR a.sigle in (:ally)')
+            ->andWhere('f.user != :user')
+            ->andWhere('f.flightTime is null')
+            ->andWhere('u.ally is null OR a.sigle not in (:friend)')
+            ->andWhere('u.ally is null OR u.ally != :myAlly')
+            ->setParameters(['planet' => $fleet->getPlanet(), 'ally' => $warAlly, 'user' => $user, 'friend' => $friendAlly, 'myAlly' => $allyF])
+            ->getQuery()
+            ->getResult();
+
+        $fleetFight = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->where('f.planet = :planet')
+            ->andWhere('f.user != :user')
+            ->andWhere('f.fightAt is not null')
+            ->andWhere('f.flightTime is null')
+            ->setParameters(['planet' => $fleet->getPlanet(), 'user' => $user])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+
+        if($fleetFight) {
+            $fleet->setFightAt($fleetFight->getFightAt());
+        } elseif ($fleets) {
+            foreach ($fleets as $setWar) {
+                if($setWar->getUser()->getAlly()) {
+                    $fleetArm = $fleet->getMissile() + $fleet->getLaser() + $fleet->getPlasma();
+                    if($fleetArm > 0) {
+                        $fleet->setAttack(1);
+                    }
+                    foreach ($eAlly as $tmp) {
+                        if ($setWar->getUser()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                            $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
+                            if($fleetArm > 0) {
+                                $setWar->setAttack(1);
+                            }
+                        }
+                    }
+                }
+            }
+            $allFleets = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->where('f.planet = :planet')
+                ->andWhere('f.flightTime is null')
+                ->setParameters(['planet' => $fleet->getPlanet()])
+                ->getQuery()
+                ->getResult();
+
+            $now = new DateTime();
+            $now->setTimezone(new DateTimeZone('Europe/Paris'));
+            $now->add(new DateInterval('PT' . 300 . 'S'));
+
+            foreach ($allFleets as $updateF) {
+                $updateF->setFightAt($now);
+            }
+            $fleet->setFightAt($now);
+        }
+        if ($fleet->getFightAt()) {
+            $em->flush();
+            return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleet->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
 
         if(count($user->getFleets()) >= 75) {
@@ -1211,6 +1489,99 @@ class FleetController  extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $eAlly = $user->getAllyEnnemy();
+        $warAlly = [];
+        $x = 0;
+        foreach ($eAlly as $tmp) {
+            $warAlly[$x] = $tmp->getAllyTag();
+            $x++;
+        }
+
+        $fAlly = $user->getAllyFriends();
+        $friendAlly = [];
+        $x = 0;
+        foreach ($fAlly as $tmp) {
+            if($tmp->getAccepted() == 1) {
+                $friendAlly[$x] = $tmp->getAllyTag();
+                $x++;
+            }
+        }
+        if(!$friendAlly) {
+            $friendAlly = ['impossible', 'personne'];
+        }
+
+        if($user->getAlly()) {
+            $allyF = $user->getAlly();
+        } else {
+            $allyF = 'wedontexistsok';
+        }
+
+        $fleets = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->join('f.user', 'u')
+            ->leftJoin('u.ally', 'a')
+            ->where('f.planet = :planet')
+            ->andWhere('f.attack = true OR a.sigle in (:ally)')
+            ->andWhere('f.user != :user')
+            ->andWhere('f.flightTime is null')
+            ->andWhere('u.ally is null OR a.sigle not in (:friend)')
+            ->andWhere('u.ally is null OR u.ally != :myAlly')
+            ->setParameters(['planet' => $oldFleet->getPlanet(), 'ally' => $warAlly, 'user' => $user, 'friend' => $friendAlly, 'myAlly' => $allyF])
+            ->getQuery()
+            ->getResult();
+
+        $fleetFight = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->where('f.planet = :planet')
+            ->andWhere('f.user != :user')
+            ->andWhere('f.fightAt is not null')
+            ->andWhere('f.flightTime is null')
+            ->setParameters(['planet' => $oldFleet->getPlanet(), 'user' => $user])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+
+        if($fleetFight) {
+            $oldFleet->setFightAt($fleetFight->getFightAt());
+        } elseif ($fleets) {
+            foreach ($fleets as $setWar) {
+                if($setWar->getUser()->getAlly()) {
+                    $fleetArm = $oldFleet->getMissile() + $oldFleet->getLaser() + $oldFleet->getPlasma();
+                    if($fleetArm > 0) {
+                        $oldFleet->setAttack(1);
+                    }
+                    foreach ($eAlly as $tmp) {
+                        if ($setWar->getUser()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                            $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
+                            if($fleetArm > 0) {
+                                $setWar->setAttack(1);
+                            }
+                        }
+                    }
+                }
+            }
+            $allFleets = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->where('f.planet = :planet')
+                ->andWhere('f.flightTime is null')
+                ->setParameters(['planet' => $oldFleet->getPlanet()])
+                ->getQuery()
+                ->getResult();
+
+            $now = new DateTime();
+            $now->setTimezone(new DateTimeZone('Europe/Paris'));
+            $now->add(new DateInterval('PT' . 300 . 'S'));
+
+            foreach ($allFleets as $updateF) {
+                $updateF->setFightAt($now);
+            }
+            $oldFleet->setFightAt($now);
+        }
+        if ($oldFleet->getFightAt()) {
+            $em->flush();
+            return $this->redirectToRoute('manage_fleet', ['fleetGive' => $oldFleet->getId(), 'usePlanet' => $usePlanet->getId()]);
+        }
+
         if(count($user->getFleets()) >= 75) {
             $this->addFlash("fail", "Vous avez atteint la limite de flottes autorisées par l'Instance.");
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $oldFleet->getId(), 'usePlanet' => $usePlanet->getId()]);
@@ -1261,24 +1632,6 @@ class FleetController  extends AbstractController
                 ($niobium < 0 || $water < 0) || ($uranium < 0 || $soldier < 0) || ($tank < 0 || $worker < 0) || $scientist < 0) {
                 return $this->redirectToRoute('manage_fleet', ['fleetGive' => $oldFleet->getId(), 'usePlanet' => $usePlanet->getId()]);
             }
-            $eAlly = $user->getAllyEnnemy();
-            $warAlly = [];
-            $x = 0;
-            foreach ($eAlly as $tmp) {
-                $warAlly[$x] = $tmp->getAllyTag();
-                $x++;
-            }
-            $fleets = $em->getRepository('App:Fleet')
-                ->createQueryBuilder('f')
-                ->join('f.user', 'u')
-                ->leftJoin('u.ally', 'a')
-                ->where('f.planet = :planet')
-                ->andWhere('f.attack = true OR a.sigle in (:ally)')
-                ->andWhere('f.user != :user')
-                ->andWhere('f.flightTime is null')
-                ->setParameters(['planet' => $oldFleet->getPlanet(), 'ally' => $warAlly, 'user' => $user])
-                ->getQuery()
-                ->getResult();
 
             $fleet = new Fleet();
             $fleet->setCargoI($form_spatialShip->get('cargoI')->getData());
@@ -1311,23 +1664,6 @@ class FleetController  extends AbstractController
             $fleet->setWorker($form_spatialShip->get('worker')->getData());
             $fleet->setScientist($form_spatialShip->get('scientist')->getData());
             $fleet->setSignature($fleet->getNbrSignatures());
-            if($fleets) {
-                $allFleets = $em->getRepository('App:Fleet')
-                    ->createQueryBuilder('f')
-                    ->join('f.user', 'u')
-                    ->where('f.planet = :planet')
-                    ->andWhere('f.user != :user')
-                    ->setParameters(['planet' => $oldFleet->getPlanet()])
-                    ->getQuery()
-                    ->getResult();
-                $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
-                $now->add(new DateInterval('PT' . 300 . 'S'));
-                foreach ($allFleets as $updateF) {
-                    $updateF->setFightAt($now);
-                }
-                $fleet->setFightAt($now);
-            }
             $fleet->setUser($user);
             $fleet->setPlanet($oldFleet->getPlanet());
             if ($form_spatialShip->get('name')->getData()) {
@@ -1398,7 +1734,97 @@ class FleetController  extends AbstractController
 
         if($fleet->getCancelFlight() > $now) {
             $fleet->setFlightTime(null);
+            $fleet->setCancelFlight(null);
             $em->remove($fleet->getDestination());
+
+            $eAlly = $user->getAllyEnnemy();
+            $warAlly = [];
+            $x = 0;
+            foreach ($eAlly as $tmp) {
+                $warAlly[$x] = $tmp->getAllyTag();
+                $x++;
+            }
+
+            $fAlly = $user->getAllyFriends();
+            $friendAlly = [];
+            $x = 0;
+            foreach ($fAlly as $tmp) {
+                if($tmp->getAccepted() == 1) {
+                    $friendAlly[$x] = $tmp->getAllyTag();
+                    $x++;
+                }
+            }
+            if(!$friendAlly) {
+                $friendAlly = ['impossible', 'personne'];
+            }
+
+            if($user->getAlly()) {
+                $allyF = $user->getAlly();
+            } else {
+                $allyF = 'wedontexistsok';
+            }
+
+            $fleets = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->join('f.user', 'u')
+                ->leftJoin('u.ally', 'a')
+                ->where('f.planet = :planet')
+                ->andWhere('f.attack = true OR a.sigle in (:ally)')
+                ->andWhere('f.user != :user')
+                ->andWhere('f.flightTime is null')
+                ->andWhere('u.ally is null OR a.sigle not in (:friend)')
+                ->andWhere('u.ally is null OR u.ally != :myAlly')
+                ->setParameters(['planet' => $fleet->getPlanet(), 'ally' => $warAlly, 'user' => $user, 'friend' => $friendAlly, 'myAlly' => $allyF])
+                ->getQuery()
+                ->getResult();
+
+            $fleetFight = $em->getRepository('App:Fleet')
+                ->createQueryBuilder('f')
+                ->where('f.planet = :planet')
+                ->andWhere('f.user != :user')
+                ->andWhere('f.fightAt is not null')
+                ->andWhere('f.flightTime is null')
+                ->setParameters(['planet' => $fleet->getPlanet(), 'user' => $user])
+                ->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
+
+            if($fleetFight) {
+                $fleet->setFightAt($fleetFight->getFightAt());
+            } elseif ($fleets) {
+                foreach ($fleets as $setWar) {
+                    if($setWar->getUser()->getAlly()) {
+                        $fleetArm = $fleet->getMissile() + $fleet->getLaser() + $fleet->getPlasma();
+                        if($fleetArm > 0) {
+                            $fleet->setAttack(1);
+                        }
+                        foreach ($eAlly as $tmp) {
+                            if ($setWar->getUser()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                                $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
+                                if($fleetArm > 0) {
+                                    $setWar->setAttack(1);
+                                }
+                            }
+                        }
+                    }
+                }
+                $allFleets = $em->getRepository('App:Fleet')
+                    ->createQueryBuilder('f')
+                    ->where('f.planet = :planet')
+                    ->andWhere('f.flightTime is null')
+                    ->setParameters(['planet' => $fleet->getPlanet()])
+                    ->getQuery()
+                    ->getResult();
+
+                $now = new DateTime();
+                $now->setTimezone(new DateTimeZone('Europe/Paris'));
+                $now->add(new DateInterval('PT' . 300 . 'S'));
+
+                foreach ($allFleets as $updateF) {
+                    $updateF->setFightAt($now);
+                }
+                $fleet->setFightAt($now);
+            }
 
             $em->flush();
         }

@@ -74,6 +74,21 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
+        $dests = $em->getRepository('App:Destination')
+            ->createQueryBuilder('d')
+            ->where('d.fleet is null')
+            ->getQuery()
+            ->getResult();
+
+        if($dests) {
+            echo "Suppression destinations : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\FleetsController::destinationDeleteAction', [
+                'dests'  => $dests,
+                'em' => $em
+            ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+        }
+
         while (1) {
             $firstFleet = $em->getRepository('App:Fleet')
                 ->createQueryBuilder('f')
@@ -175,6 +190,21 @@ class CronTaskController extends AbstractController
             $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::scientistsAction', [
                 'planetScientists'  => $planetScientists,
                 'em'  => $em
+            ]);
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+        }
+
+        $prods = $em->getRepository('App:Product')
+            ->createQueryBuilder('p')
+            ->where('p.planet is null')
+            ->getQuery()
+            ->getResult();
+
+        if($prods) {
+            echo "Suppression Products : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::productionDeleteAction', [
+                'prods'  => $prods,
+                'em' => $em
             ]);
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
@@ -321,36 +351,6 @@ class CronTaskController extends AbstractController
             $cronValue = $this->forward('App\Controller\Connected\Execute\ZombiesController::zombiesAction', [
                 'zUsers'  => $zUsers,
                 'now' => $now,
-                'em' => $em
-            ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
-        }
-
-        $dests = $em->getRepository('App:Destination')
-            ->createQueryBuilder('d')
-            ->where('d.fleet is null')
-            ->getQuery()
-            ->getResult();
-
-        if($dests) {
-            echo "Suppression destinations : ";
-            $cronValue = $this->forward('App\Controller\Connected\Execute\FleetsController::destinationDeleteAction', [
-                'dests'  => $dests,
-                'em' => $em
-            ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
-        }
-
-        $prods = $em->getRepository('App:Product')
-            ->createQueryBuilder('p')
-            ->where('p.planet is null')
-            ->getQuery()
-            ->getResult();
-
-        if($prods) {
-            echo "Suppression Products : ";
-            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::productionDeleteAction', [
-                'prods'  => $prods,
                 'em' => $em
             ]);
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";

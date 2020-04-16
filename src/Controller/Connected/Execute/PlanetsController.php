@@ -284,11 +284,11 @@ class PlanetsController extends AbstractController
         $nowEmbargo->add(new DateInterval('PT' . (600) . 'S'));
 
         foreach ($embargos as $embargo) {
-            $embargo->setFood(($embargo->getFood() - 22000) >= 0 ? ($embargo->getFood() - 22000) : 0);
+            $embargo->setFood(($embargo->getFood() - (($embargo->getWorker() / 12) + 2000)) >= 0 ? ($embargo->getFood() - (($embargo->getWorker() / 12) + 2000)) : 0);
             if ($embargo->getFood() == 0) {
-                $embargo->setWorker(($embargo->getWorker() - 15000) >= 0 ? ($embargo->getWorker() - 15000) : 0);
-                if ($embargo->getWorker() == 0) {
-                    $embargo->setSoldier(($embargo->getSoldier() - 5000) >= 0 ? ($embargo->getSoldier() - 5000) : 0);
+                $embargo->setWorker(($embargo->getWorker() - (450000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getWorker() - (450000 / $embargo->getFdProduction())) : 2000);
+                if ($embargo->getWorker() == 2000) {
+                    $embargo->setSoldier(($embargo->getSoldier() - (150000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getSoldier() - (150000 / $embargo->getFdProduction())) : 0);
                 }
             }
         }
