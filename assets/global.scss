@@ -197,6 +197,10 @@ a:hover {
   font-size: 1rem;
 }
 
+.text-little {
+  font-size: 0.8rem;
+}
+
 .text-mini {
   font-size: 0.7rem;
 }
@@ -414,13 +418,20 @@ span a {
   }
 }
 
+.right-link-planet-first div span {
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+
 .right-link-planet a div span {
+    white-space: nowrap;
     color: orange;
     text-decoration: none;
 }
 
 .right-link-planet a:hover {
     div span {
+      white-space: nowrap;
       color: #FC7F23;
       text-decoration: none;
   }

@@ -73,8 +73,8 @@ class GalaxyController extends AbstractController
             ->select('u.id, count(p) as number')
             ->groupBy('u.id')
             ->where('g.position = :id')
-            ->andWhere('u.id = :one')
-            ->setParameters(['one' => 1, 'id' => $id])
+            ->andWhere('u.id = 1')
+            ->setParameters(['id' => $id])
             ->orderBy('count(p.id)', 'DESC')
             ->getQuery()
             ->getOneOrNullResult();

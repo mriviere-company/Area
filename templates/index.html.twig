@@ -11,13 +11,6 @@
         </div>
     {% endfor %}
     {% if is_granted('ROLE_USER') %}
-        <div class="row mt-5">
-            <div class="offset-3 col-6 text-center">
-                <div id="connect-register">
-                    <a href="{{ path('overview', {'usePlanet': usePlanet.getId()}) }}"><img alt="{{ 'image'|trans({},'front_global') }}" style="border-radius:20px;" src="{{ asset('img/play.png') }}"></a>
-                </div>
-            </div>
-        </div>
     {% else %}
         <div class="row mt-5">
             <div class="offset-3 col-6 text-center">

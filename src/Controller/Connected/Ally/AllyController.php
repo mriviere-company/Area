@@ -77,9 +77,9 @@ class AllyController extends AbstractController
             $leader = $em->getRepository('App:User')
                 ->createQueryBuilder('u')
                 ->join('u.grade', 'g')
-                ->where('g.placement = :one')
+                ->where('g.placement = 1')
                 ->andWhere('u.ally = :ally')
-                ->setParameters(['one' => 1, 'ally' => $user->getAlly()])
+                ->setParameters(['ally' => $user->getAlly()])
                 ->getQuery()
                 ->getOneOrNullResult();
 
@@ -111,9 +111,9 @@ class AllyController extends AbstractController
 
                 $tmpGrade = $em->getRepository('App:Grade')
                     ->createQueryBuilder('g')
-                    ->where('g.placement = :top')
+                    ->where('g.placement = 1')
                     ->andWhere('g.ally = :ally')
-                    ->setParameters(['top' => 1, 'ally' => $user->getAlly()])
+                    ->setParameters(['ally' => $user->getAlly()])
                     ->getQuery()
                     ->setMaxResults(1)
                     ->getOneOrNullResult();
@@ -127,9 +127,9 @@ class AllyController extends AbstractController
 
         $userVotes = $em->getRepository('App:User')
             ->createQueryBuilder('u')
-            ->where('u.voteAlly > :vote')
+            ->where('u.voteAlly > 0')
             ->andWhere('u.ally = :ally')
-            ->setParameters(['vote' => 0, 'ally' => $user->getAlly()])
+            ->setParameters(['ally' => $user->getAlly()])
             ->orderBy('u.voteAlly', 'DESC')
             ->getQuery()
             ->getResult();

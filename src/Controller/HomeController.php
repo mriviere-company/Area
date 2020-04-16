@@ -26,15 +26,15 @@ class HomeController extends AbstractController
                 ->getQuery()
                 ->setMaxResults(1)
                 ->getOneOrNullResult();
-        } else {
-            $usePlanet = null;
+
+            return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
         }
+
         $server = 0;
         if ($servers) {
             $server = 1;
         }
         return $this->render('index.html.twig', [
-            'usePlanet' => $usePlanet,
             'server' => $server
         ]);
     }

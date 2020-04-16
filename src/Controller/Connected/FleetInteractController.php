@@ -138,9 +138,9 @@ class FleetInteractController  extends AbstractController
         $allPlanets = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.user = :user')
-            ->andWhere('p.signature >:zero')
+            ->andWhere('p.signature > 0')
             ->andWhere('p.id != :planet')
-            ->setParameters(['user' => $user, 'zero' => 0, 'planet' => $usePlanet->getId()])
+            ->setParameters(['user' => $user, 'planet' => $usePlanet->getId()])
             ->getQuery()
             ->getResult();
 

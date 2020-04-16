@@ -36,6 +36,8 @@ spatial.sendFleet: envoyer
 spatial.cargo: Cargo
 workerImg: Travailleurs
 soldierImg: Soldats
+tooltip.drop: 'Poser la flotte sur la planète ?'
+tooltip.recycle: 'Temps avant prochain recyclage.'
 popover.title: 'Caractéristiques techniques'
 popover.sonde: '<h5>Signature thermique : 1<br>Vitesse : 1.000/lm</h5>'
 popover.colo: '<h5>Signature thermique : 200<br>Vitesse : 50/lm<hr>Coloniser une planète</h5>'

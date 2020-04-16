@@ -38,10 +38,10 @@ class ConnectController extends AbstractController
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
             ->where('p.user is null')
-            ->andWhere('p.ground = :ground')
-            ->andWhere('p.sky = :sky')
+            ->andWhere('p.ground = 25')
+            ->andWhere('p.sky = 5')
             ->andWhere('g.id = :id')
-            ->setParameters(['ground' => 25, 'sky' => 5, 'id' => $id])
+            ->setParameters(['id' => $id])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

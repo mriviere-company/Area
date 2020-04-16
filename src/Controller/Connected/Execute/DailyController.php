@@ -17,8 +17,7 @@ class DailyController extends AbstractController
         $users = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.rank', 'r')
-            ->where('u.id != :one')
-            ->setParameters(['one' => 1])
+            ->where('u.id != 1')
             ->orderBy('r.point', 'DESC')
             ->getQuery()
             ->getResult();
@@ -224,8 +223,7 @@ class DailyController extends AbstractController
         $usersUp = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.rank', 'r')
-            ->where('u.id != :one')
-            ->setParameters(['one' => 1])
+            ->where('u.id != 1')
             ->orderBy('r.point', 'DESC')
             ->getQuery()
             ->getResult();

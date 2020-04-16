@@ -276,4 +276,28 @@ class PlanetsController extends AbstractController
 
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
+
+    public function embargoPlanetAction($embargos, $server, $em)
+    {
+        $nowEmbargo = new DateTime();
+        $nowEmbargo->setTimezone(new DateTimeZone('Europe/Paris'));
+        $nowEmbargo->add(new DateInterval('PT' . (600) . 'S'));
+
+        foreach ($embargos as $embargo) {
+            $embargo->setFood(($embargo->getFood() - 22000) >= 0 ? ($embargo->getFood() - 22000) : 0);
+            if ($embargo->getFood() == 0) {
+                $embargo->setWorker(($embargo->getWorker() - 15000) >= 0 ? ($embargo->getWorker() - 15000) : 0);
+                if ($embargo->getWorker() == 0) {
+                    $embargo->setSoldier(($embargo->getSoldier() - 5000) >= 0 ? ($embargo->getSoldier() - 5000) : 0);
+                }
+            }
+        }
+        $server->setEmbargo($nowEmbargo);
+
+        echo "Flush -> " . count($embargos) . " ";
+
+        $em->flush();
+
+        return new Response ("<span style='color:#008000'>OK</span><br/>");
+    }
 }

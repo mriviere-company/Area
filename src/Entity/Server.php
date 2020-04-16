@@ -37,6 +37,11 @@ class Server
     protected $dailyReport;
 
     /**
+     * @ORM\Column(name="embargo",type="datetime", nullable=true)
+     */
+    protected $embargo;
+
+    /**
      * @ORM\OneToMany(targetEntity="Galaxy", mappedBy="server", fetch="EXTRA_LAZY", cascade={"persist"})
      */
     protected $galaxys;
@@ -56,6 +61,7 @@ class Server
         $this->speed = 0.1;
         $this->pvp = false;
         $this->dailyReport = null;
+        $this->embargo = null;
         $this->galaxys = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -162,6 +168,22 @@ class Server
     public function setSpeed(float $speed): void
     {
         $this->speed = $speed;
+    }
+
+    /**
+     * @return null
+     */
+    public function getEmbargo()
+    {
+        return $this->embargo;
+    }
+
+    /**
+     * @param null $embargo
+     */
+    public function setEmbargo($embargo): void
+    {
+        $this->embargo = $embargo;
     }
 
     public function getId()

@@ -381,8 +381,8 @@ class SectorController extends AbstractController
         $fPlanet = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->andWhere('p.user = :user')
-            ->andwhere('p.sonde > :zero')
-            ->setParameters(['user' => $user, 'zero' => 0])
+            ->andwhere('p.sonde > 0')
+            ->setParameters(['user' => $user])
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
@@ -471,8 +471,8 @@ class SectorController extends AbstractController
         $fPlanet = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->andWhere('p.user = :user')
-            ->andwhere('p.nuclearBomb > :zero')
-            ->setParameters(['user' => $user, 'zero' => 0])
+            ->andwhere('p.nuclearBomb > 0')
+            ->setParameters(['user' => $user])
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();

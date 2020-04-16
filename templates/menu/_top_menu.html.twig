@@ -31,7 +31,7 @@
         <a class="btn-top" href="{{ path('administration') }}">{{ 'easyadmin'|trans }}</a>
     {% endif %}
     {% if is_granted('ROLE_USER') %}
-        <a class="btn-top" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>
+        <a class="btn-top" href="{{ path('erase_cookie') }}">{{ 'logout'|trans }}</a>
     {% endif %}
 </div>
 <div class="footer">

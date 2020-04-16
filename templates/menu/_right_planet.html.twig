@@ -92,7 +92,7 @@
                     </div>
                 </a>
             </div>
-            <div class="col-6">
+            <div class="col-6 right-link-planet-first">
                 <div {% if attacker %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-2 bg-right-small px-2 py-1{% if attacker %} planetFull{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} constructFree{% endif %}">
                     <div class="pt-1 float-left"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(usePlanet, 'imageFile') }}">{{ usePlanet.getName() }}</span></div>
                 </div>
@@ -117,7 +117,7 @@
                             <div class="col-6 right-link-planet">
                                 <a href="{{ planet.id }}">
                                     <div{% if attackerBis %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-2 bg-right-small px-2 py-2{% if attackerBis %} planetFull{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} constructFree{% endif %}">
-                                        <div class="pt-1 float-left"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">{% if planet.moon %}<span class="text-jaune">{{ planet.name }}</span>{% else %}{{ planet.name }}{% endif %}</div>
+                                        <div class="pt-1 float-left"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-1" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">{% if planet.moon %}<span class="text-jaune">{{ planet.name }}</span>{% else %}{{ planet.name }}{% endif %}</div>
                                     </div>
                                 </a>
                             </div>

@@ -22,6 +22,7 @@ class CronTaskController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
         $userGOs = $em->getRepository('App:User')
             ->createQueryBuilder('u')
@@ -223,6 +224,7 @@ class CronTaskController extends AbstractController
             echo "Flottes : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeFleetAction', [
                 'fleets'  => $fleets,
+                'server' => $server,
                 'now'  => $now,
                 'em'  => $em
             ]);
@@ -251,10 +253,10 @@ class CronTaskController extends AbstractController
             ->createQueryBuilder('f')
             ->join('f.planet', 'p')
             ->where('f.recycleAt < :now')
-            ->andWhere('f.recycleur > :zero')
+            ->andWhere('f.recycleur > 0')
             ->andWhere('f.flightTime is null')
-            ->andWhere('p.nbCdr > :zero or p.wtCdr > :zero')
-            ->setParameters(['now' => $now, 'zero' => 0])
+            ->andWhere('p.nbCdr > 0 or p.wtCdr > 0')
+            ->setParameters(['now' => $now])
             ->getQuery()
             ->getResult();
 
@@ -352,6 +354,29 @@ class CronTaskController extends AbstractController
                 'em' => $em
             ]);
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+        }
+
+        if ($now > $server->getEmbargo()) {
+            $embargos = $em->getRepository('App:Planet')
+                ->createQueryBuilder('p')
+                ->join('p.user', 'u')
+                ->join('p.fleets', 'f')
+                ->where('f.attack = true')
+                ->andWhere('u.zombie = false')
+                ->andWhere('u.bot = 0')
+                ->andWhere('f.user != p.user')
+                ->getQuery()
+                ->getResult();
+
+            if ($embargos) {
+                echo "Embargos : ";
+                $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::embargoPlanetAction', [
+                    'embargos' => $embargos,
+                    'server' => $server,
+                    'em' => $em
+                ]);
+                echo $cronValue->getContent() ? $cronValue->getContent() : "<span style='color:#FF0000'>KO<span><br/>";
+            }
         }
 
         if ($opened) {

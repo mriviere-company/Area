@@ -394,7 +394,7 @@ class FleetController  extends AbstractController
                 return $response;
             }
             if ($request->get('name') == 'attack') {
-                if ($fleetGive->getMissile() <= 0) {
+                if ($fleetGive->getMissile() <= 0 && $fleetGive->getLaser() <= 0 && $fleetGive->getPlasma() <= 0) {
                     $response->setData(
                         [
                             'has_error' => true,
@@ -642,12 +642,18 @@ class FleetController  extends AbstractController
                 }
             }
             $fleetGive->setSignature($fleetGive->getNbrSignatures());
+            if ($fleetGive->getMissile() <= 0 && $fleetGive->getLaser() <= 0 && $fleetGive->getPlasma() <= 0) {
+                $fleetGive->setAttack(0);
+            }
 
             $em->flush();
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
 
         $fleetGive->setSignature($fleetGive->getNbrSignatures());
+        if ($fleetGive->getMissile() <= 0 && $fleetGive->getLaser() <= 0 && $fleetGive->getPlasma() <= 0) {
+            $fleetGive->setAttack(0);
+        }
         $em->flush();
 
         return $this->render('connected/fleet/edit.html.twig', [
@@ -760,8 +766,8 @@ class FleetController  extends AbstractController
             $sectorDestroy = $em->getRepository('App:Sector')
                 ->createQueryBuilder('s')
                 ->where('s.position = :sector')
-                ->andWhere('s.destroy = :true')
-                ->setParameters(['sector' => $form_sendFleet->get('sector')->getData(), 'true' => 1])
+                ->andWhere('s.destroy = true')
+                ->setParameters(['sector' => $form_sendFleet->get('sector')->getData()])
                 ->getQuery()
                 ->getOneOrNullResult();
 
@@ -1360,6 +1366,9 @@ class FleetController  extends AbstractController
             $oldFleet->setSignature($oldFleet->getNbrSignatures());
             if ($oldFleet->getNbrSignatures() == 0) {
                 $em->remove($oldFleet);
+            }
+            if ($oldFleet->getMissile() <= 0 && $oldFleet->getLaser() <= 0 && $oldFleet->getPlasma() <= 0) {
+                $oldFleet->setAttack(0);
             }
 
             $em->flush();

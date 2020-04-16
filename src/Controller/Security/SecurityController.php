@@ -267,6 +267,31 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @Route("/au-revoir", name="erase_cookie")
+     * @Route("/au-revoir/", name="erase_cookie_noSlash")
+     */
+    public function eraseCookieAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $rememberMes = $em->getRepository('App:RemembermeToken')
+            ->createQueryBuilder('r')
+            ->where('r.username =:username')
+            ->setParameters(['username' => $user->getUsername()])
+            ->getQuery()
+            ->getResult();
+
+        if($rememberMes) {
+            foreach($rememberMes as $rememberMe) {
+                $em->remove($rememberMe);
+            }
+            $em->flush();
+        }
+        return $this->redirectToRoute('logout');
+    }
+
+    /**
      * @Route("/logout", name="logout")
      * @Route("/logout/", name="logout_noSlash")
      */

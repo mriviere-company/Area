@@ -12,7 +12,7 @@ use DateTime;
 
 class MoveFleetController extends AbstractController
 {
-    public function centralizeFleetAction($fleets, $now, $em)
+    public function centralizeFleetAction($fleets, $server, $now, $em)
     {
         $nowReport = new DateTime();
         $nowReport->setTimezone(new DateTimeZone('Europe/Paris'));
@@ -322,7 +322,6 @@ class MoveFleetController extends AbstractController
                                 } else {
                                     $speed = $fleet->getSpeed();
                                 }
-                                $server = $em->getRepository('App:Server')->find(['id' => 1]);
                                 $distance = $speed * $base * 1000 * $server->getSpeed();
                                 $moreNow = new DateTime();
                                 $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
@@ -696,7 +695,7 @@ class MoveFleetController extends AbstractController
                                         } else {
                                             $reportInv->setTitle("Rapport contre attaque : Victoire");
                                             $reportInv->setImageName("zombie_win_report.jpg");
-                                            $reportInv->setContent("Vos soldats débarquent sur la planète zombie et sortent l'artillerie lourde ! Les rues s'emplissent de morts mais l'entraînement prévaut sur la peur et vous purgez cette planète de cette peste macabre.<br> La planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) est désormais libre. Et votre indice d'attaque zombie est divisé par 10. Lors de l'assaut vous dénombrez <span class='text-rouge'>" . number_format(round($soldierAtmp)) . "</span> pertes parmis vos soldats. Mais vous avez exterminé <span class='text-vert'>" . number_format(round($soldierDtmp + ($workerDtmp / 6) + ($tankDtmp * 3000))) . "</span> zombies ! <br>Et vous remportez <span class='text-vert'>+" . number_format($warPointAtt) . "</span> points de Guerre.");
+                                            $reportInv->setContent("Vos soldats débarquent sur la planète zombie et sortent l'artillerie lourde ! Les rues s'emplissent de morts mais l'entraînement prévaut sur la peur et vous purgez cette planète de cette peste macabre.<br> La planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) est désormais libre. Et votre indice d'attaque zombie est divisé par 10. Lors de l'assaut vous dénombrez <span class='text-rouge'>" . number_format(round($soldierAtmp)) . "</span> pertes parmis vos soldats. Mais vous avez exterminé <span class='text-vert'>" . number_format(round($soldierDtmp + ($workerDtmp / 6) + ($tankDtmp * 3000))) . "</span> zombies ! <br>Et vous remportez <span class='text-vert'>+" . number_format($warPointAtt) . "</span> points de Guerre ainsi que <span class='text-vert'>+10</span> uraniums.");
                                         }
                                         if ($userDefender->getZombie() == 1) {
                                             $image = [
