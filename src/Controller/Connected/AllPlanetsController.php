@@ -31,7 +31,7 @@ class AllPlanetsController extends AbstractController
             ->createQueryBuilder('p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->select('p.id, p.position, p.name, p.caserne, p.signature, p.bunker, p.centerSearch, p. lightUsine, p.uranium, p.empty, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, p.construct, p.ground, p.groundPlace, p.sky, p.skyPlace, p.imageName, p.radarAt, p.brouilleurAt, p.moon')
+            ->select('p.id, p.position, p.name, p.caserne, p.wtCdr, p.nbCdr, p.signature, p.bunker, p.centerSearch, p. lightUsine, p.uranium, p.empty, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, p.construct, p.ground, p.groundPlace, p.sky, p.skyPlace, p.imageName, p.radarAt, p.brouilleurAt, p.moon')
             ->where('p.user = :user')
             ->setParameters(['user' => $user])
             ->orderBy($crit, $order)

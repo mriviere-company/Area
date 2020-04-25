@@ -16,6 +16,7 @@ class CronTaskController extends AbstractController
      * @Route("/construction/", name="cron_task")
      * @Route("/construction/{opened}/", name="cron_task_user", requirements={"opened"="\d+"})
      * @Route("/connect/construction/{opened}/", name="connect_cron_task_user", requirements={"opened"="\d+"})
+     * @Route("/connect/carte-spatiale/construction/{opened}/", name="map_cron_task_user", requirements={"opened"="\d+"})
      */
     public function cronTaskAction($opened = NULL)
     {

@@ -49,7 +49,7 @@ overview.fleetSignature: Signature
 tooltip.signature: 'Ceci correspond a la signature thermique de votre flotte.'
 title.lastFleet: 'Flottes en mouvement'
 title.planet: Planète
-constructionsWaiting: 'Constructions en attentes sur la planète'
+constructionsWaiting: 'Constructions en attente sur la planète'
 form.name: 'nouveau nom'
 form.renamePlanet: Renommer
 tooltip.rank: 'Votre classement est affiché ici avec l''évolution positive ou négative depuis les dernières 24h.'

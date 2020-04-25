@@ -437,6 +437,19 @@ span a {
   }
 }
 
+.cdr-on-planet {
+  position: absolute;
+  z-index: 4;
+  left: 2rem;
+  background: rgba(0,0,0, 0.4);
+  border-radius: 25px;
+}
+
+.back-planet {
+  position: absolute;
+  z-index: 2;
+}
+
 li a {
   color: orange;
 }

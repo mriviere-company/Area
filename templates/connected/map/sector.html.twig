@@ -115,7 +115,8 @@
                                                     {% endif %}{% endfor %}{% if planet.signature > 0 %}{% endif %}"data-html="true">{% if colorFleet == 'pp-enemy' %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets-enemy.gif') }}">{% elseif colorFleet == 'pp-mine' %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets.gif') }}">{% elseif colorFleet == 'pp-ally' %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets.gif') }}">{% elseif colorFleet == 'pp-peace' %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets.gif') }}">{% endif %}
                                     </a>
                                 </div>
-                            {% elseif planet.signature > 0 %}
+                            {% endif %}
+                            {% if planet.signature > 0 %}
                                 <div>
                                     <a class="planet tipFleet" data-placement="right" data-trigger="" title="<h4 class='text-blanc'>{{ 'sector.groundfleet'|trans }}</h4><div class='my-1 text-left'>({{ planet.signature|number_format }}) <img height='15' src='{{ asset('img/utility.png') }}'></div>" data-html="true"><img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets-ground.gif') }}"></a>
                                 </div>
@@ -159,7 +160,8 @@
                                                     {% endif %}{% endfor %}"data-html="true">{% if colorFleet == 'pp-enemy' %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets-enemy.gif') }}">{% elseif colorFleet == 'pp-mine' %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets.gif') }}">{% elseif colorFleet == 'pp-ally' %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets.gif') }}">{% elseif colorFleet == 'pp-peace' %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets.gif') }}">{% endif %}
                         </a>
                     </div>
-                {% elseif planet.signature > 0 %}
+                {% endif %}
+                {% if planet.signature > 0 %}
                     <div>
                         <a class="planet tipFleet" data-placement="right" data-trigger="" title="<h4 class='text-blanc'>{{ 'sector.groundfleet'|trans }}</h4><div class='my-1 text-left'>({{ planet.signature|number_format }}) <img alt='{{ 'image'|trans({},'front_global') }}' height='15' src='{{ asset('img/utility.png') }}'></div>" data-html="true"><img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/fleets-ground.gif') }}"></a>
                     </div>

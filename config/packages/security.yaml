@@ -48,6 +48,7 @@ security:
                 path:     /
                 always_remember_me: true
                 secure: true
+                name: 'area_remember'
                 token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
 
     # Easy way to control access for large sections of your site
