@@ -286,9 +286,9 @@ class PlanetsController extends AbstractController
         foreach ($embargos as $embargo) {
             $embargo->setFood(($embargo->getFood() - (($embargo->getWorker() / 12) + 2000)) >= 0 ? ($embargo->getFood() - (($embargo->getWorker() / 12) + 2000)) : 0);
             if ($embargo->getFood() == 0) {
-                $embargo->setWorker(($embargo->getWorker() - (450000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getWorker() - (450000 / $embargo->getFdProduction())) : 2000);
+                $embargo->setWorker(($embargo->getWorker() - (900000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getWorker() - (900000 / $embargo->getFdProduction())) : 2000);
                 if ($embargo->getWorker() == 2000) {
-                    $embargo->setSoldier(($embargo->getSoldier() - (150000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getSoldier() - (150000 / $embargo->getFdProduction())) : 0);
+                    $embargo->setSoldier(($embargo->getSoldier() - (300000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getSoldier() - (300000 / $embargo->getFdProduction())) : 0);
                 }
             }
         }
