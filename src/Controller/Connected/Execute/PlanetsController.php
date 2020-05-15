@@ -35,7 +35,7 @@ class PlanetsController extends AbstractController
                 $planet->setWaterMax($planet->getWaterMax() + 5000000);
             } elseif ($build == 'silos') {
                 $planet->setSilos($planet->getSilos() + 1);
-                $planet->setFoodMax($planet->getFoodMax() + 5000000);
+                $planet->setFoodMax($planet->getFoodMax() + 8000000);
             } elseif ($build == 'city') {
                 $planet->setCity($planet->getCity() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 5.56);

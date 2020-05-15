@@ -453,7 +453,7 @@ class Fleet
             } else {
                 $new = 0;
             }
-            $ships = $ships . "Frégates a plasma : " . number_format($this->getFregatePlasma()) . " <span class='float-right'>Perte : <span class=\"text-rouge\">" . number_format(round($new)) . "</span></span><br>";
+            $ships = $ships . "Frégates à plasma : " . number_format($this->getFregatePlasma()) . " <span class='float-right'>Perte : <span class=\"text-rouge\">" . number_format(round($new)) . "</span></span><br>";
         }
         if($this->getCroiser()) {
             if($armor != 0) {
@@ -529,7 +529,7 @@ class Fleet
             $ships = $ships . "Frégates : " . number_format($this->getFregate()) . " <span class='float-right'>Perte : Aucune</span><br>";
         }
         if($this->getFregatePlasma()) {
-            $ships = $ships . "Frégates a plasma : " . number_format($this->getFregatePlasma()) . " <span class='float-right'>Perte : Aucune</span><br>";
+            $ships = $ships . "Frégates à plasma : " . number_format($this->getFregatePlasma()) . " <span class='float-right'>Perte : Aucune</span><br>";
         }
         if($this->getCroiser()) {
             $ships = $ships . "Croiseurs : " . number_format($this->getCroiser()) . " <span class='float-right'>Perte : Aucune</span><br>";
@@ -605,7 +605,7 @@ class Fleet
             $ships = $ships . "Frégates : " . number_format($this->getFregate()) . " <span class='float-right'>Perte : " . "<span class=\"text-rouge\">" . "Totale</span></span><br>";
         }
         if($this->getFregatePlasma()) {
-            $ships = $ships . "Frégates a plasma : " . number_format($this->getFregatePlasma()) . " <span class='float-right'>Perte : " . "<span class=\"text-rouge\">" . "Totale</span></span><br>";
+            $ships = $ships . "Frégates à plasma : " . number_format($this->getFregatePlasma()) . " <span class='float-right'>Perte : " . "<span class=\"text-rouge\">" . "Totale</span></span><br>";
         }
         if($this->getCroiser()) {
             $ships = $ships . "Croiseurs : " . number_format($this->getCroiser()) . " <span class='float-right'>Perte : " . "<span class=\"text-rouge\">" . "Totale</span></span><br>";

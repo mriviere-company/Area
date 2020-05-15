@@ -111,6 +111,15 @@ class FleetsController extends AbstractController
                 if ($planetCdr->getNbCdr() > $recycle) {
                     $fleetCdr->setNiobium($fleetCdr->getNiobium() + $recycle);
                     $planetCdr->setNbCdr($planetCdr->getNbCdr() - $recycle);
+                    if ($planetCdr->getWtCdr() < $recycle) {
+                        if ($planetCdr->getNbCdr() > $recycle) {
+                            $fleetCdr->setNiobium($fleetCdr->getNiobium() + ($recycle - $planetCdr->getWtCdr()));
+                            $planetCdr->setNbCdr($planetCdr->getNbCdr() - ($recycle - $planetCdr->getWtCdr()));
+                        } else {
+                            $fleetCdr->setNiobium($fleetCdr->getNiobium() + ($recycle - $planetCdr->getWtCdr()));
+                            $planetCdr->setNbCdr(0);
+                        }
+                    }
                 } else {
                     $fleetCdr->setNiobium($fleetCdr->getNiobium() + $planetCdr->getNbCdr());
                     $planetCdr->setNbCdr(0);

@@ -148,13 +148,15 @@ class DeployController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));
+        $now->add(new DateInterval('PT' . 300 . 'S'));
         $user = $this->getUser();
 
         if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
-
-        $fleet->setRecycleAt($now);
+        if ($fleet->getPlanet()->getNbCdr() > 0 || $fleet->getPlanet()->getWtCdr() > 0) {
+            $fleet->setRecycleAt($now);
+        }
         $em->flush();
 
         return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleet->getId(), 'usePlanet' => $usePlanet->getId()]);

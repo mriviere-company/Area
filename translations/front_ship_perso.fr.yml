@@ -5,15 +5,15 @@ ship.recycleur: Recycleur
 ship.barge: 'Barge d''invasion'
 ship.hunter: Chasseur
 ship.hunterHeavy: 'Chasseur lourd'
-ship.hunterWar: 'Chasseur a plasma'
+ship.hunterWar: 'Chasseur à plasma'
 ship.cargoV: 'Cargo V'
 ship.cargoI: 'Cargo I'
 ship.cargoX: 'Cargo X'
 ship.corvet: Corvette
-ship.corvetLaser: 'Corvette a laser'
+ship.corvetLaser: 'Corvette à laser'
 ship.corvetWar: 'Corvette de combat'
 ship.fregate: Fregate
-ship.fregatePlasma: 'Frégate a plasma'
+ship.fregatePlasma: 'Frégate à plasma'
 ship.croiser: Croiseur
 ship.ironClad: Cuirassé
 ship.destroyer: Destroyer

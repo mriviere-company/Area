@@ -105,8 +105,8 @@ fleet.cargoV: 'Cargo V'
 fleet.cargoX: 'Cargo X'
 fleet.hunterHeavy: 'Chasseur lourd'
 fleet.corvet: Corvette
-fleet.corvetLaser: 'Corvette a laser'
-fleet.fregatePlasma: 'Frégate a plasma'
+fleet.corvetLaser: 'Corvette à laser'
+fleet.fregatePlasma: 'Frégate à plasma'
 fleet.croiser: Croiseur
 fleet.ironClad: Cuirassé
 fleet.destroyer: Destroyer
@@ -121,7 +121,7 @@ fleet.split: Scinder
 fleet.putOnGround: 'mettre au sol'
 fleet.splitFleet: 'Diviser la flotte'
 fleet.name: Nom
-fleet.hunterWar: 'Chasseur a plasma'
+fleet.hunterWar: 'Chasseur à plasma'
 fleet.corvetWar: 'Corvette de combat'
 fleet.moonMaker: Lunar
 fleet.radarShip: 'Vaisseau radar'
@@ -183,13 +183,13 @@ destroyer: Destroyers
 ironClad: Cuirassés
 croiser: Croiseurs
 fregate: Frégates
-fregatePlasma: 'Frégates a plasma'
+fregatePlasma: 'Frégates à plasma'
 corvet: Corvettes
-corvetLaser: 'Corvettes a laser'
+corvetLaser: 'Corvettes à laser'
 corvetWar: 'Corvettes de combat'
 hunter: Chasseurs
 hunterHeavy: 'Chasseurs lourds'
-hunterWar: 'Chasseurs a plasma'
+hunterWar: 'Chasseurs à plasma'
 moonMaker: Lunars
 motherShip: 'Vaisseau mère'
 radarShip: 'Vaisseaux radar'

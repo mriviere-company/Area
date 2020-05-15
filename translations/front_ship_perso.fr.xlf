@@ -35,7 +35,7 @@
       </trans-unit>
       <trans-unit id="XdQA3Xw" resname="ship.hunterWar">
         <source>ship.hunterWar</source>
-        <target>Chasseur a plasma</target>
+        <target>Chasseur à plasma</target>
       </trans-unit>
       <trans-unit id="lPFz87a" resname="ship.cargoV">
         <source>ship.cargoV</source>
@@ -131,7 +131,7 @@
       </trans-unit>
       <trans-unit id="QG6B7Sj" resname="quest.tutorial">
         <source>quest.tutorial</source>
-        <target>C'est ici que vous produisez les vaisseaux qui constitueront vos flottes et silloneront les galaxies. Pour débuter vous avez une production gratuite, lancez la construction de 10 chasseurs a plasma et 5 corvettes de combats.</target>
+        <target>C'est ici que vous produisez les vaisseaux qui constitueront vos flottes et silloneront les galaxies. Pour débuter vous avez une production gratuite, lancez la construction de 10 chasseurs à plasma et 5 corvettes de combats.</target>
       </trans-unit>
       <trans-unit id="SvwPUFp" resname="quest.tutorialBis">
         <source>quest.tutorialBis</source>

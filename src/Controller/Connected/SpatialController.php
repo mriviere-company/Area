@@ -399,8 +399,13 @@ class SpatialController extends AbstractController
                     $updateF->setFightAt($now);
                 }
                 $fleet->setFightAt($now);
+            } else {
+                $now->add(new DateInterval('PT' . 300 . 'S'));
             }
 
+            if ($usePlanet->getNbCdr() > 0 || $usePlanet->getWtCdr() > 0) {
+                $fleet->setRecycleAt($now);
+            }
             $fleet->setUser($user);
             $fleet->setPlanet($usePlanet);
             if ($form_createFleet->get('name')->getData()) {
