@@ -126,7 +126,7 @@ class FleetController  extends AbstractController
         if ($form_listCreate->isSubmitted()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if(count($user->getFleetLists()) >= 10) {
-                $this->addFlash("fail", "Vous avez atteint la limite de Cohortes autorisées par l'Instance.");
+                $this->addFlash("fail", "Vous avez atteint la limite (10) de Cohortes autorisées par l'Instance.");
                 return $this->redirectToRoute('fleet_list', ['usePlanet' => $usePlanet->getId()]);
             }
 
@@ -1228,11 +1228,6 @@ class FleetController  extends AbstractController
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleet->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
 
-        if(count($user->getFleets()) >= 75) {
-            $this->addFlash("fail", "Vous avez atteint la limite de flottes autorisées par l'Instance.");
-            return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleet->getId(), 'usePlanet' => $usePlanet->getId()]);
-        }
-
         $form_spatialShip = $this->createForm(FleetEditShipType::class);
         $form_spatialShip->handleRequest($request);
 
@@ -1583,7 +1578,7 @@ class FleetController  extends AbstractController
         }
 
         if(count($user->getFleets()) >= 75) {
-            $this->addFlash("fail", "Vous avez atteint la limite de flottes autorisées par l'Instance.");
+            $this->addFlash("fail", "Vous avez atteint la limite (75) de flottes autorisées par l'Instance.");
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $oldFleet->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
 

@@ -154,7 +154,7 @@ class DeployController extends AbstractController
         if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
-        if ($fleet->getPlanet()->getNbCdr() > 0 || $fleet->getPlanet()->getWtCdr() > 0) {
+        if (($fleet->getPlanet()->getNbCdr() > 0 || $fleet->getPlanet()->getWtCdr()) > 0 && $fleet->getCargoPlace() != $fleet->getCargoFull()) {
             $fleet->setRecycleAt($now);
         }
         $em->flush();

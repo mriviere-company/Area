@@ -248,7 +248,7 @@ class SpatialController extends AbstractController
 
 
         if(count($user->getFleets()) >= 75) {
-            $this->addFlash("fail", "Vous avez atteint la limite de flottes autorisées par l'Instance.");
+            $this->addFlash("fail", "Vous avez atteint la limite (75) de flottes autorisées par l'Instance.");
             return $this->redirectToRoute('spatial', ['usePlanet' => $usePlanet->getId()]);
         }
 

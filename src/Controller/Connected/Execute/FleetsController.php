@@ -145,6 +145,18 @@ class FleetsController extends AbstractController
                         $em->persist($reportRec);
                         $fleetCdr->getUser()->setViewReport(false);
                     }
+                } elseif ($fleetCdr->getCargoPlace() == $fleetCdr->getCargoFull()) {
+                    $reportRec = new Report();
+                    $reportRec->setType('move');
+                    $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
+                    $reportRec->setImageName("recycle_report.jpg");
+                    $reportRec->setSendAt($now);
+                    $reportRec->setUser($fleetCdr->getUser());
+                    $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
+                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
+                    $em->persist($reportRec);
+                    $fleetCdr->getUser()->setViewReport(false);
+                    $fleetCdr->setRecycleAt(null);
                 } else {
                     $fleetCdr->setRecycleAt($tmpNoCdr);
                 }
@@ -168,7 +180,29 @@ class FleetsController extends AbstractController
                     $fleetCdr->setWater($fleetCdr->getWater() + $planetCdr->getWtCdr());
                     $planetCdr->setWtCdr(0);
                 }
-                if ($planetCdr->getNbCdr() == 0 && $planetCdr->getWtCdr() == 0 || $fleetCdr->getCargoPlace() == $fleetCdr->getCargoFull()) {
+                if ($planetCdr->getNbCdr() == 0 && $planetCdr->getWtCdr() == 0) {
+                    $reportRec = new Report();
+                    $reportRec->setType('move');
+                    $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
+                    $reportRec->setImageName("recycle_report.jpg");
+                    $reportRec->setSendAt($now);
+                    $reportRec->setUser($fleetCdr->getUser());
+                    $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
+                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
+                    $em->persist($reportRec);
+                    $fleetCdr->getUser()->setViewReport(false);
+                    $fleetCdr->setRecycleAt(null);
+                } elseif ($fleetCdr->getCargoPlace() == $fleetCdr->getCargoFull()) {
+                    $reportRec = new Report();
+                    $reportRec->setType('move');
+                    $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
+                    $reportRec->setImageName("recycle_report.jpg");
+                    $reportRec->setSendAt($now);
+                    $reportRec->setUser($fleetCdr->getUser());
+                    $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
+                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
+                    $em->persist($reportRec);
+                    $fleetCdr->getUser()->setViewReport(false);
                     $fleetCdr->setRecycleAt(null);
                 } else {
                     $fleetCdr->setRecycleAt($tmpNoCdr);
