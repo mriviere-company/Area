@@ -125,7 +125,7 @@ class PlanetController extends AbstractController
             $reportColo->setUser($user);
             $reportColo->setTitle("Colonisation de planète");
             $reportColo->setImageName("colonize_report.jpg");
-            $reportColo->setContent("Vous venez de coloniser une planète inhabitée en : (" .  $newPlanet->getSector()->getgalaxy()->getPosition() . "." . $newPlanet->getSector()->getPosition() . "." . $newPlanet->getPosition() . ") . Cette planète fait désormais partit de votre Empire, pensez a la renommer sur la page Planètes.");
+            $reportColo->setContent("Vous venez de coloniser une planète inhabitée en : (" .  $newPlanet->getSector()->getgalaxy()->getPosition() . "." . $newPlanet->getSector()->getPosition() . "." . $newPlanet->getPosition() . ") . Cette planète fait désormais partie de votre Empire, pensez à la renommer sur la page Planètes.");
             $user->setViewReport(false);
             $em->persist($reportColo);
             $quest = $user->checkQuests('colonize');
