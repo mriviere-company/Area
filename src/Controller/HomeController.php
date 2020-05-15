@@ -16,24 +16,18 @@ class HomeController extends AbstractController
         $servers = $em->getRepository('App:Server')->findBy(['open' => 1]);
         $user = $this->getUser();
 
-        if($user) {
-
-            $usePlanet = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.user', 'u')
-                ->where('u.username = :user')
-                ->setParameters(['user' => $this->getUser()->getUsername()])
-                ->getQuery()
-                ->setMaxResults(1)
-                ->getOneOrNullResult();
-
-            return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
+        if ($user) {
+            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
+            if ($usePlanet) {
+                return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
+            }
         }
 
         $server = 0;
         if ($servers) {
             $server = 1;
         }
+
         return $this->render('index.html.twig', [
             'server' => $server
         ]);
