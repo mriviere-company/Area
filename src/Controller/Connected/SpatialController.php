@@ -400,10 +400,12 @@ class SpatialController extends AbstractController
                 }
                 $fleet->setFightAt($now);
             } else {
+                $now = new DateTime();
+                $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $now->add(new DateInterval('PT' . 300 . 'S'));
             }
 
-            if ($usePlanet->getNbCdr() > 0 || $usePlanet->getWtCdr() > 0) {
+            if (($usePlanet->getNbCdr() > 0 || $usePlanet->getWtCdr() > 0) && $fleet->getRecycleur() > 0) {
                 $fleet->setRecycleAt($now);
             }
             $fleet->setUser($user);

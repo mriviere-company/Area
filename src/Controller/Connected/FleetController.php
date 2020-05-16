@@ -1249,6 +1249,8 @@ class FleetController  extends AbstractController
             } elseif (abs($form_spatialShip->get('lessRecycleur')->getData()) <= $fleet->getRecycleur()) {
                 $recycleur = $planetTake->getRecycleur() + abs($form_spatialShip->get('lessRecycleur')->getData());
                 $fleet->setRecycleur($fleet->getRecycleur() - abs($form_spatialShip->get('lessRecycleur')->getData()));
+            } else {
+                $recycleur = $planetTake->getRecycleur();
             }
             if (abs($form_spatialShip->get('moreCargoI')->getData())) {
                 $cargoI = $planetTake->getCargoI() - abs($form_spatialShip->get('moreCargoI')->getData());
@@ -1256,6 +1258,8 @@ class FleetController  extends AbstractController
             } elseif (abs($form_spatialShip->get('lessCargoI')->getData()) <= $fleet->getCargoI()) {
                 $cargoI = $planetTake->getCargoI() + abs($form_spatialShip->get('lessCargoI')->getData());
                 $fleet->setCargoI($fleet->getCargoI() - abs($form_spatialShip->get('lessCargoI')->getData()));
+            } else {
+                $cargoI = $planetTake->getCargoI();
             }
             if (abs($form_spatialShip->get('moreCargoV')->getData())) {
                 $cargoV = $planetTake->getCargoV() - abs($form_spatialShip->get('moreCargoV')->getData());
@@ -1263,6 +1267,8 @@ class FleetController  extends AbstractController
             } elseif (abs($form_spatialShip->get('lessCargoV')->getData()) <= $fleet->getCargoV()) {
                 $cargoV = $planetTake->getCargoV() + abs($form_spatialShip->get('lessCargoV')->getData());
                 $fleet->setCargoV($fleet->getCargoV() - abs($form_spatialShip->get('lessCargoV')->getData()));
+            } else {
+                $cargoV = $planetTake->getCargoV();
             }
             if (abs($form_spatialShip->get('moreCargoX')->getData())) {
                 $cargoX = $planetTake->getCargoX() - abs($form_spatialShip->get('moreCargoX')->getData());
@@ -1270,6 +1276,8 @@ class FleetController  extends AbstractController
             } elseif (abs($form_spatialShip->get('lessCargoX')->getData()) <= $fleet->getCargoX()) {
                 $cargoX = $planetTake->getCargoX() + abs($form_spatialShip->get('lessCargoX')->getData());
                 $fleet->setCargoX($fleet->getCargoX() - abs($form_spatialShip->get('lessCargoX')->getData()));
+            } else {
+                $cargoX = $planetTake->getCargoX();
             }
             if (abs($form_spatialShip->get('moreBarge')->getData())) {
                 $barge = $planetTake->getBarge() - abs($form_spatialShip->get('moreBarge')->getData());
@@ -1277,6 +1285,8 @@ class FleetController  extends AbstractController
             } elseif (abs($form_spatialShip->get('lessBarge')->getData()) <= $fleet->getBarge()) {
                 $barge = $planetTake->getBarge() + abs($form_spatialShip->get('lessBarge')->getData());
                 $fleet->setBarge($fleet->getBarge() - abs($form_spatialShip->get('lessBarge')->getData()));
+            } else {
+                $barge = $planetTake->getBarge();
             }
             if (abs($form_spatialShip->get('moreMotherShip')->getData())) {
                 $motherShip = $planetTake->getMotherShip() - abs($form_spatialShip->get('moreMotherShip')->getData());
@@ -1284,6 +1294,8 @@ class FleetController  extends AbstractController
             } elseif (abs($form_spatialShip->get('lessMotherShip')->getData()) <= $fleet->getMotherShip()) {
                 $motherShip = $planetTake->getMotherShip() + abs($form_spatialShip->get('lessMotherShip')->getData());
                 $fleet->setMotherShip($fleet->getMotherShip() - abs($form_spatialShip->get('lessMotherShip')->getData()));
+            } else {
+                $motherShip = $planetTake->getMotherShip();
             }
             if (abs($form_spatialShip->get('moreMoonMaker')->getData())) {
                 $moonMaker = $planetTake->getMoonMaker() - abs($form_spatialShip->get('moreMoonMaker')->getData());
