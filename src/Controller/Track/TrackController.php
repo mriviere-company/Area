@@ -91,6 +91,16 @@ class TrackController extends AbstractController
             $track->setPreviousPage('Instagram');
         } elseif (stripos(strtoupper($referer), '.XYZ') !== FALSE) {
             $track->setPreviousPage('Xyz');
+        } elseif (stripos(strtoupper($referer), '82721527') !== FALSE) {
+            $track->setPreviousPage('82721527');
+        } elseif (stripos(strtoupper($referer), 'ESLGAMING') !== FALSE) {
+            $track->setPreviousPage('Esl');
+        } elseif (stripos(strtoupper($referer), 'LINKEDIN') !== FALSE) {
+            $track->setPreviousPage('Linkedin');
+        } elseif (stripos(strtoupper($referer), 'LNKD') !== FALSE) {
+            $track->setPreviousPage('Linkedin');
+        } elseif (stripos(strtoupper($referer), 'AVENOEL') !== FALSE) {
+            $track->setPreviousPage('Avenoel');
         } else {
             $track->setPreviousPage($referer);
         }

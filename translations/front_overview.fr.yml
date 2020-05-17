@@ -53,7 +53,6 @@ constructionsWaiting: 'Constructions en attente sur la planète'
 form.name: 'nouveau nom'
 form.renamePlanet: Renommer
 tooltip.rank: 'Votre classement est affiché ici avec l''évolution positive ou négative depuis les dernières 24h.'
-title.tmpbeta: '<-- Cliquez sur le bouton Beta vx.x pour accéder aux dernières mises à jour. (15/06/2018)'
 info.civil: 'Civils :'
 info.worker: 'Travailleurs :'
 info.cost: 'Économie de l''Empire :'
