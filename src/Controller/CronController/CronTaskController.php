@@ -374,6 +374,7 @@ class CronTaskController extends AbstractController
                 $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::embargoPlanetAction', [
                     'embargos' => $embargos,
                     'server' => $server,
+                    'now' => $now,
                     'em' => $em
                 ]);
                 echo $cronValue->getContent() ? $cronValue->getContent() : "<span style='color:#FF0000'>KO<span><br/>";

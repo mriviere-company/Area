@@ -278,10 +278,11 @@ class PlanetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
-    public function embargoPlanetAction($embargos, $server, $em)
+    public function embargoPlanetAction($embargos, $server, $now, $em)
     {
         $nowEmbargo = new DateTime();
         $nowEmbargo->setTimezone(new DateTimeZone('Europe/Paris'));
+        $nowEmbargo->add(new DateInterval('PT' . (3600) . 'S'));
 
         foreach ($embargos as $embargo) {
             $food = (($embargo->getWorker() / 2) + 2000) >= 0 ? (($embargo->getWorker() / 2) + 2000) : 0;
@@ -298,14 +299,13 @@ class PlanetsController extends AbstractController
             }
             $reportEmbargo = new Report();
             $reportEmbargo->setType('fight');
-            $reportEmbargo->setSendAt($nowEmbargo);
+            $reportEmbargo->setSendAt($now);
             $reportEmbargo->setUser($embargo->getUser());
             $reportEmbargo->setTitle("Votre planète est sous embargo !");
             $reportEmbargo->setImageName("embargo_report.jpg");
             $reportEmbargo->setContent("Votre planète <span class='text-vert'>" . $embargo->getName() . "</span> subit actuellement l'embargo d'une flotte hostile !<br>Vous avez perdu <span class='text-rouge'>" . number_format($food) . "</span> rations, <span class='text-rouge'>" . number_format($worker) . "</span> travailleurs et <span class='text-rouge'>" . number_format($soldier) . "</span> soldats.");
             $em->persist($reportEmbargo);
         }
-        $nowEmbargo->add(new DateInterval('PT' . (3600) . 'S'));
         $server->setEmbargo($nowEmbargo);
 
         echo "Flush -> " . count($embargos) . " ";
