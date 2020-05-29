@@ -54,10 +54,14 @@ class DailyController extends AbstractController
             $report->setUser($user);
             $ally = $user->getAlly();
             $nbrQuests = count($user->getQuests());
-            foreach ($user->getQuests() as $quest) {
-                $user->removeQuest($quest);
+            if ($nbrQuests) {
+                foreach ($user->getQuests() as $quest) {
+                    $user->removeQuest($quest);
+                }
             }
-            $user->addQuest($questOne);
+            if ($user->getBot() == false) {
+                $user->addQuest($questOne);
+            }
             $worker = 0;
             $planetPoint= 0;
             $buildingCost = 0;
@@ -69,7 +73,9 @@ class DailyController extends AbstractController
             $gain = $worker;
             $lose = null;
             if($ally) {
-                $user->addQuest($questTwo);
+                if ($user->getBot() == false) {
+                    $user->addQuest($questTwo);
+                }
                 if($ally->getPeaces()) {
                     foreach($ally->getPeaces() as $peace) {
                         if($peace->getType() == false && $peace->getAccepted() == 1) {
@@ -114,10 +120,14 @@ class DailyController extends AbstractController
                 $allyBitcoin = $allyBitcoin + $taxe;
                 $ally->setBitcoin($allyBitcoin);
             } else {
-                $questAlly = $em->getRepository('App:Quest')->findOneById(50);
-                $user->addQuest($questAlly);
+                if ($user->getBot() == false) {
+                    $questAlly = $em->getRepository('App:Quest')->findOneById(50);
+                    $user->addQuest($questAlly);
+                }
             }
-            $user->addQuest($questTree);
+            if ($user->getBot() == false) {
+                $user->addQuest($questTree);
+            }
             $troops = $user->getAllTroops();
             $ship = $user->getAllShipsCost();
             $cost = $user->getBitcoin();
@@ -214,7 +224,9 @@ class DailyController extends AbstractController
             if ($economicGO == 1) {
                 $report->setContent($report->getContent() . "<br>Votre réserve de Bitcoins passe en négatif et vous n'êtes plus en mesure d'entretenir votre armada.<br>Vous perdez tous les vaisseaux que contenait votre Empire et redémarrez avec 5.000 Bitcoins.");
             }
-            $em->persist($report);
+            if ($user->getBot() == false) {
+                $em->persist($report);
+            }
             $x++;
         }
 

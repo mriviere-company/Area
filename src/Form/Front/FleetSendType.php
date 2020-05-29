@@ -114,7 +114,8 @@ class FleetSendType extends AbstractType
             $translator->trans('form.discharge') => '2',
             $translator->trans('form.col') => '3',
             $translator->trans('form.loot') => '4',
-            $translator->trans('fleet.invade') => '5'
+            $translator->trans('fleet.invade') => '5',
+            $translator->trans('form.onGround') => '7'
         ];
     }
 

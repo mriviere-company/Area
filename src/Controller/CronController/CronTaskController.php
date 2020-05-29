@@ -333,6 +333,23 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
+        $reports = $em->getRepository('App:Report')
+            ->createQueryBuilder('r')
+            ->join('r.user', 'u')
+            ->andWhere('u.bot = true')
+            ->getQuery()
+            ->getResult();
+
+        if($reports) {
+            echo "Report : ";
+            foreach ($reports as $report) {
+                $report->setImageName(null);
+                $em->remove($report);
+            }
+            $em->flush();
+            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+        }
+
         $zUsers = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.planets', 'p')

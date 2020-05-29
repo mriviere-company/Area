@@ -25,7 +25,6 @@ Encore
     .addEntry('shipsCharts', './assets/js/shipsCharts.js')
     .addEntry('bitcoinCharts', './assets/js/bitcoinCharts.js')
     .addEntry('pdgCharts', './assets/js/pdgCharts.js')
-    .addEntry('publicCharts', './assets/js/publicCharts.js')
     .addEntry('zombieCharts', './assets/js/zombieCharts.js')
     .enableForkedTypeScriptTypesChecking()
 ;

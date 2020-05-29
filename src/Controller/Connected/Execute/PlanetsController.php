@@ -285,10 +285,10 @@ class PlanetsController extends AbstractController
         $nowEmbargo->add(new DateInterval('PT' . (3600) . 'S'));
 
         foreach ($embargos as $embargo) {
-            $food = (($embargo->getWorker() / 2) + 2000) >= 0 ? (($embargo->getWorker() / 2) + 2000) : 0;
+            $food = (($embargo->getWorker() / 5) + 2000) >= 0 ? (($embargo->getWorker() / 5) + 2000) : 0;
             $worker = 0;
             $soldier = 0;
-            $embargo->setFood(($embargo->getFood() - (($embargo->getWorker() / 2) + 2000)) >= 0 ? ($embargo->getFood() - (($embargo->getWorker() / 2) + 2000)) : 0);
+            $embargo->setFood(($embargo->getFood() - (($embargo->getWorker() / 5) + 2000)) >= 0 ? ($embargo->getFood() - (($embargo->getWorker() / 5) + 2000)) : 0);
             if ($embargo->getFood() == 0) {
                 $embargo->setWorker(($embargo->getWorker() - (4500000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getWorker() - (4500000 / $embargo->getFdProduction())) : 2000);
                 $worker = ((4500000 / $embargo->getFdProduction())) >= 0 ? (4500000 / $embargo->getFdProduction()) : 2000;

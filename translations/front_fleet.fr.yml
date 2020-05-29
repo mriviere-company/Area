@@ -167,6 +167,7 @@ form.discharge: 'Décharger et revenir'
 form.col: Coloniser
 form.num: 0
 form.loot: Piller
+form.onGround: 'Mettre au sol'
 fleet.st: ST
 tooltip.remove: 'Supprimer flotte de la Cohorte ?'
 tooltip.cancel: 'Annuler l''envoi de la flotte ?'
