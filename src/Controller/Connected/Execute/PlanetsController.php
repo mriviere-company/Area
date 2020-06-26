@@ -41,7 +41,7 @@ class PlanetsController extends AbstractController
                 $planet->setCity($planet->getCity() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 5.56);
                 $planet->setWorkerMax($planet->getWorkerMax() + 125000);
-                $quest = $planet->getUser()->checkQuests('build_city');
+                $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_city') : NULL;
                 if($quest) {
                     $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
                     $planet->getUser()->removeQuest($quest);
@@ -50,7 +50,7 @@ class PlanetsController extends AbstractController
                 $planet->setMetropole($planet->getMetropole() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 8.32);
                 $planet->setWorkerMax($planet->getWorkerMax() + 400000);
-                $quest = $planet->getUser()->checkQuests('build_metro');
+                $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_metro') : NULL;
                 if($quest) {
                     $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
                     $planet->getUser()->removeQuest($quest);
@@ -78,7 +78,7 @@ class PlanetsController extends AbstractController
             } elseif ($build == 'heavyUsine') {
                 $planet->setHeavyUsine($planet->getHeavyUsine() + 1);
                 $planet->setShipProduction($planet->getShipProduction() + 0.3);
-                $quest = $planet->getUser()->checkQuests('build_heavy');
+                $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_heavy') : NULL;
                 if($quest) {
                     $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
                     $planet->getUser()->removeQuest($quest);

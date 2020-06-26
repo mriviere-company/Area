@@ -90,6 +90,7 @@ class RankController extends AbstractController
             ->groupBy('u.id')
             ->where('u.rank is not null')
             ->andWhere('u.id != 1')
+            ->andWhere('u.bot = false')
             ->andWhere('r.point > 200')
             ->orderBy('point', 'DESC')
             ->getQuery()
@@ -98,7 +99,9 @@ class RankController extends AbstractController
 
         $nbrPlayers = $em->getRepository('App:Rank')
             ->createQueryBuilder('r')
+            ->join('r.user', 'u')
             ->select('count(r.id) as nbrPlayer')
+            ->where('u.bot = false')
             ->getQuery()
             ->getSingleScalarResult();
 

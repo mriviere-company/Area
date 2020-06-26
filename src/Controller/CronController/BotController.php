@@ -106,6 +106,7 @@ class BotController extends AbstractController
      */
     public function manageBotAction()
     {
+        exit;
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $now->setTimezone(new DateTimeZone('Europe/Paris'));

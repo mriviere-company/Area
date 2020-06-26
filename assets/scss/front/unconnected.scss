@@ -14,23 +14,11 @@
   font-size: 2rem;
   width: 281px;
   height: 38px;
-  background-image: url("../public/img/form.jpg");
+  background-image: url("../public/img/form.jpg")!important;
   margin-bottom: 1rem;
   line-height: 4rem;
   padding-left: 1rem;
   text-shadow: 1.5px 1.5px 2px rgba(0,0,0, 0.8);
-  border: 1px solid silver;
-  border-radius: 5px;
-}
-
-.login-button {
-  color: #000000;
-  font-size: 2rem;
-  width: 115px;
-  height: 38px;
-  background-image: url("../public/img/form.jpg");
-  margin-left: 0.6rem;
-  text-shadow: 1.5px 1.5px 2px rgba(255,255,255, 0.3);
   border: 1px solid silver;
   border-radius: 5px;
 }
