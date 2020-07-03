@@ -4,6 +4,7 @@ user.level: 'Niveau du joueur :'
 user.ally: 'Alliance :'
 user.allyNone: Aucune
 user.galaxy: 'Galaxie(s) :'
+user.more.galaxy: '- ??'
 user.planet: 'Planètes :'
 user.first.planet: 'Position :'
 user.fleet: 'Flottes :'

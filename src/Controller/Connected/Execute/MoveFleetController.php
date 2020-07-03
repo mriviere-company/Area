@@ -689,7 +689,7 @@ class MoveFleetController extends AbstractController
                                         $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
                                         $reportDef->setImageName("defend_lose_report.jpg");
                                         $reportDef->setContent("Mais QUI ? QUI !!! Vous as donné un commandant si médiocre" .
-                                            $this->forward('App\Controller\FacilitiesController::userReportAction', ['user' => $defender, 'usePlanet' => $usePlanetDef])->getContent() .
+                                            $this->forward('App\Controller\FacilitiesController::userReportAction', ['user' => $user, 'usePlanet' => $usePlanetDef])->getContent() .
                                             "n'a pas eu à faire grand chose pour prendre votre planète" .
                                             $this->forward('App\Controller\FacilitiesController::coordinatesAction', ['planet' => $defender, 'usePlanet' => $usePlanetDef])->getContent() .
                                             number_format(round($soldierAtmp)) . " soldats ennemis sont tout de même éliminés. C'est toujours ça de gagné. Vos <span class='text-rouge'>" . number_format($soldierDtmp) .
@@ -721,7 +721,7 @@ class MoveFleetController extends AbstractController
                                             $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
                                             $reportDef->setImageName("defend_lose_report.jpg");
                                             $reportDef->setContent("Mais QUI ? QUI !!! Vous as donné un commandant si médiocre" .
-                                                $this->forward('App\Controller\FacilitiesController::userReportAction', ['user' => $defender, 'usePlanet' => $usePlanetDef])->getContent() .
+                                                $this->forward('App\Controller\FacilitiesController::userReportAction', ['user' => $user, 'usePlanet' => $usePlanetDef])->getContent() .
                                                 "n'a pas eu à faire grand chose pour prendre votre planète" .
                                                 $this->forward('App\Controller\FacilitiesController::coordinatesAction', ['planet' => $defender, 'usePlanet' => $usePlanetDef])->getContent() .
                                                 number_format(round($soldierAtmp)) . " soldats ennemis sont tout de même éliminés. C'est toujours ça de gagné. Vos <span class='text-rouge'>" .

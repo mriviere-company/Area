@@ -18,6 +18,7 @@ class DailyController extends AbstractController
             ->createQueryBuilder('u')
             ->join('u.rank', 'r')
             ->where('u.id != 1')
+            ->andWhere('u.bot = false')
             ->orderBy('r.point', 'DESC')
             ->getQuery()
             ->getResult();

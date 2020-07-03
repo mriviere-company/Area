@@ -71,14 +71,16 @@ class SoldierController extends AbstractController
                         return $this->redirectToRoute('soldier', ['usePlanet' => $usePlanet->getId()]);
                     }
                     $tmpSoldier = $usePlanet->getSoldierAtNbr();
-                    $now->add(new DateInterval('PT' . round(($nbrSoldier + $tmpSoldier) / 10) . 'S'));  // X10 NORMAL GAME
+                    $now = clone $usePlanet->getSoldierAt();
+                    $now->add(new DateInterval('PT' . round(($nbrSoldier) / 10) . 'S'));  // X10 NORMAL GAME
                     $usePlanet->setSoldierAtNbr($tmpSoldier + $nbrSoldier);
+                    $usePlanet->setSoldierAt($now);
                 } else {
                     $now->add(new DateInterval('PT' . round($nbrSoldier / 10) . 'S')); // X10 NORMAL GAME
                     $usePlanet->setSoldierAtNbr($nbrSoldier);
+                    $usePlanet->setSoldierAt($now);
                 }
                 $usePlanet->setWorker($usePlanet->getWorker() - ($nbrSoldier * 2));
-                $usePlanet->setSoldierAt($now);
                 $user->setBitcoin($user->getBitcoin() - ($nbrSoldier * $price));
                 $quest = $user->checkQuests('soldier');
                 if($quest) {
@@ -115,8 +117,9 @@ class SoldierController extends AbstractController
                         return $this->redirectToRoute('soldier', ['usePlanet' => $usePlanet->getId()]);
                     }
                     $tmpTank = $usePlanet->getTankAtNbr();
-                    $now->add(new DateInterval('PT' . round(($nbrTank + $tmpTank) * 900) . 'S'));
-                    $usePlanet->setTankAtNbr($usePlanet->getTankAtNbr() + $nbrTank);
+                    $now = clone $usePlanet->getTankAt();
+                    $now->add(new DateInterval('PT' . round(($nbrTank) * 900) . 'S'));
+                    $usePlanet->setTankAtNbr($tmpTank + $nbrTank);
                 } else {
                     $now->add(new DateInterval('PT' . round($nbrTank * 900) . 'S'));
                     $usePlanet->setTankAtNbr($nbrTank);
@@ -157,6 +160,7 @@ class SoldierController extends AbstractController
                         return $this->redirectToRoute('soldier', ['usePlanet' => $usePlanet->getId()]);
                     }
                     $tmpNuclear = $usePlanet->getNuclearAtNbr();
+                    $now = clone $usePlanet->getNuclearAt();
                     $now->add(new DateInterval('PT' . round(($nbrNuclear + $tmpNuclear) * 24) . 'H'));
                     $usePlanet->setNuclearAtNbr($usePlanet->getNuclearAtNbr() + $nbrNuclear);
                 } else {
@@ -198,6 +202,7 @@ class SoldierController extends AbstractController
                         return $this->redirectToRoute('soldier', ['usePlanet' => $usePlanet->getId()]);
                     }
                     $tmpScientist = $usePlanet->getScientistAtNbr();
+                    $now = clone $usePlanet->getScientistAt();
                     $now->add(new DateInterval('PT' . round((($nbrScientist + $tmpScientist) * 60)/ $user->getScientistProduction()) . 'S'));
                     $usePlanet->setScientistAtNbr($usePlanet->getScientistAtNbr() + $nbrScientist);
                 } else {

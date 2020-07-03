@@ -385,6 +385,7 @@ class CronTaskController extends AbstractController
                 ->andWhere('uf.zombie = false')
                 ->andWhere('u.bot = 0')
                 ->andWhere('f.user != p.user')
+                ->andWhere('f.signature > 125000')
                 ->getQuery()
                 ->getResult();
 

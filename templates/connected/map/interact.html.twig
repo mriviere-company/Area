@@ -59,7 +59,7 @@
             {% if planet.getUser() and (render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': planet.getSector().getPosition(), 'gal': planet.getSector().getGalaxy().getPosition()})) > planet.getSkyBrouilleur() or planet.getOurFleet(app.user)) %}
                 <tr>
                     <td colspan="3" class="center-cells">
-                        <span><a data-toggle="modal" data-target="#userpModal" href="{{ path('user_profil_modal', {'userPlanet': planet.getUser().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.seeProfil'|trans }} {{ planet.getUser().getUserName() }}</a></span>
+                        <span><a href="{{ path('user_profil', {'userPlanet': planet.getUser().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.seeProfil'|trans }} {{ planet.getUser().getUserName() }}</a></span>
                     </td>
                 </tr>
             {% endif %}
@@ -78,11 +78,5 @@
             </tbody>
         </table>
         {{ form_end(form_fleetMove) }}
-    </div>
-    <div class="modal fade" id="userpModal" tabindex="-1" role="dialog" aria-labelledby="userpModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-            <div class="modal-content special">
-            </div>
-        </div>
     </div>
 {% endblock %}
