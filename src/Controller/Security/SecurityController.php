@@ -194,7 +194,7 @@ class SecurityController extends AbstractController
             if ($user->getRoles()[0] == 'ROLE_MODO' || $user->getRoles()[0] == 'ROLE_ADMIN') {
                 return $this->redirectToRoute('administration');
             }
-            if ($user->getBot() == 1) {
+            if ($user->getBot() == 1 && $user->getId() != 1) {
                 $user->setBot(0);
                 $em->flush();
             }

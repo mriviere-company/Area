@@ -22,7 +22,9 @@
         {%- endblock -%}
 
         {%- block right_planet -%}
-            {{ render(controller('App\\Controller\\Connected\\AllPlanetsController::allPlanetsAction', {'usePlanet': usePlanet.getId(), 'id': 1})) }}
+            {% if app.user.getId() != 1 %}
+                {{ render(controller('App\\Controller\\Connected\\AllPlanetsController::allPlanetsAction', {'usePlanet': usePlanet.getId(), 'id': 1})) }}
+            {% endif %}
         {%- endblock -%}
 
         {{ render(controller('App\\Controller\\Track\\TrackController::trackAction', {'currentPage': app.request.attributes.get('_route')})) }}

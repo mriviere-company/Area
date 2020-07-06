@@ -173,14 +173,17 @@ class ServerController extends AbstractController
                 ->getOneOrNullResult();
 
             $iaPlanet->setUser($iaPlayer);
-            $iaPlanet->setWorker(1000000);
-            $iaPlanet->setWorkerMax(1000000);
-            $iaPlanet->setSoldier(1000000);
-            $iaPlanet->setSoldierMax(1000000);
-            $iaPlanet->setBunker(50);
-            $iaPlanet->setGroundPlace(500);
-            $iaPlanet->setGround(1300);
-            $iaPlanet->setSky(180);
+            $iaPlanet->setWorker(49850000);
+            $iaPlanet->setWorkerMax(49850000);
+            $iaPlanet->setSoldier(10001000);
+            $iaPlanet->setSoldierMax(10001000);
+            $iaPlanet->setTank(500);
+            $iaPlanet->setBunker(500);
+            $iaPlanet->setMetropole(744);
+            $iaPlanet->setGroundPlace(5744);
+            $iaPlanet->setGround(6000);
+            $iaPlanet->setSkyPlace(744);
+            $iaPlanet->setSky(1000);
             $iaPlanet->setImageName('hydra_planet.png');
             $iaPlanet->setName('Fort Hydra');
             $iaPlayer->addPlanet($iaPlanet);
@@ -197,10 +200,10 @@ class ServerController extends AbstractController
 
             foreach ($putFleets as $putFleet) {
                 $fleet = new Fleet();
-                $fleet->setHunterWar(rand(1500, 5000));
-                $fleet->setCorvetWar(rand(100, 500));
-                $fleet->setFregatePlasma(rand(50, 200));
-                $fleet->setDestroyer(rand(10, 100));
+                $fleet->setHunterWar(rand(8000, 25000));
+                $fleet->setCorvetWar(rand(4000, 8000));
+                $fleet->setFregatePlasma(rand(2000, 4000));
+                $fleet->setDestroyer(rand(1000, 2000));
                 $fleet->setUser($iaPlayer);
                 $fleet->setPlanet($putFleet);
                 $fleet->setAttack(1);
