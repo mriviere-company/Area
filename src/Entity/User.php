@@ -1485,9 +1485,9 @@ class User implements UserInterface, \Serializable
             return 'continue';
         } elseif ('skyBrouilleur' == $building && $this->onde >= 5) {
             return 'continue';
-        } elseif ('island' == $building && $level <= 5 && $this->expansion > 0) {
+        } elseif ('island' == $building && $this->expansion > 0) {
             return 'continue';
-        } elseif ('orbital' == $building && $level <= 5 && $this->expansion >= 2) {
+        } elseif ('orbital' == $building && $this->expansion >= 2) {
             return 'continue';
         }
         return null;

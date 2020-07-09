@@ -34,6 +34,11 @@ building.tutorial: 'Comme vous pouvez le constater votre planète de départ a d
 building.tutorialBis: 'Le bâtiment est actuellement en construction, pour éviter d''avoir a attendre mettez d''autres mines et extracteurs en en attente de construction en cliquant sur «Ajouter».'
 building.tutorialTer: 'Parfait ! Rendez vous sur l''onglet «Recherches».'
 niobiumImg: Niobium
+island: 'Ville flottante'
+orbital: 'Station orbitale'
+niobiumStock: 'Entrepôt de Niobium'
+waterStock: 'Réservoir d''eau'
+bunker: 'Fort défensif'
 waterImg: Eau
 groundImg: Terrain
 pdgImg: 'Points de Guerre'
@@ -43,6 +48,7 @@ aeroponicFarm: 'Ferme aéroponique'
 extractor: 'Extracteur d''eau'
 silos: 'Silo agricole'
 city: 'Grande ville'
+nuclearBase: 'Base nucléaire'
 metropole: Metropole
 caserne: Caserne
 destruct: Destruction

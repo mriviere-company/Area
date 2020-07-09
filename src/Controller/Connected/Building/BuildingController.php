@@ -81,7 +81,7 @@ class BuildingController extends AbstractController
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         if ($usePlanet->getConstructAt() > $now) {
-            $level = $level + $usePlanet->getConstructionsLike($building);
+            $level = $level + $usePlanet->getConstructionsLike($building) + ($usePlanet->getConstruct() && $usePlanet->getConstruct() == $building ? 1 : 0);
             $construction = new Construction();
             $construction->setConstruct($building);
             $construction->setConstructTime($level * $time);

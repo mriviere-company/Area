@@ -36,6 +36,16 @@
             {% if usePlanet.getConstruct() == 'destruct' %}
             <div class="text-rouge text-center p-2"><h2>{{ 'building.destroyBuild'|trans }}<span class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</span></h2></div>
             {% endif %}
+            {% if usePlanet.getConstructions()|length > 0 %}
+                <div class="ml-3">
+                    {{ 'building.constructions'|trans }}
+                    {% set x = 1 %}
+                    {% for construction in usePlanet.getConstructions() %}
+                        {% if x > 1 %} - {% endif %}<span><a data-toggle="tooltip" data-placement="right" title="{{ 'tooltip.cancelList'|trans }}" href="{{ path('building_listCancel', {'usePlanet': usePlanet.getId(), 'construction': construction.getId()}) }}">{{ construction.getConstruct()|trans }}</a></span>
+                        {% set x = x + 1 %}
+                    {% endfor %}
+                </div>
+            {% endif %}
             <div class="block-title"><h1>{{ 'building.titleRessource'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
@@ -52,8 +62,8 @@
                         <td class="center-cells p-1{% if app.user.getTutorial() == 5 or app.user.getTutorial() == 6 %} tutorial-show{% endif %}">
                             {% if usePlanet.getConstruct() == 'miner' %}
                                 {% if planetNb >= ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingNiobium('miner')) and planetWt >= ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingWater('miner')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('miner') <= usePlanet.getGround() %}
-                                    <div>{% if ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')) < 3600 %}{{  ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner'))|date('i:s') }}{% elseif ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')) < 86400 %}{{  ((usePlanet.getMiner() + 1) * app.user.getBuildingTime('miner')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')- 3600)|date('d H:i:s') }}{% endif %}</div>
-                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'miner', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    <div class="mt-5">{% if ((usePlanet.getMiner() + 2 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')) < 3600 %}{{  ((usePlanet.getMiner() + 2 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner'))|date('i:s') }}{% elseif ((usePlanet.getMiner() + 2 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')) < 86400 %}{{  ((usePlanet.getMiner() + 2) * app.user.getBuildingTime('miner')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getMiner() + 2 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'miner', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
                                 {% endif %}
@@ -63,7 +73,7 @@
                                     <div>{% if ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')) < 3600 %}{{  ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner'))|date('i:s') }}{% elseif ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')) < 86400 %}{{  ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingTime('miner')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'miner', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
                                 {% elseif planetNb >= ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingNiobium('miner')) and planetWt >= ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * app.user.getBuildingWater('miner')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('miner') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
-                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'miner', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'miner', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -91,8 +101,8 @@
                         <td class="center-cells p-1{% if app.user.getTutorial() == 5 or app.user.getTutorial() == 6 %} tutorial-show{% endif %}">
                             {% if usePlanet.getConstruct() == 'extractor' %}
                                 {% if planetNb >= ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingNiobium('extractor')) and planetWt >= ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingWater('extractor')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('extractor') <= usePlanet.getGround() %}
-                                    <div>{% if ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')) < 3600 %}{{  ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor'))|date('i:s') }}{% elseif ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')) < 86400 %}{{  ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')- 3600)|date('d H:i:s') }}{% endif %}</div>
-                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'extractor', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    <div class="mt-5">{% if ((usePlanet.getExtractor() + 2 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')) < 3600 %}{{  ((usePlanet.getExtractor() + 2 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor'))|date('i:s') }}{% elseif ((usePlanet.getExtractor() + 2 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')) < 86400 %}{{  ((usePlanet.getExtractor() + 2 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getExtractor() + 2 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'extractor', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
                                 {% endif %}
@@ -102,7 +112,7 @@
                                     <div>{% if ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')) < 3600 %}{{  ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor'))|date('i:s') }}{% elseif ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')) < 86400 %}{{  ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingTime('extractor')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'extractor', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
                                 {% elseif planetNb >= ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingNiobium('extractor')) and planetWt >= ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * app.user.getBuildingWater('extractor')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('extractor') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
-                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'extractor', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'extractor', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -130,8 +140,8 @@
                         <td class="center-cells p-1{% if app.user.getTutorial() == 5 or app.user.getTutorial() == 6 %} tutorial-show{% endif %}">
                             {% if usePlanet.getConstruct() == 'farm' %}
                                 {% if planetNb >= ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingNiobium('farm')) and planetWt >= ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingWater('farm')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('farm') <= usePlanet.getGround() %}
-                                    <div>{% if ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')) < 3600 %}{{  ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm'))|date('i:s') }}{% elseif ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')) < 86400 %}{{  ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')- 3600)|date('d H:i:s') }}{% endif %}</div>
-                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'farm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    <div class="mt-5">{% if ((usePlanet.getFarm() + 2 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')) < 3600 %}{{  ((usePlanet.getFarm() + 2 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm'))|date('i:s') }}{% elseif ((usePlanet.getFarm() + 2 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')) < 86400 %}{{  ((usePlanet.getFarm() + 2 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getFarm() + 2 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'farm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
                                 {% endif %}
@@ -141,7 +151,7 @@
                                     <div>{% if ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')) < 3600 %}{{  ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm'))|date('i:s') }}{% elseif ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')) < 86400 %}{{  ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingTime('farm')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'farm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
                                 {% elseif planetNb >= ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingNiobium('farm')) and planetWt >= ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * app.user.getBuildingWater('farm')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('farm') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
-                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'farm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'farm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -183,8 +193,8 @@
                         <td class="center-cells p-1{% if app.user.getTutorial() == 5 or app.user.getTutorial() == 6 %} tutorial-show{% endif %}">
                             {% if usePlanet.getConstruct() == 'aeroponicFarm' %}
                                 {% if planetNb >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm')) and planetWt >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('aeroponicFarm') <= usePlanet.getSky() %}
-                                    <div>{% if ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 3600 %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm'))|date('i:s') }}{% elseif ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 86400 %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('d H:i:s') }}{% endif %}</div>
-                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    <div class="mt-5">{% if ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 3600 %}{{  ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm'))|date('i:s') }}{% elseif ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 86400 %}{{  ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
                                 {% endif %}
@@ -194,7 +204,7 @@
                                     <div>{% if ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 3600 %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm'))|date('i:s') }}{% elseif ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 86400 %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
                                 {% elseif planetNb >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm')) and planetWt >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('aeroponicFarm') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
-                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -235,13 +245,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'niobiumStock' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getNiobiumStock() + 1 + usePlanet.getConstructionsLike('niobiumStock')) * app.user.getBuildingNiobium('niobiumStock')) and planetWt >= ((usePlanet.getNiobiumStock() + 1 + usePlanet.getConstructionsLike('niobiumStock')) * app.user.getBuildingWater('niobiumStock')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('niobiumStock') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getNiobiumStock() + 2 + usePlanet.getConstructionsLike('niobiumStock')) * app.user.getBuildingTime('niobiumStock')) < 3600 %}{{  ((usePlanet.getNiobiumStock() + 2 + usePlanet.getConstructionsLike('niobiumStock')) * app.user.getBuildingTime('niobiumStock'))|date('i:s') }}{% elseif ((usePlanet.getNiobiumStock() + 2 + usePlanet.getConstructionsLike('niobiumStock')) * app.user.getBuildingTime('niobiumStock')) < 86400 %}{{  ((usePlanet.getNiobiumStock() + 2) * app.user.getBuildingTime('niobiumStock')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getNiobiumStock() + 2 + usePlanet.getConstructionsLike('niobiumStock')) * app.user.getBuildingTime('niobiumStock')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'niobiumStock', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getNiobiumStock() + 1) * app.user.getBuildingNiobium('niobiumStock')) and planetWt >= ((usePlanet.getNiobiumStock() + 1) * app.user.getBuildingWater('niobiumStock')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('niobiumStock') <= usePlanet.getGround() and usePlanet.getConstruct is null and app.user.getCargo() > 1 %}
                                     <div>{% if ((usePlanet.getNiobiumStock() + 1) * app.user.getBuildingTime('niobiumStock')) < 3600 %}{{  ((usePlanet.getNiobiumStock() + 1) * app.user.getBuildingTime('niobiumStock'))|date('i:s') }}{% elseif ((usePlanet.getNiobiumStock() + 1) * app.user.getBuildingTime('niobiumStock')) < 86400 %}{{  ((usePlanet.getNiobiumStock() + 1) * app.user.getBuildingTime('niobiumStock')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getNiobiumStock() + 1) * app.user.getBuildingTime('niobiumStock')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'niobiumStock', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getNiobiumStock() + 1 + usePlanet.getConstructionsLike('niobiumStock')) * app.user.getBuildingNiobium('niobiumStock')) and planetWt >= ((usePlanet.getNiobiumStock() + 1 + usePlanet.getConstructionsLike('niobiumStock')) * app.user.getBuildingWater('niobiumStock')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('niobiumStock') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'niobiumStock', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -282,13 +299,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'waterStock' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getWaterStock() + 1 + usePlanet.getConstructionsLike('waterStock')) * app.user.getBuildingNiobium('waterStock')) and planetWt >= ((usePlanet.getWaterStock() + 1 + usePlanet.getConstructionsLike('waterStock')) * app.user.getBuildingWater('waterStock')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('waterStock') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getWaterStock() + 2 + usePlanet.getConstructionsLike('waterStock')) * app.user.getBuildingTime('waterStock')) < 3600 %}{{  ((usePlanet.getWaterStock() + 2 + usePlanet.getConstructionsLike('waterStock')) * app.user.getBuildingTime('waterStock'))|date('i:s') }}{% elseif ((usePlanet.getWaterStock() + 2 + usePlanet.getConstructionsLike('waterStock')) * app.user.getBuildingTime('waterStock')) < 86400 %}{{  ((usePlanet.getWaterStock() + 2) * app.user.getBuildingTime('waterStock')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getWaterStock() + 2 + usePlanet.getConstructionsLike('waterStock')) * app.user.getBuildingTime('waterStock')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'waterStock', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getWaterStock() + 1) * app.user.getBuildingNiobium('waterStock')) and planetWt >= ((usePlanet.getWaterStock() + 1) * app.user.getBuildingWater('waterStock')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('waterStock') <= usePlanet.getGround() and usePlanet.getConstruct is null and app.user.getCargo() > 1 %}
                                     <div>{% if ((usePlanet.getWaterStock() + 1) * app.user.getBuildingTime('waterStock')) < 3600 %}{{  ((usePlanet.getWaterStock() + 1) * app.user.getBuildingTime('waterStock'))|date('i:s') }}{% elseif ((usePlanet.getWaterStock() + 1) * app.user.getBuildingTime('waterStock')) < 86400 %}{{  ((usePlanet.getWaterStock() + 1) * app.user.getBuildingTime('waterStock')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getWaterStock() + 1) * app.user.getBuildingTime('waterStock')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'waterStock', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getWaterStock() + 1 + usePlanet.getConstructionsLike('waterStock')) * app.user.getBuildingNiobium('waterStock')) and planetWt >= ((usePlanet.getWaterStock() + 1 + usePlanet.getConstructionsLike('waterStock')) * app.user.getBuildingWater('waterStock')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('waterStock') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'waterStock', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -329,13 +353,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'silos' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getSilos() + 1 + usePlanet.getConstructionsLike('silos')) * app.user.getBuildingNiobium('silos')) and planetWt >= ((usePlanet.getSilos() + 1 + usePlanet.getConstructionsLike('silos')) * app.user.getBuildingWater('silos')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('silos') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getSilos() + 2 + usePlanet.getConstructionsLike('silos')) * app.user.getBuildingTime('silos')) < 3600 %}{{  ((usePlanet.getSilos() + 2 + usePlanet.getConstructionsLike('silos')) * app.user.getBuildingTime('silos'))|date('i:s') }}{% elseif ((usePlanet.getSilos() + 2 + usePlanet.getConstructionsLike('silos')) * app.user.getBuildingTime('silos')) < 86400 %}{{  ((usePlanet.getSilos() + 2) * app.user.getBuildingTime('silos')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getSilos() + 2 + usePlanet.getConstructionsLike('silos')) * app.user.getBuildingTime('silos')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'silos', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getSilos() + 1) * app.user.getBuildingNiobium('silos')) and planetWt >= ((usePlanet.getSilos() + 1) * app.user.getBuildingWater('silos')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('silos') <= usePlanet.getGround() and usePlanet.getConstruct is null and app.user.getCargo() > 1 %}
                                     <div>{% if ((usePlanet.getSilos() + 1) * app.user.getBuildingTime('silos')) < 3600 %}{{  ((usePlanet.getSilos() + 1) * app.user.getBuildingTime('silos'))|date('i:s') }}{% elseif ((usePlanet.getSilos() + 1) * app.user.getBuildingTime('silos')) < 86400 %}{{  ((usePlanet.getSilos() + 1) * app.user.getBuildingTime('silos')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getSilos() + 1) * app.user.getBuildingTime('silos')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'silos', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getSilos() + 1 + usePlanet.getConstructionsLike('silos')) * app.user.getBuildingNiobium('silos')) and planetWt >= ((usePlanet.getSilos() + 1 + usePlanet.getConstructionsLike('silos')) * app.user.getBuildingWater('silos')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('silos') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'silos', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -354,14 +385,6 @@
                 {% endif %}
                 </tbody>
             </table>
-            <div class="ml-3">
-                {{ 'building.constructions'|trans }}
-                {% set x = 1 %}
-                {% for construction in usePlanet.getConstructions() %}
-                    {% if x > 1 %} - {% endif %}<span><a data-toggle="tooltip" data-placement="right" title="{{ 'tooltip.cancelList'|trans }}" href="{{ path('building_listCancel', {'usePlanet': usePlanet.getId(), 'construction': construction.getId()}) }}">{{ construction.getConstruct()|trans }}</a></span>
-                    {% set x = x + 1 %}
-                {% endfor %}
-            </div>
             <div class="block-title"><h1>{{ 'building.titleEco'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
@@ -376,13 +399,19 @@
                     </td>
                     <td class="center-cells p-1">
                         {% if usePlanet.getConstruct() == 'centerSearch' %}
-                            <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                            {% if planetNb >= ((usePlanet.getCenterSearch() + 1 + usePlanet.getConstructionsLike('centerSearch')) * app.user.getBuildingNiobium('centerSearch')) and planetWt >= ((usePlanet.getCenterSearch() + 1 + usePlanet.getConstructionsLike('centerSearch')) * app.user.getBuildingWater('centerSearch')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('centerSearch') <= usePlanet.getGround() %}
+                                <div class="mt-5">{% if ((usePlanet.getCenterSearch() + 2 + usePlanet.getConstructionsLike('centerSearch')) * app.user.getBuildingTime('centerSearch')) < 3600 %}{{  ((usePlanet.getCenterSearch() + 2 + usePlanet.getConstructionsLike('centerSearch')) * app.user.getBuildingTime('centerSearch'))|date('i:s') }}{% elseif ((usePlanet.getCenterSearch() + 2 + usePlanet.getConstructionsLike('centerSearch')) * app.user.getBuildingTime('centerSearch')) < 86400 %}{{  ((usePlanet.getCenterSearch() + 2) * app.user.getBuildingTime('centerSearch')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCenterSearch() + 2 + usePlanet.getConstructionsLike('centerSearch')) * app.user.getBuildingTime('centerSearch')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'centerSearch', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                            {% else %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                            {% endif %}
                             <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
-
                         {% else %}
                             {% if planetNb >= ((usePlanet.getCenterSearch() + 1) * app.user.getBuildingNiobium('centerSearch')) and planetWt >= ((usePlanet.getCenterSearch() + 1) * app.user.getBuildingWater('centerSearch')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('centerSearch') <= usePlanet.getGround() and usePlanet.getConstruct is null %}
                                 <div>{% if ((usePlanet.getCenterSearch() + 1) * app.user.getBuildingTime('centerSearch')) < 3600 %}{{  ((usePlanet.getCenterSearch() + 1) * app.user.getBuildingTime('centerSearch'))|date('i:s') }}{% elseif ((usePlanet.getCenterSearch() + 1) * app.user.getBuildingTime('centerSearch')) < 86400 %}{{  ((usePlanet.getCenterSearch() + 1) * app.user.getBuildingTime('centerSearch')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCenterSearch() + 1) * app.user.getBuildingTime('centerSearch')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                 <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'centerSearch', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                            {% elseif planetNb >= ((usePlanet.getCenterSearch() + 1 + usePlanet.getConstructionsLike('centerSearch')) * app.user.getBuildingNiobium('centerSearch')) and planetWt >= ((usePlanet.getCenterSearch() + 1 + usePlanet.getConstructionsLike('centerSearch')) * app.user.getBuildingWater('centerSearch')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('centerSearch') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'centerSearch', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                             {% else %}
                                 <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                             {% endif %}
@@ -423,13 +452,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'city' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getCity() + 1 + usePlanet.getConstructionsLike('city')) * app.user.getBuildingNiobium('city')) and planetWt >= ((usePlanet.getCity() + 1 + usePlanet.getConstructionsLike('city')) * app.user.getBuildingWater('city')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('city') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getCity() + 2 + usePlanet.getConstructionsLike('city')) * app.user.getBuildingTime('city')) < 3600 %}{{  ((usePlanet.getCity() + 2 + usePlanet.getConstructionsLike('city')) * app.user.getBuildingTime('city'))|date('i:s') }}{% elseif ((usePlanet.getCity() + 2 + usePlanet.getConstructionsLike('city')) * app.user.getBuildingTime('city')) < 86400 %}{{  ((usePlanet.getCity() + 2) * app.user.getBuildingTime('city')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCity() + 2 + usePlanet.getConstructionsLike('city')) * app.user.getBuildingTime('city')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'city', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getCity() + 1) * app.user.getBuildingNiobium('city')) and planetWt >= ((usePlanet.getCity() + 1) * app.user.getBuildingWater('city')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('city') <= usePlanet.getGround() and app.user.getDemography() > 0 and usePlanet.getConstruct is null %}
                                     <div>{% if ((usePlanet.getCity() + 1) * app.user.getBuildingTime('city')) < 3600 %}{{  ((usePlanet.getCity() + 1) * app.user.getBuildingTime('city'))|date('i:s') }}{% elseif ((usePlanet.getCity() + 1) * app.user.getBuildingTime('city')) < 86400 %}{{  ((usePlanet.getCity() + 1) * app.user.getBuildingTime('city')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCity() + 1) * app.user.getBuildingTime('city')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'city', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getCity() + 1 + usePlanet.getConstructionsLike('city')) * app.user.getBuildingNiobium('city')) and planetWt >= ((usePlanet.getCity() + 1 + usePlanet.getConstructionsLike('city')) * app.user.getBuildingWater('city')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('city') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'city', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -470,13 +506,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'metropole' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getMetropole() + 1 + usePlanet.getConstructionsLike('metropole')) * app.user.getBuildingNiobium('metropole')) and planetWt >= ((usePlanet.getMetropole() + 1 + usePlanet.getConstructionsLike('metropole')) * app.user.getBuildingWater('metropole')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('metropole') <= usePlanet.getGround() and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('metropole') <= usePlanet.getSky() %}
+                                    <div class="mt-5">{% if ((usePlanet.getMetropole() + 2 + usePlanet.getConstructionsLike('metropole')) * app.user.getBuildingTime('metropole')) < 3600 %}{{  ((usePlanet.getMetropole() + 2 + usePlanet.getConstructionsLike('metropole')) * app.user.getBuildingTime('metropole'))|date('i:s') }}{% elseif ((usePlanet.getMetropole() + 2 + usePlanet.getConstructionsLike('metropole')) * app.user.getBuildingTime('metropole')) < 86400 %}{{  ((usePlanet.getMetropole() + 2) * app.user.getBuildingTime('metropole')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getMetropole() + 2 + usePlanet.getConstructionsLike('metropole')) * app.user.getBuildingTime('metropole')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'metropole', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getMetropole() + 1) * app.user.getBuildingNiobium('metropole')) and planetWt >= ((usePlanet.getMetropole() + 1) * app.user.getBuildingWater('metropole')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('metropole') <= usePlanet.getGround() and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('metropole') <= usePlanet.getSky() and app.user.getDemography() == 5 and usePlanet.getConstruct is null %}
                                     <div>{% if ((usePlanet.getMetropole() + 1) * app.user.getBuildingTime('metropole')) < 3600 %}{{  ((usePlanet.getMetropole() + 1) * app.user.getBuildingTime('metropole'))|date('i:s') }}{% elseif ((usePlanet.getMetropole() + 1) * app.user.getBuildingTime('metropole')) < 86400 %}{{  ((usePlanet.getMetropole() + 1) * app.user.getBuildingTime('metropole')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getMetropole() + 1) * app.user.getBuildingTime('metropole')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'metropole', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getMetropole() + 1 + usePlanet.getConstructionsLike('metropole')) * app.user.getBuildingNiobium('metropole')) and planetWt >= ((usePlanet.getMetropole() + 1 + usePlanet.getConstructionsLike('metropole')) * app.user.getBuildingWater('metropole')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('metropole') <= usePlanet.getGround() and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('metropole') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'metropole', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -522,13 +565,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'caserne' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('caserne')) * app.user.getBuildingNiobium('caserne')) and planetWt >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('caserne')) * app.user.getBuildingWater('caserne')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('caserne') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('caserne')) * app.user.getBuildingTime('caserne')) < 3600 %}{{  ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('caserne')) * app.user.getBuildingTime('caserne'))|date('i:s') }}{% elseif ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('caserne')) * app.user.getBuildingTime('caserne')) < 86400 %}{{  ((usePlanet.getCaserne() + 2) * app.user.getBuildingTime('caserne')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('caserne')) * app.user.getBuildingTime('caserne')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'caserne', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('caserne')) and planetWt >= ((usePlanet.getCaserne() + 1) * app.user.getBuildingWater('caserne')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('caserne') <= usePlanet.getGround() and app.user.getDiscipline() > 0 and usePlanet.getConstruct is null %}
-                                    <div>{% if ((usePlanet.getCaserne() + 1) * 2100) < 3600 %}{{  ((usePlanet.getCaserne() + 1) * 2100)|date('i:s') }}{% elseif ((usePlanet.getCaserne() + 1) * 2100) < 86400 %}{{  ((usePlanet.getCaserne() + 1) * 2100- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCaserne() + 1) * 2100- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <div>{% if ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('caserne')) < 3600 %}{{  ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('caserne'))|date('i:s') }}{% elseif ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('caserne')) < 86400 %}{{  ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('caserne')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('caserne')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'caserne', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('caserne')) * app.user.getBuildingNiobium('caserne')) and planetWt >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('caserne')) * app.user.getBuildingWater('caserne')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('caserne') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'caserne', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -569,13 +619,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'bunker' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getBunker() + 1 + usePlanet.getConstructionsLike('bunker')) * app.user.getBuildingNiobium('bunker')) and planetWt >= ((usePlanet.getBunker() + 1 + usePlanet.getConstructionsLike('bunker')) * app.user.getBuildingWater('bunker')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('bunker') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getBunker() + 2 + usePlanet.getConstructionsLike('bunker')) * app.user.getBuildingTime('bunker')) < 3600 %}{{  ((usePlanet.getBunker() + 2 + usePlanet.getConstructionsLike('bunker')) * app.user.getBuildingTime('bunker'))|date('i:s') }}{% elseif ((usePlanet.getBunker() + 2 + usePlanet.getConstructionsLike('bunker')) * app.user.getBuildingTime('bunker')) < 86400 %}{{  ((usePlanet.getBunker() + 2) * app.user.getBuildingTime('bunker')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getBunker() + 2 + usePlanet.getConstructionsLike('bunker')) * app.user.getBuildingTime('bunker')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'bunker', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getBunker() + 1) * app.user.getBuildingNiobium('bunker')) and planetWt >= ((usePlanet.getBunker() + 1) * app.user.getBuildingWater('bunker')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('bunker') <= usePlanet.getGround() and app.user.getDiscipline() == 3 and usePlanet.getConstruct is null %}
                                     <div>{% if ((usePlanet.getBunker() + 1) * app.user.getBuildingTime('bunker')) < 3600 %}{{  ((usePlanet.getBunker() + 1) * app.user.getBuildingTime('bunker')- 3600)|date('i:s') }}{% else %}{{  ((usePlanet.getBunker() + 1) * 4320- 3600)|date('H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'bunker', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getBunker() + 1 + usePlanet.getConstructionsLike('bunker')) * app.user.getBuildingNiobium('bunker')) and planetWt >= ((usePlanet.getBunker() + 1 + usePlanet.getConstructionsLike('bunker')) * app.user.getBuildingWater('bunker')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('bunker') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'bunker', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -616,13 +673,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'nuclearBase' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getNuclearBase() + 1 + usePlanet.getConstructionsLike('nuclearBase')) * app.user.getBuildingNiobium('nuclearBase')) and planetWt >= ((usePlanet.getNuclearBase() + 1 + usePlanet.getConstructionsLike('nuclearBase')) * app.user.getBuildingWater('nuclearBase')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('nuclearBase') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getNuclearBase() + 2 + usePlanet.getConstructionsLike('nuclearBase')) * app.user.getBuildingTime('nuclearBase')) < 3600 %}{{  ((usePlanet.getNuclearBase() + 2 + usePlanet.getConstructionsLike('nuclearBase')) * app.user.getBuildingTime('nuclearBase'))|date('i:s') }}{% elseif ((usePlanet.getNuclearBase() + 2 + usePlanet.getConstructionsLike('nuclearBase')) * app.user.getBuildingTime('nuclearBase')) < 86400 %}{{  ((usePlanet.getNuclearBase() + 2) * app.user.getBuildingTime('nuclearBase')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getNuclearBase() + 2 + usePlanet.getConstructionsLike('nuclearBase')) * app.user.getBuildingTime('nuclearBase')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'nuclearBase', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getNuclearBase() + 1) * app.user.getBuildingNiobium('nuclearBase')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('nuclearBase') <= usePlanet.getGround() and usePlanet.getConstruct is null and usePlanet.getNuclearBase() < 6 %}
                                     <div>{% if ((usePlanet.getNuclearBase() + 1) * app.user.getBuildingTime('nuclearBase')) < 3600 %}{{  ((usePlanet.getNuclearBase() + 1) * app.user.getBuildingTime('nuclearBase')- 3600)|date('i:s') }}{% else %}{{  ((usePlanet.getNuclearBase() + 1) * app.user.getBuildingTime('nuclearBase')- 3600)|date('H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'nuclearBase', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getNuclearBase() + 1 + usePlanet.getConstructionsLike('nuclearBase')) * app.user.getBuildingNiobium('nuclearBase')) and planetWt >= ((usePlanet.getNuclearBase() + 1 + usePlanet.getConstructionsLike('nuclearBase')) * app.user.getBuildingWater('nuclearBase')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('nuclearBase') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'nuclearBase', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -663,13 +727,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'spaceShip' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getSpaceShip() + 1 + usePlanet.getConstructionsLike('spaceShip')) * app.user.getBuildingNiobium('spaceShip')) and planetWt >= ((usePlanet.getSpaceShip() + 1 + usePlanet.getConstructionsLike('spaceShip')) * app.user.getBuildingWater('spaceShip')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('spaceShip') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getSpaceShip() + 2 + usePlanet.getConstructionsLike('spaceShip')) * app.user.getBuildingTime('spaceShip')) < 3600 %}{{  ((usePlanet.getSpaceShip() + 2 + usePlanet.getConstructionsLike('spaceShip')) * app.user.getBuildingTime('spaceShip'))|date('i:s') }}{% elseif ((usePlanet.getSpaceShip() + 2 + usePlanet.getConstructionsLike('spaceShip')) * app.user.getBuildingTime('spaceShip')) < 86400 %}{{  ((usePlanet.getSpaceShip() + 2) * app.user.getBuildingTime('spaceShip')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getSpaceShip() + 2 + usePlanet.getConstructionsLike('spaceShip')) * app.user.getBuildingTime('spaceShip')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'spaceShip', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getSpaceShip() + 1) * app.user.getBuildingNiobium('spaceShip')) and planetWt >= ((usePlanet.getSpaceShip() + 1) * app.user.getBuildingWater('spaceShip')) and usePlanet.getGroundPlace() + 2 <= usePlanet.getGround() and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('spaceShip') <= usePlanet.getSky() and app.user.getIndustry() > 0 and usePlanet.getConstruct is null %}
                                     <div>{% if ((usePlanet.getSpaceShip() + 1) * app.user.getBuildingTime('spaceShip')) < 3600 %}{{  ((usePlanet.getSpaceShip() + 1) * app.user.getBuildingTime('spaceShip'))|date('i:s') }}{% elseif ((usePlanet.getSpaceShip() + 1) * app.user.getBuildingTime('spaceShip')) < 86400 %}{{  ((usePlanet.getSpaceShip() + 1) * app.user.getBuildingTime('spaceShip')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getSpaceShip() + 1) * app.user.getBuildingTime('spaceShip')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'spaceShip', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getSpaceShip() + 1 + usePlanet.getConstructionsLike('spaceShip')) * app.user.getBuildingNiobium('spaceShip')) and planetWt >= ((usePlanet.getSpaceShip() + 1 + usePlanet.getConstructionsLike('spaceShip')) * app.user.getBuildingWater('spaceShip')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('spaceShip') <= usePlanet.getGround() and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('spaceShip') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'spaceShip', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -732,7 +803,7 @@
                             {% elseif usePlanet.getConstruct() == 'lightUsine' %}
                                 <a class="btn btn-lg btn-danger mt-5" href="{{ path('cancel_construction', {'cancelPlanet': usePlanet.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'building.cancel'|trans }}</a>
                             {% else %}
-                                <a class="btn btn-lg btn-danger mt-5" disabled>{{ 'building.demolish'|trans }}</a>
+                                <a class="btn btn-lg btn-danger" disabled>{{ 'building.demolish'|trans }}</a>
                             {% endif %}
                         </td>
                     </tr>
@@ -783,7 +854,7 @@
                             {% elseif usePlanet.getConstruct() == 'heavyUsine' %}
                                 <a class="btn btn-lg btn-danger mt-5" href="{{ path('cancel_construction', {'cancelPlanet': usePlanet.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'building.cancel'|trans }}</a>
                             {% else %}
-                                <a class="btn btn-lg btn-danger mt-5" disabled>{{ 'building.demolish'|trans }}</a>
+                                <a class="btn btn-lg btn-danger" disabled>{{ 'building.demolish'|trans }}</a>
                             {% endif %}
                         </td>
                     </tr>
@@ -817,13 +888,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'radar' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getRadar() + 1 + usePlanet.getConstructionsLike('radar')) * app.user.getBuildingNiobium('radar')) and planetWt >= ((usePlanet.getRadar() + 1 + usePlanet.getConstructionsLike('radar')) * app.user.getBuildingWater('radar')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('radar') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getRadar() + 2 + usePlanet.getConstructionsLike('radar')) * app.user.getBuildingTime('radar')) < 3600 %}{{  ((usePlanet.getRadar() + 2 + usePlanet.getConstructionsLike('radar')) * app.user.getBuildingTime('radar'))|date('i:s') }}{% elseif ((usePlanet.getRadar() + 2 + usePlanet.getConstructionsLike('radar')) * app.user.getBuildingTime('radar')) < 86400 %}{{  ((usePlanet.getRadar() + 2) * app.user.getBuildingTime('radar')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getRadar() + 2 + usePlanet.getConstructionsLike('radar')) * app.user.getBuildingTime('radar')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'radar', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getRadar() + 1) * app.user.getBuildingNiobium('radar')) and planetWt >= ((usePlanet.getRadar() + 1) * app.user.getBuildingWater('radar')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('radar') <= usePlanet.getGround() and app.user.getOnde() > 0 and usePlanet.getConstruct is null %}
                                     <div>{% if ((usePlanet.getRadar() + 1) * app.user.getBuildingTime('radar')) < 3600 %}{{  ((usePlanet.getRadar() + 1) * app.user.getBuildingTime('radar'))|date('i:s') }}{% elseif ((usePlanet.getRadar() + 1) * app.user.getBuildingTime('radar')) < 86400 %}{{ ((usePlanet.getRadar() + 1) * app.user.getBuildingTime('radar')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getRadar() + 1) * app.user.getBuildingTime('radar')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'radar', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getRadar() + 1 + usePlanet.getConstructionsLike('radar')) * app.user.getBuildingNiobium('radar')) and planetWt >= ((usePlanet.getRadar() + 1 + usePlanet.getConstructionsLike('radar')) * app.user.getBuildingWater('radar')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('radar') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'radar', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -864,13 +942,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'skyRadar' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getSkyRadar() + 1 + usePlanet.getConstructionsLike('skyRadar')) * app.user.getBuildingNiobium('skyRadar')) and planetWt >= ((usePlanet.getSkyRadar() + 1 + usePlanet.getConstructionsLike('skyRadar')) * app.user.getBuildingWater('skyRadar')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('skyRadar') <= usePlanet.getSky() %}
+                                    <div class="mt-5">{% if ((usePlanet.getSkyRadar() + 2 + usePlanet.getConstructionsLike('skyRadar')) * app.user.getBuildingTime('skyRadar')) < 3600 %}{{  ((usePlanet.getSkyRadar() + 2 + usePlanet.getConstructionsLike('skyRadar')) * app.user.getBuildingTime('skyRadar'))|date('i:s') }}{% elseif ((usePlanet.getSkyRadar() + 2 + usePlanet.getConstructionsLike('skyRadar')) * app.user.getBuildingTime('skyRadar')) < 86400 %}{{  ((usePlanet.getSkyRadar() + 2) * app.user.getBuildingTime('skyRadar')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getSkyRadar() + 2 + usePlanet.getConstructionsLike('skyRadar')) * app.user.getBuildingTime('skyRadar')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'skyRadar', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getSkyRadar() + 1) * app.user.getBuildingNiobium('skyRadar')) and planetWt >= ((usePlanet.getSkyRadar() + 1) * app.user.getBuildingWater('skyRadar')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('skyRadar') <= usePlanet.getSky() and app.user.getOnde() > 2 and usePlanet.getConstruct is null %}
                                     <div>{% if ((usePlanet.getSkyRadar() + 1) * app.user.getBuildingTime('skyRadar')) < 3600 %}{{  ((usePlanet.getSkyRadar() + 1) * app.user.getBuildingTime('skyRadar'))|date('i:s') }}{% elseif ((usePlanet.getSkyRadar() + 1) * app.user.getBuildingTime('skyRadar')) < 86400 %}{{  ((usePlanet.getSkyRadar() + 1) * app.user.getBuildingTime('skyRadar')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getSkyRadar() + 1) * app.user.getBuildingTime('skyRadar')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'skyRadar', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getSkyRadar() + 1 + usePlanet.getConstructionsLike('skyRadar')) * app.user.getBuildingNiobium('skyRadar')) and planetWt >= ((usePlanet.getSkyRadar() + 1 + usePlanet.getConstructionsLike('skyRadar')) * app.user.getBuildingWater('skyRadar')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('skyRadar') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'skyRadar', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -911,13 +996,20 @@
                         </td>
                         <td class="center-cells p-1">
                             {% if usePlanet.getConstruct() == 'skyBrouilleur' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% if planetNb >= ((usePlanet.getSkyBrouilleur() + 1 + usePlanet.getConstructionsLike('skyBrouilleur')) * app.user.getBuildingNiobium('skyBrouilleur')) and planetWt >= ((usePlanet.getSkyBrouilleur() + 1 + usePlanet.getConstructionsLike('skyBrouilleur')) * app.user.getBuildingWater('skyBrouilleur')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('skyBrouilleur') <= usePlanet.getSky() %}
+                                    <div class="mt-5">{% if ((usePlanet.getSkyBrouilleur() + 2 + usePlanet.getConstructionsLike('skyBrouilleur')) * app.user.getBuildingTime('skyBrouilleur')) < 3600 %}{{  ((usePlanet.getSkyBrouilleur() + 2 + usePlanet.getConstructionsLike('skyBrouilleur')) * app.user.getBuildingTime('skyBrouilleur'))|date('i:s') }}{% elseif ((usePlanet.getSkyBrouilleur() + 2 + usePlanet.getConstructionsLike('skyBrouilleur')) * app.user.getBuildingTime('skyBrouilleur')) < 86400 %}{{  ((usePlanet.getSkyBrouilleur() + 2) * app.user.getBuildingTime('skyBrouilleur')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getSkyBrouilleur() + 2 + usePlanet.getConstructionsLike('skyBrouilleur')) * app.user.getBuildingTime('skyBrouilleur')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'skyBrouilleur', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
                                 <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
                                 {% if planetNb >= ((usePlanet.getSkyBrouilleur() + 1) * app.user.getBuildingNiobium('skyBrouilleur')) and planetWt >= ((usePlanet.getSkyBrouilleur() + 1) * app.user.getBuildingWater('skyBrouilleur')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('skyBrouilleur') <= usePlanet.getSky() and app.user.getOnde() == 5 and usePlanet.getConstruct is null %}
                                     <div>{% if ((usePlanet.getSkyBrouilleur() + 1) * app.user.getBuildingTime('skyBrouilleur')) < 3600 %}{{  ((usePlanet.getSkyBrouilleur() + 1) * app.user.getBuildingTime('skyBrouilleur'))|date('i:s') }}{% elseif ((usePlanet.getSkyBrouilleur() + 1) * app.user.getBuildingTime('skyBrouilleur')) < 86400 %}{{  ((usePlanet.getSkyBrouilleur() + 1) * app.user.getBuildingTime('skyBrouilleur')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getSkyBrouilleur() + 1) * app.user.getBuildingTime('skyBrouilleur')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                     <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'skyBrouilleur', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getSkyBrouilleur() + 1 + usePlanet.getConstructionsLike('skyBrouilleur')) * app.user.getBuildingNiobium('skyBrouilleur')) and planetWt >= ((usePlanet.getSkyBrouilleur() + 1 + usePlanet.getConstructionsLike('skyBrouilleur')) * app.user.getBuildingWater('skyBrouilleur')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('skyBrouilleur') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'skyBrouilleur', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
                                     <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
@@ -955,7 +1047,7 @@
                     {% else %}
                         <tr class="access-build">
                             <td class="center-cells">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/island.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.island'|trans|raw }}"><strong>{{ 'building.island'|trans }} x {% if usePlanet.getIsland() %}{{ usePlanet.getIsland() }}{% else %}0{% endif %}/5</strong></button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/island.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.island'|trans|raw }}"><strong>{{ 'building.island'|trans }} x {% if usePlanet.getIsland() %}{{ usePlanet.getIsland() }}{% else %}0{% endif %}</strong></button>
                                 <div class="mt-4"><span class="ml-4">{% if (usePlanet.getIsland + 1) * app.user.getBuildingWarPoint('island') > usePlanet.getUser().getRank().getWarPoint() %}<span class="text-rouge">{{ ((usePlanet.getIsland() + 1) * app.user.getBuildingWarPoint('island'))|number_format }}</span>{% else %}{{ ((usePlanet.getIsland() + 1) * app.user.getBuildingWarPoint('island'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'pdgImg'|trans }}" src="{{ asset('img/pdg.png') }}"></span></div>
                             </td>
                             <td class="center-cells cell-middle">
@@ -963,12 +1055,19 @@
                             </td>
                             <td class="center-cells p-4">
                                 {% if usePlanet.getConstruct() == 'island' %}
-                                    <div class="mt-5 timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
-
+                                    {% if planetPdg >= ((usePlanet.getIsland() + 1) * app.user.getBuildingWarPoint('island')) %}
+                                        <div class="mt-5">{% if ((usePlanet.getIsland() + 2 + usePlanet.getConstructionsLike('island')) * app.user.getBuildingTime('island')) < 3600 %}{{  ((usePlanet.getIsland() + 2 + usePlanet.getConstructionsLike('island')) * app.user.getBuildingTime('island'))|date('i:s') }}{% elseif ((usePlanet.getIsland() + 2 + usePlanet.getConstructionsLike('island')) * app.user.getBuildingTime('island')) < 86400 %}{{  ((usePlanet.getIsland() + 2) * app.user.getBuildingTime('island')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getIsland() + 2 + usePlanet.getConstructionsLike('island')) * app.user.getBuildingTime('island')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                        <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'island', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    {% else %}
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                    {% endif %}
+                                    <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
                                 {% else %}
-                                    {% if planetPdg >= ((usePlanet.getIsland() + 1) * app.user.getBuildingWarPoint('island')) and app.user.getExpansion() > 0 and usePlanet.getConstruct is null and usePlanet.getIsland() < 5 %}
+                                    {% if planetPdg >= ((usePlanet.getIsland() + 1) * app.user.getBuildingWarPoint('island')) and app.user.getExpansion() > 0 and usePlanet.getConstruct is null %}
                                         <div>{% if ((usePlanet.getIsland() + 1) * app.user.getBuildingTime('island')) < 3600 %}{{  ((usePlanet.getIsland() + 1) * app.user.getBuildingTime('island'))|date('i:s') }}{% elseif ((usePlanet.getIsland() + 1) * app.user.getBuildingTime('island')) < 86400 %}{{  ((usePlanet.getIsland() + 1) * app.user.getBuildingTime('island')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getIsland() + 1) * app.user.getBuildingTime('island')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                         <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'island', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                    {% elseif planetPdg >= ((usePlanet.getIsland() + 1 + usePlanet.getConstructionsLike('island')) * app.user.getBuildingWarPoint('island')) and usePlanet.getConstructAt() %}
+                                        <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'island', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                     {% else %}
                                         <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                     {% endif %}
@@ -998,7 +1097,7 @@
                     {% else %}
                         <tr class="access-build-2">
                             <td class="center-cells">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/orbital.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.orbital'|trans|raw }}"><strong>{{ 'building.orbital'|trans }} x {% if usePlanet.getOrbital() %}{{ usePlanet.getOrbital() }}{% else %}0{% endif %}/5</strong></button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/orbital.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.orbital'|trans|raw }}"><strong>{{ 'building.orbital'|trans }} x {% if usePlanet.getOrbital() %}{{ usePlanet.getOrbital() }}{% else %}0{% endif %}</strong></button>
                                 <div class="mt-4"><span class="ml-4">{% if (usePlanet.getOrbital + 1) * app.user.getBuildingWarPoint('orbital') > usePlanet.getUser().getRank().getWarPoint() %}<span class="text-rouge">{{ ((usePlanet.getOrbital() + 1) * app.user.getBuildingWarPoint('orbital'))|number_format }}</span>{% else %}{{ ((usePlanet.getOrbital() + 1) * app.user.getBuildingWarPoint('orbital'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'pdgImg'|trans }}" src="{{ asset('img/pdg.png') }}"></span></div>
                             </td>
                             <td class="center-cells cell-middle">
@@ -1006,12 +1105,19 @@
                             </td>
                             <td class="center-cells p-4">
                                 {% if usePlanet.getConstruct() == 'orbital' %}
-                                    <div class="mt-5 timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
-
+                                    {% if planetPdg >= ((usePlanet.getOrbital() + 1) * app.user.getBuildingWarPoint('orbital')) %}
+                                        <div class="mt-5">{% if ((usePlanet.getOrbital() + 2 + usePlanet.getConstructionsLike('orbital')) * app.user.getBuildingTime('orbital')) < 3600 %}{{  ((usePlanet.getOrbital() + 2 + usePlanet.getConstructionsLike('orbital')) * app.user.getBuildingTime('orbital'))|date('i:s') }}{% elseif ((usePlanet.getOrbital() + 2 + usePlanet.getConstructionsLike('orbital')) * app.user.getBuildingTime('orbital')) < 86400 %}{{  ((usePlanet.getOrbital() + 2) * app.user.getBuildingTime('orbital')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getOrbital() + 2 + usePlanet.getConstructionsLike('orbital')) * app.user.getBuildingTime('orbital')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                        <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'orbital', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    {% else %}
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                    {% endif %}
+                                    <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
                                 {% else %}
-                                    {% if planetPdg >= ((usePlanet.getOrbital() + 1) * app.user.getBuildingWarPoint('orbital')) and app.user.getExpansion() == 2 and usePlanet.getConstruct is null and usePlanet.getOrbital() < 5 %}
+                                    {% if planetPdg >= ((usePlanet.getOrbital() + 1) * app.user.getBuildingWarPoint('orbital')) and app.user.getExpansion() == 2 and usePlanet.getConstruct is null %}
                                         <div>{% if ((usePlanet.getOrbital() + 1) * app.user.getBuildingTime('orbital')) < 3600 %}{{  ((usePlanet.getOrbital() + 1) * app.user.getBuildingTime('orbital'))|date('i:s') }}{% elseif ((usePlanet.getOrbital() + 1) * app.user.getBuildingTime('orbital')) < 86400 %}{{  ((usePlanet.getOrbital() + 1) * app.user.getBuildingTime('orbital')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getOrbital() + 1) * app.user.getBuildingTime('orbital')- 3600)|date('d H:i:s') }}{% endif %}</div>
                                         <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'orbital', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                    {% elseif planetPdg >= ((usePlanet.getOrbital() + 1 + usePlanet.getConstructionsLike('orbital')) * app.user.getBuildingWarPoint('orbital')) and usePlanet.getConstructAt() %}
+                                        <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'orbital', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                     {% else %}
                                         <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                     {% endif %}
