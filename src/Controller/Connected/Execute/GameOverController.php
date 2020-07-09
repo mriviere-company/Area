@@ -90,6 +90,9 @@ class GameOverController extends AbstractController
                         foreach ($salon->getContents() as $content) {
                             $em->remove($content);
                         }
+                        foreach ($salon->getViews() as $view) {
+                            $em->remove($view);
+                        }
                         $em->remove($salon);
                     }
                     foreach ($ally->getExchanges() as $exchange) {
