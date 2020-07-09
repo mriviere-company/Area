@@ -411,8 +411,11 @@ class ServerController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        foreach ($salons as $salo) {
-            $em->remove($salo);
+        foreach ($salons as $salon) {
+            foreach ($salon->getViews() as $view) {
+                $em->remove($view);
+            }
+            $em->remove($salon);
         }
 
         $reports = $em->getRepository('App:Report')->findAll();
