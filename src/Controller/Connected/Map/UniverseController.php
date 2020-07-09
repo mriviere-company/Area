@@ -63,7 +63,23 @@ class UniverseController extends AbstractController
             ->select('count(p) as number')
             ->groupBy('s.id')
             ->getQuery()
-            ->getSingleScalarResult();
+            ->getOneOrNullResult();
+
+        if ($totalPlanet) {
+            $totalPlanet = $em->getRepository('App:Server')
+                ->createQueryBuilder('s')
+                ->join('s.galaxys', 'g')
+                ->join('g.sectors', 'se')
+                ->join('se.planets', 'p')
+                ->join('p.user', 'u')
+                ->join('u.ally', 'a')
+                ->select('count(p) as number')
+                ->groupBy('s.id')
+                ->getQuery()
+                ->getSingleScalarResult();
+        } else {
+            $totalPlanet = 1;
+        }
 
 
         if (!$usePlanet) {

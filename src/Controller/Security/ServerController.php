@@ -79,8 +79,8 @@ class ServerController extends AbstractController
                 if (($nbrSector == 23 || $nbrSector == 28 || $nbrSector == 73 || $nbrSector == 78) && $nbrPlanet == 13) {
                     $planet = new Planet();
                     $planet->setMerchant(true);
-                    $planet->setGround(400);
-                    $planet->setSky(80);
+                    $planet->setGround(4000);
+                    $planet->setSky(800);
                     $planet->setImageName('merchant.png');
                     $planet->setName('Marchands');
                     $planet->setSector($sector);
@@ -137,15 +137,15 @@ class ServerController extends AbstractController
                                 $planet->setGround(25);
                                 $planet->setSky(5);
                             } else {
-                                $planet->setGround(rand(30, 40));
-                                $planet->setSky(rand(5, 8));
+                                $planet->setGround(rand(50, 60));
+                                $planet->setSky(rand(11, 13));
                             }
                         } elseif ($nbrSector == 45 || $nbrSector == 46 || $nbrSector == 55 || $nbrSector == 56) {
-                            $planet->setGround(rand(65, 85));
-                            $planet->setSky(rand(10, 20));
+                            $planet->setGround(rand(95, 115));
+                            $planet->setSky(rand(30, 40));
                         } else {
-                            $planet->setGround(rand(48, 60));
-                            $planet->setSky(rand(8, 11));
+                            $planet->setGround(rand(65, 80));
+                            $planet->setSky(rand(14, 17));
                         }
                     }
                 }
@@ -325,7 +325,7 @@ class ServerController extends AbstractController
 
         foreach ($users as $user) {
             $ship = $user->getShip();
-            if ($ship) {
+            if ($ship && $user->getId() != 1) {
                 $user->setShip(null);
                 $em->remove($ship);
             }

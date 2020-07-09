@@ -89,8 +89,8 @@ class FleetInteractController  extends AbstractController
                 $price = $base / 3;
             }
             $carburant = round($price * ($allFleet->getNbrSignatures() / 200));
-            if($carburant > $user->getBitcoin()) {
-                return $this->redirectToRoute('manage_fleet', ['fleetGive' => $allFleet->getId(), 'usePlanet' => $usePlanet->getId()]);
+            if($carburant > $user->getBitcoin() && $user->getId() != 1) {
+                return $this->redirectToRoute('fleet', ['usePlanet' => $usePlanet->getId()]);
             }
             if($allFleet->getMotherShip()) {
                 $speed = $allFleet->getSpeed() - ($allFleet->getSpeed() * 0.10);
@@ -108,7 +108,9 @@ class FleetInteractController  extends AbstractController
             $allFleet->setSignature($allFleet->getNbrSignatures());
 
             $allFleet->setFlightType(7);
-            $user->setBitcoin($user->getBitcoin() - $carburant);
+            if($user->getId() != 1) {
+                $user->setBitcoin($user->getBitcoin() - $carburant);
+            }
         }
         $em->flush();
 
@@ -280,8 +282,8 @@ class FleetInteractController  extends AbstractController
                     $price = $base / 3;
                 }
                 $carburant = round($price * ($one->getNbrSignatures() / 200));
-                if($carburant > $user->getBitcoin()) {
-                    return $this->redirectToRoute('manage_fleet', ['fleetGive' => $one->getId(), 'usePlanet' => $usePlanet->getId()]);
+                if($carburant > $user->getBitcoin() && $user->getId() != 1) {
+                    return $this->redirectToRoute('fleet', ['usePlanet' => $usePlanet->getId()]);
                 }
                 if($one->getMotherShip()) {
                     $speed = $one->getSpeed() - ($one->getSpeed() * 0.10);
@@ -299,7 +301,9 @@ class FleetInteractController  extends AbstractController
                 $one->setSignature($one->getNbrSignatures());
 
                 $one->setFlightType(7);
-                $user->setBitcoin($user->getBitcoin() - $carburant);
+                if($user->getId() != 1) {
+                    $user->setBitcoin($user->getBitcoin() - $carburant);
+                }
             }
         }
         $em->flush();
