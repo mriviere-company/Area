@@ -81,24 +81,27 @@ class ZombieController extends AbstractController
             $zombieTotal = $zombie;
             $zombie = $zombie - $soldier - $tank;
             $gain = null;
-            $alea = rand(1, 100) == 100 ? 2 : 1;
+            $alea = rand(1, 100) >= 95 ? 2 : 1;
             if ($zombie <= 1) {
                 $zombie = 1;
             } else {
                 $zombie = 1 + ((100 * $zombie) / $zombieTotal) / 100;
             }
             if ($time == 1) {
+                $percent = ROUND(95 / $zombie);
+                $gain = 1;
+            } elseif ($time == 5) {
                 $percent = ROUND(90 / $zombie);
-                $gain = 2;
-            } elseif ($time == 3) {
-                $percent = ROUND(70 / $zombie);
-                $gain = 5;
-            } elseif ($time == 6) {
-                $percent = ROUND(50 / $zombie);
-                $gain = 8;
-            } elseif ($time == 10) {
-                $percent = ROUND(30 / $zombie);
-                $gain = 15;
+                $gain = 4;
+            } elseif ($time == 15) {
+                $percent = ROUND(85 / $zombie);
+                $gain = 12;
+            } elseif ($time == 45) {
+                $percent = ROUND(80 / $zombie);
+                $gain = 30;
+            } elseif ($time == 360) {
+                $percent = ROUND(75 / $zombie);
+                $gain = 60;
             }
             if ($soldier > $planet->getSoldier() || $tank > $planet->getTank() || !$gain || ($soldier == 0 && $tank == 0) || count($planet->getMissions()) >= 10) {
                 if (count($planet->getMissions()) >= 10) {
@@ -110,7 +113,7 @@ class ZombieController extends AbstractController
                 }
                 return $this->redirectToRoute('zombie', ['usePlanet' => $usePlanet->getId()]);
             } else {
-                $nowMission->add(new DateInterval('PT' . $time . 'H'));
+                $nowMission->add(new DateInterval('PT' . $time . 'M'));
                 $mission = new Mission();
                 $mission->setMissionAt($nowMission);
                 $mission->setType(0);
@@ -142,24 +145,27 @@ class ZombieController extends AbstractController
             }
             $zombieTotal = $zombie;
             $zombie = $zombie - $soldier - $tank;
-            $alea = rand(1, 100) == 100 ? 2 : 1;
+            $alea = rand(1, 100) >= 95 ? 2 : 1;
             if ($zombie <= 1) {
                 $zombie = 1;
             } else {
                 $zombie = 1 + ((100 * $zombie) / $zombieTotal) / 100;
             }
             if ($time == 1) {
-                $percent = ROUND(90 / $zombie);
+                $percent = ROUND(95 / $zombie);
                 $gain = 2;
-            } elseif ($time == 3) {
-                $percent = ROUND(70 / $zombie);
-                $gain = 5;
-            } elseif ($time == 6) {
-                $percent = ROUND(50 / $zombie);
+            } elseif ($time == 5) {
+                $percent = ROUND(90 / $zombie);
                 $gain = 8;
-            } elseif ($time == 10) {
-                $percent = ROUND(30 / $zombie);
-                $gain = 15;
+            } elseif ($time == 15) {
+                $percent = ROUND(85 / $zombie);
+                $gain = 22;
+            } elseif ($time == 45) {
+                $percent = ROUND(80 / $zombie);
+                $gain = 60;
+            } elseif ($time == 360) {
+                $percent = ROUND(75 / $zombie);
+                $gain = 400;
             }
             if ($soldier > $planet->getSoldier() || $tank > $planet->getTank() || !$gain || ($soldier == 0 && $tank == 0) || count($planet->getMissions()) >= 10) {
                 if (count($planet->getMissions()) >= 10) {
@@ -171,7 +177,7 @@ class ZombieController extends AbstractController
                 }
                 return $this->redirectToRoute('zombie', ['usePlanet' => $usePlanet->getId()]);
             } else {
-                $nowMission->add(new DateInterval('PT' . $time . 'H'));
+                $nowMission->add(new DateInterval('PT' . $time . 'M'));
                 $mission = new Mission();
                 $mission->setMissionAt($nowMission);
                 $mission->setType(1);
@@ -234,7 +240,7 @@ class ZombieController extends AbstractController
         $reportMission->setUser($user);
         $planet = $mission->getPlanet();
         if ($mission->getType() == 0) {
-            if (rand(1, 100) <= $mission->getPercent()) {
+            if (rand(0, 100) <= $mission->getPercent()) {
                 $lose = 1 + ((100 - $mission->getPercent()) / rand(4,7)) / 100;
                 if ($planet->getSoldier() + round($mission->getSoldier() / $lose) > $planet->getSoldierMax() || $planet->getTank() + round($mission->getTank() / $lose) > 500) {
                     $this->addFlash("fail", "Vous n'avez pas assez de place pour vos soldats ou tanks.");
@@ -262,7 +268,7 @@ class ZombieController extends AbstractController
                 $em->remove($mission);
             }
         } else {
-            if (rand(1, 100) <= $mission->getPercent()) {
+            if (rand(0, 100) <= $mission->getPercent()) {
                 $lose = 1 + ((100 - $mission->getPercent()) / rand(3,6)) / 100;
                 if ($planet->getSoldier() + round($mission->getSoldier() / $lose) > $planet->getSoldierMax() || $planet->getTank() + round($mission->getTank() / $lose) > 500) {
                     $this->addFlash("fail", "Vous n'avez pas assez de place pour vos soldats ou tanks.");
@@ -273,7 +279,7 @@ class ZombieController extends AbstractController
                 $planet->setSoldier($planet->getSoldier() + round($mission->getSoldier() / $lose));
                 $planet->setTank($planet->getTank() + round($mission->getTank() / $lose));
                 $planet->setUranium($planet->getUranium() + $mission->getGain());
-                $user->setZombieAtt($user->getZombieAtt() + 1);
+                $user->setZombieAtt($user->getZombieAtt() + 10);
                 $reportMission->setTitle("Mission de récupération d'uranium");
                 $reportMission->setImageName("uranium_win_report.jpg");
                 $reportMission->setContent("L'escouade militaire envoyée en mission est de retour, son capitaine vous fait son rapport :<br> <span class='text-vert'>+" . number_format($mission->getGain()) . "</span> uranium ont été récupérés en zone zombie.<br><span class='text-rouge'>" . number_format($soldier) . "</span> soldats meurent dans la mission ainsi que <span class='text-rouge'>" . number_format($tank) . "</span> tanks.<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+1</span>.");

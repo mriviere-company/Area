@@ -1443,17 +1443,20 @@ function manageZbMission() {
         if($('.zbMission .nbrTime').val() > 0) {
             timeZb = $('.zbMission .nbrTime').val();
             if (timeZb == 1) {
-                gainZb = -2;
+                gainZb = -1;
+                succeedZb = Math.round(95 / zombie);
+            } else if (timeZb == 5) {
+                gainZb = -4;
                 succeedZb = Math.round(90 / zombie);
-            } else if (timeZb == 2) {
-                gainZb = -5;
-                succeedZb = Math.round(70 / zombie);
-            } else if (timeZb == 3) {
-                gainZb = -8;
-                succeedZb = Math.round(50 / zombie);
-            } else if (timeZb == 4) {
-                gainZb = -15;
-                succeedZb = Math.round(30 / zombie);
+            } else if (timeZb == 15) {
+                gainZb = -12;
+                succeedZb = Math.round(85 / zombie);
+            } else if (timeZb == 45) {
+                gainZb = -30;
+                succeedZb = Math.round(80 / zombie);
+            } else if (timeZb == 360) {
+                gainZb = -60;
+                succeedZb = Math.round(75 / zombie);
             }
         }
         if(succeedZb >= 70) {
@@ -1501,16 +1504,19 @@ function manageUraMission() {
             timeUra = $('.uraMission .nbrTime').val();
             if (timeUra == 1) {
                 gainUra = 2;
-                succeedUra = Math.round(90 / zombie);
-            } else if (timeUra == 2) {
-                gainUra = 5;
-                succeedUra = Math.round(70 / zombie);
-            } else if (timeUra == 3) {
+                succeedUra = Math.round(95 / zombie);
+            } else if (timeUra == 5) {
                 gainUra = 8;
-                succeedUra = Math.round(50 / zombie);
-            } else if (timeUra == 4) {
-                gainUra = 15;
-                succeedUra = Math.round(30 / zombie);
+                succeedUra = Math.round(90 / zombie);
+            } else if (timeUra == 15) {
+                gainUra = 22;
+                succeedUra = Math.round(85 / zombie);
+            } else if (timeUra == 45) {
+                gainUra = 60;
+                succeedUra = Math.round(80 / zombie);
+            } else if (timeUra == 360) {
+                gainUra = 400;
+                succeedUra = Math.round(75 / zombie);
             }
         }
         if(succeedUra >= 70) {

@@ -66,10 +66,11 @@ class MissionUraType extends AbstractType
     {
         $translator = new Translator('front_zombie');
         return [
-            $translator->trans('form.one') => 1,
-            $translator->trans('form.three') => 3,
-            $translator->trans('form.six') => 6,
-            $translator->trans('form.ten') => 10
+            $translator->trans('form.first') => 1,
+            $translator->trans('form.second') => 5,
+            $translator->trans('form.third') => 15,
+            $translator->trans('form.fourth') => 45,
+            $translator->trans('form.fifth') => 360
         ];
     }
 

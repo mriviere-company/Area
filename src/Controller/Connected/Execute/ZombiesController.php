@@ -88,12 +88,12 @@ class ZombiesController extends AbstractController
                 if ($dMilitary > $aMilitary) {
                     if ($zUser->getAlly()) {
                         if ($zUser->getAlly()->getPolitic() == 'fascism') {
-                            $zUser->setZombieAtt($zUser->getZombieAtt() + 5);
+                            $zUser->setZombieAtt($zUser->getZombieAtt() + 25);
                         } else {
-                            $zUser->setZombieAtt($zUser->getZombieAtt() + 10);
+                            $zUser->setZombieAtt($zUser->getZombieAtt() + 50);
                         }
                     } else {
-                        $zUser->setZombieAtt($zUser->getZombieAtt() + 1);
+                        $zUser->setZombieAtt($zUser->getZombieAtt() + 10);
                     }
                     $warPointDef = round($aMilitary / 10);
                     $zUser->getRank()->setWarPoint($zUser->getRank()->getWarPoint() + $warPointDef);
@@ -166,12 +166,12 @@ class ZombiesController extends AbstractController
             } else {
                 if ($zUser->getAlly()) {
                     if ($zUser->getAlly()->getPolitic() == 'fascism') {
-                        $zUser->setZombieAtt($zUser->getZombieAtt() + 5);
+                        $zUser->setZombieAtt($zUser->getZombieAtt() + 25);
                     } else {
-                        $zUser->setZombieAtt($zUser->getZombieAtt() + 10);
+                        $zUser->setZombieAtt($zUser->getZombieAtt() + 50);
                     }
                 } else {
-                    $zUser->setZombieAtt($zUser->getZombieAtt() + 1);
+                    $zUser->setZombieAtt($zUser->getZombieAtt() + 10);
                 }
             }
             $zUser->setViewReport(false);

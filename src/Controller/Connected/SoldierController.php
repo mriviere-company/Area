@@ -138,12 +138,12 @@ class SoldierController extends AbstractController
                 $now = new DateTime();
                 $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $nbrNuclear = abs($form_caserneRecruit->get('nuclear')->getData());
-                if($nbrNuclear > $user->getBitcoin() / 25000 ||
-                    $nbrNuclear * 500 > $usePlanet->getUranium() ||
+                if($nbrNuclear * 25000 > $user->getBitcoin() ||
+                    $nbrNuclear * 5000 > $usePlanet->getUranium() ||
                     ($usePlanet->getWorker() < 10000 || ($usePlanet->getNuclearBomb() + $nbrNuclear) > $usePlanet->getNuclearBase())) {
-                    if ($nbrNuclear * 500 > $usePlanet->getUranium()) {
+                    if ($nbrNuclear * 5000 > $usePlanet->getUranium()) {
                         $this->addFlash("fail", "Vous n'avez pas assez d'uranium.");
-                    } elseif ($nbrNuclear > $user->getBitcoin() / 25000) {
+                    } elseif ($nbrNuclear * 25000 > $user->getBitcoin()) {
                         $this->addFlash("fail", "Vous ne disposez pas d'assez de bitcoins.");
                     } elseif ($usePlanet->getNuclearBomb() + $nbrNuclear > $usePlanet->getNuclearBase()) {
                         $this->addFlash("fail", "Vous dépassez la limite de bombes nucléaires sur la planète.");
@@ -167,7 +167,7 @@ class SoldierController extends AbstractController
                     $now->add(new DateInterval('PT' . round($nbrNuclear * 24) . 'H'));
                     $usePlanet->setNuclearAtNbr($nbrNuclear);
                 }
-                $usePlanet->setUranium($usePlanet->getUranium() - ($nbrNuclear * 500));
+                $usePlanet->setUranium($usePlanet->getUranium() - ($nbrNuclear * 5000));
                 $user->setBitcoin($user->getBitcoin() - ($nbrNuclear * 25000));
                 $usePlanet->setNuclearAt($now);
                 $quest = $user->checkQuests('nuclear');
