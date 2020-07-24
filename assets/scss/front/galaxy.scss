@@ -8,7 +8,7 @@
 }
 
 .red-border {
-  border: 2px solid red!important;
+  border: 2px solid $color-red!important;
   height: 161px;
   width: 162px;
 }
@@ -31,7 +31,7 @@
   margin-top: 2rem;
   color: #fff;
   width: 671px;
-  background-color: black;
+  background-color: $color-black;
   border: 1px solid white;
   padding: 1.5rem;
 }
@@ -39,7 +39,7 @@
 .sector-info {
   margin-top: 2rem;
   color: #fff;
-  background-image: url("../public/img/back.jpg");
+  background-image: $back-basic;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: 5px;
   padding: 1.5rem;
@@ -47,7 +47,7 @@
 
 div.tooltip-inner {
   max-width: 500px;
-  background: black; //#3c3c3c
+  background: $color-black; //#3c3c3c
   color: #BCBCC0;
   text-align: left;
   padding: 0px 5px;
@@ -64,24 +64,24 @@ div.tooltip-inner span a.ally {
 div.tooltip-inner span a.manage {
   font-size: 1.5rem;
   font-family: Arial, Helvetica, sans-serif;
-  color: #00ffff!important;
+  color: $color-turquoise!important;
 }
 
 .pp-mine {
   font-weight: 600;
-  color: #00ffff!important;
+  color: $color-turquoise!important;
   font-size: 1.2rem!important;
 }
 
 .pp-no {
   font-weight: 600;
-  color: black!important;
+  color: $color-black!important;
   font-size: 1.2rem!important;
 }
 
 .pp-ally {
   font-weight: 600;
-  color: #00ff00!important;
+  color: $color-green!important;
   font-size: 1.2rem!important;
 }
 
@@ -93,7 +93,7 @@ div.tooltip-inner span a.manage {
 
 .pp-ia {
   font-weight: 600;
-  color: #FF00BF;
+  color: $color-pink!important;
   font-size: 1.2rem!important;
 }
 .pp-col {
@@ -104,26 +104,26 @@ div.tooltip-inner span a.manage {
 
 .pp-cdr {
   font-weight: 600;
-  color: yellow;
+  color: $color-yellow;
   font-size: 1.2rem!important;
 }
 
 .pp-enemy {
   font-weight: 600;
-  color: red!important;
+  color: $color-red;
   font-size: 1.2rem!important;
 }
 
 .pp-mine2 {
-  color: #00ffff!important;
+  color: $color-turquoise!important;
 }
 
 .pp-no2 {
-  color: black!important;
+  color: $color-black!important;
 }
 
 .pp-ally2 {
-  color: #00ff00!important;
+  color: $color-green!important;
 }
 
 .pp-peace2 {
@@ -131,15 +131,15 @@ div.tooltip-inner span a.manage {
 }
 
 .pp-ia2 {
-  color: #FF00BF;
+  color: $color-pink!important;
 }
 
 .pp-cdr2 {
-  color: yellow;
+  color: $color-yellow!important;
 }
 
 .pp-enemy2 {
-  color: red!important;
+  color: $color-red!important;
 }
 
 .map-block-sector {

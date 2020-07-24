@@ -1,5 +1,5 @@
 .navbar-ressource {
-  background-image: url("../public/img/back.jpg");
+  background-image: $back-basic;
   margin-top: 1%;
   z-index: 2;
   border-radius: 0px 5px 5px 0px;
@@ -32,7 +32,7 @@
   color: #fff !important;
   height: 20px;
   font-size: 1.2rem;
-  background-image: url("../public/img/form-game.jpg");
+  background-image: $back-form;
   line-height: 1.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -40,7 +40,7 @@
   border: 1px solid silver;
   border-radius: 5px;
   option {
-    background: black;
+    background: $color-black;
   }
 }
 
@@ -61,8 +61,8 @@
 progress.product-full::-webkit-progress-value {
   width: 60px;
   height: 7px;
-  background-color: red;
-  border: 1px solid black;
+  background-color: $color-red;
+  border: 1px solid $color-black;
 }
 
 progress.product-ressource::-webkit-progress-value {
@@ -80,5 +80,5 @@ progress.product-ressource {
 progress.product-full {
   width: 60px;
   height: 7px;
-  background-color: red;
+  background-color: $color-red;
 }

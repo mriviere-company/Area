@@ -5,7 +5,7 @@
   color: #fff!important;
   height: 30px;
   font-size: 1.2rem;
-  background-image: url("../public/img/form-game.jpg");
+  background-image: $back-form;
   line-height: 1.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
@@ -13,7 +13,7 @@
   border: 1px solid silver;
   border-radius: 5px;
   option {
-    background-image: url("../public/img/form-game.jpg");
-    background: black;
+    background-image: $back-form;
+    background: $color-black;
   }
 }

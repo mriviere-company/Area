@@ -169,7 +169,7 @@
                     </tr>
                 {% endif %}
                 {% if (app.user.getCargo() <= 1 and usePlanet.getAeroponicFarm() == 0) or app.user.getAeroponicFarm() <= 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/aeroponic_farm.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans({'%product%': ((((usePlanet.getAeroponicFarm() + 1) * 25)) * 60)|round})|raw }}">{{ 'building.aeroponicFarm'|trans|raw }}</button>
                         </th>
@@ -222,7 +222,7 @@
                     </tr>
                 {% endif %}
                 {% if app.user.getCargo() <= 1 and usePlanet.getNiobiumStock() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/niobiumStock.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.niobiumStock'|trans|raw }}">{{ 'building.niobiumStock'|trans|raw }}</button>
                         </th>
@@ -276,7 +276,7 @@
                     </tr>
                 {% endif %}
                 {% if app.user.getCargo() <= 1 and usePlanet.getWaterStock() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/waterStock.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.waterStock'|trans|raw }}">{{ 'building.waterStock'|trans|raw }}</button>
                         </th>
@@ -330,7 +330,7 @@
                     </tr>
                 {% endif %}
                 {% if (app.user.getCargo() <= 1 and usePlanet.getSilos() == 0) or app.user.getAeroponicFarm() <= 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/silos.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.silos'|trans|raw }}">{{ 'building.silos'|trans|raw }}</button>
                         </th>
@@ -429,7 +429,7 @@
                 </tr>
 
                 {% if app.user.getDemography() <= 0 and usePlanet.getCity() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/city.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.city'|trans|raw }}">{{ 'building.city'|trans|raw }}</button>
                         </th>
@@ -483,7 +483,7 @@
                     </tr>
                 {% endif %}
                 {% if app.user.getDemography() <= 4 and usePlanet.getMetropole() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/metropole.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.metropole'|trans|raw }}">{{ 'building.metropole'|trans|raw }}</button>
                         </th>
@@ -542,7 +542,7 @@
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 {% if app.user.getDiscipline() <= 0 and usePlanet.getCaserne() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/caserne.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.caserne'|trans|raw }}">{{ 'building.caserne'|trans|raw }}</button>
                         </th>
@@ -596,7 +596,7 @@
                     </tr>
                 {% endif %}
                 {% if app.user.getDiscipline() != 3 and usePlanet.getBunker() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/bunker.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.bunker'|trans|raw }}">{{ 'building.bunker'|trans|raw }}</button>
                         </th>
@@ -650,7 +650,7 @@
                     </tr>
                 {% endif %}
                 {% if usePlanet.getUranium() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/nuclear_base.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.nuclearBase'|trans|raw }}">{{ 'building.nuclearBase'|trans|raw }}</button>
                         </th>
@@ -704,7 +704,7 @@
                     </tr>
                 {% endif %}
                 {% if app.user.getIndustry() <= 0 and usePlanet.getSpaceShip() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/chantier.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.chantier'|trans|raw }}">{{ 'building.chantier'|trans|raw }}</button>
                         </th>
@@ -758,7 +758,7 @@
                     </tr>
                 {% endif %}
                 {% if app.user.getLightShip() <= 0 and usePlanet.getLightUsine() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/light.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.light'|trans|raw }}">{{ 'building.light'|trans|raw }}</button>
                         </th>
@@ -809,7 +809,7 @@
                     </tr>
                 {% endif %}
                 {% if app.user.getHeavyShip() <= 0 and usePlanet.getHeavyUsine() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/heavy.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.heavy'|trans|raw }}">{{ 'building.heavy'|trans|raw }}</button>
                         </th>
@@ -865,7 +865,7 @@
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 {% if app.user.getOnde() <= 0 and usePlanet.getRadar() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/radar.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.radar'|trans|raw }}">{{ 'building.radar'|trans|raw }}</button>
                         </th>
@@ -919,7 +919,7 @@
                     </tr>
                 {% endif %}
                 {% if app.user.getOnde() <= 2 and usePlanet.getSkyRadar() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/skyRadar.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.skyRadar'|trans|raw }}">{{ 'building.skyRadar'|trans|raw }}</button>
                         </th>
@@ -973,7 +973,7 @@
                     </tr>
                 {% endif %}
                 {% if app.user.getOnde() != 5 and usePlanet.getSkyBrouilleur() == 0 %}
-                    <tr class="blocked-building">
+                    <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/brouilleur.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.brouilleur'|trans|raw }}">{{ 'building.brouilleur'|trans|raw }}</button>
                         </th>
@@ -1033,7 +1033,7 @@
                 <table class="table table-striped table-bordered table-dark text-center">
                     <tbody>
                     {% if app.user.getExpansion() <= 0 and usePlanet.getIsland() == 0 %}
-                        <tr class="blocked-building">
+                        <tr class="blocked-building blockedBack">
                             <th class="tab-cells-name">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/island.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.island'|trans|raw }}">{{ 'building.island'|trans|raw }}</button>
                             </th>
@@ -1083,7 +1083,7 @@
                         </tr>
                     {% endif %}
                     {% if app.user.getExpansion() != 2 and usePlanet.getOrbital() == 0 %}
-                        <tr class="blocked-building">
+                        <tr class="blocked-building blockedBack">
                             <th class="tab-cells-name">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/orbital.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.orbital'|trans|raw }}">{{ 'building.orbital'|trans|raw }}</button>
                             </th>

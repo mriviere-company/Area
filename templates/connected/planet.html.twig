@@ -58,7 +58,7 @@
                     {% if x % 5 == 0 %}
                 <tr>
                     {% endif %}
-                    <td width="160" class="center-cells text-center{% if attacker %} planetFull{% endif %}">
+                    <td width="160" class="center-cells text-center{% if attacker %} warningBack{% endif %}">
                         <a class="text-or glyphicon glyphicon-remove" href="{{ path('planet_seller_sub', {'planet': planet.getId(), 'usePlanet': usePlanet.getId()}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.remove'|trans }}"></a> <span{% if planet.getNiobium() >= planet.getNiobiumMax() or planet.getWater() >= planet.getWaterMax() %} class="text-rouge"{% endif %}>{{ planet.getName() }}</span>
                     </td>
                     {% set x = x + 1 %}

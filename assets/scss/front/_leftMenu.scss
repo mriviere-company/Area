@@ -2,7 +2,7 @@
   position: sticky;
   z-index: 1;
   top: 0;
-  background-image: url("../public/img/back.jpg");
+  background-image: $back-basic;
   border-radius: 5px 0px 5px 5px;
 }
 
@@ -28,22 +28,6 @@
   border-top: 1px solid #17a2b8;
 }
 
-.freeSearchBuild {
-  background-color: rgba(0, 128, 0, 0.5);
-}
-
-.currentRoute {
-  background-color: rgba(23, 162, 184, 0.5);
-}
-
-.currentRank {
-  background-color: rgba(23, 162, 184, 0.5)!important;
-}
-
-.planetFull {
-  background-image: url("../public/img/back_blocus.jpg")!important;
-}
-
 .btn-left-bottom {
   color: #fff;
   border: 1px solid #17a2b8;
@@ -67,6 +51,6 @@
 }
 
 .popover {
-  color: black;
+  color: $color-black;
   width: 500px;
 }

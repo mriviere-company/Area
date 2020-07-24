@@ -4,7 +4,7 @@
   padding: 1.5rem 1rem 5rem 1rem;
   margin-bottom: 3rem;
   margin-top: 6rem;
-  background-image: url("../public/img/back.jpg");
+  background-image: $back-basic;
   border-radius: 5px;
 }
 
@@ -14,7 +14,7 @@
   padding: 1.5rem 1rem 5rem 1rem;
   margin-bottom: 3rem;
   margin-top: 6rem;
-  background-image: url("../public/img/back.jpg");
+  background-image: $back-basic;
   border-radius: 5px;
 }
 
@@ -23,7 +23,7 @@
   padding: 0.5rem;
   margin-top: 5rem;
   margin-left: 20rem;
-  background-image: url("../public/img/back.jpg");
+  background-image: $back-basic;
   border: 1px solid grey;
   border-radius: 5px;
 }
@@ -82,7 +82,7 @@
 .display-allFleet {
   padding: 1.5rem 1rem 1rem 1rem;
   min-height: 65px;
-  background-image: url("../public/img/back.jpg");
+  background-image: $back-basic;
   border: 1px solid white;
   border-radius: 10px;
 }

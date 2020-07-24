@@ -55,7 +55,7 @@
             </tr>
             {% set x = 1 %}
             {% for ally in allAllys %}
-                <tr{% if app.user.getAlly() and app.user.getAlly().getSigle() == ally.sigle %} class="currentRank"{% elseif  app.user.getAlly() and ally.sigle in app.user.getAllyFriendsTag() %} class="constructFree"{% elseif app.user.getAlly() and ally.sigle in app.user.getAllyEnnemyTag() %} class="planetFull"{% endif %}>
+                <tr{% if app.user.getAlly() and app.user.getAlly().getSigle() == ally.sigle %} class="currentBack"{% elseif  app.user.getAlly() and ally.sigle in app.user.getAllyFriendsTag() %} class="availableBack"{% elseif app.user.getAlly() and ally.sigle in app.user.getAllyEnnemyTag() %} class="warningBack"{% endif %}>
                     <th width="15px" class="tab-cells-name p-2">
                         {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> {{ x }}.{% else %}<div class="glyphicon glyphicon-star" hidden></div> {{ x }}.{% endif %}
                     </th>

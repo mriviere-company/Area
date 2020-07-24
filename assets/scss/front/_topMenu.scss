@@ -16,7 +16,7 @@
  }
 
 a.btn-menu:hover {
-  color: black!important;
+  color: $color-black!important;
   text-shadow: 1.5px 1.5px 2px rgba(0,0,0, 0);
 }
 
@@ -62,7 +62,7 @@ a.btn-top:hover {
 .logout {
   color: #fff;
   :hover {
-    color: red;
+    color: $color-red;
   }
 }
 

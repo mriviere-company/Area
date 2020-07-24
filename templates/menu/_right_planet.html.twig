@@ -25,7 +25,7 @@
             </div>
             {% if allTuto > 22 %}</a>{% endif %}
         {% endif %}
-        <div {% if attacker %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-4 bg-right px-4 py-2{% if attacker %} planetFull{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} constructFree{% endif %}">
+        <div {% if attacker %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-4 bg-right px-4 py-2{% if attacker %} warningBack{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} availableBack{% endif %}">
             <div class="pt-2 float-left"><img alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ vich_uploader_asset(usePlanet, 'imageFile') }}">{% if usePlanet.nbCdr or usePlanet.wtCdr %} <img class="cdr-on-planet" alt="{{ 'image'|trans({},'front_global') }}" height="16" width="16" src="/img/niobium.png">{% endif %}</div>
             <div class="float-right">
                 <div class="mt-2{% if allTuto < 14 %} tutorial-hide{% endif %}">
@@ -62,7 +62,7 @@
                         {% else %}
                             {% set attackerBis = false %}
                         {% endif %}
-                        <div{% if attackerBis %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-4 bg-right px-4 py-2{% if attackerBis %} planetFull{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} constructFree{% endif %}">  {#or planet.getSkyPlace() != planet.getSky()#}
+                        <div{% if attackerBis %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-4 bg-right px-4 py-2{% if attackerBis %} warningBack{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} availableBack{% endif %}">  {#or planet.getSkyPlace() != planet.getSky()#}
                             <div class="pt-2 float-left"><a href="{{ planet.id }}"><img class="back-planet" alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">{% if planet.nbCdr or planet.wtCdr %} <img class="cdr-on-planet" alt="{{ 'image'|trans({},'front_global') }}" height="16" width="16" src="/img/niobium.png">{% endif %}</a></div>
                             <div class="float-right">
                                 <div class="mt-2{% if allTuto < 14 %} tutorial-hide{% endif %}">
@@ -93,7 +93,7 @@
                 </a>
             </div>
             <div class="col-6 right-link-planet-first">
-                <div {% if attacker %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-2 bg-right-small px-2 py-1{% if attacker %} planetFull{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} constructFree{% endif %}">
+                <div {% if attacker %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="currentPlanet mb-2 bg-right-small px-2 py-1{% if attacker %} warningBack{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} availableBack{% endif %}">
                     <div class="pt-1 float-left"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-2" height="32" width="32" src="{{ vich_uploader_asset(usePlanet, 'imageFile') }}">{% if usePlanet.nbCdr or usePlanet.wtCdr %} <img class="cdr-on-planet" alt="{{ 'image'|trans({},'front_global') }}" height="16" width="16" src="/img/niobium.png">{% endif %}{{ usePlanet.getName() }}</span></div>
                 </div>
             </div>
@@ -116,7 +116,7 @@
                             {% endif %}
                             <div class="col-6 right-link-planet">
                                 <a href="{{ planet.id }}">
-                                    <div{% if attackerBis %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-2 bg-right-small px-2 py-2{% if attackerBis %} planetFull{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} constructFree{% endif %}">
+                                    <div{% if attackerBis %} data-toggle="tooltip" data-placement="bottom" title="{{ 'embargo'|trans }}"{% endif %} class="mb-2 bg-right-small px-2 py-2{% if attackerBis %} warningBack{% elseif planet.construct is null and (planet.ground != planet.groundPlace) %} availableBack{% endif %}">
                                         <div class="pt-1 float-left"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="mr-1" height="32" width="32" src="{{ vich_uploader_asset(planet, 'imageFile', 'App\\Entity\\Planet') }}">{% if planet.nbCdr or planet.wtCdr %} <img class="cdr-on-planet" alt="{{ 'image'|trans({},'front_global') }}" height="16" width="16" src="/img/niobium.png">{% endif %}{% if planet.moon %}<span class="text-jaune">{{ planet.name }}</span>{% else %}{{ planet.name }}{% endif %}</div>
                                     </div>
                                 </a>

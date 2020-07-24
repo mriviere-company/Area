@@ -52,7 +52,7 @@
             </tr>
             {% set x = 1 %}
             {% for user in users %}
-                <tr{% if app.user.getId() == user.id %} class="currentRank"{% elseif app.user.getAlly() and app.user.getAlly().getId() == user.alliance %} class="constructFree"{% elseif app.user.getAlly() and user.sigle in app.user.getAllyEnnemyTag() and user.sigle is not null %} class="planetFull"{% endif %}>
+                <tr{% if app.user.getId() == user.id %} class="currentBack"{% elseif app.user.getAlly() and app.user.getAlly().getId() == user.alliance %} class="availableBack"{% elseif app.user.getAlly() and user.sigle in app.user.getAllyEnnemyTag() and user.sigle is not null %} class="warningBack"{% endif %}>
                     <th width="100px" class="tab-cells-name p-2">
                         {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% else %}<div class="glyphicon glyphicon-star" hidden></div> <span class="float-left ml-3">{{ x }}</span>{% endif %}{% if user.position > user.oldPosition %}<span class="rank-bad-border text-rouge float-right">&#8595 {{ user.position - user.oldPosition }}</span>{% elseif user.position < user.oldPosition %}<span class="rank-good-border text-vert float-right">&#8593 {{ user.oldPosition - user.position }}</span>{% else %}<span class="rank-bad-border float-right text-mini">&#x25cf</span>{% endif %}
                     </th>

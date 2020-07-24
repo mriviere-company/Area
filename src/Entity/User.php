@@ -1042,7 +1042,7 @@ class User implements UserInterface, \Serializable
     {
         foreach($this->planets as $planet) {
             if($planet->getNiobium() >= $planet->getNiobiumMax() || $planet->getWater() >= $planet->getWaterMax()) { // fixmr requete globale des planètes
-                return ' planetFull';
+                return ' warningBack';
             }
         }
         return null;

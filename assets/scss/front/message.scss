@@ -2,7 +2,7 @@
   padding: 1.5rem 1rem 1rem 1rem;
   margin-top: 6rem;
   min-height: 150px;
-  background-image: url("../public/img/back.jpg");
+  background-image: $back-basic;
   border-radius: 5px;
 }
 
@@ -11,25 +11,25 @@
 }
 
 .display-message .nav-tabs .nav-link.active {
-  background-color: black;
+  background-color: $color-black;
   border: 1px solid orange;
   border-bottom: none;
 }
 
 .front-block-game .nav-tabs .nav-link.active {
-  background-color: black;
+  background-color: $color-black;
   border: 1px solid orange;
   border-bottom: none;
 }
 
 div.front-block-game.report li a:hover {
-  background-color: black;
+  background-color: $color-black;
   border: 1px solid orange;
   border-bottom: none;
 }
 
 div.front-block-game.report li a:focus {
-  background-color: black;
+  background-color: $color-black;
   border: 1px solid orange;
   border-bottom: none;
 }
@@ -74,7 +74,7 @@ div.front-block-game.report li a:focus {
 
 .btn-delete {
   color: #fff;
-  border: 1px solid red;
+  border: 1px solid $color-red;
   padding: .5rem 1rem;
   font-size: 1.25rem;
   line-height: 1.5;
