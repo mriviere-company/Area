@@ -27,6 +27,13 @@
             </div>
         </a>
     {% endif %}
+    <div{% if allTuto < 30 %} class="tutorial-hide"{% endif %}>
+        <a href="{{ path('heroe', {'usePlanet': usePlanet.getId()}) }}">
+            <div class="btn-left{% if app.request.attributes.get('_route') == 'heroe' %} currentBack{% endif %}{% if allTuto == 16 %} tutorial-show{% endif %}">
+                <span>{{ 'heroe'|trans }}</span>
+            </div>
+        </a>
+    </div>
     {% if app.user.getQuests()|length > 0 %}
         <div{% if allTuto < 16 %} class="tutorial-hide"{% endif %}>
             <a href="{{ path('market', {'usePlanet': usePlanet.getId()}) }}">

@@ -46,10 +46,10 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            <div class="block-title"><h1>{{ 'building.titleRessource'|trans }}</h1></div>
-            <table class="table table-striped table-bordered table-dark text-center">
+            {%  if usePlanet.getMoon() == false %}
+                <div class="block-title"><h1>{{ 'building.titleRessource'|trans }}</h1></div>
+                <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
-                {%  if usePlanet.getMoon() == false %}
                     <tr class="access-build">
                         <td class="center-cells">
                             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/mining.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.miner'|trans({'%product%': ((((usePlanet.getMiner() + 1) * 15)) * 60 * bonus)|round})|raw }}"><strong>{{ 'building.mining'|trans }} x {% if usePlanet.getMiner() %}{{ usePlanet.getMiner() }}{% else %}0{% endif %}</strong></button>
@@ -167,60 +167,65 @@
                             {% endif %}
                         </td>
                     </tr>
-                {% endif %}
-                {% if (app.user.getCargo() <= 1 and usePlanet.getAeroponicFarm() == 0) or app.user.getAeroponicFarm() <= 0 %}
-                    <tr class="blocked-building blockedBack">
-                        <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/aeroponic_farm.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans({'%product%': ((((usePlanet.getAeroponicFarm() + 1) * 25)) * 60)|round})|raw }}">{{ 'building.aeroponicFarm'|trans|raw }}</button>
-                        </th>
-                        <td class="center-cells cell-middle">
-                            {{ 'building.aeroponicFarm.blocked'|trans }}
-                        </td>
-                        <td colspan="2" width="101px" class="center-cells cell-middle">
-                            <span class="text-rouge">{{ 'building.blocked'|trans }}</span>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr class="access-build-2">
-                        <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/aeroponic_farm.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans({'%product%': (((usePlanet.getAeroponicFarm() + 1) * 25)) * 60})|raw }}"><strong>{{ 'building.aeroponicFarm'|trans }} x {% if usePlanet.getAeroponicFarm() %}{{ usePlanet.getAeroponicFarm() }}{% else %}0{% endif %}</strong></button>
-                            <div class="mt-4">{% if (usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm'))|number_format }}</span>{% else %}{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}"><span class="ml-4">{% if (usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm'))|number_format }}</span>{% else %}{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}"></span></div>
-                            <div class="mt-4">{% if app.user.getBuildingSkyPlace('aeroponicFarm') + usePlanet.getSkyPlace() > usePlanet.getSky() %}<span class="text-rouge">{{ app.user.getBuildingSkyPlace('aeroponicFarm') }}</span>{% else %}{{ app.user.getBuildingSkyPlace('aeroponicFarm') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'skyImg'|trans }}" src="{{ asset('img/sky.png') }}"></div>
-                        </td>
-                        <td class="center-cells cell-middle">
-                            {{ 'building.aeroponicFarm.desc'|trans }}
-                        </td>
-                        <td class="center-cells p-1{% if app.user.getTutorial() == 5 or app.user.getTutorial() == 6 %} tutorial-show{% endif %}">
-                            {% if usePlanet.getConstruct() == 'aeroponicFarm' %}
-                                {% if planetNb >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm')) and planetWt >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('aeroponicFarm') <= usePlanet.getSky() %}
-                                    <div class="mt-5">{% if ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 3600 %}{{  ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm'))|date('i:s') }}{% elseif ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 86400 %}{{  ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('d H:i:s') }}{% endif %}</div>
-                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                    {% if (app.user.getCargo() <= 1 and usePlanet.getAeroponicFarm() == 0) or app.user.getAeroponicFarm() <= 0 %}
+                        <tr class="blocked-building blockedBack">
+                            <th class="tab-cells-name">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/aeroponic_farm.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans({'%product%': ((((usePlanet.getAeroponicFarm() + 1) * 25)) * 60)|round})|raw }}">{{ 'building.aeroponicFarm'|trans|raw }}</button>
+                            </th>
+                            <td class="center-cells cell-middle">
+                                {{ 'building.aeroponicFarm.blocked'|trans }}
+                            </td>
+                            <td colspan="2" width="101px" class="center-cells cell-middle">
+                                <span class="text-rouge">{{ 'building.blocked'|trans }}</span>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr class="access-build-2">
+                            <td class="center-cells">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/aeroponic_farm.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans({'%product%': (((usePlanet.getAeroponicFarm() + 1) * 25)) * 60})|raw }}"><strong>{{ 'building.aeroponicFarm'|trans }} x {% if usePlanet.getAeroponicFarm() %}{{ usePlanet.getAeroponicFarm() }}{% else %}0{% endif %}</strong></button>
+                                <div class="mt-4">{% if (usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm'))|number_format }}</span>{% else %}{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}"><span class="ml-4">{% if (usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm'))|number_format }}</span>{% else %}{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}"></span></div>
+                                <div class="mt-4">{% if app.user.getBuildingSkyPlace('aeroponicFarm') + usePlanet.getSkyPlace() > usePlanet.getSky() %}<span class="text-rouge">{{ app.user.getBuildingSkyPlace('aeroponicFarm') }}</span>{% else %}{{ app.user.getBuildingSkyPlace('aeroponicFarm') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'skyImg'|trans }}" src="{{ asset('img/sky.png') }}"></div>
+                            </td>
+                            <td class="center-cells cell-middle">
+                                {{ 'building.aeroponicFarm.desc'|trans }}
+                            </td>
+                            <td class="center-cells p-1{% if app.user.getTutorial() == 5 or app.user.getTutorial() == 6 %} tutorial-show{% endif %}">
+                                {% if usePlanet.getConstruct() == 'aeroponicFarm' %}
+                                    {% if planetNb >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm')) and planetWt >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('aeroponicFarm') <= usePlanet.getSky() %}
+                                        <div class="mt-5">{% if ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 3600 %}{{  ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm'))|date('i:s') }}{% elseif ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 86400 %}{{  ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getAeroponicFarm() + 2 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                        <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    {% else %}
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                    {% endif %}
+                                    <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
                                 {% else %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                    {% if planetNb >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm')) and planetWt >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('aeroponicFarm') <= usePlanet.getSky() and usePlanet.getConstructAt() == NULL %}
+                                        <div>{% if ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 3600 %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm'))|date('i:s') }}{% elseif ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 86400 %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                        <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                    {% elseif planetNb >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm')) and planetWt >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('aeroponicFarm') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
+                                        <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    {% else %}
+                                        <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    {% endif %}
                                 {% endif %}
-                                <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
-                            {% else %}
-                                {% if planetNb >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm')) and planetWt >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('aeroponicFarm') <= usePlanet.getSky() and usePlanet.getConstructAt() == NULL %}
-                                    <div>{% if ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 3600 %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm'))|date('i:s') }}{% elseif ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')) < 86400 %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingTime('aeroponicFarm')- 3600)|date('d H:i:s') }}{% endif %}</div>
-                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
-                                {% elseif planetNb >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingNiobium('aeroponicFarm')) and planetWt >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * app.user.getBuildingWater('aeroponicFarm')) and usePlanet.getSkyPlace() + app.user.getBuildingSkyPlace('aeroponicFarm') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
-                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                            </td>
+                            <td class="center-cells p-4">
+                                {% if usePlanet.getAeroponicFarm() > 0 and usePlanet.getConstruct is null %}
+                                    <a class="btn btn-lg btn-danger  mt-5" data-toggle="confirmation" data-placement="right" data-title="{{ 'building.demolition.question'|trans }}" href="{{ path('building_remove_aeroponic_farm', {'usePlanet': usePlanet.getId()}) }}">{{ 'building.demolish'|trans }}</a>
+                                {% elseif usePlanet.getConstruct() == 'aeroponicFarm' %}
+                                    <a class="btn btn-lg btn-danger mt-5" href="{{ path('cancel_construction', {'cancelPlanet': usePlanet.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'building.cancel'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <a class="btn btn-lg btn-danger mt-5" disabled>{{ 'building.demolish'|trans }}</a>
                                 {% endif %}
-                            {% endif %}
-                        </td>
-                        <td class="center-cells p-4">
-                            {% if usePlanet.getAeroponicFarm() > 0 and usePlanet.getConstruct is null %}
-                                <a class="btn btn-lg btn-danger  mt-5" data-toggle="confirmation" data-placement="right" data-title="{{ 'building.demolition.question'|trans }}" href="{{ path('building_remove_aeroponic_farm', {'usePlanet': usePlanet.getId()}) }}">{{ 'building.demolish'|trans }}</a>
-                            {% elseif usePlanet.getConstruct() == 'aeroponicFarm' %}
-                                <a class="btn btn-lg btn-danger mt-5" href="{{ path('cancel_construction', {'cancelPlanet': usePlanet.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'building.cancel'|trans }}</a>
-                            {% else %}
-                                <a class="btn btn-lg btn-danger mt-5" disabled>{{ 'building.demolish'|trans }}</a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+                </table>
+            {% endif %}
+            <div class="block-title"><h1>{{ 'building.titleStock'|trans }}</h1></div>
+            <table class="table table-striped table-bordered table-dark text-center">
+                <tbody>
                 {% if app.user.getCargo() <= 1 and usePlanet.getNiobiumStock() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
@@ -536,9 +541,65 @@
                         </td>
                     </tr>
                 {% endif %}
+                {%  if usePlanet.getMoon() == false %}
+                    {% if app.user.getDiscipline() <= 0 and usePlanet.getCaserne() == 0 %}
+                        <tr class="blocked-building blockedBack">
+                            <th class="tab-cells-name">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/slave.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.slave'|trans|raw }}">{{ 'building.slave'|trans|raw }}</button>
+                            </th>
+                            <td class="center-cells cell-middle">
+                                {{ 'building.slave.blocked'|trans }}
+                            </td>
+                            <td colspan="2" width="101px" class="center-cells cell-middle">
+                                <span class="text-rouge">{{ 'building.blocked'|trans }}</span>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr class="access-build-2">
+                            <td class="center-cells">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/slave.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.slave'|trans|raw }}"><strong>{{ 'building.slave'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
+                                <div class="mt-4">{% if (usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('slave') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('slave'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('slave'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}"><span class="ml-4">{% if (usePlanet.getCaserne() + 1) * app.user.getBuildingWater('slave') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingWater('slave'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingWater('slave'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}"></span></div>
+                                <div class="mt-4">{% if 6 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ app.user.getBuildingGroundPlace('slave') }}</span>{% else %}{{ app.user.getBuildingGroundPlace('slave') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.png') }}"></div>
+                            </td>
+                            <td class="center-cells cell-middle">
+                                {{ 'building.slave.desc'|trans }}
+                            </td>
+                            <td class="center-cells p-1">
+                                {% if usePlanet.getConstruct() == 'slave' %}
+                                    {% if planetNb >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('slave')) * app.user.getBuildingNiobium('slave')) and planetWt >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('slave')) * app.user.getBuildingWater('slave')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('slave') <= usePlanet.getGround() %}
+                                        <div class="mt-5">{% if ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('slave')) * app.user.getBuildingTime('slave')) < 3600 %}{{  ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('slave')) * app.user.getBuildingTime('slave'))|date('i:s') }}{% elseif ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('slave')) * app.user.getBuildingTime('slave')) < 86400 %}{{  ((usePlanet.getCaserne() + 2) * app.user.getBuildingTime('slave')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('slave')) * app.user.getBuildingTime('slave')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                        <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'slave', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    {% else %}
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                    {% endif %}
+                                    <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
+
+                                {% else %}
+                                    {% if planetNb >= ((usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('slave')) and planetWt >= ((usePlanet.getCaserne() + 1) * app.user.getBuildingWater('slave')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('slave') <= usePlanet.getGround() and app.user.getDiscipline() > 0 and usePlanet.getConstruct is null %}
+                                        <div>{% if ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('slave')) < 3600 %}{{  ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('slave'))|date('i:s') }}{% elseif ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('slave')) < 86400 %}{{  ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('slave')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('slave')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                        <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'slave', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                    {% elseif planetNb >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('slave')) * app.user.getBuildingNiobium('slave')) and planetWt >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('slave')) * app.user.getBuildingWater('slave')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('slave') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                        <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'slave', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                    {% else %}
+                                        <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            <td class="center-cells p-4">
+                                {% if usePlanet.getCaserne() > 0 and usePlanet.getConstruct is null %}
+                                    <a class="btn btn-lg btn-danger  mt-5" data-toggle="confirmation" data-placement="right" data-title="{{ 'building.demolition.question'|trans }}" href="{{ path('building_remove_slave', {'usePlanet': usePlanet.getId()}) }}">{{ 'building.demolish'|trans }}</a>
+                                {% elseif usePlanet.getConstruct() == 'slave' %}
+                                    <a class="btn btn-lg btn-danger mt-5" href="{{ path('cancel_construction', {'cancelPlanet': usePlanet.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'building.cancel'|trans }}</a>
+                                {% else %}
+                                    <a class="btn btn-lg btn-danger mt-5" disabled>{{ 'building.demolish'|trans }}</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endif %}
                 </tbody>
             </table>
-            <div class="block-title"><h1>{{ 'building.titleShip'|trans }}</h1></div>
+            <div class="block-title"><h1>{{ 'building.titleArmy'|trans }}</h1></div>
             <table class="table table-striped table-bordered table-dark text-center">
                 <tbody>
                 {% if app.user.getDiscipline() <= 0 and usePlanet.getCaserne() == 0 %}
@@ -649,6 +710,65 @@
                         </td>
                     </tr>
                 {% endif %}
+                {% if app.user.getDiscipline() <= 0 and usePlanet.getCaserne() == 0 %}
+                    <tr class="blocked-building blockedBack">
+                        <th class="tab-cells-name">
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/prison.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}">{{ 'building.prison'|trans|raw }}</button>
+                        </th>
+                        <td class="center-cells cell-middle">
+                            {{ 'building.prison.blocked'|trans }}
+                        </td>
+                        <td colspan="2" width="101px" class="center-cells cell-middle">
+                            <span class="text-rouge">{{ 'building.blocked'|trans }}</span>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr class="access-build-2">
+                        <td class="center-cells">
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/prison.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}"><strong>{{ 'building.prison'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
+                            <div class="mt-4">{% if (usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('prison') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('prison'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('prison'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}"><span class="ml-4">{% if (usePlanet.getCaserne() + 1) * app.user.getBuildingWater('prison') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingWater('prison'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingWater('prison'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}"></span></div>
+                            <div class="mt-4">{% if 6 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ app.user.getBuildingGroundPlace('prison') }}</span>{% else %}{{ app.user.getBuildingGroundPlace('prison') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.png') }}"></div>
+                        </td>
+                        <td class="center-cells cell-middle">
+                            {{ 'building.prison.desc'|trans }}
+                        </td>
+                        <td class="center-cells p-1">
+                            {% if usePlanet.getConstruct() == 'prison' %}
+                                {% if planetNb >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('prison')) * app.user.getBuildingNiobium('prison')) and planetWt >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('prison')) * app.user.getBuildingWater('prison')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('prison') <= usePlanet.getGround() %}
+                                    <div class="mt-5">{% if ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('prison')) * app.user.getBuildingTime('prison')) < 3600 %}{{  ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('prison')) * app.user.getBuildingTime('prison'))|date('i:s') }}{% elseif ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('prison')) * app.user.getBuildingTime('prison')) < 86400 %}{{  ((usePlanet.getCaserne() + 2) * app.user.getBuildingTime('prison')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCaserne() + 2 + usePlanet.getConstructionsLike('prison')) * app.user.getBuildingTime('prison')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('build_building', {'building': 'prison', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="60" src="{{ asset('img/construct2.gif') }}">
+                                {% endif %}
+                                <div class="timerArea" hidden>{{ usePlanet.getConstructAt()|date('Y/m/d H:i:s') }}</div>
+
+                            {% else %}
+                                {% if planetNb >= ((usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('prison')) and planetWt >= ((usePlanet.getCaserne() + 1) * app.user.getBuildingWater('prison')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('prison') <= usePlanet.getGround() and app.user.getDiscipline() > 0 and usePlanet.getConstruct is null %}
+                                    <div>{% if ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('prison')) < 3600 %}{{  ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('prison'))|date('i:s') }}{% elseif ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('prison')) < 86400 %}{{  ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('prison')- 3600)|date('H:i:s') }}{% else %}{{  ((usePlanet.getCaserne() + 1) * app.user.getBuildingTime('prison')- 3600)|date('d H:i:s') }}{% endif %}</div>
+                                    <a class="btn btn-lg btn-start mt-3" href="{{ path('build_building', {'building': 'prison', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.build'|trans }}</a>
+                                {% elseif planetNb >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('prison')) * app.user.getBuildingNiobium('prison')) and planetWt >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('prison')) * app.user.getBuildingWater('prison')) and usePlanet.getGroundPlace() + app.user.getBuildingGroundPlace('prison') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
+                                    <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'prison', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
+                                {% else %}
+                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                {% endif %}
+                            {% endif %}
+                        </td>
+                        <td class="center-cells p-4">
+                            {% if usePlanet.getCaserne() > 0 and usePlanet.getConstruct is null %}
+                                <a class="btn btn-lg btn-danger  mt-5" data-toggle="confirmation" data-placement="right" data-title="{{ 'building.demolition.question'|trans }}" href="{{ path('building_remove_prison', {'usePlanet': usePlanet.getId()}) }}">{{ 'building.demolish'|trans }}</a>
+                            {% elseif usePlanet.getConstruct() == 'prison' %}
+                                <a class="btn btn-lg btn-danger mt-5" href="{{ path('cancel_construction', {'cancelPlanet': usePlanet.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'building.cancel'|trans }}</a>
+                            {% else %}
+                                <a class="btn btn-lg btn-danger mt-5" disabled>{{ 'building.demolish'|trans }}</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+            <div class="block-title"><h1>{{ 'building.titleShip'|trans }}</h1></div>
+            <table class="table table-striped table-bordered table-dark text-center">
+                <tbody>
                 {% if usePlanet.getUranium() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">

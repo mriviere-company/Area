@@ -102,7 +102,7 @@ class PlanetService extends AbstractController
             return new Response (true);
         }
 
-        return new Response (false);
+        return new Response (null);
     }
 
     public function planetAttackedAction($planet)
@@ -156,6 +156,6 @@ class PlanetService extends AbstractController
             return new Response (true);
         }
 
-        return new Response (false);
+        return new Response (null);
     }
 }

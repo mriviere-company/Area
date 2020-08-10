@@ -13,12 +13,12 @@ use DateTimeZone;
  * @Route("/connect")
  * @Security("is_granted('ROLE_USER')")
  */
-class CommanderController extends AbstractController
+class HeroeController extends AbstractController
 {
     /**
-     * @Route("/commandant/{usePlanet}", name="commander", requirements={"usePlanet"="\d+"})
+     * @Route("/commandants/{usePlanet}", name="heroe", requirements={"usePlanet"="\d+"})
      */
-    public function commanderAction(Planet $usePlanet)
+    public function heroeAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
@@ -27,11 +27,8 @@ class CommanderController extends AbstractController
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
-        $commander = 0;
-        $user->setCommander($commander);
-        $em->flush();
 
-        return $this->render('connected/commander.html.twig', [
+        return $this->render('connected/heroe.html.twig', [
             'usePlanet' => $usePlanet,
         ]);
     }
