@@ -62,7 +62,7 @@
                                 {% endif %}
                             </tr>
                             {% for user in app.user.getAlly().getUsers() %}
-                                <tr{% if user == app.user %} class="currentBack"{% elseif user.getLastActivity()|date('d/m/Y') > "now"|date('d/m/Y') %} class="availableBack"{% endif %}>
+                                <tr{% if user == app.user %} class="currentBack"{% elseif user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %} class="availableBack"{% endif %}>
                                     <td class="center-cells">
                                         {% if app.user.getGrade().getPlacement() == 1 %}
                                             <button class="confirm-button" href="{{ path('ally_addUser_grade', {'newGradeUser': user.getId(), 'usePlanet': usePlanet.getId() }) }}" data-toggle="modal" data-target="#openModal">{% if user.getGrade() %}{{ user.getGrade().getName() }}{% else %}???{% endif %}</button> <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.changeGrade'|trans }}"></span>
@@ -74,7 +74,7 @@
                                         <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'userPlanet': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getUsername() }}</a></span>
                                     </td>
                                     <td class="center-cells">
-                                        {% if user.getLastActivity()|date('d/m/Y') > "now"|date('d/m/Y') %}{{ user.getLastActivity()|date('H:i') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}
+                                        {% if user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %}{{ user.getLastActivity()|date('H:i') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}
                                     </td>
                                     <td class="center-cells">
                                         {{ user.getRank().getPoint() }}{% if user.getRank().getPoint() > user.getRank().getOldPoint() %}<span class="rank-good-border text-vert">+{{ (user.getRank().getPoint() - user.getRank().getOldPoint())|number_format }}</span>{% elseif user.getRank().getPoint() < user.getRank().getOldPoint() %}<span class="rank-bad-border text-rouge">-{{ (user.getRank().getOldPoint() - user.getRank().getPoint())|number_format }}</span>{% else %}<span class="rank-bad-border text-mini">&#x25cf</span>{% endif %}

@@ -5,7 +5,6 @@ namespace App\Controller\Connected\Execute;
 use App\Entity\Report;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use DateTimeZone;
 use DateInterval;
 use DateTime;
 
@@ -95,7 +94,6 @@ class PlanetsController extends AbstractController
             }
             if(count($planet->getConstructions()) > 0) {
                 $constructTime = new DateTime();
-                $constructTime->setTimezone(new DateTimeZone('Europe/Paris'));
                 foreach ($planet->getConstructions() as $construction) {
                     $planet->setConstruct($construction->getConstruct());
                     $planet->setConstructAt($constructTime->add(new DateInterval('PT' . $construction->getConstructTime() . 'S')));
@@ -281,7 +279,6 @@ class PlanetsController extends AbstractController
     public function embargoPlanetAction($embargos, $server, $now, $em)
     {
         $nowEmbargo = new DateTime();
-        $nowEmbargo->setTimezone(new DateTimeZone('Europe/Paris'));
         $nowEmbargo->add(new DateInterval('PT' . (3600) . 'S'));
 
         foreach ($embargos as $embargo) {

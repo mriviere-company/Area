@@ -1,8 +1,9 @@
 const $ = require('jquery');
         require('bootstrap-sass');
         require('bootstrap-confirmation2');
-const now = new Date();
-
+let timeZone = new Date();
+const    now = new Date(timeZone.setHours(timeZone.getHours() + timeZone.getTimezoneOffset() / 60));
+console.log(now);
 function manageImageForm() {
     $('.modify').off('click').on('click',function(e){
         $('#user_image_imageFile_file').click();
@@ -95,6 +96,70 @@ function manageTime() {
                         if (minutes == 0 && heures == 0 && jours == 0) {
                             area.html("<a onclick='setTimeout(\"window.location.reload();\",2000)' style='cursor: pointer;'  href='../../construction/1/' target='_blank'>Terminer</a>");
                             /*area.html("<a onclick='setTimeout(\"window.location.reload();\",500)' style='cursor: pointer;'>Cliquer</a>");*/
+                        } else {
+                            secondes = 59;
+                            minutes = minutes - 1;
+                            minutes = (minutes < 10 && minutes >= 0)  ? '0' + minutes : minutes;
+                            if (minutes < 0 && heures > 0) {
+                                minutes = 59;
+                                heures = heures - 1;
+                                heures = (heures < 10 && heures >= 0)  ? '0' + heures : heures;
+                                if (heures < 0 && jours > 0) {
+                                    heures = 23;
+                                    jours = jours - 1;
+                                    jours = (jours < 10 && jours >= 0)  ? '0' + jours : jours;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }, 1000);
+    });
+
+    $('.timerAreaNoEnd').each( function(){
+        let build = new Date($(this).text());
+        let area = $(this);
+        let parentCol = $(this).parent().parent();
+        let parentTr = $(this).parent().parent().parent().parent();
+        let date_now = Math.abs(build - now) / 1000;
+        let jours = Math.floor(date_now / (60 * 60 * 24));
+        let heures = Math.floor((date_now - (jours * 60 * 60 * 24)) / (60 * 60));
+        let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
+        let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
+        jours = (jours < 10 && jours >= 0)  ? '0' + jours : jours;
+        heures = (heures < 10 && heures >= 0)  ? '0' + heures : heures;
+        minutes = (minutes < 10 && minutes >= 0)  ? '0' + minutes : minutes;
+        secondes = (secondes < 10 && secondes >= 0)  ? '0' + secondes : secondes;
+        setInterval(function() {
+            if (build < now) {
+                area.html("<span class='text-rouge'>Terminer</span>");
+                area.removeAttr('hidden');
+                setTimeout(function () {
+                }, 2000);
+            } else {
+                if (date_now > 0) {
+                    if (jours > 0) {
+                        area.text('(' + jours + 'j ' + heures + ':' + minutes + ':' + secondes + ')');
+                        area.removeAttr('hidden');
+                    } else if (heures > 0) {
+                        area.text('(' + heures + ':' + minutes + ':' + secondes + ')');
+                        area.removeAttr('hidden');
+                    } else if (minutes > 0) {
+                        area.text('(' + minutes + ':' + secondes + ')');
+                        area.removeAttr('hidden');
+                    } else if (secondes > 0) {
+                        area.text('(' + secondes + ')');
+                        area.removeAttr('hidden');
+                    }
+                    secondes = secondes - 1;
+                    secondes = (secondes < 10 && secondes >= 0)  ? '0' + secondes : secondes;
+                    if (secondes < 0) {
+                        if (minutes == 0 && heures == 0 && jours == 0) {
+                            area.html("<span class='text-rouge'>Terminer</span>");
+                            parentCol.find('div .btn').removeAttr('hidden');
+                            parentTr.removeClass('warningBack');
+                            parentTr.addClass('availableBack');
                         } else {
                             secondes = 59;
                             minutes = minutes - 1;

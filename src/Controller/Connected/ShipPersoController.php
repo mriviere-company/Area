@@ -11,7 +11,6 @@ use App\Form\Front\ShipPersoType;
 use App\Entity\Planet;
 use DateTime;
 use Dateinterval;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -28,7 +27,6 @@ class ShipPersoController extends AbstractController
         $user = $this->getUser();
         $ship = $user->getShip();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');
@@ -179,7 +177,6 @@ class ShipPersoController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $ship = $user->getShip();
 
         if ($ship->getRetry() > 0) {

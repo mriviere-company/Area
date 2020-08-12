@@ -12,7 +12,6 @@ use App\Entity\Report;
 use App\Entity\Destination;
 use App\Entity\Fleet;
 use DateTime;
-use DateTimeZone;
 use DateInterval;
 
 /**
@@ -29,7 +28,6 @@ class MarketController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -159,7 +157,6 @@ class MarketController extends AbstractController
         }
         $merchant = $em->getRepository('App:User')->findOneBy(['merchant' => 1]);
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');
@@ -196,7 +193,6 @@ class MarketController extends AbstractController
                 $planet->setWater(0);
                 if ($gain > 0) {
                     $repor = new DateTime();
-                    $repor->setTimezone(new DateTimeZone('Europe/Paris'));
                     $repor->add(new DateInterval('PT' . 1200 . 'S'));
                     $fleet = new Fleet();
                     $fleet->setHunter(1);

@@ -20,62 +20,38 @@ class Mission
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Planet", inversedBy="missions", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="missions", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $planet;
+    protected $user;
 
     /**
      * @ORM\Column(name="mission_at", type="datetime")
      */
     protected $missionAt;
-
     /**
-     * @ORM\Column(name="soldier", type="integer", nullable=true, options={"unsigned":true})
-     */
-    protected $soldier;
-
-    /**
-     * @ORM\Column(name="tank", type="integer", nullable=true, options={"unsigned":true})
-     */
-    protected $tank;
-
-    /**
-     * @ORM\Column(name="gain", type="smallint", options={"unsigned":true})
-     */
-    protected $gain;
-
-    /**
-     * @ORM\Column(name="percent", type="smallint", options={"unsigned":true})
-     */
-    protected $percent;
-
-    /**
-     * @ORM\Column(name="type", type="boolean")
-     * @Assert\NotBlank(message = "required")
+     * @ORM\Column(name="type", type="smallint", options={"unsigned":true})
      */
     protected $type;
 
     public function __construct()
     {
-        $this->soldier = null;
-        $this->tank = null;
     }
 
     /**
      * @return mixed
      */
-    public function getPlanet()
+    public function getUser()
     {
-        return $this->planet;
+        return $this->user;
     }
 
     /**
-     * @param mixed $planet
+     * @param mixed $user
      */
-    public function setPlanet($planet): void
+    public function setUser($user): void
     {
-        $this->planet = $planet;
+        $this->user = $user;
     }
 
     /**
@@ -92,38 +68,6 @@ class Mission
     public function setMissionAt($missionAt): void
     {
         $this->missionAt = $missionAt;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSoldier()
-    {
-        return $this->soldier;
-    }
-
-    /**
-     * @param mixed $soldier
-     */
-    public function setSoldier($soldier): void
-    {
-        $this->soldier = $soldier;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTank()
-    {
-        return $this->tank;
-    }
-
-    /**
-     * @param mixed $tank
-     */
-    public function setTank($tank): void
-    {
-        $this->tank = $tank;
     }
 
     /**
@@ -147,31 +91,107 @@ class Mission
      */
     public function getGain()
     {
-        return $this->gain;
-    }
-
-    /**
-     * @param mixed $gain
-     */
-    public function setGain($gain): void
-    {
-        $this->gain = $gain;
+        if ($this->type < 3)
+            return $this->type;
+        if ($this->type < 5)
+            return $this->type * 2;
+        if ($this->type < 8)
+            return $this->type * 3;
+        if ($this->type < 10)
+            return $this->type * 4;
+        if ($this->type < 12)
+            return $this->type * 5;
+        if ($this->type < 15)
+            return $this->type * 7;
+        if ($this->type < 15)
+            return $this->type * 8;
+        if ($this->type < 17)
+            return $this->type * 9;
+        if ($this->type < 18)
+            return $this->type * 10;
+        if ($this->type < 20)
+            return $this->type * 11;
+        if ($this->type < 22)
+            return $this->type * 12;
+        if ($this->type < 24)
+            return $this->type * 13;
+        if ($this->type < 25)
+            return $this->type * 14;
+        if ($this->type < 27)
+            return $this->type * 15;
+        if ($this->type < 28)
+            return $this->type * 16;
+        if ($this->type < 29)
+            return $this->type * 18;
+        if ($this->type < 30)
+            return $this->type * 20;
+        if ($this->type < 31)
+            return $this->type * 21;
+        if ($this->type < 32)
+            return $this->type * 22;
+        if ($this->type < 34)
+            return $this->type * 24;
+        if ($this->type < 35)
+            return $this->type * 25;
+        if ($this->type < 36)
+            return $this->type * 26;
+        if ($this->type < 37)
+            return $this->type * 28;
+        if ($this->type < 38)
+            return $this->type * 30;
+        if ($this->type < 39)
+            return $this->type * 35;
+        if ($this->type <= 40) ;
+            return $this->type * 40;
     }
 
     /**
      * @return mixed
      */
-    public function getPercent()
+    public function getTime()
     {
-        return $this->percent;
+        if ($this->type < 3)
+            return $this->getGain() * 60;
+        if ($this->type < 5)
+            return $this->getGain() * 70;
+        if ($this->type < 8)
+            return $this->getGain() * 80;
+        if ($this->type < 10)
+            return $this->getGain() * 90;
+        if ($this->type < 12)
+            return $this->getGain() * 120;
+        if ($this->type < 15)
+            return $this->getGain() * 150;
+        if ($this->type < 18)
+            return $this->getGain() * 180;
+        if ($this->type < 22)
+            return $this->getGain() * 210;
+        if ($this->type < 25)
+            return $this->getGain() * 230;
+        if ($this->type < 28)
+            return $this->getGain() * 260;
+        if ($this->type < 30)
+            return $this->getGain() * 290;
+        if ($this->type < 32)
+            return $this->getGain() * 310;
+        if ($this->type < 35)
+            return $this->getGain() * 350;
+        if ($this->type < 38)
+            return $this->getGain() * 380;
+        if ($this->type <= 40)
+            return $this->getGain() * 450;
     }
 
     /**
-     * @param mixed $percent
+     * @return mixed
      */
-    public function setPercent($percent): void
+    public function getLevelMission()
     {
-        $this->percent = $percent;
+        $level = $this->getUser()->getLevel();
+        if ($level >= $this->type) {
+            return true;
+        }
+        return false;
     }
 
     public function getId()

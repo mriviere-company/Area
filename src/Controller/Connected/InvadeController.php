@@ -9,7 +9,6 @@ use App\Entity\Report;
 use App\Entity\Planet;
 use App\Entity\Fleet;
 use DateTime;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -25,7 +24,6 @@ class InvadeController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $alea = rand(4, 8);
         if ($usePlanet->getUser() != $user || $invader->getUser() != $user) {
             return $this->redirectToRoute('home');
@@ -345,7 +343,6 @@ class InvadeController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         if ($usePlanet->getUser() != $user || $raider->getUser() != $user) {
             return $this->redirectToRoute('home');

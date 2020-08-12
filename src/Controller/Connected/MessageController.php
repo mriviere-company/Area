@@ -11,7 +11,6 @@ use App\Form\Front\MessageRespondeType;
 use App\Entity\Message;
 use App\Entity\Planet;
 use DateTime;
-use DateTimeZone;
 use DateInterval;
 
 /**
@@ -29,9 +28,7 @@ class MessageController extends AbstractController
         $user = $this->getUser();
         $message = new Message();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $nowDel = new DateTime();
-        $nowDel->setTimezone(new DateTimeZone('Europe/Paris'));
         $nowDel->sub(new DateInterval('PT' . 1209600 . 'S'));
 
         if($user->getGameOver()) {
@@ -121,7 +118,6 @@ class MessageController extends AbstractController
         $user = $this->getUser();
         $message = new Message();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');

@@ -120,6 +120,11 @@ class User implements UserInterface, \Serializable
     protected $commander;
 
     /**
+     * @ORM\OneToMany(targetEntity="Mission", mappedBy="user", fetch="EXTRA_LAZY")
+     */
+    protected $missions;
+
+    /**
      * @ORM\OneToMany(targetEntity="Stats", mappedBy="user", fetch="EXTRA_LAZY", cascade={"persist"})
      */
     protected $stats;
@@ -525,6 +530,7 @@ class User implements UserInterface, \Serializable
         $this->salons = new \Doctrine\Common\Collections\ArrayCollection();
         $this->messages = new \Doctrine\Common\Collections\ArrayCollection();
         $this->reports = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->missions = new \Doctrine\Common\Collections\ArrayCollection();
         $this->fleets = new \Doctrine\Common\Collections\ArrayCollection();
         $this->quests = new \Doctrine\Common\Collections\ArrayCollection();
         $this->fleetLists = new \Doctrine\Common\Collections\ArrayCollection();
@@ -658,6 +664,46 @@ class User implements UserInterface, \Serializable
     public function removeSalon(\App\Entity\Salon $salon)
     {
         $this->salons->removeElement($salon);
+    }
+
+    /**
+     * Add mission
+     *
+     * @param \App\Entity\Mission $mission
+     *
+     * @return User
+     */
+    public function addMission(\App\Entity\Mission $mission)
+    {
+        $this->missions[] = $mission;
+
+        return $this;
+    }
+
+    /**
+     * Remove mission
+     *
+     * @param \App\Entity\Mission $mission
+     */
+    public function removeMission(\App\Entity\Mission $mission)
+    {
+        $this->missions->removeElement($mission);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMissions()
+    {
+        return $this->missions;
+    }
+
+    /**
+     * @param mixed $missions
+     */
+    public function setMissions($missions): void
+    {
+        $this->missions = $missions;
     }
 
     /**
@@ -1782,11 +1828,6 @@ class User implements UserInterface, \Serializable
         $return = 0;
         foreach($this->planets as $planet) {
             $return = $return + $planet->getTank();
-            if ($planet->getMissions()) {
-                foreach($planet->getMissions() as $mission) {
-                    $return = $return + $mission->getTank();
-                }
-            }
         }
 
         foreach($this->fleets as $fleet) {
@@ -1803,11 +1844,6 @@ class User implements UserInterface, \Serializable
         $return = 0;
         foreach($this->planets as $planet) {
             $return = $return + $planet->getSoldier();
-            if ($planet->getMissions()) {
-                foreach($planet->getMissions() as $mission) {
-                    $return = $return + $mission->getSoldier();
-                }
-            }
         }
         foreach($this->fleets as $fleet) {
             $return = $return + $fleet->getSoldier();
@@ -1847,8 +1883,6 @@ class User implements UserInterface, \Serializable
         $troops['tankAtNbr'] = $troops['tankAtNbr'] * $tPrice;
         $troops['scientist'] = $troops['scientist'] * $scPrice;
         $troops['scientistAtNbr'] = $troops['scientistAtNbr'] * $scPrices;
-        $troops['msoldier'] = $troops['msoldier'] * $sPrices;
-        $troops['mtank'] = $troops['mtank'] * $tPrices;
         $troops['fsoldier'] = $troops['fsoldier'] * $sPrices;
         $troops['ftank'] = $troops['ftank'] * $tPrices;
         $troops['fscientist'] = $troops['fscientist'] * $scPrices;
@@ -1914,27 +1948,6 @@ class User implements UserInterface, \Serializable
     /**
      * @return int
      */
-    public function getPriceTroopsMission($troops): int
-    {
-        if ($this->politicCostSoldier > 0) {
-            $sPrices = 6 / ( 1 + ($this->politicCostSoldier / 10));
-        } else {
-            $sPrices = 6;
-        }
-        if ($this->politicCostTank > 0) {
-            $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
-        } else {
-            $tPrices = 1000;
-        }
-        $troops['msoldier'] = $troops['msoldier'] * $sPrices;
-        $troops['mtank'] = $troops['mtank'] * $tPrices;
-
-        return $troops['msoldier'] + $troops['mtank'];
-    }
-
-    /**
-     * @return int
-     */
     public function getPriceTroopsFleet($troops): int
     {
         if ($this->politicCostSoldier > 0) {
@@ -1993,12 +2006,6 @@ class User implements UserInterface, \Serializable
             $return = $return + ($planet->getTankAtNbr() * $tPrice);
             $return = $return + ($planet->getScientist() * $scPrice);
             $return = $return + ($planet->getScientistAtNbr() * $scPrices);
-            if ($planet->getMissions()) {
-                foreach($planet->getMissions() as $mission) {
-                    $return = $return + ($mission->getSoldier() * $sPrices);
-                    $return = $return + ($mission->getTank() * $tPrices);
-                }
-            }
         }
         foreach($this->fleets as $fleet) {
             $return = $return + ($fleet->getSoldier() * $sPrices);
@@ -2220,6 +2227,46 @@ class User implements UserInterface, \Serializable
             $return = 19;
         } elseif ($this->experience < 12000000) {
             $return = 20;
+        } elseif ($this->experience < 15000000) {
+            $return = 21;
+        } elseif ($this->experience < 18000000) {
+            $return = 22;
+        } elseif ($this->experience < 21000000) {
+            $return = 23;
+        } elseif ($this->experience < 25000000) {
+            $return = 24;
+        } elseif ($this->experience < 3000000) {
+            $return = 25;
+        } elseif ($this->experience < 3600000) {
+            $return = 26;
+        } elseif ($this->experience < 4000000) {
+            $return = 27;
+        } elseif ($this->experience < 4600000) {
+            $return = 28;
+        } elseif ($this->experience < 5000000) {
+            $return = 29;
+        } elseif ($this->experience < 5600000) {
+            $return = 30;
+        } elseif ($this->experience < 6000000) {
+            $return = 31;
+        } elseif ($this->experience < 7000000) {
+            $return = 32;
+        } elseif ($this->experience < 8000000) {
+            $return = 33;
+        } elseif ($this->experience < 9000000) {
+            $return = 34;
+        } elseif ($this->experience < 10000000) {
+            $return = 35;
+        } elseif ($this->experience < 12000000) {
+            $return = 36;
+        } elseif ($this->experience < 14000000) {
+            $return = 37;
+        } elseif ($this->experience < 15000000) {
+            $return = 38;
+        } elseif ($this->experience < 17000000) {
+            $return = 39;
+        } elseif ($this->experience < 20000000) {
+            $return = 40;
         }
 
         return $return;

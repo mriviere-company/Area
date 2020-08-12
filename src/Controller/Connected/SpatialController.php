@@ -14,7 +14,6 @@ use App\Entity\Report;
 use App\Entity\Planet;
 use Dateinterval;
 use DateTime;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -30,7 +29,6 @@ class SpatialController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');
@@ -392,7 +390,6 @@ class SpatialController extends AbstractController
                     ->getResult();
 
                 $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $now->add(new DateInterval('PT' . 300 . 'S'));
 
                 foreach ($allFleets as $updateF) {
@@ -401,7 +398,6 @@ class SpatialController extends AbstractController
                 $fleet->setFightAt($now);
             } else {
                 $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $now->add(new DateInterval('PT' . 300 . 'S'));
             }
 

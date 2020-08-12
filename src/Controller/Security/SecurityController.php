@@ -7,7 +7,6 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use DateTime;
-use DateTimeZone;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -73,7 +72,6 @@ class SecurityController extends AbstractController
             }
 
             $now = new DateTime();
-            $now->setTimezone(new DateTimeZone('Europe/Paris'));
             $user->setUsername($_POST['_username']);
             $user->setEmail($_POST['_email']);
             $user->setCreatedAt($now);
@@ -154,7 +152,6 @@ class SecurityController extends AbstractController
 
         $user = new User();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user->setUsername('Test' . $number);
         $user->setEmail('Test' . $number . '@areauniverse.eu');
         $user->setCreatedAt($now);

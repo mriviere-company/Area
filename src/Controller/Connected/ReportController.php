@@ -7,9 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
 use App\Entity\Report;
-use DateTime;
-use DateTimeZone;
-use DateInterval;
 
 /**
  * @Route("/connect")

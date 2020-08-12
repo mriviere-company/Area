@@ -13,7 +13,6 @@ use App\Entity\Planet;
 use App\Entity\Peace;
 use App\Entity\War;
 use DateTime;
-use DateTimeZone;
 use Dateinterval;
 
 /**
@@ -36,7 +35,6 @@ class PactController extends AbstractController
 
         $ally = $user->getAlly();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         $allied = new Allied();
         $allied->setAlly($ally);
@@ -84,7 +82,6 @@ class PactController extends AbstractController
 
         $ally = $user->getAlly();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         $pna = new Pna();
         $pna->setAlly($ally);
@@ -165,7 +162,6 @@ class PactController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 43200 . 'S'));
 
         if ($usePlanet->getUser() != $user) {
@@ -212,7 +208,6 @@ class PactController extends AbstractController
         $user = $this->getUser();
         $ally = $user->getAlly();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 864000 . 'S'));
 
         if ($usePlanet->getUser() != $user) {
@@ -262,7 +257,6 @@ class PactController extends AbstractController
         $user = $this->getUser();
         $ally = $user->getAlly();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 864000 . 'S'));
 
         if ($usePlanet->getUser() != $user) {

@@ -12,7 +12,6 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\Planet;
 use DateTime;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -27,7 +26,6 @@ class ConfirmController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
 
         if($user->getConfirmed() == 1) {

@@ -6,7 +6,6 @@ use App\Entity\Fleet;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
-use DateTimeZone;
 use DateInterval;
 use DateTime;
 
@@ -15,7 +14,6 @@ class MoveFleetController extends AbstractController
     public function centralizeFleetAction($fleets, $server, $now, $em)
     {
         $nowReport = new DateTime();
-        $nowReport->setTimezone(new DateTimeZone('Europe/Paris'));
         foreach ($fleets as $fleet) {
             $user = $fleet->getUser();
             if ($user->getMerchant() == 1) {
@@ -143,7 +141,6 @@ class MoveFleetController extends AbstractController
                             ->getResult();
 
                         $nowWar = new DateTime();
-                        $nowWar->setTimezone(new DateTimeZone('Europe/Paris'));
                         $nowWar->add(new DateInterval('PT' . 300 . 'S'));
 
                         foreach ($allFleets as $updateF) {
@@ -163,7 +160,6 @@ class MoveFleetController extends AbstractController
                             ->getResult();
 
                         $nowWar = new DateTime();
-                        $nowWar->setTimezone(new DateTimeZone('Europe/Paris'));
                         $nowWar->add(new DateInterval('PT' . 300 . 'S'));
 
                         foreach ($allFleets as $updateF) {
@@ -324,10 +320,8 @@ class MoveFleetController extends AbstractController
                                 }
                                 $distance = $speed * $base * 1000 * $server->getSpeed();
                                 $moreNow = new DateTime();
-                                $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
                                 $moreNow->add(new DateInterval('PT' . 120 . 'S'));
                                 $nowFlight = new DateTime();
-                                $nowFlight->setTimezone(new DateTimeZone('Europe/Paris'));
                                 $nowFlight->add(new DateInterval('PT' . round($distance) . 'S'));
                                 $fleet->setFlightTime($nowFlight);
                                 $fleet->setFlightType(1);

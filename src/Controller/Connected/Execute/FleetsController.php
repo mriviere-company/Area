@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
 use App\Entity\Fleet;
-use DateTimeZone;
 use DateInterval;
 use DateTime;
 
@@ -95,7 +94,6 @@ class FleetsController extends AbstractController
     public function recycleAction($fleetCdrs, $now , $em)
     {
         $tmpNoCdr = new DateTime();
-        $tmpNoCdr->setTimezone(new DateTimeZone('Europe/Paris'));
         $tmpNoCdr->add(new DateInterval('PT' . 300 . 'S'));
         foreach ($fleetCdrs as $fleetCdr) {
             if ($fleetCdr->getUser()->getPoliticRecycleur() > 0) {

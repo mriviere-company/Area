@@ -14,7 +14,6 @@ use App\Entity\Fleet;
 use App\Entity\S_Content;
 use DateTime;
 use Dateinterval;
-use DateTimeZone;
 
 class BotController extends AbstractController
 {
@@ -109,11 +108,8 @@ class BotController extends AbstractController
         exit;
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $move = new DateTime();
-        $move->setTimezone(new DateTimeZone('Europe/Paris'));
         $messageTime = new DateTime();
-        $messageTime->setTimezone(new DateTimeZone('Europe/Paris'));
         $messageTime->sub(new DateInterval('PT' . rand(1, 400) . 'S'));
         $messageSent = 1;
 
@@ -312,7 +308,6 @@ class BotController extends AbstractController
                         $distance = $speed * $base * 1000 * $server->getSpeed();
                         $move->add(new DateInterval('PT' . round($distance) . 'S'));
                         $moreNow = new DateTime();
-                        $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
                         $moreNow->add(new DateInterval('PT' . 120 . 'S'));
                         $sonde->setFlightTime($move);
                         $destination = new Destination();
@@ -337,7 +332,6 @@ class BotController extends AbstractController
                     foreach ($planetsSeller as $planet) {
                         if ($this->forward('App\Service\PlanetService::planetAttackedAction', ['planet'  => $planet->getId()])) {
                             $sellTime = new DateTime();
-                            $sellTime->setTimezone(new DateTimeZone('Europe/Paris'));
                             $sellTime->add(new DateInterval('PT' . 1200 . 'S'));
                             $seller = new Fleet();
                             $seller->setHunter(1);
@@ -525,7 +519,6 @@ class BotController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         $level = $user->getWhichBuilding($building, $usePlanet) + 1;
         $time = $user->getBuildingTime($building);

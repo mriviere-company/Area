@@ -7,7 +7,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Planet;
 use DateTime;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -23,7 +22,6 @@ class AdminController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         if (!$date) {
             $date = new DateTime();
-            $date->setTimezone(new DateTimeZone('Europe/Paris'));
         }
         $user = $this->getUser();
         if ($user->getUsername() != 'Dev') {

@@ -11,7 +11,6 @@ use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use DateTime;
-use DateTimeZone;
 use Dateinterval;
 
 /**
@@ -78,9 +77,7 @@ class UserEvent implements EventSubscriberInterface
             if($this->token->getToken()) {
                 $user = $this->token->getToken()->getUser();
                 $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $twentyfour = new DateTime();
-                $twentyfour->setTimezone(new DateTimeZone('Europe/Paris'));
                 $twentyfour->sub(new DateInterval('PT' . 86400 . 'S'));
 
                 if ($user instanceof User) {

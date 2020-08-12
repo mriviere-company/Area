@@ -5,7 +5,6 @@ namespace App\Service;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use DateTime;
-use DateTimeZone;
 
 class ZombieService extends AbstractController
 {
@@ -14,15 +13,14 @@ class ZombieService extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
             $mission = $em->getRepository('App:Mission')
                 ->createQueryBuilder('m')
-                ->join('m.planet', 'p')
                 ->select('m.id')
-                ->where('p.user = :user')
+                ->where('m.user = :user')
                 ->andWhere('m.missionAt < :now')
-                ->setParameters(['user' => $user, 'now' => $now])
+                ->andWhere('m.type <= :level')
+                ->setParameters(['user' => $user, 'now' => $now, 'level' => $user->getLevel()])
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();

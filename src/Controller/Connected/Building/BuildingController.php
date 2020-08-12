@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
 use DateTime;
-use DateTimeZone;
 use Dateinterval;
 
 /**
@@ -25,7 +24,6 @@ class BuildingController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
@@ -48,7 +46,6 @@ class BuildingController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
 
         if ($usePlanet->getUser() != $user) {
@@ -131,7 +128,6 @@ class BuildingController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
         if ($usePlanet->getUser() != $user || $cancelPlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
@@ -150,7 +146,6 @@ class BuildingController extends AbstractController
         }
         if(count($cancelPlanet->getConstructions()) > 0) {
             $constructTime = new DateTime();
-            $constructTime->setTimezone(new DateTimeZone('Europe/Paris'));
             foreach ($cancelPlanet->getConstructions() as $construction) {
                 $cancelPlanet->setConstruct($construction->getConstruct());
                 $cancelPlanet->setConstructAt($constructTime->add(new DateInterval('PT' . $construction->getConstructTime() . 'S')));

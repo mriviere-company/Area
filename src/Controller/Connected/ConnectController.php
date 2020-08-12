@@ -9,7 +9,6 @@ use App\Entity\Rank;
 use App\Entity\Report;
 use App\Entity\Ships;
 use DateTime;
-use DateTimeZone;
 use Dateinterval;
 
 /**
@@ -25,7 +24,6 @@ class ConnectController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
         $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
 
@@ -120,7 +118,6 @@ class ConnectController extends AbstractController
         $user->setZombieAtt(1);
         $user->setDailyConnect($now);
         $nextZombie = new DateTime();
-        $nextZombie->setTimezone(new DateTimeZone('Europe/Paris'));
         $nextZombie->add(new DateInterval('PT' . 144 . 'H'));
         $user->setZombieAt($nextZombie);
         $user->setGameOver(null);

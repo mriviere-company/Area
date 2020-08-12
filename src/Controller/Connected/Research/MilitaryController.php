@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
 use DateTime;
 use Dateinterval;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -23,7 +22,6 @@ class MilitaryController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
@@ -56,7 +54,6 @@ class MilitaryController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
@@ -86,7 +83,6 @@ class MilitaryController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');

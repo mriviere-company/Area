@@ -5,11 +5,7 @@
 {% block title %}{{ 'title'|trans }}{% endblock %}
 
 {% block body %}
-    {% for message in app.flashes('fail') %}
-        <div class="flash-notice mt-5 alerte-flash-error text-center">
-            {{ message }}
-        </div>
-    {% endfor %}
+    {% set missionEnded = render(controller('App\\Service\\ZombieService::zombieIndicatorAction')) %}
     <div class="front-block">
         {% if app.user.getTutorial() == 52 or app.user.getTutorial() == 53 %}
             <table class="table table-striped borderOverview tutorial">
@@ -35,198 +31,85 @@
             <div class="text-more mb-3">{{ 'zombie.attack'|trans }} <span class="mt-5 timerArea text-rouge" hidden>{% if app.user.getZombieAt() %}{{ app.user.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span></div>
         </div>
         <div class="front-block-game mt-4">
-            {% if app.user.getStats()|length > 7 %}
-                {% set points = [] %}
-                {% set otherZombie = [] %}
-                {% set date = [] %}
-                {% for otherPoint in otherPoints %}
-                    {% set otherZombie = otherZombie|merge([(otherPoint['allZombie'] / otherPoint['numbers'])|round]) %}
-                {% endfor %}
-                {% for stat in app.user.getStats() %}
-                    {% set points = points|merge([stat.getZombie()|round]) %}
-                    {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
-                {% endfor %}
-                <div id="zombiePoints" data-zombie-points="{{ points|json_encode }}"></div>
-                <div id="zombieOtherPoints" data-zombie-other-points="{{ otherZombie|json_encode }}"></div>
-                <div id="zombieDate" data-zombie-date="{{ date|json_encode }}"></div>
-                <canvas class="mb-5" id="zombieChart" height="100"></canvas>
-                <script src="{{ asset('build/zombieCharts.js') }}"></script>
-            {% endif %}
             <h2 class="text-center mb-3">{{ 'zombie.mission'|trans }}</h2>
-            <div class="text-center mb-4">{{ 'zombie.speech'|trans }}</div>
-            <div class="row">
-                <div class="col-6">
-                    {{ form_start(form_missionZombie) }}
-                    <table class="table table-striped table-bordered table-dark text-center zbMission">
+            <div class="text-center mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.uranium'|trans }}">{{ 'zombie.speech'|trans }}<span class="glyphicon glyphicon-question-sign text-orange"></span></div>
+                <div class="offset-1 col-10 my-5">
+                    <table class="table table-striped table-bordered table-dark">
                         <tbody>
-                        <tr>
-                            <th colspan="5" class="tab-cells-name">
-                                <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.zombie'|trans }}">{{ 'zombie.zombie'|trans }} <span class="glyphicon glyphicon-question-sign text-orange"></span></span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="tab-cells-name">
-                                {{ 'zombie.soldier'|trans }}
-                            </th>
-                            <th class="tab-cells-name">
-                                {{ 'zombie.tank'|trans }}
-                            </th>
-                            <th class="tab-cells-name">
-                                {{ 'zombie.time'|trans }}
-                            </th>
-                            <th width="65" class="tab-cells-name">
-                                {{ 'zombie.gain'|trans }}
-                            </th>
-                            <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" height="20" width="20" src="{{ asset('img/clover.png') }}">
-                            </th>
-                        </tr>
-                        <tr>
-                            {% if app.user.getZombieAtt() > -20 %}
+                        {% if missionEnded %}
+                            <tr class="availableBack">
+                                <td class="center-cells text-more text-center">
+                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('mission_finish_all', {'usePlanet': usePlanet.getId()}) }}">{{ 'zombie.collectAll'|trans }}</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% for mission in missions %}
+                            {% if mission.getLevelMission() %}
+                            <tr class="{% if mission.getMissionAt()|date('d/m/Y H:i:s') <= "now"|date('d/m/Y H:i:s') %}availableBack{% else %}warningBack{% endif %}">
                                 <td class="center-cells">
-                                    {{ form_widget(form_missionZombie.soldier,{attr: { max: planet.getSoldier()}}) }}
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img alt="{{ 'image'|trans({},'front_global') }}" width="75" src="{{ asset('img/zombie_lose_report.jpg') }}">
+                                        </div>
+                                        <div class="col-7">
+                                            {{ 'zombie.level'|trans }} {{ mission.getType() }}
+                                            <br>
+                                            {{ 'zombie.reward'|trans }} <span class="text-vert">{% if app.user.getZombieAtt() > 0 %}-{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">{% else %}+{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">{% endif %}</span>
+                                            <br>
+                                            <span class="mt-5 timerAreaNoEnd text-or text-more" hidden>{% if mission.getMissionAt() %}{{ mission.getMissionAt()|date('Y/m/d H:i:s') }}{% endif %}</span>
+                                        </div>
+                                        <div class="col-3 mt-4">
+                                            {% if mission.getMissionAt()|date('d/m/Y H:i:s') <= "now"|date('d/m/Y H:i:s') %}
+                                                <a class="btn btn-lg btn-start mt-2" href="{{ path('mission_finish', {'mission': mission.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'zombie.collect'|trans }}</a>
+                                            {% else %}
+                                                <a class="btn btn-lg btn-start mt-2" href="{{ path('mission_finish', {'mission': mission.getId(), 'usePlanet': usePlanet.getId()}) }}" hidden>{{ 'zombie.collect'|trans }}</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                 </td>
-                                <td class="center-cells">
-                                    {{ form_widget(form_missionZombie.tank,{attr: { max: planet.getTank()}}) }}
-                                </td>
-                                <td class="center-cells">
-                                    {{ form_widget(form_missionZombie.time) }}
-                                </td>
-                                <td class="center-cells text-center">
-                                    <span class="zombieGain">0</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">
-                                </td>
-                                <td class="center-cells text-center">
-                                    <span class="zombiePercent">0%</span>
-                                </td>
+                            </tr>
                             {% else %}
-                                <td class="center-cells">
-                                    {{ form_widget(form_missionZombie.soldier,{attr: { disabled: 'disabled'}}) }}
-                                </td>
-                                <td class="center-cells">
-                                    {{ form_widget(form_missionZombie.tank,{attr: { disabled: 'disabled' }}) }}
-                                </td>
-                                <td class="center-cells">
-                                    {{ form_widget(form_missionZombie.time,{attr: { disabled: 'disabled' }}) }}
-                                </td>
-                                <td class="center-cells text-center">
-                                    <span class="zombieGain">0</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">
-                                </td>
-                                <td class="center-cells text-center">
-                                    <span class="zombiePercent">0%</span>
-                                </td>
+                                <tr class="blocked-building blockedBack">
+                                    <td class="center-cells">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img alt="{{ 'image'|trans({},'front_global') }}" width="40" src="{{ asset('img/zombie_lose_report.jpg') }}">
+                                            </div>
+                                            <div class="col-5">
+                                                {{ 'zombie.level'|trans }} {{ mission.getType() }}
+                                                <br>
+                                                {{ 'zombie.reward'|trans }} <span class="text-vert">{% if app.user.getZombieAtt() > 0 %}-{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">{% else %}+{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">{% endif %}</span>
+                                            </div>
+                                            <div class="col-5">
+                                                {{ 'zombie.blocked'|trans({'%level%': app.user.getLevel()}) }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                             {% endif %}
-                        </tr>
+                        {% endfor %}
+                        <tr>
                         </tbody>
                     </table>
-                    {% if app.user.getZombieAtt() > -20 %}
-                        {{ form_widget(form_missionZombie.sendForm) }}
-                    {% else %}
-                        {{ form_widget(form_missionZombie.sendForm,{attr: { disabled: 'disabled' }}) }}
-                    {% endif %}
-                    {{ form_end(form_missionZombie) }}
                 </div>
-                <div class="col-6">
-                    {{ form_start(form_missionUranium) }}
-                    <table class="table table-striped table-bordered table-dark text-center uraMission">
-                        <tbody>
-                        <tr>
-                            <th colspan="5" class="tab-cells-name">
-                                <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.uranium'|trans }}">{{ 'zombie.uranium'|trans }} <span class="glyphicon glyphicon-question-sign text-orange"></span></span>
-                            </th>
-                        </tr>
-                        <tr>
-                            <th class="tab-cells-name">
-                                {{ 'zombie.soldier'|trans }}
-                            </th>
-                            <th class="tab-cells-name">
-                                {{ 'zombie.tank'|trans }}
-                            </th>
-                            <th class="tab-cells-name">
-                                {{ 'zombie.time'|trans }}
-                            </th>
-                            <th width="65" class="tab-cells-name">
-                                {{ 'zombie.gain'|trans }}
-                            </th>
-                            <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" height="20" width="20" src="{{ asset('img/clover.png') }}">
-                            </th>
-                        </tr>
-                        <tr>
-                            <td class="center-cells">
-                                {{ form_widget(form_missionUranium.soldier,{attr: { max: planet.getSoldier()}}) }}
-                            </td>
-                            <td class="center-cells">
-                                {{ form_widget(form_missionUranium.tank,{attr: { max: planet.getTank()}}) }}
-                            </td>
-                            <td class="center-cells">
-                                {{ form_widget(form_missionUranium.time) }}
-                            </td>
-                            <td class="center-cells text-center">
-                                <span class="uraniumGain">0</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">
-                            </td>
-                            <td class="center-cells text-center">
-                                <span class="uraniumPercent">0%</span>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    {{ form_widget(form_missionUranium.sendForm) }}
-                    {{ form_end(form_missionUranium) }}
-                </div>
-            </div>
-            {% if planet.getMissions()|length > 0 %}
-                <table class="table table-striped table-bordered table-dark text-center mt-5">
-                    <tbody>
-                    <tr>
-                        <th colspan="6" class="tab-cells-name">
-                            Missions en cours
-                        </th>
-                    </tr>
-                    <tr>
-                        <th class="tab-cells-name">
-                            {{ 'zombie.soldier'|trans }}
-                        </th>
-                        <th class="tab-cells-name">
-                            {{ 'zombie.tank'|trans }}
-                        </th>
-                        <th class="tab-cells-name">
-                            {{ 'zombie.gain'|trans }}
-                        </th>
-                        <th width="55" class="tab-cells-name">
-                            {{ 'zombie.type'|trans }}
-                        </th>
-                        <th class="tab-cells-name">
-                            {{ 'zombie.succed'|trans }}
-                        </th>
-                        <th class="tab-cells-name">
-                            {{ 'zombie.time'|trans }}
-                        </th>
-                    </tr>
-                    {% for mission in planet.getMissions() %}
-                        <tr>
-                            <td class="center-cells">
-                                {{ mission.getSoldier() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="7" src="{{ asset('img/soldier.png') }}">
-                            </td>
-                            <td class="center-cells">
-                                {{ mission.getTank() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="18" src="{{ asset('img/tanks.png') }}">
-                            </td>
-                            <td class="center-cells">
-                                {% if mission.getType() == 1 %}<span class="text-vert">+{{ mission.getGain() }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">{% else %}<span class="text-vert">-{{ mission.getGain() }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">{% endif %}
-                            </td>
-                            <td class="center-cells text-center">
-                                {% if mission.getType() == 1 %}{{ 'zombie.uranium'|trans }}{% else %}{{ 'zombie.zombie'|trans }}{% endif %}
-                            </td>
-                            <td class="center-cells text-center">
-                                {{ mission.getPercent() }}%
-                            </td>
-                            <td class="center-cells text-center p-1">
-                                {% if mission.getMissionAt()|date('Y/m/d H:i:s') > "now"|date('Y/m/d H:i:s') %}<div><span class="timerArea" hidden>{{ mission.getMissionAt()|date('Y/m/d H:i:s') }}</span></div>{% else %}<a class="badge badge-success p-2" href="{{ path('mission_finish', {'mission': mission.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'zombie.finish'|trans }}</span></a>{% endif %}
-                            </td>
-                        </tr>
+                {% if app.user.getStats()|length > 7 %}
+                    {% set points = [] %}
+                    {% set otherZombie = [] %}
+                    {% set date = [] %}
+                    {% for otherPoint in otherPoints %}
+                        {% set otherZombie = otherZombie|merge([(otherPoint['allZombie'] / otherPoint['numbers'])|round]) %}
                     {% endfor %}
-                    </tbody>
-                </table>
-            {% endif %}
+                    {% for stat in app.user.getStats() %}
+                        {% set points = points|merge([stat.getZombie()|round]) %}
+                        {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
+                    {% endfor %}
+                    <div id="zombiePoints" data-zombie-points="{{ points|json_encode }}"></div>
+                    <div id="zombieOtherPoints" data-zombie-other-points="{{ otherZombie|json_encode }}"></div>
+                    <div id="zombieDate" data-zombie-date="{{ date|json_encode }}"></div>
+                    <canvas class="mb-5" id="zombieChart" height="100"></canvas>
+                    <script src="{{ asset('build/zombieCharts.js') }}"></script>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

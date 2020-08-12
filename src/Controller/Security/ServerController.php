@@ -533,9 +533,6 @@ class ServerController extends AbstractController
                 foreach ($planet->getConstructions() as $construction) {
                     $em->remove($construction);
                 }
-                foreach ($planet->getMissions() as $mission) {
-                    $em->remove($mission);
-                }
                 $planet->setImageName(null);
                 $em->remove($planet);
             }

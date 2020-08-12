@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\Front\PlanetRenameType;
 use App\Entity\Planet;
 use DateTime;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -101,7 +100,6 @@ class PlanetController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
         $colonize = $em->getRepository('App:Fleet')->find(['id' => $fleet]);
         $newPlanet = $colonize->getPlanet();

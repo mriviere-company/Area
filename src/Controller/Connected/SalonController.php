@@ -13,7 +13,6 @@ use App\Entity\S_Content;
 use App\Entity\Salon;
 use App\Entity\View;
 use DateTime;
-use DateTimeZone;
 use DateInterval;
 
 /**
@@ -31,9 +30,7 @@ class SalonController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $connected = new DateTime();
-        $connected->setTimezone(new DateTimeZone('Europe/Paris'));
         $connected->sub(new DateInterval('PT' . 1800 . 'S'));
 
         if($user->getGameOver()) {

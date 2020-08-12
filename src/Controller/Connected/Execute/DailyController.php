@@ -153,6 +153,10 @@ class DailyController extends AbstractController
                     }
                     $em->remove($fleet);
                 }
+                if ($user->getMissions()) {
+                    foreach($user->getMissions() as $mission) {
+                        $em->remove($mission);
+                    }
                 foreach ($user->getPlanets() as $planet) {
                     $product = $planet->getProduct();
                     $planet->setSonde(0);
@@ -188,10 +192,6 @@ class DailyController extends AbstractController
                         $product->setPlanet(null);
                         $em->remove($product);
                     }
-                    if ($planet->getMissions()) {
-                        foreach($planet->getMissions() as $mission) {
-                            $em->remove($mission);
-                        }
                     }
                 }
                 $economicGO = 1;

@@ -21,7 +21,6 @@ use App\Entity\Planet;
 use App\Entity\Destination;
 use App\Entity\Fleet_List;
 use Datetime;
-use DatetimeZone;
 use DateInterval;
 
 /**
@@ -38,7 +37,6 @@ class FleetInteractController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $moreNow = new DateTime();
-        $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
         $moreNow->add(new DateInterval('PT' . 120 . 'S'));
         $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
@@ -62,7 +60,6 @@ class FleetInteractController  extends AbstractController
 
         foreach ($allFleets as $allFleet) {
             $now = new DateTime();
-            $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
             $galaxy = $usePlanet->getSector()->getGalaxy()->getPosition();
             $sector = $usePlanet->getSector()->getPosition();
@@ -125,7 +122,6 @@ class FleetInteractController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $moreNow = new DateTime();
-        $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
         $moreNow->add(new DateInterval('PT' . 120 . 'S'));
         $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
@@ -255,7 +251,6 @@ class FleetInteractController  extends AbstractController
                 $em->persist($one);
 
                 $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
                 $galaxy = $usePlanet->getSector()->getGalaxy()->getPosition();
                 $sector = $usePlanet->getSector()->getPosition();
@@ -319,7 +314,6 @@ class FleetInteractController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user || $fleetGive->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -382,7 +376,6 @@ class FleetInteractController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user || $fleetGive->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -444,7 +437,6 @@ class FleetInteractController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user || $fleetGive->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -506,7 +498,6 @@ class FleetInteractController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user || $fleetGive->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -568,7 +559,6 @@ class FleetInteractController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user || $fleetGive->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -630,7 +620,6 @@ class FleetInteractController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user || $fleetGive->getUser() != $user) {
             return $this->redirectToRoute('home');
         }

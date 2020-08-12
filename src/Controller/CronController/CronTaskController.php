@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Fleet;
-use DateTimeZone;
 use DateInterval;
 use DateTime;
 
@@ -22,7 +21,6 @@ class CronTaskController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
         $userGOs = $em->getRepository('App:User')
@@ -474,7 +472,6 @@ class CronTaskController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $fiveWeeks = new DateTime();
-        $fiveWeeks->setTimezone(new DateTimeZone('Europe/Paris'));
         $fiveWeeks->sub(new DateInterval('PT' . 3888000 . 'S'));
 
         $newBots = $em->getRepository('App:User')
@@ -540,6 +537,24 @@ class CronTaskController extends AbstractController
         }
         echo $count . " Horde regroupés finis.";
         $em->flush();
+        exit;
+    }
+
+    /**
+     * @Route("/mission-new/", name="mission_new")
+     */
+    public function missionNewAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $missions = $em->getRepository('App:Mission')->findAll();
+
+        foreach ($missions as $mission) {
+            $em->remove($mission);
+        }
+
+        $em->flush();
+        echo "<span style='color:#FF0000'>KO<span><br/>";
         exit;
     }
 

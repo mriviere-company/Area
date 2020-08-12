@@ -10,7 +10,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
 use DateTime;
 use Dateinterval;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -26,7 +25,7 @@ class OverviewController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
+
         if($user->getGameOver() || $user->getAllPlanets() == 0) {
             return $this->redirectToRoute('game_over');
         }
@@ -34,12 +33,16 @@ class OverviewController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        if ($user->getTutorial() == 53) {
+            $user->setTutorial(60);
+            $em->flush();
+        }
+
         $allTroops = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->join('u.planets', 'p')
-            ->leftJoin('p.missions', 'm')
             ->leftJoin('p.product', 'pp')
-            ->select('sum(p.soldier) as soldier, sum(p.soldierAtNbr) as soldierAtNbr, sum(p.tank) as tank, sum(p.tankAtNbr) as tankAtNbr, sum(p.scientist) as scientist, sum(p.scientistAtNbr) as scientistAtNbr, sum(m.soldier) as msoldier, sum(m.tank) as mtank, sum(DISTINCT p.signature) as psignature, sum(pp.signature) as ppsignature')
+            ->select('sum(p.soldier) as soldier, sum(p.soldierAtNbr) as soldierAtNbr, sum(p.tank) as tank, sum(p.tankAtNbr) as tankAtNbr, sum(p.scientist) as scientist, sum(p.scientistAtNbr) as scientistAtNbr, sum(DISTINCT p.signature) as psignature, sum(pp.signature) as ppsignature')
             ->where('p.user = :user')
             ->setParameters(['user' => $user])
             ->setMaxResults(1)
@@ -63,8 +66,7 @@ class OverviewController extends AbstractController
         $allTroopsProduct = $user->getPriceTroopsProduct($allTroops);
         $allTroopsPlanet = $user->getPriceTroopsPlanet($allTroops);
         $allTroopsFleet = $user->getPriceTroopsFleet($allFleets);
-        $allTroopsMission = $user->getPriceTroopsMission($allTroops);
-        $allTroops = $allTroopsProduct + $allTroopsPlanet + $allTroopsFleet + $allTroopsMission;
+        $allTroops = $allTroopsProduct + $allTroopsPlanet + $allTroopsFleet;
 
         $allBuildings = $em->getRepository('App:User')
             ->createQueryBuilder('u')
@@ -106,7 +108,6 @@ class OverviewController extends AbstractController
 
 
         $oneHour = new DateTime();
-        $oneHour->setTimezone(new DateTimeZone('Europe/Paris'));
         $oneHour->add(new DateInterval('PT' . 3600 . 'S'));
         $fleetMove = $em->getRepository('App:Fleet')
             ->createQueryBuilder('f')
@@ -181,7 +182,6 @@ class OverviewController extends AbstractController
             'allTroopsProduct' => $allTroopsProduct,
             'allTroopsPlanet' => $allTroopsPlanet,
             'allTroopsFleet' => $allTroopsFleet,
-            'allTroopsMission' => $allTroopsMission,
             'myPlanets' => $myPlanets,
             'allWorkersProd' => $allWorkersProd
         ]);
@@ -195,7 +195,6 @@ class OverviewController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         if($user->getGameOver() || $user->getAllPlanets() == 0) {
             if($user->getColPlanets() == 0 && $user->getGameOver() == null) {

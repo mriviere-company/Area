@@ -8,7 +8,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
 use App\Entity\Fleet;
 use DateTime;
-use DateTimeZone;
 use Dateinterval;
 
 class DeployController extends AbstractController
@@ -20,7 +19,6 @@ class DeployController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 7200 . 'S'));
         $user = $this->getUser();
         if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
@@ -55,7 +53,6 @@ class DeployController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 3600 . 'S'));
         $user = $this->getUser();
         if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
@@ -90,7 +87,6 @@ class DeployController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
         if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
             return $this->redirectToRoute('home');
@@ -147,7 +143,6 @@ class DeployController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 300 . 'S'));
         $user = $this->getUser();
 

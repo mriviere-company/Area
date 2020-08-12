@@ -14,7 +14,6 @@ use App\Form\Front\NavigateType;
 use App\Form\Front\InteractFleetType;
 use App\Entity\Fleet;
 use Datetime;
-use DatetimeZone;
 use DateInterval;
 
 /**
@@ -272,7 +271,6 @@ class SectorController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -326,7 +324,6 @@ class SectorController extends AbstractController
             $distance = $speed * $base * 1000 * $server->getSpeed();
             $now->add(new DateInterval('PT' . round($distance) . 'S'));
             $moreNow = new DateTime();
-            $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
             $moreNow->add(new DateInterval('PT' . 120 . 'S'));
             $fleet->setFlightTime($now);
             $destination = new Destination();
@@ -373,7 +370,6 @@ class SectorController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -432,7 +428,6 @@ class SectorController extends AbstractController
         $distance = $speed * $base * 1000 * $server->getSpeed();
         $now->add(new DateInterval('PT' . round($distance) . 'S'));
         $moreNow = new DateTime();
-        $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
         $moreNow->add(new DateInterval('PT' . 120 . 'S'));
         $fleet->setFlightTime($now);
         $destination = new Destination();
@@ -463,7 +458,6 @@ class SectorController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }

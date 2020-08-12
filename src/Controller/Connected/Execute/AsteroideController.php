@@ -6,7 +6,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Destination;
 use App\Entity\Fleet;
-use DateTimeZone;
 use Dateinterval;
 use DateTime;
 
@@ -15,7 +14,6 @@ class AsteroideController extends AbstractController
     public function AsteroideAction($asteroides, $em)
     {
         $nowAste = new DateTime();
-        $nowAste->setTimezone(new DateTimeZone('Europe/Paris'));
 
         $nowAste->add(new DateInterval('PT' . (25000 * rand(1, 4)) . 'S'));
         foreach ($asteroides as $asteroide) {
@@ -59,23 +57,7 @@ class AsteroideController extends AbstractController
                         ->setMaxresults(1)
                         ->getOneOrNullResult();
 
-                    $planetBis = $em->getRepository('App:Planet')
-                        ->createQueryBuilder('p')
-                        ->leftJoin('p.missions', 'm')
-                        ->where('p.user = :user')
-                        ->andWhere('p.radarAt is null and p.brouilleurAt is null and m.soldier is not null')
-                        ->setParameters(['user' => $iaPlayer])
-                        ->orderBy('p.ground', 'ASC')
-                        ->getQuery()
-                        ->setMaxresults(1)
-                        ->getOneOrNullResult();
-
-                    if ($planetBis) {
-                        $planetZb = $planetBis;
-                    }
-
                     $timeAttAst = new DateTime();
-                    $timeAttAst->setTimezone(new DateTimeZone('Europe/Paris'));
                     $timeAttAst->add(new DateInterval('PT' . 24 . 'H'));
                     $fleet = new Fleet();
                     $alea = rand(10, 100);

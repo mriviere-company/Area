@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
 use DateTime;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -22,7 +21,6 @@ class HeroeController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');

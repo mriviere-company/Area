@@ -8,11 +8,10 @@ zombie.attack: 'La prochaine attaque est prévue dans'
 zombie.available.defense: 'Vos troupes en défense '
 zombie.speech: 'Commandant, voici les infos à notre disposition : Les zombies se sont implantés sur notre planète et ne s''arrêteront sûrement pas à celle-ci si nous ne les combattons pas. Nous devons les affaiblir avant leur prochaine attaque, une mission d''élimination nous y aiderait grandement ! Nous pouvons aussi aller dans les zones qu''ils contrôlent, nos scientifiques ont découvert que de l''uranium y était présent. Attention cela risque de faire monter notre menace zombie.'
 tooltip.zombie: 'Lancer cette mission pour faire baisser le niveau de menace zombie en éliminant les zombies présents sur votre planète.'
-zombie.soldier: Soldats
-zombie.tank: Tanks
-zombie.time: Temps
-zombie.gain: Gain
-zombie.type: Type
+zombie.reward: 'Récompense :'
+zombie.blocked: 'Votre niveau est insuffisant : %level%'
+zombie.level: 'Niveau :'
+zombie.collect: Collecter
 zombie.finish: 'Récupérer rapport'
 zombie.uranium: 'Mission de récupération d''uranium'
 tooltip.uranium: 'Lancer cette mission pour récupérer de l''uranium dans les zones infectées par les zombies.'
@@ -25,7 +24,7 @@ form.fifth: '6 heures'
 form.startMission: Lancer
 1: Uranium
 0: Zombie
-zombie.tutorial: 'Cette page est dédié a la menace Zombie, elle vous indique quelle planète est infectée par les zombies et les effectifs que vous avez dessus pour la défendre.<br> A chaque attaque votre niveau de menace est augmenté de +1 si vous êtes sans alliance, +5 dans une alliance fasciste et +10 si vous êtes dans une autre alliance.<br>Deux choix s''offrent a vous, faire baisser la menace en envoyant vos soldats en missions. Ou lancer une mission pour récupérer de l''uranium. Allez y. '
-zombie.tutorialBis: 'Bien, maintenant vous devez attendre la fin du temps que vous avez choisit pour la mission. Puis ensuite récupérer le rapport. Vous aurez toujours des pertes lors de ces missions, le risque zero n''existe pas. Si vous envahissez une planète au main des Zombies vous divisez la menace zombie par 10, ce qui peut être une solution d''urgence.'
+zombie.tutorial: 'Cette page est dédiée à la menace Zombie, elle vous indique quelle planète est infectée par les zombies et les effectifs que vous avez dessus pour la défendre.<br> A chaque attaque votre niveau de menace est augmentée de +100 si vous êtes sans alliance, +150 dans une alliance fasciste et +200 si vous êtes dans une autre alliance.<br>Vous disposez de missions permettant de faire baisser le niveau de menace, quand celui-ci passe en dessous de 0 vos missions vous permettront de gagner de l''uranium. Allez-y collectez !'
+zombie.tutorialBis: 'Bien, vous avez fait baisser le niveau de la menace zombie.<br>Tips:  Si vous envahissez une planète au main des Zombies vous divisez la menace zombie par 10, ce qui peut être une solution en cas d''urgence.'
 form.time: ''
 '': ''

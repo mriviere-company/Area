@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Destination;
 use App\Entity\Report;
 use App\Entity\Fleet;
-use DateTimeZone;
 use DateInterval;
 use DateTime;
 
@@ -29,17 +28,6 @@ class ZombiesController extends AbstractController
                 ->setMaxresults(1)
                 ->getOneOrNullResult();
 
-            $planetBis = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->leftJoin('p.missions', 'm')
-                ->where('p.user = :user')
-                ->andWhere('p.radarAt is null and p.brouilleurAt is null and m.soldier is not null')
-                ->setParameters(['user' => $zUser])
-                ->orderBy('p.ground', 'ASC')
-                ->getQuery()
-                ->setMaxresults(1)
-                ->getOneOrNullResult();
-
             $planetZb = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
                 ->where('p.user = :user')
@@ -48,10 +36,6 @@ class ZombiesController extends AbstractController
                 ->getQuery()
                 ->setMaxresults(1)
                 ->getOneOrNullResult();
-
-            if ($planetBis) {
-                $planetAtt = $planetBis;
-            }
 
             if (!$planetAtt) {
                 echo "Attaques zombies impossible - ";
@@ -176,10 +160,8 @@ class ZombiesController extends AbstractController
             }
             $zUser->setViewReport(false);
             $timeAtt = new DateTime();
-            $timeAtt->setTimezone(new DateTimeZone('Europe/Paris'));
             $timeAtt->add(new DateInterval('PT' . round(86400 * rand(1,3)) . 'S'));
             $nextZombie = new DateTime();
-            $nextZombie->setTimezone(new DateTimeZone('Europe/Paris'));
             $nextZombie->add(new DateInterval('PT' . round(12 * rand(1,5)) . 'H'));
             $zUser->setZombieAt($nextZombie);
             $fleetZb = new Fleet();

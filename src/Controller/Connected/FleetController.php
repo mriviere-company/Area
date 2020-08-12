@@ -21,7 +21,6 @@ use App\Entity\Planet;
 use App\Entity\Destination;
 use App\Entity\Fleet_List;
 use Datetime;
-use DatetimeZone;
 use DateInterval;
 
 /**
@@ -227,7 +226,6 @@ class FleetController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -484,7 +482,6 @@ class FleetController  extends AbstractController
                         ->getResult();
 
                     $now = new DateTime();
-                    $now->setTimezone(new DateTimeZone('Europe/Paris'));
                     $now->add(new DateInterval('PT' . 300 . 'S'));
 
                     foreach ($allFleets as $updateF) {
@@ -757,7 +754,6 @@ class FleetController  extends AbstractController
                 ->getResult();
 
             $now = new DateTime();
-            $now->setTimezone(new DateTimeZone('Europe/Paris'));
             $now->add(new DateInterval('PT' . 300 . 'S'));
 
             foreach ($allFleets as $updateF) {
@@ -826,9 +822,7 @@ class FleetController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $moreNow = new DateTime();
-        $moreNow->setTimezone(new DateTimeZone('Europe/Paris'));
         $moreNow->add(new DateInterval('PT' . 120 . 'S'));
 
         if ($usePlanet->getUser() != $user || $fleetGive->getUser() != $user) {
@@ -1071,7 +1065,6 @@ class FleetController  extends AbstractController
                 ->getResult();
 
             $now = new DateTime();
-            $now->setTimezone(new DateTimeZone('Europe/Paris'));
             $now->add(new DateInterval('PT' . 300 . 'S'));
 
             foreach ($allFleets as $updateF) {
@@ -1215,7 +1208,6 @@ class FleetController  extends AbstractController
                 ->getResult();
 
             $now = new DateTime();
-            $now->setTimezone(new DateTimeZone('Europe/Paris'));
             $now->add(new DateInterval('PT' . 300 . 'S'));
 
             foreach ($allFleets as $updateF) {
@@ -1576,7 +1568,6 @@ class FleetController  extends AbstractController
                 ->getResult();
 
             $now = new DateTime();
-            $now->setTimezone(new DateTimeZone('Europe/Paris'));
             $now->add(new DateInterval('PT' . 300 . 'S'));
 
             foreach ($allFleets as $updateF) {
@@ -1734,7 +1725,6 @@ class FleetController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -1824,7 +1814,6 @@ class FleetController  extends AbstractController
                     ->getResult();
 
                 $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $now->add(new DateInterval('PT' . 300 . 'S'));
 
                 foreach ($allFleets as $updateF) {
@@ -1851,7 +1840,6 @@ class FleetController  extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }

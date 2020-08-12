@@ -10,7 +10,6 @@ use App\Form\Front\CaserneRecruitType;
 use App\Entity\Planet;
 use DateTime;
 use Dateinterval;
-use DateTimeZone;
 
 /**
  * @Route("/connect")
@@ -40,7 +39,6 @@ class SoldierController extends AbstractController
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if ($form_caserneRecruit->get('soldier')->getData()) {
                 $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $nbrSoldier = abs($form_caserneRecruit->get('soldier')->getData());
                 if ($user->getAlly()) {
                     if ($user->getPoliticSoldierSale() > 0) {
@@ -90,7 +88,6 @@ class SoldierController extends AbstractController
             }
             if ($form_caserneRecruit->get('tank')->getData() && ($usePlanet->getBunker() > 0 || $usePlanet->getCaserne() > 0) && $usePlanet->getLightUsine() > 0 && $user->getTank() == 1) {
                 $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $nbrTank = abs($form_caserneRecruit->get('tank')->getData());
                 if($nbrTank * 600 > $user->getBitcoin() ||
                     $nbrTank * 5 > $usePlanet->getWorker() ||
@@ -136,7 +133,6 @@ class SoldierController extends AbstractController
             }
             if ($form_caserneRecruit->get('nuclear')->getData() && $usePlanet->getNuclearBase() > 0) {
                 $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $nbrNuclear = abs($form_caserneRecruit->get('nuclear')->getData());
                 if($nbrNuclear * 25000 > $user->getBitcoin() ||
                     $nbrNuclear * 5000 > $usePlanet->getUranium() ||
@@ -178,7 +174,6 @@ class SoldierController extends AbstractController
             }
             if ($form_caserneRecruit->get('scientist')->getData() && $usePlanet->getCenterSearch() > 0) {
                 $now = new DateTime();
-                $now->setTimezone(new DateTimeZone('Europe/Paris'));
                 $nbrScientist = abs($form_caserneRecruit->get('scientist')->getData());
                 if($nbrScientist > $user->getBitcoin() / 250 ||
                     $nbrScientist * 10 > $usePlanet->getWorker() ||

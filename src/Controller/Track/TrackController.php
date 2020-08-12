@@ -5,7 +5,6 @@ namespace App\Controller\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Track;
-use DateTimeZone;
 use DateTime;
 
 class TrackController extends AbstractController
@@ -27,7 +26,6 @@ class TrackController extends AbstractController
         }
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $track = new Track();
 
         if ($user) {

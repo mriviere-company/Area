@@ -25,7 +25,6 @@ use App\Entity\User;
 use App\Entity\War;
 use App\Entity\Planet;
 use DateTime;
-use DateTimeZone;
 use Dateinterval;
 use App\Entity\Salon;
 
@@ -188,7 +187,6 @@ class AllyController extends AbstractController
     {
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $em = $this->getDoctrine()->getManager();
 
         if ($usePlanet->getUser() != $user) {
@@ -315,7 +313,6 @@ class AllyController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         $user = $this->getUser();
         $ally = $user->getAlly();
@@ -434,7 +431,6 @@ class AllyController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         $user = $this->getUser();
         $ally = $user->getAlly();
@@ -485,7 +481,6 @@ class AllyController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         $user = $this->getUser();
         $ally = $user->getAlly();
@@ -536,7 +531,6 @@ class AllyController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $user = $this->getUser();
 
         if ($usePlanet->getUser() != $user) {
@@ -665,7 +659,6 @@ class AllyController extends AbstractController
         $user = $this->getUser();
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
 
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
@@ -832,7 +825,6 @@ class AllyController extends AbstractController
     {
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $em = $this->getDoctrine()->getManager();
 
         if ($usePlanet->getUser() != $user) {
@@ -879,7 +871,6 @@ class AllyController extends AbstractController
         }
 
         $lastActivity = new DateTime();
-        $lastActivity->setTimezone(new DateTimeZone('Europe/Paris'));
         $lastActivity->sub(new DateInterval('PT' . 5184000 . 'S'));
         $usersRecruitable = $em->getRepository('App:User')
             ->createQueryBuilder('u')
@@ -989,7 +980,6 @@ class AllyController extends AbstractController
     {
         $user = $this->getUser();
         $now = new DateTime();
-        $now->setTimezone(new DateTimeZone('Europe/Paris'));
         $em = $this->getDoctrine()->getManager();
 
         if ($usePlanet->getUser() != $user) {
