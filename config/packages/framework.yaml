@@ -16,7 +16,7 @@ framework:
         gc_maxlifetime: 31104000
         gc_probability: null
         cookie_secure: 'auto'
-        cookie_samesite: 'none'
+        cookie_samesite: 'lax'
         name: 'area'
 
     #esi: true

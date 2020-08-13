@@ -1,9 +1,9 @@
 const $ = require('jquery');
         require('bootstrap-sass');
         require('bootstrap-confirmation2');
-let timeZone = new Date();
-const    now = new Date(timeZone.setHours(timeZone.getHours() + timeZone.getTimezoneOffset() / 60));
-console.log(now);
+        const now = new Date();
+        /*const now = new Date(timeZone.setMinutes(timeZone.getMinutes() + timeZone.getTimezoneOffset()));*/
+
 function manageImageForm() {
     $('.modify').off('click').on('click',function(e){
         $('#user_image_imageFile_file').click();

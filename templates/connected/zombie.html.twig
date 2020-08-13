@@ -39,7 +39,7 @@
                         {% if missionEnded %}
                             <tr class="availableBack">
                                 <td class="center-cells text-more text-center">
-                                    <a class="btn btn-lg btn-start mt-2" href="{{ path('mission_finish_all', {'usePlanet': usePlanet.getId()}) }}">{{ 'zombie.collectAll'|trans }}</a>
+                                    <a class="btn btn-lg btn-primary mt-2" href="{{ path('mission_finish_all', {'usePlanet': usePlanet.getId()}) }}">{{ 'zombie.collectAll'|trans }}</a>
                                 </td>
                             </tr>
                         {% endif %}

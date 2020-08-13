@@ -44,7 +44,7 @@ security:
             remember_me:
                 secret:   '%kernel.secret%'
                 lifetime: 31104000
-                samesite: 'none'
+                samesite: 'lax'
                 path:     /
                 always_remember_me: true
                 secure: true

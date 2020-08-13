@@ -11,6 +11,7 @@ tooltip.zombie: 'Lancer cette mission pour faire baisser le niveau de menace zom
 zombie.reward: 'Récompense :'
 zombie.blocked: 'Votre niveau est insuffisant : %level%'
 zombie.level: 'Niveau :'
+zombie.collectAll: 'Collecter toutes les missions'
 zombie.collect: Collecter
 zombie.finish: 'Récupérer rapport'
 zombie.uranium: 'Mission de récupération d''uranium'

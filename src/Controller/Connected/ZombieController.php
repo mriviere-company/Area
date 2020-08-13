@@ -204,6 +204,7 @@ class ZombieController extends AbstractController
             ->andWhere('m.missionAt < :now')
             ->andWhere('m.type <= :level')
             ->setParameters(['user' => $user, 'now' => $now, 'level' => $user->getLevel(),])
+            ->orderBy('m.type', 'DESC')
             ->getQuery()
             ->getResult();
 
