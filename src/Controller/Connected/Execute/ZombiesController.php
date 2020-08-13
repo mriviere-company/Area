@@ -66,18 +66,18 @@ class ZombiesController extends AbstractController
                     $dWorker = $dWorker * (1 + ($zUser->getPoliticWorkerDef() / 5));
                 }
                 $dMilitary = $dWorker + $dSoldier + $dTanks;
-                $aMilitary = (500 * (($zUser->getZombieAtt() / 3) + 1) * 2 * round(1 + ($zUser->getTerraformation()) / 5));
-                $soldierAtmp = (500 * (($zUser->getZombieAtt() / 3) + 1));
+                $aMilitary = (500 * (($zUser->getZombieAtt() / 2) + 1) * 2 * round(1 + ($zUser->getTerraformation()) / 5));
+                $soldierAtmp = (500 * (($zUser->getZombieAtt() / 2) + 1));
 
                 if ($dMilitary > $aMilitary) {
                     if ($zUser->getAlly()) {
                         if ($zUser->getAlly()->getPolitic() == 'fascism') {
-                            $zUser->setZombieAtt($zUser->getZombieAtt() + 25);
+                            $zUser->setZombieAtt($zUser->getZombieAtt() + 150);
                         } else {
-                            $zUser->setZombieAtt($zUser->getZombieAtt() + 50);
+                            $zUser->setZombieAtt($zUser->getZombieAtt() + 200);
                         }
                     } else {
-                        $zUser->setZombieAtt($zUser->getZombieAtt() + 10);
+                        $zUser->setZombieAtt($zUser->getZombieAtt() + 100);
                     }
                     $warPointDef = round($aMilitary / 10);
                     $zUser->getRank()->setWarPoint($zUser->getRank()->getWarPoint() + $warPointDef);
@@ -150,12 +150,12 @@ class ZombiesController extends AbstractController
             } else {
                 if ($zUser->getAlly()) {
                     if ($zUser->getAlly()->getPolitic() == 'fascism') {
-                        $zUser->setZombieAtt($zUser->getZombieAtt() + 25);
+                        $zUser->setZombieAtt($zUser->getZombieAtt() + 150);
                     } else {
-                        $zUser->setZombieAtt($zUser->getZombieAtt() + 50);
+                        $zUser->setZombieAtt($zUser->getZombieAtt() + 200);
                     }
                 } else {
-                    $zUser->setZombieAtt($zUser->getZombieAtt() + 10);
+                    $zUser->setZombieAtt($zUser->getZombieAtt() + 100);
                 }
             }
             $zUser->setViewReport(false);
