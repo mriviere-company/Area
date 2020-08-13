@@ -63,7 +63,7 @@
             <canvas class="mb-5" id="uniquePageChart" height="250"></canvas>
             <canvas class="mb-5" id="computerChart" height="250"></canvas>
             <canvas class="mb-5" id="refererChart" height="250"></canvas>
-            <script src="{{ asset('build/admin.js') }}"></script>
+            {{ encore_entry_script_tags('admin') }}
         </div>
     </div>
 {% endblock %}

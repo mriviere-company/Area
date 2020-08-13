@@ -1048,7 +1048,8 @@
                 </div>
             </div>
             {% if app.user.getShip().getRetry() > 0  %}<span><a class="btn btn-lg btn-start float-right mr-2 mb-2{% if app.user.getTutorial() < 20 %} tutorial-hide{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipRetry'|trans }}" href="{{ path('ship_retry', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'ship.retry'|trans({'%retry%': app.user.getShip().getRetry()}) }}</a></span>{% endif %}
-            <canvas class="mt-5" id="doughnutChart" height="150"></canvas><script src="{{ asset('build/shipsCharts.js') }}"></script>
+            <canvas class="mt-5" id="doughnutChart" height="150"></canvas>
+            {{ encore_entry_script_tags('shipsCharts') }}
         </div>
     </div>
 {% endblock %}

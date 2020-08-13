@@ -22,7 +22,7 @@
                 <div id="allyOtherPoints" data-ally-other-points="{{ otherAlly|json_encode }}"></div>
                 <div id="allyDate" data-ally-date="{{ date|json_encode }}"></div>
                 <canvas id="allyChart" height="100"></canvas>
-                <script src="{{ asset('build/allyCharts.js') }}"></script>
+                {{ encore_entry_script_tags('allyCharts') }}
             </div>
         {% endif %}
         <table class="table table-striped borderOverview table-dark text-center">

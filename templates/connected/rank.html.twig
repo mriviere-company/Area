@@ -28,7 +28,7 @@
                 <div id="pointOtherPoints" data-point-other-points="{{ otherAllPoints|json_encode }}"></div>
                 <div id="pdgDate" data-pdg-date="{{ date|json_encode }}"></div>
                 <canvas class="mb-5" id="pdgChart" height="100"></canvas>
-                <script src="{{ asset('build/pdgCharts.js') }}"></script>
+                {{ encore_entry_script_tags('pdgCharts') }}
             </div>
         {% endif %}
         <table class="table table-striped borderOverview table-dark text-center">

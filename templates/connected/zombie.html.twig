@@ -107,7 +107,7 @@
                     <div id="zombieOtherPoints" data-zombie-other-points="{{ otherZombie|json_encode }}"></div>
                     <div id="zombieDate" data-zombie-date="{{ date|json_encode }}"></div>
                     <canvas class="mb-5" id="zombieChart" height="100"></canvas>
-                    <script src="{{ asset('build/zombieCharts.js') }}"></script>
+                    {{ encore_entry_script_tags('zombieCharts') }}
                 {% endif %}
             </div>
         </div>
