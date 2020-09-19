@@ -6,6 +6,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
+use DateTime;
 
 /**
  * @Route("/connect")
@@ -17,6 +18,22 @@ class AllPlanetsController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $now = new DateTime();
+
+        if ($usePlanet->getUser() != $user) {
+            return $this->redirectToRoute('home');
+        }
+
+        $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::userActivityAction', [
+            'now'  => $now,
+            'em' => $em]);
+
+        if ($seconds->getContent() >= 60) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetsGenAction', [
+                'seconds' => $seconds,
+                'now'  => $now,
+                'em' => $em]);
+        }
 
         if ($user->getOrderPlanet() == 'alpha') {
             $crit = 'p.name';

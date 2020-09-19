@@ -35,6 +35,11 @@ class Planet
     protected $user;
 
     /**
+     * @ORM\Column(name="lastActivity",type="datetime", nullable=true)
+     */
+    protected $lastActivity;
+
+    /**
      * @ORM\Column(name="nbColo",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $nbColo;
@@ -663,6 +668,7 @@ class Planet
     {
         $this->centerSearch = null;
         $this->name = 'Inhabitée';
+        $this->lastActivity = null;
         $this->niobium = 20000;
         $this->water = 14000;
         $this->food = 100000;
@@ -1179,6 +1185,22 @@ class Planet
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastActivity()
+    {
+        return $this->lastActivity;
+    }
+
+    /**
+     * @param mixed $lastActivity
+     */
+    public function setLastActivity($lastActivity): void
+    {
+        $this->lastActivity = $lastActivity;
     }
 
     /**

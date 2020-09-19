@@ -27,9 +27,9 @@
             </div>
         </a>
     {% endif %}
-    <div{% if allTuto < 30 %} class="tutorial-hide"{% endif %}>
+    <div{% if allTuto < 100 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('heroe', {'usePlanet': usePlanet.getId()}) }}">
-            <div class="btn-left{% if app.request.attributes.get('_route') == 'heroe' %} currentBack{% endif %}{% if allTuto == 16 %} tutorial-show{% endif %}">
+            <div class="btn-left{% if app.request.attributes.get('_route') == 'heroe' %} currentBack{% endif %}{% if allTuto == 100 %} tutorial-show{% endif %}">
                 <span>{{ 'heroe'|trans }}</span>
             </div>
         </a>
@@ -63,7 +63,7 @@
     {% if app.user.checkResearch() %}
         <div{% if allTuto < 7 %} class="tutorial-hide"{% endif %}>
             <a href="{{ path('search', {'usePlanet': usePlanet.getId()}) }}">
-                <div class="btn-left{% if app.user.getSearch() is null %} availableBack{% endif %}{% if app.request.attributes.get('_route') == 'search' %} currentBack{% endif %}{% if allTuto == 7 %} tutorial-show{% endif %}">
+                <div class="btn-left{% if allTuto == 7 %} tutorial-show{% elseif app.user.getSearch() is null %} availableBack{% endif %}{% if app.request.attributes.get('_route') == 'search' %} currentBack{% endif %}">
                     <span>{{ 'search'|trans }}</span>{% if app.user.getSearch() is null %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.search'|trans }}"></span>{% endif %}
                 </div>
             </a>
@@ -99,7 +99,7 @@
     <div class="btn-left separate"></div>
     <div{% if allTuto < 4 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('building', {'usePlanet': usePlanet.getId()}) }}">
-            <div class="btn-left{% if usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} availableBack{% endif %}{% if app.request.attributes.get('_route') == 'building' %} currentBack{% endif %}{% if allTuto == 4 %} tutorial-show{% endif %}">
+            <div class="btn-left{% if allTuto == 4 %} tutorial-show{% elseif usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} availableBack{% endif %}{% if app.request.attributes.get('_route') == 'building' %} currentBack{% endif %}">
                 <span>{{ 'building'|trans }}</span>{% if usePlanet.getConstruct() is null and (usePlanet.getGround() != usePlanet.getGroundPlace()) %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.building'|trans }}"></span>{% endif %}
             </div>
         </a>

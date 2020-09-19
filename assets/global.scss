@@ -531,6 +531,23 @@ input {
   background-color: $color-black;
 }
 
+.camo-green {
+  background-image: $back-camo-green;
+  background-color: $color-black;
+  background-repeat: no-repeat;
+  text-shadow: 1px 1px 1px black;
+  background-size: cover;
+}
+
+.camo-red {
+  background-image: $back-camo-red;
+  background-color: $color-black;
+  background-repeat: no-repeat;
+  background-size: cover;
+  text-shadow: 1px 1px 1px black;
+  font-size: 1.5rem;
+}
+
 // Globals colors borders
 
 .currentPlanet {

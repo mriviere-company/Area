@@ -33,6 +33,17 @@ class OverviewController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::userActivityAction', [
+            'now'  => $now,
+            'em' => $em]);
+
+        if ($seconds->getContent() >= 60) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetsGenAction', [
+                'seconds' => $seconds,
+                'now'  => $now,
+                'em' => $em]);
+        }
+
         if ($user->getTutorial() == 53) {
             $user->setTutorial(60);
             $em->flush();
@@ -221,7 +232,6 @@ class OverviewController extends AbstractController
                     $em->remove($user->getRank());
                 }
                 $user->setRank(null);
-                $user->setGrade(null);
                 $user->setJoinAllyAt(null);
                 $user->setAllyBan(null);
                 $user->setScientistProduction(1);
@@ -231,7 +241,7 @@ class OverviewController extends AbstractController
                 $user->setArmement(0);
                 $user->setIndustry(0);
                 $user->setTerraformation(round($user->getTerraformation(0) / 2));
-                /*$user->setPlasma(0);
+                $user->setPlasma(0);
                 $user->setLaser(0);
                 $user->setMissile(0);
                 $user->setRecycleur(0);
@@ -245,8 +255,9 @@ class OverviewController extends AbstractController
                 $user->setHyperespace(0);
                 $user->setDiscipline(0);
                 $user->setBarbed(0);
+                $user->setAeroponicFarm(0);
                 $user->setTank(0);
-                $user->setExpansion(0);*/
+                $user->setExpansion(0);
                 $user->setPoliticArmement(0);
                 $user->setPoliticCostScientist(0);
                 $user->setPoliticArmor(0);
@@ -349,6 +360,7 @@ class OverviewController extends AbstractController
                     }
                 }
                 $user->setAlly(null);
+                $user->setGrade(null);
 
                 foreach ($user->getSalons() as $salon) {
                     $salon->removeUser($user);

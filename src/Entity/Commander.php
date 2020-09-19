@@ -97,6 +97,11 @@ class Commander
     protected $water;
 
     /**
+     * @ORM\Column(name="food",type="smallint", options={"unsigned":true})
+     */
+    protected $food;
+
+    /**
      * @ORM\Column(name="bitcoin",type="smallint", options={"unsigned":true})
      */
     protected $bitcoin;
@@ -117,18 +122,19 @@ class Commander
     public function __construct()
     {
         $this->capture = false;
-        $this->soldier = rand(0,5);
-        $this->bitcoin = rand(0,5);
-        $this->water = rand(0,5);
-        $this->niobium = rand(0,5);
-        $this->plasma = rand(0,5);
-        $this->missile = rand(0,5);
-        $this->laser = rand(0,5);
-        $this->armor = rand(0,5);
-        $this->shield = rand(0,5);
-        $this->speed = rand(0,5);
-        $this->name = 'Temporary';
-        $this->cost = $this->getTotalSkills() * 10000;
+        $this->soldier = $this->getSoldierPoints();
+        $this->bitcoin = $this->getBitcoinPoints();
+        $this->water = $this->getWaterPoints();
+        $this->niobium = $this->getNiobiumPoints();
+        $this->food = $this->getFoodPoints();
+        $this->plasma = $this->getPlasmaPoints();
+        $this->missile = $this->getMissilePoints();
+        $this->laser = $this->getLaserPoints();
+        $this->armor = $this->getArmorPoints();
+        $this->shield = $this->getShieldPoints();
+        $this->speed = $this->getSpeedPoints();
+        $this->name = 'Give me a name';
+        $this->cost = $this->getTotalSkills() * 500;
         $this->level = $this->getTotalSkills();
     }
 
@@ -139,6 +145,182 @@ class Commander
     {
         $return = $this->soldier + $this->bitcoin + $this->water + $this->niobium + $this->plasma + $this->missile + $this->laser + $this->armor + $this->shield + $this->speed;
         return $return;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSoldierPoints()
+    {
+        $points = $this->user->getMilitaryField(); // militaries building/soldiers/tanks
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getBitcoinPoints()
+    {
+        $points = $this->user->getEconomicField(); // citizens building/bitcoins
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getWaterPoints()
+    {
+        $points = $this->user->getWaterField(); // waters building/ressources
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getNiobiumPoints()
+    {
+        $points = $this->user->getNiobiumField(); // niobiums building/ressources
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getFoodPoints()
+    {
+        $points = $this->user->getFoodField(); // foods building/ressources
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPlasmaPoints()
+    {
+        $points = $this->user->getPlasmaField(); // plasmas search/ships/points
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMissilePoints()
+    {
+        $points = $this->user->getMissileField(); // missiles search/ships/points
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getLaserPoints()
+    {
+        $points = $this->user->getLaserField(); // lasers search/ships/points
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getArmorPoints()
+    {
+        $points = $this->user->getArmorField(); // armors search/ships/points
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getShieldPoints()
+    {
+        $points = $this->user->getShieldField(); // shields search/ships/points
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getSpeedPoints()
+    {
+        $points = $this->user->getSpeedField(); // speed search/ciblage
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
     }
 
     /**
@@ -379,6 +561,22 @@ class Commander
     public function setWater($water): void
     {
         $this->water = $water;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFood()
+    {
+        return $this->food;
+    }
+
+    /**
+     * @param mixed $food
+     */
+    public function setFood($food): void
+    {
+        $this->food = $food;
     }
 
     /**

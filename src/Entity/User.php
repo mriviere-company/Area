@@ -2184,7 +2184,7 @@ class User implements UserInterface, \Serializable
      */
     public function getLevel(): int
     {
-        $return = 0;
+        $return = 40;
         if ($this->experience < 500) {
             $return = 0;
         } elseif ($this->experience < 2000) {
@@ -2231,41 +2231,41 @@ class User implements UserInterface, \Serializable
             $return = 21;
         } elseif ($this->experience < 18000000) {
             $return = 22;
-        } elseif ($this->experience < 21000000) {
+        } elseif ($this->experience < 24000000) {
             $return = 23;
-        } elseif ($this->experience < 25000000) {
+        } elseif ($this->experience < 30000000) {
             $return = 24;
-        } elseif ($this->experience < 3000000) {
+        } elseif ($this->experience < 50000000) {
             $return = 25;
-        } elseif ($this->experience < 3600000) {
-            $return = 26;
-        } elseif ($this->experience < 4000000) {
-            $return = 27;
-        } elseif ($this->experience < 4600000) {
-            $return = 28;
-        } elseif ($this->experience < 5000000) {
-            $return = 29;
-        } elseif ($this->experience < 5600000) {
-            $return = 30;
-        } elseif ($this->experience < 6000000) {
-            $return = 31;
-        } elseif ($this->experience < 7000000) {
-            $return = 32;
         } elseif ($this->experience < 8000000) {
-            $return = 33;
-        } elseif ($this->experience < 9000000) {
-            $return = 34;
+            $return = 26;
         } elseif ($this->experience < 10000000) {
-            $return = 35;
-        } elseif ($this->experience < 12000000) {
-            $return = 36;
-        } elseif ($this->experience < 14000000) {
-            $return = 37;
-        } elseif ($this->experience < 15000000) {
-            $return = 38;
-        } elseif ($this->experience < 17000000) {
-            $return = 39;
+            $return = 27;
         } elseif ($this->experience < 20000000) {
+            $return = 28;
+        } elseif ($this->experience < 25000000) {
+            $return = 29;
+        } elseif ($this->experience < 50000000) {
+            $return = 30;
+        } elseif ($this->experience < 80000000) {
+            $return = 31;
+        } elseif ($this->experience < 10000000) {
+            $return = 32;
+        } elseif ($this->experience < 20000000) {
+            $return = 33;
+        } elseif ($this->experience < 30000000) {
+            $return = 34;
+        } elseif ($this->experience < 60000000) {
+            $return = 35;
+        } elseif ($this->experience < 125000000) {
+            $return = 36;
+        } elseif ($this->experience < 250000000) {
+            $return = 37;
+        } elseif ($this->experience < 500000000) {
+            $return = 38;
+        } elseif ($this->experience < 800000000) {
+            $return = 39;
+        } elseif ($this->experience < 1000000000) {
             $return = 40;
         }
 

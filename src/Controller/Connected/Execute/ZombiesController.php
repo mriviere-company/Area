@@ -138,7 +138,7 @@ class ZombiesController extends AbstractController
                         $planetAtt->setUser(null);
                     }
                     $em->flush();
-                    if ($zUser->getColPlanets() == 0) {
+                    if ($zUser->getAllPlanets() == 0) {
                         $zUser->setGameOver($zombie->getUserName());
                         $zUser->setGrade(null);
                         foreach ($zUser->getFleets() as $tmpFleet) {

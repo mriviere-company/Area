@@ -133,8 +133,6 @@ function manageTime() {
         secondes = (secondes < 10 && secondes >= 0)  ? '0' + secondes : secondes;
         setInterval(function() {
             if (build < now) {
-                area.html("<span class='text-rouge'>Terminer</span>");
-                area.removeAttr('hidden');
                 setTimeout(function () {
                 }, 2000);
             } else {
@@ -157,6 +155,7 @@ function manageTime() {
                     if (secondes < 0) {
                         if (minutes == 0 && heures == 0 && jours == 0) {
                             area.html("<span class='text-rouge'>Terminer</span>");
+                            area.addAttr('hidden');
                             parentCol.find('div .btn').removeAttr('hidden');
                             parentTr.removeClass('warningBack');
                             parentTr.addClass('availableBack');

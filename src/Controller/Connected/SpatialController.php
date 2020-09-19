@@ -37,6 +37,19 @@ class SpatialController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::planetActivityAction', [
+            'planet' => $usePlanet,
+            'now'  => $now,
+            'em' => $em]);
+
+        if ($seconds->getContent() >= 60) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetGenAction', [
+                'planet' => $usePlanet,
+                'seconds' => $seconds,
+                'now'  => $now,
+                'em' => $em]);
+        }
+
         $form_spatialShip = $this->createForm(SpatialShipType::class);
         $form_spatialShip->handleRequest($request);
 

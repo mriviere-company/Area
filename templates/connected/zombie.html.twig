@@ -37,7 +37,7 @@
                     <table class="table table-striped table-bordered table-dark">
                         <tbody>
                         {% if missionEnded %}
-                            <tr class="availableBack">
+                            <tr>
                                 <td class="center-cells text-more text-center">
                                     <a class="btn btn-lg btn-primary mt-2" href="{{ path('mission_finish_all', {'usePlanet': usePlanet.getId()}) }}">{{ 'zombie.collectAll'|trans }}</a>
                                 </td>
@@ -45,7 +45,7 @@
                         {% endif %}
                         {% for mission in missions %}
                             {% if mission.getLevelMission() %}
-                            <tr class="{% if mission.getMissionAt()|date('d/m/Y H:i:s') <= "now"|date('d/m/Y H:i:s') %}availableBack{% else %}warningBack{% endif %}">
+                            <tr class="{% if mission.getMissionAt()|date('d/m/Y H:i:s') <= "now"|date('d/m/Y H:i:s') %}camo-green{% else %}camo-red{% endif %}">
                                 <td class="center-cells">
                                     <div class="row">
                                         <div class="col-2">

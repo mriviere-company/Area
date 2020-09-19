@@ -29,13 +29,26 @@ class BuildingController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::planetActivityAction', [
+            'planet' => $usePlanet,
+            'now'  => $now,
+            'em' => $em]);
+
+        if ($seconds->getContent() >= 60) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetGenAction', [
+                'planet' => $usePlanet,
+                'seconds' => $seconds,
+                'now'  => $now,
+                'em' => $em]);
+        }
+
         if(($user->getTutorial() == 4)) {
             $user->setTutorial(5);
             $em->flush();
         }
 
         return $this->render('connected/building.html.twig', [
-            'usePlanet' => $usePlanet,
+            'usePlanet' => $usePlanet
         ]);
     }
 

@@ -166,7 +166,7 @@ class ZombieController extends AbstractController
     }
 
     /**
-     * @Route("/finir-mission/{usePlanet}", name="mission_finish_all", requirements={"usePlanet"="\d+"})
+     * @Route("/finir-missions/{usePlanet}", name="mission_finish_all", requirements={"usePlanet"="\d+"})
      */
     public function zombieFinishAllAction(Planet $usePlanet)
     {
@@ -204,7 +204,7 @@ class ZombieController extends AbstractController
             ->andWhere('m.missionAt < :now')
             ->andWhere('m.type <= :level')
             ->setParameters(['user' => $user, 'now' => $now, 'level' => $user->getLevel(),])
-            ->orderBy('m.type', 'DESC')
+            ->orderBy('m.type', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -235,7 +235,8 @@ class ZombieController extends AbstractController
         }
         $planet->setSoldier($planet->getSoldier() - $loseSoldiers);
         $planet->setUranium($planet->getUranium() + $zombieUranium);
-        $user->setZombieAtt($user->getZombieAtt() + $zombieAtt);
+        $diffZombieAtt = $zombieAtt - $user->getZombieAtt();
+        $user->setZombieAtt($zombieAtt);
 
         if ($user->getZombieAtt() <= -150) {
             $user->setZombieAtt(-150);
@@ -245,7 +246,7 @@ class ZombieController extends AbstractController
             $user->setTutorial(53);
         }
 
-        $reportMission->setContent("Voici le rapport de vos missions zombies :<br> Vous gagnez <span class='text-vert'>+" . number_format($zombieUranium) . "</span> uraniums lors de vos recherches ! Vous perdez cependant <span class='text-rouge'>-" . number_format($loseSoldiers) . "</span> soldats.");
+        $reportMission->setContent("Voici le rapport de vos missions zombies :<br><span class='text-vert'>+" . number_format($zombieUranium) . "</span> gains d'uraniums lors de vos recherches !<br><span class='text-vert'>" . number_format($diffZombieAtt) . "</span> menaces zombies. <br><span class='text-rouge'>-" . number_format($loseSoldiers) . "</span> soldats perdus.");
 
         $em->persist($reportMission);
         $em->flush();

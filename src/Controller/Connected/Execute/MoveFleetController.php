@@ -396,6 +396,20 @@ class MoveFleetController extends AbstractController
                             $dTanks = $defender->getTank() > 0 ? $defender->getTank() * 3000 : 0;
                             $soldierDtmp = $defender->getSoldier();
                             $tankDtmp = $defender->getTank();
+
+                            $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::planetActivityAction', [
+                                'planet' => $defender,
+                                'now'  => $now,
+                                'em' => $em]);
+
+                            if ($seconds->getContent() >= 60) {
+                                $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetGenAction', [
+                                    'planet' => $defender,
+                                    'seconds' => $seconds,
+                                    'now'  => $now,
+                                    'em' => $em]);
+                            }
+
                             if ($userDefender->getPoliticSoldierAtt() > 0) {
                                 $dSoldier = $dSoldier * (1 + ($userDefender->getPoliticSoldierAtt() / 10));
                             }
@@ -552,6 +566,20 @@ class MoveFleetController extends AbstractController
                             $soldierDtmp = $defender->getSoldier();
                             $workerDtmp = $defender->getWorker();
                             $tankDtmp = $defender->getTank();
+
+                            $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::planetActivityAction', [
+                                'planet' => $defender,
+                                'now'  => $now,
+                                'em' => $em]);
+
+                            if ($seconds->getContent() >= 60) {
+                                $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetGenAction', [
+                                    'planet' => $defender,
+                                    'seconds' => $seconds,
+                                    'now'  => $now,
+                                    'em' => $em]);
+                            }
+
                             if ($userDefender->getPoliticSoldierAtt() > 0) {
                                 $dSoldier = $dSoldier * (1 + ($userDefender->getPoliticSoldierAtt() / 10));
                             }
@@ -783,7 +811,7 @@ class MoveFleetController extends AbstractController
                                             $em->flush();
                                         }
                                     }
-                                    if($userDefender->getColPlanets() == 0) {
+                                    if($userDefender->getAllPlanets() == 0) {
                                         $userDefender->setGameOver($user->getUserName());
                                         $userDefender->setGrade(null);
                                         if ($user->getExecution()) {

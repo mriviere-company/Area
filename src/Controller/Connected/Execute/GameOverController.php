@@ -25,7 +25,6 @@ class GameOverController extends AbstractController
             $userGO->setSearch(null);
             $em->remove($userGO->getRank(null));
             $userGO->setRank(null);
-            $userGO->setGrade(null);
             $userGO->setJoinAllyAt(null);
             $userGO->setAllyBan(null);
             $userGO->setScientistProduction(1);
@@ -154,6 +153,7 @@ class GameOverController extends AbstractController
                 }
             }
             $userGO->setAlly(null);
+            $userGO->setGrade(null);
 
             foreach ($userGO->getSalons() as $salon) {
                 $salon->removeUser($userGO);

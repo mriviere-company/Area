@@ -74,5 +74,5 @@ popover.motherShip: '<h5  class=''ml-3''>Signature thermique : 20.000<br>Vitesse
 spatial.motherShip: 'Vaisseau mère'
 popover.brouilleurShip: '<h5  class=''ml-3''>Signature thermique : 1000<br>Vitesse : 1.000/lm<hr>Déployer un brouilleur pendant 1h</h5>'
 spatial.brouilleurShip: 'Vaisseau brouilleur'
-quest.tutorial: 'C''est ici que vous produisez les vaisseaux qui constitueront vos flottes et silloneront les galaxies. Pour débuter vous avez une production gratuite, lancez la construction de 10 chasseurs à plasma et 5 corvettes de combats.'
+quest.tutorial: 'C''est ici que vous produisez les vaisseaux qui constitueront vos flottes et silloneront les galaxies. Pour débuter vous avez une production gratuite, cliquez sur construire.'
 quest.tutorialBis: 'Alerte ! Votre planète est attaquée !!! Une flotte remplie de zombies est en orbite de votre planète (l''aperçu de votre planète a droite est rouge pour signaler les intrusions)! Ils viennent de tenter une invasion sur votre planète et ont échoué, ne leur laissez pas le temps de recommencer et dès que vos vaisseaux sont construits créer une flotte pour les détruires.'

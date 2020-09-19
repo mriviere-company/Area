@@ -10,7 +10,7 @@ fleet.seeFlotte: 'gestion flotte'
 fleet.inAir: 'Flottes en mouvement'
 fleet.attitude: Attitude
 fleet.destroy: Abandonner
-fleet.commander: Commandant
+fleet.heroe: Commandant
 fleet.signature: Signature
 fleet.cost: Entretien
 fleet.speed: Vitesse
