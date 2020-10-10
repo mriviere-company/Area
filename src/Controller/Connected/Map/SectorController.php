@@ -25,7 +25,7 @@ class SectorController extends AbstractController
     /**
      * @Route("/carte-spatiale/{sector}/{gal}/{usePlanet}", name="map", requirements={"sector"="\d+", "usePlanet"="\d+", "gal"="\d+"})
      */
-    public function mapAction(Request $request, Sector $sector, Planet $usePlanet, Galaxy $gal)
+    public function mapAction(Request $request, Sector $sector, Galaxy $gal, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();

@@ -30,7 +30,7 @@ class AllPlanetsController extends AbstractController
 
         if ($seconds->getContent() >= 60) {
             $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetsGenAction', [
-                'seconds' => $seconds,
+                'seconds' => $seconds->getContent(),
                 'now'  => $now,
                 'em' => $em]);
         }

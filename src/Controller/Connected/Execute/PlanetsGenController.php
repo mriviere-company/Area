@@ -70,6 +70,7 @@ class PlanetsGenController extends AbstractController
                 } else {
                     $planet->setFood($planet->getFoodMax());
                 }
+                $planet->setLastActivity($now);
                 $em->flush($planet);
             } elseif ($planet->getMoon() == true) {
                 $fdProd = ($planet->getFdProduction() * $seconds) / 60;
@@ -179,6 +180,7 @@ class PlanetsGenController extends AbstractController
             } else {
                 $planet->setFood($planet->getFoodMax());
             }
+            $planet->setLastActivity($now);
             $em->flush($planet);
         } elseif ($planet->getMoon() == true) {
             $fdProd = ($planet->getFdProduction() * $seconds) / 60;
@@ -215,6 +217,7 @@ class PlanetsGenController extends AbstractController
             } else {
                 $planet->setFood($planet->getFoodMax());
             }
+            $planet->setLastActivity($now);
             $em->flush($planet);
         }
         $user->setLastActivity($now);

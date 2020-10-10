@@ -56,7 +56,7 @@ class WarPlanetController extends AbstractController
         if ($seconds->getContent() >= 60) {
             $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetGenAction', [
                 'planet' => $planetDefender,
-                'seconds' => $seconds,
+                'seconds' => $seconds->getContent(),
                 'now'  => $now,
                 'em' => $em]);
         }
@@ -373,7 +373,7 @@ class WarPlanetController extends AbstractController
         if ($seconds->getContent() >= 60) {
             $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetGenAction', [
                 'planet' => $planetDefender,
-                'seconds' => $seconds,
+                'seconds' => $seconds->getContent(),
                 'now'  => $now,
                 'em' => $em]);
         }

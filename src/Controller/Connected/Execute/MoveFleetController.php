@@ -405,7 +405,7 @@ class MoveFleetController extends AbstractController
                             if ($seconds->getContent() >= 60) {
                                 $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetGenAction', [
                                     'planet' => $defender,
-                                    'seconds' => $seconds,
+                                    'seconds' => $seconds->getContent(),
                                     'now'  => $now,
                                     'em' => $em]);
                             }
@@ -575,7 +575,7 @@ class MoveFleetController extends AbstractController
                             if ($seconds->getContent() >= 60) {
                                 $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetGenAction', [
                                     'planet' => $defender,
-                                    'seconds' => $seconds,
+                                    'seconds' => $seconds->getContent(),
                                     'now'  => $now,
                                     'em' => $em]);
                             }

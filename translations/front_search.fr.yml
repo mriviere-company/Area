@@ -45,7 +45,7 @@ title.missile: 'Arme missile'
 title.laser: 'Arme laser'
 title.plasma: 'Arme plasma'
 title.barbed: 'Barbelées'
-title.tank: 'Unitées blindées'
+title.tank: 'Unités blindées'
 title.expansion: 'Expansion territoriale'
 research.canBe: Inactive
 research.Activated: Activée
@@ -63,7 +63,7 @@ research.hyperespace.desc: 'Mais... Mais... Elle est toute petite cette galaxie!
 research.demography.desc: 'Avant de pouvoir construire une ville ou une métropole il serait bien d''apprendre un peu à rénover tout ça.'
 research.discipline.desc: '50 soldats c''est facile à contrôler, 1,000,000 déjà moins, on va étudier tout ça...'
 research.barbed.desc: 'Des barbelées c''est toujours efficace pour consolider ses positions défensives contre l''infanterie.'
-research.tank.desc: 'Pendant longtemps les invasions sont restées du domaine de l''infanterie, c''est finit tout ça ! Place aux unitées blindées mobiles !'
+research.tank.desc: 'Pendant longtemps les invasions sont restées du domaine de l''infanterie, c''est finit tout ça ! Place aux unités blindées mobiles !'
 research.expansion.desc: 'On se sent un peu a l''étroit sur cette planète quand même... Je rajoute un peu de place, ça vous dérange pas ?'
 research.armement.desc: 'Pour pouvoir développer des armes nous allons d''abord développer l''armement dans sa globalité.'
 research.missile.desc: 'Les missiles sont rapides et efficace, ils sont monté sur tous nos vaisseaux.'
