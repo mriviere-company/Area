@@ -18,9 +18,9 @@ class PlanetsGenController extends AbstractController
         }
         foreach ($user->getPlanets() as $planet) {
             if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and $planet->getMoon() == false) {
-                $nbProd = ($planet->getNbProduction() * $seconds) / 60;
-                $wtProd = ($planet->getWtProduction() * $seconds) / 60;
-                $fdProd = ($planet->getFdProduction() * $seconds) / 60;
+                $nbProd = ($planet->getNbProduction() * $seconds) / 600;
+                $wtProd = ($planet->getWtProduction() * $seconds) / 600;
+                $fdProd = ($planet->getFdProduction() * $seconds) / 600;
                 $workerMore = (($planet->getWorkerProduction() * $workerBonus * $seconds) / 60);
 
                 if ($seconds > 129600) {
@@ -128,9 +128,9 @@ class PlanetsGenController extends AbstractController
         }
 
         if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and $planet->getMoon() == false) {
-            $nbProd = ($planet->getNbProduction() * $seconds) / 60;
-            $wtProd = ($planet->getWtProduction() * $seconds) / 60;
-            $fdProd = ($planet->getFdProduction() * $seconds) / 60;
+            $nbProd = ($planet->getNbProduction() * $seconds) / 600;
+            $wtProd = ($planet->getWtProduction() * $seconds) / 600;
+            $fdProd = ($planet->getFdProduction() * $seconds) / 600;
             $workerMore = (($planet->getWorkerProduction() * $workerBonus * $seconds) / 60);
 
             if ($seconds > 129600) {

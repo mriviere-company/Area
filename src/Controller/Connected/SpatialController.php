@@ -125,13 +125,24 @@ class SpatialController extends AbstractController
             $croiser = abs($form_spatialShip->get('croiser')->getData());
             $ironClad = abs($form_spatialShip->get('ironClad')->getData());
             $destroyer = abs($form_spatialShip->get('destroyer')->getData());
-            $niobiumLess = (175000 * $motherShip) + (11000 * $brouilleurShip) + (5000 * $radarShip) + (500000 * $moonMaker) + (8000 * $cargoI) + (22000 * $cargoV) + (45000 * $cargoX) + (20000 * $colonizer) + (10000 * $recycleur) + (15000 * $barge) + (15000 * $sonde) + (250 * $hunter) + (2200 * $fregate) + (400 * $hunterHeavy) + (1000 * $corvet) + (400 * $corvetLaser) + (2000 * $fregatePlasma) + (10000 * $croiser) + (30000 * $ironClad) + (20000 * $destroyer);
-            $waterLess =  (95000 * $motherShip) + (13000 * $brouilleurShip) + (6000 * $radarShip) + (230000 * $moonMaker) + (6500 * $cargoI) + (15000 * $cargoV) + (38000 * $cargoX) + (12000 * $colonizer) + (7000 * $recycleur) + (12000 * $barge) + (50 * $hunter) + (1400 * $fregate) + (80 * $hunterHeavy) + (500 * $corvet) + (2000 * $corvetLaser) + (7000 * $fregatePlasma) + (8000 * $croiser) + (12000 * $ironClad) + (70000 * $destroyer);
-            $workerLess = (2000 * $motherShip) + (20000 * $moonMaker) + (100 * $cargoI) + (200 * $cargoV) + (250 * $cargoX) + (10000 * $colonizer) + (100 * $recycleur) + (25 * $barge) + (1 * $hunterWar) + (5 * $corvetWar) + (1 * $hunter) + (25 * $fregate) + (2 * $hunterHeavy) + (5 * $corvet) + (10 * $corvetLaser) + (50 * $fregatePlasma) + (100 * $croiser) + (80 * $ironClad) + (400 * $destroyer);
-            $soldierLess = (50 * $colonizer);
-            $warPoint = (250000 * $motherShip) + (150 * $hunterWar) + (300 * $corvetWar);
-            $bitcoinLess = (200000 * $moonMaker) + (55000 * $brouilleurShip) +  (25000 * $radarShip);
-            $time = round(((3600 * $motherShip) + (400 * $brouilleurShip) + (200 * $radarShip) + (18000 * $moonMaker) + (300 * $cargoI) + (600 * $cargoV) + (900 * $cargoX) + (10800 * $colonizer) + (400 * $recycleur) + (1800 * $barge) + (2 * $sonde) + (60 * $hunterWar) + (300 * $corvetWar) + (20 * $hunter) + (240 * $fregate) + (32 * $hunterHeavy) + (100 * $corvet) + (160 * $corvetLaser) + (600 * $fregatePlasma) + (1200 * $croiser) + (2800 * $ironClad) + (6000 * $destroyer)) / $usePlanet->getShipProduction() / 10); // X10 NORMAL GAME
+            $all_ships = (object) [['destroyer', $destroyer], ['ironclad', $ironClad], ['croiser', $croiser], ['fregateplasma', $fregatePlasma], ['corvetwar', $corvetWar], ['corvetlaser', $corvetLaser], ['corvet', $corvet], ['hunterheavy', $hunterWar], ['hunterheavy', $hunterHeavy], ['fregate', $fregate], ['sonde', $sonde], ['brouilleurship', $brouilleurShip], ['radarship', $radarShip], ['moonmaker', $moonMaker], ['barge', $barge], ['mothership', $motherShip], ['recycleur', $recycleur], ['colonizer', $colonizer], ['cargox', $cargoX], ['cargov', $cargoV], ['cargoi', $cargoI], ['hunter', $hunter]];
+            $niobiumLess = 0;
+            $waterLess = 0;
+            $workerLess = 0;
+            $soldierLess = 0;
+            $warPoint = 0;
+            $bitcoinLess = 0;
+            $time = 0;
+            foreach ($all_ships as $one_ship) {
+                $niobiumLess = $niobiumLess + $user->getNbShips($one_ship[0], $one_ship[1]);
+                $waterLess = $waterLess + $user->getWtShips($one_ship[0], $one_ship[1]);
+                $workerLess = $workerLess + $user->getWkShips($one_ship[0], $one_ship[1]);
+                $soldierLess = $soldierLess + $user->getSdShips($one_ship[0], $one_ship[1]);
+                $warPoint = $warPoint + $user->getPdgShips($one_ship[0], $one_ship[1]);
+                $bitcoinLess = $bitcoinLess + $user->getBtShips($one_ship[0], $one_ship[1]);
+                $time = $time + $user->getTime($one_ship[0], $one_ship[1], 0);
+            }
+            $time = round($time / $usePlanet->getShipProduction());
             $now->add(new DateInterval('PT' . round($time) . 'S'));
 
             if (($usePlanet->getNiobium() < $niobiumLess || $usePlanet->getWater() < $waterLess) ||

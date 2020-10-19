@@ -1545,43 +1545,43 @@ class User implements UserInterface, \Serializable
     public function getBuildingNiobium($building)
     {
         if('miner' == $building) {
-            return 450;
+            return 45;
         } elseif('extractor' == $building) {
-            return 200;
+            return 20;
         } elseif('farm' == $building) {
-            return 600;
+            return 60;
         } elseif('aeroponicFarm' == $building) {
-            return 6500;
+            return 650;
         } elseif ('niobiumStock' == $building) {
-            return 150000;
-        } elseif ('waterStock' == $building) {
-            return 110000;
-        } elseif ('silos' == $building) {
-            return 200000;
-        } elseif ('centerSearch' == $building) {
-            return 2850;
-        } elseif ('city' == $building) {
             return 15000;
-        } elseif ('metropole' == $building) {
-            return 75000;
-        } elseif ('caserne' == $building) {
-            return 13000;
-        } elseif ('bunker' == $building) {
-            return 200000;
-        } elseif ('nuclearBase' == $building) {
-            return 1000000;
-        } elseif ('spaceShip' == $building) {
-            return 3000;
-        } elseif ('lightUsine' == $building) {
-            return 7000;
-        } elseif ('heavyUsine' == $building) {
-            return 83000;
-        } elseif ('radar' == $building) {
-            return 1200;
-        } elseif ('skyRadar' == $building) {
+        } elseif ('waterStock' == $building) {
+            return 11000;
+        } elseif ('silos' == $building) {
             return 20000;
+        } elseif ('centerSearch' == $building) {
+            return 285;
+        } elseif ('city' == $building) {
+            return 1500;
+        } elseif ('metropole' == $building) {
+            return 7500;
+        } elseif ('caserne' == $building) {
+            return 1300;
+        } elseif ('bunker' == $building) {
+            return 20000;
+        } elseif ('nuclearBase' == $building) {
+            return 100000;
+        } elseif ('spaceShip' == $building) {
+            return 300;
+        } elseif ('lightUsine' == $building) {
+            return 700;
+        } elseif ('heavyUsine' == $building) {
+            return 8300;
+        } elseif ('radar' == $building) {
+            return 120;
+        } elseif ('skyRadar' == $building) {
+            return 2000;
         } elseif ('skyBrouilleur' == $building) {
-            return 51000;
+            return 5100;
         }
         return 0;
     }
@@ -1592,41 +1592,41 @@ class User implements UserInterface, \Serializable
     public function getBuildingWater($building)
     {
         if('miner' == $building) {
-            return 200;
+            return 20;
         } elseif('extractor' == $building) {
-            return 500;
+            return 50;
         } elseif('farm' == $building) {
-            return 900;
+            return 90;
         } elseif('aeroponicFarm' == $building) {
-            return 10000;
+            return 100;
         } elseif ('niobiumStock' == $building) {
-            return 100000;
+            return 10000;
         } elseif ('waterStock' == $building) {
-            return 180000;
+            return 18000;
         } elseif ('silos' == $building) {
-            return 200000;
+            return 20000;
         } elseif ('centerSearch' == $building) {
-            return 3600;
+            return 360;
         } elseif ('city' == $building) {
-            return 11000;
+            return 1100;
         } elseif ('metropole' == $building) {
-            return 55000;
+            return 5500;
         } elseif ('caserne' == $building) {
-            return 19000;
+            return 1900;
         } elseif ('bunker' == $building) {
-            return 190000;
+            return 19000;
         } elseif ('spaceShip' == $building) {
-            return 2000;
+            return 200;
         } elseif ('lightUsine' == $building) {
-            return 3900;
+            return 390;
         } elseif ('heavyUsine' == $building) {
-            return 68000;
+            return 6800;
         } elseif ('radar' == $building) {
-            return 650;
+            return 65;
         } elseif ('skyRadar' == $building) {
-            return 17200;
+            return 1720;
         } elseif ('skyBrouilleur' == $building) {
-            return 32100;
+            return 3210;
         }
         return 0;
     }
@@ -1754,6 +1754,302 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @return mixed
+     */
+    public function getTime($name, $prod, $ext)
+    {
+        $return = 0;
+        if($name == 'barge') {
+            $return = 3600;
+        } elseif ($name == 'mothership') {
+            $return = 14000;
+        } elseif ($name == 'brouilleurship') {
+            $return = 400;
+        } elseif ($name == 'radarship') {
+            $return = 200;
+        } elseif ($name == 'moonmaker') {
+            $return = 18000;
+        } elseif ($name == 'cargoi') {
+            $return = 300;
+        } elseif ($name == 'cargov') {
+            $return = 600;
+        } elseif ($name == 'cargox') {
+            $return = 900;
+        } elseif ($name == 'colonizer') {
+            $return = 10800;
+        } elseif ($name == 'recycleur') {
+            $return = 600;
+        } elseif ($name == 'sonde') {
+            $return = 20;
+        } elseif ($name == 'hunter') {
+            $return = 20;
+        } elseif ($name == 'hunterheavy') {
+            $return = 32;
+        } elseif ($name == 'hunterwar') {
+            $return = 60;
+        } elseif ($name == 'corvet') {
+            $return = 100;
+        } elseif ($name == 'corvetlaser') {
+            $return = 160;
+        } elseif ($name == 'corvetwar') {
+            $return = 300;
+        } elseif ($name == 'fregate') {
+            $return = 240;
+        } elseif ($name == 'fregateplasma') {
+            $return = 600;
+        } elseif ($name == 'croiser') {
+            $return = 1200;
+        } elseif ($name == 'ironclad') {
+            $return = 2800;
+        } elseif ($name == 'destroyer') {
+            $return = 6000;
+        }
+
+        if ($ext == 1) {
+            $return = round(($return / $prod) / 10); // Vitesse de prod
+            if ($return <= 60) {
+                $return = $return . 's';
+            } elseif ($return <= 3600) {
+                $return = round($return / 60) . 'mn';
+            } elseif ($return <= 86400) {
+                $return = round($return / 3600) . 'h';
+            } else {
+                $return = round($return / 86400) . 'j';
+            }
+        } else {
+            $return = round(($return * $prod) / 10); // Vitesse de prod
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNbShips($name, $prod)
+    {
+        $return = 0;
+        if($name == 'barge') {
+            $return = 50000;
+        } elseif ($name == 'mothership') {
+            $return = 175000;
+        } elseif ($name == 'brouilleurship') {
+            $return = 11000;
+        } elseif ($name == 'radarship') {
+            $return = 5000;
+        } elseif ($name == 'moonmaker') {
+            $return = 500000;
+        } elseif ($name == 'cargoi') {
+            $return = 8000;
+        } elseif ($name == 'cargov') {
+            $return = 22000;
+        } elseif ($name == 'cargox') {
+            $return = 45000;
+        } elseif ($name == 'colonizer') {
+            $return = 20000;
+        } elseif ($name == 'recycleur') {
+            $return = 600;
+        } elseif ($name == 'sonde') {
+            $return = 10000;
+        } elseif ($name == 'hunter') {
+            $return = 250;
+        } elseif ($name == 'hunterheavy') {
+            $return = 400;
+        }elseif ($name == 'corvet') {
+            $return = 1000;
+        } elseif ($name == 'corvetlaser') {
+            $return = 400;
+        } elseif ($name == 'fregate') {
+            $return = 2200;
+        } elseif ($name == 'fregateplasma') {
+            $return = 2000;
+        } elseif ($name == 'croiser') {
+            $return = 10000;
+        } elseif ($name == 'ironclad') {
+            $return = 30000;
+        } elseif ($name == 'destroyer') {
+            $return = 20000;
+        }
+
+        $return = round($return / 50);
+        if ($prod >= 0) {
+            $return = round($return * $prod);
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWtShips($name, $prod)
+    {
+        $return = 0;
+        if($name == 'barge') {
+            $return = 35000;
+        } elseif ($name == 'mothership') {
+            $return = 95000;
+        } elseif ($name == 'brouilleurship') {
+            $return = 13000;
+        } elseif ($name == 'radarship') {
+            $return = 6000;
+        } elseif ($name == 'moonmaker') {
+            $return = 230000;
+        } elseif ($name == 'cargoi') {
+            $return = 6500;
+        } elseif ($name == 'cargov') {
+            $return = 15000;
+        } elseif ($name == 'cargox') {
+            $return = 38000;
+        } elseif ($name == 'colonizer') {
+            $return = 12000;
+        } elseif ($name == 'recycleur') {
+            $return = 7000;
+        } elseif ($name == 'hunter') {
+            $return = 50;
+        } elseif ($name == 'hunterheavy') {
+            $return = 80;
+        } elseif ($name == 'corvet') {
+            $return = 500;
+        } elseif ($name == 'corvetlaser') {
+            $return = 2000;
+        } elseif ($name == 'fregate') {
+            $return = 1400;
+        } elseif ($name == 'fregateplasma') {
+            $return = 7000;
+        } elseif ($name == 'croiser') {
+            $return = 8000;
+        } elseif ($name == 'ironclad') {
+            $return = 12000;
+        } elseif ($name == 'destroyer') {
+            $return = 70000;
+        }
+
+        $return = round($return / 50);
+        if ($prod >= 0) {
+            $return = round($return * $prod);
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWkShips($name, $prod)
+    {
+        $return = 0;
+        if($name == 'barge') {
+            $return = 75;
+        } elseif ($name == 'mothership') {
+            $return = 2000;
+        } elseif ($name == 'moonmaker') {
+            $return = 20000;
+        } elseif ($name == 'cargoi') {
+            $return = 100;
+        } elseif ($name == 'cargov') {
+            $return = 200;
+        } elseif ($name == 'cargox') {
+            $return = 250;
+        } elseif ($name == 'colonizer') {
+            $return = 2000;
+        } elseif ($name == 'recycleur') {
+            $return = 100;
+        } elseif ($name == 'hunter') {
+            $return = 1;
+        } elseif ($name == 'hunterheavy') {
+            $return = 2;
+        } elseif ($name == 'hunterwar') {
+            $return = 1;
+        } elseif ($name == 'corvet') {
+            $return = 5;
+        } elseif ($name == 'corvetlaser') {
+            $return = 10;
+        } elseif ($name == 'corvetwar') {
+            $return = 5;
+        } elseif ($name == 'fregate') {
+            $return = 25;
+        } elseif ($name == 'fregateplasma') {
+            $return = 50;
+        } elseif ($name == 'croiser') {
+            $return = 100;
+        } elseif ($name == 'ironclad') {
+            $return = 80;
+        } elseif ($name == 'destroyer') {
+            $return = 400;
+        }
+
+        $return = round($return);
+        if ($prod >= 0) {
+            $return = round($return * $prod);
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSdShips($name, $prod)
+    {
+        $return = 0;
+        if ($name == 'colonizer') {
+            $return = 5;
+        }
+
+        $return = round($return);
+        if ($prod >= 0) {
+            $return = round($return * $prod);
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getBtShips($name, $prod)
+    {
+        $return = 0;
+        if ($name == 'brouilleurship') {
+            $return = 55000;
+        } elseif ($name == 'radarship') {
+            $return = 25000;
+        } elseif ($name == 'moonmaker') {
+            $return = 200000;
+        }
+
+        $return = round($return / 50);
+        if ($prod >= 0) {
+            $return = round($return * $prod);
+        }
+
+        return $return;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPdgShips($name, $prod)
+    {
+        $return = 0;
+        if ($name == 'mothership') {
+            $return = 250000;
+        } elseif ($name == 'hunterwar') {
+            $return = 150;
+        } elseif ($name == 'corvetwar') {
+            $return = 300;
+        }
+
+        $return = round($return / 50);
+        if ($prod >= 0) {
+            $return = round($return * $prod);
+        }
+
+        return $return;
+    }
+
+    /**
      * @return int
      */
     public function getPriceShips($ships): int
@@ -1787,7 +2083,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return int
      */
-    public function getBuildingCost(): int
+    public function getBuildingsCost(): int
     {
         $return = 0;
         foreach($this->planets as $planet) {
@@ -1897,19 +2193,19 @@ class User implements UserInterface, \Serializable
     public function getPriceTroopsProduct($troops): int
     {
         if ($this->politicCostSoldier > 0) {
-            $sPrice = 1 / (1 + ($this->politicCostSoldier / 10));
+            $sPrice = 0.1 / (1 + ($this->politicCostSoldier / 10));
         } else {
-            $sPrice = 1;
+            $sPrice = 0.1;
         }
         if ($this->politicCostTank > 0) {
-            $tPrice = 8 / (1 + ($this->politicCostTank / 5));
+            $tPrice = 2 / (1 + ($this->politicCostTank / 5));
         } else {
-            $tPrice = 8;
+            $tPrice = 2;
         }
         if ($this->politicCostScientist > 0) {
-            $scPrices = 100 / (1 + ($this->politicCostScientist / 5));
+            $scPrices = 2 / (1 + ($this->politicCostScientist / 5));
         } else {
-            $scPrices = 200;
+            $scPrices = 2;
         }
         $troops['soldierAtNbr'] = $troops['soldierAtNbr'] * $sPrice;
         $troops['tankAtNbr'] = $troops['tankAtNbr'] * $tPrice;
@@ -1924,19 +2220,19 @@ class User implements UserInterface, \Serializable
     public function getPriceTroopsPlanet($troops): int
     {
         if ($this->politicCostSoldier > 0) {
-            $sPrice = 1 / (1 + ($this->politicCostSoldier / 10));
+            $sPrice = 0.1 / (1 + ($this->politicCostSoldier / 10));
         } else {
-            $sPrice = 1;
+            $sPrice = 0.1;
         }
         if ($this->politicCostTank > 0) {
-            $tPrice = 8 / (1 + ($this->politicCostTank / 5));
+            $tPrice = 2 / (1 + ($this->politicCostTank / 5));
         } else {
-            $tPrice = 8;
+            $tPrice = 2;
         }
         if ($this->politicCostScientist > 0) {
-            $scPrice = 100 / (1 + ($this->politicCostScientist / 5));
+            $scPrice = 2 / (1 + ($this->politicCostScientist / 5));
         } else {
-            $scPrice = 200;
+            $scPrice = 2;
         }
         $troops['soldier'] = $troops['soldier'] * $sPrice;
         $troops['tank'] = $troops['tank'] * $tPrice;
@@ -1951,19 +2247,19 @@ class User implements UserInterface, \Serializable
     public function getPriceTroopsFleet($troops): int
     {
         if ($this->politicCostSoldier > 0) {
-            $sPrices = 6 / ( 1 + ($this->politicCostSoldier / 10));
+            $sPrices = 0.6 / ( 1 + ($this->politicCostSoldier / 10));
         } else {
-            $sPrices = 6;
+            $sPrices = 0.6;
         }
         if ($this->politicCostTank > 0) {
-            $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
+            $tPrices = 100 / (1 + ($this->politicCostTank / 5));
         } else {
-            $tPrices = 1000;
+            $tPrices = 100;
         }
         if ($this->politicCostScientist > 0) {
-            $scPrices = 100 / (1 + ($this->politicCostScientist / 5));
+            $scPrices = 2 / (1 + ($this->politicCostScientist / 5));
         } else {
-            $scPrices = 200;
+            $scPrices = 2;
         }
         $troops['fsoldier'] = $troops['fsoldier'] * $sPrices;
         $troops['ftank'] = $troops['ftank'] * $tPrices;
@@ -1979,25 +2275,25 @@ class User implements UserInterface, \Serializable
     {
         $return = 0;
         if ($this->politicCostSoldier > 0) {
-            $sPrice = 1 / (1 + ($this->politicCostSoldier / 10));
-            $sPrices = 6 / ( 1 + ($this->politicCostSoldier / 10));
+            $sPrice = 0.1 / (1 + ($this->politicCostSoldier / 10));
+            $sPrices = 0.6 / ( 1 + ($this->politicCostSoldier / 10));
         } else {
-            $sPrice = 1;
-            $sPrices = 6;
+            $sPrice = 0.1;
+            $sPrices = 0.6;
         }
         if ($this->politicCostTank > 0) {
-            $tPrice = 8 / (1 + ($this->politicCostTank / 5));
-            $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
+            $tPrice = 2 / (1 + ($this->politicCostTank / 5));
+            $tPrices = 100 / (1 + ($this->politicCostTank / 5));
         } else {
-            $tPrice = 8;
-            $tPrices = 1000;
+            $tPrice = 2;
+            $tPrices = 100;
         }
         if ($this->politicCostScientist > 0) {
-            $scPrice = 100 / (1 + ($this->politicCostScientist / 5));
-            $scPrices = 200 / (1 + ($this->politicCostScientist / 5));
+            $scPrice = 2 / (1 + ($this->politicCostScientist / 5));
+            $scPrices = 2 / (1 + ($this->politicCostScientist / 5));
         } else {
-            $scPrice = 100;
-            $scPrices = 200;
+            $scPrice = 2;
+            $scPrices = 2;
         }
         foreach($this->planets as $planet) {
             $return = $return + ($planet->getSoldier() * $sPrice);
@@ -2021,11 +2317,11 @@ class User implements UserInterface, \Serializable
     public function getSoldierPrice($cat): int
     {
         if ($this->politicCostSoldier > 0) {
-            $sPrice = 1 / (1 + ($this->politicCostSoldier / 10));
-            $sPrices = 6 / ( 1 + ($this->politicCostSoldier / 10));
+            $sPrice = 0.1 / (1 + ($this->politicCostSoldier / 10));
+            $sPrices = 0.6 / ( 1 + ($this->politicCostSoldier / 10));
         } else {
-            $sPrice = 1;
-            $sPrices = 6;
+            $sPrice = 0.1;
+            $sPrices = 0.6;
         }
         if ($cat == 1) {
             return $sPrice;
@@ -2041,11 +2337,11 @@ class User implements UserInterface, \Serializable
     public function getTankPrice($cat): int
     {
         if ($this->politicCostTank > 0) {
-            $tPrice = 8 / (1 + ($this->politicCostTank / 5));
-            $tPrices = 1000 / (1 + ($this->politicCostTank / 5));
+            $tPrice = 2 / (1 + ($this->politicCostTank / 5));
+            $tPrices = 100 / (1 + ($this->politicCostTank / 5));
         } else {
-            $tPrice = 8;
-            $tPrices = 1000;
+            $tPrice = 2;
+            $tPrices = 100;
         }
         if ($cat == 1) {
             return $tPrice;
@@ -2061,11 +2357,11 @@ class User implements UserInterface, \Serializable
     public function getScientistPrice($cat): int
     {
         if ($this->politicCostScientist > 0) {
-            $scPrice = 100 / (1 + ($this->politicCostScientist / 5));
-            $scPrices = 200 / (1 + ($this->politicCostScientist / 5));
+            $scPrice = 2 / (1 + ($this->politicCostScientist / 5));
+            $scPrices = 2 / (1 + ($this->politicCostScientist / 5));
         } else {
-            $scPrice = 100;
-            $scPrices = 200;
+            $scPrice = 2;
+            $scPrices = 2;
         }
         if ($cat == 1) {
             return $scPrice;
@@ -2296,7 +2592,7 @@ class User implements UserInterface, \Serializable
             $bonus = 1;
         }
         foreach($this->planets as $planet) {
-            $return = $return + ($planet->getNbProduction() * 60) * $bonus;
+            $return = $return + ($planet->getNbProduction() * 6) * $bonus;
         }
         return $return;
     }

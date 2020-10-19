@@ -71,7 +71,7 @@ class DailyController extends AbstractController
                 $planetPoint = $planetPoint + $planet->getBuildingPoint();
                 $buildingCost = $buildingCost + $planet->getBuildingCost();
             }
-            $gain = $worker;
+            $gain = $worker / 100;
             $lose = null;
             if($ally) {
                 if ($user->getBot() == false) {
@@ -243,9 +243,14 @@ class DailyController extends AbstractController
 
         $x = 1;
         foreach ($usersUp as $user) {
-            $user->getRank()->setOldPosition($user->getRank()->getPosition());
-            $user->getRank()->setPosition($x);
-            $x++;
+            if ($user->getBot() == false) {
+                $user->getRank()->setOldPosition($user->getRank()->getPosition());
+                $user->getRank()->setPosition($x);
+                $x++;
+            } else {
+                $user->getRank()->setOldPosition(0);
+                $user->getRank()->setPosition(0);
+            }
         }
 
         $allys = $em->getRepository('App:Ally')->findAll();

@@ -323,7 +323,7 @@ class DestroyController extends AbstractController
         $newSky = $usePlanet->getSkyPlace() - $user->getBuildingSkyPlace('spaceShip');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now)
-            || $usePlanet->getProduct()) {
+            || ($usePlanet->getProduct() && $level < 1)) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         $now->add(new DateInterval('PT' . 180 . 'S'));

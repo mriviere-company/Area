@@ -94,7 +94,7 @@ class DeployController extends AbstractController
         $planet = $fleet->getPlanet();
 
         if($fleet->getMoonMaker() && $planet->getEmpty() == true && $planet->getCdr() == false &&
-            $planet->getNbCdr() > 10000000 && $planet->getWtCdr() > 10000000) {
+            $planet->getNbCdr() > 750000 && $planet->getWtCdr() > 750000) {
             $fleet->setMoonMaker($fleet->getMoonMaker() - 1);
             $planet->setUser($fleet->getUser());
             $planet->setEmpty(false);
@@ -105,19 +105,19 @@ class DeployController extends AbstractController
             $planet->setName('Lune');
             $image = ['moon1.png', 'moon2.png', 'moon3.png', 'moon4.png', 'moon5.png'];
             $planet->setImageName($image[rand(0, 4)]);
-            if ($planet->getNbCdr() < 10000000 && $planet->getWtCdr() < 10000000) {
+            if ($planet->getNbCdr() < 750000 && $planet->getWtCdr() < 750000) {
                 $planet->setGround(rand(100, 150));
                 $planet->setSky(rand(10, 25));
-            } elseif ($planet->getNbCdr() < 20000000 && $planet->getWtCdr() < 20000000) {
+            } elseif ($planet->getNbCdr() < 1000000 && $planet->getWtCdr() < 1000000) {
                 $planet->setGround(rand(150, 180));
                 $planet->setSky(rand(8, 23));
-            } elseif ($planet->getNbCdr() < 50000000 && $planet->getWtCdr() < 50000000) {
+            } elseif ($planet->getNbCdr() < 2000000 && $planet->getWtCdr() < 2000000) {
                 $planet->setGround(rand(180, 210));
                 $planet->setSky(rand(6, 21));
-            } elseif ($planet->getNbCdr() < 100000000 && $planet->getWtCdr() < 100000000) {
+            } elseif ($planet->getNbCdr() < 4000000 && $planet->getWtCdr() < 4000000) {
                 $planet->setGround(rand(210, 240));
                 $planet->setSky(rand(4, 19));
-            } elseif ($planet->getNbCdr() < 200000000 && $planet->getWtCdr() < 200000000) {
+            } elseif ($planet->getNbCdr() < 8000000 && $planet->getWtCdr() < 8000000) {
                 $planet->setGround(rand(240, 280));
                 $planet->setSky(rand(2, 17));
             } else {

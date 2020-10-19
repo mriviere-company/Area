@@ -1384,7 +1384,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                let delPoint = $(this).find('.niobiumProduct').text().replace('.', '');
+                let delPoint = $(this).find('.niobiumProduct').text().replace(',', '');
                 if (niobium == 0) {
                     niobium = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1394,7 +1394,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                let delPoint = $(this).find('.waterProduct').text().replace('.', '');
+                let delPoint = $(this).find('.waterProduct').text().replace(',', '');
                 if (water == 0) {
                     water = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1404,7 +1404,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                let delPoint = $(this).find('.workerProduct').text().replace('.', '');
+                let delPoint = $(this).find('.workerProduct').text().replace(',', '');
                 if (worker == 0) {
                     worker = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1414,7 +1414,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                let delPoint = $(this).find('.soldierProduct').text().replace('.', '');
+                let delPoint = $(this).find('.soldierProduct').text().replace(',', '');
                 if (soldier == 0) {
                     soldier = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1424,7 +1424,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                let delPoint = $(this).find('.bitcoinProduct').text().replace('.', '');
+                let delPoint = $(this).find('.bitcoinProduct').text().replace(',', '');
                 if (bitcoin == 0) {
                     bitcoin = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1434,7 +1434,7 @@ function manageTotalShip() {
         });
         $('tr').each( function(){
             if($(this).find('.nbrProduct').val() > 0) {
-                let delPoint = $(this).find('.pdgProduct').text().replace('.', '');
+                let delPoint = $(this).find('.pdgProduct').text().replace(',', '');
                 if (product == 0) {
                     pdg = parseFloat($(this).find('.nbrProduct').val() * delPoint);
                 } else {
@@ -1444,37 +1444,41 @@ function manageTotalShip() {
         });
         let re = new RegExp(',', 'g')
         if(niobium <= parseFloat($('#niobium').text().replace(re, ''))) {
-            $('#niobiumProduct').text(niobium);
+            $('#niobiumProduct').text(formatNumber(niobium));
         } else {
-            $('#niobiumProduct').html("<span class='text-rouge'>" + niobium + "</span>");
+            $('#niobiumProduct').html("<span class='text-rouge'>" + formatNumber(niobium) + "</span>");
         }
         if(water <= parseFloat($('#water').text().replace(re, ''))) {
-            $('#waterProduct').text(water);
+            $('#waterProduct').text(formatNumber(water));
         } else {
-            $('#waterProduct').html("<span class='text-rouge'>" + water + "</span>");
+            $('#waterProduct').html("<span class='text-rouge'>" + formatNumber(water) + "</span>");
         }
         if(worker <= parseFloat($('#worker').text().replace(re, ''))) {
-            $('#workerProduct').text(worker);
+            $('#workerProduct').text(formatNumber(worker));
         } else {
-            $('#workerProduct').html("<span class='text-rouge'>" + worker + "</span>");
+            $('#workerProduct').html("<span class='text-rouge'>" + formatNumber(worker) + "</span>");
         }
         if(soldier <= parseFloat($('#soldier').text().replace(re, ''))) {
-            $('#soldierProduct').text(soldier);
+            $('#soldierProduct').text(formatNumber(soldier));
         } else {
-            $('#soldierProduct').html("<span class='text-rouge'>" + soldier + "</span>");
+            $('#soldierProduct').html("<span class='text-rouge'>" + formatNumber(soldier) + "</span>");
         }
         if(bitcoin <= parseFloat($('#bitcoin').text().replace(re, ''))) {
-            $('#bitcoinProduct').text(bitcoin);
+            $('#bitcoinProduct').text(formatNumber(bitcoin));
         } else {
-            $('#bitcoinProduct').html("<span class='text-rouge'>" + bitcoin + "</span>");
+            $('#bitcoinProduct').html("<span class='text-rouge'>" + formatNumber(bitcoin) + "</span>");
         }
         if(pdg <= parseFloat($('#pdg').text().replace(re, ''))) {
-            $('#pdgProduct').text(pdg);
+            $('#pdgProduct').text(formatNumber(pdg));
         } else {
-            $('#pdgProduct').html("<span class='text-rouge'>" + pdg + "</span>");
+            $('#pdgProduct').html("<span class='text-rouge'>" + formatNumber(pdg) + "</span>");
         }
-        $('#nbrProduct').text(product);
+        $('#nbrProduct').text(formatNumber(product));
     });
+}
+
+function formatNumber(num) {
+    return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
 
 function manageZbMission() {
