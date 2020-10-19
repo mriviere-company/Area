@@ -102,7 +102,7 @@ class WarPlanetController extends AbstractController
                 if ($userDefender->getZombie() == 0) {
                     $warPointDef = round($aMilitary);
                     if ($user->getPoliticPdg() > 0) {
-                        $warPointDef = round(($warPointDef * (1 + ($user->getPoliticPdg() / 10))) / 50);
+                        $warPointDef = round(($warPointDef * (1 + ($user->getPoliticPdg() / 10))) / 500);
                     }
                     $userDefender->getRank()->setWarPoint($userDefender->getRank()->getWarPoint() + $warPointDef);
                 }
@@ -171,7 +171,7 @@ class WarPlanetController extends AbstractController
                 if ($user->getPoliticPdg() > 0) {
                     $warPointAtt = round($warPointAtt * (1 + ($user->getPoliticPdg() / 10)));
                 }
-                $warPointAtt = round($warPointAtt / 60);
+                $warPointAtt = round($warPointAtt / 600);
                 $diviser = (1 + ($user->getPoliticSoldierAtt() / 10)) * $alea;
                 $aMilitary = $aMilitary - $dMilitary;
                 $fleet->setSoldier(abs($soldierAtmpTotal + round($aMilitary / $diviser)));
@@ -213,7 +213,7 @@ class WarPlanetController extends AbstractController
                         number_format($warPointAtt) . "</span> points de Guerre.");
 
                 } else {
-                    $warPointAtt = $warPointAtt / 5;
+                    $warPointAtt = $warPointAtt / 50;
                     $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $warPointAtt);
                     $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
                     if ($userDefender->getZombie() == 0) {
@@ -406,7 +406,7 @@ class WarPlanetController extends AbstractController
             if($dMilitary >= $aMilitary) {
                 $warPointDef = round($aMilitary);
                 if ($userDefender->getPoliticPdg() > 0) {
-                    $warPointDef = round(($warPointDef * (1 + ($userDefender->getPoliticPdg() / 10))) / 50);
+                    $warPointDef = round(($warPointDef * (1 + ($userDefender->getPoliticPdg() / 10))) / 500);
                 }
                 $userDefender->getRank()->setWarPoint($userDefender->getRank()->getWarPoint() + $warPointDef);
                 if($barge < $fleet->getSoldier()) {
@@ -449,9 +449,9 @@ class WarPlanetController extends AbstractController
                     "</span> tanks. Tous vos soldats sont morts et vos barges sont restées sur la planète.<br>La prochaine fois, préparez votre attaque commandant.");
 
             } else {
-                $warPointAtt = round($soldierDtmp?$soldierDtmp:1 + $tankDtmp);
+                $warPointAtt = round($soldierDtmp ? $soldierDtmp : 1 + $tankDtmp);
                 if ($fleet->getUser()->getPoliticPdg() > 0) {
-                    $warPointAtt = round(($warPointAtt * (1 + ($fleet->getUser()->getPoliticPdg() / 10))) / 60);
+                    $warPointAtt = round(($warPointAtt * (1 + ($fleet->getUser()->getPoliticPdg() / 10))) / 600);
                 }
                 $diviser = (1 + ($user->getPoliticSoldierAtt() / 10)) * 6;
                 $aMilitary = $aMilitary - $dMilitary;

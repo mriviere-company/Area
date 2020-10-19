@@ -74,8 +74,8 @@ class MarketController extends AbstractController
             }
 
             $user->setBitcoin($user->getBitcoin() + abs($form_market->get('bitcoin')->getData()));
-            $planetBuy->setSoldier($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() / 25));
-            $planetBuy->setWorker($planetBuy->getWorker() + abs($form_market->get('worker')->getData() / 5));
+            $planetBuy->setSoldier($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() / 3));
+            $planetBuy->setWorker($planetBuy->getWorker() + abs($form_market->get('worker')->getData() / 2));
             $user->getRank()->setWarPoint($user->getRank()->getWarPoint() - $cost);
             $quest = $user->checkQuests('pdg');
             if($quest) {

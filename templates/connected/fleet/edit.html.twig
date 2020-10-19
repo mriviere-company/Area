@@ -81,7 +81,7 @@
                                     {{ 'fleet.rec'|trans }}
                                 </td>
                                 <td class="p-1 pl-3">
-                                    {{ 'fleet.recyclage'|trans }} {% if fleet.getRecycleAt() %}<span class="timerArea" hidden>{{ fleet.getRecycleAt()|date('Y/m/d H:i:s') }}</span>{% else %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'click.recycle'|trans }}" class="float-right"><a href="{{ path('recycle_again', {'usePlanet': usePlanet.getId(), 'fleet': fleet.getId()}) }}">{{ 'fleet.recycleAgain'|trans }}</a></span>{% endif %} <span class="float-right mr-4">{{ (fleet.getRecycleur() * (2000 + (app.user.getPoliticRecycleur() * 400)))|number_format }} / 5mins</span>
+                                    {{ 'fleet.recyclage'|trans }} {% if fleet.getRecycleAt() %}<span class="timerArea" hidden>{{ fleet.getRecycleAt()|date('Y/m/d H:i:s') }}</span>{% else %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'click.recycle'|trans }}" class="float-right"><a href="{{ path('recycle_again', {'usePlanet': usePlanet.getId(), 'fleet': fleet.getId()}) }}">{{ 'fleet.recycleAgain'|trans }}</a></span>{% endif %} <span class="float-right mr-4">{{ (fleet.getRecycleur() * (50 + (app.user.getPoliticRecycleur() * 400)))|number_format }} / 5mins</span>
                                 </td>
                             </tr>
                         {% endif %}

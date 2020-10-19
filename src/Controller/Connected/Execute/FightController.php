@@ -410,7 +410,7 @@ class FightController extends AbstractController
                 $attackerLose->getUser()->setViewReport(false);
                 $planet = $attackerLose->getPlanet();
 
-                $newWarPoint = $warPointB;
+                $newWarPoint = $warPointB / 10;
                 if ($attackerLose->getUser()->getPoliticPdg() > 0) {
                     $newWarPoint = round($newWarPoint * (1 + ($attackerLose->getUser()->getPoliticPdg() / 10)));
                 }
@@ -449,7 +449,7 @@ class FightController extends AbstractController
                 $em->remove($attackerLose);
             }
             foreach($blockDef as $defenderWin) {
-                $newWarPoint = $warPointA;
+                $newWarPoint = $warPointA / 10;
                 if ($defenderWin->getUser()->getPoliticPdg() > 0) {
                     $newWarPoint = round($newWarPoint * (1 + ($defenderWin->getUser()->getPoliticPdg() / 10)));
                 }
@@ -567,7 +567,7 @@ class FightController extends AbstractController
                 $reportLoseB->setContent($reportLoseB->getContent() . "Vous avez perdu le combat en (" . "<span><a href='/connect/carte-spatiale/" . $defenderLose->getPlanet()->getSector()->getPosition() . "/" . $defenderLose->getPlanet()->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defenderLose->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $defenderLose->getPlanet()->getSector()->getPosition() . ":" . $defenderLose->getPlanet()->getPosition() . "</a></span>) , vos adversaires remportent " . number_format($warPointB) . " points de Guerre.");
                 $defenderLose->getUser()->setViewReport(false);
                 $planet = $defenderLose->getPlanet();
-                $newWarPoint = $warPointA;
+                $newWarPoint = $warPointA / 10;
                 if ($defenderLose->getUser()->getPoliticPdg() > 0) {
                     $newWarPoint = round($newWarPoint * (1 + ($defenderLose->getUser()->getPoliticPdg() / 10)));
                 }
@@ -605,7 +605,7 @@ class FightController extends AbstractController
                 $em->remove($defenderLose);
             }
             foreach($blockAtt as $attackerWin) {
-                $newWarPoint = $warPointB;
+                $newWarPoint = $warPointB / 10;
                 if ($attackerWin->getUser()->getPoliticPdg() > 0) {
                     $newWarPoint = round($newWarPoint * (1 + ($attackerWin->getUser()->getPoliticPdg() / 10)));
                 }

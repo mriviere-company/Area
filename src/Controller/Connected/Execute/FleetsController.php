@@ -97,9 +97,9 @@ class FleetsController extends AbstractController
         $tmpNoCdr->add(new DateInterval('PT' . 300 . 'S'));
         foreach ($fleetCdrs as $fleetCdr) {
             if ($fleetCdr->getUser()->getPoliticRecycleur() > 0) {
-                $recycle = $fleetCdr->getRecycleur() * (1000 + ($fleetCdr->getUser()->getPoliticRecycleur() * 400));
+                $recycle = $fleetCdr->getRecycleur() * (50 + ($fleetCdr->getUser()->getPoliticRecycleur() * 400));
             } else {
-                $recycle = $fleetCdr->getRecycleur() * 1000;
+                $recycle = $fleetCdr->getRecycleur() * 50;
             }
             $planetCdr = $fleetCdr->getPlanet();
             if ($fleetCdr->getCargoPlace() > ($fleetCdr->getCargoFull() + ($recycle * 2))) {

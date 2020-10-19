@@ -50,21 +50,21 @@
                                     <td>{{ quest.name|trans|raw }}</td>
                                     <td>{{ quest.gain|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.png') }}"></td>
                                     <td>
-                                        {% if quest.gain == 2500 %}
+                                        {% if quest.gain == 25 %}
                                             <div class="text-or glyphicon glyphicon-star"></div>
-                                        {% elseif quest.gain == 5000 %}
-                                            <div class="text-or glyphicon glyphicon-star"></div>
-                                            <div class="text-or glyphicon glyphicon-star"></div>
-                                        {% elseif quest.gain == 10000 %}
+                                        {% elseif quest.gain == 50 %}
                                             <div class="text-or glyphicon glyphicon-star"></div>
                                             <div class="text-or glyphicon glyphicon-star"></div>
-                                            <div class="text-or glyphicon glyphicon-star"></div>
-                                        {% elseif quest.gain == 20000 %}
+                                        {% elseif quest.gain == 100 %}
                                             <div class="text-or glyphicon glyphicon-star"></div>
                                             <div class="text-or glyphicon glyphicon-star"></div>
                                             <div class="text-or glyphicon glyphicon-star"></div>
+                                        {% elseif quest.gain == 200 %}
                                             <div class="text-or glyphicon glyphicon-star"></div>
-                                        {% elseif quest.gain == 40000 %}
+                                            <div class="text-or glyphicon glyphicon-star"></div>
+                                            <div class="text-or glyphicon glyphicon-star"></div>
+                                            <div class="text-or glyphicon glyphicon-star"></div>
+                                        {% elseif quest.gain == 400 %}
                                             <div class="text-or glyphicon glyphicon-star"></div>
                                             <div class="text-or glyphicon glyphicon-star"></div>
                                             <div class="text-or glyphicon glyphicon-star"></div>

@@ -206,9 +206,9 @@ class MoveFleetController extends AbstractController
                                 $reportSell->setTitle("Vente aux marchands");
                                 $reportSell->setImageName("sell_report.jpg");
                                 if ($user->getPoliticPdg() > 0) {
-                                    $newWarPointS = round((((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6) + ($fleet->getTank() * 5) + ($fleet->getUranium() * 10)) / 5000)) * (1 + ($user->getPoliticPdg() / 10)));
+                                    $newWarPointS = round((((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6) + ($fleet->getTank() * 5) + ($fleet->getUranium() * 10)) / 50000)) * (1 + ($user->getPoliticPdg() / 10)));
                                 } else {
-                                    $newWarPointS = round((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6) + ($fleet->getTank() * 5) + ($fleet->getUranium() * 10)) / 5000);
+                                    $newWarPointS = round((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6) + ($fleet->getTank() * 5) + ($fleet->getUranium() * 10)) / 50000);
                                 }
                                 if ($user->getPoliticMerchant() > 0) {
                                     $gainSell = (($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10) + ($fleet->getTank() * 2500) + ($fleet->getUranium() * 5000)) * (1 + ($user->getPoliticMerchant() / 20));
@@ -439,7 +439,7 @@ class MoveFleetController extends AbstractController
                                 if($dMilitary >= $aMilitary) {
                                     $warPointDef = round($aMilitary);
                                     if ($userDefender->getPoliticPdg() > 0) {
-                                        $warPointDef = round(($warPointDef * (1 + ($userDefender->getPoliticPdg() / 10))) / 50);
+                                        $warPointDef = round(($warPointDef * (1 + ($userDefender->getPoliticPdg() / 10))) / 500);
                                     }
                                     $userDefender->getRank()->setWarPoint($userDefender->getRank()->getWarPoint() + $warPointDef);
                                     if($barge < $fleet->getSoldier()) {
@@ -621,7 +621,7 @@ class MoveFleetController extends AbstractController
                                     if ($userDefender->getZombie() == 0) {
                                         $warPointDef = round($aMilitary);
                                         if ($user->getPoliticPdg() > 0) {
-                                            $warPointDef = round(($warPointDef * (1 + ($user->getPoliticPdg() / 10))) / 50);
+                                            $warPointDef = round(($warPointDef * (1 + ($user->getPoliticPdg() / 10))) / 500);
                                         }
                                         $userDefender->getRank()->setWarPoint($userDefender->getRank()->getWarPoint() + $warPointDef);
                                     }
@@ -690,7 +690,7 @@ class MoveFleetController extends AbstractController
                                     if ($user->getPoliticPdg() > 0) {
                                         $warPointAtt = round($warPointAtt * (1 + ($user->getPoliticPdg() / 10)));
                                     }
-                                    $warPointAtt = round($warPointAtt / 60);
+                                    $warPointAtt = round($warPointAtt / 600);
                                     $diviser = (1 + ($user->getPoliticSoldierAtt() / 10)) * $alea;
                                     $aMilitary = $aMilitary - $dMilitary;
                                     $fleet->setSoldier(abs($soldierAtmpTotal + round($aMilitary / $diviser)));
@@ -731,7 +731,7 @@ class MoveFleetController extends AbstractController
                                             number_format($warPointAtt) . "</span> points de Guerre.");
 
                                     } else {
-                                        $warPointAtt = $warPointAtt / 5;
+                                        $warPointAtt = $warPointAtt / 50;
                                         $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $warPointAtt);
                                         $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
                                         if ($userDefender->getZombie() == 0) {

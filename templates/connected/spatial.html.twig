@@ -5,8 +5,8 @@
 {% block title %}{{ 'title'|trans }}{% endblock %}
 
 {% block body %}
-    {% set bargeBonus = 1000 * (1 + (app.user.getPoliticBarge() / 4)) %}
-    {% set recycleurBonus = 500 + (app.user.getPoliticRecycleur() * 200) %}
+    {% set bargeBonus = 100 * (1 + (app.user.getPoliticBarge() / 4)) %}
+    {% set recycleurBonus = 50 + (app.user.getPoliticRecycleur() * 200) %}
     {% set cargoBonus = 1.2 + (app.user.getPoliticCargo() / 5) %}
     {% for message in app.flashes('fail') %}
         <div class="flash-notice mt-5 alerte-flash-error text-center">

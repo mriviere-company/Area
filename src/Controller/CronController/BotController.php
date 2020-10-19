@@ -537,7 +537,6 @@ class BotController extends AbstractController
             $construction->setPlanet($usePlanet);
             $usePlanet->setGroundPlace($newGround);
             $usePlanet->setSkyPlace($newSky);
-            $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + rand(100, 3000));
             $em->persist($construction);
         } else {
             $now->add(new DateInterval('PT' . round($level * $time) . 'S'));
@@ -545,7 +544,6 @@ class BotController extends AbstractController
             $usePlanet->setSkyPlace($newSky);
             $usePlanet->setConstruct($building);
             $usePlanet->setConstructAt($now);
-            $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + rand(100, 3000));
         }
         $em->flush();
 

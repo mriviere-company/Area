@@ -102,8 +102,6 @@ class BuildingController extends AbstractController
                 $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
                 $usePlanet->setWater($usePlanetWt - ($level * $water));
                 $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
-            } else {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + rand(100, 3000));
             }
             $em->persist($construction);
             if(($user->getTutorial() == 6)) {
@@ -119,8 +117,6 @@ class BuildingController extends AbstractController
                 $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
                 $usePlanet->setWater($usePlanetWt - ($level * $water));
                 $user->getRank()->setWarPoint($userPdg - ($level * $pdg));
-            } else {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + rand(100, 3000));
             }
             if(($user->getTutorial() == 5)) {
                 $user->setTutorial(6);
