@@ -2070,12 +2070,12 @@ class User implements UserInterface, \Serializable
         $return = 0;
         foreach($this->planets as $planet) {
             if($planet->getProduct()) {
-                $return = $return + $planet->getProduct()->getNbrSignatures();
+                $return = $return + $planet->getProduct()->getNbrSignatures() / 12;
             }
-            $return = $return + ($planet->getNbrSignatures() / 2);
+            $return = $return + ($planet->getNbrSignatures() / 12);
         }
         foreach($this->fleets as $fleet) {
-            $return = $return + ($fleet->getNbrSignatures() * 6);
+            $return = $return + ($fleet->getNbrSignatures() / 2);
         }
         return $return;
     }
@@ -2609,7 +2609,7 @@ class User implements UserInterface, \Serializable
             $bonus = 1;
         }
         foreach($this->planets as $planet) {
-            $return = $return + ($planet->getWtProduction() * 60) * $bonus;
+            $return = $return + ($planet->getWtProduction() * 6) * $bonus;
         }
         return $return;
     }

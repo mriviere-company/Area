@@ -29,17 +29,17 @@ class PlanetsController extends AbstractController
                 $planet->setFdProduction(($planet->getAeroponicFarm() * 25));
             } elseif ($build == 'niobiumStock') {
                 $planet->setNiobiumStock($planet->getNiobiumStock() + 1);
-                $planet->setNiobiumMax($planet->getNiobiumMax() + 5000000);
+                $planet->setNiobiumMax($planet->getNiobiumMax() + 50000);
             } elseif ($build == 'waterStock') {
                 $planet->setWaterStock($planet->getWaterStock() + 1);
-                $planet->setWaterMax($planet->getWaterMax() + 5000000);
+                $planet->setWaterMax($planet->getWaterMax() + 50000);
             } elseif ($build == 'silos') {
                 $planet->setSilos($planet->getSilos() + 1);
-                $planet->setFoodMax($planet->getFoodMax() + 8000000);
+                $planet->setFoodMax($planet->getFoodMax() + 80000);
             } elseif ($build == 'city') {
                 $planet->setCity($planet->getCity() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 5.56);
-                $planet->setWorkerMax($planet->getWorkerMax() + 125000);
+                $planet->setWorkerMax($planet->getWorkerMax() + 12500);
                 $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_city') : NULL;
                 if($quest) {
                     $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
@@ -48,7 +48,7 @@ class PlanetsController extends AbstractController
             } elseif ($build == 'metropole') {
                 $planet->setMetropole($planet->getMetropole() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 8.32);
-                $planet->setWorkerMax($planet->getWorkerMax() + 400000);
+                $planet->setWorkerMax($planet->getWorkerMax() + 40000);
                 $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_metro') : NULL;
                 if($quest) {
                     $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
@@ -56,10 +56,10 @@ class PlanetsController extends AbstractController
                 }
             } elseif ($build == 'caserne') {
                 $planet->setCaserne($planet->getCaserne() + 1);
-                $planet->setSoldierMax($planet->getSoldierMax() + 2500);
+                $planet->setSoldierMax($planet->getSoldierMax() + 500);
             } elseif ($build == 'bunker') {
                 $planet->setBunker($planet->getBunker() + 1);
-                $planet->setSoldierMax($planet->getSoldierMax() + 20000);
+                $planet->setSoldierMax($planet->getSoldierMax() + 5000);
             } elseif ($build == 'nuclearBase') {
                 $planet->setNuclearBase($planet->getNuclearBase() + 1);
             } elseif ($build == 'island') {
@@ -70,7 +70,7 @@ class PlanetsController extends AbstractController
                 $planet->setSky($planet->getSky() + 5);
             } elseif ($build == 'centerSearch') {
                 $planet->setCenterSearch($planet->getCenterSearch() + 1);
-                $planet->setScientistMax($planet->getScientistMax() + 500);
+                $planet->setScientistMax($planet->getScientistMax() + 250);
             } elseif ($build == 'lightUsine') {
                 $planet->setLightUsine($planet->getLightUsine() + 1);
                 $planet->setShipProduction($planet->getShipProduction() + 0.15);

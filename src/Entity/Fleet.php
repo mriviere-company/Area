@@ -662,18 +662,18 @@ class Fleet
      */
     public function getCargoPlace(): float
     {
-        $barge = $this->getBarge() * 1000;
-        $recycleur = $this->getRecycleur() * 5000;
-        $hunterHeavy = $this->getHunterHeavy() * 35;
-        $fregate = $this->getFregate() * 250;
+        $barge = $this->getBarge() * 200;
+        $recycleur = $this->getRecycleur() * 500;
+        $hunterHeavy = $this->getHunterHeavy() * 4;
+        $fregate = $this->getFregate() * 25;
         if ($this->getUser()->getPoliticCargo() > 0) {
-            $cargoI = ($this->getCargoI() * 30000) * (1 + ($this->getUser()->getPoliticCargo() / 5));
-            $cargoV = ($this->getCargoV() * 100000) * (1 + ($this->getUser()->getPoliticCargo() / 5));
-            $cargoX = ($this->getCargoX() * 250000) * (1 + ($this->getUser()->getPoliticCargo() / 5));
+            $cargoI = ($this->getCargoI() * 3000) * (1 + ($this->getUser()->getPoliticCargo() / 5));
+            $cargoV = ($this->getCargoV() * 10000) * (1 + ($this->getUser()->getPoliticCargo() / 5));
+            $cargoX = ($this->getCargoX() * 25000) * (1 + ($this->getUser()->getPoliticCargo() / 5));
         } else {
-            $cargoI = $this->getCargoI() * 30000;
-            $cargoV = $this->getCargoV() * 100000;
-            $cargoX = $this->getCargoX() * 250000;
+            $cargoI = $this->getCargoI() * 3000;
+            $cargoV = $this->getCargoV() * 10000;
+            $cargoX = $this->getCargoX() * 25000;
         }
 
         $nbr = $barge + $recycleur + $cargoI + $cargoV + $cargoX + $hunterHeavy + $fregate;

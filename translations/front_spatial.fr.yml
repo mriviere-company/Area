@@ -68,7 +68,7 @@ spatial.timeProduct: 'Temps restant'
 spatial.timeProductBlock: 'En construction'
 spatial.hunterWar: 'Chasseur à plasma'
 pdgImg: 'Points de Guerre'
-spatial.costShips: 'L''entretien des vaisseaux est divisé par 2 lorsqu''ils sont au sol, et multiplié par 6 dans une flotte.'
+spatial.costShips: 'L''entretien des vaisseaux est égal à la signature divisée par 12 lorsqu''ils sont au sols, et divisée par 2 dans une flotte.'
 spatial.corvetWar: 'Corvette de combat'
 spatial.moonMaker: Lunar
 spatial.radarShip: 'Vaisseau radar'

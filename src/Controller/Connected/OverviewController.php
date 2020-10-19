@@ -70,9 +70,9 @@ class OverviewController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        $allShipsProduct = $allTroops['ppsignature'];
-        $allShipsPlanet = round($allTroops['psignature'] / 2);
-        $allShipsFleet = $allFleets['fsignature'] * 6;
+        $allShipsProduct = $allTroops['ppsignature'] / 12;
+        $allShipsPlanet = round($allTroops['psignature'] / 12);
+        $allShipsFleet = $allFleets['fsignature'] / 2;
         $allShips = $allShipsProduct + $allShipsPlanet + $allShipsFleet;
         $allTroopsProduct = $user->getPriceTroopsProduct($allTroops);
         $allTroopsPlanet = $user->getPriceTroopsPlanet($allTroops);
