@@ -57,11 +57,11 @@ class ConnectController extends AbstractController
             $planet->setExtractor(3);
             $planet->setSpaceShip(1);
             $planet->setHunter(5);
-            $planet->setNiobium(15000);
+            $planet->setNiobium(12000);
             $planet->setWater(10000);
             $planet->setFregate(2);
-            $planet->setWorker(50000);
-            $planet->setSoldier(200);
+            $planet->setWorker(25000);
+            $planet->setSoldier(20);
             $planet->setColonizer(1);
             $user->addPlanet($planet);
             foreach ($planet->getFleets() as $fleet) {
@@ -117,6 +117,7 @@ class ConnectController extends AbstractController
         $user->setTutorial(1);
         $user->setZombieAtt(1);
         $user->setDailyConnect($now);
+        $user->setBitcoin(500);
         $nextZombie = new DateTime();
         $nextZombie->add(new DateInterval('PT' . 144 . 'H'));
         $user->setZombieAt($nextZombie);

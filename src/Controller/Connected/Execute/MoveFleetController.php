@@ -340,12 +340,12 @@ class MoveFleetController extends AbstractController
                                 if ($user->getZombie() == 1) {
                                     $newPlanet->setName('Base Zombie');
                                     $newPlanet->setWorker(125000);
-                                    $newPlanet->setSoldier(2500);
-                                    $newPlanet->setSoldierMax(2500);
+                                    $newPlanet->setSoldier(500);
+                                    $newPlanet->setSoldierMax(500);
                                     $newPlanet->setCaserne(1);
                                 } else {
                                     $newPlanet->setName('Colonie');
-                                    $newPlanet->setSoldier(50);
+                                    $newPlanet->setSoldier(20);
                                 }
                                 $newPlanet->setNbColo(count($user->getPlanets()) + 1);
                                 $quest = $user->checkQuests('colonize');
@@ -803,8 +803,8 @@ class MoveFleetController extends AbstractController
                                                 $defender->setSoldier($defender->getSoldierMax());
                                             } else {
                                                 $defender->setCaserne(1);
-                                                $defender->setSoldier(2500);
-                                                $defender->setSoldierMax(2500);
+                                                $defender->setSoldier(500);
+                                                $defender->setSoldierMax(500);
                                             }
                                             $defender->setName('Base Zombie');
                                             $defender->setImageName('hydra_planet.png');

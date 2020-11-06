@@ -71,7 +71,7 @@ class DailyController extends AbstractController
                 $planetPoint = $planetPoint + $planet->getBuildingPoint();
                 $buildingCost = $buildingCost + $planet->getBuildingCost();
             }
-            $gain = $worker / 100;
+            $gain = $worker / 10;
             $lose = null;
             if($ally) {
                 if ($user->getBot() == false) {

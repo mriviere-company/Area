@@ -572,7 +572,61 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         foreach ($plas as $pla) {
-            $pla->setWorkerMax(250000 + ($pla->getCity() * 125000) + ($pla->getMetropole() * 400000));
+            $pla->setWorkerMax(25000 + ($pla->getCity() * 12500) + ($pla->getMetropole() * 40000));
+            if ($pla->getWorker() > $pla->getWorkerMax()) {
+                $pla->setWorker($pla->getWorkerMax());
+            }
+        }
+        $em->flush();
+        echo "<span style='color:#FF0000'>KO<span><br/>";
+        exit;
+    }
+
+    /**
+     * @Route("/soldierNew/", name="soldier_new")
+     */
+    public function soldierNewAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $plas = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->where('p.caserne > 0 or p.bunker > 0')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($plas as $pla) {
+            $pla->setSoldierMax(25000 + ($pla->getCaserne() * 500) + ($pla->getBunker() * 5000));
+            if ($pla->getSoldier() > $pla->getSoldierMax()) {
+                $pla->setSoldier($pla->getSoldierMax());
+            }
+        }
+        $em->flush();
+        echo "<span style='color:#FF0000'>KO<span><br/>";
+        exit;
+    }
+
+    /**
+     * @Route("/stockNew/", name="stock_new")
+     */
+    public function stockAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $plas = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->getQuery()
+            ->getResult();
+
+        foreach ($plas as $pla) {
+            $pla->setNiobiumMax(75000 + ($pla->getNiobiumStock() > 0 ? $pla->getNiobiumStock() * 50000 : 0));
+            $pla->setWaterMax(60000 + ($pla->getWaterStock() > 0 ? $pla->getWaterStock() * 50000 : 0));
+            if ($pla->getWater() > $pla->getWaterMax()) {
+                $pla->setWater($pla->getWaterMax());
+            }
+            if ($pla->getNiobium() > $pla->getNiobiumMax()) {
+                $pla->setNiobium($pla->getNiobiumMax());
+            }
         }
         $em->flush();
         echo "<span style='color:#FF0000'>KO<span><br/>";

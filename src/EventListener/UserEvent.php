@@ -83,7 +83,7 @@ class UserEvent implements EventSubscriberInterface
                 if ($user instanceof User) {
                     if ($twentyfour > $user->getDailyConnect()) {
                         $user->setDailyConnect($now);
-                        $bonus = (($user->getLevel() + 1) * 5000) * rand(1,5);
+                        $bonus = (($user->getLevel() + 1) * 50) * rand(1,5);
                         $user->setBitcoin($user->getBitcoin() + $bonus);
                         $user->setViewReport(false);
                         $reportDaily = new Report();

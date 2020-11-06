@@ -1697,7 +1697,7 @@ class User implements UserInterface, \Serializable
     public function getBuildingWarPoint($building)
     {
         if ('island' == $building || 'orbital' == $building) {
-            return 200000;
+            return 2000;
         }
         return 0;
     }

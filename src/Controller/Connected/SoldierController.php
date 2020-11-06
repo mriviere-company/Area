@@ -42,9 +42,9 @@ class SoldierController extends AbstractController
                 $nbrSoldier = abs($form_caserneRecruit->get('soldier')->getData());
                 if ($user->getAlly()) {
                     if ($user->getPoliticSoldierSale() > 0) {
-                        $price = 75 - ($user->getPoliticSoldierSale() * 5);
+                        $price = 8 - ($user->getPoliticSoldierSale() * 5);
                     } else {
-                        $price = 75;
+                        $price = 8;
                     }
                 }
                 if($nbrSoldier * $price > $user->getBitcoin() ||
@@ -89,15 +89,15 @@ class SoldierController extends AbstractController
             if ($form_caserneRecruit->get('tank')->getData() && ($usePlanet->getBunker() > 0 || $usePlanet->getCaserne() > 0) && $usePlanet->getLightUsine() > 0 && $user->getTank() == 1) {
                 $now = new DateTime();
                 $nbrTank = abs($form_caserneRecruit->get('tank')->getData());
-                if($nbrTank * 600 > $user->getBitcoin() ||
+                if($nbrTank * 60 > $user->getBitcoin() ||
                     $nbrTank * 5 > $usePlanet->getWorker() ||
-                    $nbrTank * 40000 > $usePlanet->getNiobium() ||
+                    $nbrTank * 400 > $usePlanet->getNiobium() ||
                     ($usePlanet->getWorker() < 10000 || ($usePlanet->getTank() + $nbrTank) > 500)) {
                     if ($nbrTank * 5 > $usePlanet->getWorker()) {
                         $this->addFlash("fail", "Vous n'avez pas assez de travailleurs.");
-                    } elseif ($nbrTank * 600 > $user->getBitcoin()) {
+                    } elseif ($nbrTank * 60 > $user->getBitcoin()) {
                         $this->addFlash("fail", "Vous ne disposez pas d'assez de bitcoins.");
-                    } elseif ($nbrTank * 40000 > $usePlanet->getNiobium()) {
+                    } elseif ($nbrTank * 400 > $usePlanet->getNiobium()) {
                         $this->addFlash("fail", "Vous ne disposez pas d'assez de niobiums.");
                     } elseif ($usePlanet->getTank() + $nbrTank > 500) {
                         $this->addFlash("fail", "Vous dépassez la limite de tanks sur la planète.");
@@ -121,9 +121,9 @@ class SoldierController extends AbstractController
                     $now->add(new DateInterval('PT' . round($nbrTank * 900) . 'S'));
                     $usePlanet->setTankAtNbr($nbrTank);
                 }
-                $usePlanet->setNiobium($usePlanet->getNiobium() - ($nbrTank * 40000));
+                $usePlanet->setNiobium($usePlanet->getNiobium() - ($nbrTank * 400));
                 $usePlanet->setWorker($usePlanet->getWorker() - ($nbrTank * 5));
-                $user->setBitcoin($user->getBitcoin() - ($nbrTank * 600));
+                $user->setBitcoin($user->getBitcoin() - ($nbrTank * 60));
                 $usePlanet->setTankAt($now);
                 $quest = $user->checkQuests('tank');
                 if($quest) {
@@ -134,12 +134,12 @@ class SoldierController extends AbstractController
             if ($form_caserneRecruit->get('nuclear')->getData() && $usePlanet->getNuclearBase() > 0) {
                 $now = new DateTime();
                 $nbrNuclear = abs($form_caserneRecruit->get('nuclear')->getData());
-                if($nbrNuclear * 25000 > $user->getBitcoin() ||
-                    $nbrNuclear * 5000 > $usePlanet->getUranium() ||
+                if($nbrNuclear * 500 > $user->getBitcoin() ||
+                    $nbrNuclear * 500 > $usePlanet->getUranium() ||
                     ($usePlanet->getWorker() < 10000 || ($usePlanet->getNuclearBomb() + $nbrNuclear) > $usePlanet->getNuclearBase())) {
-                    if ($nbrNuclear * 5000 > $usePlanet->getUranium()) {
+                    if ($nbrNuclear * 500 > $usePlanet->getUranium()) {
                         $this->addFlash("fail", "Vous n'avez pas assez d'uranium.");
-                    } elseif ($nbrNuclear * 25000 > $user->getBitcoin()) {
+                    } elseif ($nbrNuclear * 500 > $user->getBitcoin()) {
                         $this->addFlash("fail", "Vous ne disposez pas d'assez de bitcoins.");
                     } elseif ($usePlanet->getNuclearBomb() + $nbrNuclear > $usePlanet->getNuclearBase()) {
                         $this->addFlash("fail", "Vous dépassez la limite de bombes nucléaires sur la planète.");
@@ -163,8 +163,8 @@ class SoldierController extends AbstractController
                     $now->add(new DateInterval('PT' . round($nbrNuclear * 24) . 'H'));
                     $usePlanet->setNuclearAtNbr($nbrNuclear);
                 }
-                $usePlanet->setUranium($usePlanet->getUranium() - ($nbrNuclear * 5000));
-                $user->setBitcoin($user->getBitcoin() - ($nbrNuclear * 25000));
+                $usePlanet->setUranium($usePlanet->getUranium() - ($nbrNuclear * 500));
+                $user->setBitcoin($user->getBitcoin() - ($nbrNuclear * 500));
                 $usePlanet->setNuclearAt($now);
                 $quest = $user->checkQuests('nuclear');
                 if($quest) {
@@ -175,12 +175,12 @@ class SoldierController extends AbstractController
             if ($form_caserneRecruit->get('scientist')->getData() && $usePlanet->getCenterSearch() > 0) {
                 $now = new DateTime();
                 $nbrScientist = abs($form_caserneRecruit->get('scientist')->getData());
-                if($nbrScientist > $user->getBitcoin() / 250 ||
+                if($nbrScientist > $user->getBitcoin() / 25 ||
                     $nbrScientist * 10 > $usePlanet->getWorker() ||
                     ($usePlanet->getWorker() < 10000 || ($usePlanet->getScientist() + $nbrScientist) > $usePlanet->getScientistMax())) {
                     if ($nbrScientist * 10 > $usePlanet->getWorker()) {
                         $this->addFlash("fail", "Vous n'avez pas assez de travailleurs.");
-                    } elseif ($nbrScientist > $user->getBitcoin() / 250) {
+                    } elseif ($nbrScientist > $user->getBitcoin() / 25) {
                         $this->addFlash("fail", "Vous ne disposez pas d'assez de bitcoins.");
                     } elseif ($usePlanet->getScientist() + $nbrScientist > $usePlanet->getScientistMax()) {
                         $this->addFlash("fail", "Vous dépassez la limite de scientifiques sur la planète.");
@@ -205,7 +205,7 @@ class SoldierController extends AbstractController
                     $usePlanet->setScientistAtNbr($nbrScientist);
                 }
                 $usePlanet->setWorker($usePlanet->getWorker() - ($nbrScientist * 10));
-                $user->setBitcoin($user->getBitcoin() - ($nbrScientist * 250));
+                $user->setBitcoin($user->getBitcoin() - ($nbrScientist * 25));
                 $usePlanet->setScientistAt($now);
                 $quest = $user->checkQuests('scientist');
                 if($quest) {

@@ -112,7 +112,7 @@ class PlanetController extends AbstractController
             $colonize->setColonizer($colonize->getColonizer() - 1);
             $newPlanet->setUser($colonize->getUser());
             $newPlanet->setName('Colonie');
-            $newPlanet->setSoldier(50);
+            $newPlanet->setSoldier(20);
             $newPlanet->setScientist(0);
             $newPlanet->setNbColo(count($fleet->getUser()->getPlanets()) + 1);
             if($colonize->getNbrShips() == 0) {
@@ -179,12 +179,12 @@ class PlanetController extends AbstractController
 
             $abandonPlanet->setUser($hydra);
             $abandonPlanet->setWorker(125000);
-            if ($abandonPlanet->getSoldierMax() >= 2500) {
+            if ($abandonPlanet->getSoldierMax() >= 500) {
                 $abandonPlanet->setSoldier($abandonPlanet->getSoldierMax());
             } else {
                 $abandonPlanet->setCaserne(1);
-                $abandonPlanet->setSoldier(2500);
-                $abandonPlanet->setSoldierMax(2500);
+                $abandonPlanet->setSoldier(500);
+                $abandonPlanet->setSoldierMax(500);
             }
             $abandonPlanet->setName('Base Zombie');
             $abandonPlanet->setImageName('hydra_planet.png');

@@ -127,8 +127,8 @@ class ZombiesController extends AbstractController
                             $planetAtt->setSoldier($planetAtt->getSoldierMax());
                         } else {
                             $planetAtt->setCaserne(1);
-                            $planetAtt->setSoldier(2500);
-                            $planetAtt->setSoldierMax(2500);
+                            $planetAtt->setSoldier(500);
+                            $planetAtt->setSoldierMax(500);
                         }
                         $planetAtt->setName('Base Zombie');
                         $planetAtt->setImageName('hydra_planet.png');

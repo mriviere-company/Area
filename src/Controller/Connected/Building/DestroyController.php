@@ -146,7 +146,7 @@ class DestroyController extends AbstractController
         }
         $now->add(new DateInterval('PT' . 180 . 'S'));
         $usePlanet->setNiobiumStock($level - 1);
-        $usePlanet->setNiobiumMax($usePlanet->getNiobiumMax() - 5000000);
+        $usePlanet->setNiobiumMax($usePlanet->getNiobiumMax() - 50000);
         $usePlanet->setGroundPlace($newGround);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
@@ -173,7 +173,7 @@ class DestroyController extends AbstractController
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         $now->add(new DateInterval('PT' . 180 . 'S'));
-        $usePlanet->setWaterMax($usePlanet->getWaterMax() - 5000000);
+        $usePlanet->setWaterMax($usePlanet->getWaterMax() - 50000);
         $usePlanet->setWaterStock($level - 1);
         $usePlanet->setGroundPlace($newGround);
         $usePlanet->setConstruct('destruct');
@@ -201,7 +201,7 @@ class DestroyController extends AbstractController
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         $now->add(new DateInterval('PT' . 180 . 'S'));
-        $usePlanet->setFoodMax($usePlanet->getFoodMax() - 5000000);
+        $usePlanet->setFoodMax($usePlanet->getFoodMax() - 50000);
         $usePlanet->setSilos($level - 1);
         $usePlanet->setGroundPlace($newGround);
         $usePlanet->setConstruct('destruct');
@@ -228,13 +228,13 @@ class DestroyController extends AbstractController
         $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('centerSearch');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
-            ($usePlanet->getScientist() > $usePlanet->getScientistMax() - 500)) {
+            ($usePlanet->getScientist() > $usePlanet->getScientistMax() - 250)) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         $now->add(new DateInterval('PT' . 180 . 'S'));
         $usePlanet->setCenterSearch($level - 1);
         $usePlanet->setGroundPlace($newGround);
-        $usePlanet->setScientistMax($usePlanet->getScientistMax() - 500);
+        $usePlanet->setScientistMax($usePlanet->getScientistMax() - 250);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
         $em->flush();
@@ -264,7 +264,7 @@ class DestroyController extends AbstractController
         $now->add(new DateInterval('PT' . 180 . 'S'));
         $usePlanet->setCity($level - 1);
         $usePlanet->setGroundPlace($newGround);
-        $usePlanet->setWorkerMax($usePlanet->getWorkerMax() - 125000);
+        $usePlanet->setWorkerMax($usePlanet->getWorkerMax() - 12500);
         $usePlanet->setWorkerProduction($usePlanet->getWorkerProduction() - 5.56);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
@@ -296,7 +296,7 @@ class DestroyController extends AbstractController
         $now->add(new DateInterval('PT' . 180 . 'S'));
         $usePlanet->setMetropole($level - 1);
         $usePlanet->setGroundPlace($newGround);
-        $usePlanet->setWorkerMax($usePlanet->getWorkerMax() - 400000);
+        $usePlanet->setWorkerMax($usePlanet->getWorkerMax() - 40000);
         $usePlanet->setWorkerProduction($usePlanet->getWorkerProduction() - 8.32);
         $usePlanet->setSkyPlace($newSky);
         $usePlanet->setConstruct('destruct');
@@ -414,13 +414,13 @@ class DestroyController extends AbstractController
         $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('caserne');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
-            ($usePlanet->getSoldier() > $usePlanet->getSoldierMax() - 2500 || $usePlanet->getSoldierAt())) {
+            ($usePlanet->getSoldier() > $usePlanet->getSoldierMax() - 500 || $usePlanet->getSoldierAt())) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         $now->add(new DateInterval('PT' . 180 . 'S'));
         $usePlanet->setCaserne($level - 1);
         $usePlanet->setGroundPlace($newGround);
-        $usePlanet->setSoldierMax($usePlanet->getSoldierMax() - 2500);
+        $usePlanet->setSoldierMax($usePlanet->getSoldierMax() - 500);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
         $em->flush();
@@ -444,13 +444,13 @@ class DestroyController extends AbstractController
         $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('bunker');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
-            ($usePlanet->getSoldier() > $usePlanet->getSoldierMax() - 20000 || $usePlanet->getSoldierAt())) {
+            ($usePlanet->getSoldier() > $usePlanet->getSoldierMax() - 500 || $usePlanet->getSoldierAt())) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         $now->add(new DateInterval('PT' . 180 . 'S'));
         $usePlanet->setBunker($level - 1);
         $usePlanet->setGroundPlace($newGround);
-        $usePlanet->setSoldierMax($usePlanet->getSoldierMax() - 20000);
+        $usePlanet->setSoldierMax($usePlanet->getSoldierMax() - 5000);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);
         $em->flush();

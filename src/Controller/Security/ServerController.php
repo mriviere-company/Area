@@ -137,15 +137,15 @@ class ServerController extends AbstractController
                                 $planet->setGround(25);
                                 $planet->setSky(5);
                             } else {
-                                $planet->setGround(rand(50, 60));
-                                $planet->setSky(rand(11, 13));
+                                $planet->setGround(rand(80, 95));
+                                $planet->setSky(rand(18, 21));
                             }
                         } elseif ($nbrSector == 45 || $nbrSector == 46 || $nbrSector == 55 || $nbrSector == 56) {
-                            $planet->setGround(rand(95, 115));
-                            $planet->setSky(rand(30, 40));
+                            $planet->setGround(rand(140, 180));
+                            $planet->setSky(rand(30, 50));
                         } else {
-                            $planet->setGround(rand(65, 80));
-                            $planet->setSky(rand(14, 17));
+                            $planet->setGround(rand(100, 115));
+                            $planet->setSky(rand(25, 29));
                         }
                     }
                 }
@@ -173,12 +173,12 @@ class ServerController extends AbstractController
                 ->getOneOrNullResult();
 
             $iaPlanet->setUser($iaPlayer);
-            $iaPlanet->setWorker(49850000);
-            $iaPlanet->setWorkerMax(49850000);
-            $iaPlanet->setSoldier(10001000);
-            $iaPlanet->setSoldierMax(10001000);
-            $iaPlanet->setTank(500);
-            $iaPlanet->setBunker(500);
+            $iaPlanet->setWorker(498500000);
+            $iaPlanet->setWorkerMax(498500000);
+            $iaPlanet->setSoldier(100010000);
+            $iaPlanet->setSoldierMax(100010000);
+            $iaPlanet->setTank(50000);
+            $iaPlanet->setBunker(50000);
             $iaPlanet->setMetropole(744);
             $iaPlanet->setGroundPlace(5744);
             $iaPlanet->setGround(6000);
@@ -200,10 +200,10 @@ class ServerController extends AbstractController
 
             foreach ($putFleets as $putFleet) {
                 $fleet = new Fleet();
-                $fleet->setHunterWar(rand(8000, 25000));
-                $fleet->setCorvetWar(rand(4000, 8000));
-                $fleet->setFregatePlasma(rand(2000, 4000));
-                $fleet->setDestroyer(rand(1000, 2000));
+                $fleet->setHunterWar(rand(80000, 250000));
+                $fleet->setCorvetWar(rand(40000, 80000));
+                $fleet->setFregatePlasma(rand(20000, 40000));
+                $fleet->setDestroyer(rand(10000, 20000));
                 $fleet->setUser($iaPlayer);
                 $fleet->setPlanet($putFleet);
                 $fleet->setAttack(1);
@@ -329,11 +329,14 @@ class ServerController extends AbstractController
                 $user->setShip(null);
                 $em->remove($ship);
             }
-            $user->setBitcoin(25000);
+            $user->setBitcoin(500);
             $user->setAlly(null);
             $user->setSearch(null);
             if ($user->getRank()) {
                 $em->remove($user->getRank());
+            }
+            if ($user->getId() != 1) {
+                $user->setBot(0);
             }
             $user->setRank(null);
             $user->setGrade(null);
@@ -506,8 +509,81 @@ class ServerController extends AbstractController
             $em->remove($stat);
         }
 
+        $tracks = $em->getRepository('App:Track')->findAll();
+
+        foreach ($tracks as $track) {
+            $em->remove($track);
+        }
+
+        $allieds = $em->getRepository('App:Allied')->findAll();
+
+        foreach ($allieds as $allied) {
+            $em->remove($allied);
+        }
+
+        $wars = $em->getRepository('App:War')->findAll();
+
+        foreach ($wars as $war) {
+            $em->remove($war);
+        }
+
+        $pnas = $em->getRepository('App:Pna')->findAll();
+
+        foreach ($pnas as $pna) {
+            $em->remove($pna);
+        }
+
+        $proposals = $em->getRepository('App:Proposal')->findAll();
+
+        foreach ($proposals as $proposal) {
+            $em->remove($proposal);
+        }
+
+        $peaces = $em->getRepository('App:Peace')->findAll();
+
+        foreach ($peaces as $peace) {
+            $em->remove($peace);
+        }
+
+        $exchanges = $em->getRepository('App:Exchange')->findAll();
+
+        foreach ($exchanges as $exchange) {
+            $em->remove($exchange);
+        }
+
+        $grades = $em->getRepository('App:Grade')->findAll();
+
+        foreach ($grades as $grade) {
+            $em->remove($grade);
+        }
+
+        $allys = $em->getRepository('App:Ally')->findAll();
+
+        foreach ($allys as $ally) {
+            $em->remove($ally);
+        }
+
+        $views = $em->getRepository('App:View')->findAll();
+
+        foreach ($views as $view) {
+            $em->remove($view);
+        }
+
         //$server = $em->getRepository('App:Server')->find(['id' => $serverId]);
         //$em->remove($server);
+
+        $usserss = $em->getRepository('App:User')
+            ->createQueryBuilder('u')
+            ->where('u.email LIKE :fake')
+            ->setParameters(['fake' => '%fake.com%'])
+            ->getQuery()
+            ->getResult();
+        foreach ($usserss as $ussers) {
+            foreach ($ussers->getFleetLists() as $fleetList) {
+                $em->remove($fleetList);
+            }
+            $em->remove($ussers);
+        }
 
         $em->flush();
 

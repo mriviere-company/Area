@@ -282,14 +282,14 @@ class PlanetsController extends AbstractController
         $nowEmbargo->add(new DateInterval('PT' . (3600) . 'S'));
 
         foreach ($embargos as $embargo) {
-            $food = (($embargo->getWorker() / 5) + 2000) >= 0 ? (($embargo->getWorker() / 5) + 2000) : 0;
+            $food = (($embargo->getWorker() / 5) + 200) >= 0 ? (($embargo->getWorker() / 5) + 200) : 0;
             $worker = 0;
             $soldier = 0;
-            $embargo->setFood(($embargo->getFood() - (($embargo->getWorker() / 5) + 2000)) >= 0 ? ($embargo->getFood() - (($embargo->getWorker() / 5) + 2000)) : 0);
+            $embargo->setFood(($embargo->getFood() - (($embargo->getWorker() / 5) + 200)) >= 0 ? ($embargo->getFood() - (($embargo->getWorker() / 5) + 200)) : 0);
             if ($embargo->getFood() == 0) {
-                $embargo->setWorker(($embargo->getWorker() - (4500000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getWorker() - (4500000 / $embargo->getFdProduction())) : 2000);
-                $worker = ((4500000 / $embargo->getFdProduction())) >= 0 ? (4500000 / $embargo->getFdProduction()) : 2000;
-                if ($embargo->getWorker() == 2000) {
+                $embargo->setWorker(($embargo->getWorker() - (4500000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getWorker() - (4500000 / $embargo->getFdProduction())) : 200);
+                $worker = ((4500000 / $embargo->getFdProduction())) >= 0 ? (4500000 / $embargo->getFdProduction()) : 200;
+                if ($embargo->getWorker() == 200) {
                     $embargo->setSoldier(($embargo->getSoldier() - (1000000 / $embargo->getFdProduction())) >= 0 ? ($embargo->getSoldier() - (1000000 / $embargo->getFdProduction())) : 0);
                     $soldier = ((1000000 / $embargo->getFdProduction())) >= 0 ? (1000000 / $embargo->getFdProduction()) : 0;
                 }

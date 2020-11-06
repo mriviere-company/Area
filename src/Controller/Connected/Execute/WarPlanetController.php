@@ -280,8 +280,8 @@ class WarPlanetController extends AbstractController
                             $planetDefender->setSoldier($planetDefender->getSoldierMax());
                         } else {
                             $planetDefender->setCaserne(1);
-                            $planetDefender->setSoldier(2500);
-                            $planetDefender->setSoldierMax(2500);
+                            $planetDefender->setSoldier(500);
+                            $planetDefender->setSoldierMax(500);
                         }
                         $planetDefender->setName('Base Zombie');
                         $planetDefender->setImageName('hydra_planet.png');

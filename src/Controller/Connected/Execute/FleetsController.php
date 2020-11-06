@@ -45,7 +45,7 @@ class FleetsController extends AbstractController
             $em->remove($nukeBomb);
             if ($newHome->getMetropole() > 0) {
                 $newHome->setMetropole($newHome->getMetropole() - 1);
-                $newHome->setWorkerMax($newHome->getWorkerMax() - 400000);
+                $newHome->setWorkerMax($newHome->getWorkerMax() - 40000);
                 $newHome->setWorkerProduction($newHome->getWorkerProduction() - 8.32);
                 if ($newHome->getWorker() > $newHome->getWorkerMax()) {
                     $newHome->setWorker($newHome->getWorkerMax());
@@ -54,7 +54,7 @@ class FleetsController extends AbstractController
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Une métropole a été détruite.");
             } elseif ($newHome->getCity() > 0) {
                 $newHome->setCity($newHome->getCity() - 1);
-                $newHome->setWorkerMax($newHome->getWorkerMax() - 125000);
+                $newHome->setWorkerMax($newHome->getWorkerMax() - 12500);
                 $newHome->setWorkerProduction($newHome->getWorkerProduction() - 5.56);
                 if ($newHome->getWorker() > $newHome->getWorkerMax()) {
                     $newHome->setWorker($newHome->getWorkerMax());
@@ -63,7 +63,7 @@ class FleetsController extends AbstractController
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Une ville a été détruite.");
             } elseif ($newHome->getBunker() > 0) {
                 $newHome->setBunker($newHome->getBunker() - 1);
-                $newHome->setSoldierMax($newHome->getSoldierMax() - 20000);
+                $newHome->setSoldierMax($newHome->getSoldierMax() - 5000);
                 if ($newHome->getSoldier() > $newHome->getSoldierMax()) {
                     $newHome->setSoldier($newHome->getSoldierMax());
                 }
@@ -71,7 +71,7 @@ class FleetsController extends AbstractController
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Un bunker a été détruit.");
             } elseif ($newHome->getCaserne() > 0) {
                 $newHome->setCaserne($newHome->getCaserne() - 1);
-                $newHome->setSoldierMax($newHome->getSoldierMax() - 2500);
+                $newHome->setSoldierMax($newHome->getSoldierMax() - 500);
                 if ($newHome->getSoldier() > $newHome->getSoldierMax()) {
                     $newHome->setSoldier($newHome->getSoldierMax());
                 }
