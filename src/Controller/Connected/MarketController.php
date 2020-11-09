@@ -27,7 +27,6 @@ class MarketController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $now = new DateTime();
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
@@ -59,23 +58,23 @@ class MarketController extends AbstractController
             $cost = (abs($form_market->get('bitcoin')->getData())) + (abs($form_market->get('soldier')->getData())) + (abs($form_market->get('worker')->getData()));
             $cost = ceil($cost);
             if(($cost > $user->getRank()->getWarPoint() ||
-                ($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData())) > $planetBuy->getSoldierMax()) ||
-                    ($planetBuy->getWorker() + abs($form_market->get('worker')->getData())) > $planetBuy->getWorkerMax()) {
-                if ($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData()) > $planetBuy->getSoldierMax()) {
+                ($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() * 20)) > $planetBuy->getSoldierMax()) ||
+                    ($planetBuy->getWorker() + abs($form_market->get('worker')->getData() * 100)) > $planetBuy->getWorkerMax()) {
+                if ($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() * 20) > $planetBuy->getSoldierMax()) {
                     $this->addFlash("fail", "Vous dépassez la limite de soldats sur la planète.");
-                } elseif ($planetBuy->getWorker() + abs($form_market->get('worker')->getData()) > $planetBuy->getWorkerMax()) {
+                } elseif ($planetBuy->getWorker() + abs($form_market->get('worker')->getData() * 100) > $planetBuy->getWorkerMax()) {
                     $this->addFlash("fail", "Vous dépassez la limite de travailleurs sur la planète.");
                 } elseif ($cost > $user->getRank()->getWarPoint()) {
-                    $this->addFlash("fail", "Vous n'avez pas assez de bitcoins.");
+                    $this->addFlash("fail", "Vous n'avez pas assez de points de Guerre.");
                 } else {
                     $this->addFlash("fail", "Vous n'avez pas toutes les conditions requises.");
                 }
                 return $this->redirectToRoute('market', ['usePlanet' => $usePlanet->getId()]);
             }
 
-            $user->setBitcoin($user->getBitcoin() + abs($form_market->get('bitcoin')->getData()));
-            $planetBuy->setSoldier($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() / 3));
-            $planetBuy->setWorker($planetBuy->getWorker() + abs($form_market->get('worker')->getData() / 2));
+            $user->setBitcoin($user->getBitcoin() + abs($form_market->get('bitcoin')->getData() * 10));
+            $planetBuy->setSoldier($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() * 20));
+            $planetBuy->setWorker($planetBuy->getWorker() + abs($form_market->get('worker')->getData() * 100));
             $user->getRank()->setWarPoint($user->getRank()->getWarPoint() - $cost);
             $quest = $user->checkQuests('pdg');
             if($quest) {
