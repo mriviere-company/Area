@@ -1650,5 +1650,5 @@ $(document).ready(function() {
     manageTotalShip();
     manageZbMission();
     manageUraMission();
-    console.log("Toute utilisation de scripts sur le jeu seront puni d'un ban permanent, merci.");
+    console.log("Toutes utilisations de scripts sur le jeu seront punies d'un ban permanent, merci.");
 });
