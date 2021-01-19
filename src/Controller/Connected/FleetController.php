@@ -347,7 +347,7 @@ class FleetController  extends AbstractController
             }
         }
 
-        if ($fleetGive->getFlightType() != 6 && $fleetGive->getFlightTime() < $now) {
+        if (($fleetGive->getFlightType() != 6 || !$fleetGive->getFlightType()) && $fleetGive->getFlightTime() && $fleetGive->getFlightTime() < $now) {
             $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeOneFleetAction', [
                 'fleet'  => $fleetGive,
                 'server' => $server,
