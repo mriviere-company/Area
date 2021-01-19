@@ -10,8 +10,9 @@ use DateTime;
 
 class PlanetsController extends AbstractController
 {
-    public function buildingsAction($planets, $em)
+    public function buildingsAction($planets, $now, $em)
     {
+        $nextPlanets = [];
         foreach ($planets as $planet) {
             $build = $planet->getConstruct();
             if($build == 'destruct') {
@@ -95,9 +96,17 @@ class PlanetsController extends AbstractController
             if(count($planet->getConstructions()) > 0) {
                 $constructTime = new DateTime();
                 foreach ($planet->getConstructions() as $construction) {
-                    $planet->setConstruct($construction->getConstruct());
-                    $planet->setConstructAt($constructTime->add(new DateInterval('PT' . $construction->getConstructTime() . 'S')));
-                    $em->remove($construction);
+                    $timeLimit = $planet->getConstructAt()->add(new DateInterval('PT' . $construction->getConstructTime() . 'S'));
+                        if ($timeLimit < $now) {
+                            $planet->setConstruct($construction->getConstruct());
+                            $planet->setConstructAt($timeLimit);
+                            $em->remove($construction);
+                            array_push($nextPlanets, $planet);
+                    } else {
+                            $planet->setConstruct($construction->getConstruct());
+                            $planet->setConstructAt($constructTime->add(new DateInterval('PT' . $construction->getConstructTime() . 'S')));
+                            $em->remove($construction);
+                        }
                     break;
                 }
             } else {
@@ -105,9 +114,12 @@ class PlanetsController extends AbstractController
                 $planet->setConstructAt(null);
             }
         }
-        echo "Flush -> " . count($planets) . " ";
 
         $em->flush();
+
+        if ($nextPlanets) {
+            self::buildingsAction($nextPlanets, $now, $em);
+        }
 
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
@@ -125,7 +137,6 @@ class PlanetsController extends AbstractController
                 $soldierAt->setSoldierAtNbr(null);
             }
         }
-        echo "Flush -> " . count($planetSoldiers) . " ";
 
         $em->flush();
 
@@ -145,7 +156,6 @@ class PlanetsController extends AbstractController
                 $tankAt->setTankAtNbr(null);
             }
         }
-        echo "Flush -> " . count($planetTanks) . " ";
 
         $em->flush();
 
@@ -187,7 +197,6 @@ class PlanetsController extends AbstractController
                 $scientistAt->setScientistAtNbr(null);
             }
         }
-        echo "Flush -> " . count($planetScientists) . " ";
 
         $em->flush();
 
@@ -223,10 +232,8 @@ class PlanetsController extends AbstractController
             $planetProduct->setSignature($planetProduct->getNbrSignatures());
             $product->setPlanet(null);
             $em->remove($product);
+            $em->flush();
         }
-        echo "Flush -> " . count($products) . " ";
-
-        $em->flush();
 
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }

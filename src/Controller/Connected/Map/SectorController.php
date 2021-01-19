@@ -29,8 +29,52 @@ class SectorController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $now = new DateTime();
+        $server = $em->getRepository('App:Server')->find(['id' => 1]);
+
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
+        }
+
+        $fleets = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->join('f.planet', 'p')
+            ->join('p.sector', 's')
+            ->join('s.galaxy', 'g')
+            ->where('f.flightTime < :now')
+            ->andWhere('f.flightType != :six or f.flightType is null')
+            ->andWhere('s.position = :id')
+            ->andWhere('g.position = :gal')
+            ->setParameters(['now' => $now, 'six' => 6, 'id' => $sector->getPosition(), 'gal' => $gal->getPosition()])
+            ->getQuery()
+            ->getResult();
+
+        if ($fleets) {
+            $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeFleetAction', [
+                'fleets'  => $fleets,
+                'server' => $server,
+                'now'  => $now,
+                'em'  => $em
+            ]);
+        }
+
+        $products = $em->getRepository('App:Product')
+            ->createQueryBuilder('p')
+            ->join('p.planet', 'pp')
+            ->join('pp.sector', 's')
+            ->join('s.galaxy', 'g')
+            ->where('p.productAt < :now')
+            ->andWhere('s.position = :id')
+            ->andWhere('g.position = :gal')
+            ->setParameters(['now' => $now, 'id' => $sector->getPosition(), 'gal' => $gal->getPosition()])
+            ->getQuery()
+            ->getResult();
+
+        if ($products) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsController::productsAction', [
+                'products'  => $products,
+                'em' => $em
+            ]);
         }
 
         $form_navigate = $this->createForm(NavigateType::class, null, ["galaxy" => $gal->getPosition(), "sector" => $sector->getPosition()]);
@@ -278,7 +322,7 @@ class SectorController extends AbstractController
         $form_sendFleet = $this->createForm(InteractFleetType::class, null, ["user" => $user->getId()]);
         $form_sendFleet->handleRequest($request);
 
-        if($planet && $usePlanet) {
+        if ($planet && $usePlanet) {
         } else {
             return $this->redirectToRoute('map', ['usePlanet' => $usePlanet->getId(), 'sector' => $planet->getSector()->getId(), 'gal' => $planet->getSector()->getGalaxy()->getId()]);
         }

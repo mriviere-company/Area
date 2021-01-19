@@ -24,12 +24,34 @@ class SoldierController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $now = new DateTime();
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
+        }
+
+        if ($usePlanet->getSoldierAt() < $now) {
+            $this->forward('App\Controller\Connected\Execute\PlanetController::soldierOneAction', [
+                'planetSoldier'  => $usePlanet,
+                'em'  => $em
+            ]);
+        }
+
+        if ($usePlanet->getTankAt() < $now) {
+            $this->forward('App\Controller\Connected\Execute\PlanetController::tankOneAction', [
+                'planetTank'  => $usePlanet,
+                'em'  => $em
+            ]);
+        }
+
+        if ($usePlanet->getScientistAt() < $now) {
+            $this->forward('App\Controller\Connected\Execute\PlanetController::scientistOneAction', [
+                'planetScientist'  => $usePlanet,
+                'em'  => $em
+            ]);
         }
 
         $form_caserneRecruit = $this->createForm(CaserneRecruitType::class);

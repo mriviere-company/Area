@@ -113,8 +113,8 @@ class CronTaskController extends AbstractController
             }
         }
 
-        $planets = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans overview, building, invasion et rapport journalier.
-            ->createQueryBuilder('p')                         // File d'attente doit pouvoir construire plusieurs bâtiments.
+        $planets = $em->getRepository('App:Planet') // Actualiser DONE
+            ->createQueryBuilder('p')
             ->where('p.constructAt < :now')
             ->setParameters(['now' => $now])
             ->getQuery()
@@ -124,12 +124,13 @@ class CronTaskController extends AbstractController
             echo "Construction : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::buildingsAction', [
                 'planets'  => $planets,
+                'now' => $now,
                 'em' => $em
             ]);
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $planetSoldiers = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans overview, entraînement, zombie, invasion, pillage, planètes.
+        $planetSoldiers = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans entraînement, zombie, invasion, pillage, planètes, daily.
             ->createQueryBuilder('p')
             ->where('p.soldierAt < :now')
             ->setParameters(['now' => $now])
@@ -145,7 +146,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $planetTanks = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans overview, entraînement, zombie, invasion, pillage, planètes.
+        $planetTanks = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans entraînement, zombie, invasion, pillage, planètes, daily.
             ->createQueryBuilder('p')
             ->where('p.tankAt < :now')
             ->setParameters(['now' => $now])
@@ -177,7 +178,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $planetScientists = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans overview, entraînement, planètes.
+        $planetScientists = $em->getRepository('App:Planet') // Actualiser DONE
             ->createQueryBuilder('p')
             ->where('p.scientistAt < :now')
             ->setParameters(['now' => $now])
@@ -193,7 +194,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $prods = $em->getRepository('App:Product')
+        $prods = $em->getRepository('App:Product') // Actualiser DONE
             ->createQueryBuilder('p')
             ->where('p.planet is null')
             ->getQuery()
@@ -208,7 +209,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $products = $em->getRepository('App:Product')
+        $products = $em->getRepository('App:Product') // Actualiser DONE
             ->createQueryBuilder('p')
             ->where('p.productAt < :now')
             ->setParameters(['now' => $now])
@@ -224,7 +225,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $radars = $em->getRepository('App:Planet')
+        $radars = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans overview, carte spatiale.
             ->createQueryBuilder('p')
             ->where('p.radarAt < :now or p.brouilleurAt < :now')
             ->setParameters(['now' => $now])
@@ -241,7 +242,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $fleets = $em->getRepository('App:Fleet') // CHANGE -> Actualiser dans overview, Flottes, carte spatiale, chantier spatial.
+        $fleets = $em->getRepository('App:Fleet') // Actualiser DONE
             ->createQueryBuilder('f')
             ->where('f.flightTime < :now')
             ->andWhere('f.flightType != :six or f.flightType is null')
@@ -278,7 +279,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $fleetCdrs = $em->getRepository('App:Fleet') // CHANGE -> Actualiser Flottes, carte spatiale, gérer flotte, combat.
+        $fleetCdrs = $em->getRepository('App:Fleet') // CHANGE ->  Flottes, carte spatiale, gérer flotte, combat.
             ->createQueryBuilder('f')                           // Pouvoir cumuler plusieurs recyclage en une seule fois.
             ->join('f.planet', 'p')
             ->where('f.recycleAt < :now')

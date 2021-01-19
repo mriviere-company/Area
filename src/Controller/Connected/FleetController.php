@@ -16,7 +16,6 @@ use App\Form\Front\FleetListType;
 use App\Form\Front\FleetSplitType;
 use App\Form\Front\FleetEditShipType;
 use App\Entity\Fleet;
-use App\Entity\Report;
 use App\Entity\Planet;
 use App\Entity\Destination;
 use App\Entity\Fleet_List;
@@ -36,6 +35,8 @@ class FleetController  extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $now = new DateTime();
+        $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
         if($user->getGameOver()) {
             return $this->redirectToRoute('game_over');
@@ -43,6 +44,40 @@ class FleetController  extends AbstractController
 
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
+        }
+
+        $fleets = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->where('f.flightTime < :now')
+            ->andWhere('f.flightType != :six or f.flightType is null')
+            ->andWhere('f.user = :user')
+            ->setParameters(['now' => $now, 'six' => 6, 'user' => $user])
+            ->getQuery()
+            ->getResult();
+
+        if ($fleets) {
+            $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeFleetAction', [
+                'fleets'  => $fleets,
+                'server' => $server,
+                'now'  => $now,
+                'em'  => $em
+            ]);
+        }
+
+        $products = $em->getRepository('App:Product')
+            ->createQueryBuilder('p')
+            ->join('p.planet', 'pp')
+            ->where('p.productAt < :now')
+            ->andWhere('pp.user = :user')
+            ->setParameters(['now' => $now, 'user' => $user])
+            ->getQuery()
+            ->getResult();
+
+        if ($products) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsController::productsAction', [
+                'products'  => $products,
+                'em' => $em
+            ]);
         }
 
         $fleetGiveMove = $em->getRepository('App:Fleet')
@@ -301,6 +336,8 @@ class FleetController  extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $now = new DateTime();
+        $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
         if ($usePlanet->getUser() != $user || $fleetGive->getUser() != $user) {
             if (!$user->getAlly()) {
@@ -308,6 +345,22 @@ class FleetController  extends AbstractController
             } elseif ($user->getGrade()->getPlacement() != 1 || $fleetGive->getUser()->getAlly() != $user->getAlly()) {
                 return $this->redirectToRoute('home');
             }
+        }
+
+        if ($fleetGive->getFlightType() != 6 && $fleetGive->getFlightTime() < $now) {
+            $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeOneFleetAction', [
+                'fleet'  => $fleetGive,
+                'server' => $server,
+                'now'  => $now,
+                'em'  => $em
+            ]);
+        }
+
+        if ($fleetGive->getPlanet()->getProduct() && $fleetGive->getPlanet()->getProduct()->getProductAt() < $now) {
+            $this->forward('App\Controller\Connected\Execute\PlanetController::productOneAction', [
+                'product'  => $fleetGive->getPlanet()->getProduct(),
+                'em' => $em
+            ]);
         }
 
         if ($fleetGive->getCargoFull() > $fleetGive->getCargoPlace()) {

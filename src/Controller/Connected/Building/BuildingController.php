@@ -29,6 +29,14 @@ class BuildingController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        if ($usePlanet->getConstructAt() < $now) {
+            $this->forward('App\Controller\Connected\Execute\PlanetController::buildingOneAction', [
+                'planet'  => $usePlanet,
+                'now' => $now,
+                'em' => $em
+            ]);
+        }
+
         $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::planetActivityAction', [
             'planet' => $usePlanet,
             'now'  => $now,

@@ -48,6 +48,14 @@ class WarPlanetController extends AbstractController
         $workerDtmp = $planetDefender->getWorker();
         $tankDtmp = $planetDefender->getTank();
 
+        if ($planetDefender->getConstructAt() < $now) {
+            $this->forward('App\Controller\Connected\Execute\PlanetController::buildingOneAction', [
+                'planet'  => $planetDefender,
+                'now' => $now,
+                'em' => $em
+            ]);
+        }
+
         $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::planetActivityAction', [
             'planet' => $planetDefender,
             'now'  => $now,

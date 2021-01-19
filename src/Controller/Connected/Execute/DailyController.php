@@ -67,6 +67,13 @@ class DailyController extends AbstractController
             $planetPoint= 0;
             $buildingCost = 0;
             foreach ($user->getPlanets() as $planet) {
+                if ($planet->getConstructAt() < $now) {
+                    $this->forward('App\Controller\Connected\Execute\PlanetController::buildingOneAction', [
+                        'planet'  => $planet,
+                        'now' => $now,
+                        'em' => $em
+                    ]);
+                }
                 $worker = $worker + $planet->getWorker();
                 $planetPoint = $planetPoint + $planet->getBuildingPoint();
                 $buildingCost = $buildingCost + $planet->getBuildingCost();

@@ -24,6 +24,67 @@ class AllPlanetsController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
+        $planetSoldiers = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->where('p.soldierAt < :now')
+            ->andWhere('p.user = :user')
+            ->setParameters(['now' => $now, 'user' => $user])
+            ->getQuery()
+            ->getResult();
+
+        if ($planetSoldiers) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsController::soldiersAction', [
+                'planetSoldiers'  => $planetSoldiers,
+                'em'  => $em
+            ]);
+        }
+
+        $planetTanks = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->where('p.tankAt < :now')
+            ->andWhere('p.user = :user')
+            ->setParameters(['now' => $now, 'user' => $user])
+            ->getQuery()
+            ->getResult();
+
+        if ($planetTanks) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsController::tanksAction', [
+                'planetTanks'  => $planetTanks,
+                'em'  => $em
+            ]);
+        }
+
+        $planetScientists = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->where('p.scientistAt < :now')
+            ->andWhere('p.user = :user')
+            ->setParameters(['now' => $now, 'user' => $user])
+            ->getQuery()
+            ->getResult();
+
+        if ($planetScientists) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsController::scientistsAction', [
+                'planetScientists'  => $planetScientists,
+                'em'  => $em
+            ]);
+        }
+
+        $products = $em->getRepository('App:Product')
+            ->createQueryBuilder('p')
+            ->join('p.planet', 'pp')
+            ->where('p.productAt < :now')
+            ->andWhere('pp.user = :user')
+            ->setParameters(['now' => $now, 'user' => $user])
+            ->getQuery()
+            ->getResult();
+
+        if ($products) {
+            $this->forward('App\Controller\Connected\Execute\PlanetsController::productsAction', [
+                'products'  => $products,
+                'em' => $em
+            ]);
+        }
+
         $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::userActivityAction', [
             'now'  => $now,
             'em' => $em]);

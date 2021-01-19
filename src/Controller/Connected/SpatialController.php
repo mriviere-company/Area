@@ -36,6 +36,12 @@ class SpatialController extends AbstractController
         if ($usePlanet->getUser() != $user) {
             return $this->redirectToRoute('home');
         }
+        if ($usePlanet->getProduct() && $usePlanet->getProduct()->getProductAt() < $now) {
+            $this->forward('App\Controller\Connected\Execute\PlanetController::productOneAction', [
+                'product'  => $usePlanet->getProduct(),
+                'em' => $em
+            ]);
+        }
 
         $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::planetActivityAction', [
             'planet' => $usePlanet,
