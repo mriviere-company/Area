@@ -30,10 +30,6 @@
         {{ render(controller('App\\Controller\\Track\\TrackController::trackAction', {'currentPage': app.request.attributes.get('_route')})) }}
         {% block body %}{% endblock %}
 
-        {%- block footer -%}
-            {% include 'menu/_footer.html.twig' %}
-        {%- endblock -%}
-
         {% block javascripts %}
             {{ encore_entry_script_tags('main') }}
             <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>

@@ -12,36 +12,34 @@
     {% endfor %}
     {% if is_granted('ROLE_USER') %}
     {% else %}
-        <div class="row mt-5">
-            <div class="offset-3 col-6 text-center">
-                {% if app.user is null %}
-                     <div id="connect-register">
-                         <div>
-                             <input disabled="disabled" class="login-input text-center{% if server == 1 %} server-on{% else %} server-off{% endif %}" value="{% if server == 1 %}{{ 'server.on'|trans }}{% else %}{{ 'server.off'|trans }}{% endif %}"/>
-                         </div>
-                         <form action="{{ path('login') }}" method="post">
-                             <div>
-                                 <input class="login-input" required="required" type="text" id="username" minlength="4" maxlength="20" placeholder="{{ 'username'|trans }}" name="_username"/>
-                             </div>
-                             <div>
-                                 <input class="login-input" required="required" type="password" minlength="4" placeholder="{{ 'password'|trans }}" id="password" name="_password"/>
-                             </div>
-                             <div>
-                                 <input class="login-input" type="email" minlength="5" placeholder="{{ 'email'|trans }}" maxlength="30" id="email" name="_email" hidden/>
-                             </div>
-                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-                             <div>
-                                 {#<a class="recovery-button" href="{{ path('recoveryPw') }}" data-toggle="modal" data-target="#openModal">{{ 'recoveryPw'|trans }}</a>#}
-                                 <button class="confirm-button" type="submit">{{ 'login'|trans }}</button>
-                                 <button id="registration-check" class="confirm-button">{{ 'register'|trans }}</button>
-                             </div>
-                         </form>
-                         <div class="mt-2" hidden>
-                             <button data-toggle="confirmation" data-placement="right" data-title="{{ 'register.question'|trans }}" class="confirm-button" href="{{ path('register_ghost') }}">{{ 'ghost.register'|trans }}</button>
-                         </div>
+        <div class="text-center">
+            {% if app.user is null %}
+                 <div id="connect-register">
+                     <div>
+                         <input disabled="disabled" class="login-input text-center{% if server == 1 %} server-on{% else %} server-off{% endif %}" value="{% if server == 1 %}{{ 'server.on'|trans }}{% else %}{{ 'server.off'|trans }}{% endif %}"/>
                      </div>
-                 {% endif %}
-            </div>
+                     <form action="{{ path('login') }}" method="post">
+                         <div>
+                             <input class="login-input" required="required" type="text" id="username" minlength="4" maxlength="20" placeholder="{{ 'username'|trans }}" name="_username"/>
+                         </div>
+                         <div>
+                             <input class="login-input" required="required" type="password" minlength="4" placeholder="{{ 'password'|trans }}" id="password" name="_password"/>
+                         </div>
+                         <div>
+                             <input class="login-input" type="email" minlength="5" placeholder="{{ 'email'|trans }}" maxlength="30" id="email" name="_email" hidden/>
+                         </div>
+                         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                         <div>
+                             {#<a class="recovery-button" href="{{ path('recoveryPw') }}" data-toggle="modal" data-target="#openModal">{{ 'recoveryPw'|trans }}</a>#}
+                             <button class="confirm-button" type="submit">{{ 'login'|trans }}</button>
+                             <button id="registration-check" class="confirm-button">{{ 'register'|trans }}</button>
+                         </div>
+                     </form>
+                     <div class="mt-2" hidden>
+                         <button data-toggle="confirmation" data-placement="right" data-title="{{ 'register.question'|trans }}" class="confirm-button" href="{{ path('register_ghost') }}">{{ 'ghost.register'|trans }}</button>
+                     </div>
+                 </div>
+             {% endif %}
         </div>
     {% endif %}
 {% endblock %}
