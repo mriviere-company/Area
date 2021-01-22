@@ -118,6 +118,25 @@ class TrackController extends AbstractController
         $em->persist($track);
         $em->flush();
 
+        $firstFleet = $em->getRepository('App:Fleet')
+            ->createQueryBuilder('f')
+            ->join('f.planet', 'p')
+            ->select('p.id')
+            ->where('f.fightAt < :now')
+            ->andWhere('f.flightTime is null')
+            ->setParameters(['now' => $now])
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getOneOrNullResult();
+
+        if ($firstFleet) {
+            $this->forward('App\Controller\Connected\Execute\FightController::fightAction', [
+                'firstFleet' => $firstFleet,
+                'now' => $now,
+                'em' => $em
+            ]);
+        }
+
         return new Response ("");
     }
 }

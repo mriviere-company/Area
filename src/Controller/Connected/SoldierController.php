@@ -33,21 +33,21 @@ class SoldierController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if ($usePlanet->getSoldierAt() < $now) {
+        if ($usePlanet->getSoldierAt() && $usePlanet->getSoldierAt() < $now) {
             $this->forward('App\Controller\Connected\Execute\PlanetController::soldierOneAction', [
                 'planetSoldier'  => $usePlanet,
                 'em'  => $em
             ]);
         }
 
-        if ($usePlanet->getTankAt() < $now) {
+        if ($usePlanet->getTankAt() && $usePlanet->getTankAt() < $now) {
             $this->forward('App\Controller\Connected\Execute\PlanetController::tankOneAction', [
                 'planetTank'  => $usePlanet,
                 'em'  => $em
             ]);
         }
 
-        if ($usePlanet->getScientistAt() < $now) {
+        if ($usePlanet->getScientistAt() && $usePlanet->getScientistAt() < $now) {
             $this->forward('App\Controller\Connected\Execute\PlanetController::scientistOneAction', [
                 'planetScientist'  => $usePlanet,
                 'em'  => $em
