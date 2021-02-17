@@ -403,7 +403,7 @@ class CronTaskController extends AbstractController
         if ($opened) {
             echo "<script>window.close();</script>";
         } else {
-            echo "Cron terminé.";
+            echo "Cron succeed.";
             exit;
         }
         return new Response ("true");

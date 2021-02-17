@@ -114,10 +114,10 @@ class User implements UserInterface, \Serializable
     protected $rank;
 
     /**
-     * @ORM\OneToOne(targetEntity="Commander", inversedBy="user", fetch="EXTRA_LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Heroe", inversedBy="user", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
      */
-    protected $commander;
+    protected $heroe;
 
     /**
      * @ORM\OneToMany(targetEntity="Mission", mappedBy="user", fetch="EXTRA_LAZY")
@@ -3612,17 +3612,17 @@ class User implements UserInterface, \Serializable
     /**
      * @return mixed
      */
-    public function getCommander()
+    public function getHeroe()
     {
-        return $this->commander;
+        return $this->heroe;
     }
 
     /**
-     * @param mixed $commander
+     * @param mixed $heroe
      */
-    public function setCommander($commander): void
+    public function setHeroe($heroe): void
     {
-        $this->commander = $commander;
+        $this->heroe = $heroe;
     }
 
     /**

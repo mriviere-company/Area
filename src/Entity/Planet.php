@@ -45,10 +45,10 @@ class Planet
     protected $nbColo;
 
     /**
-     * @ORM\OneToOne(targetEntity="Commander", inversedBy="planet", fetch="EXTRA_LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Heroe", inversedBy="planet", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
      */
-    protected $commander;
+    protected $heroe;
 
     /**
      * @ORM\Column(name="niobium",type="integer", options={"unsigned":true})
@@ -2325,17 +2325,17 @@ class Planet
     /**
      * @return mixed
      */
-    public function getCommander()
+    public function getHeroe()
     {
-        return $this->commander;
+        return $this->heroe;
     }
 
     /**
-     * @param mixed $commander
+     * @param mixed $heroe
      */
-    public function setCommander($commander): void
+    public function setHeroe($heroe): void
     {
-        $this->commander = $commander;
+        $this->heroe = $heroe;
     }
 
     /**

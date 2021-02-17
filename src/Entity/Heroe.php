@@ -7,10 +7,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
 
 /**
- * @ORM\Table(name="commander")
+ * @ORM\Table(name="heroe")
  * @ORM\Entity
  */
-class Commander
+class Heroe
 {
     /**
      * @ORM\Column(type="integer")
@@ -20,17 +20,17 @@ class Commander
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="commander", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="User", mappedBy="heroe", fetch="EXTRA_LAZY")
      */
     protected $user;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fleet", mappedBy="commander", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Fleet", mappedBy="heroe", fetch="EXTRA_LAZY")
      */
     protected $fleet;
 
     /**
-     * @ORM\OneToOne(targetEntity="Planet", mappedBy="commander", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Planet", mappedBy="heroe", fetch="EXTRA_LAZY")
      */
     protected $planet;
 
@@ -87,6 +87,11 @@ class Commander
     protected $plasma;
 
     /**
+     * @ORM\Column(name="precision",type="smallint", options={"unsigned":true})
+     */
+    protected $precision;
+
+    /**
      * @ORM\Column(name="niobium",type="smallint", options={"unsigned":true})
      */
     protected $niobium;
@@ -102,9 +107,19 @@ class Commander
     protected $food;
 
     /**
+     * @ORM\Column(name="uranium",type="smallint", options={"unsigned":true})
+     */
+    protected $uranium;
+
+    /**
      * @ORM\Column(name="bitcoin",type="smallint", options={"unsigned":true})
      */
     protected $bitcoin;
+
+    /**
+     * @ORM\Column(name="warPoint",type="smallint", options={"unsigned":true})
+     */
+    protected $warPoint;
 
     /**
      * @ORM\Column(name="worker",type="smallint", options={"unsigned":true})
@@ -117,12 +132,27 @@ class Commander
     protected $soldier;
 
     /**
+     * @ORM\Column(name="tank",type="smallint", options={"unsigned":true})
+     */
+    protected $tank;
+
+    /**
+     * @ORM\Column(name="scientist",type="smallint", options={"unsigned":true})
+     */
+    protected $scientist;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->capture = false;
         $this->soldier = $this->getSoldierPoints();
+        $this->tank = $this->getTankPoints();
+        $this->scientist = $this->getSoldierPoints();
+        $this->warPoint = $this->getWarPointPoints();
+        $this->uranium = $this->getUraniumPoints();
+        $this->precision = $this->getPrecisionPoints();
         $this->bitcoin = $this->getBitcoinPoints();
         $this->water = $this->getWaterPoints();
         $this->niobium = $this->getNiobiumPoints();
@@ -312,7 +342,87 @@ class Commander
      */
     public function getSpeedPoints()
     {
-        $points = $this->user->getSpeedField(); // speed search/ciblage
+        $points = $this->user->getSpeedField(); // speed rapidité
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getTankPoints()
+    {
+        $points = $this->user->getTankField(); // sgains tank
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getUraniumPoints()
+    {
+        $points = $this->user->getUraniumField(); // gain uranium
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getScientistPoints()
+    {
+        $points = $this->user->getScientistField(); // scientifique gains
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getWarPointPoints()
+    {
+        $points = $this->user->getWarPointField(); // gain points de guerre
+        if ($points > 500000 or rand(1, 75) == 1)
+            return rand(75, 100);
+        if ($points > 250000 or rand(1, 75) == 1)
+            return rand(50, 75);
+        if ($points > 100000 or rand(1, 75) == 1)
+            return rand(25, 50);
+
+        return rand(1, 25);
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrecisionPoints()
+    {
+        $points = $this->user->getPrecisionField();// precision ciblage
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -625,6 +735,102 @@ class Commander
     public function setSoldier($soldier): void
     {
         $this->soldier = $soldier;
+    }
+
+    /**
+     * @return float|int
+     */
+    public function getCost()
+    {
+        return $this->cost;
+    }
+
+    /**
+     * @param float|int $cost
+     */
+    public function setCost($cost): void
+    {
+        $this->cost = $cost;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrecision(): int
+    {
+        return $this->precision;
+    }
+
+    /**
+     * @param int $precision
+     */
+    public function setPrecision(int $precision): void
+    {
+        $this->precision = $precision;
+    }
+
+    /**
+     * @return int
+     */
+    public function getUranium(): int
+    {
+        return $this->uranium;
+    }
+
+    /**
+     * @param int $uranium
+     */
+    public function setUranium(int $uranium): void
+    {
+        $this->uranium = $uranium;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWarPoint(): int
+    {
+        return $this->warPoint;
+    }
+
+    /**
+     * @param int $warPoint
+     */
+    public function setWarPoint(int $warPoint): void
+    {
+        $this->warPoint = $warPoint;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTank(): int
+    {
+        return $this->tank;
+    }
+
+    /**
+     * @param int $tank
+     */
+    public function setTank(int $tank): void
+    {
+        $this->tank = $tank;
+    }
+
+    /**
+     * @return int
+     */
+    public function getScientist(): int
+    {
+        return $this->scientist;
+    }
+
+    /**
+     * @param int $scientist
+     */
+    public function setScientist(int $scientist): void
+    {
+        $this->scientist = $scientist;
     }
 
 }

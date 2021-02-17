@@ -267,140 +267,140 @@
                                 <th class="text-center p-1">
                                     {{ fleet.getNiobium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputR">
                                     {{ form_widget(form_manageFleet.lessNiobium,{attr: { max: fleet.getNiobium()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputR">
+                                    {{ form_widget(form_manageFleet.lessNiobiums,{attr: { max: fleet.getNiobium()}}) }}
                                 </td>
                                 <th class="text-center p-1">
                                     {{ fleet.getPlanet().getNiobium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputLessR">
                                     {{ form_widget(form_manageFleet.moreNiobium,{attr: { max: fleet.getPlanet().getNiobium()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputLessR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputLessR">
+                                    {{ form_widget(form_manageFleet.moreNiobiums,{attr: { max: fleet.getPlanet().getNiobium()}}) }}
                                 </td>
                             </tr>
                             <tr{% if fleet.getPlanet().getWater() == 0 and fleet.getWater() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
                                     {{ fleet.getWater()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputR">
                                     {{ form_widget(form_manageFleet.lessWater,{attr: { max: fleet.getWater()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputR">
+                                    {{ form_widget(form_manageFleet.lessWaters,{attr: { max: fleet.getWater()}}) }}
                                 </td>
                                 <th class="text-center p-1">
                                     {{ fleet.getPlanet().getWater()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputLessR">
                                     {{ form_widget(form_manageFleet.moreWater,{attr: { max: fleet.getPlanet().getWater()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputLessR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputLessR">
+                                    {{ form_widget(form_manageFleet.moreWaters,{attr: { max: fleet.getPlanet().getWater()}}) }}
                                 </td>
                             </tr>
                             <tr{% if fleet.getPlanet().getUranium() == 0 and fleet.getUranium() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
                                     {{ fleet.getUranium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'uraniumImg'|trans }}" src="{{ asset('img/uranium.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputR">
                                     {{ form_widget(form_manageFleet.lessUranium,{attr: { max: fleet.getUranium()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputR">
+                                    {{ form_widget(form_manageFleet.lessUraniums,{attr: { max: fleet.getUranium()}}) }}
                                 </td>
                                 <th class="text-center p-1">
                                     {{ fleet.getPlanet().getUranium()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'uraniumImg'|trans }}" src="{{ asset('img/uranium.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputLessR">
                                     {{ form_widget(form_manageFleet.moreUranium,{attr: { max: fleet.getPlanet().getUranium()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputLessR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputLessR">
+                                    {{ form_widget(form_manageFleet.moreUraniums,{attr: { max: fleet.getPlanet().getUranium()}}) }}
                                 </td>
                             </tr>
                             <tr{% if fleet.getPlanet().getSoldier() == 0 and fleet.getSoldier() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
                                     {{ fleet.getSoldier()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldierImg'|trans }}" src="{{ asset('img/soldier.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputR">
                                     {{ form_widget(form_manageFleet.lessSoldier,{attr: { max: fleet.getSoldier()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputR">
+                                    {{ form_widget(form_manageFleet.lessSoldiers,{attr: { max: fleet.getSoldier()}}) }}
                                 </td>
                                 <th class="text-center p-1">
                                     {{ fleet.getPlanet().getSoldier()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="8" data-toggle="tooltip" data-placement="bottom" title="{{ 'soldierImg'|trans }}" src="{{ asset('img/soldier.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputLessR">
                                     {{ form_widget(form_manageFleet.moreSoldier,{attr: { max: fleet.getPlanet().getSoldier()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputLessR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputLessR">
+                                    {{ form_widget(form_manageFleet.moreSoldiers,{attr: { max: fleet.getPlanet().getSoldier()}}) }}
                                 </td>
                             </tr>
                             <tr{% if fleet.getPlanet().getTank() == 0 and fleet.getTank() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
                                     {{ fleet.getTank()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="18" data-toggle="tooltip" data-placement="bottom" title="{{ 'tankImg'|trans }}" src="{{ asset('img/tanks.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputR">
                                     {{ form_widget(form_manageFleet.lessTank,{attr: { max: fleet.getTank()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputR">
+                                    {{ form_widget(form_manageFleet.lessTanks,{attr: { max: fleet.getTank()}}) }}
                                 </td>
                                 <th class="text-center p-1">
                                     {{ fleet.getPlanet().getTank()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="18" data-toggle="tooltip" data-placement="bottom" title="{{ 'tankImg'|trans }}" src="{{ asset('img/tanks.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputLessR">
                                     {{ form_widget(form_manageFleet.moreTank,{attr: { max: fleet.getPlanet().getTank()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputLessR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputLessR">
+                                    {{ form_widget(form_manageFleet.moreTanks,{attr: { max: fleet.getPlanet().getTank()}}) }}
                                 </td>
                             </tr>
                             <tr{% if fleet.getPlanet().getWorker() == 0 and fleet.getWorker() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
                                     {{ fleet.getWorker()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'workerImg'|trans }}" src="{{ asset('img/worker.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputR">
                                     {{ form_widget(form_manageFleet.lessWorker,{attr: { max: fleet.getWorker()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputR">
+                                    {{ form_widget(form_manageFleet.lessWorkers,{attr: { max: fleet.getWorker()}}) }}
                                 </td>
                                 <th class="text-center p-1">
                                     {{ fleet.getPlanet().getWorker()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'workerImg'|trans }}" src="{{ asset('img/worker.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputLessR">
                                     {{ form_widget(form_manageFleet.moreWorker,{attr: { max: (fleet.getPlanet().getWorker() - 10000)}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputLessR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputLessR">
+                                    {{ form_widget(form_manageFleet.moreWorkers,{attr: { max: (fleet.getPlanet().getWorker() - 10000)}}) }}
                                 </td>
                             </tr>
                             <tr{% if fleet.getPlanet().getScientist() == 0 and fleet.getScientist() == 0 %} hidden{% endif %}>
                                 <th class="text-center p-1">
                                     {{ fleet.getScientist()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientistImg'|trans }}" src="{{ asset('img/scientist.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputR">
                                     {{ form_widget(form_manageFleet.lessScientist,{attr: { max: fleet.getScientist()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputR">
+                                    {{ form_widget(form_manageFleet.lessScientists,{attr: { max: fleet.getScientist()}}) }}
                                 </td>
                                 <th class="text-center p-1">
                                     {{ fleet.getPlanet().getScientist()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" width="15" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientistImg'|trans }}" src="{{ asset('img/scientist.png') }}">
                                 </th>
-                                <td class="center-cells p-1 px-4">
+                                <td class="center-cells p-1 px-4 maxInputLessR">
                                     {{ form_widget(form_manageFleet.moreScientist,{attr: { max: fleet.getPlanet().getScientist()}}) }}
                                 </td>
-                                <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
-                                    <span class="maxInputLessR">max</span>
+                                <td width="30" class="center-cells p-1 px-4 maxInputLessR">
+                                    {{ form_widget(form_manageFleet.moreScientists,{attr: { max: fleet.getPlanet().getScientist()}}) }}
                                 </td>
                             </tr>
                             </tbody>

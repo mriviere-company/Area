@@ -713,7 +713,9 @@
                 {% if app.user.getDiscipline() <= 0 and usePlanet.getCaserne() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/prison.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}">{{ 'building.prison'|trans|raw }}</button>
+                            <a href="{{ path('jail', {'usePlanet': usePlanet.getId()}) }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3 catch-border" width="40" src="{{ asset('img/prison.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}">{{ 'building.prison'|trans|raw }}</button>
+                            </a>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.prison.blocked'|trans }}
@@ -725,7 +727,10 @@
                 {% else %}
                     <tr class="access-build-2">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/prison.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}"><strong>{{ 'building.prison'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
+                            <a href="{{ path('jail', {'usePlanet': usePlanet.getId()}) }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3 catch-border" src="{{ asset('img/prison.jpg') }}">
+                            </a>
+                            <button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}"><strong>{{ 'building.prison'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('prison') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('prison'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingNiobium('prison'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.png') }}"><span class="ml-4">{% if (usePlanet.getCaserne() + 1) * app.user.getBuildingWater('prison') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingWater('prison'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * app.user.getBuildingWater('prison'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.png') }}"></span></div>
                             <div class="mt-4">{% if 6 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ app.user.getBuildingGroundPlace('prison') }}</span>{% else %}{{ app.user.getBuildingGroundPlace('prison') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.png') }}"></div>
                         </td>

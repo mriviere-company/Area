@@ -57,6 +57,7 @@ SkyImg: Espace
 rank: Classement
 quest: 'Objectifs'
 heroe: Commandants
+item: Inventaire
 market: 'Points de Guerre'
 helpNew: 'Aide débutant'
 fleetNoAlly: 'Des flottes non alliées ont été repérées en orbite de notre planète.'

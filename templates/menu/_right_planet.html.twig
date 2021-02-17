@@ -12,7 +12,7 @@
     {% if allPlanets|length <= 12 %}
         {% if allPlanets|length > 2 %}
             {% if allTuto > 22 %}<a href="{{ path('zombie', {'usePlanet': usePlanet.getId()}) }}">{% endif %}
-            <div data-toggle="tooltip" data-placement="left" {% if missionEnded %}title="{{ 'tooltip.missions'|trans }}"{% else %}title="{{ 'tooltip.zombie'|trans }}"{% endif %} class="mb-4 bg-right px-4 py-2 zombie-right{% if allTuto == 51 %} tutorial-show{% endif %}">
+            <div data-toggle="tooltip" data-placement="left" {% if missionEnded %}title="{{ 'tooltip.missions'|trans }}"{% else %}title="{{ 'tooltip.zombie'|trans }}"{% endif %} class="mb-4 bg-right px-4 py-2 alert-border{% if allTuto == 51 %} tutorial-show{% endif %}">
                 <div class="pt-2 float-left"><img alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ asset('img/zombie_indic.gif') }}"></div>
                 <div class="float-right">
                     <div class="mt-2">

@@ -53,18 +53,24 @@ class Server
     protected $speed;
 
     /**
+     * @ORM\Column(name="production",type="decimal", precision=28, scale=3)
+     * @Assert\NotBlank(message = "required")
+     */
+    protected $production;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->open = false;
         $this->speed = 0.1;
+        $this->production = 1;
         $this->pvp = false;
         $this->dailyReport = null;
         $this->embargo = null;
         $this->galaxys = new \Doctrine\Common\Collections\ArrayCollection();
     }
-
 
     /**
      * @return mixed
@@ -168,6 +174,22 @@ class Server
     public function setSpeed(float $speed): void
     {
         $this->speed = $speed;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProduction(): int
+    {
+        return $this->production;
+    }
+
+    /**
+     * @param int $production
+     */
+    public function setProduction(int $production): void
+    {
+        $this->production = $production;
     }
 
     /**

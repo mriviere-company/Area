@@ -67,10 +67,10 @@ class Fleet
     protected $destination;
 
     /**
-     * @ORM\OneToOne(targetEntity="Commander", inversedBy="fleet", fetch="EXTRA_LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Heroe", inversedBy="fleet", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
      */
-    protected $commander;
+    protected $heroe;
 
     /**
      * @ORM\Column(name="flightTime",type="datetime", nullable=true)
@@ -1723,17 +1723,17 @@ class Fleet
     /**
      * @return mixed
      */
-    public function getCommander()
+    public function getHeroe()
     {
-        return $this->commander;
+        return $this->heroe;
     }
 
     /**
-     * @param mixed $commander
+     * @param mixed $heroe
      */
-    public function setCommander($commander): void
+    public function setHeroe($heroe): void
     {
-        $this->commander = $commander;
+        $this->heroe = $heroe;
     }
 
     /**

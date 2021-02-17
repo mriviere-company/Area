@@ -806,12 +806,14 @@ function manageMaxClick() {
         $('.maxInputR').each( function(){
             let parent = $(this).parent().parent();
             parent.find('input:first').val(parent.find('input:first').attr('max'));
+            $(this).find('input:first').val($(this).find('input:first').attr('max'));
         });
     });
     $('.removeAllShipR').off('click').on('click',function(e){
         $('.maxInputLessR').each( function(){
             let parent = $(this).parent().parent();
-            parent.find('input:eq(1)').val(parent.find('input:eq(1)').attr('max'));
+            parent.find('input:first').val(parent.find('input:first').attr('max'));
+            $(this).find('input:first').val($(this).find('input:first').attr('max'));
         });
     });
     $('.addAllRes').off('click').on('click',function(e){
