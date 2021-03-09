@@ -2,13 +2,25 @@
 
 namespace App\Controller\Connected\Execute;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use DateInterval;
 use DateTime;
 
+/**
+ * Class PlanetController
+ * @package App\Controller\Connected\Execute
+ */
 class PlanetController extends AbstractController
 {
+    /**
+     * @param $planet
+     * @param $now
+     * @param $em
+     * @return Response
+     * @throws Exception
+     */
     public function buildingOneAction($planet, $now, $em)
     {
         $build = $planet->getConstruct();
@@ -38,19 +50,19 @@ class PlanetController extends AbstractController
             $planet->setCity($planet->getCity() + 1);
             $planet->setWorkerProduction($planet->getWorkerProduction() + 5.56);
             $planet->setWorkerMax($planet->getWorkerMax() + 12500);
-            $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_city') : NULL;
+            $quest = $planet->getCharacter() ? $planet->getCharacter()->checkQuests('build_city') : null;
             if($quest) {
-                $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
-                $planet->getUser()->removeQuest($quest);
+                $planet->getCharacter()->getRank()->setWarPoint($planet->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
+                $planet->getCharacter()->removeQuest($quest);
             }
         } elseif ($build == 'metropole') {
             $planet->setMetropole($planet->getMetropole() + 1);
             $planet->setWorkerProduction($planet->getWorkerProduction() + 8.32);
             $planet->setWorkerMax($planet->getWorkerMax() + 40000);
-            $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_metro') : NULL;
+            $quest = $planet->getCharacter() ? $planet->getCharacter()->checkQuests('build_metro') : null;
             if($quest) {
-                $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
-                $planet->getUser()->removeQuest($quest);
+                $planet->getCharacter()->getRank()->setWarPoint($planet->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
+                $planet->getCharacter()->removeQuest($quest);
             }
         } elseif ($build == 'caserne') {
             $planet->setCaserne($planet->getCaserne() + 1);
@@ -75,10 +87,10 @@ class PlanetController extends AbstractController
         } elseif ($build == 'heavyUsine') {
             $planet->setHeavyUsine($planet->getHeavyUsine() + 1);
             $planet->setShipProduction($planet->getShipProduction() + 0.3);
-            $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_heavy') : NULL;
+            $quest = $planet->getCharacter() ? $planet->getCharacter()->checkQuests('build_heavy') : null;
             if($quest) {
-                $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
-                $planet->getUser()->removeQuest($quest);
+                $planet->getCharacter()->getRank()->setWarPoint($planet->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
+                $planet->getCharacter()->removeQuest($quest);
             }
         } elseif ($build == 'spaceShip') {
             $planet->setSpaceShip($planet->getSpaceShip() + 1);
@@ -119,6 +131,11 @@ class PlanetController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $planetSoldier
+     * @param $em
+     * @return Response
+     */
     public function soldierOneAction($planetSoldier, $em)
     {
         if ($planetSoldier->getSoldier() + $planetSoldier->getSoldierAtNbr() <= $planetSoldier->getSoldierMax()) {
@@ -136,6 +153,11 @@ class PlanetController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $planetTank
+     * @param $em
+     * @return Response
+     */
     public function tankOneAction($planetTank, $em)
     {
         if ($planetTank->getTank() + $planetTank->getTankAtNbr() <= 500) {
@@ -153,6 +175,11 @@ class PlanetController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $planetScientist
+     * @param $em
+     * @return Response
+     */
     public function scientistOneAction($planetScientist, $em)
     {
         if ($planetScientist->getScientist() + $planetScientist->getScientistAtNbr() <= $planetScientist->getScientistMax()) {
@@ -172,6 +199,11 @@ class PlanetController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $product
+     * @param $em
+     * @return Response
+     */
     public function productOneAction($product, $em)
     {
         $planetProduct = $product->getPlanet();

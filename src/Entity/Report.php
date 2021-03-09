@@ -23,10 +23,10 @@ class Report
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="reports", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="reports", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\Column(name="title",type="string", length=75)
@@ -149,17 +149,17 @@ class Report
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**

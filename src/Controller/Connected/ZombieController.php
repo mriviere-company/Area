@@ -2,6 +2,9 @@
 
 namespace App\Controller\Connected;
 
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -19,27 +22,26 @@ class ZombieController extends AbstractController
 {
     /**
      * @Route("/zombie/{usePlanet}", name="zombie", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
      */
     public function ZombieAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if($user->getGameOver()) {
+        if($character->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $now = new DateTime();
-        if (count($user->getMissions()) == 0) {
+        if (count($character->getMissions()) == 0) {
             $i = 1;
             while ($i != 41) {
-                $mission = new Mission();
-                $mission->setMissionAt($now);
-                $mission->setUser($user);
-                $mission->setType($i);
+                $mission = new Mission($character, $i);
                 $em->persist($mission);
                 $i++;
             }
@@ -48,9 +50,9 @@ class ZombieController extends AbstractController
 
         $planet = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
-            ->where('p.user = :user')
+            ->where('p.character = :character')
             ->andWhere('p.radarAt is null and p.brouilleurAt is null')
-            ->setParameters(['user' => $user])
+            ->setParameters(['character' => $character])
             ->orderBy('p.ground', 'ASC')
             ->getQuery()
             ->setMaxresults(1)
@@ -65,17 +67,17 @@ class ZombieController extends AbstractController
 
         $otherPoints = $em->getRepository('App:Stats')
             ->createQueryBuilder('s')
-            ->join('s.user', 'u')
+            ->join('s.character', 'c')
             ->select('count(s) as numbers, sum(DISTINCT s.zombie) as allZombie')
             ->groupBy('s.date')
-            ->andWhere('u.bot = false')
+            ->andWhere('c.bot = false')
             ->getQuery()
             ->getResult();
 
         $missions = $em->getRepository('App:Mission')
             ->createQueryBuilder('m')
-            ->where('m.user = :user')
-            ->setParameters(['user' => $user])
+            ->where('m.character = :character')
+            ->setParameters(['character' => $character])
             ->orderBy('m.type', 'ASC')
             ->getQuery()
             ->getResult();
@@ -90,36 +92,41 @@ class ZombieController extends AbstractController
 
     /**
      * @Route("/finir-mission/{mission}/{usePlanet}", name="mission_finish", requirements={"usePlanet"="\d+", "mission"="\d+"})
+     * @param Mission $mission
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function zombieFinishAction(Mission $mission, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
         $nowMission = new DateTime();
         $nowMission->add(new DateInterval('PT' . $mission->getTime() . 'S'));
 
-        if ($usePlanet->getUser() != $user || $mission->getMissionAt() > $now) {
+        if ($usePlanet->getCharacter() != $character || $mission->getMissionAt() > $now) {
             return $this->redirectToRoute('home');
         }
 
         $reportMission = new Report();
         $reportMission->setType('zombie');
         $reportMission->setSendAt($now);
-        $reportMission->setUser($user);
+        $reportMission->setCharacter($character);
         $planet = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.user = :user')
             ->andWhere('p.radarAt is null and p.brouilleurAt is null')
-            ->setParameters(['user' => $user])
+            ->setParameters(['character' => $character])
             ->orderBy('p.ground', 'ASC')
             ->getQuery()
             ->setMaxresults(1)
             ->getOneOrNullResult();
 
-        if ($user->getZombieAtt() > 0) {
+        if ($character->getZombieAtt() > 0) {
             if (rand(0, 100) >= 5) {
-                $user->setZombieAtt($user->getZombieAtt() - $mission->getGain());
+                $character->ZombieAtt($character->getZombieAtt() - $mission->getGain());
                 $mission->setMissionAt($nowMission);
                 $reportMission->setTitle("Mission d'élimination zombies");
                 $reportMission->setImageName("zombie_win_report.jpg");
@@ -129,21 +136,21 @@ class ZombieController extends AbstractController
                 $reportMission->setImageName("zombie_lose_report.jpg");
                 $loseSoldiers = ($planet->getSoldier() / rand(8,10));
                 $planet->setSoldier($planet->getSoldier() - $loseSoldiers);
-                $user->setZombieAtt($user->getZombieAtt() + $mission->getGain());
+                $character->ZombieAtt($character->getZombieAtt() + $mission->getGain());
                 $reportMission->setContent("Des hommes de l'escouade militaire envoyée reviennent progressivement par petit groupe.<br>Ils ne s'attendaient pas à une telle résistance... <span class='text-rouge'>" . number_format($loseSoldiers) . "</span> soldats sont morts durant la mission et votre niveau de menace a augmenté de " . $mission->getGain() . " !");
                 $mission->setMissionAt($nowMission);
             }
         } else {
             if (rand(0, 100) >= 5) {
                 $zombieThreat = rand(1, 10);
-                $user->setZombieAtt($user->getZombieAtt() + $zombieThreat);
+                $character->ZombieAtt($character->getZombieAtt() + $zombieThreat);
                 $reportMission->setTitle("Mission de récupération d'uranium");
                 $reportMission->setImageName("uranium_win_report.jpg");
                 $reportMission->setContent("L'escouade militaire envoyée en mission est de retour, son capitaine vous fait son rapport :<br> <span class='text-vert'>+" . number_format($mission->getGain()) . "</span> uranium ont été récupérés en zone zombie.<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+" . $zombieThreat ."</span>.");
                 $planet->setUranium($planet->getUranium() + $mission->getGain());
                 $mission->setMissionAt($nowMission);
             } else {
-                $user->setZombieAtt($user->getZombieAtt() + $mission->getGain());
+                $character->ZombieAtt($character->getZombieAtt() + $mission->getGain());
                 $reportMission->setTitle("Échec mission");
                 $reportMission->setImageName("zombie_lose_report.jpg");
                 $reportMission->setContent("Des hommes de l'escouade militaire envoyée reviennent progressivement par petit groupe.<br>Ils ne s'attendaient pas à une telle résistance...<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+". $mission->getGain() ."</span>.");
@@ -151,8 +158,8 @@ class ZombieController extends AbstractController
             }
         }
 
-        if ($user->getZombieAtt() <= -150) {
-            $user->setZombieAtt(-150);
+        if ($character->getZombieAtt() <= -150) {
+            $character->ZombieAtt(-150);
         }
 
         if ($user->getTutorial() == 52) {
@@ -167,14 +174,18 @@ class ZombieController extends AbstractController
 
     /**
      * @Route("/finir-missions/{usePlanet}", name="mission_finish_all", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function zombieFinishAllAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -182,7 +193,7 @@ class ZombieController extends AbstractController
             ->createQueryBuilder('p')
             ->where('p.user = :user')
             ->andWhere('p.radarAt is null and p.brouilleurAt is null')
-            ->setParameters(['user' => $user])
+            ->setParameters(['character' => $character])
             ->orderBy('p.ground', 'ASC')
             ->getQuery()
             ->setMaxresults(1)
@@ -191,19 +202,19 @@ class ZombieController extends AbstractController
         $reportMission = new Report();
         $reportMission->setType('zombie');
         $reportMission->setSendAt($now);
-        $reportMission->setUser($user);
+        $reportMission->setCharacter($character);
         $reportMission->setTitle("Mission d'élimination zombies");
         $reportMission->setImageName("zombie_win_report.jpg");
-        $zombieAtt = $user->getZombieAtt();
+        $zombieAtt = $character->getZombieAtt();
         $zombieUranium = 0;
         $loseSoldiers = 0;
 
         $missions = $em->getRepository('App:Mission')
             ->createQueryBuilder('m')
-            ->where('m.user = :user')
+            ->where('m.character = :character')
             ->andWhere('m.missionAt < :now')
             ->andWhere('m.type <= :level')
-            ->setParameters(['user' => $user, 'now' => $now, 'level' => $user->getLevel(),])
+            ->setParameters(['character' => $character, 'now' => $now, 'level' => $character->getLevel(),])
             ->orderBy('m.type', 'ASC')
             ->getQuery()
             ->getResult();
@@ -235,11 +246,11 @@ class ZombieController extends AbstractController
         }
         $planet->setSoldier($planet->getSoldier() - $loseSoldiers);
         $planet->setUranium($planet->getUranium() + $zombieUranium);
-        $diffZombieAtt = $zombieAtt - $user->getZombieAtt();
-        $user->setZombieAtt($zombieAtt);
+        $diffZombieAtt = $zombieAtt - $character->getZombieAtt();
+        $character->ZombieAtt($zombieAtt);
 
-        if ($user->getZombieAtt() <= -150) {
-            $user->setZombieAtt(-150);
+        if ($character->getZombieAtt() <= -150) {
+            $character->ZombieAtt(-150);
         }
 
         if ($user->getTutorial() == 52) {

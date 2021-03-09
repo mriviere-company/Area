@@ -2,23 +2,30 @@
 
 namespace App\Controller\Share;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
+/**
+ * Class ShareController
+ * @package App\Controller\Share
+ */
 class ShareController extends AbstractController
 {
     /**
      * @Route("/rapport/share/{id}", name="report_share_display")
+     * @param string $key
+     * @return Response
      */
-    public function reportSharePageAction($id)
+    public function reportSharePageAction(string $key)
     {
         $em = $this->getDoctrine()->getManager();
 
         $report = $em->getRepository('App:Report')
             ->createQueryBuilder('r')
             ->andWhere('r.shareKey = :key')
-            ->setParameters(['key' => $id])
+            ->setParameters(['key' => $key])
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -29,15 +36,17 @@ class ShareController extends AbstractController
 
     /**
      * @Route("/message/share/{id}", name="message_share_display")
+     * @param string $key
+     * @return Response
      */
-    public function messageSharePageAction($id)
+    public function messageSharePageAction(string $key)
     {
         $em = $this->getDoctrine()->getManager();
 
         $message = $em->getRepository('App:Message')
             ->createQueryBuilder('r')
             ->andWhere('r.shareKey = :key')
-            ->setParameters(['key' => $id])
+            ->setParameters(['key' => $key])
             ->getQuery()
             ->getOneOrNullResult();
 

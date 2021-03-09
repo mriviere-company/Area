@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -63,12 +64,26 @@ class Peace
      */
     protected $pdg;
 
-    public function __construct()
+    /**
+     * Peace constructor.
+     * @param Ally $ally
+     * @param string $tag
+     * @param bool $type
+     * @param int $planet
+     * @param int $taxe
+     * @param int $pdg
+     * @param bool $accepted
+     */
+    public function __construct(Ally $ally, string $tag, bool $type, int $planet, int $taxe, int $pdg, bool $accepted)
     {
-        $this->accepted = false;
-        $this->planet = null;
-        $this->taxe = null;
-        $this->pdg = null;
+        $this->ally = $ally;
+        $this->tag = $tag;
+        $this->type = $type;
+        $this->accepted = $accepted;
+        $this->planet = $planet;
+        $this->taxe = $taxe;
+        $this->pdg = $pdg;
+        $this->signedAt = new DateTime();
     }
 
     /**
@@ -199,6 +214,9 @@ class Peace
         $this->pdg = $pdg;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

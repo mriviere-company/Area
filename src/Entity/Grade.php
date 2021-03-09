@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -25,10 +26,10 @@ class Grade
     protected $ally;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="grade", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Character", mappedBy="grade", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $users;
+    protected $characters;
 
     /**
      * @ORM\Column(name="placement",type="smallint", options={"unsigned":true})
@@ -61,13 +62,47 @@ class Grade
      */
     protected $canPeace;
 
-    public function __construct()
+    /**
+     * @ORM\Column(name="canEdit",type="boolean")
+     */
+    protected $canEdit;
+
+    /**
+     * @ORM\Column(name="seeMembers",type="boolean")
+     */
+    protected $seeMembers;
+
+    /**
+     * @ORM\Column(name="useFleets",type="boolean")
+     */
+    protected $useFleets;
+
+    /**
+     * Grade constructor.
+     * @param Ally $ally
+     * @param string $name
+     * @param int $placement
+     * @param bool $recruit
+     * @param bool $kick
+     * @param bool $war
+     * @param bool $peace
+     * @param bool $edit
+     * @param bool $see
+     * @param bool $use
+     */
+    public function __construct(Ally $ally, string $name, int $placement, bool $recruit, bool $kick, bool $war, bool $peace, bool $edit, bool $see, bool $use)
     {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->canRecruit = false;
-        $this->canKick = false;
-        $this->canWar = false;
-        $this->canPeace = false;
+        $this->ally = $ally;
+        $this->name = $name;
+        $this->placement = $placement;
+        $this->canRecruit = $recruit;
+        $this->canKick = $kick;
+        $this->canWar = $war;
+        $this->canPeace = $peace;
+        $this->canEdit = $edit;
+        $this->seeMembers = $see;
+        $this->useFleets = $use;
+        $this->characters = new ArrayCollection();
     }
 
     /**
@@ -183,45 +218,48 @@ class Grade
     }
 
     /**
-     * Add user
+     * Add character
      *
-     * @param \App\Entity\User $user
+     * @param \App\Entity\Character $character
      *
      * @return Grade
      */
-    public function addUser(\App\Entity\User $user)
+    public function addCharacter(\App\Entity\Character $character)
     {
-        $this->users[] = $user;
+        $this->characters[] = $character;
 
         return $this;
     }
 
     /**
-     * Remove user
+     * Remove character
      *
-     * @param \App\Entity\User $user
+     * @param \App\Entity\Character $character
      */
-    public function removeUser(\App\Entity\User $user)
+    public function removeCharacter(\App\Entity\Character $character)
     {
-        $this->users->removeElement($user);
+        $this->characters->removeElement($character);
     }
 
     /**
      * @return mixed
      */
-    public function getUsers()
+    public function getCharacters()
     {
-        return $this->users;
+        return $this->characters;
     }
 
     /**
-     * @param mixed $users
+     * @param mixed $characters
      */
-    public function setUsers($users): void
+    public function setcharacters($characters): void
     {
-        $this->users = $users;
+        $this->characters = $characters;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

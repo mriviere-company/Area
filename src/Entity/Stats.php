@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -20,10 +21,10 @@ class Stats
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="stats", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="stats", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\Column(name="bitcoin",type="bigint")
@@ -50,6 +51,24 @@ class Stats
      */
     protected $date;
 
+    /**
+     * Stats constructor.
+     * @param Character $character
+     * @param int $bitcoin
+     * @param int $points
+     * @param int $pdg
+     * @param int $zombie
+     */
+    public function __construct(Character $character, int $bitcoin, int $points, int $pdg, int $zombie)
+    {
+        $this->character = $character;
+        $this->bitcoin = $bitcoin;
+        $this->points = $points;
+        $this->pdg = $pdg;
+        $this->zombie = $zombie;
+        $this->date = new DateTime();
+    }
+
     public function getId()
     {
         return $this->id;
@@ -58,17 +77,17 @@ class Stats
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**

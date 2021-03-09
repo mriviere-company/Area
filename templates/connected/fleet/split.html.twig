@@ -5,7 +5,7 @@
 {% block title %}{{ 'title'|trans }}{% endblock %}
 
 {% block body %}
-    {% set cargoBonus = 1.2 + (app.user.getPoliticCargo() / 5) %}
+    {% set cargoBonus = 1.2 + (character.getPoliticCargo() / 5) %}
     {% set multiple = oldFleet.getMotherShip() > 0 ? 1.1 : 1 %}
     <div class="front-block editFleet">
         {{ form_start(form_spatialShip) }}

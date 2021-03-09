@@ -11,13 +11,14 @@ class PlanetService extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $ally = $user->getAlly();
+        $character = $user->getMainCharacter();
+        $ally = $character->getAlly();
 
         if ($ally) {
             $planet = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
-                ->join('p.user', 'u')
-                ->join('u.ally', 'a')
+                ->join('p.character', 'c')
+                ->join('c.ally', 'a')
                 ->join('p.sector', 's')
                 ->join('s.galaxy', 'g')
                 ->select('case when p.radar is not null and p.skyRadar is not null then (p.radar + p.skyRadar) when p.radar is not null then p.radar when p.skyRadar is not null then p.skyRadar else 0 end as allRadar')
@@ -34,9 +35,9 @@ class PlanetService extends AbstractController
                 ->join('p.sector', 's')
                 ->join('s.galaxy', 'g')
                 ->select('case when p.radar is not null and p.skyRadar is not null then (p.radar + p.skyRadar) when p.radar is not null then p.radar when p.skyRadar is not null then p.skyRadar else 0 end as allRadar')
-                ->where('p.user = :user')
+                ->where('p.character = :character')
                 ->andWhere('s.position = :sPos and g.position = :gPos')
-                ->setParameters(['user' => $user, 'sPos' => $sector, 'gPos' => $gal])
+                ->setParameters(['character' => $character, 'sPos' => $sector, 'gPos' => $gal])
                 ->setMaxResults(1)
                 ->orderBy('allRadar', 'DESC')
                 ->getQuery()
@@ -54,9 +55,10 @@ class PlanetService extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $ally = $user->getAlly();
+        $character = $user->getMainCharacter();
+        $ally = $character->getAlly();
 
-        $eAlly = $user->getAllyEnnemy();
+        $eAlly = $character->getAllyEnnemy();
         $warAlly = [];
         $x = 0;
         foreach ($eAlly as $tmp) {
@@ -64,7 +66,7 @@ class PlanetService extends AbstractController
             $x++;
         }
 
-        $fAlly = $user->getAllyFriends();
+        $fAlly = $character->getAllyFriends();
         $friendAlly = [];
         $x = 0;
         foreach ($fAlly as $tmp) {
@@ -83,17 +85,17 @@ class PlanetService extends AbstractController
 
         $attacker = $em->getRepository('App:Fleet')
             ->createQueryBuilder('f')
-            ->join('f.user', 'u')
+            ->join('f.character', 'c')
             ->join('f.planet', 'p')
-            ->leftJoin('u.ally', 'a')
+            ->leftJoin('c.ally', 'a')
             ->select('f.id')
-            ->where('p.user = :user')
+            ->where('p.character = :character')
             ->andWhere('f.attack = true OR a.sigle in (:ally)')
-            ->andWhere('f.user != :user')
+            ->andWhere('f.character != :character')
             ->andWhere('f.flightTime is null')
-            ->andWhere('u.ally is null OR a.sigle not in (:friend)')
-            ->andWhere('u.ally is null OR u.ally != :myAlly')
-            ->setParameters(['ally' => $warAlly, 'user' => $user, 'friend' => $friendAlly, 'myAlly' => $ally])
+            ->andWhere('c.ally is null OR a.sigle not in (:friend)')
+            ->andWhere('c.ally is null OR c.ally != :myAlly')
+            ->setParameters(['ally' => $warAlly, 'character' => $character, 'friend' => $friendAlly, 'myAlly' => $ally])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
@@ -109,9 +111,10 @@ class PlanetService extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $ally = $user->getAlly();
+        $character = $user->getMainCharacter();
+        $ally = $character->getAlly();
 
-        $eAlly = $user->getAllyEnnemy();
+        $eAlly = $character->getAllyEnnemy();
         $warAlly = [];
         $x = 0;
         foreach ($eAlly as $tmp) {
@@ -119,7 +122,7 @@ class PlanetService extends AbstractController
             $x++;
         }
 
-        $fAlly = $user->getAllyFriends();
+        $fAlly = $character->getAllyFriends();
         $friendAlly = [];
         $x = 0;
         foreach ($fAlly as $tmp) {
@@ -138,16 +141,16 @@ class PlanetService extends AbstractController
 
         $attacker = $em->getRepository('App:Fleet')
             ->createQueryBuilder('f')
-            ->join('f.user', 'u')
-            ->leftJoin('u.ally', 'a')
+            ->join('f.character', 'c')
+            ->leftJoin('c.ally', 'a')
             ->select('f.id')
             ->where('f.planet = :planet')
             ->andWhere('f.attack = true OR a.sigle in (:ally)')
-            ->andWhere('f.user != :user')
+            ->andWhere('f.character != :character')
             ->andWhere('f.flightTime is null')
-            ->andWhere('u.ally is null OR a.sigle not in (:friend)')
-            ->andWhere('u.ally is null OR u.ally != :myAlly')
-            ->setParameters(['planet' => $planet, 'ally' => $warAlly, 'user' => $user, 'friend' => $friendAlly, 'myAlly' => $ally])
+            ->andWhere('c.ally is null OR a.sigle not in (:friend)')
+            ->andWhere('c.ally is null OR c.ally != :myAlly')
+            ->setParameters(['planet' => $planet, 'ally' => $warAlly, 'character' => $character, 'friend' => $friendAlly, 'myAlly' => $ally])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

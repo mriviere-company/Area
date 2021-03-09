@@ -9,7 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class ModifPasswordType extends AbstractType
+class UserOptionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -18,6 +18,23 @@ class ModifPasswordType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(
+                'username',
+                null,
+                [
+                    'label' => 'form.username',
+                    'data' => null,
+                    'attr'  => [
+                        'placeholder' => 'form.username',
+                        'class' => 'game-input',
+                        'value' => $options['username'],
+                        'maxlength' => '15',
+                        'minlength' => '3',
+                        'autocomplete' => 'off',
+                    ],
+                    'required' => false
+                ]
+            )
             ->add(
                 'oldPassword',
                 null,
@@ -28,7 +45,7 @@ class ModifPasswordType extends AbstractType
                         'class' => 'game-input',
                         'autocomplete' => 'off',
                     ],
-                    'required' => false,
+                    'required' => false
                 ]
             )
             ->add(
@@ -41,7 +58,7 @@ class ModifPasswordType extends AbstractType
                         'class' => 'game-input',
                         'autocomplete' => 'off',
                     ],
-                    'required' => false,
+                    'required' => false
                 ]
             )
             ->add(
@@ -54,7 +71,7 @@ class ModifPasswordType extends AbstractType
                         'class' => 'game-input',
                         'autocomplete' => 'off',
                     ],
-                    'required' => false,
+                    'required' => false
                 ]
             )
             ->add(
@@ -65,37 +82,25 @@ class ModifPasswordType extends AbstractType
                     'attr'  => [
                         'placeholder' => 'form.newletter',
                         'class' => '',
-                        'checked'   => 'checked'
+                        'checked' => $options['newletter']
                     ],
-                    'required' => false,
-                    'mapped' => true,
+                    'required' => false
                 ]
             )
             ->add(
-                'planetOrder',
-                'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
+                'connect_last',
+                CheckboxType::class,
                 [
-                    'choices' => $this->getChoices(),
-                    'label' => 'form.planetOrder',
+                    'label' => 'form.connectLast',
                     'attr'  => [
-                        'placeholder' => 'form.planetOrder',
-                        'class' => 'planetOrder select2',
+                        'placeholder' => 'form.connectLast',
+                        'class' => '',
+                        'checked' => $options['connectLast'],
                     ],
-                    'required' => true
+                    'required' => false
                 ]
             )
             ->add('sendForm', SubmitType::class, ['label' => 'form.newOptions', 'attr' => ['class' => 'confirm-button float-right']]);
-    }
-
-    protected function getChoices()
-    {
-        $translator = new Translator('front_options');
-        return [
-            '' => null,
-            $translator->trans('form.alpha') => 'alpha',
-            $translator->trans('form.pos') => 'pos',
-            $translator->trans('form.col') => 'colo'
-        ];
     }
 
     /**
@@ -103,6 +108,7 @@ class ModifPasswordType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired(['username', 'newletter', 'connectLast']);
         $resolver->setDefaults(
             [
                 'data_class'         => null,

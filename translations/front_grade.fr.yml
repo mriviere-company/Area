@@ -1,5 +1,5 @@
 form.name: 'Nom du grade'
-form.send: 'Ajouter grade'
+form.send: 'Ajouter'
 leader: Dirigeant
 coleader: Diplomate
 officer: Recruteur

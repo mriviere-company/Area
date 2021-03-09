@@ -13,8 +13,8 @@
         </select>
         <button type="submit" id="planet_choice_send" hidden></button>
     </form>
-    {% if app.user.getAlly() %}
-        {% set bonus = 1.2 + (app.user.getPoliticProd() / 14) %}
+    {% if ally %}
+        {% set bonus = 1.2 + (character.getPoliticProd() / 14) %}
     {% else %}
         {% set bonus = 1 %}
     {% endif %}

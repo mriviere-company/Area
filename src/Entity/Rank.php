@@ -19,9 +19,10 @@ class Rank
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="rank", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Character", mappedBy="rank", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\Column(name="warPoint",type="bigint", options={"unsigned":true})
@@ -48,8 +49,13 @@ class Rank
      */
     protected $oldPosition;
 
-    public function __construct()
+    /**
+     * Rank constructor.
+     * @param Character $character
+     */
+    public function __construct(Character $character)
     {
+        $this->character = $character;
         $this->warPoint = 0;
         $this->point = 100;
         $this->oldPoint = 0;
@@ -60,17 +66,17 @@ class Rank
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**
@@ -153,6 +159,9 @@ class Rank
         $this->warPoint = $warPoint;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

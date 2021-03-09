@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected\Research;
 
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,26 +19,31 @@ class ArmementController extends AbstractController
 {
     /**
      * @Route("/rechercher-armement/{usePlanet}", name="research_armement", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function researchArmementAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $user->getArmement() + 1;
-        $userBt = $user->getBitcoin();
-        if(($userBt < ($level * 2000)) ||
-            ($level == 6 || $user->getSearchAt() > $now)) {
+        $level = $character->getArmement() + 1;
+        $characterBt = $character->getBitcoin();
+        if(($characterBt < ($level * 2000)) ||
+            ($level == 6 || $character->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
-        $now->add(new DateInterval('PT' . round(($level * 370 / $user->getScientistProduction())) . 'S')); // X10 NORMAL GAME
-        $user->setSearch('armement');
-        $user->setSearchAt($now);
-        $user->setBitcoin($userBt - ($level * 2000));
+        $now->add(new DateInterval('PT' . round(($level * 370 / $character->getScientistProduction())) . 'S')); // X10 NORMAL GAME
+        $character->setSearch('armement');
+        $character->setSearchAt($now);
+        $character->setBitcoin($characterBt - ($level * 2000));
         if(($user->getTutorial() == 8)) {
             $user->setTutorial(9);
         }
@@ -47,26 +54,31 @@ class ArmementController extends AbstractController
 
     /**
      * @Route("/rechercher-missile/{usePlanet}", name="research_missile", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function researchMissileAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $user->getMissile() + 1;
-        $userBt = $user->getBitcoin();
-        if(($userBt < ($level * 2600) || $user->getArmement() < 0) ||
-            ($level == 4 || $user->getSearchAt() > $now)) {
+        $level = $character->getMissile() + 1;
+        $characterBt = $character->getBitcoin();
+        if(($characterBt < ($level * 2600) || $character->getArmement() < 0) ||
+            ($level == 4 || $character->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
-        $now->add(new DateInterval('PT' . round(($level * 450 / $user->getScientistProduction())) . 'S'));
-        $user->setSearch('missile');
-        $user->setSearchAt($now);
-        $user->setBitcoin($userBt - ($level * 2600));
+        $now->add(new DateInterval('PT' . round(($level * 450 / $character->getScientistProduction())) . 'S'));
+        $character->setSearch('missile');
+        $character->setSearchAt($now);
+        $character->setBitcoin($characterBt - ($level * 2600));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -74,26 +86,31 @@ class ArmementController extends AbstractController
 
     /**
      * @Route("/rechercher-laser/{usePlanet}", name="research_laser", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function researchLaserAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $user->getLaser() + 1;
-        $userBt = $user->getBitcoin();
-        if(($userBt < ($level * 13000) || $user->getArmement() < 2) ||
-            ($level == 4 || $user->getSearchAt() > $now)) {
+        $level = $character->getLaser() + 1;
+        $characterBt = $character->getBitcoin();
+        if(($characterBt < ($level * 13000) || $character->getArmement() < 2) ||
+            ($level == 4 || $character->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
-        $now->add(new DateInterval('PT' . round(($level * 1800 / $user->getScientistProduction())) . 'S'));
-        $user->setSearch('laser');
-        $user->setSearchAt($now);
-        $user->setBitcoin($userBt - ($level * 13000));
+        $now->add(new DateInterval('PT' . round(($level * 1800 / $character->getScientistProduction())) . 'S'));
+        $character->setSearch('laser');
+        $character->setSearchAt($now);
+        $character->setBitcoin($characterBt - ($level * 13000));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -101,26 +118,31 @@ class ArmementController extends AbstractController
 
     /**
      * @Route("/rechercher-plasma/{usePlanet}", name="research_plasma", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function researchPlasmaAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $user->getPlasma() + 1;
-        $userBt = $user->getBitcoin();
-        if(($userBt < ($level * 29000) || $user->getArmement() < 4) ||
-            ($level == 4 || $user->getSearchAt() > $now)) {
+        $level = $character->getPlasma() + 1;
+        $characterBt = $character->getBitcoin();
+        if(($characterBt < ($level * 29000) || $character->getArmement() < 4) ||
+            ($level == 4 || $character->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
-        $now->add(new DateInterval('PT' . round(($level * 4680 / $user->getScientistProduction())) . 'S'));
-        $user->setSearch('plasma');
-        $user->setSearchAt($now);
-        $user->setBitcoin($userBt - ($level * 29000));
+        $now->add(new DateInterval('PT' . round(($level * 4680 / $character->getScientistProduction())) . 'S'));
+        $character->setSearch('plasma');
+        $character->setSearchAt($now);
+        $character->setBitcoin($characterBt - ($level * 29000));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);

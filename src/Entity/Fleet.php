@@ -38,10 +38,10 @@ class Fleet
     protected $fightAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="fleets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="fleets", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="fleets", fetch="EXTRA_LAZY")
@@ -62,13 +62,14 @@ class Fleet
     protected $planet;
 
     /**
-     * @ORM\OneToOne(targetEntity="Destination", mappedBy="fleet", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Destination", mappedBy="fleet", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="destination_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $destination;
 
     /**
-     * @ORM\OneToOne(targetEntity="Heroe", inversedBy="fleet", fetch="EXTRA_LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Heroe", inversedBy="fleet", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $heroe;
 
@@ -252,9 +253,6 @@ class Fleet
      */
     protected $uranium;
 
-    /**
-     * User constructor.
-     */
     public function __construct()
     {
         $this->name = 'Flotte';
@@ -314,16 +312,16 @@ class Fleet
             $attack = "<span class='text-rouge'> [Attaque]</span>";
         }
         if ($usePlanet) {
-            if($this->getUser()->getAlly()) {
-                $return = "<span class='text-bleu'>[" . $this->getUser()->getAlly()->getSigle() . "] " . $this->getUser()->getAlly()->getName() . "</span> - " . "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getUser()->getUserName() . " -> "  . $this->getName() . $attack . "</a></span>";
+            if($this->getCharacter()->getAlly()) {
+                $return = "<span class='text-bleu'>[" . $this->getCharacter()->getAlly()->getSigle() . "] " . $this->getCharacter()->getAlly()->getName() . "</span> - " . "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getCharacter()->getUserName() . " -> "  . $this->getName() . $attack . "</a></span>";
             } else {
-                $return = "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getUser()->getUserName() . " -> "  . $this->getName() . $attack . "</a></span>";
+                $return = "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getCharacter()->getUserName() . " -> "  . $this->getName() . $attack . "</a></span>";
             }
         } else {
-            if($this->getUser()->getAlly()) {
-                $return = "<span class='text-bleu'>[" . $this->getUser()->getAlly()->getSigle() . "]" . " " . $this->getUser()->getAlly()->getName() . "</span> - " . $this->getUser()->getUserName() . " -> " . $this->getName() . $attack;
+            if($this->getCharacter()->getAlly()) {
+                $return = "<span class='text-bleu'>[" . $this->getCharacter()->getAlly()->getSigle() . "]" . " " . $this->getCharacter()->getAlly()->getName() . "</span> - " . $this->getCharacter()->getUserName() . " -> " . $this->getName() . $attack;
             } else {
-                $return = $this->getUser()->getUserName() . " -> "  . $this->getName() . $attack;
+                $return = $this->getCharacter()->getUserName() . " -> "  . $this->getName() . $attack;
             }
         }
         return $return;
@@ -623,17 +621,17 @@ class Fleet
     /**
      * @return mixed
      */
-    public function getAllianceUser()
+    public function getAllianceCharacter()
     {
-        if($this->getUser()->getAlly()) {
-            $uAlly = $this->getUser()->getAlly()->getUsers();
-            $uFleet = $this->getPlanet()->getUser();
-            foreach ($uAlly as $user) {
-                if ($uFleet == $user) {
+        if($this->getCharacter()->getAlly()) {
+            $uAlly = $this->getCharacter()->getAlly()->getCharacters();
+            $uFleet = $this->getPlanet()->getCharacter();
+            foreach ($uAlly as $character) {
+                if ($uFleet == $character) {
                     return null;
                 }
             }
-        } elseif ($this->getUser() == $this->getPlanet()->getUser()) {
+        } elseif ($this->getCharacter() == $this->getPlanet()->getCharacter()) {
             return null;
         }
         return 'ok';
@@ -666,10 +664,10 @@ class Fleet
         $recycleur = $this->getRecycleur() * 500;
         $hunterHeavy = $this->getHunterHeavy() * 4;
         $fregate = $this->getFregate() * 25;
-        if ($this->getUser()->getPoliticCargo() > 0) {
-            $cargoI = ($this->getCargoI() * 3000) * (1 + ($this->getUser()->getPoliticCargo() / 5));
-            $cargoV = ($this->getCargoV() * 10000) * (1 + ($this->getUser()->getPoliticCargo() / 5));
-            $cargoX = ($this->getCargoX() * 25000) * (1 + ($this->getUser()->getPoliticCargo() / 5));
+        if ($this->getCharacter()->getPoliticCargo() > 0) {
+            $cargoI = ($this->getCargoI() * 3000) * (1 + ($this->getCharacter()->getPoliticCargo() / 5));
+            $cargoV = ($this->getCargoV() * 10000) * (1 + ($this->getCharacter()->getPoliticCargo() / 5));
+            $cargoX = ($this->getCargoX() * 25000) * (1 + ($this->getCharacter()->getPoliticCargo() / 5));
         } else {
             $cargoI = $this->getCargoI() * 3000;
             $cargoV = $this->getCargoV() * 10000;
@@ -688,17 +686,17 @@ class Fleet
      */
     public function getArmor(): float
     {
-        $hunter = $this->getUser()->getShip()->getArmorHunter() * $this->getHunter();
-        $hunterHeavy = $this->getUser()->getShip()->getArmorHunterHeavy() * $this->getHunterHeavy();
-        $hunterWar = $this->getUser()->getShip()->getArmorHunterWar() * $this->getHunterWar();
-        $corvet = $this->getUser()->getShip()->getArmorCorvet() * $this->getCorvet();
-        $corvetLaser = $this->getUser()->getShip()->getArmorCorvetLaser() * $this->getCorvetLaser();
-        $corvetWar = $this->getUser()->getShip()->getArmorCorvetWar() * $this->getCorvetWar();
-        $fregate = $this->getUser()->getShip()->getArmorFregate() * $this->getFregate();
-        $fregatePlasma = $this->getUser()->getShip()->getArmorFregatePlasma() * $this->getFregatePlasma();
-        $croiser = $this->getUser()->getShip()->getArmorCroiser() * $this->getCroiser();
-        $ironClad = $this->getUser()->getShip()->getArmorIronClad() * $this->getIronClad();
-        $destroyer = $this->getUser()->getShip()->getArmorDestroyer() * $this->getDestroyer();
+        $hunter = $this->getCharacter()->getShip()->getArmorHunter() * $this->getHunter();
+        $hunterHeavy = $this->getCharacter()->getShip()->getArmorHunterHeavy() * $this->getHunterHeavy();
+        $hunterWar = $this->getCharacter()->getShip()->getArmorHunterWar() * $this->getHunterWar();
+        $corvet = $this->getCharacter()->getShip()->getArmorCorvet() * $this->getCorvet();
+        $corvetLaser = $this->getCharacter()->getShip()->getArmorCorvetLaser() * $this->getCorvetLaser();
+        $corvetWar = $this->getCharacter()->getShip()->getArmorCorvetWar() * $this->getCorvetWar();
+        $fregate = $this->getCharacter()->getShip()->getArmorFregate() * $this->getFregate();
+        $fregatePlasma = $this->getCharacter()->getShip()->getArmorFregatePlasma() * $this->getFregatePlasma();
+        $croiser = $this->getCharacter()->getShip()->getArmorCroiser() * $this->getCroiser();
+        $ironClad = $this->getCharacter()->getShip()->getArmorIronClad() * $this->getIronClad();
+        $destroyer = $this->getCharacter()->getShip()->getArmorDestroyer() * $this->getDestroyer();
         if($this->getMotherShip() == 1) {
             $motherShip = 20000;
         } else {
@@ -717,14 +715,14 @@ class Fleet
      */
     public function getShield(): float
     {
-        $corvet = $this->getUser()->getShip()->getShieldCorvet() * $this->getCorvet();
-        $corvetLaser = $this->getUser()->getShip()->getShieldCorvetLaser() * $this->getCorvetLaser();
-        $corvetWar = $this->getUser()->getShip()->getShieldCorvetWar() * $this->getCorvetWar();
-        $fregate = $this->getUser()->getShip()->getShieldFregate() * $this->getFregate();
-        $fregatePlasma = $this->getUser()->getShip()->getShieldFregatePlasma() * $this->getFregatePlasma();
-        $croiser = $this->getUser()->getShip()->getShieldCroiser() * $this->getCroiser();
-        $ironClad = $this->getUser()->getShip()->getShieldIronClad() * $this->getIronClad();
-        $destroyer = $this->getUser()->getShip()->getShieldDestroyer() * $this->getDestroyer();
+        $corvet = $this->getCharacter()->getShip()->getShieldCorvet() * $this->getCorvet();
+        $corvetLaser = $this->getCharacter()->getShip()->getShieldCorvetLaser() * $this->getCorvetLaser();
+        $corvetWar = $this->getCharacter()->getShip()->getShieldCorvetWar() * $this->getCorvetWar();
+        $fregate = $this->getCharacter()->getShip()->getShieldFregate() * $this->getFregate();
+        $fregatePlasma = $this->getCharacter()->getShip()->getShieldFregatePlasma() * $this->getFregatePlasma();
+        $croiser = $this->getCharacter()->getShip()->getShieldCroiser() * $this->getCroiser();
+        $ironClad = $this->getCharacter()->getShip()->getShieldIronClad() * $this->getIronClad();
+        $destroyer = $this->getCharacter()->getShip()->getShieldDestroyer() * $this->getDestroyer();
         $motherShip = $this->getMotherShip() * 5000;
 
         $nbr = $motherShip + $corvetWar + $fregate + $corvet + $corvetLaser + $fregatePlasma + $croiser + $ironClad + $destroyer ;
@@ -739,17 +737,17 @@ class Fleet
      */
     public function getAccurate(): float
     {
-        $hunter = $this->getUser()->getShip()->getAccurateHunter() * $this->getHunter();
-        $hunterHeavy = $this->getUser()->getShip()->getAccurateHunterHeavy() * $this->getHunterHeavy();
-        $hunterWar = $this->getUser()->getShip()->getAccurateHunterWar() * $this->getHunterWar();
-        $corvet = $this->getUser()->getShip()->getAccurateCorvet() * $this->getCorvet();
-        $corvetLaser = $this->getUser()->getShip()->getAccurateCorvetLaser() * $this->getCorvetLaser();
-        $corvetWar = $this->getUser()->getShip()->getAccurateCorvetWar() * $this->getCorvetWar();
-        $fregate = $this->getUser()->getShip()->getAccurateFregate() * $this->getFregate();
-        $fregatePlasma = $this->getUser()->getShip()->getAccurateFregatePlasma() * $this->getFregatePlasma();
-        $croiser = $this->getUser()->getShip()->getAccurateCroiser() * $this->getCroiser();
-        $ironClad = $this->getUser()->getShip()->getAccurateIronClad() * $this->getIronClad();
-        $destroyer = $this->getUser()->getShip()->getAccurateDestroyer() * $this->getDestroyer();
+        $hunter = $this->getCharacter()->getShip()->getAccurateHunter() * $this->getHunter();
+        $hunterHeavy = $this->getCharacter()->getShip()->getAccurateHunterHeavy() * $this->getHunterHeavy();
+        $hunterWar = $this->getCharacter()->getShip()->getAccurateHunterWar() * $this->getHunterWar();
+        $corvet = $this->getCharacter()->getShip()->getAccurateCorvet() * $this->getCorvet();
+        $corvetLaser = $this->getCharacter()->getShip()->getAccurateCorvetLaser() * $this->getCorvetLaser();
+        $corvetWar = $this->getCharacter()->getShip()->getAccurateCorvetWar() * $this->getCorvetWar();
+        $fregate = $this->getCharacter()->getShip()->getAccurateFregate() * $this->getFregate();
+        $fregatePlasma = $this->getCharacter()->getShip()->getAccurateFregatePlasma() * $this->getFregatePlasma();
+        $croiser = $this->getCharacter()->getShip()->getAccurateCroiser() * $this->getCroiser();
+        $ironClad = $this->getCharacter()->getShip()->getAccurateIronClad() * $this->getIronClad();
+        $destroyer = $this->getCharacter()->getShip()->getAccurateDestroyer() * $this->getDestroyer();
 
         $nbr = $hunterWar + $corvetWar + $fregate + $hunter + $hunterHeavy + $corvet + $corvetLaser + $fregatePlasma + $croiser + $ironClad + $destroyer ;
         return $nbr;
@@ -760,17 +758,17 @@ class Fleet
      */
     public function getMissile(): float
     {
-        $hunter = $this->getUser()->getShip()->getMissileHunter() * $this->getHunter();
-        $hunterHeavy = $this->getUser()->getShip()->getMissileHunterHeavy() * $this->getHunterHeavy();
-        $hunterWar = $this->getUser()->getShip()->getMissileHunterWar() * $this->getHunterWar();
-        $corvet = $this->getUser()->getShip()->getMissileCorvet() * $this->getCorvet();
-        $corvetLaser = $this->getUser()->getShip()->getMissileCorvetLaser() * $this->getCorvetLaser();
-        $corvetWar = $this->getUser()->getShip()->getMissileCorvetWar() * $this->getCorvetWar();
-        $fregate = $this->getUser()->getShip()->getMissileFregate() * $this->getFregate();
-        $fregatePlasma = $this->getUser()->getShip()->getMissileFregatePlasma() * $this->getFregatePlasma();
-        $croiser = $this->getUser()->getShip()->getMissileCroiser() * $this->getCroiser();
-        $ironClad = $this->getUser()->getShip()->getMissileIronClad() * $this->getIronClad();
-        $destroyer = $this->getUser()->getShip()->getMissileDestroyer() * $this->getDestroyer();
+        $hunter = $this->getCharacter()->getShip()->getMissileHunter() * $this->getHunter();
+        $hunterHeavy = $this->getCharacter()->getShip()->getMissileHunterHeavy() * $this->getHunterHeavy();
+        $hunterWar = $this->getCharacter()->getShip()->getMissileHunterWar() * $this->getHunterWar();
+        $corvet = $this->getCharacter()->getShip()->getMissileCorvet() * $this->getCorvet();
+        $corvetLaser = $this->getCharacter()->getShip()->getMissileCorvetLaser() * $this->getCorvetLaser();
+        $corvetWar = $this->getCharacter()->getShip()->getMissileCorvetWar() * $this->getCorvetWar();
+        $fregate = $this->getCharacter()->getShip()->getMissileFregate() * $this->getFregate();
+        $fregatePlasma = $this->getCharacter()->getShip()->getMissileFregatePlasma() * $this->getFregatePlasma();
+        $croiser = $this->getCharacter()->getShip()->getMissileCroiser() * $this->getCroiser();
+        $ironClad = $this->getCharacter()->getShip()->getMissileIronClad() * $this->getIronClad();
+        $destroyer = $this->getCharacter()->getShip()->getMissileDestroyer() * $this->getDestroyer();
 
         $nbr = $hunterWar + $corvetWar + $fregate + $hunter + $hunterHeavy + $corvet + $corvetLaser + $fregatePlasma + $croiser + $ironClad + $destroyer ;
         return $nbr;
@@ -781,14 +779,14 @@ class Fleet
      */
     public function getLaser(): float
     {
-        $hunterWar = $this->getUser()->getShip()->getLaserHunterWar() * $this->getHunterWar();
-        $corvetLaser = $this->getUser()->getShip()->getLaserCorvetLaser() * $this->getCorvetLaser();
-        $corvetWar = $this->getUser()->getShip()->getLaserCorvetWar() * $this->getCorvetWar();
-        $fregate = $this->getUser()->getShip()->getLaserFregate() * $this->getFregate();
-        $fregatePlasma = $this->getUser()->getShip()->getLaserFregatePlasma() * $this->getFregatePlasma();
-        $croiser = $this->getUser()->getShip()->getLaserCroiser() * $this->getCroiser();
-        $ironClad = $this->getUser()->getShip()->getLaserIronClad() * $this->getIronClad();
-        $destroyer = $this->getUser()->getShip()->getLaserDestroyer() * $this->getDestroyer();
+        $hunterWar = $this->getCharacter()->getShip()->getLaserHunterWar() * $this->getHunterWar();
+        $corvetLaser = $this->getCharacter()->getShip()->getLaserCorvetLaser() * $this->getCorvetLaser();
+        $corvetWar = $this->getCharacter()->getShip()->getLaserCorvetWar() * $this->getCorvetWar();
+        $fregate = $this->getCharacter()->getShip()->getLaserFregate() * $this->getFregate();
+        $fregatePlasma = $this->getCharacter()->getShip()->getLaserFregatePlasma() * $this->getFregatePlasma();
+        $croiser = $this->getCharacter()->getShip()->getLaserCroiser() * $this->getCroiser();
+        $ironClad = $this->getCharacter()->getShip()->getLaserIronClad() * $this->getIronClad();
+        $destroyer = $this->getCharacter()->getShip()->getLaserDestroyer() * $this->getDestroyer();
 
         $nbr = $hunterWar + $corvetWar + $fregate + $corvetLaser + $fregatePlasma + $croiser + $ironClad + $destroyer ;
         return $nbr;
@@ -799,11 +797,11 @@ class Fleet
      */
     public function getPlasma(): float
     {
-        $hunterWar = $this->getUser()->getShip()->getPlasmaHunterWar() * $this->getHunterWar();
-        $fregatePlasma = $this->getUser()->getShip()->getPlasmaFregatePlasma() * $this->getFregatePlasma();
-        $croiser = $this->getUser()->getShip()->getPlasmaCroiser() * $this->getCroiser();
-        $ironClad = $this->getUser()->getShip()->getPlasmaIronClad() * $this->getIronClad();
-        $destroyer = $this->getUser()->getShip()->getPlasmaDestroyer() * $this->getDestroyer();
+        $hunterWar = $this->getCharacter()->getShip()->getPlasmaHunterWar() * $this->getHunterWar();
+        $fregatePlasma = $this->getCharacter()->getShip()->getPlasmaFregatePlasma() * $this->getFregatePlasma();
+        $croiser = $this->getCharacter()->getShip()->getPlasmaCroiser() * $this->getCroiser();
+        $ironClad = $this->getCharacter()->getShip()->getPlasmaIronClad() * $this->getIronClad();
+        $destroyer = $this->getCharacter()->getShip()->getPlasmaDestroyer() * $this->getDestroyer();
 
         $nbr = $fregatePlasma + $croiser + $ironClad + $destroyer + $hunterWar;
         if($this->getMotherShip() == 1) {
@@ -1211,17 +1209,17 @@ class Fleet
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**

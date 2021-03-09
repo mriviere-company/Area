@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -19,9 +20,9 @@ class Quest
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="quests", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Character", mappedBy="quests", fetch="EXTRA_LAZY")
      */
-    protected $users;
+    protected $characters;
 
     /**
      * @ORM\Column(name="gain",type="integer", options={"unsigned":true})
@@ -36,7 +37,7 @@ class Quest
 
     public function __construct()
     {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characters = new ArrayCollection();
         $this->gain = 500;
     }
 
@@ -73,43 +74,43 @@ class Quest
     }
 
     /**
-     * Add user
+     * Add character
      *
-     * @param \App\Entity\User $user
+     * @param \App\Entity\Character $character
      *
-     * @return User
+     * @return Quest
      */
-    public function addUser(\App\Entity\User $user)
+    public function addCharacter(\App\Entity\Character $character)
     {
-        $this->users[] = $user;
+        $this->characters[] = $character;
 
         return $this;
     }
 
     /**
-     * Remove user
+     * Remove character
      *
-     * @param \App\Entity\User $user
+     * @param \App\Entity\Character $character
      */
-    public function removeUser(\App\Entity\User $user)
+    public function removeCharacter(\App\Entity\Character $character)
     {
-        $this->users->removeElement($user);
+        $this->characters->removeElement($character);
     }
 
     /**
      * @return mixed
      */
-    public function getUsers()
+    public function getCharacters()
     {
-        return $this->users;
+        return $this->characters;
     }
 
     /**
-     * @param mixed $users
+     * @param mixed $characters
      */
-    public function setUsers($users): void
+    public function setcharacters($characters): void
     {
-        $this->users = $users;
+        $this->characters = $characters;
     }
 
     public function getId()

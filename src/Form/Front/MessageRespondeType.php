@@ -94,7 +94,7 @@ class MessageRespondeType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'App\Entity\Message',
+                'data_class'         => null,
                 'translation_domain' => 'front_message',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',

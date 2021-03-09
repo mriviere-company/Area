@@ -20,9 +20,10 @@ class Ships
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="ship", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Character", mappedBy="ship", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\Column(name="pointHunter",type="smallint", options={"unsigned":true})
@@ -364,9 +365,6 @@ class Ships
      */
     protected $retry;
 
-    /**
-     * User constructor.
-     */
     public function __construct()
     {
         $this->pointHunter = 3;
@@ -442,17 +440,17 @@ class Ships
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**

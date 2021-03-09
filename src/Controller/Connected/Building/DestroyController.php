@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected\Building;
 
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,18 +19,23 @@ class DestroyController extends AbstractController
 {
     /**
      * @Route("/detruire-mine/{usePlanet}", name="building_remove_mine", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveMineAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getMiner();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('miner');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('miner');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -45,18 +52,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-puit/{usePlanet}", name="building_remove_extract", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveExtractAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getExtractor();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('extractor');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('extractor');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -73,18 +85,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-ferme/{usePlanet}", name="building_remove_farm", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveFarmAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getFarm();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('farm');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('farm');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -101,13 +118,17 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-ferme-aeroponique/{usePlanet}", name="building_remove_aeroponic_farm", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveAeroponicFarmAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -129,18 +150,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-stockage-niobium/{usePlanet}", name="building_remove_niobiumStock", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveNiobiumStockAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getNiobiumStock();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('niobiumStock');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('niobiumStock');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -157,18 +183,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-stockage-eau/{usePlanet}", name="building_remove_waterStock", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveWaterStockAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getWaterStock();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('waterStock');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('waterStock');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -185,18 +216,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-silos/{usePlanet}", name="building_remove_silos", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveSilosAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getSilos();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('silos');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('silos');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -213,19 +249,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-laboratoire/{usePlanet}", name="building_remove_search", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveSearchAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getCenterSearch();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('centerSearch');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('centerSearch');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
             ($usePlanet->getScientist() > $usePlanet->getScientistMax() - 250)) {
@@ -244,19 +284,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-ville/{usePlanet}", name="building_remove_city", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveCityAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getCity();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('city');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('city');
 
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
@@ -275,19 +319,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-metropole/{usePlanet}", name="building_remove_metropole", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveMetropoleAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getMetropole();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('metropole');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('metropole');
         $newSky = $usePlanet->getSkyPlace() - $user->getBuildingSkyPlace('metropole');
 
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
@@ -308,18 +356,22 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-chantier-spatiale/{usePlanet}", name="building_remove_spaceShipyard", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveSpaceShipyardAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getSpaceShip();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('spaceShip');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('spaceShip');
         $newSky = $usePlanet->getSkyPlace() - $user->getBuildingSkyPlace('spaceShip');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now)
@@ -340,18 +392,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-usine-legere/{usePlanet}", name="building_remove_lightUsine", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveLightUsineAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getLightUsine();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('lightUsine');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('lightUsine');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now)
             || $usePlanet->getProduct()) {
@@ -370,18 +427,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-usine-lourde/{usePlanet}", name="building_remove_heavyUsine", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveHeavyUsineAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getHeavyUsine();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('heavyUsine');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('heavyUsine');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now)
             || $usePlanet->getProduct()) {
@@ -400,18 +462,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-caserne/{usePlanet}", name="building_remove_caserne", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveCaserneAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getCaserne();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('caserne');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('caserne');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
             ($usePlanet->getSoldier() > $usePlanet->getSoldierMax() - 500 || $usePlanet->getSoldierAt())) {
@@ -430,18 +497,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-bunker/{usePlanet}", name="building_remove_bunker", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveBunkerAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getBunker();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('bunker');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('bunker');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
             ($usePlanet->getSoldier() > $usePlanet->getSoldierMax() - 500 || $usePlanet->getSoldierAt())) {
@@ -460,18 +532,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-nucleaire/{usePlanet}", name="building_remove_nuclear", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveNuclearAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getNuclearBase();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('nuclearBase');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('nuclearBase');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
             $usePlanet->getNuclearBomb() > $usePlanet->getNuclearBase() - 1) {
@@ -489,18 +566,23 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-radar/{usePlanet}", name="building_remove_radar", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function buildingRemoveRadarAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getRadar();
-        $newGround = $usePlanet->getGroundPlace() - $user->getBuildingGroundPlace('radar');
+        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('radar');
 
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
@@ -523,7 +605,8 @@ class DestroyController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -551,7 +634,8 @@ class DestroyController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 

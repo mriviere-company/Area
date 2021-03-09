@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -29,7 +30,7 @@ class RemembermeToken
     private $value;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      *
      * @ORM\Column(name="lastUsed", type="datetime", nullable=false)
      */
@@ -82,17 +83,17 @@ class RemembermeToken
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
-    public function getLastused(): \DateTime
+    public function getLastused(): DateTime
     {
         return $this->lastused;
     }
 
     /**
-     * @param \DateTime $lastused
+     * @param DateTime $lastused
      */
-    public function setLastused(\DateTime $lastused): void
+    public function setLastused(DateTime $lastused): void
     {
         $this->lastused = $lastused;
     }

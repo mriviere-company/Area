@@ -7,7 +7,7 @@
 {% block body %}
     <div class="front-block">
         <div class="front-block-game">
-            {% if app.user.getAlly() %}
+            {% if ally %}
                 <h1 class="text-center p-4">{{ 'ally.makePeaceTitle'|trans }}</h1>
                 <table class="table table-striped table-bordered table-dark text-center mt-4">
                     <tbody>
@@ -101,11 +101,11 @@
                         </tbody>
                     </table>
                 {% endif %}
-                {% if app.user.getAlly().getPeaces()|length > 0 %}
+                {% if ally.getPeaces()|length > 0 %}
                     <h1 class="text-center p-4">{{ 'ally.peaceOffer'|trans }}</h1>
                     <table class="table table-striped table-bordered table-dark text-center mt-4">
                         <tbody>
-                        {% for peace in app.user.getAlly().getPeaces() %}
+                        {% for peace in ally.getPeaces() %}
                             {% if peace.getAccepted() == 0 %}
                                 <tr>
                                     <th colspan="4" class="tab-cells-name text-orange">[{{ peace.getAlly().getSigle() }}] {{ peace.getAlly().getName() }}</th>

@@ -2,6 +2,10 @@
 
 namespace App\Controller\Connected;
 
+use App\Entity\Character;
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -21,22 +25,27 @@ class MessageController extends AbstractController
 {
     /**
      * @Route("/message/{usePlanet}", name="message", requirements={"usePlanet"="\d+"})
+     * @param Request $request
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function messageAction(Request $request, Planet $usePlanet)
     {
-        $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $message = new Message();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if($character->getGameOver()) {
+            return $this->redirectToRoute('game_over');
+        }
+        if ($usePlanet->getCharacter() != $character) {
+            return $this->redirectToRoute('home');
+        }
+
+        $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $nowDel = new DateTime();
         $nowDel->sub(new DateInterval('PT' . 1209600 . 'S'));
-
-        if($user->getGameOver()) {
-            return $this->redirectToRoute('game_over');
-        }
-        if ($usePlanet->getUser() != $user) {
-            return $this->redirectToRoute('home');
-        }
 
         $removeMessages = $em->getRepository('App:Message')
             ->createQueryBuilder('m')
@@ -55,50 +64,44 @@ class MessageController extends AbstractController
         $messages = $em->getRepository('App:Message')
             ->createQueryBuilder('m')
             ->where('m.idSender = :id')
-            ->setParameters(['id' => $user->getId()])
+            ->setParameters(['id' => $character->getId()])
             ->orderBy('m.sendAt', 'DESC')
             ->getQuery()
             ->getResult();
 
         $messagesR = $em->getRepository('App:Message')
             ->createQueryBuilder('m')
-            ->where('m.user = :user')
-            ->setParameters(['user' => $user])
+            ->where('m.character = :character')
+            ->setParameters(['character' => $character])
             ->orderBy('m.sendAt', 'DESC')
             ->getQuery()
             ->getResult();
 
-        $user->setViewMessage(true);
+        $character->setViewMessage(true);
 
         $em->flush();
 
-        $form_message = $this->createForm(MessageType::class, $message);
+        $form_message = $this->createForm(MessageType::class);
         $form_message->handleRequest($request);
 
-        if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $user->getBitcoin() &&
-            ($user->getSalonBan() > $now || $user->getSalonBan() == null)) {
+        if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $character->getBitcoin() &&
+            ($character->getSalonBan() > $now || $character->getSalonBan() == null)) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $recever = $form_message->get('user')->getData();
-            if ($form_message->get('anonymous')->getData() == false) {
-                $message->setSender($user->getUsername());
-            }
-            $message->setIdSender($user->getId());
-            $message->setContent(nl2br($form_message->get('content')->getData()));
-            $message->setSendAt($now);
+            $recever = $form_message->get('character')->getData();
+            $message = new Message($form_message->get('character')->getData(), nl2br($form_message->get('title')->getData()), nl2br($form_message->get('content')->getData()), abs($form_message->get('bitcoin')->getData()), $character->getId(), $form_message->get('anonymous')->getData() ? $character->getUsername() : null);
             $recever->setBitcoin($recever->getBitcoin() + abs($form_message->get('bitcoin')->getData()));
             $recever->setViewMessage(false);
-            $user->setBitcoin($user->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
+            $character->setBitcoin($character->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
             $em->persist($message);
-            $quest = $user->checkQuests('private_message');
+            $quest = $character->checkQuests('private_message');
             if($quest) {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());
-                $user->removeQuest($quest);
+                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
+                $character->removeQuest($quest);
             }
 
             $em->flush();
 
-            $form_message = null;
-            $form_message = $this->createForm(MessageType::class);
+            return $this->redirectToRoute('message', ['usePlanet' => $usePlanet->getId()]);
         }
 
         return $this->render('connected/message.html.twig', [
@@ -110,48 +113,46 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/repondre/{id}/{usePlanet}", name="message_responde", requirements={"usePlanet"="\d+", "id"="\d+"})
+     * @Route("/repondre/{userRecever}/{usePlanet}", name="message_responde", requirements={"usePlanet"="\d+", "userRecever"="\d+"})
+     * @param Request $request
+     * @param Planet $usePlanet
+     * @param Character $userRecever
+     * @return RedirectResponse|Response
      */
-    public function messageRespondeAction(Request $request, Planet $usePlanet, $id)
+    public function messageRespondeAction(Request $request, Planet $usePlanet, Character $userRecever)
     {
-        $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $message = new Message();
-        $now = new DateTime();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if($user->getGameOver()) {
+        if($character->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
+        $now = new DateTime();
 
-        if($user->getSalonBan() > $now) {
+        if($character->getSalonBan() > $now) {
             return $this->redirectToRoute('message', ['usePlanet' => $usePlanet->getId()]);
         }
+        $em = $this->getDoctrine()->getManager();
 
-        $form_message = $this->createForm(MessageRespondeType::class, $message);
+        $form_message = $this->createForm(MessageRespondeType::class);
         $form_message->handleRequest($request);
 
-        if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $user->getBitcoin()) {
+        if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $character->getBitcoin()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $userRecever = $em->getRepository('App:User')->find(['id' => $id]);
 
-            if ($form_message->get('anonymous')->getData() == false) {
-                $message->setSender($user->getUsername());
-            }
-            $message->setIdSender($user->getId());
-            $message->setUser($userRecever);
-            $message->setContent(nl2br($form_message->get('content')->getData()));
-            $message->setSendAt($now);
+            $message = new Message($userRecever, nl2br($form_message->get('title')->getData()), nl2br($form_message->get('content')->getData()), abs($form_message->get('bitcoin')->getData()), $character->getId(), $form_message->get('anonymous')->getData() ? $character->getUsername() : null);
+
             $userRecever->setBitcoin($userRecever->getBitcoin() + abs($form_message->get('bitcoin')->getData()));
             $userRecever->setViewMessage(false);
-            $user->setBitcoin($user->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
+            $character->setBitcoin($character->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
             $em->persist($message);
-            $quest = $user->checkQuests('private_message');
+            $quest = $character->checkQuests('private_message');
             if($quest) {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());
-                $user->removeQuest($quest);
+                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
+                $character->removeQuest($quest);
             }
 
             $em->flush();
@@ -161,23 +162,28 @@ class MessageController extends AbstractController
         return $this->render('connected/profil/user_responde.html.twig', [
             'usePlanet' => $usePlanet,
             'form_message' => $form_message->createView(),
-            'id' => $id,
+            'userRecever' => $userRecever,
         ]);
     }
 
     /**
-     * @Route("/message-view/{id}/{usePlanet}", name="message_view", requirements={"usePlanet"="\d+", "id"="\d+"})
+     * @Route("/message-view/{message}/{usePlanet}", name="message_view", requirements={"usePlanet"="\d+", "message"="\d+"})
+     * @param Planet $usePlanet
+     * @param Message $message
+     * @return RedirectResponse
      */
-    public function messageViewAction(Planet $usePlanet, Message $id)
+    public function messageViewAction(Planet $usePlanet, Message $message)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        if ($user == $id->getUser()) {
-            $id->setNewMessage(false);
+        if ($user == $message->getUser()) {
+            $message->setNewMessage(false);
             $em->flush();
         }
 
@@ -185,22 +191,27 @@ class MessageController extends AbstractController
     }
 
     /**
-     * @Route("/message-share/{id}/{usePlanet}", name="message_share", requirements={"usePlanet"="\d+", "id"="\d+"})
+     * @Route("/message-share/{message}/{usePlanet}", name="message_share", requirements={"usePlanet"="\d+", "message"="\d+"})
+     * @param Planet $usePlanet
+     * @param Message $message
+     * @return RedirectResponse
      */
-    public function messageShareAction(Planet $usePlanet, Message $id)
+    public function messageShareAction(Planet $usePlanet, Message $message)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
-        if ($user == $id->getUser()) {
+        if ($user == $message->getUser()) {
             $alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-'];
             $newShareKey = $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)]
                 . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)]
                 . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)];
 
-            $id->setShareKey($newShareKey);
+        $message->setShareKey($newShareKey);
             $em->flush();
         }
 
@@ -209,20 +220,24 @@ class MessageController extends AbstractController
 
     /**
      * @Route("/message-view-all/{usePlanet}/", name="message_all_view", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function messageAllViewAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $messages = $em->getRepository('App:Message')
             ->createQueryBuilder('m')
             ->where('m.newMessage = true')
-            ->andWhere('m.user = :user')
-            ->setParameters(['user' => $user])
+            ->andWhere('m.character = :character')
+            ->setParameters(['character' => $character])
             ->getQuery()
             ->getResult();
 

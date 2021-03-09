@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Execute;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Destination;
@@ -10,8 +11,19 @@ use App\Entity\Fleet;
 use DateInterval;
 use DateTime;
 
+/**
+ * Class ZombiesController
+ * @package App\Controller\Connected\Execute
+ */
 class ZombiesController extends AbstractController
 {
+    /**
+     * @param $zUsers
+     * @param $now
+     * @param $em
+     * @return Response
+     * @throws Exception
+     */
     public function zombiesAction($zUsers, $now, $em)
     {
         foreach ($zUsers as $zUser) {
@@ -47,7 +59,7 @@ class ZombiesController extends AbstractController
                 $reportDef = new Report();
                 $reportDef->setType('invade');
                 $reportDef->setSendAt($now);
-                $reportDef->setUser($zUser);
+                $reportDef->setCharacter($zUser);
                 if ($zUser->getZombieAtt() >= 1 && $zUser->getTutorial() == 50) {
                     $zUser->setTutorial(51);
                 }
@@ -132,17 +144,17 @@ class ZombiesController extends AbstractController
                         }
                         $planetAtt->setName('Base Zombie');
                         $planetAtt->setImageName('hydra_planet.png');
-                        $planetAtt->setUser($zombie);
+                        $planetAtt->setCharacter($zombie);
                     } else {
                         $planetAtt->setName('Inhabitée');
-                        $planetAtt->setUser(null);
+                        $planetAtt->setCharacter(null);
                     }
                     $em->flush();
                     if ($zUser->getAllPlanets() == 0) {
                         $zUser->setGameOver($zombie->getUserName());
                         $zUser->setGrade(null);
                         foreach ($zUser->getFleets() as $tmpFleet) {
-                            $tmpFleet->setUser($zombie);
+                            $tmpFleet->setCharacter($zombie);
                             $tmpFleet->setFleetList(null);
                         }
                     }
@@ -172,13 +184,12 @@ class ZombiesController extends AbstractController
             $fleetZb->setCorvetLaser(1 + round(($zUser->getAllShipsPoint() / (6 * rand(1, 5))) / 5));
             $fleetZb->setCorvetWar(1 + round(($zUser->getAllShipsPoint() / (7 * rand(1, 5))) / 5));
             $fleetZb->setFregate(1 + round(($zUser->getAllShipsPoint() / (8 * rand(1, 5))) / 5));
-            $fleetZb->setUser($zombie);
+            $fleetZb->setCharacter($zombie);
             $fleetZb->setPlanet($planetZb);
             $fleetZb->setSignature($fleetZb->getNbrSignatures());
-            $destination = new Destination();
-            $destination->setFleet($fleetZb);
-            $destination->setPlanet($planetAtt);
+            $destination = new Destination($fleetZb, $planetAtt);
             $em->persist($destination);
+            $fleetZb->setDestination($destination);
             $fleetZb->setFlightTime($timeAtt);
             $fleetZb->setAttack(1);
             $fleetZb->setFlightType(1);

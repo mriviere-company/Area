@@ -2,10 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Admin;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Admin;
 
 /**
  * @method Admin|null find($id, $lockMode = null, $lockVersion = null)

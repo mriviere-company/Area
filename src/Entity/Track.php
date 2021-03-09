@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -20,7 +21,7 @@ class Track
     private $id;
 
     /**
-     * @ORM\Column(name="user",type="string", length=40, nullable=true)
+     * @ORM\Column(name="username",type="string", length=40, nullable=true)
      */
     protected $username;
 
@@ -53,6 +54,11 @@ class Track
      * @ORM\Column(name="date",type="datetime", nullable=true)
      */
     protected $date;
+
+    public function __construct()
+    {
+        $this->date = new DateTime();
+    }
 
     public function getId()
     {

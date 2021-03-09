@@ -20,7 +20,7 @@ class Product
 
     /**
      * @ORM\OneToOne(targetEntity="Planet", inversedBy="product", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $planet;
 
@@ -158,9 +158,7 @@ class Product
      * @ORM\Column(name="productAt",type="datetime")
      */
     protected $productAt;
-    /**
-     * User constructor.
-     */
+
     public function __construct()
     {
         $this->destroyer = null;

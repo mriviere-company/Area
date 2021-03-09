@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -20,9 +21,9 @@ class S_Content
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="sContents", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="sContents", fetch="EXTRA_LAZY")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\Column(name="message",type="string", length=200)
@@ -41,19 +42,33 @@ class S_Content
     protected $sendAt;
 
     /**
-     * @return mixed
+     * S_Content constructor.
+     * @param $character
+     * @param $message
+     * @param $salon
      */
-    public function getUser()
+    public function __construct(Character $character, string $message, Salon $salon)
     {
-        return $this->user;
+        $this->character = $character;
+        $this->message = $message;
+        $this->salon = $salon;
+        $this->sendAt = new DateTime();
     }
 
     /**
-     * @param mixed $user
+     * @return mixed
      */
-    public function setUser($user): void
+    public function getCharacter()
     {
-        $this->user = $user;
+        return $this->character;
+    }
+
+    /**
+     * @param mixed $character
+     */
+    public function setCharacter($character): void
+    {
+        $this->character = $character;
     }
 
     /**

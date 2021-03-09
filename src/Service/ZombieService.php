@@ -12,15 +12,16 @@ class ZombieService extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getMainCharacter();
         $now = new DateTime();
 
             $mission = $em->getRepository('App:Mission')
                 ->createQueryBuilder('m')
                 ->select('m.id')
-                ->where('m.user = :user')
+                ->where('m.character = :character')
                 ->andWhere('m.missionAt < :now')
                 ->andWhere('m.type <= :level')
-                ->setParameters(['user' => $user, 'now' => $now, 'level' => $user->getLevel()])
+                ->setParameters(['character' => $character, 'now' => $now, 'level' => $character->getLevel()])
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();

@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\User;
+use App\Entity\Character;
 
 class MessageType extends AbstractType
 {
@@ -29,29 +29,27 @@ class MessageType extends AbstractType
                         'placeholder' => 'form.name',
                         'class' => '',
                     ],
-                    'mapped' => false,
-                    'required' => false,
+                    'required' => false
                 ]
             )
             ->add(
-                'user',
+                'character',
                 EntityType::class,
                 [
-                    'class' => User::class,
-                    'label' => 'form.user',
+                    'class' => Character::class,
+                    'label' => 'form.character',
                     'query_builder' => function (EntityRepository $er) {
-                        return $er->createQueryBuilder('u')
-                            ->where('u.rank is not null')
-                            ->orderBy('u.username', 'ASC');
+                        return $er->createQueryBuilder('c')
+                            ->where('c.rank is not null')
+                            ->orderBy('c.username', 'ASC');
                     },
                     'choice_label' => 'username',
                     'attr'  => [
-                        'placeholder' => 'form.user',
+                        'placeholder' => 'form.character',
                         'class' => 'game-input',
                         'autocomplete' => 'off',
                     ],
-                    'required' => true,
-                    'mapped' => true,
+                    'required' => true
                 ]
             )
             ->add(
@@ -66,8 +64,7 @@ class MessageType extends AbstractType
                         'minlength' => '1',
                         'autocomplete' => 'off',
                     ],
-                    'required' => true,
-                    'mapped' => true,
+                    'required' => true
                 ]
             )
             ->add(
@@ -85,8 +82,7 @@ class MessageType extends AbstractType
                         'minlength' => '1',
                         'autocomplete' => 'off',
                     ],
-                    'required' => true,
-                    'mapped' => true,
+                    'required' => true
                 ]
             )
             ->add(
@@ -101,8 +97,7 @@ class MessageType extends AbstractType
                         'min' => '0',
                         'autocomplete' => 'off',
                     ],
-                    'required' => true,
-                    'mapped' => true,
+                    'required' => false
                 ]
             )
             ->add('sendForm', SubmitType::class, ['label' => 'form.sendMessage', 'attr' => ['class' => 'confirm-button float-right mt-3']]);
@@ -115,7 +110,7 @@ class MessageType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'App\Entity\Message',
+                'data_class'         => null,
                 'translation_domain' => 'front_message',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',

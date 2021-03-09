@@ -85,6 +85,42 @@ class AllyGradeType extends AbstractType
                 ]
             )
             ->add(
+                'canEdit',
+                CheckboxType::class,
+                [
+                    'label' => 'form.name',
+                    'attr'  => [
+                        'placeholder' => 'form.name',
+                        'class' => '',
+                    ],
+                    'required' => false
+                ]
+            )
+            ->add(
+                'seeMembers',
+                CheckboxType::class,
+                [
+                    'label' => 'form.name',
+                    'attr'  => [
+                        'placeholder' => 'form.name',
+                        'class' => '',
+                    ],
+                    'required' => false
+                ]
+            )
+            ->add(
+                'useFleets',
+                CheckboxType::class,
+                [
+                    'label' => 'form.name',
+                    'attr'  => [
+                        'placeholder' => 'form.name',
+                        'class' => '',
+                    ],
+                    'required' => false
+                ]
+            )
+            ->add(
                 'placement',
                 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                 [
@@ -129,7 +165,7 @@ class AllyGradeType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'App\Entity\Grade',
+                'data_class'         => null,
                 'translation_domain' => 'front_grade',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',

@@ -2,10 +2,11 @@
 
 namespace App\Controller\External;
 
+use Swift_Mailer;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\HttpFoundation\Request;
-use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
@@ -14,8 +15,11 @@ class ExternalController extends AbstractController
 {
     /**
      * @Route("/nouveau-password/{key}", name="recoveryPw", requirements={"key"="\d+"})
+     * @param Swift_Mailer $mailer
+     * @param $key
+     * @return RedirectResponse
      */
-    public function recoveryPwAction(\Swift_Mailer $mailer, User $key)
+    public function recoveryPwAction(Swift_Mailer $mailer, $key)
     {
         $userId = $key; //fixmr decrypt
         $em = $this->getDoctrine()->getManager();
@@ -54,6 +58,9 @@ class ExternalController extends AbstractController
     /**
      * @Route("/confirmation-email/{key}", name="confirmEmail", requirements={"key"=".+"})
      * @Route("/confirmation-email/{key}/", name="confirmEmail_noSlash", requirements={"key"=".+"})
+     * @param Request $request
+     * @param $key
+     * @return RedirectResponse
      */
     public function confirmEmailAction(Request $request, $key)
     {
@@ -79,6 +86,9 @@ class ExternalController extends AbstractController
     /**
      * @Route("/desactiver-newletter/{key}", name="deactivate_newletter", requirements={"key"=".+"})
      * @Route("/desactiver-newletter/{key}/", name="deactivate_newletter_noSlash", requirements={"key"=".+"})
+     * @param Request $request
+     * @param $key
+     * @return RedirectResponse
      */
     public function deactivateNewletterAction(Request $request, $key)
     {
@@ -104,8 +114,10 @@ class ExternalController extends AbstractController
     /**
      * @Route("/mail-admin", name="mail_while")
      * @Route("/mail-admin/", name="mail_while_noSlash")
+     * @param Swift_Mailer $mailer
+     * @return RedirectResponse
      */
-    public function mailAdminAction(\Swift_Mailer $mailer)
+    public function mailAdminAction(Swift_Mailer $mailer)
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('App:User')->findAll();

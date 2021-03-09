@@ -29,9 +29,9 @@ class MarketType extends AbstractType
                     'label' => 'form.planet',
                     'query_builder' => function (EntityRepository $er) use($options) {
                         return $er->createQueryBuilder('p')
-                            ->join('p.user', 'u')
-                            ->where('u.id = :user')
-                            ->setParameter('user', $options['user'])
+                            ->join('p.character', 'c')
+                            ->where('c.id = :character')
+                            ->setParameter('character', $options['character'])
                             ->orderBy('p.name', 'ASC');
                     },
                     'choice_label' => 'name',
@@ -96,7 +96,7 @@ class MarketType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(['user']);
+        $resolver->setRequired(['character']);
         $resolver->setDefaults(
             [
                 'data_class'         => null,

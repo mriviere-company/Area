@@ -2,6 +2,9 @@
 
 namespace App\Controller\Connected;
 
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -22,25 +25,30 @@ class MarketController extends AbstractController
 {
     /**
      * @Route("/marchands/{usePlanet}", name="market", requirements={"usePlanet"="\d+"})
+     * @param Request $request
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
      */
     public function marketAction(Request $request, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $quests = $em->getRepository('App:Quest')
             ->createQueryBuilder('q')
             ->select('q.name, q.gain')
-            ->join('q.users', 'u')
-            ->where('u.id = :user')
-            ->setParameters(['user' => $user->getId()])
+            ->join('q.characters', 'c')
+            ->where('c.id = :character')
+            ->setParameters(['character' => $character->getId()])
             ->getQuery()
             ->getResult();
 
-        $form_market = $this->createForm(MarketType::class, null, ["user" => $user->getId()]);
+        $form_market = $this->createForm(MarketType::class, null, ["character" => $character->getId()]);
         $form_market->handleRequest($request);
 
         if ($form_market->isSubmitted() && $form_market->isValid()) {
@@ -57,14 +65,14 @@ class MarketController extends AbstractController
             }
             $cost = (abs($form_market->get('bitcoin')->getData())) + (abs($form_market->get('soldier')->getData())) + (abs($form_market->get('worker')->getData()));
             $cost = ceil($cost);
-            if(($cost > $user->getRank()->getWarPoint() ||
+            if(($cost > $character->getRank()->getWarPoint() ||
                 ($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() * 20)) > $planetBuy->getSoldierMax()) ||
                     ($planetBuy->getWorker() + abs($form_market->get('worker')->getData() * 100)) > $planetBuy->getWorkerMax()) {
                 if ($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() * 20) > $planetBuy->getSoldierMax()) {
                     $this->addFlash("fail", "Vous dépassez la limite de soldats sur la planète.");
                 } elseif ($planetBuy->getWorker() + abs($form_market->get('worker')->getData() * 100) > $planetBuy->getWorkerMax()) {
                     $this->addFlash("fail", "Vous dépassez la limite de travailleurs sur la planète.");
-                } elseif ($cost > $user->getRank()->getWarPoint()) {
+                } elseif ($cost > $character->getRank()->getWarPoint()) {
                     $this->addFlash("fail", "Vous n'avez pas assez de points de Guerre.");
                 } else {
                     $this->addFlash("fail", "Vous n'avez pas toutes les conditions requises.");
@@ -72,14 +80,14 @@ class MarketController extends AbstractController
                 return $this->redirectToRoute('market', ['usePlanet' => $usePlanet->getId()]);
             }
 
-            $user->setBitcoin($user->getBitcoin() + abs($form_market->get('bitcoin')->getData() * 10));
+            $character->setBitcoin($character->getBitcoin() + abs($form_market->get('bitcoin')->getData() * 10));
             $planetBuy->setSoldier($planetBuy->getSoldier() + abs($form_market->get('soldier')->getData() * 20));
             $planetBuy->setWorker($planetBuy->getWorker() + abs($form_market->get('worker')->getData() * 100));
-            $user->getRank()->setWarPoint($user->getRank()->getWarPoint() - $cost);
-            $quest = $user->checkQuests('pdg');
+            $character->getRank()->setWarPoint($character->getRank()->getWarPoint() - $cost);
+            $quest = $character->checkQuests('pdg');
             if($quest) {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());
-                $user->removeQuest($quest);
+                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
+                $character->removeQuest($quest);
             }
 
             $em->flush();
@@ -100,20 +108,25 @@ class MarketController extends AbstractController
 
     /**
      * @Route("/planete-ajouter-marchand/{usePlanet}/{planet}", name="planet_seller_add", requirements={"usePlanet"="\d+","planet"="\d+"})
+     * @param Planet $usePlanet
+     * @param Planet $planet
+     * @return RedirectResponse
      */
     public function planetAddAction(Planet $usePlanet, Planet $planet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        if($user->getGameOver()) {
+        if($character->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
-        if($user == $planet->getUser()) {
+        if($character == $planet->getCharacter()) {
             $planet->setAutoSeller(true);
             $em->flush();
         }
@@ -128,15 +141,17 @@ class MarketController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        if($user->getGameOver()) {
+        if($character->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
-        if($user == $planet->getUser()) {
+        if($character == $planet->getCharacter()) {
             $planet->setAutoSeller(false);
             $em->flush();
         }
@@ -146,26 +161,31 @@ class MarketController extends AbstractController
 
     /**
      * @Route("/vente-auto-marchand/{usePlanet}/", name="planets_seller", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function sellMerchantAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
-        $merchant = $em->getRepository('App:User')->findOneBy(['merchant' => 1]);
+        $merchant = $em->getRepository('App:Character')->findOneBy(['merchant' => 1]);
         $now = new DateTime();
 
-        if($user->getGameOver()) {
+        if($character->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
         $planetsSeller = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
-            ->where('p.user = :user')
+            ->where('p.character = :character')
             ->andWhere('p.autoSeller = true')
-            ->setParameters(['user' => $user])
+            ->setParameters(['character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -179,9 +199,9 @@ class MarketController extends AbstractController
         $gain = 0;
         foreach ($planetsSeller as $planet) {
             if ($this->forward('App\Service\PlanetService::planetAttackedAction', ['planet'  => $planet->getId()])) {
-                if ($user->getAlly() && $user->getAlly()->getPolitic() == 'democrat') {
-                    if ($user->getPoliticMerchant() > 0) {
-                        $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * (1 + ($user->getPoliticMerchant() / 20)) * 0.75);
+                if ($character->getAlly() && $character->getAlly()->getPolitic() == 'democrat') {
+                    if ($character->getPoliticMerchant() > 0) {
+                        $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * (1 + ($character->getPoliticMerchant() / 20)) * 0.75);
                     } else {
                         $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * 0.75);
                     }
@@ -195,12 +215,11 @@ class MarketController extends AbstractController
                     $repor->add(new DateInterval('PT' . 1200 . 'S'));
                     $fleet = new Fleet();
                     $fleet->setHunter(1);
-                    $fleet->setUser($merchant);
+                    $fleet->setCharacter($merchant);
                     $fleet->setPlanet($planet);
-                    $destination = new Destination();
-                    $destination->setFleet($fleet);
-                    $destination->setPlanet($planetMerchant);
+                    $destination = new Destination($fleet, $planetMerchant);
                     $em->persist($destination);
+                    $fleet->setDestination($destination);
                     $fleet->setFlightTime($repor);
                     $fleet->setAttack(0);
                     $fleet->setName('Cargos');
@@ -213,17 +232,17 @@ class MarketController extends AbstractController
             $reportSell = new Report();
             $reportSell->setType('economic');
             $reportSell->setSendAt($now);
-            $reportSell->setUser($user);
+            $reportSell->setCharacter($character);
             $reportSell->setTitle("Vente aux marchands");
             $reportSell->setImageName("sell_report.jpg");
             $reportSell->setContent("Votre vente aux marchands vous a rapporté <span class='text-vert'>+" . number_format($gain) . "</span> bitcoins. Vous ne gagnez pas de points de Guerre dans les ventes automatiques, pour en gagner vendez directement aux Marchands.");
             $em->persist($reportSell);
-            $user->setBitcoin($user->getBitcoin() + $gain);
-            $user->setViewReport(false);
-            $quest = $user->checkQuests('sell');
+            $character->setBitcoin($character->getBitcoin() + $gain);
+            $character->setViewReport(false);
+            $quest = $character->checkQuests('sell');
             if($quest) {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());
-                $user->removeQuest($quest);
+                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
+                $character->removeQuest($quest);
             }
         }
 

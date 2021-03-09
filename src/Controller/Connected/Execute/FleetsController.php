@@ -9,8 +9,18 @@ use App\Entity\Fleet;
 use DateInterval;
 use DateTime;
 
+/**
+ * Class FleetsController
+ * @package App\Controller\Connected\Execute
+ */
 class FleetsController extends AbstractController
 {
+    /**
+     * @param $nukeBombs
+     * @param $now
+     * @param $em
+     * @return Response
+     */
     public function nukeBombAction($nukeBombs, $now, $em)
     {
         foreach ($nukeBombs as $nukeBomb) {
@@ -32,13 +42,13 @@ class FleetsController extends AbstractController
             $reportNuclearAtt->setTitle("Votre missile nucléaire a touché sa cible !");
             $reportNuclearAtt->setImageName("nuclear_attack.png");
             $reportNuclearAtt->setSendAt($now);
-            $reportNuclearAtt->setUser($nukeBomb->getUser());
+            $reportNuclearAtt->setCharacter($nukeBomb->getCharacter());
             $reportNuclearDef = new Report();
             $reportNuclearDef->setType('fight');
             $reportNuclearDef->setTitle("Un missile nucléaire vous a frappé !");
             $reportNuclearDef->setImageName("nuclear_attack.png");
             $reportNuclearDef->setSendAt($now);
-            $reportNuclearDef->setUser($newHome->getUser());
+            $reportNuclearDef->setCharacter($newHome->getCharacter());
             $dest = $nukeBomb->getDestination();
             $nukeBomb->setDestination(null);
             $em->remove($dest);
@@ -91,6 +101,13 @@ class FleetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $fleetCdrs
+     * @param $now
+     * @param $em
+     * @return Response
+     * @throws \Exception
+     */
     public function recycleAction($fleetCdrs, $now , $em)
     {
         $tmpNoCdr = new DateTime();
@@ -137,7 +154,7 @@ class FleetsController extends AbstractController
                         $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
                         $reportRec->setImageName("recycle_report.jpg");
                         $reportRec->setSendAt($now);
-                        $reportRec->setUser($fleetCdr->getUser());
+                        $reportRec->setCharacter($fleetCdr->getCharacter());
                         $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
                         $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
                         $em->persist($reportRec);
@@ -149,7 +166,7 @@ class FleetsController extends AbstractController
                     $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
                     $reportRec->setImageName("recycle_report.jpg");
                     $reportRec->setSendAt($now);
-                    $reportRec->setUser($fleetCdr->getUser());
+                    $reportRec->setCharacter($fleetCdr->getCharacter());
                     $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
                     $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
                     $em->persist($reportRec);
@@ -184,7 +201,7 @@ class FleetsController extends AbstractController
                     $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
                     $reportRec->setImageName("recycle_report.jpg");
                     $reportRec->setSendAt($now);
-                    $reportRec->setUser($fleetCdr->getUser());
+                    $reportRec->setCharacter($fleetCdr->getCharacter());
                     $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
                     $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
                     $em->persist($reportRec);
@@ -196,7 +213,7 @@ class FleetsController extends AbstractController
                     $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
                     $reportRec->setImageName("recycle_report.jpg");
                     $reportRec->setSendAt($now);
-                    $reportRec->setUser($fleetCdr->getUser());
+                    $reportRec->setCharacter($fleetCdr->getCharacter());
                     $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
                     $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
                     $em->persist($reportRec);
@@ -219,12 +236,17 @@ class FleetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $fleetRegroups
+     * @param $demoFleet
+     * @return Response
+     */
     public function oneFleetAction($fleetRegroups, $demoFleet)
     {
         $em = $this->getDoctrine()->getManager();
 
         $one = new Fleet();
-        $one->setUser($demoFleet->getUser());
+        $one->setCharacter($demoFleet->getCharacter());
         $one->setPlanet($demoFleet->getPlanet());
         $one->setName($demoFleet->getName());
         $one->setAttack($demoFleet->getAttack());
@@ -263,7 +285,7 @@ class FleetsController extends AbstractController
             $one->setFood($one->getFood() + $fleetRegroup->getFood());
             $one->setUranium($one->getUranium() + $fleetRegroup->getUranium());
             $one->setNuclearBomb($one->getNuclearBomb() + $fleetRegroup->getNuclearBomb());
-            $fleetRegroup->setUser(null);
+            $fleetRegroup->setCharacter(null);
             $em->remove($fleetRegroup);
         }
         $one->setSignature($one->getNbrSignatures());
@@ -275,6 +297,11 @@ class FleetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $dests
+     * @param $em
+     * @return Response
+     */
     public function destinationDeleteAction($dests, $em)
     {
         foreach ($dests as $dest) {

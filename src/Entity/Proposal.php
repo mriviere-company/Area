@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -24,14 +25,26 @@ class Proposal
     protected $ally;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="proposals", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="proposals", fetch="EXTRA_LAZY")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\Column(name="proposalAt",type="datetime")
      */
     protected $proposalAt;
+
+    /**
+     * Proposal constructor.
+     * @param Ally $ally
+     * @param Character $character
+     */
+    public function __construct(Ally $ally, Character $character)
+    {
+        $this->ally = $ally;
+        $this->character = $character;
+        $this->proposalAt = new DateTime();
+    }
 
     /**
      * @return mixed
@@ -52,17 +65,17 @@ class Proposal
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**

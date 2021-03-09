@@ -5,8 +5,17 @@ namespace App\Controller\Connected\Execute;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class AlliancesController
+ * @package App\Controller\Connected\Execute
+ */
 class AlliancesController extends AbstractController
 {
+    /**
+     * @param $pacts
+     * @param $em
+     * @return Response
+     */
     public function pactsAction($pacts, $em)
     {
         foreach ($pacts as $pact) {
@@ -55,6 +64,12 @@ class AlliancesController extends AbstractController
 
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
+
+    /**
+     * @param $peaces
+     * @param $em
+     * @return Response
+     */
     public function peacesAction($peaces, $em)
     {
         foreach ($peaces as $peace) {

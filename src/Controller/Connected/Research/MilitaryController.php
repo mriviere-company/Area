@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected\Research;
 
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,28 +19,33 @@ class MilitaryController extends AbstractController
 {
     /**
      * @Route("/rechercher-industrie/{usePlanet}", name="research_industry", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function researchIndustryAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $user->getIndustry() + 1;
-        $userBt = $user->getBitcoin();
+        $level = $character->getIndustry() + 1;
+        $characterBt = $character->getBitcoin();
 
-        if(($userBt < ($level * 1500)) ||
-            ($level == 6 || $user->getSearchAt() > $now)) {
+        if(($characterBt < ($level * 1500)) ||
+            ($level == 6 || $character->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 150 / $user->getScientistProduction())) . 'S'));
-        $user->setSearch('industry');
-        $user->setSearchAt($now);
-        $user->setBitcoin($userBt - ($level * 1500));
+        $now->add(new DateInterval('PT' . round(($level * 150 / $character->getScientistProduction())) . 'S'));
+        $character->setSearch('industry');
+        $character->setSearchAt($now);
+        $character->setBitcoin($characterBt - ($level * 1500));
         if(($user->getTutorial() == 8)) {
             $user->setTutorial(9);
         }
@@ -49,28 +56,33 @@ class MilitaryController extends AbstractController
 
     /**
      * @Route("/rechercher-vaisseaux-leger/{usePlanet}", name="research_light_ship", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function researchLightShipAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $user->getLightShip() + 1;
-        $userBt = $user->getBitcoin();
+        $level = $character->getLightShip() + 1;
+        $characterBt = $character->getBitcoin();
 
-        if(($userBt < ($level * 9000) || $user->getIndustry() < 3) ||
-            ($level == 4 || $user->getSearchAt() > $now)) {
+        if(($characterBt < ($level * 9000) || $character->getIndustry() < 3) ||
+            ($level == 4 || $character->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 860 / $user->getScientistProduction())) . 'S'));
-        $user->setSearch('lightShip');
-        $user->setSearchAt($now);
-        $user->setBitcoin($userBt - ($level * 9000));
+        $now->add(new DateInterval('PT' . round(($level * 860 / $character->getScientistProduction())) . 'S'));
+        $character->setSearch('lightShip');
+        $character->setSearchAt($now);
+        $character->setBitcoin($characterBt - ($level * 9000));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -78,28 +90,33 @@ class MilitaryController extends AbstractController
 
     /**
      * @Route("/rechercher-vaisseaux-lourd/{usePlanet}", name="research_heavy_ship", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function researchHeavyShipAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $user->getHeavyShip() + 1;
-        $userBt = $user->getBitcoin();
+        $level = $character->getHeavyShip() + 1;
+        $characterBt = $character->getBitcoin();
 
-        if(($userBt < ($level * 42000) || $user->getIndustry() < 5) ||
-            ($level == 4 || $user->getSearchAt() > $now)) {
+        if(($characterBt < ($level * 42000) || $character->getIndustry() < 5) ||
+            ($level == 4 || $character->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 1200 / $user->getScientistProduction())) . 'S')); // X100 NORMAL GAME
-        $user->setSearch('heavyShip');
-        $user->setSearchAt($now);
-        $user->setBitcoin($userBt - ($level * 42000));
+        $now->add(new DateInterval('PT' . round(($level * 1200 / $character->getScientistProduction())) . 'S')); // X100 NORMAL GAME
+        $character->setSearch('heavyShip');
+        $character->setSearchAt($now);
+        $character->setBitcoin($characterBt - ($level * 42000));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);

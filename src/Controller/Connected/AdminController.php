@@ -3,6 +3,8 @@
 namespace App\Controller\Connected;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Planet;
@@ -16,14 +18,18 @@ class AdminController extends AbstractController
 {
     /**
      * @Route("/administration-dashboard/{usePlanet}", name="admin_dashboard", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @param null $date
+     * @return RedirectResponse|Response
      */
-    public function adminDashboardAction(Planet $usePlanet, $date = NULL)
+    public function adminDashboardAction(Planet $usePlanet, $date = null)
     {
         $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
         if (!$date) {
             $date = new DateTime();
         }
-        $user = $this->getUser();
+
         if ($user->getUsername() != 'Dev') {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
         }

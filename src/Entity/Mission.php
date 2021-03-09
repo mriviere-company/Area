@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -20,10 +21,10 @@ class Mission
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="missions", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="missions", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\Column(name="mission_at", type="datetime")
@@ -34,24 +35,32 @@ class Mission
      */
     protected $type;
 
-    public function __construct()
+    /**
+     * Mission constructor.
+     * @param Character $character
+     * @param int $type
+     */
+    public function __construct(Character $character, int $type)
     {
+        $this->character = $character;
+        $this->type = $type;
+        $this->missionAt = new DateTime();
     }
 
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**
@@ -187,13 +196,16 @@ class Mission
      */
     public function getLevelMission()
     {
-        $level = $this->getUser()->getLevel();
+        $level = $this->getCharacter()->getLevel();
         if ($level >= $this->type) {
             return true;
         }
         return false;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

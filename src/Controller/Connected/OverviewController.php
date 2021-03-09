@@ -2,6 +2,9 @@
 
 namespace App\Controller\Connected;
 
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,18 +22,23 @@ class OverviewController extends AbstractController
 {
     /**
      * @Route("/empire/{usePlanet}", name="overview", requirements={"usePlanet"="\d+"})
+     * @param Request $request
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function overviewAction(Request $request, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $server = $usePlanet->getSector()->getGalaxy()->getServer();
+        $character = $user->getCharacter($server);
         $now = new DateTime();
-        $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
-        if($user->getGameOver() || $user->getAllPlanets() == 0) {
+        if($character->getGameOver() || $character->getAllPlanets() == 0) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -43,8 +51,8 @@ class OverviewController extends AbstractController
             ->join('d.planet', 'dp')
             ->where('f.flightTime < :now')
             ->andWhere('f.flightType != :six or f.flightType is null')
-            ->andWhere('f.user = :user or p.user = :user')
-            ->setParameters(['now' => $now, 'six' => 6, 'user' => $user])
+            ->andWhere('f.character = :character or p.character = :character')
+            ->setParameters(['now' => $now, 'six' => 6, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -60,8 +68,8 @@ class OverviewController extends AbstractController
         $planets = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.constructAt < :now')
-            ->andWhere('p.user = :user')
-            ->setParameters(['now' => $now, 'user' => $user])
+            ->andWhere('p.character = :character')
+            ->setParameters(['now' => $now, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -76,8 +84,8 @@ class OverviewController extends AbstractController
         $planetSoldiers = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.soldierAt < :now')
-            ->andWhere('p.user = :user')
-            ->setParameters(['now' => $now, 'user' => $user])
+            ->andWhere('p.character = :character')
+            ->setParameters(['now' => $now, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -91,8 +99,8 @@ class OverviewController extends AbstractController
         $planetTanks = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.tankAt < :now')
-            ->andWhere('p.user = :user')
-            ->setParameters(['now' => $now, 'user' => $user])
+            ->andWhere('p.character = :character')
+            ->setParameters(['now' => $now, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -106,8 +114,8 @@ class OverviewController extends AbstractController
         $planetScientists = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.scientistAt < :now')
-            ->andWhere('p.user = :user')
-            ->setParameters(['now' => $now, 'user' => $user])
+            ->andWhere('p.character = :character')
+            ->setParameters(['now' => $now, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -122,8 +130,8 @@ class OverviewController extends AbstractController
             ->createQueryBuilder('p')
             ->join('p.planet', 'pp')
             ->where('p.productAt < :now')
-            ->andWhere('pp.user = :user')
-            ->setParameters(['now' => $now, 'user' => $user])
+            ->andWhere('pp.character = :character')
+            ->setParameters(['now' => $now, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -135,11 +143,13 @@ class OverviewController extends AbstractController
         }
 
         $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::userActivityAction', [
+            'character' => $character,
             'now'  => $now,
             'em' => $em]);
 
         if ($seconds->getContent() >= 60) {
             $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetsGenAction', [
+                'character' => $character,
                 'seconds' => $seconds->getContent(),
                 'now'  => $now,
                 'em' => $em]);
@@ -150,23 +160,23 @@ class OverviewController extends AbstractController
             $em->flush();
         }
 
-        $allTroops = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->join('u.planets', 'p')
+        $allTroops = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->join('c.planets', 'p')
             ->leftJoin('p.product', 'pp')
             ->select('sum(p.soldier) as soldier, sum(p.soldierAtNbr) as soldierAtNbr, sum(p.tank) as tank, sum(p.tankAtNbr) as tankAtNbr, sum(p.scientist) as scientist, sum(p.scientistAtNbr) as scientistAtNbr, sum(DISTINCT p.signature) as psignature, sum(pp.signature) as ppsignature')
-            ->where('p.user = :user')
-            ->setParameters(['user' => $user])
+            ->where('p.character = :character')
+            ->setParameters(['character' => $character])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
 
-        $allFleets = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->leftJoin('u.fleets', 'f')
+        $allFleets = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->leftJoin('c.fleets', 'f')
             ->select('sum(f.soldier) as fsoldier, sum(f.scientist) as fscientist, sum(f.tank) as ftank, sum(f.signature) as fsignature')
-            ->where('f.user = :user')
-            ->setParameters(['user' => $user])
+            ->where('f.character = :character')
+            ->setParameters(['character' => $character])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
@@ -175,17 +185,17 @@ class OverviewController extends AbstractController
         $allShipsPlanet = round($allTroops['psignature'] / 12);
         $allShipsFleet = $allFleets['fsignature'] / 2;
         $allShips = $allShipsProduct + $allShipsPlanet + $allShipsFleet;
-        $allTroopsProduct = $user->getPriceTroopsProduct($allTroops);
-        $allTroopsPlanet = $user->getPriceTroopsPlanet($allTroops);
-        $allTroopsFleet = $user->getPriceTroopsFleet($allFleets);
+        $allTroopsProduct = $character->getPriceTroopsProduct($allTroops);
+        $allTroopsPlanet = $character->getPriceTroopsPlanet($allTroops);
+        $allTroopsFleet = $character->getPriceTroopsFleet($allFleets);
         $allTroops = $allTroopsProduct + $allTroopsPlanet + $allTroopsFleet;
 
-        $allBuildings = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->join('u.planets', 'p')
+        $allBuildings = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->join('c.planets', 'p')
             ->select('sum(p.miner * 1) as miner, sum(p.extractor * 1) as extractor, sum(p.aeroponicFarm * 2) as aeroponicFarm, sum(p.farm * 1) as farm, sum(p.silos * 30) as silos, sum(p.niobiumStock * 30) as niobiumStock, sum(p.waterStock * 30) as waterStock, sum(p.caserne * 66) as caserne, sum(p.bunker * 800) as bunker, sum(p.centerSearch * 53) as centerSearch, sum(p.city * 13) as city, sum(p.metropole * 26) as metropole, sum(p.lightUsine * 333) as lightUsine, sum(p.heavyUsine * 666) as heavyUsine, sum(p.spaceShip * 100) as spaceShip, sum(p.radar * 13) as radar, sum(p.skyRadar * 133) as skyRadar, sum(p.skyBrouilleur * 400) as skyBrouilleur, sum(p.nuclearBase * 3333) as nuclearBase, sum(p.orbital * 333) as orbital, sum(p.island * 333) as island, sum(p.worker) as worker, sum(p.workerProduction) as workerProd')
-            ->where('p.user = :user')
-            ->setParameters(['user' => $user])
+            ->where('p.character = :character')
+            ->setParameters(['character' => $character])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
@@ -194,14 +204,14 @@ class OverviewController extends AbstractController
         $allWorkersProd = $allBuildings['workerProd'] * 60;
         $allBuilding = $allBuildings['centerSearch'] + $allBuildings['miner'] + $allBuildings['extractor'] + $allBuildings['niobiumStock'] + $allBuildings['waterStock'] + $allBuildings['city'] + $allBuildings['metropole'] + $allBuildings['bunker'] + $allBuildings['caserne'] + $allBuildings['spaceShip'] + $allBuildings['lightUsine'] + $allBuildings['heavyUsine'] + $allBuildings['radar'] + $allBuildings['skyRadar'] + $allBuildings['skyBrouilleur'] + $allBuildings['nuclearBase'] + $allBuildings['orbital'] + $allBuildings['island'];
 
-        if ($user->getPoliticWorker() > 0) {
-            $allWorkersProd = $allWorkersProd * (1 + ($user->getPoliticWorker() / 5));
+        if ($character->getPoliticWorker() > 0) {
+            $allWorkersProd = $allWorkersProd * (1 + ($character->getPoliticWorker() / 5));
         }
 
         $attackFleets = $em->getRepository('App:Fleet')
             ->createQueryBuilder('f')
-            ->join('f.user', 'u')
-            ->leftJoin('u.ally', 'a')
+            ->join('f.character', 'c')
+            ->leftJoin('c.ally', 'a')
             ->join('f.planet', 'p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
@@ -209,10 +219,10 @@ class OverviewController extends AbstractController
             ->join('d.planet', 'dp')
             ->join('dp.sector', 'ds')
             ->join('ds.galaxy', 'dg')
-            ->select('f.attack, f.name, f.signature, p.name as pName, p.position as position, p.skyBrouilleur, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, dp.name as dName, dp.position as dPosition, ds.position as dSector, dg.position as dGalaxy, ds.id as dIdSector, dg.id as dIdGalaxy, f.flightTime, u.id as user, a.sigle as sigle, u.username as username')
-            ->where('f.user != :user')
-            ->andWhere('dp.user = :user')
-            ->setParameters(['user' => $user])
+            ->select('f.attack, f.name, f.signature, p.name as pName, p.position as position, p.skyBrouilleur, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, dp.name as dName, dp.position as dPosition, ds.position as dSector, dg.position as dGalaxy, ds.id as dIdSector, dg.id as dIdGalaxy, f.flightTime, c.id as character, a.sigle as sigle, c.username as username')
+            ->where('f.character != :character')
+            ->andWhere('dp.character = :character')
+            ->setParameters(['character' => $character])
             ->orderBy('f.flightTime')
             ->setMaxResults(4)
             ->getQuery()
@@ -231,18 +241,18 @@ class OverviewController extends AbstractController
             ->join('dp.sector', 'ds')
             ->join('ds.galaxy', 'dg')
             ->select('f.id, f.attack, f.name, f.signature, p.name as pName, p.position as position, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, dp.name as dName, dp.position as dPosition, ds.position as dSector, dg.position as dGalaxy, ds.id as dIdSector, dg.id as dIdGalaxy, f.flightTime')
-            ->where('f.user = :user')
+            ->where('f.character = :character')
             ->andWhere('f.flightTime < :time')
-            ->setParameters(['user' => $user, 'time' => $oneHour])
+            ->setParameters(['character' => $character, 'time' => $oneHour])
             ->orderBy('f.flightTime')
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
 
 
-        if ($user->getOrderPlanet() == 'alpha') {
+        if ($character->getOrderPlanet() == 'alpha') {
             $crit = 'p.name';
-        } elseif ($user->getOrderPlanet() == 'colo') {
+        } elseif ($character->getOrderPlanet() == 'colo') {
             $crit = 'p.nbColo';
         } else {
             $crit = 'p.id';
@@ -254,8 +264,8 @@ class OverviewController extends AbstractController
             ->leftJoin('p.constructions', 'c')
             ->select('p.name, p.id, p.sky, p.skyPlace, p.ground, p.groundPlace, p.construct, p.constructAt, count(c.construct) as nbrConstruct, p.moon, p.construct')
             ->groupBy('p.id')
-            ->where('p.user = :user')
-            ->setParameters(['user' => $user])
+            ->where('p.character = :character')
+            ->setParameters(['character' => $character])
             ->orderBy($crit, $order)
             ->getQuery()
             ->getResult();
@@ -264,16 +274,15 @@ class OverviewController extends AbstractController
             $fleetMove = null;
         }
 
-        $user = $this->getUser();
-        $form_image = $this->createForm(UserImageType::class,$user);
+        $form_image = $this->createForm(UserImageType::class,$character);
         $form_image->handleRequest($request);
 
         if ($form_image->isSubmitted()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $quest = $user->checkQuests('logo');
+            $quest = $character->checkQuests('logo');
             if($quest) {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());
-                $user->removeQuest($quest);
+                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
+                $character->removeQuest($quest);
             }
             $em->flush();
         }
@@ -306,86 +315,88 @@ class OverviewController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getMainCharacter();
+
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 172800 . 'S'));
-        if($user->getGameOver() || $user->getAllPlanets() == 0) {
-            if($user->getColPlanets() == 0 && $user->getGameOver() == null) {
-                $user->setGameOver($user->getUserName());
+        if($character->getGameOver() || $character->getAllPlanets() == 0) {
+            if($character->getColPlanets() == 0 && $character->getGameOver() == null) {
+                $character->setGameOver($character->getUserName());
 
                 $em->flush();
             }
-            if($user->getRank()) {
+            if($character->getRank()) {
 
-                foreach ($user->getFleetLists() as $list) {
+                foreach ($character->getFleetLists() as $list) {
                     foreach ($list->getFleets() as $fleetL) {
                         $fleetL->setFleetList(null);
                     }
                     $em->remove($list);
                 }
-                $ship = $user->getShip();
+                $ship = $character->getShip();
                 if ($ship) {
-                    $user->setShip(null);
+                    $character->setShip(null);
                     $em->remove($ship);
                 }
-                $user->setBitcoin(25000);
-                $user->setSearch(null);
-                if ($user->getRank()) {
-                    $em->remove($user->getRank());
+                $character->setBitcoin(5000);
+                $character->setSearch(null);
+                if ($character->getRank()) {
+                    $em->remove($character->getRank());
                 }
-                $user->setRank(null);
-                $user->setJoinAllyAt(null);
-                $user->setAllyBan(null);
-                $user->setScientistProduction(1);
-                $user->setSearchAt(null);
-                $user->setDemography(0);
-                $user->setUtility(0);
-                $user->setArmement(0);
-                $user->setIndustry(0);
-                $user->setTerraformation(round($user->getTerraformation(0) / 2));
-                $user->setPlasma(0);
-                $user->setLaser(0);
-                $user->setMissile(0);
-                $user->setRecycleur(0);
-                $user->setCargo(0);
-                $user->setBarge(0);
-                $user->setHyperespace(0);
-                $user->setDiscipline(0);
-                $user->setHeavyShip(0);
-                $user->setLightShip(0);
-                $user->setOnde(0);
-                $user->setHyperespace(0);
-                $user->setDiscipline(0);
-                $user->setBarbed(0);
-                $user->setAeroponicFarm(0);
-                $user->setTank(0);
-                $user->setExpansion(0);
-                $user->setPoliticArmement(0);
-                $user->setPoliticCostScientist(0);
-                $user->setPoliticArmor(0);
-                $user->setPoliticBarge(0);
-                $user->setPoliticCargo(0);
-                $user->setPoliticColonisation(0);
-                $user->setPoliticCostSoldier(0);
-                $user->setPoliticCostTank(0);
-                $user->setPoliticInvade(0);
-                $user->setPoliticMerchant(0);
-                $user->setPoliticPdg(0);
-                $user->setPoliticProd(0);
-                $user->setPoliticRecycleur(0);
-                $user->setPoliticSearch(0);
-                $user->setPoliticSoldierAtt(0);
-                $user->setPoliticSoldierSale(0);
-                $user->setPoliticTankDef(0);
-                $user->setPoliticWorker(0);
-                $user->setPoliticWorkerDef(0);
-                $user->setZombieAtt(1);
-                if ($user->getAlly()) {
-                    $ally = $user->getAlly();
-                    if (count($ally->getUsers()) == 1 || ($ally->getPolitic() == 'fascism' && $user->getGrade()->getPlacement() == 1)) {
-                        foreach ($ally->getUsers() as $user) {
-                        $user->setAlly(null);
-                        $user->setGrade(null);
-                        $user->setAllyBan($now);
+                $character->setRank(null);
+                $character->setJoinAllyAt(null);
+                $character->setAllyBan(null);
+                $character->setScientistProduction(1);
+                $character->setSearchAt(null);
+                $character->setDemography(0);
+                $character->setUtility(0);
+                $character->setArmement(0);
+                $character->setIndustry(0);
+                $character->setTerraformation(round($character->getTerraformation(0) / 2));
+                $character->setPlasma(0);
+                $character->setLaser(0);
+                $character->setMissile(0);
+                $character->setRecycleur(0);
+                $character->setCargo(0);
+                $character->setBarge(0);
+                $character->setHyperespace(0);
+                $character->setDiscipline(0);
+                $character->setHeavyShip(0);
+                $character->setLightShip(0);
+                $character->setOnde(0);
+                $character->setHyperespace(0);
+                $character->setDiscipline(0);
+                $character->setBarbed(0);
+                $character->setAeroponicFarm(0);
+                $character->setTank(0);
+                $character->setExpansion(0);
+                $character->setPoliticArmement(0);
+                $character->setPoliticCostScientist(0);
+                $character->setPoliticArmor(0);
+                $character->setPoliticBarge(0);
+                $character->setPoliticCargo(0);
+                $character->setPoliticColonisation(0);
+                $character->setPoliticCostSoldier(0);
+                $character->setPoliticCostTank(0);
+                $character->setPoliticInvade(0);
+                $character->setPoliticMerchant(0);
+                $character->setPoliticPdg(0);
+                $character->setPoliticProd(0);
+                $character->setPoliticRecycleur(0);
+                $character->setPoliticSearch(0);
+                $character->setPoliticSoldierAtt(0);
+                $character->setPoliticSoldierSale(0);
+                $character->setPoliticTankDef(0);
+                $character->setPoliticWorker(0);
+                $character->setPoliticWorkerDef(0);
+                $character->setZombieAtt(1);
+                if ($character->getAlly()) {
+                    $ally = $character->getAlly();
+                    if (count($ally->getCharacters()) == 1 || ($ally->getPolitic() == 'fascism' && $character->getGrade()->getPlacement() == 1)) {
+                        foreach ($ally->getCharacters() as $character) {
+                        $character->setAlly(null);
+                        $character->setGrade(null);
+                        $character->setAllyBan($now);
                     }
                         foreach ($ally->getFleets() as $fleet) {
                             $fleet->setAlly(null);
@@ -460,11 +471,11 @@ class OverviewController extends AbstractController
                         $em->remove($ally);
                     }
                 }
-                $user->setAlly(null);
-                $user->setGrade(null);
+                $character->setAlly(null);
+                $character->setGrade(null);
 
-                foreach ($user->getSalons() as $salon) {
-                    $salon->removeUser($user);
+                foreach ($character->getSalons() as $salon) {
+                    $salon->removeCharacter($character);
                 }
 
                 $salon = $em->getRepository('App:Salon')
@@ -474,8 +485,8 @@ class OverviewController extends AbstractController
                     ->getQuery()
                     ->getOneOrNullResult();
 
-                $salon->removeUser($user);
-                $user->setSalons(null);
+                $salon->removeCharacter($character);
+                $character->setSalons(null);
 
                 $em->flush();
             }
@@ -492,8 +503,8 @@ class OverviewController extends AbstractController
                 ->join('g.server', 'ss')
                 ->join('g.sectors', 's')
                 ->join('s.planets', 'p')
-                ->leftJoin('p.user', 'u')
-                ->select('g.id, g.position, count(DISTINCT u.id) as users, ss.id as server')
+                ->leftJoin('p.character', 'c')
+                ->select('g.id, g.position, count(DISTINCT c.id) as characters, ss.id as server')
                 ->groupBy('g.id')
                 ->orderBy('g.position', 'ASC')
                 ->getQuery()

@@ -2,7 +2,10 @@
 
 namespace App\Controller\Connected;
 
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -24,55 +27,70 @@ class SalonController extends AbstractController
     /**
      * @Route("/salon/{usePlanet}", name="salon", requirements={"usePlanet"="\d+"})
      * @Route("/salon/{usePlanet}/{id}", name="salon_id", requirements={"usePlanet"="\d+", "id"="\d+"})
+     * @param Request $request
+     * @param Planet $usePlanet
+     * @param mixed $id
+     * @return JsonResponse|RedirectResponse|Response
+     * @throws Exception
      */
-    public function salonAction(Request $request, Planet $usePlanet, $id = 1)
+    public function salonAction(Request $request, Planet $usePlanet, $id = 'Public')
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $server = $usePlanet->getSector()->getGalaxy()->getServer();
+        $character = $user->getCharacter($server);
         $now = new DateTime();
         $connected = new DateTime();
         $connected->sub(new DateInterval('PT' . 1800 . 'S'));
 
-        if($user->getGameOver()) {
+        if($character->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        if($user->getAlly()) {
-            $sigle = $user->getAlly()->getSigle();
+        if($character->getAlly()) {
+            $sigle = $character->getAlly()->getSigle();
         } else {
             $sigle = 'AKOUNAMATATA';
         }
 
-        $salon = $em->getRepository('App:Salon')->find(['id' => $id]);
+        $salon = $em->getRepository('App:Salon')
+            ->createQueryBuilder('s')
+            ->where('s.name = :public')
+            ->orWhere('s.id = :id')
+            ->AndWhere('s.server = :server')
+            ->setParameters(['public' => 'Public', 'id' => $id, 'server' => $server])
+            ->getQuery()
+            ->getOneOrNullResult();
+
         if ($id != 1) {
-            foreach($user->getViews() as $view) {
+            foreach($character->getViews() as $view) {
                 if($view->getSalon() == $salon) {
                     $em->remove($view);
                 }
             }
         } else {
-            $user->setViewMessage(true);
+            $character->setViewMessage(true);
         }
 
         $salons = $em->getRepository('App:Salon')
             ->createQueryBuilder('s')
             ->leftJoin('s.allys', 'a')
-            ->leftJoin('s.users', 'u')
+            ->leftJoin('s.characters', 'c')
             ->where('a.sigle = :sigle')
-            ->orWhere('s.name = :name')
-            ->orWhere('u.username = :user')
-            ->setParameters(['sigle' => $sigle, 'name' => 'Public', 'user' => $user->getUserName()])
+            ->orWhere('s.name = :name and s.server = :server')
+            ->orWhere('c.username = :character')
+            ->setParameters(['sigle' => $sigle, 'server' => $server, 'name' => 'Public', 'character' => $character->getUserName()])
             ->getQuery()
             ->getResult();
 
-        $userCos = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->where('u.lastActivity > :date')
+        $userCos = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->where('c.lastActivity > :date')
             ->setParameters(['date' => $connected])
-            ->orderBy('u.username', 'ASC')
+            ->orderBy('c.username', 'ASC')
             ->getQuery()
             ->getResult();
 
@@ -83,6 +101,8 @@ class SalonController extends AbstractController
             }
         }
         if($ok == 0) {
+            var_dump($salon->getId());
+            var_dump(count($salons)); exit;
             return $this->redirectToRoute('salon', ['usePlanet' => $usePlanet->getId()]);
         }
 
@@ -94,21 +114,21 @@ class SalonController extends AbstractController
                 ->createQueryBuilder('sc')
                 ->orderBy('sc.sendAt', 'ASC')
                 ->where('sc.salon = :attachSalon')
-                ->andWhere('sc.user != :user')
+                ->andWhere('sc.character != :character')
                 ->andWhere('sc.sendAt > :date')
-                ->setParameters(['attachSalon' => $salon, 'user' => $user, 'date' => $user->getSalonAt()])
+                ->setParameters(['attachSalon' => $salon, 'character' => $character, 'date' => $character->getSalonAt()])
                 ->setMaxResults('1')
                 ->getQuery()
                 ->getResult();
 
-            if($newMessages || $user->getSalonAt() == null) {
+            if($newMessages || $character->getSalonAt() == null) {
                 $response = new JsonResponse();
                 $response->setData(
                     [
                         'has_error' => false,
                     ]
                 );
-                $user->setSalonAt($now);
+                $character->setSalonAt($now);
 
                 $em->flush();
                 return $response;
@@ -123,17 +143,14 @@ class SalonController extends AbstractController
             }
         }
 
-        if ($form_message->isSubmitted() && $form_message->isValid() && ($user->getSalonBan() > $now || $user->getSalonBan() == null)) {
+        if ($form_message->isSubmitted() && $form_message->isValid() && ($character->getSalonBan() > $now || $character->getSalonBan() == null)) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $message = new S_Content();
-            $message->setSalon($salon);
             if (substr($form_message->get('content')->getData(), 0, 8) == 'https://' || substr($form_message->get('content')->getData(), 0, 7) == 'http://') {
-                $message->setMessage('<span><a target="_blank" href="' . $form_message->get('content')->getData() . '">' . $form_message->get('content')->getData() . '</a></span>');
+                $content = '<span><a target="_blank" href="' . $form_message->get('content')->getData() . '">' . $form_message->get('content')->getData() . '</a></span>';
             } else {
-                $message->setMessage(nl2br($form_message->get('content')->getData()));
+                $content = nl2br($form_message->get('content')->getData());
             }
-            $message->setSendAt($now);
-            $message->setUser($user);
+            $message = new S_Content($character, $content, $salon);
 
             if(count($salon->getContents()) > 50) {
                 $removeMessage = $em->getRepository('App:S_Content')
@@ -144,53 +161,51 @@ class SalonController extends AbstractController
                     ->setMaxResults('10')
                     ->getQuery()
                     ->getResult();
+
                 foreach($removeMessage as $oneMessage) {
                     $em->remove($oneMessage);
                 }
             }
 
             if($salon->getId() == 1) {
-                $userViews = $em->getRepository('App:User')
-                    ->createQueryBuilder('u')
-                    ->where('u.id != :user')
-                    ->andWhere('u.bot = false')
-                    ->setParameters(['user' => $user->getId()])
+                $userViews = $em->getRepository('App:Character')
+                    ->createQueryBuilder('c')
+                    ->where('c.id != :character')
+                    ->andWhere('c.bot = false')
+                    ->setParameters(['character' => $character->getId()])
                     ->getQuery()
                     ->getResult();
+
                 foreach($userViews as $userView) {
                     $userView->setSalonAt(null);
                 }
             } else {
                 foreach($salon->getAllys() as $ally) {
-                    foreach($ally->getUsers() as $tmpuser) {
-                        if ($tmpuser != $user) {
-                            $view = new View();
-                            $view->setUser($tmpuser);
-                            $view->setSalon($salon);
+                    foreach($ally->getCharacters() as $tmpuser) {
+                        if ($tmpuser != $character) {
+                            $view = new View($tmpuser, $salon);
                             $em->persist($view);
                         }
                     }
                 }
-                foreach($salon->getUsers() as $tmpuser) {
-                    if ($tmpuser != $user) {
-                        $view = new View();
-                        $view->setUser($tmpuser);
-                        $view->setSalon($salon);
+                foreach($salon->getCharacters() as $tmpuser) {
+                    if ($tmpuser != $character) {
+                        $view = new View($tmpuser, $salon);
                         $em->persist($view);
                     }
                 }
             }
             $em->persist($message);
-            $quest = $user->checkQuests('salon_message');
+            $quest = $character->checkQuests('salon_message');
             if($quest) {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());
-                $user->removeQuest($quest);
+                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
+                $character->removeQuest($quest);
             }
 
             $form_message = null;
             $form_message = $this->createForm(SalonType::class);
         }
-        $user->setSalonAt($now);
+        $character->setSalonAt($now);
 
         if(($user->getTutorial() == 24)) {
             $user->setTutorial(50);
@@ -209,12 +224,17 @@ class SalonController extends AbstractController
 
     /**
      * @Route("/rejoindre-salon/{sigle}/{usePlanet}", name="ally_join_salon", requirements={"sigle"="\w+", "usePlanet"="\d+"})
+     * @param $sigle
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function addSalonAction($sigle, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -225,7 +245,7 @@ class SalonController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        $salon->addUser($user);
+        $salon->addCharacter($character);
 
         $em->flush();
 
@@ -234,16 +254,21 @@ class SalonController extends AbstractController
 
     /**
      * @Route("/quitter-salon/{salon}/{usePlanet}", name="ally_leave_salon", requirements={"salon"="\d+", "usePlanet"="\d+"})
+     * @param Salon $salon
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function leaveSalonAction(Salon $salon, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $salon->removeUser($user);
+        $salon->removeCharacter($character);
 
         $em->flush();
 

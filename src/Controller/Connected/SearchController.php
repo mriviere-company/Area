@@ -2,11 +2,12 @@
 
 namespace App\Controller\Connected;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
-use DateTime;
 
 /**
  * @Route("/connect")
@@ -16,17 +17,19 @@ class SearchController extends AbstractController
 {
     /**
      * @Route("/recherche/{usePlanet}", name="search", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
      */
     public function searchAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
-        $now = new DateTime();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if($user->getGameOver()) {
+        if($character->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -35,7 +38,7 @@ class SearchController extends AbstractController
             $em->flush();
         }
 
-        if($user->getTutorial() == 8 && $user->getSearchAt()) {
+        if($user->getTutorial() == 8 && $character->getSearchAt()) {
             $user->setTutorial(9);
             $em->flush();
         }
@@ -47,73 +50,76 @@ class SearchController extends AbstractController
 
     /**
      * @Route("/annuler-rechercher/{usePlanet}", name="research_cancel", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function researchCancelAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
-        $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $research = $user->getSearch();
+        $research = $character->getSearch();
         if ($research == 'onde') {
-            $level = $user->getOnde() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 2300));
+            $level = $character->getOnde() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 2300));
         } elseif ($research == 'industry') {
-            $level = $user->getIndustry() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 1500));
+            $level = $character->getIndustry() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 1500));
         } elseif ($research == 'discipline') {
-            $level = $user->getDiscipline() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 11700));
+            $level = $character->getDiscipline() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 11700));
         } elseif ($research == 'hyperespace') {
-            $level = $user->getHyperespace() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 25000000));
+            $level = $character->getHyperespace() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 25000000));
         } elseif ($research == 'barge') {
-            $level = $user->getBarge() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 35000));
+            $level = $character->getBarge() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 35000));
         } elseif ($research == 'utility') {
-            $level = $user->getUtility() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 2500));
+            $level = $character->getUtility() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 2500));
         } elseif ($research == 'demography') {
-            $level = $user->getDemography() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 8000));
+            $level = $character->getDemography() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 8000));
         } elseif ($research == 'aeroponicFarm') {
-            $level = $user->getAeroponicFarm() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 16000));
+            $level = $character->getAeroponicFarm() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 16000));
         } elseif ($research == 'terraformation') {
-            $level = $user->getTerraformation() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 12000));
+            $level = $character->getTerraformation() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 12000));
         } elseif ($research == 'cargo') {
-            $level = $user->getCargo() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 3500));
+            $level = $character->getCargo() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 3500));
         } elseif ($research == 'recycleur') {
-            $level = $user->getRecycleur() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 16900));
+            $level = $character->getRecycleur() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 16900));
         } elseif ($research == 'armement') {
-            $level = $user->getArmement() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 2000));
+            $level = $character->getArmement() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 2000));
         } elseif ($research == 'missile') {
-            $level = $user->getMissile() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 2600));
+            $level = $character->getMissile() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 2600));
         } elseif ($research == 'laser') {
-            $level = $user->getLaser() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 13000));
+            $level = $character->getLaser() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 13000));
         } elseif ($research == 'plasma') {
-            $level = $user->getPlasma() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 29000));
+            $level = $character->getPlasma() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 29000));
         } elseif ($research == 'lightShip') {
-            $level = $user->getLightShip() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 9000));
+            $level = $character->getLightShip() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 9000));
         } elseif ($research == 'heavyShip') {
-            $level = $user->getHeavyShip() + 1;
-            $user->setBitcoin($user->getBitcoin() + ($level * 42000));
-        } elseif ($user->getWhichResearch($research) === 0 || $user->getWhichResearch($research) === -1) {
-            $user->setBitcoin($user->getBitcoin() + (($user->getWhichResearch($research) + 1) * $user->getResearchCost($research)));
+            $level = $character->getHeavyShip() + 1;
+            $character->setBitcoin($character->getBitcoin() + ($level * 42000));
+        } elseif ($character->getWhichResearch($research) === 0 || $character->getWhichResearch($research) === -1) {
+            $character->setBitcoin($character->getBitcoin() + (($character->getWhichResearch($research) + 1) * $character->getResearchCost($research)));
         }
-        $user->setSearch(null);
-        $user->setSearchAt(null);
+        $character->setSearch(null);
+        $character->setSearchAt(null);
 
         $em->flush();
 

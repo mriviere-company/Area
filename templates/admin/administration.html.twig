@@ -8,6 +8,7 @@
     <div class="row mt-5">
         <div class="offset-1 col-10 mt-5">
             <div class="text-center mt-5">
+                    <a class="confirm-button" href="{{ path('create_server', {'name': 'test'}) }}">{{ 'galaxy.create'|trans }}</a>
                 {% for server in servers %}
                     <table class="table table-striped table-bordered table-dark text-left">
                         <tbody>
@@ -15,18 +16,17 @@
                             <td>
                                 <span class="mx-5">{{ 'server'|trans }} {{ server.id }}</span>
                                 <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" src="{{ asset('img/server.png') }}">
-                                <a class="btn-menu" href="{{ path('logout') }}">{{ 'logout'|trans }}</a>
                                 {% if server.open == 1 %}
-                                    <a class="confirm-button text-vert" href="{{ path('deactive_server', {'serverId': server.id}) }}">{{ 'server.open'|trans }}</a>
+                                    <a class="confirm-button text-vert" href="{{ path('deactive_server', {'server': server.id}) }}">{{ 'server.open'|trans }}</a>
                                 {% else %}
-                                    <a class="confirm-button text-rouge" href="{{ path('active_server', {'serverId': server.id}) }}">{{ 'server.closed'|trans }}</a>
+                                    <a class="confirm-button text-rouge" href="{{ path('active_server', {'server': server.id}) }}">{{ 'server.closed'|trans }}</a>
                                 {% endif %}
                                 {% if server.pvp == 1 %}
-                                    <a class="confirm-button text-rouge" href="{{ path('pve_server', {'serverId': server.id}) }}">{{ 'server.pvp'|trans }}</a>
+                                    <a class="confirm-button text-rouge" href="{{ path('pve_server', {'server': server.id}) }}">{{ 'server.pvp'|trans }}</a>
                                 {% else %}
-                                    <a class="confirm-button text-vert" href="{{ path('pvp_server', {'serverId': server.id}) }}">{{ 'server.pve'|trans }}</a>
+                                    <a class="confirm-button text-vert" href="{{ path('pvp_server', {'server': server.id}) }}">{{ 'server.pve'|trans }}</a>
                                 {% endif %}
-                                <a class="btn-menu" href="{{ path('destroy_server', {'serverId': 1}) }}" target="_blank">{{ 'serveur.kill.serveur'|trans }}</a>
+                                <a class="btn-menu" href="{{ path('destroy_server', {'server': server.id}) }}" target="_blank">{{ 'serveur.kill.serveur'|trans }}</a>
                             </td>
                         </tr>
                         </tbody>
@@ -41,13 +41,13 @@
                         <tr>
                             {% endif %}
                             <td class="text-center">
-                            <span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mb-4" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.users|number_format }) }}</span></span>
+                            <span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mb-4" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.characters|number_format }) }}</span></span>
                                 <div><a class="confirm-button" href="{{ path('destroy_galaxy', {'galaxyId': galaxy.id}) }}">{{ 'galaxy.destroy'|trans }}</a></div>
                             </td>
                             {% set x = x + 1 %}
                         {% endfor %}
                             <td class="text-center">
-                                <a class="confirm-button" href="{{ path('create_galaxy', {'serverId': server.id}) }}">{{ 'galaxy.create'|trans }}</a>
+                                <a class="confirm-button" href="{{ path('create_galaxy', {'server': server.id}) }}">{{ 'galaxy.create'|trans }}</a>
                             </td>
                         </tr>
                         </tbody>

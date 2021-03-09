@@ -2,29 +2,127 @@
 
 namespace App\Controller\Security;
 
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
+use App\Entity\Event;
+use App\Entity\Ships;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Planet;
 use App\Entity\Sector;
 use App\Entity\Galaxy;
+use App\Entity\Server;
 use App\Entity\Salon;
-use App\Entity\User;
+use App\Entity\Character;
 use App\Entity\Rank;
 use App\Entity\Fleet;
 use DateTime;
+use DateInterval;
 
 /**
  * @Route("/serveur")
- * @Security("is_granted('ROLE_ADMIN')")
  */
 class ServerController extends AbstractController
 {
     /**
-     * @Route("/creation-galaxie/{serverId}", name="create_galaxy", requirements={"serverId"="\d+"})
+     * @Route("/creation-serveur/{name}", name="create_server", requirements={"name"="\w+"})
+     * @param string $name
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function createServerAction($serverId)
+    public function createServerAction(string $name)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $server = new Server($name, 1, 0.1, 19, 30, 23, 00, 1);
+        $em->persist($server);
+        $em->flush();
+
+        $event = new Event('ZombieAttack', $server, 6, 21, 00, 6, 22, 00);
+        $em->persist($event);
+        $em->flush();
+
+        $event = new Event('TotalWar', $server, 10, 8, 30, 10, 23, 00);
+        $em->persist($event);
+        $em->flush();
+
+        $event = new Event('ProductArmy', $server, 2, 01, 00, 3, 00, 01);
+        $em->persist($event);
+        $em->flush();
+
+        $event = new Event('InvadeAliens', $server, 7, 12, 00, 7, 14, 00);
+        $em->persist($event);
+        $em->flush();
+
+        $event = new Event('Recycling', $server, 3, 01, 00, 4, 00, 01);
+        $em->persist($event);
+        $em->flush();
+
+        $event = new Event('Raider', $server, 4, 12, 00, 4, 20, 00);
+        $em->persist($event);
+        $em->flush();
+
+        $event = new Event('ArenaAlly', $server, 12, 20, 00, 12, 22, 00);
+        $em->persist($event);
+        $em->flush();
+
+        $event = new Event('DestroyFleet', $server, 8, 18, 00, 8, 22, 00);
+        $em->persist($event);
+        $em->flush();
+
+        $event = new Event('ServerVsServer', $server, 30, 19, 00, 60, 23, 00);
+        $em->persist($event);
+        $em->flush();
+
+        $salon = new Salon('Public', $server);
+        $em->persist($salon);
+        $em->flush();
+
+        $iaZombie = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
+        $iaAlien = $em->getRepository('App:Character')->findOneBy(['alien' => 1]);
+
+        if ($iaZombie == null) {
+            $iaZombie = new Character(null, 'Zombie', $server);
+            $iaZombie->setBitcoin(100);
+            $iaZombie->setAlien(1);
+            $iaZombie->setImageName('hydre.png');
+            $rank = new Rank($iaZombie);
+            $em->persist($rank);
+            $iaZombie->setRank($rank);
+            $em->persist($iaZombie);
+            $ships = new Ships();
+            $iaZombie->setShip($ships);
+            $ships->setCharacter($iaZombie);
+            $em->persist($ships);
+            $em->flush();
+        }
+        if ($iaAlien == null) {
+            $iaAlien = new Character(null, 'Aliens', $server);
+            $iaAlien->setBitcoin(100);
+            $iaAlien->setZombie(1);
+            $iaAlien->setImageName('hydre.png');
+            $rank = new Rank($iaAlien);
+            $em->persist($rank);
+            $iaAlien->setRank($rank);
+            $em->persist($iaAlien);
+            $ships = new Ships();
+            $iaAlien->setShip($ships);
+            $ships->setCharacter($iaAlien);
+            $em->persist($ships);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('server_select');
+    }
+
+    /**
+     * @Route("/creation-galaxie/{server}", name="create_galaxy", requirements={"server"="\d+"})
+     * @param Server $server
+     * @return RedirectResponse
+     */
+    public function createGalaxyAction(Server $server)
     {
         $em = $this->getDoctrine()->getManager();
         $image = [
@@ -35,117 +133,202 @@ class ServerController extends AbstractController
             'planet25.png', 'planet26.png', 'planet27.png', 'planet28.png', 'planet29.png', 'planet30.png',
             'planet31.png', 'planet32.png', 'planet33.png'
         ];
-        $server = $em->getRepository('App:Server')->find(['id' => $serverId]);
+        $imageSun = ['sun1.png', 'sun2.png', 'sun3.png', 'sun4.png', 'sun5.png', 'sun6.png'];
+        $planetPve = ["1", "10", "91", "100", "12", "19", "82", "89", "23", "28", "73", "78", "34", "37", "64", "67", "45", "46", "55", "56"];
+        $planetPveOne = ["1", "10", "91", "100"];
+        $planetPveTwo = ["12", "19", "82", "89"];
+        $planetPveThree = ["23", "28", "73", "78"];
+        $planetPveFour = ["34", "37", "64", "67"];
+        $planetPveFive = ["45", "46", "55", "56"];
+
+        $sectorPositions = [
+            '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53',
+            '54', '55', '56', '57', '58', '59', '60', '5', '6', '15', '16', '25', '26', '35',
+            '36', '45', '46', '55', '56', '65', '66', '75', '76', '85', '86', '95', '96'
+        ];
+
+        $iaLevelOn = ["41", "51", "50", "60", "5", "6", "95", "96"];
+        $iaLevelTwo = ["42", "52", "49", "59", "15", "16", "85", "86"];
+        $iaLevelThree = ["43", "53", "48", "58", "25", "26", "75", "76"];
+        $iaLevelFour = ["44", "54", "47", "57", "35", "36", "65", "66"];
+        $iaLevelFive = ["45", "46", "55", "56"];
+
+        $iaPlayer = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
 
         $nbrGalaxy = $em->getRepository('App:Galaxy')->findBy(['server' => $server]);
         $nbrSector = 1;
         $nbrPlanets = 0;
-        $galaxy = new Galaxy();
-        $galaxy->setPosition(count($nbrGalaxy) + 1);
-        $galaxy->setServer($server);
+        $galaxy = new Galaxy($server, count($nbrGalaxy) + 1, );
         $em->persist($galaxy);
-        /*$salon = new Salon();
-        $salon->setName('Public');
-        $em->persist($salon);
-        $em->flush();*/
-        $iaPlayer = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
-
-        /*if ($iaPlayer == null) {
-            $iaPlayer = new User();
-            $now = new DateTime();
-            $iaPlayer->setUsername('Zombies');
-            $iaPlayer->setEmail('support@areauniverse.eu');
-            $iaPlayer->setCreatedAt($now);
-            $iaPlayer->setPassword(password_hash('ViolGratuit2019', PASSWORD_BCRYPT));
-            $iaPlayer->setBitcoin(100);
-            $iaPlayer->setImageName('hydre.png');
-            $rank = new Rank();
-            $em->persist($rank);
-            $iaPlayer->setRank($rank);
-            $em->persist($iaPlayer);
-
-            $iaSalon = $em->getRepository('App:Salon')->find(['id' => 1]);
-            $iaSalon->addUser($iaPlayer);
-            $em->flush();
-        }*/
 
         while ($nbrSector <= 100) {
             $nbrPlanet = 1;
-            $sector = new Sector();
-            $sector->setGalaxy($galaxy);
-            $sector->setPosition($nbrSector);
+            $alreadyBot1 = 0;
+            $alreadyBot2 = 0;
+            $sector = new Sector($galaxy, $nbrSector);
             $em->persist($sector);
             while ($nbrPlanet <= 25) {
-                if (($nbrSector == 23 || $nbrSector == 28 || $nbrSector == 73 || $nbrSector == 78) && $nbrPlanet == 13) {
-                    $planet = new Planet();
-                    $planet->setMerchant(true);
-                    $planet->setGround(4000);
-                    $planet->setSky(800);
-                    $planet->setImageName('merchant.png');
-                    $planet->setName('Marchands');
-                    $planet->setSector($sector);
-                    $planet->setPosition($nbrPlanet);
-                    if ($server->getPvp(1)) {
-                        $fleet = new Fleet();
-                        $fleet->setHunterWar(200);
-                        $fleet->setCorvetWar(25);
-                        $fleet->setFregatePlasma(2);
-                        $fleet->setDestroyer(1);
-                        $fleet->setUser($iaPlayer);
-                        $fleet->setPlanet($planet);
-                        $fleet->setAttack(1);
-                        $fleet->setName('Horde');
-                        $fleet->setSignature($fleet->getNbrSignatures());
-                        $em->persist($fleet);
-                    }
+                if ($nbrPlanet == 13) {
+                    $planet = new Planet(null, 'Soleil', 0, 0, $nbrPlanet, $sector, $imageSun[rand(0, 5)],  0, null,true, false);
                 } else {
-                    if (rand(1, 20) < 6) {
-                        $planet = new Planet();
-                        $planet->setEmpty(true);
-                        $planet->setName('Vide');
-                        $planet->setSector($sector);
-                        $planet->setPosition($nbrPlanet);
-                    } elseif (rand(0, 101) < 2) {
-                        $planet = new Planet();
-                        $planet->setCdr(true);
-                        $planet->setImageName('cdr.png');
-                        $planet->setName('Astéroïdes');
-                        $planet->setSector($sector);
-                        $planet->setPosition($nbrPlanet);
-                        if ($server->getPvp(1)) {
+                    if ((in_array($nbrSector, $planetPve)) && (($alreadyBot1 == false && rand(0, 8) == 1) || $alreadyBot1 == false && $nbrPlanet == 25)) {
+                        $alreadyBot1 = true;
+                        if (in_array($nbrSector, $planetPveOne)) {
+                            $planet = new Planet(null, 'Fort Marchand I', 500, 150, $nbrPlanet, $sector, 'merchant.png',  1, null, false, false);
                             $fleet = new Fleet();
-                            $fleet->setHunterWar(rand(50, 3000));
-                            $fleet->setCorvetWar(rand(50, 200));
-                            $fleet->setFregatePlasma(rand(20, 100));
-                            $fleet->setDestroyer(rand(1, 50));
-                            $fleet->setUser($iaPlayer);
+                            $fleet->setHunterWar(200);
+                            $fleet->setCorvetWar(25);
+                            $fleet->setFregatePlasma(2);
+                            $fleet->setDestroyer(1);
+                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setPlanet($planet);
+                            $fleet->setAttack(1);
+                            $fleet->setName('Horde');
+                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $em->persist($fleet);
+                        } elseif (in_array($nbrSector, $planetPveTwo)) {
+                            $planet = new Planet(null, 'Fort Marchand II', 1000, 300, $nbrPlanet, $sector, 'merchant.png',  2, null, false, false);
+                            $fleet = new Fleet();
+                            $fleet->setHunterWar(2000);
+                            $fleet->setCorvetWar(250);
+                            $fleet->setFregatePlasma(20);
+                            $fleet->setDestroyer(10);
+                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setPlanet($planet);
+                            $fleet->setAttack(1);
+                            $fleet->setName('Horde');
+                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $em->persist($fleet);
+                        } elseif (in_array($nbrSector, $planetPveThree)) {
+                            $planet = new Planet(null, 'Fort Marchand III', 1500, 450, $nbrPlanet, $sector, 'merchant.png',  3, null, false, false);
+                            $fleet = new Fleet();
+                            $fleet->setHunterWar(20000);
+                            $fleet->setCorvetWar(2500);
+                            $fleet->setFregatePlasma(200);
+                            $fleet->setDestroyer(100);
+                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setPlanet($planet);
+                            $fleet->setAttack(1);
+                            $fleet->setName('Horde');
+                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $em->persist($fleet);
+                        } elseif (in_array($nbrSector, $planetPveFour)) {
+                            $planet = new Planet(null, 'Fort Marchand IV', 3000, 600, $nbrPlanet, $sector, 'merchant.png',  4, null, false, false);
+                            $fleet = new Fleet();
+                            $fleet->setHunterWar(200000);
+                            $fleet->setCorvetWar(25000);
+                            $fleet->setFregatePlasma(2000);
+                            $fleet->setDestroyer(1000);
+                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setPlanet($planet);
+                            $fleet->setAttack(1);
+                            $fleet->setName('Horde');
+                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $em->persist($fleet);
+                        } else {
+                            $planet = new Planet(null, 'Fort Marchand V', 4000, 800, $nbrPlanet, $sector, 'merchant.png',  5, null, false, false);
+                            $fleet = new Fleet();
+                            $fleet->setHunterWar(2000000);
+                            $fleet->setCorvetWar(250000);
+                            $fleet->setFregatePlasma(20000);
+                            $fleet->setDestroyer(10000);
+                            $fleet->setCharacter($iaPlayer);
                             $fleet->setPlanet($planet);
                             $fleet->setAttack(1);
                             $fleet->setName('Horde');
                             $fleet->setSignature($fleet->getNbrSignatures());
                             $em->persist($fleet);
                         }
-                    } else {
-                        $nbrPlanets++;
-                        $planet = new Planet();
-
-                        $planet->setImageName($image[rand(0, 32)]);
-                        $planet->setSector($sector);
-                        $planet->setPosition($nbrPlanet);
-                        if (($nbrSector >= 1 && $nbrSector <= 9) || ($nbrSector >= 92 && $nbrSector <= 99) || ($nbrSector % 10 == 0 || $nbrSector % 10 == 1)) {
-                            if ($nbrPlanet == 4 || $nbrPlanet == 6 || $nbrPlanet == 15 || $nbrPlanet == 17 || $nbrPlanet == 25) {
-                                $planet->setGround(25);
-                                $planet->setSky(5);
-                            } else {
-                                $planet->setGround(rand(80, 95));
-                                $planet->setSky(rand(18, 21));
-                            }
-                        } elseif ($nbrSector == 45 || $nbrSector == 46 || $nbrSector == 55 || $nbrSector == 56) {
-                            $planet->setGround(rand(140, 180));
-                            $planet->setSky(rand(30, 50));
+                    } elseif ((in_array($nbrSector, $sectorPositions)) && (($alreadyBot2 == false && rand(0, 8) == 1) || $alreadyBot2 == false && $nbrPlanet == 24)) {
+                        $alreadyBot2 = true;
+                        $fleetBot = new Fleet();
+                        if (in_array($nbrSector, $iaLevelOn)) {
+                            $planet = new Planet($iaPlayer, 'Fort Hydra I', 0, 0, $nbrPlanet, $sector, 'bot_one.gif',  0, null, false, false);
+                            $fleetBot->setHunterWar(rand(5, 200));
+                        } elseif (in_array($nbrSector, $iaLevelTwo)) {
+                            $planet = new Planet($iaPlayer, 'Fort Hydra II', 0, 0, $nbrPlanet, $sector, 'bot_two.gif',  0, null, false, false);
+                            $fleetBot->setHunterWar(rand(5000, 20000));
+                            $fleetBot->setCorvetWar(rand(500, 1500));
+                        } elseif (in_array($nbrSector, $iaLevelThree)) {
+                            $planet = new Planet($iaPlayer, 'Fort Hydra III', 0, 0, $nbrPlanet, $sector, 'bot_three.gif',  0, null, false, false);
+                            $fleetBot->setHunterWar(rand(80000, 250000));
+                            $fleetBot->setCorvetWar(rand(40000, 80000));
+                            $fleetBot->setFregatePlasma(rand(20000, 40000));
+                        } elseif (in_array($nbrSector, $iaLevelFour)) {
+                            $planet = new Planet($iaPlayer, 'Fort Hydra IV', 0, 0, $nbrPlanet, $sector, 'bot_four.gif',  0, null, false, false);
+                            $fleetBot->setHunterWar(rand(650000, 1250000));
+                            $fleetBot->setCorvetWar(rand(180000, 380000));
+                            $fleetBot->setFregatePlasma(rand(60000, 80000));
+                            $fleetBot->setDestroyer(rand(10000, 20000));
                         } else {
-                            $planet->setGround(rand(100, 115));
-                            $planet->setSky(rand(25, 29));
+                            $planet = new Planet($iaPlayer, 'Fort Hydra V', 0, 0, $nbrPlanet, $sector, 'bot_five.gif',  0, null, false, false);
+                            $fleetBot->setHunterWar(rand(1250000, 3250000));
+                            $fleetBot->setCorvetWar(rand(380000, 780000));
+                            $fleetBot->setFregatePlasma(rand(80000, 120000));
+                            $fleetBot->setDestroyer(rand(50000, 90000));
+                        }
+                        $iaPlayer->addPlanet($planet);
+                        $fleetBot->setCharacter($iaPlayer);
+                        $fleetBot->setPlanet($planet);
+                        $fleetBot->setAttack(1);
+                        $fleetBot->setName('Horde');
+                        $fleetBot->setSignature($fleetBot->getNbrSignatures());
+                        $em->persist($fleetBot);
+                    } else {
+                        if (rand(1, 19) < 6) {
+                            $planet = new Planet(null, 'Vide', 0, 0, $nbrPlanet, $sector, null,  0, null,false, true);
+                        } elseif (rand(0, 65) < 2) {
+                            $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_niobium.png',  0, 'niobium', false, false);
+                            $fleet = new Fleet();
+                            $fleet->setHunterWar(rand(50, 3000));
+                            $fleet->setCorvetWar(rand(50, 200));
+                            $fleet->setFregatePlasma(rand(20, 100));
+                            $fleet->setDestroyer(rand(1, 50));
+                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setPlanet($planet);
+                            $fleet->setAttack(1);
+                            $fleet->setName('Horde');
+                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $em->persist($fleet);
+                        } elseif (rand(0, 70) < 2) {
+                            $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_water.png',  0, 'water', false, false);
+                            $fleet = new Fleet();
+                            $fleet->setHunterWar(rand(50, 3000));
+                            $fleet->setCorvetWar(rand(50, 200));
+                            $fleet->setFregatePlasma(rand(20, 100));
+                            $fleet->setDestroyer(rand(1, 50));
+                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setPlanet($planet);
+                            $fleet->setAttack(1);
+                            $fleet->setName('Horde');
+                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $em->persist($fleet);
+                        } elseif (rand(0, 90) < 2) {
+                            $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_uranium.png',  0, 'uranium', false, false);
+                            $fleet = new Fleet();
+                            $fleet->setHunterWar(rand(50, 3000));
+                            $fleet->setCorvetWar(rand(50, 200));
+                            $fleet->setFregatePlasma(rand(20, 100));
+                            $fleet->setDestroyer(rand(1, 50));
+                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setPlanet($planet);
+                            $fleet->setAttack(1);
+                            $fleet->setName('Horde');
+                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $em->persist($fleet);
+                        } else {
+                            $nbrPlanets++;
+                            if (($nbrSector >= 1 && $nbrSector <= 9) || ($nbrSector >= 92 && $nbrSector <= 99) || ($nbrSector % 10 == 0 || $nbrSector % 10 == 1)) {
+                                if ($nbrPlanet == 4 || $nbrPlanet == 6 || $nbrPlanet == 15 || $nbrPlanet == 17 || $nbrPlanet == 25) {
+                                    $planet = new Planet(null, 'Inhabitée', 25, 5, $nbrPlanet, $sector, $image[rand(0, 32)],  0, null, false, false);
+                                } else {
+                                    $planet = new Planet(null, 'Inhabitée', rand(80, 95), rand(18, 21), $nbrPlanet, $sector, $image[rand(0, 32)],  0, null, false, false);
+                                }
+                            } elseif ($nbrSector == 45 || $nbrSector == 46 || $nbrSector == 55 || $nbrSector == 56) {
+                                $planet = new Planet(null, 'Inhabitée', rand(140, 180), rand(30, 50), $nbrPlanet, $sector, $image[rand(0, 32)],  0, null, false, false);
+                            } else {
+                                $planet = new Planet(null, 'Inhabitée', rand(100, 115), rand(25, 29), $nbrPlanet, $sector, $image[rand(0, 32)],  0, null, false, false);
+                            }
                         }
                     }
                 }
@@ -156,71 +339,40 @@ class ServerController extends AbstractController
         }
         $em->flush();
 
-        if ($server->getPvp(1)) {
-            $iaPlanet = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.sector', 's')
-                ->join('s.galaxy', 'g')
-                ->where('p.user is null')
-                ->andWhere('p.ground > 70')
-                ->andWhere('p.sky > 15')
-                ->andWhere('p.ground < 86')
-                ->andWhere('p.sky < 21')
-                ->andWhere('g.position = :galaxy')
-                ->setParameters(['galaxy' => count($nbrGalaxy) + 1])
-                ->setMaxResults(1)
-                ->getQuery()
-                ->getOneOrNullResult();
+        $putFleets = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->join('p.sector', 's')
+            ->join('s.galaxy', 'g')
+            ->andWhere('s.position in (:pos)')
+            ->andWhere('g.position = :galaxy')
+            ->setParameters(['pos' => [45, 46, 55, 56], 'galaxy' => count($nbrGalaxy) + 1])
+            ->getQuery()
+            ->getResult();
 
-            $iaPlanet->setUser($iaPlayer);
-            $iaPlanet->setWorker(498500000);
-            $iaPlanet->setWorkerMax(498500000);
-            $iaPlanet->setSoldier(100010000);
-            $iaPlanet->setSoldierMax(100010000);
-            $iaPlanet->setTank(50000);
-            $iaPlanet->setBunker(50000);
-            $iaPlanet->setMetropole(744);
-            $iaPlanet->setGroundPlace(5744);
-            $iaPlanet->setGround(6000);
-            $iaPlanet->setSkyPlace(744);
-            $iaPlanet->setSky(1000);
-            $iaPlanet->setImageName('hydra_planet.png');
-            $iaPlanet->setName('Fort Hydra');
-            $iaPlayer->addPlanet($iaPlanet);
-
-            $putFleets = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.sector', 's')
-                ->join('s.galaxy', 'g')
-                ->andWhere('s.position in (:pos)')
-                ->andWhere('g.position = :galaxy')
-                ->setParameters(['pos' => [45, 46, 55, 56], 'galaxy' => count($nbrGalaxy) + 1])
-                ->getQuery()
-                ->getResult();
-
-            foreach ($putFleets as $putFleet) {
-                $fleet = new Fleet();
-                $fleet->setHunterWar(rand(80000, 250000));
-                $fleet->setCorvetWar(rand(40000, 80000));
-                $fleet->setFregatePlasma(rand(20000, 40000));
-                $fleet->setDestroyer(rand(10000, 20000));
-                $fleet->setUser($iaPlayer);
-                $fleet->setPlanet($putFleet);
-                $fleet->setAttack(1);
-                $fleet->setName('Horde');
-                $fleet->setSignature($fleet->getNbrSignatures());
-                $em->persist($fleet);
-            }
-            $em->flush();
+        foreach ($putFleets as $putFleet) {
+            $fleet = new Fleet();
+            $fleet->setHunterWar(rand(1250000, 3250000));
+            $fleet->setCorvetWar(rand(380000, 780000));
+            $fleet->setFregatePlasma(rand(80000, 120000));
+            $fleet->setDestroyer(rand(50000, 90000));
+            $fleet->setCharacter($iaPlayer);
+            $fleet->setPlanet($putFleet);
+            $fleet->setAttack(1);
+            $fleet->setName('Horde');
+            $fleet->setSignature($fleet->getNbrSignatures());
+            $em->persist($fleet);
         }
+        $em->flush();
 
-        return $this->redirectToRoute('administration');
+        return $this->redirectToRoute('server_select');
     }
 
     /**
-     * @Route("/creation-univers-petit/{serverId}", name="create_little", requirements={"serverId"="\d+"})
+     * @Route("/creation-univers-petit/{server}", name="create_little", requirements={"server"="\d+"})
+     * @param Server $server
+     * @return RedirectResponse
      */
-    public function createServerLittleAction($serverId)
+    public function createServerLittleAction(Server $server)
     {
         $em = $this->getDoctrine()->getManager();
         $image = [
@@ -233,19 +385,14 @@ class ServerController extends AbstractController
         ];
         $x = 1;
         while($x < 6) {
-            $server = $em->getRepository('App:Server')->find(['id' => $serverId]);
             $nbrSector = 1;
             $nbrPlanets = 0;
-            $galaxy = new Galaxy();
-            $galaxy->setPosition($x);
-            $galaxy->setServer($server);
+            $galaxy = new Galaxy($server, $x);
             $em->persist($galaxy);
 
             while ($nbrSector <= 16) {
                 $nbrPlanet = 1;
-                $sector = new Sector();
-                $sector->setGalaxy($galaxy);
-                $sector->setPosition($nbrSector);
+                $sector = new Sector($galaxy, $nbrSector);
                 $em->persist($sector);
                 while ($nbrPlanet <= 25) {
                     if (($nbrSector == 7 || $nbrSector == 10) && $nbrPlanet == 13) {
@@ -304,17 +451,19 @@ class ServerController extends AbstractController
             $x = $x + 1;
         }
 
-        return $this->redirectToRoute('administration');
+        return $this->redirectToRoute('server_select');
     }
 
     /**
-     * @Route("/destruction-univers/{serverId}", name="destroy_server", requirements={"serverId"="\d+"})
+     * @Route("/destruction-univers/{server}", name="destroy_server", requirements={"server"="\d+"})
+     * @param Server $server
+     * @return RedirectResponse
      */
-    public function destroyServerAction($serverId)
+    public function destroyServerAction(Server $server)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $users = $em->getRepository('App:User')->findAll();
+        $characters = $em->getRepository('App:Character')->findAll();
 
         $salon = $em->getRepository('App:Salon')
             ->createQueryBuilder('s')
@@ -323,80 +472,80 @@ class ServerController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        foreach ($users as $user) {
-            $ship = $user->getShip();
-            if ($ship && $user->getId() != 1) {
-                $user->setShip(null);
+        foreach ($characters as $character) {
+            $ship = $character->getShip();
+            if ($ship && $character->getId() != 1) {
+                $character->setShip(null);
                 $em->remove($ship);
             }
-            $user->setBitcoin(500);
-            $user->setAlly(null);
-            $user->setSearch(null);
-            if ($user->getRank()) {
-                $em->remove($user->getRank());
+            $character->setBitcoin(5000);
+            $character->setAlly(null);
+            $character->setSearch(null);
+            if ($character->getRank()) {
+                $em->remove($character->getRank());
             }
-            if ($user->getId() != 1) {
-                $user->setBot(0);
+            if ($character->getId() != 1) {
+                $character->setBot(0);
             }
-            $user->setRank(null);
-            $user->setGrade(null);
-            $user->setJoinAllyAt(null);
-            $user->setAllyBan(null);
-            $user->setScientistProduction(1);
-            $user->setSearchAt(null);
-            $user->setPlasma(0);
-            $user->setLaser(0);
-            $user->setMissile(0);
-            $user->setArmement(0);
-            $user->setRecycleur(0);
-            $user->setCargo(0);
-            $user->setTerraformation(0);
-            $user->setDemography(0);
-            $user->setUtility(0);
-            $user->setBarge(0);
-            $user->setHyperespace(0);
-            $user->setDiscipline(0);
-            $user->setHeavyShip(0);
-            $user->setLightShip(0);
-            $user->setIndustry(0);
-            $user->setOnde(0);
-            $user->setHyperespace(0);
-            $user->setDiscipline(0);
-            $user->setBarbed(0);
-            $user->setTank(0);
-            $user->setExpansion(0);
-            $user->setPoliticArmement(0);
-            $user->setPoliticCostScientist(0);
-            $user->setPoliticArmor(0);
-            $user->setPoliticBarge(0);
-            $user->setPoliticCargo(0);
-            $user->setPoliticColonisation(0);
-            $user->setPoliticCostSoldier(0);
-            $user->setPoliticCostTank(0);
-            $user->setPoliticInvade(0);
-            $user->setPoliticMerchant(0);
-            $user->setPoliticPdg(0);
-            $user->setPoliticProd(0);
-            $user->setPoliticRecycleur(0);
-            $user->setPoliticSearch(0);
-            $user->setPoliticSoldierAtt(0);
-            $user->setPoliticSoldierSale(0);
-            $user->setPoliticTankDef(0);
-            $user->setPoliticWorker(0);
-            $user->setPoliticWorkerDef(0);
-            foreach ($user->getProposals() as $proposal) {
-                $user->removeProposal($proposal);
+            $character->setRank(null);
+            $character->setGrade(null);
+            $character->setJoinAllyAt(null);
+            $character->setAllyBan(null);
+            $character->setScientistProduction(1);
+            $character->setSearchAt(null);
+            $character->setPlasma(0);
+            $character->setLaser(0);
+            $character->setMissile(0);
+            $character->setArmement(0);
+            $character->setRecycleur(0);
+            $character->setCargo(0);
+            $character->setTerraformation(0);
+            $character->setDemography(0);
+            $character->setUtility(0);
+            $character->setBarge(0);
+            $character->setHyperespace(0);
+            $character->setDiscipline(0);
+            $character->setHeavyShip(0);
+            $character->setLightShip(0);
+            $character->setIndustry(0);
+            $character->setOnde(0);
+            $character->setHyperespace(0);
+            $character->setDiscipline(0);
+            $character->setBarbed(0);
+            $character->setTank(0);
+            $character->setExpansion(0);
+            $character->setPoliticArmement(0);
+            $character->setPoliticCostScientist(0);
+            $character->setPoliticArmor(0);
+            $character->setPoliticBarge(0);
+            $character->setPoliticCargo(0);
+            $character->setPoliticColonisation(0);
+            $character->setPoliticCostSoldier(0);
+            $character->setPoliticCostTank(0);
+            $character->setPoliticInvade(0);
+            $character->setPoliticMerchant(0);
+            $character->setPoliticPdg(0);
+            $character->setPoliticProd(0);
+            $character->setPoliticRecycleur(0);
+            $character->setPoliticSearch(0);
+            $character->setPoliticSoldierAtt(0);
+            $character->setPoliticSoldierSale(0);
+            $character->setPoliticTankDef(0);
+            $character->setPoliticWorker(0);
+            $character->setPoliticWorkerDef(0);
+            foreach ($character->getProposals() as $proposal) {
+                $character->removeProposal($proposal);
             }
-            foreach ($user->getFleets() as $fleet) {
+            foreach ($character->getFleets() as $fleet) {
                 if ($fleet->getDestination()) {
                     $em->remove($fleet->getDestination());
                 }
-                $user->removeFleet($fleet);
+                $character->removeFleet($fleet);
             }
-            foreach ($user->getPlanets() as $planet) {
-                $user->removePlanet($planet);
+            foreach ($character->getPlanets() as $planet) {
+                $character->removePlanet($planet);
             }
-            $salon->removeUser($user);
+            $salon->removeCharacter($character);
         }
 
         $sContents = $em->getRepository('App:S_Content')->findAll();
@@ -568,35 +717,23 @@ class ServerController extends AbstractController
         foreach ($views as $view) {
             $em->remove($view);
         }
+        $em->flush();
 
-        //$server = $em->getRepository('App:Server')->find(['id' => $serverId]);
-        //$em->remove($server);
-
-        $usserss = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->where('u.email LIKE :fake')
-            ->setParameters(['fake' => '%fake.com%'])
-            ->getQuery()
-            ->getResult();
-        foreach ($usserss as $ussers) {
-            foreach ($ussers->getFleetLists() as $fleetList) {
-                $em->remove($fleetList);
-            }
-            $em->remove($ussers);
-        }
+        $em->remove($server);
 
         $em->flush();
 
-        return $this->redirectToRoute('administration');
+        return $this->redirectToRoute('server_select');
     }
 
     /**
      * @Route("/destruction-galaxy/{galaxyId}", name="destroy_galaxy", requirements={"galaxyId"="\d+"})
+     * @param Galaxy $galaxy
+     * @return RedirectResponse
      */
-    public function destroyGalaxyAction($galaxyId)
+    public function destroyGalaxyAction(Galaxy $galaxy)
     {
         $em = $this->getDoctrine()->getManager();
-        $galaxy = $em->getRepository('App:Galaxy')->find(['id' => $galaxyId]);
 
         foreach ($galaxy->getSectors() as $sector) {
             foreach ($sector->getPlanets() as $planet) {
@@ -621,7 +758,7 @@ class ServerController extends AbstractController
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
             ->where('g.id = :galaxyId')
-            ->setParameters(['galaxyId' => $galaxyId])
+            ->setParameters(['galaxyId' => $galaxy->getId()])
             ->getQuery()
             ->getResult();
 
@@ -634,7 +771,7 @@ class ServerController extends AbstractController
         $em->remove($galaxy);
         $em->flush();
 
-        return $this->redirectToRoute('administration');
+        return $this->redirectToRoute('server_select');
     }
 
     /**
@@ -670,78 +807,82 @@ class ServerController extends AbstractController
             $em->remove($fleet);
         }
 
-        $users = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->join('u.planets', 'p')
+        $characters = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->join('c.planets', 'p')
             ->where('p.id is null')
             ->getQuery()
             ->getResult();
 
-        foreach ($users as $user) {
-            $user->setGameOver(1);
+        foreach ($characters as $character) {
+            $character->setGameOver(1);
         }
         $em->flush();
 
-        return $this->redirectToRoute('administration');
+        return $this->redirectToRoute('server_select');
     }
 
     /**
-     * @Route("/activer-connexion/{serverId}", name="active_server", requirements={"serverId"="\d+"})
+     * @Route("/activer-connexion/{server}", name="active_server", requirements={"server"="\d+"})
+     * @param Server $server
+     * @return RedirectResponse
      */
-    public function activeServerAction($serverId)
+    public function activeServerAction(Server $server)
     {
         $em = $this->getDoctrine()->getManager();
-        $server = $em->getRepository('App:Server')->find(['id' => $serverId]);
 
         $server->setOpen(1);
 
         $em->flush();
 
-        return $this->redirectToRoute('administration');
+        return $this->redirectToRoute('server_select');
     }
 
     /**
-     * @Route("/desactiver-connexion/{serverId}", name="deactive_server", requirements={"serverId"="\d+"})
+     * @Route("/desactiver-connexion/{server}", name="deactive_server", requirements={"server"="\d+"})
+     * @param Server $server
+     * @return RedirectResponse
      */
-    public function deactivateServerAction($serverId)
+    public function deactivateServerAction(Server $server)
     {
         $em = $this->getDoctrine()->getManager();
-        $server = $em->getRepository('App:Server')->find(['id' => $serverId]);
 
         $server->setOpen(0);
 
         $em->flush();
 
-        return $this->redirectToRoute('administration');
+        return $this->redirectToRoute('server_select');
     }
 
     /**
-     * @Route("/activer-pve/{serverId}", name="pve_server", requirements={"serverId"="\d+"})
+     * @Route("/activer-pve/{server}", name="pve_server", requirements={"server"="\d+"})
+     * @param Server $server
+     * @return RedirectResponse
      */
-    public function PveAction($serverId)
+    public function PveAction(Server $server)
     {
         $em = $this->getDoctrine()->getManager();
-        $server = $em->getRepository('App:Server')->find(['id' => $serverId]);
 
         $server->setPvp(0);
 
         $em->flush();
 
-        return $this->redirectToRoute('administration');
+        return $this->redirectToRoute('server_select');
     }
 
     /**
-     * @Route("/activer-pvp/{serverId}", name="pvp_server", requirements={"serverId"="\d+"})
+     * @Route("/activer-pvp/{server}", name="pvp_server", requirements={"server"="\d+"})
+     * @param Server $server
+     * @return RedirectResponse
      */
-    public function PvpAction($serverId)
+    public function PvpAction(Server $server)
     {
         $em = $this->getDoctrine()->getManager();
-        $server = $em->getRepository('App:Server')->find(['id' => $serverId]);
 
         $server->setPvp(1);
 
         $em->flush();
 
-        return $this->redirectToRoute('administration');
+        return $this->redirectToRoute('server_select');
     }
 }

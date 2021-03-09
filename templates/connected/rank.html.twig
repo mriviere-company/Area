@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="front-block">
-        {% if app.user.getStats()|length > 7 %}
+        {% if character.getStats()|length > 7 %}
             <div class="front-block-second">
                 {% set points = [] %}
                 {% set pdg = [] %}
@@ -17,7 +17,7 @@
                     {% set otherPdg = otherPdg|merge([(otherPoint['allPdg'] / otherPoint['numbers'])|round]) %}
                     {% set otherAllPoints = otherAllPoints|merge([(otherPoint['allPoint'] / otherPoint['numbers'])|round]) %}
                 {% endfor %}
-                {% for stat in app.user.getStats() %}
+                {% for stat in character.getStats() %}
                     {% set pdg = pdg|merge([stat.getPdg()|round]) %}
                     {% set points = points|merge([stat.getPoints()|round]) %}
                     {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
@@ -53,31 +53,59 @@
             </thead>
             <tbody>
             {% set x = 1 %}
-            {% for user in users %}
-                <tr{% if app.user.getId() == user.id %} class="currentBack"{% elseif app.user.getAlly() and app.user.getAlly().getId() == user.alliance %} class="availableBack"{% elseif app.user.getAlly() and user.sigle in app.user.getAllyEnnemyTag() and user.sigle is not null %} class="warningBack"{% endif %}>
+            {% for allCharacter in allCharacters %}
+                <tr{% if character.getId() == allCharacter.id %} class="currentBack"{% elseif ally and ally.getId() == allCharacter.alliance %} class="availableBack"{% elseif ally and allCharacter.sigle in character.getAllyEnnemyTag() and allCharacter.sigle is not null %} class="warningBack"{% endif %}>
                     <td width="100px" class="tab-cells-name p-2">
-                        {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> <span class="float-left ml-3">{{ x }}</span>{% else %}<div class="glyphicon glyphicon-star" hidden></div> <span class="float-left ml-3">{{ x }}</span>{% endif %}{% if user.position > user.oldPosition %}<span class="rank-bad-border text-rouge float-right">&#8595 {{ user.position - user.oldPosition }}</span>{% elseif user.position < user.oldPosition %}<span class="rank-good-border text-vert float-right">&#8593 {{ user.oldPosition - user.position }}</span>{% else %}<span class="rank-bad-border float-right text-mini">&#x25cf</span>{% endif %}
+                        {% if x == 1 %}
+                            <div class="text-or glyphicon glyphicon-star"></div> <span
+                                class="float-left ml-3">{{ x }}</span>{% elseif x == 2 %}
+                            <div class="text-argent glyphicon glyphicon-star"></div> <span
+                                    class="float-left ml-3">{{ x }}</span>{% elseif x == 3 %}
+                            <div class="text-bronze glyphicon glyphicon-star"></div> <span
+                                    class="float-left ml-3">{{ x }}</span>{% else %}
+                            <div class="glyphicon glyphicon-star" hidden></div> <span
+                                    class="float-left ml-3">{{ x }}</span>{% endif %}{% if allCharacter.position > allCharacter.oldPosition %}
+                            <span class="rank-bad-border text-rouge float-right">
+                            &#8595 {{ allCharacter.position - allCharacter.oldPosition }}</span>{% elseif allCharacter.position < allCharacter.oldPosition %}
+                            <span class="rank-good-border text-vert float-right">
+                            &#8593 {{ allCharacter.oldPosition - allCharacter.position }}</span>{% else %}<span
+                                class="rank-bad-border float-right text-mini">&#x25cf</span>{% endif %}
                     </td>
                     <td class="tab-cells-name p-2 text-left">
-                        {% if user.imageName and x <= 12 %}
-                            <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ vich_uploader_asset(user, 'imageFile', 'App\\Entity\\User') }}">
+                        {% if allCharacter.imageName and x <= 12 %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15"
+                                 src="{{ vich_uploader_asset(allCharacter, 'imageFile', 'App\\Entity\\Character') }}">
                         {% endif %}
-                        {% if user.alliance %}<span><a data-toggle="modal" data-target="#allyModal"  href="{{ path('ally_profil_modal', {'allyUser': user.alliance, 'usePlanet': usePlanet.getId()}) }}">[{{ user.sigle }}]</a></span> {% endif %}<span><a data-toggle="modal" data-target="#userModal"  href="{{ path('user_profil_modal', {'userPlanet': user.id, 'usePlanet': usePlanet.getId()}) }}">{{ user.username }}</a>{% if user.politic == 'democrat' %}<div class="ml-2 text-vert glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="top" title="{{ 'democrat'|trans }}"></div>{% elseif user.politic == 'communism' %}<div class="ml-2 text-rouge glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="top" title="{{ 'communism'|trans }}"></div>{% elseif user.politic == 'fascism' %}<div class="ml-2 text-blanc glyphicon glyphicon-flash" data-toggle="tooltip" data-placement="top" title="{{ 'fascism'|trans }}"></div>{% endif %}</span>
+                        {% if allCharacter.alliance %}<span><a data-toggle="modal" data-target="#allyModal"
+                                                            href="{{ path('ally_profil_modal', {'allyCharacter': allCharacter.alliance, 'usePlanet': usePlanet.getId()}) }}">[{{ allCharacter.sigle }}]</a>
+                        </span> {% endif %}<span><a data-toggle="modal" data-target="#userModal"
+                                                    href="{{ path('user_profil_modal', {'characterProfil': allCharacter.id, 'usePlanet': usePlanet.getId()}) }}">{{ allCharacter.username }}</a>{% if allCharacter.politic == 'democrat' %}<div
+                            class="ml-2 text-vert glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="top"
+                            title="{{ 'democrat'|trans }}"></div>{% elseif allCharacter.politic == 'communism' %}<div
+                        class="ml-2 text-rouge glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="top"
+                        title="{{ 'communism'|trans }}"></div>{% elseif allCharacter.politic == 'fascism' %}<div
+                        class="ml-2 text-blanc glyphicon glyphicon-flash" data-toggle="tooltip" data-placement="top"
+                        title="{{ 'fascism'|trans }}"></div>{% endif %}</span>
                     </td>
                     <td class="tab-cells-name p-2">
-                        {% if app.user.getId() == user.id %}
-                            {{ user.planets|number_format }}
-                        {% elseif user.politic == 'communism' or user.politic == 'fascism' %}
+                        {% if character.getId() == allCharacter.id %}
+                            {{ allCharacter.planets|number_format }}
+                        {% elseif allCharacter.politic == 'communism' or allCharacter.politic == 'fascism' %}
                             ??
                         {% else %}
-                            {{ user.planets|number_format }}
+                            {{ allCharacter.planets|number_format }}
                         {% endif %}
                     </td>
                     <td class="tab-cells-name p-2">
-                        {{ user.point|number_format }}{% if user.point > user.oldPoint %}<span class="rank-good-border text-vert">+{{ (user.point - user.oldPoint)|number_format }}</span>{% elseif user.point < user.oldPoint %}<span class="rank-bad-border text-rouge">-{{ (user.oldPoint - user.point)|number_format }}</span>{% else %}<span class="rank-bad-border text-mini">&#x25cf</span>{% endif %}
+                        {{ allCharacter.point|number_format }}{% if allCharacter.point > allCharacter.oldPoint %}<span
+                                class="rank-good-border text-vert">
+                            +{{ (allCharacter.point - allCharacter.oldPoint)|number_format }}</span>{% elseif allCharacter.point < allCharacter.oldPoint %}
+                            <span class="rank-bad-border text-rouge">
+                            -{{ (allCharacter.oldPoint - allCharacter.point)|number_format }}</span>{% else %}<span
+                                class="rank-bad-border text-mini">&#x25cf</span>{% endif %}
                     </td>
                     <td class="tab-cells-name p-2">
-                        {{ user.warPoint|number_format }}
+                        {{ allCharacter.warPoint|number_format }}
                     </td>
                 </tr>
                 {% set x = x + 1 %}
@@ -109,13 +137,15 @@
             </div>
         {% endif %}
     </div>
-    <div class="modal fade" id="allyModal" tabindex="-1" role="dialog" aria-labelledby="allyModalLabel" aria-hidden="true">
+    <div class="modal fade" id="allyModal" tabindex="-1" role="dialog" aria-labelledby="allyModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content special">
             </div>
         </div>
     </div>
-    <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content special">
             </div>

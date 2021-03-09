@@ -1,25 +1,15 @@
 security:
     encoders:
         App\Entity\User: auto
-        App\Entity\Admin:
-            algorithm: plaintext
         Symfony\Component\Security\Core\User\User: auto
     role_hierarchy:
-        ROLE_ADMIN: [ ROLE_MODO ]
+        ROLE_ADMIN: [ ROLE_MODO, ROLE_USER ]
     providers:
         chain_provider:
             chain:
-                providers: [my_in_memory_provider, my_entity_user_provider, my_entity_admin_provider]
-        my_in_memory_provider:
-            memory:
-                users:
-                    admin:
-                        password: $2y$13$btsT96GfhIp4Ze1v3u73/ey5cQUVUUSEzqw2MVLJKUCi3YNglRea6
-                        roles: [ROLE_ADMIN]
+                providers: [my_entity_user_provider]
         my_entity_user_provider:
             entity: { class: App\Entity\User}
-        my_entity_admin_provider:
-            entity: { class: App\Entity\Admin }
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -56,5 +46,4 @@ security:
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(HTTPS_SCHEMA)%' }
         - { path: ^/connect, roles: ROLE_USER, requires_channel: '%env(HTTPS_SCHEMA)%' }
-        - { path: ^/serveur, roles: ROLE_ADMIN, requires_channel: '%env(HTTPS_SCHEMA)%' }
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: '%env(HTTPS_SCHEMA)%' }

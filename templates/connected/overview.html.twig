@@ -6,8 +6,8 @@
 
 {% block body %}
     {% set cost = allTroops + allShips + allBuildings %}
-    {% if app.user.getAlly() %}
-        {% set totalgain = (allWorkers / 10) / ( 1 + app.user.getAlly().getTaxe() / 100) %}
+    {% if ally %}
+        {% set totalgain = (allWorkers / 10) / ( 1 + ally.getTaxe() / 100) %}
     {% else %}
         {% set totalgain = allWorkers / 10 %}
     {% endif %}
@@ -41,15 +41,15 @@
                 </tbody>
             </table>
         {% endif %}
-        {% if app.user.getAlly() %}
-            {% if app.user.getAlly().getDefcon() != 0 %}
+        {% if ally %}
+            {% if ally.getDefcon() != 0 %}
                 <table class="table table-striped borderOverview table-dark text-center">
                     <tbody>
                     <tr>
-                        <th class="tab-cells-name p-1{% if app.user.getAlly().getDefcon() == 1 %} back-vert{% elseif app.user.getAlly().getDefcon() == 2 %} back-orange{% else %} back-rouge{% endif %}">
+                        <th class="tab-cells-name p-1{% if ally.getDefcon() == 1 %} back-vert{% elseif ally.getDefcon() == 2 %} back-orange{% else %} back-rouge{% endif %}">
                             <div class="row">
                                 <div class="col-12 py-1">
-                                    {{ 'info.defcon'|trans|raw }} {{ app.user.getAlly().getDefcon()|trans }}
+                                    {{ 'info.defcon'|trans|raw }} {{ ally.getDefcon()|trans }}
                                 </div>
                             </div>
                         </th>
@@ -63,9 +63,9 @@
                 <tr>
                     <th class="tab-cells-name pt-4">
                         <div class="modify">
-                            {% if app.user %}
-                                {% if app.user.imageName %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.modify'|trans }}" height="64" width="64" src="{{ vich_uploader_asset(app.user, 'imageFile') }}">
+                            {% if character %}
+                                {% if character.imageName %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.modify'|trans }}" height="64" width="64" src="{{ vich_uploader_asset(character, 'imageFile') }}">
                                 {% else %}
                                     <img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.modify'|trans }}" height="64" width="64" src="{{ asset('img/avatar.png') }}">
                                 {% endif %}
@@ -78,29 +78,29 @@
                         {{ form_widget(form_image.imageFile) }}
                         {{ form_widget(form_image.sendForm) }}
                         {{ form_end(form_image) }}
-                        <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.level'|trans }}" class="text-center"><span class="glyphicon glyphicon-star text-orange"></span> {{ 'info.level'|trans }} {{ app.user.getLevel() }}</div>
+                        <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.level'|trans }}" class="text-center"><span class="glyphicon glyphicon-star text-orange"></span> {{ 'info.level'|trans }} {{ character.getLevel() }}</div>
                     </th>
                     <td class="center-cells text-left">
-                        <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.pseudo'|trans }}" class="my-2">{{ 'info.userName'|trans|raw }} <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'userPlanet': app.user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ app.user.getUsername() }}</a></span></div>
-                        <div class="my-2">{{ 'info.grade'|trans|raw }} {% if app.user.getAlly() %}{{ app.user.getGrade().getName() }}{% else %}{{ 'info.independant'|trans|raw }}{% endif %}</div>
-                        {% if app.user.getZombie() == 0 %}<div class="my-2">{{ 'info.rank'|trans|raw }} : <span><a href="{{ path('rank_user', {'usePlanet': usePlanet.getId()}) }}">{{ app.user.getRank().getPosition()|number_format }}</a></span> |  {% if app.user.getRank().getPoint() > app.user.getRank().getOldPoint() %}<span class="text-vert">+{{ (app.user.getRank().getPoint() - app.user.getRank().getOldPoint())|number_format }}</span>{% elseif app.user.getRank().getPoint() < app.user.getRank().getOldPoint() %}<span class="text-rouge">-{{ (app.user.getRank().getOldPoint() - app.user.getRank().getPoint())|number_format }}</span>{% else %}<span class="text-mini">&#x25cf</span>{% endif %}  ({% if app.user.getRank().getPosition() > app.user.getRank().getOldPosition() %}<span class="text-rouge">-{{ app.user.getRank().getPosition() - app.user.getRank().getOldPosition() }}</span>{% elseif app.user.getRank().getPosition() > app.user.getRank().getOldPosition() %}<span class="text-vert">+{{ app.user.getRank().getOldPosition() - app.user.getRank().getPosition() }}</span>{% else %}<span class="text-mini"> &#x25cf </span>{% endif %}) <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.rank'|trans }}"></span></div>{% endif %}
-                        <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxPlanets'|trans }}" class="my-2">{{ 'info.planet'|trans|raw }} {{ app.user.getColPlanets() }} / {{ app.user.getTerraformation() + 2 + app.user.getPoliticColonisation() + app.user.getPoliticInvade() }} <img alt="{{ 'image'|trans({},'front_global') }}" class="ml-2" height="15" src="{{ asset('img/planet9.png') }}"></div>
-                        {% if app.user.getAllMoon() > 0 %}<div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxMoon'|trans }}" class="my-2">{{ 'info.moon'|trans|raw }} {{ app.user.getAllMoon() }} <img alt="{{ 'image'|trans({},'front_global') }}" class="ml-2" height="15" src="{{ asset('img/moon1.png') }}"></div>{% endif %}
+                        <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.pseudo'|trans }}" class="my-2">{{ 'info.userName'|trans|raw }} <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'characterProfil': character.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ character.getUsername() }}</a></span></div>
+                        <div class="my-2">{{ 'info.grade'|trans|raw }} {% if ally %}{{ character.getGrade().getName() }}{% else %}{{ 'info.independant'|trans|raw }}{% endif %}</div>
+                        {% if character.getZombie() == 0 %}<div class="my-2">{{ 'info.rank'|trans|raw }} : <span><a href="{{ path('rank_user', {'usePlanet': usePlanet.getId()}) }}">{{ character.getRank().getPosition()|number_format }}</a></span> |  {% if character.getRank().getPoint() > character.getRank().getOldPoint() %}<span class="text-vert">+{{ (character.getRank().getPoint() - character.getRank().getOldPoint())|number_format }}</span>{% elseif character.getRank().getPoint() < character.getRank().getOldPoint() %}<span class="text-rouge">-{{ (character.getRank().getOldPoint() - character.getRank().getPoint())|number_format }}</span>{% else %}<span class="text-mini">&#x25cf</span>{% endif %}  ({% if character.getRank().getPosition() > character.getRank().getOldPosition() %}<span class="text-rouge">-{{ character.getRank().getPosition() - character.getRank().getOldPosition() }}</span>{% elseif character.getRank().getPosition() > character.getRank().getOldPosition() %}<span class="text-vert">+{{ character.getRank().getOldPosition() - character.getRank().getPosition() }}</span>{% else %}<span class="text-mini"> &#x25cf </span>{% endif %}) <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.rank'|trans }}"></span></div>{% endif %}
+                        <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxPlanets'|trans }}" class="my-2">{{ 'info.planet'|trans|raw }} {{ character.getColPlanets() }} / {{ character.getTerraformation() + 2 + character.getPoliticColonisation() + character.getPoliticInvade() }} <img alt="{{ 'image'|trans({},'front_global') }}" class="ml-2" height="15" src="{{ asset('img/planet9.png') }}"></div>
+                        {% if character.getAllMoon() > 0 %}<div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxMoon'|trans }}" class="my-2">{{ 'info.moon'|trans|raw }} {{ character.getAllMoon() }} <img alt="{{ 'image'|trans({},'front_global') }}" class="ml-2" height="15" src="{{ asset('img/moon1.png') }}"></div>{% endif %}
                     </td>
                     <td class="center-cells text-left">
-                        <div class="my-2">{{ 'info.niobium'|trans|raw }} <span class="text-vert">+{{ app.user.getAllNiobium()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/niobium.png') }}"> / h </div>
-                        <div class="my-2">{{ 'info.water'|trans|raw }} <span class="text-vert">+{{ app.user.getAllWater()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/water.png') }}"> / h </div>
+                        <div class="my-2">{{ 'info.niobium'|trans|raw }} <span class="text-vert">+{{ character.getAllNiobium()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/niobium.png') }}"> / h </div>
+                        <div class="my-2">{{ 'info.water'|trans|raw }} <span class="text-vert">+{{ character.getAllWater()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/water.png') }}"> / h </div>
                         <div class="my-2">{{ 'info.worker'|trans|raw }} <span class="text-vert">+{{ allWorkersProd|number_format }}</span>  <img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/worker.png') }}"> / h </div>
-                        <div class="my-2">{{ 'info.civil'|trans|raw }} {{ allWorkers|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/worker.png') }}"> {% if app.user.getAllScientist() > 0 %}<span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.scientists'|trans }}">{{ app.user.getAllScientist()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/scientist.png') }}"></span>{% endif %}</div>
-                        <div class="my-2">{{ 'info.soldier'|trans|raw }} <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.soldiers'|trans }}">{{ app.user.getAllSoldier()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/soldier.png') }}"></span>{% if app.user.getAllTank() > 0 %} et <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.tanks'|trans }}">{{ app.user.getAllTank()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/tanks.png') }}"></span></div>{% endif %}
+                        <div class="my-2">{{ 'info.civil'|trans|raw }} {{ allWorkers|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/worker.png') }}"> {% if character.getAllScientist() > 0 %}<span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.scientists'|trans }}">{{ character.getAllScientist()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/scientist.png') }}"></span>{% endif %}</div>
+                        <div class="my-2">{{ 'info.soldier'|trans|raw }} <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.soldiers'|trans }}">{{ character.getAllSoldier()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/soldier.png') }}"></span>{% if character.getAllTank() > 0 %} et <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.tanks'|trans }}">{{ character.getAllTank()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/tanks.png') }}"></span></div>{% endif %}
                     </td>
                     <td class="center-cells text-left">
-                        {% if app.user.getAlly() %}
-                            <div class="my-2"><span>{{ 'info.ally'|trans|raw }} : <span><a href="{{ path('rank_ally', {'usePlanet': usePlanet.getId()}) }}">[{{ app.user.getAlly().getSigle() }}] {{ app.user.getAlly().getName() }}</a></span></div>
-                            <div class="my-2">{{ 'info.allyLevel'|trans|raw }} {{ app.user.getAlly().getLevel() }} / 10</div>
-                            <div class="my-2">{{ 'info.allyMembers'|trans|raw }} {{ app.user.getAlly().getUsers()|length }} / {{ app.user.getAlly().getMaxMembers()}}</div>
-                            <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxPlanetsAlly'|trans }}" class="my-2">{{ 'info.allyPlanets'|trans|raw }} {{ app.user.getAlly().getPlanets()|number_format }} / {{ (app.user.getAlly().getPlanetsMax())|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" class="ml-2" height="15" src="{{ asset('img/planet9.png') }}"></div>
-                            <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.bitcoinAlly'|trans }}" class="my-2">{{ 'info.allyBitcoin'|trans|raw }} {{ app.user.getAlly().getBitcoin()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="15" src="{{ asset('img/coin.png') }}"> | {{ app.user.getAlly().getPdg()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.png') }}"></div>
+                        {% if ally %}
+                            <div class="my-2"><span>{{ 'info.ally'|trans|raw }} : <span><a href="{{ path('rank_ally', {'usePlanet': usePlanet.getId()}) }}">[{{ ally.getSigle() }}] {{ ally.getName() }}</a></span></div>
+                            <div class="my-2">{{ 'info.allyLevel'|trans|raw }} {{ ally.getLevel() }} / 10</div>
+                            <div class="my-2">{{ 'info.allyMembers'|trans|raw }} {{ ally.getCharacters()|length }} / {{ ally.getMaxMembers()}}</div>
+                            <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxPlanetsAlly'|trans }}" class="my-2">{{ 'info.allyPlanets'|trans|raw }} {{ ally.getPlanets()|number_format }} / {{ (ally.getPlanetsMax())|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" class="ml-2" height="15" src="{{ asset('img/planet9.png') }}"></div>
+                            <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.bitcoinAlly'|trans }}" class="my-2">{{ 'info.allyBitcoin'|trans|raw }} {{ ally.getBitcoin()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="15" src="{{ asset('img/coin.png') }}"> | {{ ally.getPdg()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.png') }}"></div>
                         {% else %}
                             <div class="my-2{% if app.user.getTutorial() < 18 %} tutorial-hide{% endif %}"><span><a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}">{{ 'info.allyMissing'|trans|raw }}</a></span></div>
                             <div class="my-2">{{ 'info.allyMissingBoost'|trans|raw }}</div>
@@ -121,7 +121,7 @@
                 {% for fleet in attackFleets %}
                     <tr>
                         <th class="tab-cells-name p-2 pl-3">
-                            {{ 'overview.oneFleet'|trans }} <span class="{{ app.user.getFleetsColor(fleet.user, fleet.sigle) }}">{{  fleet.name }}</span> <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.signature'|trans }}">({{ fleet.signature|number_format }})</span>  {{ 'overview.fromPlayer'|trans }} <span><a href="{{ path('user_profil', {'userPlanet': fleet.user, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.username }}</a></span>  {{ 'overview.arriveFrom'|trans }} {% if render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': fleet.sector, 'gal': fleet.galaxy})) > fleet.skyBrouilleur %}<span><a href="{{ path('map', {'sector': fleet.idSector, 'gal': fleet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.name }} - ({{ fleet.galaxy }}.{{ fleet.sector }}.{{ fleet.position }})</a></span>{% else %}???{% endif %}  {{ 'overview.arriveTo'|trans }} <span><a href="{{ path('map', {'sector': fleet.dIdSector, 'gal': fleet.dIdGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.dName }} - ({{ fleet.dGalaxy }}.{{ fleet.dSector }}.{{ fleet.dPosition }})</a></span> - <span class="timerArea" hidden>{{ fleet.flightTime|date('Y/m/d H:i:s') }}</span>
+                            {{ 'overview.oneFleet'|trans }} <span class="{{ character.getFleetsColor(fleet.character, fleet.sigle) }}">{{  fleet.name }}</span> <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.signature'|trans }}">({{ fleet.signature|number_format }})</span>  {{ 'overview.fromPlayer'|trans }} <span><a href="{{ path('user_profil', {'characterProfil': fleet.character, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.username }}</a></span>  {{ 'overview.arriveFrom'|trans }} {% if render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': fleet.sector, 'galaxy': fleet.galaxy})) > fleet.skyBrouilleur %}<span><a href="{{ path('map', {'sector': fleet.idSector, 'galaxy': fleet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.name }} - ({{ fleet.galaxy }}.{{ fleet.sector }}.{{ fleet.position }})</a></span>{% else %}???{% endif %}  {{ 'overview.arriveTo'|trans }} <span><a href="{{ path('map', {'sector': fleet.dIdSector, 'galaxy': fleet.dIdGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.dName }} - ({{ fleet.dGalaxy }}.{{ fleet.dSector }}.{{ fleet.dPosition }})</a></span> - <span class="timerArea" hidden>{{ fleet.flightTime|date('Y/m/d H:i:s') }}</span>
                         </th>
                     </tr>
                 {% endfor %}
@@ -139,7 +139,7 @@
                 {% for fleet in fleetMove %}
                     <tr>
                         <th class="tab-cells-name p-2 pl-3">
-                            <span class="pp-mine">{{ 'overview.yourFleet'|trans }}</span> {% if fleet.attack == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/stance_attack.gif') }}">{% else %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/stance_defend.gif') }}">{% endif %} <span><a class="ml-2" href="{{ path('manage_fleet', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.id }) }}">{{  fleet.name }}</a></span> <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.signature'|trans }}">({{ fleet.signature|number_format }})</span> {{ 'overview.fromTo'|trans }} <span><a href="{{ path('map', {'sector': fleet.idSector, 'gal': fleet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.pName }} - ({{ fleet.galaxy }}.{{ fleet.sector }}.{{ fleet.position }})</a></span> {{ 'overview.goTo'|trans }} <span><a href="{{ path('map', {'sector': fleet.dIdSector, 'gal': fleet.dIdGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.dName }} - ({{ fleet.dGalaxy }}.{{ fleet.dSector }}.{{ fleet.dPosition }})</a></span> - <span class="timerArea" hidden>{{ fleet.flightTime|date('Y/m/d H:i:s') }}</span>
+                            <span class="pp-mine">{{ 'overview.yourFleet'|trans }}</span> {% if fleet.attack == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/stance_attack.gif') }}">{% else %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/stance_defend.gif') }}">{% endif %} <span><a class="ml-2" href="{{ path('manage_fleet', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.id }) }}">{{  fleet.name }}</a></span> <span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.signature'|trans }}">({{ fleet.signature|number_format }})</span> {{ 'overview.fromTo'|trans }} <span><a href="{{ path('map', {'sector': fleet.idSector, 'galaxy': fleet.idGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.pName }} - ({{ fleet.galaxy }}.{{ fleet.sector }}.{{ fleet.position }})</a></span> {{ 'overview.goTo'|trans }} <span><a href="{{ path('map', {'sector': fleet.dIdSector, 'galaxy': fleet.dIdGalaxy, 'usePlanet': usePlanet.getId()}) }}">{{ fleet.dName }} - ({{ fleet.dGalaxy }}.{{ fleet.dSector }}.{{ fleet.dPosition }})</a></span> - <span class="timerArea" hidden>{{ fleet.flightTime|date('Y/m/d H:i:s') }}</span>
                         </th>
                     </tr>
                 {% endfor %}
@@ -151,10 +151,10 @@
             <tr>
                 <th class="tab-cells-name p-1">
                     <div class="row">
-                        {% if app.user.checkResearch() %}
+                        {% if character.checkResearch() %}
                             <div class="col-6 pt-1 ml-2{% if app.user.getTutorial() < 8 %} tutorial-hide{% endif %}">
                                 {{ 'overview.search'|trans }}
-                                {% if app.user.getSearch() %}<span><a href="{{ path('search', {'usePlanet': usePlanet.getId()}) }}">{{ app.user.getSearch()|trans }}</a></span> <span class="timerArea" hidden>{{ app.user.getSearchAt()|date('Y/m/d H:i:s') }}</span> - <a class="text-rouge glyphicon glyphicon-remove" href="{{ path('research_cancel', {'usePlanet': usePlanet.getId()}) }}"></a>{% else %}<span><a href="{{ path('search', {'usePlanet': usePlanet.getId()}) }}">{{ 'cell.searchNone'|trans|raw }}</a></span>{% endif %}
+                                {% if character.getSearch() %}<span><a href="{{ path('search', {'usePlanet': usePlanet.getId()}) }}">{{ character.getSearch()|trans }}</a></span> <span class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</span> - <a class="text-rouge glyphicon glyphicon-remove" href="{{ path('research_cancel', {'usePlanet': usePlanet.getId()}) }}"></a>{% else %}<span><a href="{{ path('search', {'usePlanet': usePlanet.getId()}) }}">{{ 'cell.searchNone'|trans|raw }}</a></span>{% endif %}
                             </div>
                         {% endif %}
                         <div class="col-5 pt-1 ml-2" data-html="true" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.dailyCost'|trans({'%soldier%': allTroops|number_format, '%shipPro%': allShipsProduct|number_format, '%shipPla%': allShipsPlanet|number_format, '%shipFle%': allShipsFleet|number_format, '%soldierPro%': allTroopsProduct|number_format, '%soldierPla%': allTroopsPlanet|number_format, '%soldierFle%': allTroopsFleet|number_format, '%ship%': allShips|number_format, '%build%': allBuildings|number_format, '%bitcoin%': cost|number_format, '%gain%': (totalgain)|number_format}) }}">

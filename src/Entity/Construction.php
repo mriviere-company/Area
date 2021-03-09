@@ -35,6 +35,18 @@ class Construction
     protected $constructTime;
 
     /**
+     * Construction constructor.
+     * @param Planet $planet
+     * @param string $construct
+     * @param int $time
+     */
+    public function __construct(Planet $planet, string $construct, int $time)
+    {
+        $this->planet = $planet;
+        $this->construct = $construct;
+        $this->constructTime = $time;
+    }
+    /**
      * @return mixed
      */
     public function getPlanet()

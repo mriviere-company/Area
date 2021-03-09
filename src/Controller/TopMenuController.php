@@ -5,8 +5,11 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Front\UserContactType;
 
+/**
+ * Class TopMenuController
+ * @package App\Controller
+ */
 class TopMenuController extends AbstractController
 {
     /**
@@ -20,8 +23,8 @@ class TopMenuController extends AbstractController
         if($this->getUser()) {
             $usePlanet = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
-                ->join('p.user', 'u')
-                ->where('u.username = :user')
+                ->join('p.character', 'c')
+                ->where('c.username = :user')
                 ->setParameters(['user' => $this->getUser()->getUsername()])
                 ->getQuery()
                 ->setMaxResults(1)
@@ -46,8 +49,8 @@ class TopMenuController extends AbstractController
         if($this->getUser()) {
             $usePlanet = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
-                ->join('p.user', 'u')
-                ->where('u.username = :user')
+                ->join('p.character', 'c')
+                ->where('c.username = :user')
                 ->setParameters(['user' => $this->getUser()->getUsername()])
                 ->getQuery()
                 ->setMaxResults(1)
@@ -72,8 +75,8 @@ class TopMenuController extends AbstractController
         if($this->getUser()) {
             $usePlanet = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
-                ->join('p.user', 'u')
-                ->where('u.username = :user')
+                ->join('p.character', 'c')
+                ->where('c.username = :user')
                 ->setParameters(['user' => $this->getUser()->getUsername()])
                 ->getQuery()
                 ->setMaxResults(1)

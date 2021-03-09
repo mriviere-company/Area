@@ -3,6 +3,9 @@
 namespace App\Controller\Connected;
 
 use App\Entity\Ships;
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -20,18 +23,23 @@ class ShipPersoController extends AbstractController
 {
     /**
      * @Route("/vaisseaux-personalisation/{usePlanet}", name="ship_perso", requirements={"usePlanet"="\d+"})
+     * @param Request $request
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function shipAction(Request $request, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $ship = $user->getShip();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $ship = $character->getShip();
         $now = new DateTime();
 
-        if($user->getGameOver()) {
+        if($character->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -54,7 +62,7 @@ class ShipPersoController extends AbstractController
             $laser = abs($form_shipPerso->get('laser')->getData()) * 2;
             $plasma = abs($form_shipPerso->get('plasma')->getData());
 
-            if ($ship->getMax() - $points >= 0 && $ship->getLastUpdate() < $now && $user->getShip()->getRemainingPoints() > 0) {
+            if ($ship->getMax() - $points >= 0 && $ship->getLastUpdate() < $now && $character->getShip()->getRemainingPoints() > 0) {
                 if ($form_shipPerso->get('ship')->getData() == 'hunter' && $points <= $ship->getPointHunter()) {
                     $ship->setArmorHunter($ship->getArmorHunter() + $armor);
                     $ship->setMissileHunter($ship->getMissileHunter() + $missile);
@@ -171,18 +179,20 @@ class ShipPersoController extends AbstractController
 
     /**
      * @Route("/vaisseaux-reinitialisation/{usePlanet}", name="ship_retry", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function shipRetryAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $now = new DateTime();
-        $ship = $user->getShip();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $ship = $character->getShip();
 
         if ($ship->getRetry() > 0) {
             $nextMax = 1175 - $ship->getRemainingPoints() + $ship->getMax();
             $nextRetry = $ship->getRetry() - 1;
-            $user->setShip(null);
+            $character->setShip(null);
             $em->remove($ship);
             $ships = new Ships();
             if ($nextMax < 40) {
@@ -190,7 +200,8 @@ class ShipPersoController extends AbstractController
             }
             $ships->setMax($nextMax);
             $ships->setRetry($nextRetry);
-            $user->setShip($ships);
+            $character->setShip($ships);
+            $ships->setCharacter($character);
             $em->persist($ships);
             $em->flush();
         }

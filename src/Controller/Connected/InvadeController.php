@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -16,23 +17,27 @@ use DateTime;
  */
 class InvadeController extends AbstractController
 {
-      /**
-       * @Route("/hello-we-come-for-you/{fleet}/{usePlanet}", name="invader_planet", requirements={"fleet"="\d+", "usePlanet"="\d+"})
-       */
+    /**
+     * @Route("/hello-we-come-for-you/{fleet}/{usePlanet}", name="invader_planet", requirements={"fleet"="\d+", "usePlanet"="\d+"})
+     * @param Fleet $fleet
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     */
     public function invaderAction(Fleet $fleet, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
 
-        if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $redirect = $this->forward('App\Controller\Connected\Execute\WarPlanetController::invaderAction', [
             'usePlanet' => $usePlanet,
             'fleet' => $fleet,
-            'user' => $user,
+            'character' => $character,
             'now'  => $now,
             'em' => $em]);
 
@@ -51,21 +56,25 @@ class InvadeController extends AbstractController
 
     /**
      * @Route("/merci-pour-les-ressources/{fleet}/{usePlanet}", name="raid_planet", requirements={"fleet"="\d+", "usePlanet"="\d+"})
+     * @param Fleet $fleet
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function raidAction(Fleet $fleet, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
 
-        if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $redirect = $this->forward('App\Controller\Connected\Execute\WarPlanetController::raidAction', [
             'usePlanet' => $usePlanet,
             'fleet' => $fleet,
-            'user' => $user,
+            'character' => $character,
             'now'  => $now,
             'em' => $em]);
 

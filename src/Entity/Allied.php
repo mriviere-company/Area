@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -53,11 +54,19 @@ class Allied
     protected $accepted;
 
     /**
-     * User constructor.
+     * Allied constructor.
+     * @param Ally $ally
+     * @param string $tag
+     * @param $accepted
      */
-    public function __construct()
+    public function __construct(Ally $ally, string $tag, $accepted)
     {
-        $this->accepted = false;
+        $this->ally = $ally;
+        $this->allyTag = $tag;
+        $this->signedAt = new DateTime();
+        $this->accepted = $accepted;
+        $this->dismissAt = null;
+        $this->dismissBy = null;
     }
 
     /**
@@ -156,6 +165,9 @@ class Allied
         $this->dismissBy = $dismissBy;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

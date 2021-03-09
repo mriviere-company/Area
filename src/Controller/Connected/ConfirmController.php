@@ -2,6 +2,9 @@
 
 namespace App\Controller\Connected;
 
+use Swift_Mailer;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,12 +24,16 @@ class ConfirmController extends AbstractController
 {
     /**
      * @Route("/confirmation-compte/{usePlanet}", name="confirm_account", requirements={"usePlanet"="\d+"})
+     * @param Request $request
+     * @param Planet $usePlanet
+     * @param Swift_Mailer $mailer
+     * @return RedirectResponse|Response
      */
-    public function confirmAction(Request $request, Planet $usePlanet, \Swift_Mailer $mailer)
+    public function confirmAction(Request $request, Planet $usePlanet, Swift_Mailer $mailer)
     {
         $em = $this->getDoctrine()->getManager();
-        $now = new DateTime();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
         if($user->getConfirmed() == 1) {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);

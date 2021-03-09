@@ -43,9 +43,12 @@ ally.kick: Exclure
 ally.allyUsers: 'Choisir membre'
 ally.canRecruit: Recruter
 ally.gradeName: 'Nom du grade'
-ally.canPeace: Pacte/Pna
+ally.canPeace: Pacte
 ally.canKick: Exclure
 ally.canWar: Guerre
+ally.canEdit: Modifier
+ally.seeMembers: Voir
+ally.useFleets: Flottes
 ally.pacts: Pactes
 form.send.vote: 'Voter pour votre président'
 ally.alliedName: 'Pacte défensif'

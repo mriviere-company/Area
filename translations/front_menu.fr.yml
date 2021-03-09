@@ -3,9 +3,7 @@ footer: 'Suivez nous sur facebook!'
 mriviere: 'Développé par mriviere'
 under.maj: 'MISE À JOUR EN COURS'
 media: Medias
-easyadmin: 'Pannel Admin'
 adminMail: 'Mail global'
-admin: 'Pannel Admin'
 serveur.activate: 'Activer'
 serveur.deactivate: 'Désactiver'
 serveur.createBig: 'Créer Univers'
@@ -13,6 +11,7 @@ serveur.createLittle: 'Créer petit Univers'
 serveur.kill.sector: 'Détruire secteur'
 serveur.kill.serveur: 'Détruire Univers'
 logout: Déconnexion
+parameters: Paramètres
 game: Jeu
 globalView: 'Vue d''ensemble'
 fleet: Flottes

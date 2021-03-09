@@ -2,30 +2,49 @@
 
 namespace App\Controller\Connected;
 
+use App\Entity\Character;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Rank;
 use App\Entity\Report;
 use App\Entity\Ships;
-use DateTime;
+use App\Entity\Galaxy;
+use App\Entity\Server;
 use Dateinterval;
+use Exception;
+use DateTime;
 
 /**
  * @Route("/connect")
- * @Security("is_granted('ROLE_USER')")
+ * @Security("is_granted('ROLE_USER', 'ROLE_ADMIN')")
  */
 class ConnectController extends AbstractController
 {
     /**
-     * @Route("/connection/{id}", name="connect_server", requirements={"id"="\d+"})
+     * @Route("/connection/{galaxy}/{server}", name="connect_server", requirements={"galaxy"="\d+", "server"="\d+"})
+     * @Route("/connection/{server}", name="connected_server", requirements={"server"="\d+"})
+     * @param Galaxy|null $galaxy
+     * @param Server $server
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
-    public function connectServerAction($id)
+    public function connectServerAction(Galaxy $galaxy = null, Server $server)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
+        $character = $user->getCharacter($server);
+
+        if (!$character) {
+            $character = new Character($user, $user->getUsername(), $server);
+            $em->persist($character);
+            $em->flush();
+        }
+
+        $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($character);
 
         if($usePlanet) {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
@@ -35,17 +54,17 @@ class ConnectController extends AbstractController
             ->createQueryBuilder('p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->where('p.user is null')
+            ->where('p.character is null')
             ->andWhere('p.ground = 25')
             ->andWhere('p.sky = 5')
             ->andWhere('g.id = :id')
-            ->setParameters(['id' => $id])
+            ->setParameters(['id' => $galaxy])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
 
         if($planet) {
-            $planet->setUser($user);
+            $planet->setCharacter($character);
             $planet->setName('Nova Terra');
             $planet->setSonde(10);
             $planet->setRadar(1);
@@ -63,88 +82,107 @@ class ConnectController extends AbstractController
             $planet->setWorker(25000);
             $planet->setSoldier(20);
             $planet->setColonizer(1);
-            $user->addPlanet($planet);
+            $character->addPlanet($planet);
             foreach ($planet->getFleets() as $fleet) {
-                if ($fleet->getUser()->getZombie() == 1) {
+                if ($fleet->getCharacter()->getZombie() == 1) {
                     $em->remove($fleet);
                 } else {
-                    $fleet->setPlanet($fleet->getUser()->getFirstPlanetFleet());
+                    $fleet->setPlanet($fleet->getCharacter()->getFirstPlanetFleet());
                 }
             }
         } else {
             $this->addFlash("full", "Cette galaxie est déjà pleine !");
-            $servers = $em->getRepository('App:Server')
-                ->createQueryBuilder('s')
-                ->select('s.id, s.open, s.pvp')
-                ->groupBy('s.id')
-                ->orderBy('s.id', 'ASC')
-                ->getQuery()
-                ->getResult();
-
-            $galaxys = $em->getRepository('App:Galaxy')
-                ->createQueryBuilder('g')
-                ->join('g.server', 'ss')
-                ->join('g.sectors', 's')
-                ->join('s.planets', 'p')
-                ->leftJoin('p.user', 'u')
-                ->select('g.id, g.position, count(DISTINCT u.id) as users, ss.id as server')
-                ->groupBy('g.id')
-                ->orderBy('g.position', 'ASC')
-                ->getQuery()
-                ->getResult();
-
-            return $this->render('connected/play.html.twig', [
-                'galaxys' => $galaxys,
-                'servers' => $servers
-            ]);
+            return $this->redirectToRoute('server_select');
         }
 
         $salon = $em->getRepository('App:Salon')
             ->createQueryBuilder('s')
             ->where('s.name = :name')
-            ->setParameters(['name' => 'Public'])
+            ->andWhere('s.server = :server')
+            ->setParameters(['name' => 'Public', 'server' => $server])
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (!$user->getShip()) {
+        if (!$character->getShip()) {
             $ships = new Ships();
-            $user->setShip($ships);
+            $character->setShip($ships);
+            $ships->setCharacter($character);
             $em->persist($ships);
         }
-        $rank = new Rank();
+        $rank = new Rank($character);
         $em->persist($rank);
-        $user->setRank($rank);
-        $user->setTutorial(1);
-        $user->setZombieAtt(1);
-        $user->setDailyConnect($now);
-        $user->setBitcoin(500);
+        $character->setRank($rank);
+        $character->setDailyConnect($now);
         $nextZombie = new DateTime();
         $nextZombie->add(new DateInterval('PT' . 144 . 'H'));
-        $user->setZombieAt($nextZombie);
-        $user->setGameOver(null);
-        $salon->removeUser($user);
-        $salon->addUser($user);
-        foreach ($user->getQuests() as $quest) {
-            $user->removeQuest($quest);
+        $character->setZombieAt($nextZombie);
+        $character->setGameOver(null);
+        $salon->removeCharacter($character);
+        $salon->addCharacter($character);
+        foreach ($character->getQuests() as $quest) {
+            $character->removeQuest($quest);
         }
         $questOne = $em->getRepository('App:Quest')->findOneById(2);
         $questTwo = $em->getRepository('App:Quest')->findOneById(4);
         $questTree = $em->getRepository('App:Quest')->findOneById(50);
-        $user->addQuest($questOne);
-        $user->addQuest($questTwo);
-        $user->addQuest($questTree);
+        $character->addQuest($questOne);
+        $character->addQuest($questTwo);
+        $character->addQuest($questTree);
 
         $report = new Report();
         $report->setSendAt($now);
-        $report->setUser($user);
-        $report->setTitle("Bienvenu parmis nous "  . $user->getUsername() . " !");
+        $report->setCharacter($character);
+        $report->setTitle("Bienvenu parmis nous "  . $character->getUsername() . " !");
         $report->setImageName("welcome_report.jpg");
         $report->setContent("Une épidémie s'est déclaré sur la Terre et en ce moment même il est fort a parier qu'elle est aux mains des hordes zombies. Vous et quelques autres commandant de vaisseaux spatiaux avez eu la chance de fuir avec un certains nombre de travailleurs/soldats. Remontez notre civilisation et préparez vous, les Zombies ne sont pas arrivés par hasard sur Terre... Bon courage commandant. (Pour recevoir de l'aide : La page Salon ou rendez-vous sur le discord)");
         $em->persist($report);
-        $user->setViewReport(false);
+        $character->setViewReport(false);
 
         $em->flush();
 
-        return $this->redirectToRoute('login');
+        return $this->redirectToRoute('overview', ['usePlanet' => $planet->getId()]);
+    }
+    /**
+     * @Route("/selection-serveur/", name="server_select")
+     * @return RedirectResponse|Response
+     * @throws Exception
+     */
+    public function serverInterfaceAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser();
+
+        $servers = $em->getRepository('App:Server')
+            ->createQueryBuilder('s')
+            ->leftJoin('s.characters', 'c')
+            ->select('s.id, count(DISTINCT c.id) as characters, s.open, s.pvp')
+            ->groupBy('s.id')
+            ->orderBy('s.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        $galaxys = $em->getRepository('App:Galaxy')
+            ->createQueryBuilder('g')
+            ->join('g.server', 'ss')
+            ->join('g.sectors', 's')
+            ->join('s.planets', 'p')
+            ->leftJoin('p.character', 'c')
+            ->select('g.id, g.position, count(DISTINCT c.id) as characters, ss.id as server')
+            ->groupBy('g.id')
+            ->orderBy('g.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+
+        if ($user->getRoles()[0] == 'ROLE_MODO' || $user->getRoles()[0] == 'ROLE_ADMIN') {
+            return $this->render('admin/administration.html.twig', [
+                'galaxys' => $galaxys,
+                'servers' => $servers
+            ]);
+        } else {
+            return $this->render('connected/play.html.twig', [
+                'galaxys' => $galaxys,
+                'servers' => $servers
+            ]);
+        }
     }
 }

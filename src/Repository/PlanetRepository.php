@@ -3,43 +3,46 @@
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 
 class PlanetRepository extends EntityRepository
 {
     /**
      * @param $id
-     * @param $user
+     * @param $character
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
-    public function findByCurrentPlanet($id, $user) {
+    public function findByCurrentPlanet($id, $character) {
         return $this->createQueryBuilder('p')
             ->where('p.id = :id')
-            ->andWhere('p.user = :user')
-            ->setParameters(['id' => $id, 'user' => $user])
+            ->andWhere('p.character = :character')
+            ->setParameters(['id' => $id, 'character' => $character])
             ->getQuery()
             ->getOneOrNullResult();
     }
 
     /**
-     * @param $user
+     * @param $character
      * @return mixed
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
-    public function findByFirstPlanet($user) {
-        $request = $this->createQueryBuilder('p')
-            ->join('p.user', 'u')
-            ->where('u.username = :user')
-            ->setParameters(['user' => $user->getUsername()]);
-        if ($user->getOrderPlanet() == 'alpha') {
-            $request->orderBy('p.name', 'ASC');
-        } elseif ($user->getOrderPlanet() == 'colo') {
-            $request->orderBy('p.nbColo', 'ASC');
-        } else {
-            $request->orderBy('p.id', 'ASC');
+    public function findByFirstPlanet($character) {
+        if ($character) {
+            $request = $this->createQueryBuilder('p')
+                ->where('p.character = :character')
+                ->setParameters(['character' => $character]);
+            if ($character->getOrderPlanet() == 'alpha') {
+                $request->orderBy('p.name', 'ASC');
+            } elseif ($character->getOrderPlanet() == 'colo') {
+                $request->orderBy('p.nbColo', 'ASC');
+            } else {
+                $request->orderBy('p.id', 'ASC');
+            }
+            return $request->getQuery()
+                ->setMaxResults(1)
+                ->getOneOrNullResult();
         }
-        return $request->getQuery()
-            ->setMaxResults(1)
-            ->getOneOrNullResult();
+        return null;
     }
 }

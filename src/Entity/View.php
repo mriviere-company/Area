@@ -20,10 +20,10 @@ class View
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="views", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="views", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\ManyToOne(targetEntity="Salon", inversedBy="views", fetch="EXTRA_LAZY")
@@ -31,11 +31,20 @@ class View
      */
     protected $salon;
 
-    public function __construct()
+    /**
+     * View constructor.
+     * @param Character $character
+     * @param Salon $salon
+     */
+    public function __construct(Character $character, Salon $salon)
     {
-        $this->salon = null;
+        $this->character = $character;
+        $this->salon = $salon;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
@@ -44,17 +53,17 @@ class View
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**

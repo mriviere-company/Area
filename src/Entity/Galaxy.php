@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -20,7 +21,7 @@ class Galaxy
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Sector", mappedBy="galaxy", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Sector", mappedBy="galaxy", fetch="EXTRA_LAZY")
      */
     protected $sectors;
 
@@ -36,9 +37,16 @@ class Galaxy
      */
     protected $server;
 
-    public function __construct()
+    /**
+     * Galaxy constructor.
+     * @param Server $server
+     * @param int $position
+     */
+    public function __construct(Server $server, int $position)
     {
-        $this->sectors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->server = $server;
+        $this->position = $position;
+        $this->sectors = new ArrayCollection();
     }
 
     /**
@@ -113,6 +121,9 @@ class Galaxy
         $this->server = $server;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

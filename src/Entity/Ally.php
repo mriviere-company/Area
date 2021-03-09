@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
@@ -23,10 +25,10 @@ class Ally
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="ally", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Character", mappedBy="ally", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $users;
+    protected $characters;
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet", mappedBy="ally", fetch="EXTRA_LAZY")
@@ -62,7 +64,7 @@ class Ally
     protected $sigle;
 
     /**
-     * @ORM\Column(name="slogan",type="string", length=30, unique=true)
+     * @ORM\Column(name="slogan",type="string", length=30)
      * @Assert\NotBlank(message = "required")
      */
     protected $slogan;
@@ -83,7 +85,7 @@ class Ally
     protected $maxMembers;
 
     /**
-     * @ORM\OneToMany(targetEntity="Grade", mappedBy="ally", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Grade", mappedBy="ally", fetch="EXTRA_LAZY")
      */
     protected $grades;
 
@@ -123,22 +125,22 @@ class Ally
     protected $taxe;
 
     /**
-     * @ORM\OneToMany(targetEntity="Pna", mappedBy="ally", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Pna", mappedBy="ally", fetch="EXTRA_LAZY")
      */
     protected $pnas;
 
     /**
-     * @ORM\OneToMany(targetEntity="Allied", mappedBy="ally", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Allied", mappedBy="ally", fetch="EXTRA_LAZY")
      */
     protected $allieds;
 
     /**
-     * @ORM\OneToMany(targetEntity="Peace", mappedBy="ally", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Peace", mappedBy="ally", fetch="EXTRA_LAZY")
      */
     protected $peaces;
 
     /**
-     * @ORM\OneToMany(targetEntity="War", mappedBy="ally", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="War", mappedBy="ally", fetch="EXTRA_LAZY")
      */
     protected $wars;
 
@@ -175,7 +177,7 @@ class Ally
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @var \DateTime
+     * @var DateTime
      */
     private $updatedAt;
 
@@ -184,20 +186,20 @@ class Ally
      */
     public function __construct()
     {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->fleets = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->salons = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->proposals = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->pnas = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->allieds = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->wars = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->grades = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characters = new ArrayCollection();
+        $this->fleets = new ArrayCollection();
+        $this->salons = new ArrayCollection();
+        $this->proposals = new ArrayCollection();
+        $this->pnas = new ArrayCollection();
+        $this->allieds = new ArrayCollection();
+        $this->wars = new ArrayCollection();
+        $this->grades = new ArrayCollection();
         $this->defcon = 0;
         $this->bitcoin = 0;
-        $this->createdAt = null;
+        $this->createdAt = new DateTime();
         $this->imageFile = null;
         $this->rank = 1;
-        $this->descritpion = '-';
+        $this->description = '-';
         $this->politic = 'democrat';
         $this->level = 0;
         $this->maxMembers = 3;
@@ -296,12 +298,12 @@ class Ally
     /**
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getUsers()
+    public function getCharacters()
     {
         $criteria = Criteria::create()
             ->orderBy(array('username' => 'ASC'));
 
-        return $this->users->matching($criteria);
+        return $this->characters->matching($criteria);
     }
 
     /**
@@ -337,27 +339,27 @@ class Ally
     }
 
     /**
-     * Add user
+     * Add character
      *
-     * @param \App\Entity\User $user
+     * @param \App\Entity\Character $character
      *
      * @return Ally
      */
-    public function addUser(\App\Entity\User $user)
+    public function addCharacter(\App\Entity\Character $character)
     {
-        $this->users[] = $user;
+        $this->characters[] = $character;
 
         return $this;
     }
 
     /**
-     * Remove user
+     * Remove character
      *
-     * @param \App\Entity\User $user
+     * @param \App\Entity\Character $character
      */
-    public function removeUser(\App\Entity\User $user)
+    public function removeCharacter(\App\Entity\Character $character)
     {
-        $this->users->removeElement($user);
+        $this->characters->removeElement($character);
     }
 
     /**
@@ -522,16 +524,16 @@ class Ally
     /**
      * @return mixed
      */
-    public function getUsersPoint()
+    public function getCharactersPoint()
     {
         $return = 0;
 
-        foreach($this->getUsers() as $user) {
-            if($user->getRank()) {
-                $return = $return + $user->getRank()->getPoint();
+        foreach($this->getCharacters() as $character) {
+            if($character->getRank()) {
+                $return = $return + $character->getRank()->getPoint();
             }
         }
-        return round($return / (count($this->getUsers()) > 0 ? count($this->getUsers()) : 1));
+        return round($return / (count($this->getCharacters()) > 0 ? count($this->getCharacters()) : 1));
     }
 
     /**
@@ -591,10 +593,10 @@ class Ally
     {
         $return = 0;
 
-        foreach($this->getUsers() as $user) {
-            $return = $return + $user->getTerraformation() + 2;
-            $return = $return + $user->getPoliticColonisation();
-            $return = $return + $user->getPoliticInvade();
+        foreach($this->getCharacters() as $character) {
+            $return = $return + $character->getTerraformation() + 2;
+            $return = $return + $character->getPoliticColonisation();
+            $return = $return + $character->getPoliticInvade();
         }
         return $return;
     }
@@ -606,8 +608,8 @@ class Ally
     {
         $return = 0;
 
-        foreach($this->getUsers() as $user) {
-            foreach ($user->getPlanets() as $planet) {
+        foreach($this->getCharacters() as $character) {
+            foreach ($character->getPlanets() as $planet) {
                 if($planet->getEmpty() == false) {
                     $return++;
                 }
@@ -724,9 +726,9 @@ class Ally
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param DateTime $updatedAt
      */
-    public function setUpdatedAt(\DateTime $updatedAt): void
+    public function setUpdatedAt(DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }

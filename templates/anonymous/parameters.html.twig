@@ -1,0 +1,55 @@
+{% extends 'anonymous/base.html.twig' %}
+
+{% trans_default_domain 'front_options' %}
+
+{% block title %}{{ 'title'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="row mt-5">
+        <div class="offset-1 col-10 mt-5">
+            <table class="table table-striped table-dark text-center borderOverview">
+                <tbody>
+                <tr>
+                    <td width="140" class="center-cells">
+                        {{ 'modifUsername'|trans }}
+                    </td>
+                    <td width="200" class="center-cells">
+                        {{ 'modifPassword'|trans }}
+                    </td>
+                    <td class="center-cells">
+                        {{ 'newletter'|trans }}
+                    </td>
+                    <td class="center-cells">
+                        {{ 'lastPlanet'|trans }}
+                    </td>
+                    <td class="center-cells">
+                    </td>
+                </tr>
+                {{ form_start(form_parameters) }}
+                <tr>
+                    <td width="140" class="center-cells">
+                        {{ form_widget(form_parameters.username) }}
+                    </td>
+                    <td width="200" class="center-cells">
+                        {{ form_widget(form_parameters.oldPassword) }}
+                        {{ form_widget(form_parameters.password) }}
+                        {{ form_widget(form_parameters.confirmPassword) }}
+                    </td>
+                    <td class="center-cells">
+                        {{ form_widget(form_parameters.newletter) }}
+                    </td>
+                    <td class="center-cells">
+                        {{ form_widget(form_parameters.connect_last) }}
+                    </td>
+                    <td>
+                        </br>
+                        </br>
+                        {{ form_widget(form_parameters.sendForm) }}
+                    </td>
+                </tr>
+                {{ form_end(form_parameters) }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

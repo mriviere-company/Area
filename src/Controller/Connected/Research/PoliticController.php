@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected\Research;
 
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,31 +19,37 @@ class PoliticController extends AbstractController
 {
     /**
      * @Route("/lancer-recherche/{search}/{usePlanet}", name="research_ally", requirements={"search"="\w+", "usePlanet"="\d+"})
+     * @param string $search
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function researchAllyAction(Planet $usePlanet, $search)
+    public function researchAllyAction(string $search, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $user->getWhichResearch($search) + 1;
-        $userBt = $user->getBitcoin();
-        $cost = $user->getResearchCost($search);
-        $time = $user->getResearchTime($search);
+        $level = $character->getWhichResearch($search) + 1;
+        $characterBt = $character->getBitcoin();
+        $cost = $character->getResearchCost($search);
+        $time = $character->getResearchTime($search);
 
-        if(($userBt < ($level * $cost)) ||
-            ($level == 6 || $user->getSearchAt() > $now) ||
-            $user->getWhichResearch($search) === 0) {
+        if(($characterBt < ($level * $cost)) ||
+            ($level == 6 || $character->getSearchAt() > $now) ||
+            $character->getWhichResearch($search) === 0) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * $time / $user->getScientistProduction())) . 'S'));
-        $user->setSearch($search);
-        $user->setSearchAt($now);
-        $user->setBitcoin($userBt - ($level * $cost));
+        $now->add(new DateInterval('PT' . round(($level * $time / $character->getScientistProduction())) . 'S'));
+        $character->setSearch($search);
+        $character->setSearchAt($now);
+        $character->setBitcoin($characterBt - ($level * $cost));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);

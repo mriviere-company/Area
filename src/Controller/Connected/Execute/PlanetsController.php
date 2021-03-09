@@ -3,13 +3,25 @@
 namespace App\Controller\Connected\Execute;
 
 use App\Entity\Report;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use DateInterval;
 use DateTime;
 
+/**
+ * Class PlanetsController
+ * @package App\Controller\Connected\Execute
+ */
 class PlanetsController extends AbstractController
 {
+    /**
+     * @param $planets
+     * @param $now
+     * @param $em
+     * @return Response
+     * @throws Exception
+     */
     public function buildingsAction($planets, $now, $em)
     {
         $nextPlanets = [];
@@ -41,19 +53,19 @@ class PlanetsController extends AbstractController
                 $planet->setCity($planet->getCity() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 5.56);
                 $planet->setWorkerMax($planet->getWorkerMax() + 12500);
-                $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_city') : NULL;
+                $quest = $planet->getCharacter() ? $planet->getCharacter()->checkQuests('build_city') : null;
                 if($quest) {
-                    $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
-                    $planet->getUser()->removeQuest($quest);
+                    $planet->getCharacter()->getRank()->setWarPoint($planet->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
+                    $planet->getCharacter()->removeQuest($quest);
                 }
             } elseif ($build == 'metropole') {
                 $planet->setMetropole($planet->getMetropole() + 1);
                 $planet->setWorkerProduction($planet->getWorkerProduction() + 8.32);
                 $planet->setWorkerMax($planet->getWorkerMax() + 40000);
-                $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_metro') : NULL;
+                $quest = $planet->getCharacter() ? $planet->getCharacter()->checkQuests('build_metro') : null;
                 if($quest) {
-                    $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
-                    $planet->getUser()->removeQuest($quest);
+                    $planet->getCharacter()->getRank()->setWarPoint($planet->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
+                    $planet->getCharacter()->removeQuest($quest);
                 }
             } elseif ($build == 'caserne') {
                 $planet->setCaserne($planet->getCaserne() + 1);
@@ -78,10 +90,10 @@ class PlanetsController extends AbstractController
             } elseif ($build == 'heavyUsine') {
                 $planet->setHeavyUsine($planet->getHeavyUsine() + 1);
                 $planet->setShipProduction($planet->getShipProduction() + 0.3);
-                $quest = $planet->getUser() ? $planet->getUser()->checkQuests('build_heavy') : NULL;
+                $quest = $planet->getCharacter() ? $planet->getCharacter()->checkQuests('build_heavy') : null;
                 if($quest) {
-                    $planet->getUser()->getRank()->setWarPoint($planet->getUser()->getRank()->getWarPoint() + $quest->getGain());
-                    $planet->getUser()->removeQuest($quest);
+                    $planet->getCharacter()->getRank()->setWarPoint($planet->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
+                    $planet->getCharacter()->removeQuest($quest);
                 }
             } elseif ($build == 'spaceShip') {
                 $planet->setSpaceShip($planet->getSpaceShip() + 1);
@@ -124,6 +136,11 @@ class PlanetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $planetSoldiers
+     * @param $em
+     * @return Response
+     */
     public function soldiersAction($planetSoldiers, $em)
     {
         foreach ($planetSoldiers as $soldierAt) {
@@ -143,6 +160,11 @@ class PlanetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $planetTanks
+     * @param $em
+     * @return Response
+     */
     public function tanksAction($planetTanks, $em)
     {
         foreach ($planetTanks as $tankAt) {
@@ -162,6 +184,11 @@ class PlanetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $planetNuclears
+     * @param $em
+     * @return Response
+     */
     public function nuclearsAction($planetNuclears, $em)
     {
         foreach ($planetNuclears as $nuclear) {
@@ -182,6 +209,11 @@ class PlanetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $planetScientists
+     * @param $em
+     * @return Response
+     */
     public function scientistsAction($planetScientists, $em)
     {
         foreach ($planetScientists as $scientistAt) {
@@ -203,6 +235,11 @@ class PlanetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $products
+     * @param $em
+     * @return Response
+     */
     public function productsAction($products, $em)
     {
         foreach ($products as $product) {
@@ -238,12 +275,18 @@ class PlanetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $radars
+     * @param $now
+     * @param $em
+     * @return Response
+     */
     public function radarsAction($radars, $now, $em)
     {
         foreach ($radars as $radar) {
             if($radar->getRadarAt() < $now && $radar->getMoon() == false) {
                 if(!$radar->getRadarAt()) {
-                    $radar->setUser(null);
+                    $radar->setCharacter(null);
                 }
                 $radar->setName('Vide');
                 $radar->setSkyRadar(0);
@@ -251,7 +294,7 @@ class PlanetsController extends AbstractController
             }
             if($radar->getBrouilleurAt() < $now && $radar->getMoon() == false) {
                 if(!$radar->getBrouilleurAt()) {
-                    $radar->setUser(null);
+                    $radar->setCharacter(null);
                 }
                 $radar->setName('Vide');
                 $radar->setSkyBrouilleur(0);
@@ -271,6 +314,11 @@ class PlanetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
+    /**
+     * @param $prods
+     * @param $em
+     * @return Response
+     */
     public function productionDeleteAction($prods, $em)
     {
         foreach ($prods as $prod) {
@@ -283,12 +331,20 @@ class PlanetsController extends AbstractController
         return new Response ("<span style='color:#008000'>OK</span><br/>");
     }
 
-    public function embargoPlanetAction($embargos, $server, $now, $em)
+    /**
+     * @param $embargos
+     * @param $now
+     * @param $em
+     * @return Response
+     * @throws Exception
+     */
+    public function embargoPlanetAction($embargos, $now, $em)
     {
         $nowEmbargo = new DateTime();
         $nowEmbargo->add(new DateInterval('PT' . (3600) . 'S'));
 
         foreach ($embargos as $embargo) {
+            $server = $embargo->getPlanet()->getSector()->getGalaxy()->getServer();
             $food = (($embargo->getWorker() / 5) + 200) >= 0 ? (($embargo->getWorker() / 5) + 200) : 0;
             $worker = 0;
             $soldier = 0;
@@ -304,7 +360,7 @@ class PlanetsController extends AbstractController
             $reportEmbargo = new Report();
             $reportEmbargo->setType('fight');
             $reportEmbargo->setSendAt($now);
-            $reportEmbargo->setUser($embargo->getUser());
+            $reportEmbargo->setCharacter($embargo->getUser());
             $reportEmbargo->setTitle("Votre planète est sous embargo !");
             $reportEmbargo->setImageName("embargo_report.jpg");
             $reportEmbargo->setContent("Votre planète <span class='text-vert'>" . $embargo->getName() . "</span> subit actuellement l'embargo d'une flotte hostile !<br>Vous avez perdu <span class='text-rouge'>" . number_format($food) . "</span> rations, <span class='text-rouge'>" . number_format($worker) . "</span> travailleurs et <span class='text-rouge'>" . number_format($soldier) . "</span> soldats.");

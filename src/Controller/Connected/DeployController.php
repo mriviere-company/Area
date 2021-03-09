@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected;
 
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -14,6 +16,10 @@ class DeployController extends AbstractController
 {
     /**
      * @Route("/deployer-radar/{fleet}/{usePlanet}", name="deploy_radar", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param Planet $usePlanet
+     * @param Fleet $fleet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function deployRadarAction(Planet $usePlanet, Fleet $fleet)
     {
@@ -21,7 +27,9 @@ class DeployController extends AbstractController
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 7200 . 'S'));
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
         $planet = $fleet->getPlanet();
@@ -31,7 +39,7 @@ class DeployController extends AbstractController
             if($planet->getSkyRadar()) {
                 $planet->setSkyRadar($planet->getSkyRadar() + 1);
             } else {
-                $planet->setUser($fleet->getUser());
+                $planet->setCharacter($fleet->getCharacter());
                 $planet->setName('Radar');
                 $planet->setSkyRadar(1);
                 $planet->setRadarAt($now);
@@ -43,11 +51,15 @@ class DeployController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('map', ['sector' => $planet->getSector()->getId(), 'gal' => $planet->getSector()->getGalaxy()->getId(), 'usePlanet' => $usePlanet->getId()]);
+        return $this->redirectToRoute('map', ['sector' => $planet->getSector()->getId(), 'galaxy' => $planet->getSector()->getGalaxy()->getId(), 'usePlanet' => $usePlanet->getId()]);
     }
 
     /**
      * @Route("/deployer-brouilleur/{fleet}/{usePlanet}", name="deploy_brouilleur", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param Planet $usePlanet
+     * @param Fleet $fleet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function deployBrouilleurAction(Planet $usePlanet, Fleet $fleet)
     {
@@ -55,7 +67,9 @@ class DeployController extends AbstractController
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 3600 . 'S'));
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
         $planet = $fleet->getPlanet();
@@ -65,7 +79,7 @@ class DeployController extends AbstractController
             if($planet->getSkyBrouilleur()) {
                 $planet->setSkyBrouilleur($planet->getSkyBrouilleur() + 1);
             } else {
-                $planet->setUser($fleet->getUser());
+                $planet->setCharacter($fleet->getCharacter());
                 $planet->setName('Brouilleur');
                 $planet->setSkyBrouilleur(1);
                 $planet->setBrouilleurAt($now);
@@ -77,18 +91,22 @@ class DeployController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('map', ['sector' => $planet->getSector()->getId(), 'gal' => $planet->getSector()->getGalaxy()->getId(), 'usePlanet' => $usePlanet->getId()]);
+        return $this->redirectToRoute('map', ['sector' => $planet->getSector()->getId(), 'galaxy' => $planet->getSector()->getGalaxy()->getId(), 'usePlanet' => $usePlanet->getId()]);
     }
 
     /**
      * @Route("/deployer-lunar/{fleet}/{usePlanet}", name="deploy_moonMaker", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param Planet $usePlanet
+     * @param Fleet $fleet
+     * @return RedirectResponse
      */
     public function deployMoonMakerAction(Planet $usePlanet, Fleet $fleet)
     {
         $em = $this->getDoctrine()->getManager();
-        $now = new DateTime();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
         $planet = $fleet->getPlanet();
@@ -96,7 +114,7 @@ class DeployController extends AbstractController
         if($fleet->getMoonMaker() && $planet->getEmpty() == true && $planet->getCdr() == false &&
             $planet->getNbCdr() > 750000 && $planet->getWtCdr() > 750000) {
             $fleet->setMoonMaker($fleet->getMoonMaker() - 1);
-            $planet->setUser($fleet->getUser());
+            $planet->setCharacter($fleet->getCharacter());
             $planet->setEmpty(false);
             $planet->setMoon(true);
             $planet->setNbProduction(0);
@@ -133,11 +151,15 @@ class DeployController extends AbstractController
             $em->flush();
         }
 
-        return $this->redirectToRoute('map', ['sector' => $planet->getSector()->getId(), 'gal' => $planet->getSector()->getGalaxy()->getId(), 'usePlanet' => $usePlanet->getId()]);
+        return $this->redirectToRoute('map', ['sector' => $planet->getSector()->getId(), 'galaxy' => $planet->getSector()->getGalaxy()->getId(), 'usePlanet' => $usePlanet->getId()]);
     }
 
     /**
      * @Route("/relancer-recyclage/{fleet}/{usePlanet}", name="recycle_again", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param Planet $usePlanet
+     * @param Fleet $fleet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function recycleAgainAction(Planet $usePlanet, Fleet $fleet)
     {
@@ -145,8 +167,9 @@ class DeployController extends AbstractController
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 300 . 'S'));
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getUser() != $user || $fleet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
         if (($fleet->getPlanet()->getNbCdr() > 0 || $fleet->getPlanet()->getWtCdr()) > 0 && $fleet->getCargoPlace() != $fleet->getCargoFull()) {

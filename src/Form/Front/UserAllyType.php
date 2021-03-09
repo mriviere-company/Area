@@ -142,7 +142,7 @@ class UserAllyType extends AbstractType
         return [
             $translator->trans('democrat') => 'democrat',
             $translator->trans('fascism') => 'fascism',
-            $translator->trans('communism') => 'communism',
+            $translator->trans('communism') => 'communism'
          /*   $translator->trans('anarchism') => 'anarchism',
             $translator->trans('monarchy') => 'monarchy',
             $translator->trans('theocrat') => 'theocrat'*/

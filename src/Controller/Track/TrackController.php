@@ -7,11 +7,20 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Track;
 use DateTime;
 
+/**
+ * Class TrackController
+ * @package App\Controller\Track
+ */
 class TrackController extends AbstractController
 {
+    /**
+     * @param $currentPage
+     * @return Response
+     */
     public function trackAction($currentPage)
     {
         $user = $this->getUser();
+
         $u_agent = $_SERVER['HTTP_USER_AGENT'];
         if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -32,7 +41,6 @@ class TrackController extends AbstractController
             $track->setUsername($this->getUser()->getUserName());
         }
 
-        $track->setDate($now);
         $track->setIp($ip);
 
         if (stripos(strtoupper($u_agent), 'ANDROID') !== FALSE) {
@@ -102,16 +110,6 @@ class TrackController extends AbstractController
         } else {
             $track->setPreviousPage($referer);
         }
-
-/*        if(isset($_SERVER['QUERY_STRING'])) {
-            if ($_SERVER['QUERY_STRING'] == "") {
-                $page_courante = $_SERVER['PHP_SELF'];
-            } else {
-                $page_courante = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
-            }
-        } else {
-            $page_courante = $_SERVER['PHP_SELF'];
-        }*/
 
         $track->setPage($currentPage);
 

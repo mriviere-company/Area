@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -15,51 +17,55 @@ class RankController extends AbstractController
 {
     /**
      * @Route("/classement-alliance/{usePlanet}", name="rank_ally", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
      */
     public function rankAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $allAllys = $em->getRepository('App:Ally')
             ->createQueryBuilder('a')
-            ->join('a.users', 'u')
-            ->join('u.planets', 'p')
-            ->join('u.rank', 'r')
-            ->select('a.id, a.sigle, a.imageName, a.name, count(DISTINCT u.id) as users, count(DISTINCT p) as planets, sum(DISTINCT r.point) as point, sum(DISTINCT r.oldPoint) as oldPoint, a.maxMembers, a.createdAt, a.politic')
+            ->join('a.characters', 'c')
+            ->join('c.planets', 'p')
+            ->join('c.rank', 'r')
+            ->select('a.id, a.sigle, a.imageName, a.name, count(DISTINCT c.id) as characters, count(DISTINCT p) as planets, sum(DISTINCT r.point) as point, sum(DISTINCT r.oldPoint) as oldPoint, a.maxMembers, a.createdAt, a.politic')
             ->groupBy('a.id')
             ->where('a.rank is not null')
             ->orderBy('point', 'DESC')
             ->getQuery()
             ->getResult();
 
-        if ($user->getAlly()) {
+        if ($character->getAlly()) {
             $allyPoints = $em->getRepository('App:Stats')
                 ->createQueryBuilder('s')
-                ->join('s.user', 'u')
+                ->join('s.character', 'c')
                 ->select('count(s) as numbers, sum(DISTINCT s.points) as ally, s.date')
                 ->groupBy('s.date')
-                ->where('u.ally = :ally')
-                ->setParameters(['ally' => $user->getAlly()])
+                ->where('c.ally = :ally')
+                ->setParameters(['ally' => $character->getAlly()])
                 ->getQuery()
                 ->getResult();
 
             $otherPoints = $em->getRepository('App:Stats')
                 ->createQueryBuilder('s')
-                ->join('s.user', 'u')
+                ->join('s.character', 'c')
                 ->select('count(s) as numbers, sum(DISTINCT s.points) as allAlly')
                 ->groupBy('s.date')
-                ->where('u.ally != :ally')
-                ->andWhere('u.bot = false')
-                ->setParameters(['ally' => $user->getAlly()])
+                ->where('c.ally != :ally')
+                ->andWhere('c.bot = false')
+                ->setParameters(['ally' => $character->getAlly()])
                 ->getQuery()
                 ->getResult();
         } else {
-            $allyPoints = NULL;
-            $otherPoints = NULL;
+            $allyPoints = null;
+            $otherPoints = null;
         }
 
         return $this->render('connected/ally/rank.html.twig', [
@@ -72,25 +78,29 @@ class RankController extends AbstractController
 
     /**
      * @Route("/classement-joueurs/{usePlanet}", name="rank_user", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
      */
     public function rankUserAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $users = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->join('u.planets', 'p')
-            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, u.id, u.imageName, u.username, r.point as point, r.oldPoint as oldPoint, r.position as position, r.oldPosition as oldPosition, r.warPoint as warPoint, u.createdAt, a.politic as politic, u.bot')
-            ->leftJoin('u.rank', 'r')
-            ->leftJoin('u.ally', 'a')
-            ->groupBy('u.id')
-            ->where('u.rank is not null')
-            ->andWhere('u.id != 1')
-            ->andWhere('u.bot = false')
+        $allCharacters = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->join('c.planets', 'p')
+            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, c.id, c.imageName, c.username, r.point as point, r.oldPoint as oldPoint, r.position as position, r.oldPosition as oldPosition, r.warPoint as warPoint, c.createdAt, a.politic as politic, c.bot')
+            ->leftJoin('c.rank', 'r')
+            ->leftJoin('c.ally', 'a')
+            ->groupBy('c.id')
+            ->where('c.rank is not null')
+            ->andWhere('c.id != 1')
+            ->andWhere('c.bot = false')
             ->andWhere('r.point > 200')
             ->orderBy('point', 'DESC')
             ->getQuery()
@@ -99,9 +109,9 @@ class RankController extends AbstractController
 
         $nbrPlayers = $em->getRepository('App:Rank')
             ->createQueryBuilder('r')
-            ->join('r.user', 'u')
+            ->join('r.character', 'c')
             ->select('count(r.id) as nbrPlayer')
-            ->where('u.bot = false')
+            ->where('c.bot = false')
             ->getQuery()
             ->getSingleScalarResult();
 
@@ -114,35 +124,9 @@ class RankController extends AbstractController
 
         return $this->render('connected/rank.html.twig', [
             'usePlanet' => $usePlanet,
-            'users' => $users,
+            'allCharacters' => $allCharacters,
             'nbrPlayers' => $nbrPlayers - 100,
             'otherPoints' => $otherPoints
         ]);
     }
-
-//    /**
-//     * @Route("/classement-joueurs/{usePlanet}", name="rank_user", requirements={"usePlanet"="\d+"})
-//     */
-//    public function rankUserAction(Planet $usePlanet)
-//    {
-//        $em = $this->getDoctrine()->getManager();
-//        $user = $this->getUser();
-//        if ($usePlanet->getUser() != $user) {
-//          return $this->redirectToRoute('home');
-//        }
-//
-//        $users = $em->getRepository('App:User')
-//            ->createQueryBuilder('u')
-//            ->leftJoin('u.rank', 'r')
-//            ->where('u.rank is not null')
-//            ->andWhere('u.id != 1')
-//            ->orderBy('r.point', 'DESC')
-//            ->getQuery()
-//            ->getResult();
-//
-//        return $this->render('connected/rank.html.twig', [
-//            'usePlanet' => $usePlanet,
-//            'users' => $users,
-//        ]);
-//    }
 }

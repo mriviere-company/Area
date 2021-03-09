@@ -5,8 +5,18 @@ namespace App\Controller\Connected\Execute;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class GameOverController
+ * @package App\Controller\Connected\Execute
+ */
 class GameOverController extends AbstractController
 {
+    /**
+     * @param $userGOs
+     * @param $now
+     * @param $em
+     * @return Response
+     */
     public function gameOverCronAction($userGOs, $now, $em)
     {
         foreach ($userGOs as $userGO) {
@@ -21,7 +31,7 @@ class GameOverController extends AbstractController
             if ($ship) {
                 $em->remove($ship);
             }
-            $userGO->setBitcoin(25000);
+            $userGO->setBitcoin(5000);
             $userGO->setSearch(null);
             $em->remove($userGO->getRank(null));
             $userGO->setRank(null);
@@ -73,8 +83,8 @@ class GameOverController extends AbstractController
             $userGO->setZombieAtt(1);
             if ($userGO->getAlly()) {
                 $ally = $userGO->getAlly();
-                if (count($ally->getUsers()) == 1 || ($ally->getPolitic() == 'fascism' && $userGO->getGrade()->getPlacement() == 1)) {
-                    foreach ($ally->getUsers() as $userGO) {
+                if (count($ally->getCharacters()) == 1 || ($ally->getPolitic() == 'fascism' && $userGO->getGrade()->getPlacement() == 1)) {
+                    foreach ($ally->getCharacters() as $userGO) {
                         $userGO->setAlly(null);
                         $userGO->setGrade(null);
                         $userGO->setAllyBan($now);

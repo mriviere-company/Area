@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -25,14 +26,20 @@ class Salon
     protected $allys;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", inversedBy="salons")
+     * @ORM\ManyToMany(targetEntity="Character", inversedBy="salons")
      */
-    private $users;
+    private $characters;
 
     /**
-     * @ORM\OneToMany(targetEntity="S_Content", mappedBy="salon", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="S_Content", mappedBy="salon", fetch="EXTRA_LAZY")
      */
     protected $contents;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Server", inversedBy="salon", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="server_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $server;
 
     /**
      * @ORM\Column(name="name",type="string", length=30)
@@ -46,38 +53,42 @@ class Salon
     protected $views;
 
     /**
-     * User constructor.
+     * Salon constructor.
+     * @param string $name
+     * @param Server $server
      */
-    public function __construct()
+    public function __construct(string $name, Server $server)
     {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->allys = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->contents = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->views = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->name = $name;
+        $this->server = $server;
+        $this->characters = new ArrayCollection();
+        $this->allys = new ArrayCollection();
+        $this->contents = new ArrayCollection();
+        $this->views = new ArrayCollection();
     }
 
     /**
-     * Add user
+     * Add character
      *
-     * @param \App\Entity\User $user
+     * @param \App\Entity\Character $character
      *
      * @return Salon
      */
-    public function addUser(\App\Entity\User $user)
+    public function addCharacter(\App\Entity\Character $character)
     {
-        $this->users[] = $user;
+        $this->characters[] = $character;
 
         return $this;
     }
 
     /**
-     * Remove user
+     * Remove character
      *
-     * @param \App\Entity\User $user
+     * @param \App\Entity\Character $character
      */
-    public function removeUser(\App\Entity\User $user)
+    public function removeCharacter(\App\Entity\Character $character)
     {
-        $this->users->removeElement($user);
+        $this->characters->removeElement($character);
     }
 
     /**
@@ -171,17 +182,17 @@ class Salon
     /**
      * @return mixed
      */
-    public function getUsers()
+    public function getCharacters()
     {
-        return $this->users;
+        return $this->characters;
     }
 
     /**
-     * @param mixed $users
+     * @param mixed $characters
      */
-    public function setUsers($users): void
+    public function setCharacters($characters): void
     {
-        $this->users = $users;
+        $this->characters = $characters;
     }
 
     /**
@@ -232,8 +243,27 @@ class Salon
         $this->views = $views;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getServer()
+    {
+        return $this->server;
+    }
+
+    /**
+     * @param mixed $server
+     */
+    public function setServer($server): void
+    {
+        $this->server = $server;
     }
 }

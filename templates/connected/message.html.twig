@@ -28,7 +28,7 @@
                                 <th class="tab-cells-name">
                                     <span class="ml-3">
                                         {{ 'message.sender'|trans }}
-                                        {% if message.getSender() %}<a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'userPlanet': message.getIdSender(), 'usePlanet': usePlanet.getId()}) }}">{{ message.getSender() }}</a>{% else %}{{ 'message.anonymousSender'|trans }}{% endif %}
+                                        {% if message.getSender() %}<a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'characterProfil': message.getIdSender(), 'usePlanet': usePlanet.getId()}) }}">{{ message.getSender() }}</a>{% else %}{{ 'message.anonymousSender'|trans }}{% endif %}
                                     </span>
                                     <span class="float-right">
                                         {{ 'message.bitcoinRe'|trans }}
@@ -40,7 +40,7 @@
                                         <span class="mr-3">{{ 'message.title'|trans }}</span> {{ message.getTitle() }}
                                     </span>
                                     <span class="float-right">
-                                        {% if message.getNewMessage() == true %}<a class="btn-new" href="{{ path('message_view', {'usePlanet': usePlanet.getId(), 'id': message.getId()}) }}">{{ 'NewMessage'|trans }}</a>{% endif %}
+                                        {% if message.getNewMessage() == true %}<a class="btn-new" href="{{ path('message_view', {'message': message.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'NewMessage'|trans }}</a>{% endif %}
                                         {{ message.getSendAt()|date('d/m/Y H:i:s') }}
                                     </span>
                                 </th>
@@ -50,12 +50,12 @@
                                     <div class="p-3">
                                         {{ message.getContent()|raw }}
                                     </div>
-                                    <div class="float-right"><a class="confirm-button p-1" data-toggle="modal" data-target="#respondeModal" href="{{ path('message_responde', {'usePlanet': usePlanet.getId(), 'id': message.getIdSender()}) }}">{{ 'responde'|trans }}</a></div>
+                                    <div class="float-right"><a class="confirm-button p-1" data-toggle="modal" data-target="#respondeModal" href="{{ path('message_responde', {'userRecever': message.getIdSender(), 'usePlanet': usePlanet.getId()}) }}">{{ 'responde'|trans }}</a></div>
                                 </th>
                             </tr>
                             <tr>
                                 <th colspan="2" class="tab-cells-name">
-                                    <div class="p-1">{% if message.getShareKey() %}<a class="p-1" href="{{ path('message_share_display', {'id': message.getShareKey()}) }}" target="_blank">https://www.areauniverse.eu/connect/message/share/{{ message.getShareKey() }}</a>{% endif %}<a class="confirm-button btn-sm" href="{{ path('message_share', {'usePlanet': usePlanet.getId(), 'id': message.getId()}) }}">{{ 'share'|trans }}</a></div>
+                                    <div class="p-1">{% if message.getShareKey() %}<a class="p-1" href="{{ path('message_share_display', {'key': message.getShareKey()}) }}" target="_blank">https://www.areauniverse.eu/connect/message/share/{{ message.getShareKey() }}</a>{% endif %}<a class="confirm-button btn-sm" href="{{ path('message_share', {'usePlanet': usePlanet.getId(), 'id': message.getId()}) }}">{{ 'share'|trans }}</a></div>
                                 </th>
                             </tr>
                             </tbody>
@@ -71,7 +71,7 @@
                             <th class="tab-cells-name text-center">
                                 <div class="row">
                                     <div class="offset-2 col-8">
-                                        {{ form_widget(form_message.user) }}
+                                        {{ form_widget(form_message.character) }}
                                     </div>
                                 </div>
                             </th>
@@ -99,7 +99,7 @@
                                         {{ 'message.bitcoin'|trans }}
                                     </div>
                                     <div class="col-2">
-                                        {{ form_widget(form_message.bitcoin,{attr: { max: app.user.getBitcoin()}}) }}
+                                        {{ form_widget(form_message.bitcoin,{attr: { max: character.getBitcoin()}}) }}
                                     </div>
                                 </div>
                             </th>
@@ -117,7 +117,7 @@
                                 <th class="tab-cells-name">
                                     <span class="ml-3">
                                         {{ 'message.sendTo'|trans }}
-                                        <a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'userPlanet': message.getUser().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ message.getUser().getUserName() }}</a>
+                                        <a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'characterProfil': message.getCharacter().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ message.getCharacter().getUserName() }}</a>
                                         {% if message.getSender is null %}<span class="text-vert ml-3">{{ 'message.sendAnonym'|trans }}</span>{% endif %}
                                     </span>
                                     <span class="float-right">

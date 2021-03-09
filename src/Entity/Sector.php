@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -20,7 +21,7 @@ class Sector
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Planet", mappedBy="sector", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Planet", mappedBy="sector", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
      */
     protected $planets;
@@ -43,9 +44,11 @@ class Sector
      */
     protected $destroy;
 
-    public function __construct()
+    public function __construct(Galaxy $galaxy, int $position)
     {
-        $this->planets = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->galaxy = $galaxy;
+        $this->position = $position;
+        $this->planets = new ArrayCollection();
         $this->destroy = false;
     }
 

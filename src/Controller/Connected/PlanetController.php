@@ -4,6 +4,8 @@ namespace App\Controller\Connected;
 
 use App\Entity\Fleet;
 use App\Entity\Report;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -20,41 +22,45 @@ class PlanetController extends AbstractController
 {
     /**
      * @Route("/planete/{usePlanet}", name="planet", requirements={"usePlanet"="\d+"})
+     * @param Request $request
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
      */
     public function planetAction(Request $request, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if($user->getGameOver()) {
+        if($character->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $otherPoints = $em->getRepository('App:Stats')
             ->createQueryBuilder('s')
-            ->join('s.user', 'u')
+            ->join('s.character', 'c')
             ->select('count(s) as numbers, sum(DISTINCT s.bitcoin) as allBitcoin')
             ->groupBy('s.date')
-            ->andWhere('u.bot = false')
+            ->andWhere('c.bot = false')
             ->getQuery()
             ->getResult();
 
         $planetsSeller = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
-            ->where('p.user = :user')
+            ->where('p.character = :character')
             ->andWhere('p.autoSeller = true')
-            ->setParameters(['user' => $user])
+            ->setParameters(['character' => $character])
             ->getQuery()
             ->getResult();
 
         $planetsNoSell = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
-            ->where('p.user = :user')
+            ->where('p.character = :character')
             ->andWhere('p.autoSeller = false')
-            ->setParameters(['user' => $user])
+            ->setParameters(['character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -66,8 +72,8 @@ class PlanetController extends AbstractController
             $renamePlanet = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
                 ->where('p.id = :id')
-                ->andWhere('p.user = :user')
-                ->setParameters(['id' => $form_manageRenamePlanet->get('id')->getData(), 'user' => $user])
+                ->andWhere('p.character = :character')
+                ->setParameters(['id' => $form_manageRenamePlanet->get('id')->getData(), 'character' => $character])
                 ->getQuery()
                 ->getOneOrNullResult();
 
@@ -95,41 +101,44 @@ class PlanetController extends AbstractController
 
     /**
      * @Route("/colonisation-planete/{fleet}/", name="colonizer_planet", requirements={"fleet"="\d+"})
+     * @param Fleet $fleet
+     * @return RedirectResponse
      */
     public function colonizeAction(Fleet $fleet)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
         $user = $this->getUser();
+        $character = $user->getMainCharacter();
         $colonize = $em->getRepository('App:Fleet')->find(['id' => $fleet]);
         $newPlanet = $colonize->getPlanet();
 
-        if($colonize->getColonizer() && $newPlanet->getUser() == null &&
+        if($colonize->getColonizer() && $newPlanet->getCharacter() == null &&
             $newPlanet->getEmpty() == false && $newPlanet->getMerchant() == false &&
-            $newPlanet->getCdr() == false && $colonize->getUser()->getColPlanets() < 26 &&
-            $colonize->getUser()->getColPlanets() <= ($user->getTerraformation() + 1 + $user->getPoliticColonisation())) {
+            $newPlanet->getCdr() == false && $colonize->getCharacter()->getColPlanets() < 26 &&
+            $colonize->getCharacter()->getColPlanets() <= ($character->getTerraformation() + 1 + $character->getPoliticColonisation())) {
 
             $colonize->setColonizer($colonize->getColonizer() - 1);
-            $newPlanet->setUser($colonize->getUser());
+            $newPlanet->setCharacter($colonize->getCharacter());
             $newPlanet->setName('Colonie');
             $newPlanet->setSoldier(20);
             $newPlanet->setScientist(0);
-            $newPlanet->setNbColo(count($fleet->getUser()->getPlanets()) + 1);
+            $newPlanet->setNbColo(count($fleet->getCharacter()->getPlanets()) + 1);
             if($colonize->getNbrShips() == 0) {
                 $em->remove($colonize);
             }
             $reportColo = new Report();
             $reportColo->setSendAt($now);
-            $reportColo->setUser($user);
+            $reportColo->setCharacter($character);
             $reportColo->setTitle("Colonisation de planète");
             $reportColo->setImageName("colonize_report.jpg");
             $reportColo->setContent("Vous venez de coloniser une planète inhabitée en : (" .  $newPlanet->getSector()->getgalaxy()->getPosition() . "." . $newPlanet->getSector()->getPosition() . "." . $newPlanet->getPosition() . ") . Cette planète fait désormais partie de votre Empire, pensez à la renommer sur la page Planètes.");
-            $user->setViewReport(false);
+            $character->setViewReport(false);
             $em->persist($reportColo);
-            $quest = $user->checkQuests('colonize');
+            $quest = $character->checkQuests('colonize');
             if($quest) {
-                $user->getRank()->setWarPoint($user->getRank()->getWarPoint() + $quest->getGain());
-                $user->removeQuest($quest);
+                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
+                $character->removeQuest($quest);
             }
             $em->flush();
         }
@@ -139,12 +148,17 @@ class PlanetController extends AbstractController
 
     /**
      * @Route("/planete-abandon/{abandonPlanet}/{usePlanet}", name="planet_abandon", requirements={"usePlanet"="\d+","abandonPlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @param Planet $abandonPlanet
+     * @return RedirectResponse
      */
     public function planetAbandonAction(Planet $usePlanet, Planet $abandonPlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user || $abandonPlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        
+        if ($usePlanet->getCharacter() != $character || $abandonPlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -158,13 +172,13 @@ class PlanetController extends AbstractController
             ->andWhere('dp.position = :planete')
             ->andWhere('s.position = :sector')
             ->andWhere('g.position = :galaxy')
-            ->andWhere('f.user != :user')
+            ->andWhere('f.character != :character')
             ->andWhere('f.attack = true')
-            ->setParameters(['planete' => $abandonPlanet->getPosition(), 'sector' => $abandonPlanet->getSector()->getPosition(), 'galaxy' => $abandonPlanet->getSector()->getGalaxy()->getPosition(), 'user' => $user])
+            ->setParameters(['planete' => $abandonPlanet->getPosition(), 'sector' => $abandonPlanet->getSector()->getPosition(), 'galaxy' => $abandonPlanet->getSector()->getGalaxy()->getPosition(), 'character' => $character])
             ->getQuery()
             ->getResult();
 
-        if($abandonPlanet->getFleetsAbandon($user) == 1 || $fleetComing) {
+        if($abandonPlanet->getFleetsAbandon($character) == 1 || $fleetComing) {
             return $this->redirectToRoute('planet', ['usePlanet' => $usePlanet->getId()]);
         }
 
@@ -172,12 +186,12 @@ class PlanetController extends AbstractController
             if($abandonPlanet->getWorker() < 10000) {
                 $abandonPlanet->setWorker(10000);
             }
-            $abandonPlanet->setUser(null);
+            $abandonPlanet->setCharacter(null);
             $abandonPlanet->setName('Abandonnée');
         } else {
-            $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+            $hydra = $em->getRepository('App:character')->findOneBy(['zombie' => 1]);
 
-            $abandonPlanet->setUser($hydra);
+            $abandonPlanet->setCharacter($hydra);
             $abandonPlanet->setWorker(125000);
             if ($abandonPlanet->getSoldierMax() >= 500) {
                 $abandonPlanet->setSoldier($abandonPlanet->getSoldierMax());
@@ -192,14 +206,14 @@ class PlanetController extends AbstractController
 
         $em->flush();
 
-        if($user->getColPlanets() == 0) {
-            $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
-            foreach ($user->getFleets() as $fleet) {
+        if($character->getColPlanets() == 0) {
+            $hydra = $em->getRepository('App:character')->findOneBy(['zombie' => 1]);
+            foreach ($character->getFleets() as $fleet) {
                 if($fleet->getFleetList()) {
                     $fleet->getFleetList()->removeFleet($fleet);
                     $fleet->setFleetList(null);
                 }
-                $fleet->setUser($hydra);
+                $fleet->setCharacter($hydra);
                 $fleet->setName('Incursion H');
                 $fleet->setAttack(true);
             }
@@ -209,7 +223,7 @@ class PlanetController extends AbstractController
             return $this->redirectToRoute('game_over');
         }
         if ($usePlanet == $abandonPlanet) {
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
+            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($character);
         }
 
         return $this->redirectToRoute('planet', ['usePlanet' => $usePlanet->getId()]);

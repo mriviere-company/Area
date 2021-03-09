@@ -8,7 +8,11 @@ form.newOptions: Sauvegarder
 form.alpha: Alphabétique
 form.pos: Position
 form.col: Colonisation
-newletterActiver: 'Activer/Désactiver Newletter'
+form.username: Pseudonyme
+form.connectLast: 'Dernière connexion'
+newletter: 'Newletter'
+modifUsername: Pseudonyme
+lastPlanet: 'Connexion auto'
 form.planetOrder : ''
 form.newletter: ''
 '': ''

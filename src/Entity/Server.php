@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -18,6 +20,14 @@ class Server
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @ORM\Column(name="name", type="string", length=20)
+     * @Assert\NotBlank(message = "required")
+     * @Assert\Regex(
+     *     pattern="/[a-zA-Z0-9]/")
+     */
+    protected $name;
 
     /**
      * @ORM\Column(name="open",type="boolean")
@@ -42,11 +52,6 @@ class Server
     protected $embargo;
 
     /**
-     * @ORM\OneToMany(targetEntity="Galaxy", mappedBy="server", fetch="EXTRA_LAZY", cascade={"persist"})
-     */
-    protected $galaxys;
-
-    /**
      * @ORM\Column(name="speed",type="decimal", precision=28, scale=3)
      * @Assert\NotBlank(message = "required")
      */
@@ -59,17 +64,66 @@ class Server
     protected $production;
 
     /**
-     * User constructor.
+     * @ORM\OneToMany(targetEntity="Character", mappedBy="server", fetch="EXTRA_LAZY")
      */
-    public function __construct()
+    protected $characters;
+
+    /**
+     * @ORM\Column(name="attackStartAt",type="datetime", nullable=true)
+     */
+    protected $attackStartAt;
+
+    /**
+     * @ORM\Column(name="attackEndAt",type="datetime", nullable=true)
+     */
+    protected $attackEndAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Galaxy", mappedBy="server", fetch="EXTRA_LAZY")
+     */
+    protected $galaxys;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="server", fetch="EXTRA_LAZY")
+     */
+    protected $events;
+
+
+    /**
+     * @ORM\OneToOne(targetEntity="Salon", mappedBy="server", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="salon_id", referencedColumnName="id", onDelete="SET NULL")
+     */
+    protected $salon;
+
+    /**
+     * Server constructor.
+     * @param string $name
+     * @param bool $pvp
+     * @param int $speed
+     * @param int $startHour
+     * @param int $startMin
+     * @param int $endHour
+     * @param int $endMin
+     * @param int $prod
+     */
+    public function __construct(string $name, bool $pvp, int $speed, int $startHour, int $startMin, int $endHour, int $endMin, int $prod)
     {
+        $now = new DateTime();
+        $nowBis = new DateTime();
+        $nowTer = new DateTime();
+
+        $this->characters = new ArrayCollection();
+        $this->galaxys = new ArrayCollection();
+        $this->events = new ArrayCollection();
+        $this->dailyReport = $now;
+        $this->production = $prod;
+        $this->embargo = $now;
+        $this->attackStartAt = $nowBis->setTime($startHour, $startMin, 00);
+        $this->attackEndAt = $nowTer->setTime($endHour, $endMin, 00);
         $this->open = false;
-        $this->speed = 0.1;
-        $this->production = 1;
-        $this->pvp = false;
-        $this->dailyReport = null;
-        $this->embargo = null;
-        $this->galaxys = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->speed = $speed;
+        $this->pvp = $pvp;
+        $this->name = $name;
     }
 
     /**
@@ -91,11 +145,11 @@ class Server
     /**
      * Add galaxy
      *
-     * @param \App\Entity\Galaxy $galaxys
+     * @param Galaxy $galaxys
      *
-     * @return Galaxy
+     * @return Server
      */
-    public function addGalaxy(\App\Entity\Galaxy $galaxys)
+    public function addGalaxy(Galaxy $galaxys)
     {
         $this->galaxys[] = $galaxys;
 
@@ -105,11 +159,91 @@ class Server
     /**
      * Remove galaxy
      *
-     * @param \App\Entity\Galaxy $galaxys
+     * @param Galaxy $galaxys
      */
-    public function removeGalaxy(\App\Entity\Galaxy $galaxys)
+    public function removeGalaxy(Galaxy $galaxys)
     {
         $this->galaxys->removeElement($galaxys);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getEvents(): ArrayCollection
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param ArrayCollection $events
+     */
+    public function setEvents(ArrayCollection $events): void
+    {
+        $this->events = $events;
+    }
+
+
+    /**
+     * Add event
+     *
+     * @param Event $events
+     *
+     * @return Server
+     */
+    public function addEvent(Event $events)
+    {
+        $this->events[] = $events;
+
+        return $this;
+    }
+
+    /**
+     * Remove event
+     *
+     * @param Event $events
+     */
+    public function removeEvent(Event $events)
+    {
+        $this->events->removeElement($events);
+    }
+    /**
+     * @return mixed
+     */
+    public function getCharacters()
+    {
+        return $this->characters;
+    }
+
+    /**
+     * @param mixed $characters
+     */
+    public function setCharacters($characters): void
+    {
+        $this->characters = $characters;
+    }
+
+    /**
+     * Add character
+     *
+     * @param Character $characters
+     *
+     * @return Server
+     */
+    public function addCharacter(Character $characters)
+    {
+        $this->characters[] = $characters;
+
+        return $this;
+    }
+
+    /**
+     * Remove character
+     *
+     * @param Character $characters
+     */
+    public function removeCharacter(Character $characters)
+    {
+        $this->characters->removeElement($characters);
     }
 
     /**
@@ -208,8 +342,75 @@ class Server
         $this->embargo = $embargo;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return null
+     */
+    public function getSalon()
+    {
+        return $this->salon;
+    }
+
+    /**
+     * @param null $salon
+     */
+    public function setSalon($salon): void
+    {
+        $this->salon = $salon;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return null
+     */
+    public function getAttackStartAt()
+    {
+        return $this->attackStartAt;
+    }
+
+    /**
+     * @param null $attackStartAt
+     */
+    public function setAttackStartAt($attackStartAt): void
+    {
+        $this->attackStartAt = $attackStartAt;
+    }
+
+    /**
+     * @return null
+     */
+    public function getAttackEndAt()
+    {
+        return $this->attackEndAt;
+    }
+
+    /**
+     * @param null $attackEndAt
+     */
+    public function setAttackEndAt($attackEndAt): void
+    {
+        $this->attackEndAt = $attackEndAt;
     }
 }

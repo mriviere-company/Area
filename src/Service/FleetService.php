@@ -11,7 +11,7 @@ class FleetService extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $ally = $user->getAlly();
+        $ally = $character->getAlly();
 
         return new Response (null);
     }

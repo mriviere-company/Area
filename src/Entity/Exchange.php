@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -52,12 +53,23 @@ class Exchange
     protected $accepted;
 
     /**
-     * User constructor.
+     * Exchange constructor.
+     * @param Ally $ally
+     * @param string $username
+     * @param bool $type
+     * @param bool $accepted
+     * @param int $amount
+     * @param string|null $content
      */
-    public function __construct()
+    public function __construct(Ally $ally, string $username, bool $type, bool $accepted, int $amount, ?string $content)
     {
-        $this->accepted = 0;
-        $this->content = '-';
+        $this->ally = $ally;
+        $this->name = $username;
+        $this->createdAt = new DateTime();
+        $this->type = $type;
+        $this->accepted = $accepted;
+        $this->amount = $amount;
+        $this->content = $content ? $content : "-";
     }
 
     /**
@@ -65,6 +77,9 @@ class Exchange
      */
     protected $createdAt;
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

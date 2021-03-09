@@ -20,8 +20,8 @@ class Destination
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fleet", inversedBy="destination", fetch="EXTRA_LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Fleet", inversedBy="destination", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $fleet;
 
@@ -31,6 +31,16 @@ class Destination
      */
     protected $planet;
 
+    /**
+     * Destination constructor.
+     * @param Fleet $fleet
+     * @param Planet $planet
+     */
+    public function __construct(Fleet $fleet, Planet $planet)
+    {
+        $this->fleet = $fleet;
+        $this->planet = $planet;
+    }
     /**
      * @return mixed
      */
@@ -63,6 +73,9 @@ class Destination
         $this->planet = $planet;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

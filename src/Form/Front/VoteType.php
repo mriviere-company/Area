@@ -2,7 +2,7 @@
 
 namespace App\Form\Front;
 
-use App\Entity\User;
+use App\Entity\Character;
 use function Couchbase\defaultEncoder;
 use Doctrine\ORM\EntityRepository;
 use PMA\libraries\config\Form;
@@ -22,15 +22,15 @@ class VoteType extends AbstractType
     {
         $builder
             ->add(
-                'user',
+                'character',
                 EntityType::class,
                 [
-                    'class' => User::class,
+                    'class' => Character::class,
                     'label' => 'form.vote',
                     'query_builder' => function (EntityRepository $er) use($options) {
-                        return $er->createQueryBuilder('u')
-                            ->join('u.ally', 'a')
-                            ->join('u.grade', 'g')
+                        return $er->createQueryBuilder('c')
+                            ->join('c.ally', 'a')
+                            ->join('c.grade', 'g')
                             ->where('a.id = :id')
                             ->setParameter('id', $options['allyId'])
                             ->orderBy('g.placement', 'ASC');

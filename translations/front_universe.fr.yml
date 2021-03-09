@@ -2,7 +2,7 @@ title: Univers
 tooltip.galaxy: 'Galaxy %position%'
 galaxy.nbr: 'Galaxy %position%'
 galaxy.players: '%players% joueurs'
-choseGalaxy: 'Choisissez une Galaxie !'
+server.galaxy: 'Connectez vous au serveur ou lancez vous dans une nouvelle galaxie !'
 server.open: Ouvert
 server.closed: Fermé
 server.pvp: Pvp

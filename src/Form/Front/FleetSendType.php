@@ -74,7 +74,7 @@ class FleetSendType extends AbstractType
                     'label' => 'form.planet',
                     'query_builder' => function (EntityRepository $er) use($options) {
                         return $er->createQueryBuilder('p')
-                            ->join('p.user', 'u')
+                            ->join('p.character', 'c')
                             ->where('u.id = :user')
                             ->setParameter('user', $options['user'])
                             ->orderBy('p.name', 'ASC');

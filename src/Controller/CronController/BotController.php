@@ -47,7 +47,7 @@ class BotController extends AbstractController
             $user->setLastActivity($now);
             $user->setNewletter(false);
             // image de profil
-            $em->persist($user);
+            $em->persist($character);
             $em->flush();
 
             $planet = $em->getRepository('App:Planet')
@@ -61,7 +61,7 @@ class BotController extends AbstractController
                 ->getOneOrNullResult();
 
             if($planet) {
-                $planet->setUser($user);
+                $planet->setCharacter($character);
                 $planet->setName('Terra Nova');
                 $planet->setSonde(10);
                 $planet->setRadar(2);
@@ -81,20 +81,21 @@ class BotController extends AbstractController
                 $planet->setColonizer(1);
                 $user->addPlanet($planet);
                 foreach ($planet->getFleets() as $fleet) {
-                    if ($fleet->getUser()->getZombie() == 1) {
+                    if ($fleet->getCharacter()->getZombie() == 1) {
                         $em->remove($fleet);
                     } else {
-                        $fleet->setPlanet($fleet->getUser()->getFirstPlanetFleet());
+                        $fleet->setPlanet($fleet->getCharacter()->getFirstPlanetFleet());
                     }
                 }
             }
             $ships = new Ships();
             $user->setShip($ships);
+            $ships->setCharacter($character);
             $em->persist($ships);
-            $rank = new Rank();
+            $rank = new Rank($user);
             $em->persist($rank);
             $user->setRank($rank);
-            $salon->addUser($user);
+            $salon->addUser($character);
         }
         $em->flush();
         exit;*/
@@ -125,7 +126,7 @@ class BotController extends AbstractController
                 ->getOneOrNullResult();
 
 
-            if ($user) {
+            if ($character) {
 
                 $planet = $em->getRepository('App:Planet')
                     ->createQueryBuilder('p')
@@ -135,7 +136,7 @@ class BotController extends AbstractController
                     ->andWhere('p.ground = 25')
                     ->andWhere('p.sky = 5')
                     ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
-                    ->setParameters(['gal' => rand(1, 25), 'sector' => rand(1, 100)])
+                    ->setParameters(['galaxy' => rand(1, 25), 'sector' => rand(1, 100)])
                     ->setMaxResults(1)
                     ->getQuery()
                     ->getOneOrNullResult();
@@ -149,14 +150,14 @@ class BotController extends AbstractController
                         ->andWhere('p.ground = 25')
                         ->andWhere('p.sky = 5')
                         ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
-                        ->setParameters(['gal' => rand(1, 25), 'sector' => rand(1, 100)])
+                        ->setParameters(['galaxy' => rand(1, 25), 'sector' => rand(1, 100)])
                         ->setMaxResults(1)
                         ->getQuery()
                         ->getOneOrNullResult();
                 }
 
                 if ($planet) {
-                    $planet->setUser($user);
+                    $planet->setCharacter($character);
                     $planet->setName('Terra Nova');
                     $planet->setSonde(10);
                     $planet->setRadar(2);
@@ -176,23 +177,23 @@ class BotController extends AbstractController
                     $planet->setColonizer(1);
                     $user->addPlanet($planet);
                     foreach ($planet->getFleets() as $fleet) {
-                        if ($fleet->getUser()->getZombie() == 1) {
+                        if ($fleet->getCharacter()->getZombie() == 1) {
                             $em->remove($fleet);
                         } else {
-                            $fleet->setPlanet($fleet->getUser()->getFirstPlanetFleet());
+                            $fleet->setPlanet($fleet->getCharacter()->getFirstPlanetFleet());
                         }
                     }
                     $user->setTutorial(60);
-                    $user->setDailyConnect($now);
-                    //$user->setLastActivity($now);
+                    $character->DailyConnect($now);
+                    //$character->LastActivity($now);
 
                     $ships = new Ships();
-                    $user->setShip($ships);
+                    $character->Ship($ships);
+                    $ships->setCharacter($character);
                     $em->persist($ships);
 
-                    $rank = new Rank();
+                    $rank = new Rank($character);
                     $em->persist($rank);
-                    $user->setRank($rank);
                 }
             }
             echo "Ajout nouveau bot finis.<br>";
@@ -264,7 +265,7 @@ class BotController extends AbstractController
 
                     $planet = $em->getRepository('App:Planet')
                         ->createQueryBuilder('p')
-                        ->join('p.user', 'u')
+                        ->join('p.character', 'c')
                         ->join('p.sector', 's')
                         ->join('s.galaxy', 'g')
                         ->where('u.bot = false')
@@ -299,7 +300,7 @@ class BotController extends AbstractController
                         }
                         $sonde = new Fleet();
                         $sonde->setSonde(1);
-                        $sonde->setUser($bot);
+                        $sonde->setCharacter($bot);
                         $sonde->setPlanet($fPlanet);
                         $sonde->setName('Auto Sonde');
                         $sonde->setSignature($sonde->getNbrSignatures());
@@ -310,10 +311,9 @@ class BotController extends AbstractController
                         $moreNow = new DateTime();
                         $moreNow->add(new DateInterval('PT' . 120 . 'S'));
                         $sonde->setFlightTime($move);
-                        $destination = new Destination();
-                        $destination->setFleet($sonde);
-                        $destination->setPlanet($planet);
+                        $destination = new Destination($sonde, $planet);
                         $em->persist($destination);
+                        $sonde->setDestination($destination);
                         $sonde->setFlightType(1);
                         $sonde->setCancelFlight($moreNow);
                         $em->persist($sonde);
@@ -335,12 +335,11 @@ class BotController extends AbstractController
                             $sellTime->add(new DateInterval('PT' . 1200 . 'S'));
                             $seller = new Fleet();
                             $seller->setHunter(1);
-                            $seller->setUser($merchant);
+                            $seller->setCharacter($merchant);
                             $seller->setPlanet($planet);
-                            $destination = new Destination();
-                            $destination->setFleet($seller);
-                            $destination->setPlanet($planetMerchant);
+                            $destination = new Destination($seller, $planetMerchant);
                             $em->persist($destination);
+                            $seller->setDestination($destination);
                             $seller->setFlightTime($sellTime);
                             $seller->setAttack(0);
                             $seller->setName('Cargos');
@@ -353,14 +352,10 @@ class BotController extends AbstractController
                     //$bot->setLastActivity($now);
                 }
                 if (rand(1, 8000) == 8001 && $messageSent == 1) {
-                    $message = new S_Content();
                     $messageSent = 0;
-                    $message->setSalon($salon);
                     $allMessages = ['Salut', 'Plop', 'bonjour', 'bonjour', 'ca va', 'Salut', 'Salut', 'Salut', 'Salut', 'Salut', 'Salut', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'bonjour', 'Slt tlm', 'ca va ?', 'wesh', 'bj', 'bonjour', 'hellooo', 'hello', 'hello', 'hello', 'hello', 'hello'];
                     $body = $allMessages[mt_rand(0, count($allMessages) - 1)];
-                    $message->setMessage(nl2br($body));
-                    $message->setSendAt($messageTime);
-                    $message->setUser($bot);
+                    $message = new S_Content($bot, nl2br($body), $salon);
                     $em->persist($message);
                     $userViews = $em->getRepository('App:User')
                         ->createQueryBuilder('u')
@@ -471,13 +466,13 @@ class BotController extends AbstractController
                             ->join('s.galaxy', 'g')
                             ->where('p.user is null')
                             ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.id = :gal and s.position = :sector')
-                            ->setParameters(['gal' => $bot->getFirstPlanetFleet()->getSector()->getGalaxy(), 'sector' => rand(1, 100)])
+                            ->setParameters(['galaxy' => $bot->getFirstPlanetFleet()->getSector()->getGalaxy(), 'sector' => rand(1, 100)])
                             ->getQuery()
                             ->setMaxResults(1)
                             ->getOneOrNullResult();
 
                         if ($newPlanet) {
-                            $newPlanet->setUser($bot);
+                            $newPlanet->setCharacter($bot);
                             $newPlanet->setName('Colonie');
                             $newPlanet->setSoldier(200);
                             $newPlanet->setScientist(0);
@@ -489,13 +484,13 @@ class BotController extends AbstractController
                                 ->join('s.galaxy', 'g')
                                 ->where('p.user is null')
                                 ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
-                                ->setParameters(['gal' => rand(10, 25), 'sector' => rand(1, 100)])
+                                ->setParameters(['galaxy' => rand(10, 25), 'sector' => rand(1, 100)])
                                 ->getQuery()
                                 ->setMaxResults(1)
                                 ->getOneOrNullResult();
 
                             if ($newPlanet) {
-                                $newPlanet->setUser($bot);
+                                $newPlanet->setCharacter($bot);
                                 $newPlanet->setName('Colonie');
                                 $newPlanet->setSoldier(200);
                                 $newPlanet->setScientist(0);
@@ -531,10 +526,7 @@ class BotController extends AbstractController
         }
         if ($usePlanet->getConstructAt() > $now) {
             $level = $level + $usePlanet->getConstructionsLike($building);
-            $construction = new Construction();
-            $construction->setConstruct($building);
-            $construction->setConstructTime($level * $time);
-            $construction->setPlanet($usePlanet);
+            $construction = new Construction($usePlanet, $building, $level * $time);
             $usePlanet->setGroundPlace($newGround);
             $usePlanet->setSkyPlace($newSky);
             $em->persist($construction);

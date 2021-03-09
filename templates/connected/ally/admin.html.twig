@@ -7,27 +7,27 @@
 {% block body %}
     <div class="front-block">
         <div class="front-block-game">
-            {% if app.user.getAlly() %}
+            {% if ally %}
                 <h1 class="text-center p-4">{{ 'ally.gradeTitle'|trans }}</h1>
                 <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ app.user.getAlly().getUsers()|length }} {{ 'ally.members'|trans }}</a>
+                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCharacters()|length }} {{ 'ally.members'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_bank', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.found'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ path('ally_page_pacts', {'usePlanet': usePlanet.getId()}) }}" >{{ app.user.getAlly().getPacts() }}  {{ 'ally.pacts'|trans }}</a>
+                        <a href="{{ path('ally_page_pacts', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getPacts() }}  {{ 'ally.pacts'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_add', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.add'|trans }}</a>
                     </li>
-                    {% if app.user.getGrade().getPlacement() == 1 %}
+                    {% if character.getGrade().getPlacement() == 1 %}
                         <li class="nav-item">
                             <a class="nav-link active" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">{{ 'ally.admin'|trans }}</a>
                         </li>
                     {% endif %}
-                    {% if app.user.getAlly().getPolitic() == 'democrate' %}
+                    {% if ally.getPolitic() == 'democrate' %}
                         <li class="nav-item">
                             <a href="{{ path('ally_page_exit', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.leave'|trans }}</a>
                         </li>
@@ -38,7 +38,7 @@
                     {{ form_label(form_allyDefcon.defcon) }} {{ form_widget(form_allyDefcon.defcon) }} {{ form_widget(form_allyDefcon.sendForm) }}
                     {{ form_end(form_allyDefcon) }}
                 </div>
-                {% if app.user.getAlly().getPolitic() != 'fascism' %}
+                {% if ally.getPolitic() != 'fascism' %}
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="admin" role="tabpanel" aria-labelledby="admin-tab">
                             {{ form_start(form_allyGrade) }}
@@ -50,6 +50,9 @@
                                     <th class="tab-cells-name">{{ 'ally.canPeace'|trans }}</th>
                                     <th class="tab-cells-name">{{ 'ally.canKick'|trans }}</th>
                                     <th class="tab-cells-name">{{ 'ally.canWar'|trans }}</th>
+                                    <th class="tab-cells-name">{{ 'ally.canEdit'|trans }}</th>
+                                    <th class="tab-cells-name">{{ 'ally.seeMembers'|trans }}</th>
+                                    <th class="tab-cells-name">{{ 'ally.useFleets'|trans }}</th>
                                     <th class="tab-cells-name">{{ 'ally.priority'|trans }}</th>
                                     <th></th>
                                 </tr>
@@ -59,6 +62,9 @@
                                     <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.canPeace) }}</td>
                                     <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.canKick) }}</td>
                                     <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.canWar) }}</td>
+                                    <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.canEdit) }}</td>
+                                    <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.seeMembers) }}</td>
+                                    <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.useFleets) }}</td>
                                     <td class="center-cells pt-3">{{ form_widget(form_allyGrade.placement) }}</td>
                                     <td class="center-cells">{{ form_widget(form_allyGrade.sendForm) }}</td>
                                 </tr>

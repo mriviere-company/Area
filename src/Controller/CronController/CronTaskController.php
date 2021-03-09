@@ -13,27 +13,28 @@ class CronTaskController extends AbstractController
 {
     /**
      * @Route("/construction/", name="cron_task")
-     * @Route("/construction/{opened}/", name="cron_task_user", requirements={"opened"="\d+"})
-     * @Route("/connect/construction/{opened}/", name="connect_cron_task_user", requirements={"opened"="\d+"})
-     * @Route("/connect/carte-spatiale/construction/{opened}/", name="map_cron_task_user", requirements={"opened"="\d+"})
+     * @Route("/construction/{opened}/", name="cron_task_character", requirements={"opened"="\d+"})
+     * @Route("/connect/construction/{opened}/", name="connect_cron_task_character", requirements={"opened"="\d+"})
+     * @Route("/connect/carte-spatiale/construction/{opened}/", name="map_cron_task_character", requirements={"opened"="\d+"})
+     * @param null $opened
+     * @return Response
      */
-    public function cronTaskAction($opened = NULL)
+    public function cronTaskAction($opened = null)
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
-        $server = $em->getRepository('App:Server')->find(['id' => 1]);
 
-        $userGOs = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->where('u.gameOver is not null')
-            ->andWhere('u.rank is not null')
+        $characterGOs = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->where('c.gameOver is not null')
+            ->andWhere('c.rank is not null')
             ->getQuery()
             ->getResult();
 
-        if ($userGOs) {
+        if ($characterGOs) {
             echo "Game Over : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\GameOverController::gameOverCronAction', [
-                'userGOs'  => $userGOs,
+                'characterGOs'  => $characterGOs,
                 'now'  => $now,
                 'em' => $em
             ]);
@@ -43,7 +44,7 @@ class CronTaskController extends AbstractController
         $asteroides = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.cdr = true')
-            ->andWhere('p.recycleAt < :now OR p.recycleAt IS NULL')
+            ->andWhere('p.recycleAt < :now OR p.recycleAt IS null')
             ->setParameters(['now' => $now])
             ->getQuery()
             ->getResult();
@@ -57,20 +58,25 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $dailyReport = $em->getRepository('App:Server')
+        $dailyReports = $em->getRepository('App:Server')
             ->createQueryBuilder('s')
             ->where('s.dailyReport < :now')
             ->setParameters(['now' => $now])
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
 
-        if ($dailyReport) {
-            echo "Rapport quotidien : ";
-            $cronValue = $this->forward('App\Controller\Connected\Execute\DailyController::dailyLoadAction', [
-                'now'  => $now,
-                'em' => $em
-            ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+        if ($dailyReports) {
+            foreach ($dailyReports as $dailyReport) {
+                echo "Rapport quotidien : ";
+                $cronValue = $this->forward(
+                    'App\Controller\Connected\Execute\DailyController::dailyLoadAction',
+                    [
+                        'server' => $dailyReport,
+                        'em' => $em
+                    ]
+                );
+                echo $cronValue->getContent() ? $cronValue->getContent() : "<span style='color:#FF0000'>KO<span><br/>";
+            }
         }
 
         $dests = $em->getRepository('App:Destination')
@@ -254,7 +260,6 @@ class CronTaskController extends AbstractController
             echo "Flottes : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeFleetAction', [
                 'fleets'  => $fleets,
-                'server' => $server,
                 'now'  => $now,
                 'em'  => $em
             ]);
@@ -334,8 +339,8 @@ class CronTaskController extends AbstractController
 
         $reports = $em->getRepository('App:Report')
             ->createQueryBuilder('r')
-            ->join('r.user', 'u')
-            ->andWhere('u.bot = true')
+            ->join('r.character', 'c')
+            ->andWhere('c.bot = true')
             ->getQuery()
             ->getResult();
 
@@ -349,55 +354,52 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $zUsers = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->join('u.planets', 'p')
-            ->where('u.zombieAt < :now')
-            ->andWhere('u.rank is not null')
-            ->andWhere('u.bot = false')
-            ->andWhere('u.zombie = false')
+        $zCharacters = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->join('c.planets', 'p')
+            ->where('c.zombieAt < :now')
+            ->andWhere('c.rank is not null')
+            ->andWhere('c.bot = false')
+            ->andWhere('c.zombie = false')
             ->andWhere('p.id is not null')
-            ->groupBy('u.id')
+            ->groupBy('c.id')
             ->having('count(p.id) >= 3')
             ->setParameters(['now' => $now])
             ->getQuery()
             ->getResult();
 
-        if($zUsers) {
+        if($zCharacters) {
             echo "Zombies : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\ZombiesController::zombiesAction', [
-                'zUsers'  => $zUsers,
+                'zCharacters'  => $zCharacters,
                 'now' => $now,
                 'em' => $em
             ]);
             echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        if ($now > $server->getEmbargo()) {
-            $embargos = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.user', 'u')
-                ->join('p.fleets', 'f')
-                ->join('f.user', 'uf')
-                ->where('f.attack = true')
-                ->andWhere('u.zombie = false')
-                ->andWhere('uf.zombie = false')
-                ->andWhere('u.bot = 0')
-                ->andWhere('f.user != p.user')
-                ->andWhere('f.signature > 125000')
-                ->getQuery()
-                ->getResult();
+        $embargos = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->join('p.character', 'c')
+            ->join('p.fleets', 'f')
+            ->join('f.character', 'cf')
+            ->where('f.attack = true')
+            ->andWhere('c.zombie = false')
+            ->andWhere('cf.zombie = false')
+            ->andWhere('c.bot = 0')
+            ->andWhere('f.character != p.character')
+            ->andWhere('f.signature > 125000')
+            ->getQuery()
+            ->getResult();
 
-            if ($embargos) {
-                echo "Embargos : ";
-                $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::embargoPlanetAction', [
-                    'embargos' => $embargos,
-                    'server' => $server,
-                    'now' => $now,
-                    'em' => $em
-                ]);
-                echo $cronValue->getContent() ? $cronValue->getContent() : "<span style='color:#FF0000'>KO<span><br/>";
-            }
+        if ($embargos) {
+            echo "Embargos : ";
+            $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::embargoPlanetAction', [
+                'embargos' => $embargos,
+                'now' => $now,
+                'em' => $em
+            ]);
+            echo $cronValue->getContent() ? $cronValue->getContent() : "<span style='color:#FF0000'>KO<span><br/>";
         }
 
         if ($opened) {
@@ -450,8 +452,8 @@ class CronTaskController extends AbstractController
 
         $stats = $em->getRepository('App:Report')
             ->createQueryBuilder('r')
-            ->join('r.user', 'u')
-            ->andWhere('u.bot = true')
+            ->join('r.character', 'c')
+            ->andWhere('c.bot = true')
             ->getQuery()
             ->getResult();
 
@@ -475,10 +477,10 @@ class CronTaskController extends AbstractController
         $fiveWeeks = new DateTime();
         $fiveWeeks->sub(new DateInterval('PT' . 3888000 . 'S'));
 
-        $newBots = $em->getRepository('App:User')
-            ->createQueryBuilder('u')
-            ->where('u.bot = false')
-            ->andWhere('u.lastActivity < :five')
+        $newBots = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->where('c.bot = false')
+            ->andWhere('c.lastActivity < :five')
             ->setParameters(['five' => $fiveWeeks])
             ->getQuery()
             ->getResult();
@@ -497,27 +499,27 @@ class CronTaskController extends AbstractController
     public function HordeYesAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+        $hydra = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
         $count = 0;
 
         $planets = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->join('p.fleets', 'f')
-            ->where('f.user = :user')
+            ->where('f.character = :character')
             ->andWhere('f.flightTime is null')
-            ->setParameters(['user' => $hydra])
+            ->setParameters(['character' => $hydra])
             ->getQuery()
             ->getResult();
 
         foreach ($planets as $planet) {
             if (count($planet->getFleets()) > 1) {
                 $one = new Fleet();
-                $one->setUser($hydra);
+                $one->setCharacter($hydra);
                 $one->setPlanet($planet);
                 $one->setName('Horde V');
                 $one->setAttack(1);
                 foreach ($planet->getFleets() as $fleet) {
-                    if ($fleet->getUser() == $hydra && !$fleet->getDestination()) {
+                    if ($fleet->getCharacter() == $hydra && !$fleet->getDestination()) {
                         $one->setBarge($one->getBarge() + $fleet->getBarge());
                         $one->setHunter($one->getHunter() + $fleet->getHunter());
                         $one->setHunterWar($one->getHunterWar() + $fleet->getHunterWar());
@@ -527,7 +529,7 @@ class CronTaskController extends AbstractController
                         $one->setFregate($one->getFregate() + $fleet->getFregate());
                         $one->setFregatePlasma($one->getFregatePlasma() + $fleet->getFregatePlasma());
                         $one->setDestroyer($one->getDestroyer() + $fleet->getDestroyer());
-                        $fleet->setUser(null);
+                        $fleet->setCharacter(null);
                         $em->remove($fleet);
                         $count = $count + 1;
                     }

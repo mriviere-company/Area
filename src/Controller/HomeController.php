@@ -5,6 +5,10 @@ namespace App\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * Class HomeController
+ * @package App\Controller
+ */
 class HomeController extends AbstractController
 {
     /**
@@ -17,10 +21,11 @@ class HomeController extends AbstractController
         $user = $this->getUser();
 
         if ($user) {
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
+            /*$usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($character);
             if ($usePlanet) {
                 return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
-            }
+            }*/
+            return $this->redirectToRoute('server_select');
         }
 
         $server = 0;

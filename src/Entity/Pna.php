@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -42,9 +43,18 @@ class Pna
      */
     protected $accepted;
 
-    public function __construct()
+    /**
+     * Pna constructor.
+     * @param Ally $ally
+     * @param string $tag
+     * @param bool $accepted
+     */
+    public function __construct(Ally $ally, string $tag, bool $accepted)
     {
-        $this->accepted = false;
+        $this->ally = $ally;
+        $this->tag = $tag;
+        $this->accepted = $accepted;
+        $this->signedAt = new DateTime();
     }
 
     /**
@@ -111,6 +121,9 @@ class Pna
         $this->accepted = $accepted;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

@@ -2,6 +2,9 @@
 
 namespace App\Controller\Connected\Ally;
 
+use Exception;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -23,24 +26,23 @@ class PactController extends AbstractController
 {
     /**
      * @Route("/accepter-pacte/{pact}/{usePlanet}", name="ally_acceptAllied", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param Allied $pact
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function pactAcceptAction(Allied $pact, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $ally = $user->getAlly();
-        $now = new DateTime();
+        $ally = $character->getAlly();
 
-        $allied = new Allied();
-        $allied->setAlly($ally);
-        $allied->setAllyTag($pact->getAlly()->getSigle());
-        $allied->setSignedAt($now);
-        $allied->setAccepted(true);
+        $allied = new Allied($ally, $pact->getAlly()->getSigle(), true);
         $pact->setAccepted(true);
         $em->persist($allied);
         $ally->addAllyAllied($allied);
@@ -52,12 +54,17 @@ class PactController extends AbstractController
 
     /**
      * @Route("/refuser-pacte/{pact}/{usePlanet}", name="ally_refuseAllied", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param Allied $pact
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function pactRefuseAction(Allied $pact, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -70,24 +77,23 @@ class PactController extends AbstractController
 
     /**
      * @Route("/accepter-pna/{pact}/{usePlanet}", name="ally_acceptPna", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param Pna $pact
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function pnaAcceptAction(Pna $pact, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $ally = $user->getAlly();
-        $now = new DateTime();
+        $ally = $character->getAlly();
 
-        $pna = new Pna();
-        $pna->setAlly($ally);
-        $pna->setAllyTag($pact->getAlly()->getSigle());
-        $pna->setSignedAt($now);
-        $pna->setAccepted(true);
+        $pna = new Pna($ally, $pact->getAlly()->getSigle(), true);
         $pact->setAccepted(true);
         $em->persist($pna);
         $ally->addAllyPna($pna);
@@ -99,12 +105,17 @@ class PactController extends AbstractController
 
     /**
      * @Route("/refuser-pna/{pact}/{usePlanet}", name="ally_refusePna", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param Pna $pact
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function pnaRefuseAction(Pna $pact, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -117,17 +128,21 @@ class PactController extends AbstractController
 
     /**
      * @Route("/detruire-pna/{pact}/{usePlanet}", name="ally_remove_pna", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param Pna $pact
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function allyPnaRefuseAction(Pna $pact, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
-        $ally = $user->getAlly();
+        $ally = $character->getAlly();
         $otherAlly = $em->getRepository('App:Ally')
             ->createQueryBuilder('a')
             ->where('a.sigle = :sigle')
@@ -156,15 +171,20 @@ class PactController extends AbstractController
 
     /**
      * @Route("/detruire-pacte/{pact}/{usePlanet}", name="ally_remove_pact", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param Allied $pact
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function allyPactRefuseAction(Allied $pact, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 43200 . 'S'));
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -180,16 +200,16 @@ class PactController extends AbstractController
             ->where('al.allyTag = :allytag')
             ->andWhere('al.ally = :ally')
             ->setParameters([
-                'allytag' => $user->getAlly()->getSigle(),
+                'allytag' => $character->getAlly()->getSigle(),
                 'ally' => $otherAlly])
             ->getQuery()
             ->getOneOrNullResult();
 
         if($pact2) {
             $pact2->setDismissAt($now);
-            $pact2->setDismissBy($user->getAlly()->getSigle());
+            $pact2->setDismissBy($character->getAlly()->getSigle());
             $pact->setDismissAt($now);
-            $pact->setDismissBy($user->getAlly()->getSigle());
+            $pact->setDismissBy($character->getAlly()->getSigle());
             $em->flush();
         } else {
             $em->remove($pact);
@@ -201,16 +221,22 @@ class PactController extends AbstractController
 
     /**
      * @Route("/faire-la-paix/{war}/{usePlanet}", name="ally_make_peace", requirements={"war"="\d+", "usePlanet"="\d+"})
+     * @param Request $request
+     * @param War $war
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function allyMakePeaceAction(Request $request, War $war, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $ally = $user->getAlly();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $ally = $character->getAlly();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 864000 . 'S'));
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -227,14 +253,7 @@ class PactController extends AbstractController
 
         if (($form_peace->isSubmitted() && $form_peace->isValid())) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $peace = new Peace();
-            $peace->setAlly($ally);
-            $peace->setAllyTag($war->getAllyTag());
-            $peace->setSignedAt($now);
-            $peace->setType($form_peace->get('type')->getData());
-            $peace->setPlanet($form_peace->get('planetNbr')->getData());
-            $peace->setTaxe($form_peace->get('taxeNbr')->getData());
-            $peace->setPdg($form_peace->get('pdgNbr')->getData());
+            $peace = new Peace($ally, $war->getAllyTag(), $form_peace->get('type')->getData(), $form_peace->get('planetNbr')->getData(), $form_peace->get('taxeNbr')->getData(), $form_peace->get('pdgNbr')->getData(), false);
             $em->persist($peace);
             $em->flush();
 
@@ -250,16 +269,21 @@ class PactController extends AbstractController
 
     /**
      * @Route("/accepter-paix/{id}/{usePlanet}", name="ally_accept_peace", requirements={"id"="\d+", "usePlanet"="\d+"})
+     * @param int $id
+     * @param Planet $usePlanet
+     * @return RedirectResponse
+     * @throws Exception
      */
-    public function allyAcceptPeaceAction($id, Planet $usePlanet)
+    public function allyAcceptPeaceAction(int $id, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $ally = $user->getAlly();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $ally = $character->getAlly();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 864000 . 'S'));
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -315,16 +339,8 @@ class PactController extends AbstractController
         foreach ($otherPeaces as $otherPeace) {
             $em->remove($otherPeace);
         }
-        $peace2 = new Peace();
-        $peace2->setAlly($otherAlly);
-        $peace2->setAllyTag($peace->getAlly()->getSigle());
-        $peace2->setSignedAt($now);
-        $peace2->setType($type);
-        $peace2->setPlanet($peace->getPlanet());
-        $peace2->setTaxe($peace->getTaxe());
-        $peace2->setPdg($peace->getPdg());
+        $peace2 = new Peace($otherAlly, $peace->getAlly()->getSigle(), $type, $peace->getPlanet(), $peace->getTaxe(), $peace->getPdg(), true);
         $peace->setSignedAt($now);
-        $peace2->setAccepted(true);
         $peace->setAccepted(true);
         $em->persist($peace2);
         $em->flush();
@@ -334,13 +350,17 @@ class PactController extends AbstractController
 
     /**
      * @Route("/refuser-paix/{peace}/{usePlanet}", name="ally_remove_peace", requirements={"peace"="\d+", "usePlanet"="\d+"})
+     * @param Peace $peace
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function allyRemovePeaceAction(Peace $peace, Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -357,7 +377,7 @@ class PactController extends AbstractController
             ->where('al.allyTag = :allytag')
             ->andWhere('al.ally = :ally')
             ->setParameters([
-                'allytag' => $user->getAlly()->getSigle(),
+                'allytag' => $character->getAlly()->getSigle(),
                 'ally' => $otherAlly])
             ->getQuery()
             ->getOneOrNullResult();

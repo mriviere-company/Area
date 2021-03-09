@@ -7,11 +7,11 @@
 {% block body %}
     <div class="front-block">
         <div class="front-block-game">
-            {% if app.user.getAlly() %}
-                <h1 class="text-center text-orange mb-4">{{ app.user.getAlly().getName() }}<small> - [{{ app.user.getAlly().getSigle() }}]</small></h1>
+            {% if ally %}
+                <h1 class="text-center text-orange mb-4">{{ ally.getName() }}<small> - [{{ ally.getSigle() }}]</small></h1>
                 <div class="text-center modify-allyImage">
-                    {% if app.user.getAlly().getImageName() %}
-                        <img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ vich_uploader_asset(app.user.getAlly(), 'imageFile') }}">
+                    {% if ally.getImageName() %}
+                        <img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ vich_uploader_asset(ally, 'imageFile') }}">
                     {% else %}
                         <img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ asset('img/ally.jpg') }}">
                     {% endif %}
@@ -20,32 +20,32 @@
                 {{ form_widget(form_allyImage.imageFile) }}
                 {{ form_widget(form_allyImage.sendForm) }}
                 {{ form_end(form_allyImage) }}
-                <div class="text-center my-2">"{{ app.user.getAlly().getSlogan() }}"</div>
+                <div class="text-center my-2">"{{ ally.getSlogan() }}"</div>
                 <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ app.user.getAlly().getUsers()|length }} {{ 'ally.members'|trans }}</a>
+                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCharacters()|length }} {{ 'ally.members'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_bank', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.found'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ path('ally_page_pacts', {'usePlanet': usePlanet.getId()}) }}" >{{ app.user.getAlly().getPacts() }}  {{ 'ally.pacts'|trans }}</a>
+                        <a href="{{ path('ally_page_pacts', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getPacts() }}  {{ 'ally.pacts'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_add', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.add'|trans }}</a>
                     </li>
-                    {% if app.user.getGrade().getPlacement() == 1 %}
+                    {% if character.getGrade().getPlacement() == 1 %}
                         <li class="nav-item">
                             <a href="{{ path('ally_page_admin', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.admin'|trans }}</a>
                         </li>
                     {% endif %}
-                    {% if app.user.getAlly().getPolitic() == 'democrate' %}
+                    {% if ally.getPolitic() == 'democrate' %}
                     <li class="nav-item">
                         <a class="nav-link active" id="leave-tab" data-toggle="tab" href="#leave" role="tab" aria-controls="leave" aria-selected="false">{{ 'ally.leave'|trans }}</a>
                     </li>
                     {% endif %}
                 </ul>
-                {% if app.user.getAlly().getPolitic() == 'democrate' %}
+                {% if ally.getPolitic() == 'democrate' %}
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="leave" role="tabpanel" aria-labelledby="leave-tab">
                             <div class="pull-right mt-5">

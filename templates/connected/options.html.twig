@@ -10,34 +10,26 @@
     <table class="table table-striped table-dark text-center borderOverview">
         <tbody>
         <tr>
-            <td width="200" class="center-cells">
-                {{ 'modifPassword'|trans }}
-            </td>
-            <td class="center-cells">
-                {{ 'newletterActiver'|trans }}
+            <td width="140" class="center-cells">
+                {{ 'modifUsername'|trans }}
             </td>
             <td class="center-cells">
                 {{ 'planetOrder'|trans }}
             </td>
         </tr>
-        {{ form_start(form_pass) }}
+        {{ form_start(form_prefers) }}
         <tr>
-            <td width="200" class="center-cells">
-                {{ form_widget(form_pass.oldPassword) }}
-                {{ form_widget(form_pass.password) }}
-                {{ form_widget(form_pass.confirmPassword) }}
-            </td>
-            <td class="center-cells">
-                {{ form_widget(form_pass.newletter) }}
+            <td width="140" class="center-cells">
+                {{ form_widget(form_prefers.username) }}
             </td>
             <td>
-                {{ form_widget(form_pass.planetOrder) }}
+                {{ form_widget(form_prefers.planetOrder) }}
                 </br>
                 </br>
-                {{ form_widget(form_pass.sendForm) }}
+                {{ form_widget(form_prefers.sendForm) }}
             </td>
         </tr>
-        {{ form_end(form_pass) }}
+        {{ form_end(form_prefers) }}
         </tbody>
     </table>
 </div>

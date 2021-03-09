@@ -5,21 +5,36 @@ namespace App\Controller\Connected\Execute;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Class ChronosController
+ * @package App\Controller\Connected\Execute
+ */
 class ChronosController extends AbstractController
 {
-    public function userActivityAction($now, $em)
+    /**
+     * @param $character
+     * @param $now
+     * @param $em
+     * @return Response
+     */
+    public function userActivityAction($character, $now, $em)
     {
-        $user = $this->getUser();
-        if ($user->getLastActivity()) {
-            $seconds = ($now->format('U') - ($user->getLastActivity()->format('U')));
+        if ($character->getLastActivity()) {
+            $seconds = ($now->format('U') - ($character->getLastActivity()->format('U')));
         } else {
-            $user->setLastActivity($now);
-            $em->flush($user);
-            $seconds = ($now->format('U') - ($user->getLastActivity()->format('U')));
+            $character->setLastActivity($now);
+            $em->flush($character);
+            $seconds = ($now->format('U') - ($character->getLastActivity()->format('U')));
         }
         return new Response ($seconds);
     }
 
+    /**
+     * @param $planet
+     * @param $now
+     * @param $em
+     * @return Response
+     */
     public function planetActivityAction($planet, $now, $em)
     {
         if ($planet->getLastActivity()) {

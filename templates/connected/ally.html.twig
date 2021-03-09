@@ -6,13 +6,13 @@
 
 {% block body %}
     <div class="front-block">
-        {% if app.user.getAlly() %}
+        {% if ally %}
             <div class="front-block-second">
-                <h1 class="text-center text-orange mb-4">{{ app.user.getAlly().getName() }}<small> - [{{ app.user.getAlly().getSigle() }}]</small></h1>
-                <h3 class="text-center text-or mb-4">{{ 'ally.level'|trans }}{{ app.user.getAlly().getLevel() }}</h3>
+                <h1 class="text-center text-orange mb-4">{{ ally.getName() }}<small> - [{{ ally.getSigle() }}]</small></h1>
+                <h3 class="text-center text-or mb-4">{{ 'ally.level'|trans }}{{ ally.getLevel() }}</h3>
                 <div class="text-center modify-allyImage">
-                    {% if app.user.getAlly().getImageName() %}
-                        <img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ vich_uploader_asset(app.user.getAlly(), 'imageFile') }}">
+                    {% if ally.getImageName() %}
+                        <img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ vich_uploader_asset(ally, 'imageFile') }}">
                     {% else %}
                         <img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450" src="{{ asset('img/ally.jpg') }}">
                     {% endif %}
@@ -21,26 +21,26 @@
                 {{ form_widget(form_allyImage.imageFile) }}
                 {{ form_widget(form_allyImage.sendForm) }}
                 {{ form_end(form_allyImage) }}
-                <div class="text-center my-2">"{{ app.user.getAlly().getSlogan() }}"</div>
+                <div class="text-center my-2">"{{ ally.getSlogan() }}"</div>
                 <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="true">{{ app.user.getAlly().getUsers()|length }} {{ 'ally.members'|trans }}</a>
+                        <a class="nav-link active" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="true">{{ ally.getCharacters()|length }} {{ 'ally.members'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_bank', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.found'|trans }}</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ path('ally_page_pacts', {'usePlanet': usePlanet.getId()}) }}" >{{ app.user.getAlly().getPacts() }}  {{ 'ally.pacts'|trans }}</a>
+                        <a href="{{ path('ally_page_pacts', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getPacts() }}  {{ 'ally.pacts'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_add', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.add'|trans }}</a>
                     </li>
-                    {% if app.user.getGrade().getPlacement() == 1 %}
+                    {% if character.getGrade().getPlacement() == 1 %}
                         <li class="nav-item">
                             <a href="{{ path('ally_page_admin', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.admin'|trans }}</a>
                         </li>
                     {% endif %}
-                    {% if app.user.getAlly().getPolitic() == 'democrate' %}
+                    {% if ally.getPolitic() == 'democrate' %}
                         <li class="nav-item">
                             <a href="{{ path('ally_page_exit', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.leave'|trans }}</a>
                         </li>
@@ -56,22 +56,22 @@
                                 <th class="tab-cells-name">{{ 'ally.memberConnected'|trans }}</th>
                                 <th class="tab-cells-name">{{ 'ally.memberPoint'|trans }}</th>
                                 <th class="tab-cells-name">{{ 'ally.memberDateJoin'|trans }}</th>
-                                {% if app.user.getGrade().getCanKick() != 1 or (app.user.getAlly().getPolitic() == 'fascism' and app.user.getAlly().getWars()|length > 0 or app.user.getAlly().getPeaces()|length > 0) %}
+                                {% if character.getGrade().getCanKick() != 1 or (ally.getPolitic() == 'fascism' and ally.getWars()|length > 0 or ally.getPeaces()|length > 0) %}
                                 {% else %}
                                     <th class="tab-cells-name">{{ 'ally.memberKick'|trans }}</th>
                                 {% endif %}
                             </tr>
-                            {% for user in app.user.getAlly().getUsers() %}
-                                <tr{% if user == app.user %} class="currentBack"{% elseif user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %} class="availableBack"{% endif %}>
+                            {% for user in ally.getCharacters() %}
+                                <tr{% if user == character %} class="currentBack"{% elseif user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %} class="availableBack"{% endif %}>
                                     <td class="center-cells">
-                                        {% if app.user.getGrade().getPlacement() == 1 %}
+                                        {% if character.getGrade().getPlacement() == 1 %}
                                             <button class="confirm-button" href="{{ path('ally_addUser_grade', {'newGradeUser': user.getId(), 'usePlanet': usePlanet.getId() }) }}" data-toggle="modal" data-target="#openModal">{% if user.getGrade() %}{{ user.getGrade().getName() }}{% else %}???{% endif %}</button> <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.changeGrade'|trans }}"></span>
                                         {% else %}
                                             {% if user.getGrade() %}{{ user.getGrade().getName() }}{% else %}???{% endif %}
                                         {% endif %}
                                     </td>
                                     <td class="center-cells">
-                                        <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'userPlanet': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getUsername() }}</a></span>
+                                        <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'characterProfil': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getUsername() }}</a></span>
                                     </td>
                                     <td class="center-cells">
                                         {% if user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %}{{ user.getLastActivity()|date('H:i') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}
@@ -82,8 +82,8 @@
                                     <td class="center-cells">
                                         {{ user.getJoinAllyAt()|date('d/m/Y') }}
                                     </td>
-                                    {% if user == app.user or app.user.getGrade().getCanKick() != 1 or (app.user.getAlly().getPolitic() == 'fascism' and app.user.getAlly().getWars()|length > 0 or app.user.getAlly().getPeaces()|length > 0) %}
-                                        {% if user == app.user and (app.user.getAlly().getPolitic() == 'fascism' and app.user.getAlly().getWars()|length == 0 and app.user.getAlly().getPeaces()|length == 0) %}
+                                    {% if user == character or character.getGrade().getCanKick() != 1 or (ally.getPolitic() == 'fascism' and ally.getWars()|length > 0 or ally.getPeaces()|length > 0) %}
+                                        {% if user == character and (ally.getPolitic() == 'fascism' and ally.getWars()|length == 0 and ally.getPeaces()|length == 0) %}
                                             <td class="center-cells">
                                             </td>
                                         {% endif %}
@@ -100,9 +100,9 @@
                     </div>
                 </div>
             </div>
-        {% if app.user.getAlly().getPolitic() == 'democrat' %}
+        {% if ally.getPolitic() == 'democrat' %}
                 <div class="front-block-game mt-4 text-center">
-                    {% if app.user.getAlly().getPolitic() == 'democrat' %}
+                    {% if ally.getPolitic() == 'democrat' %}
                         {% set x = 1 %}
                         <div class="row pb-5">
                             {% for userVote in userVotes %}
@@ -114,13 +114,13 @@
                         </div>
                         {{ form_start(form_allyVote) }}
                         <div class="form-group">
-                            {{ form_widget(form_allyVote.user) }}
+                            {{ form_widget(form_allyVote.character) }}
                         </div>
                         <div class="form-group text-center mt-5">
                             {{ form_widget(form_allyVote.sendForm) }}
                         </div>
                         {{ form_end(form_allyVote) }}
-                    {% elseif app.user.getAlly().getPolitic() == 'fascism' %}
+                    {% elseif ally.getPolitic() == 'fascism' %}
                     {% endif %}
                 </div>
             {% endif %}

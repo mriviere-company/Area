@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -27,10 +28,10 @@ class Fleet_List
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="fleetLists", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="fleetLists", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet", mappedBy="fleetList", fetch="EXTRA_LAZY")
@@ -44,13 +45,17 @@ class Fleet_List
     protected $priority;
 
     /**
-     * User constructor.
+     * Fleet_List constructor.
+     * @param Character $character
+     * @param string|null $name
+     * @param int $priority
      */
-    public function __construct()
+    public function __construct(Character $character, ?string $name, int $priority)
     {
-        $this->fleets = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->priority = 0;
-        $this->name = 'Cohorte';
+        $this->character = $character;
+        $this->name = $name ? $name : 'Cohorte';
+        $this->priority = $priority;
+        $this->fleets = new ArrayCollection();
     }
 
     /**
@@ -85,17 +90,17 @@ class Fleet_List
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**
@@ -154,6 +159,9 @@ class Fleet_List
         $this->priority = $priority;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;

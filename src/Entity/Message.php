@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -20,10 +21,10 @@ class Message
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="messages", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="messages", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\Column(name="sender",type="string", nullable=true)
@@ -67,15 +68,31 @@ class Message
      */
     protected $sendAt;
 
-    public function __construct()
+    /**
+     * Message constructor.
+     * @param Character $character
+     * @param string|null $title
+     * @param string $content
+     * @param int $bitcoin
+     * @param int $id
+     * @param string|null $username
+     */
+    public function __construct(Character $character, ?string $title, string $content, int $bitcoin, int $id, ?string $username)
     {
-        $this->sender = null;
-        $this->idSender = 0;
+        $this->character = $character;
+        $this->title = $title ? $title : 'Bonjour';
+        $this->content = $content;
+        $this->bitcoin = $bitcoin;
+        $this->idSender = $id;
+        $this->sender = $username ? $username : null;
         $this->newMessage = 1;
-        $this->bitcoin = 0;
-        $this->title = 'Bonjour';
+        $this->shareKey = null;
+        $this->sendAt = new DateTime();
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
@@ -84,17 +101,17 @@ class Message
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**

@@ -10,7 +10,9 @@
         {% endblock %}
     </head>
     <body class="area">
-        {% set allPlanets = app.user.getPlanets() %}
+        {% set character = app.user.getMainCharacter() %}
+        {% set ally = character.getAlly() %}
+        {% set allPlanets = character.getPlanets() %}
         {% set allTuto = app.user.getTutorial() %}
 
         {%- block left_menu -%}
@@ -22,7 +24,7 @@
         {%- endblock -%}
 
         {%- block right_planet -%}
-            {% if app.user.getId() != 1 %}
+            {% if character.getId() != 1 %}
                 {{ render(controller('App\\Controller\\Connected\\AllPlanetsController::allPlanetsAction', {'usePlanet': usePlanet.getId(), 'id': 1})) }}
             {% endif %}
         {%- endblock -%}

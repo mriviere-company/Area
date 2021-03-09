@@ -14,21 +14,22 @@ use DateTime;
  */
 class AllPlanetsController extends AbstractController
 {
-    public function allPlanetsAction(Planet $usePlanet, $id)
+    public function allPlanetsAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
 
-        if ($usePlanet->getUser() != $user) {
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $planetSoldiers = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.soldierAt < :now')
-            ->andWhere('p.user = :user')
-            ->setParameters(['now' => $now, 'user' => $user])
+            ->andWhere('p.character = :character')
+            ->setParameters(['now' => $now, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -42,8 +43,8 @@ class AllPlanetsController extends AbstractController
         $planetTanks = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.tankAt < :now')
-            ->andWhere('p.user = :user')
-            ->setParameters(['now' => $now, 'user' => $user])
+            ->andWhere('p.character = :character')
+            ->setParameters(['now' => $now, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -57,8 +58,8 @@ class AllPlanetsController extends AbstractController
         $planetScientists = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
             ->where('p.scientistAt < :now')
-            ->andWhere('p.user = :user')
-            ->setParameters(['now' => $now, 'user' => $user])
+            ->andWhere('p.character = :character')
+            ->setParameters(['now' => $now, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -73,8 +74,8 @@ class AllPlanetsController extends AbstractController
             ->createQueryBuilder('p')
             ->join('p.planet', 'pp')
             ->where('p.productAt < :now')
-            ->andWhere('pp.user = :user')
-            ->setParameters(['now' => $now, 'user' => $user])
+            ->andWhere('pp.character = :character')
+            ->setParameters(['now' => $now, 'character' => $character])
             ->getQuery()
             ->getResult();
 
@@ -86,19 +87,21 @@ class AllPlanetsController extends AbstractController
         }
 
         $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::userActivityAction', [
+            'character' => $character,
             'now'  => $now,
             'em' => $em]);
 
         if ($seconds->getContent() >= 60) {
             $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetsGenAction', [
+                'character' => $character,
                 'seconds' => $seconds->getContent(),
                 'now'  => $now,
                 'em' => $em]);
         }
 
-        if ($user->getOrderPlanet() == 'alpha') {
+        if ($character->getOrderPlanet() == 'alpha') {
             $crit = 'p.name';
-        } elseif ($user->getOrderPlanet() == 'colo') {
+        } elseif ($character->getOrderPlanet() == 'colo') {
             $crit = 'p.nbColo';
         } else {
             $crit = 'p.id';
@@ -110,8 +113,8 @@ class AllPlanetsController extends AbstractController
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
             ->select('p.id, p.position, p.name, p.caserne, p.wtCdr, p.nbCdr, p.signature, p.bunker, p.centerSearch, p. lightUsine, p.uranium, p.empty, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, p.construct, p.ground, p.groundPlace, p.sky, p.skyPlace, p.imageName, p.radarAt, p.brouilleurAt, p.moon')
-            ->where('p.user = :user')
-            ->setParameters(['user' => $user])
+            ->where('p.character = :character')
+            ->setParameters(['character' => $character])
             ->orderBy($crit, $order)
             ->getQuery()
             ->getResult();

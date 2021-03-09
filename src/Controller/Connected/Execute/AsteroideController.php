@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Execute;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Destination;
@@ -9,8 +10,18 @@ use App\Entity\Fleet;
 use Dateinterval;
 use DateTime;
 
+/**
+ * Class AsteroideController
+ * @package App\Controller\Connected\Execute
+ */
 class AsteroideController extends AbstractController
 {
+    /**
+     * @param $asteroides
+     * @param $em
+     * @return Response
+     * @throws Exception
+     */
     public function AsteroideAction($asteroides, $em)
     {
         $nowAste = new DateTime();
@@ -65,12 +76,11 @@ class AsteroideController extends AbstractController
                     $fleet->setCorvetWar(50 * $alea);
                     $fleet->setFregatePlasma(3 * $alea);
                     $fleet->setDestroyer(1 * $alea);
-                    $fleet->setUser($iaPlayer);
+                    $fleet->setCharacter($iaPlayer);
                     $fleet->setPlanet($planetZb);
-                    $destination = new Destination();
-                    $destination->setFleet($fleet);
-                    $destination->setPlanet($newAsteroides);
+                    $destination = new Destination($fleet, $newAsteroides);
                     $em->persist($destination);
+                    $fleet->setDestination($destination);
                     $fleet->setFlightTime($timeAttAst);
                     $fleet->setAttack(1);
                     $fleet->setName('Horde');

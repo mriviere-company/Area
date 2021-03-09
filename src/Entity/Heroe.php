@@ -20,17 +20,20 @@ class Heroe
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="User", mappedBy="heroe", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Character", mappedBy="heroe", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\OneToOne(targetEntity="Fleet", mappedBy="heroe", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $fleet;
 
     /**
      * @ORM\OneToOne(targetEntity="Planet", mappedBy="heroe", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $planet;
 
@@ -141,9 +144,6 @@ class Heroe
      */
     protected $scientist;
 
-    /**
-     * User constructor.
-     */
     public function __construct()
     {
         $this->capture = false;
@@ -182,7 +182,7 @@ class Heroe
      */
     public function getSoldierPoints()
     {
-        $points = $this->user->getMilitaryField(); // militaries building/soldiers/tanks
+        $points = $this->character->getMilitaryField(); // militaries building/soldiers/tanks
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -198,7 +198,7 @@ class Heroe
      */
     public function getBitcoinPoints()
     {
-        $points = $this->user->getEconomicField(); // citizens building/bitcoins
+        $points = $this->character->getEconomicField(); // citizens building/bitcoins
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -214,7 +214,7 @@ class Heroe
      */
     public function getWaterPoints()
     {
-        $points = $this->user->getWaterField(); // waters building/ressources
+        $points = $this->character->getWaterField(); // waters building/ressources
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -230,7 +230,7 @@ class Heroe
      */
     public function getNiobiumPoints()
     {
-        $points = $this->user->getNiobiumField(); // niobiums building/ressources
+        $points = $this->character->getNiobiumField(); // niobiums building/ressources
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -246,7 +246,7 @@ class Heroe
      */
     public function getFoodPoints()
     {
-        $points = $this->user->getFoodField(); // foods building/ressources
+        $points = $this->character->getFoodField(); // foods building/ressources
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -262,7 +262,7 @@ class Heroe
      */
     public function getPlasmaPoints()
     {
-        $points = $this->user->getPlasmaField(); // plasmas search/ships/points
+        $points = $this->character->getPlasmaField(); // plasmas search/ships/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -278,7 +278,7 @@ class Heroe
      */
     public function getMissilePoints()
     {
-        $points = $this->user->getMissileField(); // missiles search/ships/points
+        $points = $this->character->getMissileField(); // missiles search/ships/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -294,7 +294,7 @@ class Heroe
      */
     public function getLaserPoints()
     {
-        $points = $this->user->getLaserField(); // lasers search/ships/points
+        $points = $this->character->getLaserField(); // lasers search/ships/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -310,7 +310,7 @@ class Heroe
      */
     public function getArmorPoints()
     {
-        $points = $this->user->getArmorField(); // armors search/ships/points
+        $points = $this->character->getArmorField(); // armors search/ships/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -326,7 +326,7 @@ class Heroe
      */
     public function getShieldPoints()
     {
-        $points = $this->user->getShieldField(); // shields search/ships/points
+        $points = $this->character->getShieldField(); // shields search/ships/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -342,7 +342,7 @@ class Heroe
      */
     public function getSpeedPoints()
     {
-        $points = $this->user->getSpeedField(); // speed rapidité
+        $points = $this->character->getSpeedField(); // speed rapidité
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -358,7 +358,7 @@ class Heroe
      */
     public function getTankPoints()
     {
-        $points = $this->user->getTankField(); // sgains tank
+        $points = $this->character->getTankField(); // sgains tank
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -374,7 +374,7 @@ class Heroe
      */
     public function getUraniumPoints()
     {
-        $points = $this->user->getUraniumField(); // gain uranium
+        $points = $this->character->getUraniumField(); // gain uranium
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -390,7 +390,7 @@ class Heroe
      */
     public function getScientistPoints()
     {
-        $points = $this->user->getScientistField(); // scientifique gains
+        $points = $this->character->getScientistField(); // scientifique gains
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -406,7 +406,7 @@ class Heroe
      */
     public function getWarPointPoints()
     {
-        $points = $this->user->getWarPointField(); // gain points de guerre
+        $points = $this->character->getWarPointField(); // gain points de guerre
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -422,7 +422,7 @@ class Heroe
      */
     public function getPrecisionPoints()
     {
-        $points = $this->user->getPrecisionField();// precision ciblage
+        $points = $this->character->getPrecisionField();// precision ciblage
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -452,17 +452,17 @@ class Heroe
     /**
      * @return mixed
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param mixed $user
+     * @param mixed $character
      */
-    public function setUser($user): void
+    public function setCharacter($character): void
     {
-        $this->user = $user;
+        $this->character = $character;
     }
 
     /**

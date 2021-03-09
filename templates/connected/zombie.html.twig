@@ -25,10 +25,10 @@
         <div class="front-block-second text-center">
             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left" src="{{ asset('img/zombie_indic.gif') }}">
             <img alt="{{ 'image'|trans({},'front_global') }}" class="float-right mt-4" src="{{ vich_uploader_asset(planet, 'imageFile') }}">
-            <div class="text-more mt-5">{{ 'zombie.planet'|trans }} «{{ planet.getName() }}» <span><a href="{{ path('map', {'sector': planet.getSector().getId(), 'gal': planet.getSector().getGalaxy().getId(), 'usePlanet': planet.getId()}) }}">{{ planet.getSector().getGalaxy.getPosition() }}:{{ planet.getSector().getPosition() }}:{{ planet.getPosition() }}</a></span> {{ 'zombie.infected'|trans }}</div>
-            <div class="text-more">{{ 'zombie.menace'|trans }} <span class="zombieIndicator text-rouge">{{ app.user.getZombieAtt() }}</span></div>
+            <div class="text-more mt-5">{{ 'zombie.planet'|trans }} «{{ planet.getName() }}» <span><a href="{{ path('map', {'sector': planet.getSector().getId(), 'galaxy': planet.getSector().getGalaxy().getId(), 'usePlanet': planet.getId()}) }}">{{ planet.getSector().getGalaxy.getPosition() }}:{{ planet.getSector().getPosition() }}:{{ planet.getPosition() }}</a></span> {{ 'zombie.infected'|trans }}</div>
+            <div class="text-more">{{ 'zombie.menace'|trans }} <span class="zombieIndicator text-rouge">{{ character.getZombieAtt() }}</span></div>
             <div class="text-more">{{ 'zombie.available.defense'|trans }} {{ planet.getSoldier() }}/{{ planet.getSoldierMax() }} <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-3" src="{{ asset('img/soldier.png') }}"> {{ planet.getTank() }}/500 <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-3" src="{{ asset('img/tanks.png') }}"></div>
-            <div class="text-more mb-3">{{ 'zombie.attack'|trans }} <span class="mt-5 timerArea text-rouge" hidden>{% if app.user.getZombieAt() %}{{ app.user.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span></div>
+            <div class="text-more mb-3">{{ 'zombie.attack'|trans }} <span class="mt-5 timerArea text-rouge" hidden>{% if character.getZombieAt() %}{{ character.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span></div>
         </div>
         <div class="front-block-game mt-4">
             <h2 class="text-center mb-3">{{ 'zombie.mission'|trans }}</h2>
@@ -54,7 +54,7 @@
                                         <div class="col-7">
                                             {{ 'zombie.level'|trans }} {{ mission.getType() }}
                                             <br>
-                                            {{ 'zombie.reward'|trans }} <span class="text-vert">{% if app.user.getZombieAtt() > 0 %}-{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">{% else %}+{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">{% endif %}</span>
+                                            {{ 'zombie.reward'|trans }} <span class="text-vert">{% if character.getZombieAtt() > 0 %}-{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">{% else %}+{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">{% endif %}</span>
                                             <br>
                                             <span class="mt-5 timerAreaNoEnd text-or text-more" hidden>{% if mission.getMissionAt() %}{{ mission.getMissionAt()|date('Y/m/d H:i:s') }}{% endif %}</span>
                                         </div>
@@ -78,10 +78,10 @@
                                             <div class="col-5">
                                                 {{ 'zombie.level'|trans }} {{ mission.getType() }}
                                                 <br>
-                                                {{ 'zombie.reward'|trans }} <span class="text-vert">{% if app.user.getZombieAtt() > 0 %}-{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">{% else %}+{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">{% endif %}</span>
+                                                {{ 'zombie.reward'|trans }} <span class="text-vert">{% if character.getZombieAtt() > 0 %}-{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/zombie_indic.gif') }}">{% else %}+{{ mission.getGain() }} <img alt="{{ 'image'|trans({},'front_global') }}" width="12" src="{{ asset('img/uranium.png') }}">{% endif %}</span>
                                             </div>
                                             <div class="col-5">
-                                                {{ 'zombie.blocked'|trans({'%level%': app.user.getLevel()}) }}
+                                                {{ 'zombie.blocked'|trans({'%level%': character.getLevel()}) }}
                                             </div>
                                         </div>
                                     </td>
@@ -92,14 +92,14 @@
                         </tbody>
                     </table>
                 </div>
-                {% if app.user.getStats()|length > 7 %}
+                {% if character.getStats()|length > 7 %}
                     {% set points = [] %}
                     {% set otherZombie = [] %}
                     {% set date = [] %}
                     {% for otherPoint in otherPoints %}
                         {% set otherZombie = otherZombie|merge([(otherPoint['allZombie'] / otherPoint['numbers'])|round]) %}
                     {% endfor %}
-                    {% for stat in app.user.getStats() %}
+                    {% for stat in character.getStats() %}
                         {% set points = points|merge([stat.getZombie()|round]) %}
                         {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
                     {% endfor %}

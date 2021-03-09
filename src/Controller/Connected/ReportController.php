@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -16,30 +18,35 @@ class ReportController extends AbstractController
 {
     /**
      * @Route("/rapport/{usePlanet}", name="report", requirements={"usePlanet"="\d+"})
-     * @Route("/rapport/{id}/{usePlanet}", name="report_id", requirements={"usePlanet"="\d+", "id"="\w+"})
+     * @Route("/rapport/{id}/{usePlanet}", name="report_id", requirements={"id"="\w+", "usePlanet"="\d+"})
+     * @param string $id
+     * @param Planet $usePlanet
+     * @return RedirectResponse|Response
      */
-    public function reportAction(Planet $usePlanet, $id = 'defaut')
+    public function reportAction(string $id = 'defaut', Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         if ($id == 'defaut') {
             $reports = $em->getRepository('App:Report')
                 ->createQueryBuilder('r')
-                ->where('r.user = :user')
-                ->setParameters(['user' => $user])
+                ->where('r.character = :character')
+                ->setParameters(['character' => $character])
                 ->orderBy('r.sendAt', 'DESC')
                 ->getQuery()
                 ->getResult();
         } else {
             $reports = $em->getRepository('App:Report')
                 ->createQueryBuilder('r')
-                ->where('r.user = :user')
+                ->where('r.character = :character')
                 ->andWhere('r.type = :type')
-                ->setParameters(['user' => $user, 'type' => $id])
+                ->setParameters(['character' => $character, 'type' => $id])
                 ->orderBy('r.sendAt', 'DESC')
                 ->getQuery()
                 ->getResult();
@@ -77,12 +84,17 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report-view/{report}/{usePlanet}", name="report_view", requirements={ "report"="\d+", "usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @param Report $report
+     * @return RedirectResponse
      */
     public function reportViewAction(Planet $usePlanet, Report $report)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user || $report->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character || $report->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -95,12 +107,17 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/supprimer-rapport/{report}/{usePlanet}", name="report_delete", requirements={"usePlanet"="\d+", "report"="\d+"})
+     * @param Planet $usePlanet
+     * @param Report $report
+     * @return RedirectResponse
      */
     public function reportDeleteAction(Planet $usePlanet, Report $report)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user || $report->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character || $report->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
@@ -114,15 +131,20 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/rapport-share/{id}/{usePlanet}", name="report_share", requirements={"usePlanet"="\d+", "id"="\d+"})
+     * @param Planet $usePlanet
+     * @param Report $id
+     * @return RedirectResponse
      */
     public function reportShareAction(Planet $usePlanet, Report $id)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
-        if ($user == $id->getUser()) {
+        if ($character == $id->getCharacter()) {
             $alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-'];
             $newShareKey = $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)]
                 . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)]
@@ -137,20 +159,24 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report-view-all/{usePlanet}/", name="report_all_view", requirements={"usePlanet"="\d+"})
+     * @param Planet $usePlanet
+     * @return RedirectResponse
      */
     public function reportAllViewAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        if ($usePlanet->getUser() != $user) {
+        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+
+        if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
         }
 
         $reports = $em->getRepository('App:Report')
             ->createQueryBuilder('r')
             ->where('r.newReport > 0')
-            ->andWhere('r.user = :user')
-            ->setParameters(['user' => $user])
+            ->andWhere('r.character = :character')
+            ->setParameters(['character' => $character])
             ->getQuery()
             ->getResult();
 

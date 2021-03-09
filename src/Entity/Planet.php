@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -29,10 +31,10 @@ class Planet
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="planets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Character", inversedBy="planets", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
-    protected $user;
+    protected $character;
 
     /**
      * @ORM\Column(name="lastActivity",type="datetime", nullable=true)
@@ -45,8 +47,8 @@ class Planet
     protected $nbColo;
 
     /**
-     * @ORM\OneToOne(targetEntity="Heroe", inversedBy="planet", fetch="EXTRA_LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Heroe", inversedBy="planet", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $heroe;
 
@@ -91,7 +93,8 @@ class Planet
     protected $shipProduction;
 
     /**
-     * @ORM\OneToOne(targetEntity="Product", mappedBy="planet", fetch="EXTRA_LAZY", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Product", mappedBy="planet", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $product;
 
@@ -492,12 +495,17 @@ class Planet
     protected $empty;
 
     /**
-     * @ORM\Column(name="cdr",type="boolean")
+     * @ORM\Column(name="sun",type="boolean")
+     */
+    protected $sun;
+
+    /**
+     * @ORM\Column(name="cdr",type="string", length=20, nullable=true)
      */
     protected $cdr;
 
     /**
-     * @ORM\Column(name="merchant",type="boolean")
+     * @ORM\Column(name="merchant",type="smallint", nullable=true, options={"unsigned":true})
      */
     protected $merchant;
 
@@ -540,25 +548,45 @@ class Planet
     /**
      * @ORM\Column(type="datetime", nullable=true)
      *
-     * @var \DateTime
+     * @var DateTime
      */
     private $updatedAt;
 
-    public function __construct()
+    /**
+     * Planet constructor.
+     * @param Object|null $character
+     * @param string $name
+     * @param int $ground
+     * @param int $sky
+     * @param int $position
+     * @param Sector $sector
+     * @param string|null $image
+     * @param int $merchant
+     * @param string|null $cdr
+     * @param bool $sun
+     * @param bool $empty
+     */
+    public function __construct(?object $character, string $name, int $ground, int $sky, int $position, Sector $sector, ?string $image,  int $merchant, ?string $cdr, bool $sun, bool $empty)
     {
-        $this->destinations = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->fleets = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->constructions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->character = $character;
+        $this->name = $name;
+        $this->sky = $sky ? $sky : 0;
+        $this->ground = $ground ? $ground : 0;
+        $this->position = $position;
+        $this->sector = $sector;
+        $this->imageName = $image;
+        $this->merchant = $merchant;
+        $this->cdr = $cdr;
+        $this->sun = $sun;
+        $this->empty = $empty;
+        $this->destinations = new ArrayCollection();
+        $this->fleets = new ArrayCollection();
+        $this->constructions = new ArrayCollection();
         $this->centerSearch = null;
         $this->imageFile = null;
         $this->brouilleurAt = null;
         $this->radarAt = null;
         $this->moon = 0;
-        $this->merchant = 0;
-        $this->cdr = 0;
-        $this->empty = 0;
-        $this->cdr = 0;
-        $this->name = 'Inhabitée';
         $this->niobium = 200;
         $this->water = 140;
         $this->food = 1000;
@@ -623,8 +651,6 @@ class Planet
         $this->scientist = null;
         $this->groundPlace = 0;
         $this->skyPlace = 0;
-        $this->ground = 0;
-        $this->sky = 0;
         $this->recycleAt = null;
         $this->autoSeller = 0;
         $this->uranium = null;
@@ -654,16 +680,25 @@ class Planet
         }
     }
 
+    /**
+     * @return File|null
+     */
     public function getImageFile(): ?File
     {
         return $this->imageFile;
     }
 
+    /**
+     * @return mixed
+     */
     public function getId()
     {
         return $this->id;
     }
 
+    /**
+     *
+     */
     public function setRestartAll(): void
     {
         $this->centerSearch = null;
@@ -871,12 +906,12 @@ class Planet
     /**
      * @return mixed
      */
-    public function getFleetNoFriends($user)
+    public function getFleetNoFriends($character)
     {
         $fullFleet = [];
         $x = 0;
         foreach($this->fleets as $fleet) {
-            if($fleet->getUser() == $user || $fleet->getUser()->getAlly() == $user->getAlly()) {
+            if($fleet->getCharacter() == $character || $fleet->getCharacter()->getAlly() == $character->getAlly()) {
             } else {
                 $fullFleet[$x] = $fleet;
             }
@@ -917,14 +952,14 @@ class Planet
     /**
      * @return int
      */
-    public function getFleetsAbandon($user): int
+    public function getFleetsAbandon($character): int
     {
         $planete = 0;
         foreach($this->getFleets() as $fleet) {
             if($fleet->getFlightTime()) {
                 $planete = 0;
             } else {
-                if($fleet->getUser() != $user) {
+                if($fleet->getCharacter() != $character) {
                     if($fleet->getAttack() == 1) {
                         $planete = 1;
                     }
@@ -941,7 +976,7 @@ class Planet
     public function getPreviousPlanet(): int
     {
         $id = $this->getId();
-        foreach($this->getUser()->getPlanets() as $planet) {
+        foreach($this->getCharacter()->getPlanets() as $planet) {
             if($planet->getId() == $this->getId()) {
                 return $id;
             }
@@ -958,7 +993,7 @@ class Planet
     {
         $id = $this->getId();
         $next = 0;
-        foreach($this->getUser()->getPlanets() as $planet) {
+        foreach($this->getCharacter()->getPlanets() as $planet) {
             $id = $planet->getId();
             if($next == 1) {
                 return $id;
@@ -975,8 +1010,8 @@ class Planet
      */
     public function getPlanetAlliance()
     {
-        if ($this->getUser()) {
-            return $this->getUser()->getAlly();
+        if ($this->getCharacter()) {
+            return $this->getCharacter()->getAlly();
         } else {
             return null;
         }
@@ -985,13 +1020,13 @@ class Planet
     /**
      * @return mixed
      */
-    public function getOurAllyPact($user)
+    public function getOurAllyPact($character)
     {
-        if ($this->getUser()) {
-            if ($this->getUser()->getAlly() && $user->getAlly()) {
-                if (count($this->getUser()->getAlly()->getAllieds()) > 0) {
-                    foreach($this->getUser()->getAlly()->getAllieds() as $allied) {
-                        if($allied->getAllyTag() == $user->getAlly()->getSigle() && $allied->getAccepted() == 1) {
+        if ($this->getCharacter()) {
+            if ($this->getCharacter()->getAlly() && $character->getAlly()) {
+                if (count($this->getCharacter()->getAlly()->getAllieds()) > 0) {
+                    foreach($this->getCharacter()->getAlly()->getAllieds() as $allied) {
+                        if($allied->getAllyTag() == $character->getAlly()->getSigle() && $allied->getAccepted() == 1) {
                             return 'pact';
                         }
                     }
@@ -1004,11 +1039,11 @@ class Planet
     /**
      * @return mixed
      */
-    public function getOurFleet($user)
+    public function getOurFleet($character)
     {
 
         foreach($this->getFleets() as $fleet) {
-            if ($fleet->getUser() == $user && $fleet->getFlightTime() == null) {
+            if ($fleet->getCharacter() == $character && $fleet->getFlightTime() == null) {
                 return 'hello';
             }
         }
@@ -1110,29 +1145,35 @@ class Planet
     }
 
     /**
-     * @return \App\Entity\User
+     * @return Character
      */
-    public function getUser()
+    public function getCharacter()
     {
-        return $this->user;
+        return $this->character;
     }
 
     /**
-     * @param \App\Entity\User $user
+     * @param Character|null $character
      * @return Planet
      */
-    public function setUser(\App\Entity\User $user = null)
+    public function setCharacter(Character $character = null)
     {
-        $this->user = $user;
+        $this->character = $character;
 
         return $this;
     }
 
+    /**
+     * @param string|null $imageName
+     */
     public function setImageName(?string $imageName): void
     {
         $this->imageName = $imageName;
     }
 
+    /**
+     * @return string|null
+     */
     public function getImageName(): ?string
     {
         return $this->imageName;
@@ -1947,9 +1988,9 @@ class Planet
     }
 
     /**
-     * @param \DateTime $updatedAt
+     * @param DateTime $updatedAt
      */
-    public function setUpdatedAt(\DateTime $updatedAt): void
+    public function setUpdatedAt(DateTime $updatedAt): void
     {
         $this->updatedAt = $updatedAt;
     }
@@ -2688,5 +2729,21 @@ class Planet
     public function setBunker($bunker): void
     {
         $this->bunker = $bunker;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSun()
+    {
+        return $this->sun;
+    }
+
+    /**
+     * @param mixed $sun
+     */
+    public function setSun($sun): void
+    {
+        $this->sun = $sun;
     }
 }

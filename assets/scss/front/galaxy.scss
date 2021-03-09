@@ -15,14 +15,14 @@
 
 .galaxy-position {
   position: absolute;
-  margin-left: -10rem;
+  margin-left: -9rem;
   margin-top: 1rem;
   color: #FFFFFF;
 }
 
 .galaxy-players {
   position: absolute;
-  margin-left: -10.5rem;
+  margin-left: -10rem;
   margin-top: 9rem;
   color: #FFFFFF;
 }
@@ -136,6 +136,10 @@ div.tooltip-inner span a.manage {
 
 .pp-cdr2 {
   color: $color-yellow!important;
+}
+
+.pp-bot {
+  color: $color-orange!important;
 }
 
 .pp-enemy2 {

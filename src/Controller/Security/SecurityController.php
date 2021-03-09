@@ -2,6 +2,8 @@
 
 namespace App\Controller\Security;
 
+use Swift_Mailer;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,16 +14,22 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+/**
+ * Class SecurityController
+ * @package App\Controller\Security
+ */
 class SecurityController extends AbstractController
 {
     /**
      * @Route("/enregistrement", name="register")
      * @Route("/enregistrement/", name="register_noSlash")
+     * @param Request $request
+     * @param Swift_Mailer $mailer
+     * @return RedirectResponse
      */
-    public function registerAction(Request $request, \Swift_Mailer $mailer)
+    public function registerAction(Request $request, Swift_Mailer $mailer)
     {
         $em = $this->getDoctrine()->getManager();
-        $user = new User();
 
         if ($_POST) {
             $userSameName = $em->getRepository('App:User')
@@ -71,12 +79,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('home');
             }
 
-            $now = new DateTime();
-            $user->setUsername($_POST['_username']);
-            $user->setEmail($_POST['_email']);
-            $user->setCreatedAt($now);
-            $user->setPassword(password_hash($_POST['_password'], PASSWORD_BCRYPT));
-            $user->setIpAddress($userIp);
+            $user = new User($_POST['_username'], $_POST['_email'], password_hash($_POST['_password'], PASSWORD_BCRYPT), $userIp);
             $em->persist($user);
             $em->flush();
 
@@ -119,6 +122,8 @@ class SecurityController extends AbstractController
     /**
      * @Route("/enregistrement-anonyme", name="register_ghost")
      * @Route("/enregistrement-anonyme/", name="register_ghost_noSlash")
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function registerGhostAction(Request $request)
     {
@@ -150,14 +155,7 @@ class SecurityController extends AbstractController
             ->getQuery()
             ->getSingleScalarResult();
 
-        $user = new User();
-        $now = new DateTime();
-        $user->setUsername('Test' . $number);
-        $user->setEmail('Test' . $number . '@areauniverse.eu');
-        $user->setCreatedAt($now);
-        $user->setPassword(password_hash('connected', PASSWORD_BCRYPT));
-        $user->setIpAddress($userIp);
-        $user->setConfirmed(0);
+        $user = new User('Test' . $number, 'Test' . $number . '@areauniverse.eu', password_hash('connected', PASSWORD_BCRYPT), $userIp, false);
         $em->persist($user);
         $em->flush();
 
@@ -189,11 +187,7 @@ class SecurityController extends AbstractController
 
         if($user) {
             if ($user->getRoles()[0] == 'ROLE_MODO' || $user->getRoles()[0] == 'ROLE_ADMIN') {
-                return $this->redirectToRoute('administration');
-            }
-            if ($user->getBot() == 1 && $user->getId() != 1) {
-                $user->setBot(0);
-                $em->flush();
+                return $this->redirectToRoute('server_select');
             }
 
             if (!$user->getSpecUsername()) {
@@ -222,41 +216,12 @@ class SecurityController extends AbstractController
                     $em->flush();
                 }
             }
-
-            if($user->getGameOver()) {
-                return $this->redirectToRoute('game_over');
-            }
-
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($user);
-
-            if($usePlanet) {
+            if ($user->getConnectLast()) {
+                $character = $user->getMainCharacter();
+                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($character);
                 return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
-            } else {
-                $servers = $em->getRepository('App:Server')
-                    ->createQueryBuilder('s')
-                    ->select('s.id, s.open, s.pvp')
-                    ->groupBy('s.id')
-                    ->orderBy('s.id', 'ASC')
-                    ->getQuery()
-                    ->getResult();
-
-                $galaxys = $em->getRepository('App:Galaxy')
-                    ->createQueryBuilder('g')
-                    ->join('g.server', 'ss')
-                    ->join('g.sectors', 's')
-                    ->join('s.planets', 'p')
-                    ->leftJoin('p.user', 'u')
-                    ->select('g.id, g.position, count(DISTINCT u.id) as users, ss.id as server')
-                    ->groupBy('g.id')
-                    ->orderBy('g.position', 'ASC')
-                    ->getQuery()
-                    ->getResult();
-
-                return $this->render('connected/play.html.twig', [
-                    'galaxys' => $galaxys,
-                    'servers' => $servers
-                ]);
             }
+            return $this->redirectToRoute('server_select');
         }
 
         $this->addFlash("fail", "Le mot de passe est incorrect.");
