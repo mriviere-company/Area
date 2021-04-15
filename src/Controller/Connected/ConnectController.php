@@ -155,7 +155,7 @@ class ConnectController extends AbstractController
         $servers = $em->getRepository('App:Server')
             ->createQueryBuilder('s')
             ->leftJoin('s.characters', 'c')
-            ->select('s.id, count(DISTINCT c.id) as characters, s.open, s.pvp')
+            ->select('s.id, count(DISTINCT c.id) as characters, s.open, s.pvp, s.name')
             ->groupBy('s.id')
             ->orderBy('s.id', 'ASC')
             ->getQuery()

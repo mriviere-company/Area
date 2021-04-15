@@ -28,7 +28,7 @@
                 {% else %}
                         <div class="offset-1 offset-xl-2 col-md-5 col-xl-3 table-dark text-center borderOverview p-4 mr-4">
                 {% endif %}
-                    <div class="text-more">{{ 'server'|trans }} {{ server.id }}</div>
+                    <div class="text-more">{{ 'server'|trans }} {{ server.id }} - {{ server.name }}</div>
                     <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block"
                          src="{{ asset('img/server.png') }}">
                     <div>

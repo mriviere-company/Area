@@ -777,7 +777,7 @@ class Planet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getNbrSignatures(): float
     {
@@ -810,7 +810,7 @@ class Planet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getNbrSignaturesRegroup(): float
     {

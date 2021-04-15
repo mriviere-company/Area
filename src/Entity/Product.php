@@ -273,7 +273,7 @@ class Product
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getNbrSignatures(): float
     {

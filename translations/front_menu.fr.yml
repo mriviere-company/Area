@@ -10,8 +10,8 @@ serveur.createBig: 'Créer Univers'
 serveur.createLittle: 'Créer petit Univers'
 serveur.kill.sector: 'Détruire secteur'
 serveur.kill.serveur: 'Détruire Univers'
-logout: Déconnexion
-parameters: Paramètres
+logout: Quitter
+parameters: Options
 game: Jeu
 globalView: 'Vue d''ensemble'
 fleet: Flottes
@@ -31,7 +31,7 @@ message: Messagerie
 report: Rapport
 salon: Salon
 disconnect: Deconnexion
-rules: Règlement
+rules: Règles
 statistic: 'Statistiques'
 createFlotte: 'Créer flotte'
 objective: 'Histoire'

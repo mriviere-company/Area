@@ -79,7 +79,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('home');
             }
 
-            $user = new User($_POST['_username'], $_POST['_email'], password_hash($_POST['_password'], PASSWORD_BCRYPT), $userIp);
+            $user = new User($_POST['_username'], $_POST['_email'], password_hash($_POST['_password'], PASSWORD_BCRYPT), $userIp, false);
             $em->persist($user);
             $em->flush();
 
@@ -211,10 +211,8 @@ class SecurityController extends AbstractController
                 }
             } else {
                 $userIp = null;
-                if ($user->getUsername() != 'admin') {
-                    $user->setIpAddress(null);
-                    $em->flush();
-                }
+                $user->setIpAddress(null);
+                $em->flush();
             }
             if ($user->getConnectLast()) {
                 $character = $user->getMainCharacter();

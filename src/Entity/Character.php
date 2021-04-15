@@ -2041,9 +2041,9 @@ class Character
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getAllShipsCost(): int
+    public function getAllShipsCost(): float
     {
         $return = 0;
         foreach($this->planets as $planet) {
@@ -2055,6 +2055,7 @@ class Character
         foreach($this->fleets as $fleet) {
             $return = $return + ($fleet->getNbrSignatures() / 2);
         }
+
         return $return;
     }
 
@@ -2067,13 +2068,14 @@ class Character
         foreach($this->planets as $planet) {
             $return = $return + $planet->getBuildingCost();
         }
+
         return $return;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getAllShipsPoint(): int
+    public function getAllShipsPoint(): float
     {
         $return = 0;
         foreach($this->planets as $planet) {
@@ -2082,6 +2084,7 @@ class Character
         foreach($this->fleets as $fleet) {
             $return = $return + ($fleet->getNbrSignatures() / 5);
         }
+
         return $return;
     }
 

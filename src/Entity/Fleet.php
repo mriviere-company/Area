@@ -638,7 +638,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getCargoFull(): float
     {
@@ -656,7 +656,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getCargoPlace(): float
     {
@@ -682,7 +682,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getArmor(): float
     {
@@ -711,7 +711,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getShield(): float
     {
@@ -733,7 +733,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getAccurate(): float
     {
@@ -754,7 +754,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getMissile(): float
     {
@@ -775,7 +775,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getLaser(): float
     {
@@ -793,7 +793,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getPlasma(): float
     {
@@ -811,7 +811,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getNbrShips(): float
     {
@@ -844,7 +844,7 @@ class Fleet
     }
 
     /**
-     * @return int
+     * @return float
      */
     public function getNbrSignatures(): float
     {

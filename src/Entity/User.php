@@ -85,10 +85,10 @@ class User implements UserInterface, \Serializable
      * @param string $username
      * @param string $email
      * @param string $password
-     * @param string $ip
+     * @param string|null $ip
      * @param bool $confirmed
      */
-    public function __construct(string $username, string $email, string $password, string $ip, bool $confirmed)
+    public function __construct(string $username, string $email, string $password, ?string $ip, bool $confirmed)
     {
         $this->username = $username;
         $this->email = $email;
@@ -179,7 +179,7 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        if ($this->getUsername() == 'admin') {
+        if ($this->getUsername() == 'Admin') {
             return ['ROLE_ADMIN'];
         }
         return ['ROLE_USER'];

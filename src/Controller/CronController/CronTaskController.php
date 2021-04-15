@@ -2,6 +2,7 @@
 
 namespace App\Controller\CronController;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -567,18 +568,14 @@ class CronTaskController extends AbstractController
     public function testAction()
     {
         $em = $this->getDoctrine()->getManager();
-
-        $plas = $em->getRepository('App:Planet')
-            ->createQueryBuilder('p')
-            ->where('p.metropole > 0 or p.city > 0')
+        $importedUsers = $em->getRepository('App:ImportUser')
+            ->createQueryBuilder('iu')
             ->getQuery()
             ->getResult();
 
-        foreach ($plas as $pla) {
-            $pla->setWorkerMax(25000 + ($pla->getCity() * 12500) + ($pla->getMetropole() * 40000));
-            if ($pla->getWorker() > $pla->getWorkerMax()) {
-                $pla->setWorker($pla->getWorkerMax());
-            }
+        foreach ($importedUsers as $importedUser) {
+            $user = new User( $importedUser->getUsername(), $importedUser->getEmail(), $importedUser->getPassword(), $importedUser->getIpAddress(), $importedUser->isConfirmed());
+            $em->persist($user);
         }
         $em->flush();
         echo "<span style='color:#FF0000'>KO<span><br/>";

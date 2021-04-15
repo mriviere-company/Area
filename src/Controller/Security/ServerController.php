@@ -80,11 +80,12 @@ class ServerController extends AbstractController
         $em->persist($salon);
         $em->flush();
 
+        $iaZombieUser = $em->getRepository('App:User')->findOneBy(['id' => 1]);
         $iaZombie = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
         $iaAlien = $em->getRepository('App:Character')->findOneBy(['alien' => 1]);
 
         if ($iaZombie == null) {
-            $iaZombie = new Character(null, 'Zombie', $server);
+            $iaZombie = new Character($iaZombieUser, 'Zombie', $server);
             $iaZombie->setBitcoin(100);
             $iaZombie->setAlien(1);
             $iaZombie->setImageName('hydre.png');
@@ -99,7 +100,7 @@ class ServerController extends AbstractController
             $em->flush();
         }
         if ($iaAlien == null) {
-            $iaAlien = new Character(null, 'Aliens', $server);
+            $iaAlien = new Character($iaZombieUser, 'Aliens', $server);
             $iaAlien->setBitcoin(100);
             $iaAlien->setZombie(1);
             $iaAlien->setImageName('hydre.png');
