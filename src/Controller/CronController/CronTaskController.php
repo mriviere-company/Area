@@ -352,7 +352,6 @@ class CronTaskController extends AbstractController
                 $em->remove($report);
             }
             $em->flush();
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $zCharacters = $em->getRepository('App:Character')

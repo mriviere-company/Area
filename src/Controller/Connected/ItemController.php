@@ -23,8 +23,6 @@ class ItemController extends AbstractController
      */
     public function itemAction(Planet $usePlanet)
     {
-        $em = $this->getDoctrine()->getManager();
-        $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 

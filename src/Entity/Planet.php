@@ -1107,11 +1107,11 @@ class Planet
     /**
      * Add fleet
      *
-     * @param \App\Entity\Fleet $fleet
+     * @param Fleet $fleet
      *
      * @return Planet
      */
-    public function addFleet(\App\Entity\Fleet $fleet)
+    public function addFleet(Fleet $fleet)
     {
         $this->fleets[] = $fleet;
 
@@ -1121,9 +1121,9 @@ class Planet
     /**
      * Remove fleet
      *
-     * @param \App\Entity\Fleet $fleet
+     * @param Fleet $fleet
      */
-    public function removeFleet(\App\Entity\Fleet $fleet)
+    public function removeFleet(Fleet $fleet)
     {
         $this->fleets->removeElement($fleet);
     }

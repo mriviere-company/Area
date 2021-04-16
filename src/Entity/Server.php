@@ -167,9 +167,9 @@ class Server
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
-    public function getEvents(): ArrayCollection
+    public function getEvents()
     {
         return $this->events;
     }

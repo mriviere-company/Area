@@ -81,39 +81,36 @@ class ServerController extends AbstractController
         $em->flush();
 
         $iaZombieUser = $em->getRepository('App:User')->findOneBy(['id' => 1]);
-        $iaZombie = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
-        $iaAlien = $em->getRepository('App:Character')->findOneBy(['alien' => 1]);
 
-        if ($iaZombie == null) {
-            $iaZombie = new Character($iaZombieUser, 'Zombie', $server);
-            $iaZombie->setBitcoin(100);
-            $iaZombie->setAlien(1);
-            $iaZombie->setImageName('hydre.png');
-            $rank = new Rank($iaZombie);
-            $em->persist($rank);
-            $iaZombie->setRank($rank);
-            $em->persist($iaZombie);
-            $ships = new Ships();
-            $iaZombie->setShip($ships);
-            $ships->setCharacter($iaZombie);
-            $em->persist($ships);
-            $em->flush();
-        }
-        if ($iaAlien == null) {
-            $iaAlien = new Character($iaZombieUser, 'Aliens', $server);
-            $iaAlien->setBitcoin(100);
-            $iaAlien->setZombie(1);
-            $iaAlien->setImageName('hydre.png');
-            $rank = new Rank($iaAlien);
-            $em->persist($rank);
-            $iaAlien->setRank($rank);
-            $em->persist($iaAlien);
-            $ships = new Ships();
-            $iaAlien->setShip($ships);
-            $ships->setCharacter($iaAlien);
-            $em->persist($ships);
-            $em->flush();
-        }
+        $iaZombie = new Character($iaZombieUser, 'Zombie', $server);
+        $iaZombie->setBitcoin(100);
+        $iaZombie->setZombie(1);
+        $iaZombie->setBot(1);
+        $iaZombie->setImageName('hydre.png');
+        $rank = new Rank($iaZombie);
+        $em->persist($rank);
+        $iaZombie->setRank($rank);
+        $em->persist($iaZombie);
+        $ships = new Ships();
+        $iaZombie->setShip($ships);
+        $ships->setCharacter($iaZombie);
+        $em->persist($ships);
+        $em->flush();
+
+        $iaAlien = new Character($iaZombieUser, 'Aliens', $server);
+        $iaAlien->setBitcoin(100);
+        $iaAlien->setAlien(1);
+        $iaAlien->setBot(1);
+        $iaAlien->setImageName('hydre.png');
+        $rank = new Rank($iaAlien);
+        $em->persist($rank);
+        $iaAlien->setRank($rank);
+        $em->persist($iaAlien);
+        $ships = new Ships();
+        $iaAlien->setShip($ships);
+        $ships->setCharacter($iaAlien);
+        $em->persist($ships);
+        $em->flush();
 
         return $this->redirectToRoute('server_select');
     }
@@ -154,7 +151,13 @@ class ServerController extends AbstractController
         $iaLevelFour = ["44", "54", "47", "57", "35", "36", "65", "66"];
         $iaLevelFive = ["45", "46", "55", "56"];
 
-        $iaPlayer = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
+        $iaPlayer = $em->getRepository('App:Character')
+            ->createQueryBuilder('c')
+            ->where('c.alien = true')
+            ->andWhere('c.server =:server')
+            ->setParameters(['server' => $server])
+            ->getQuery()
+            ->getOneOrNullResult();
 
         $nbrGalaxy = $em->getRepository('App:Galaxy')->findBy(['server' => $server]);
         $nbrSector = 1;
@@ -464,14 +467,7 @@ class ServerController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $characters = $em->getRepository('App:Character')->findAll();
-
-        $salon = $em->getRepository('App:Salon')
-            ->createQueryBuilder('s')
-            ->where('s.name = :name')
-            ->setParameters(['name' => 'Public'])
-            ->getQuery()
-            ->getOneOrNullResult();
+        $characters = $em->getRepository('App:Character')->findBy(['server' => $server]);
 
         foreach ($characters as $character) {
             $ship = $character->getShip();
@@ -479,90 +475,98 @@ class ServerController extends AbstractController
                 $character->setShip(null);
                 $em->remove($ship);
             }
-            $character->setBitcoin(5000);
-            $character->setAlly(null);
-            $character->setSearch(null);
+            if ($character->getAlly()) {
+                $ally = $character->getAlly();
+                $character->setAlly(null);
+                foreach ($ally->getAllied() as $allied) {
+                    $em->remove($allied);
+                }
+
+                foreach ($ally->getWars() as $war) {
+                    $em->remove($war);
+                }
+
+                foreach ($ally->getPeaces() as $peace) {
+                    $em->remove($peace);
+                }
+
+                foreach ($ally->getExchanges() as $exchange) {
+                    $em->remove($exchange);
+                }
+
+                foreach ($ally->getPnas() as $pna) {
+                    $em->remove($pna);
+                }
+
+                foreach ($ally->getGrades() as $grade) {
+                    $em->remove($grade);
+                }
+
+                $em->remove($ally);
+            }
+
             if ($character->getRank()) {
                 $em->remove($character->getRank());
             }
-            if ($character->getId() != 1) {
-                $character->setBot(0);
-            }
-            $character->setRank(null);
-            $character->setGrade(null);
-            $character->setJoinAllyAt(null);
-            $character->setAllyBan(null);
-            $character->setScientistProduction(1);
-            $character->setSearchAt(null);
-            $character->setPlasma(0);
-            $character->setLaser(0);
-            $character->setMissile(0);
-            $character->setArmement(0);
-            $character->setRecycleur(0);
-            $character->setCargo(0);
-            $character->setTerraformation(0);
-            $character->setDemography(0);
-            $character->setUtility(0);
-            $character->setBarge(0);
-            $character->setHyperespace(0);
-            $character->setDiscipline(0);
-            $character->setHeavyShip(0);
-            $character->setLightShip(0);
-            $character->setIndustry(0);
-            $character->setOnde(0);
-            $character->setHyperespace(0);
-            $character->setDiscipline(0);
-            $character->setBarbed(0);
-            $character->setTank(0);
-            $character->setExpansion(0);
-            $character->setPoliticArmement(0);
-            $character->setPoliticCostScientist(0);
-            $character->setPoliticArmor(0);
-            $character->setPoliticBarge(0);
-            $character->setPoliticCargo(0);
-            $character->setPoliticColonisation(0);
-            $character->setPoliticCostSoldier(0);
-            $character->setPoliticCostTank(0);
-            $character->setPoliticInvade(0);
-            $character->setPoliticMerchant(0);
-            $character->setPoliticPdg(0);
-            $character->setPoliticProd(0);
-            $character->setPoliticRecycleur(0);
-            $character->setPoliticSearch(0);
-            $character->setPoliticSoldierAtt(0);
-            $character->setPoliticSoldierSale(0);
-            $character->setPoliticTankDef(0);
-            $character->setPoliticWorker(0);
-            $character->setPoliticWorkerDef(0);
+
             foreach ($character->getProposals() as $proposal) {
                 $character->removeProposal($proposal);
             }
+
             foreach ($character->getFleets() as $fleet) {
-                if ($fleet->getDestination()) {
-                    $em->remove($fleet->getDestination());
+                $destination = $fleet->getDestination();
+                if ($destination) {
+                    $destination->setFleet(null);
+                    $em->remove($destination);
                 }
+                $fleet->setDestination(null);
+                $fleet->setCharacter(null);
+                $fleet->setPlanet(null);
                 $character->removeFleet($fleet);
             }
+
             foreach ($character->getPlanets() as $planet) {
-                $character->removePlanet($planet);
+                $product = $planet->getProduct();
+                if ($product) {
+                    $product->setPlanet(null);
+                    $em->remove($product);
+                }
+                $contructions = $planet->getConstructions();
+                if ($contructions) {
+                    foreach ($contructions as $contruction) {
+                        $em->remove($contruction);
+                    }
+                }
+                $planet->setCharacter(null);
             }
-            $salon->removeCharacter($character);
+
+            foreach ($character->getStats() as $stats) {
+                $character->removeStats($stats);
+            }
+
+            foreach ($character->getViews() as $view) {
+                $em->remove($view);
+            }
+
+            foreach ($character->getReports() as $report) {
+                $report->setCharacter(null);
+                $report->setImageName(null);
+                $em->remove($report);
+            }
+
+            foreach ($character->getMessages() as $message) {
+                $em->remove($message);
+            }
+
+            foreach ($character->getSContents() as $sContent) {
+                $em->remove($sContent);
+            }
+
+            $em->remove($character);
         }
+        $em->flush();
 
-        $sContents = $em->getRepository('App:S_Content')->findAll();
-
-        foreach ($sContents as $sContent) {
-            $em->remove($sContent);
-        }
-
-        $salons = $em->getRepository('App:Salon')
-            ->createQueryBuilder('s')
-            ->leftJoin('s.allys', 'a')
-            ->where('s.name != :name')
-            ->andWhere('a.id is null')
-            ->setParameters(['name' => 'Public'])
-            ->getQuery()
-            ->getResult();
+        $salons = $em->getRepository('App:Salon')->findBy(['server' => $server]);
 
         foreach ($salons as $salon) {
             foreach ($salon->getViews() as $view) {
@@ -571,154 +575,43 @@ class ServerController extends AbstractController
             $em->remove($salon);
         }
 
-        $reports = $em->getRepository('App:Report')->findAll();
-
-        foreach ($reports as $report) {
-            $report->setImageName(null);
-            $em->remove($report);
-        }
-
-        $messages = $em->getRepository('App:Message')->findAll();
-
-        foreach ($messages as $message) {
-            $em->remove($message);
-        }
-
-        $products = $em->getRepository('App:Product')->findAll();
-
-        foreach ($products as $product) {
-            $product->setPlanet(null);
-            $em->remove($product);
-        }
-
-        $destinations = $em->getRepository('App:Destination')->findAll();
-
-        foreach ($destinations as $destination) {
-            $em->remove($destination);
-        }
-
-        $fleets = $em->getRepository('App:Fleet')->findAll();
-
-        foreach ($fleets as $fleet) {
-            $em->remove($fleet);
-        }
-
-        $wars = $em->getRepository('App:War')->findAll();
-
-        foreach ($wars as $war) {
-            $em->remove($war);
-        }
-
-        $peaces = $em->getRepository('App:Peace')->findAll();
-
-        foreach ($peaces as $peace) {
-            $em->remove($peace);
-        }
-
-        $allys = $em->getRepository('App:Ally')->findAll();
-
-        foreach ($allys as $ally) {
-            $ally->setBitcoin(0);
-            $ally->setPdg(0);
-        }
-
-        $constructions = $em->getRepository('App:Construction')->findAll();
-
-        foreach ($constructions as $construction) {
-            $em->remove($construction);
-        }
-
-        $missions = $em->getRepository('App:Mission')->findAll();
-
-        foreach ($missions as $mission) {
-            $em->remove($mission);
-        }
-
-        $planets = $em->getRepository('App:Planet')->findAll();
+        $planets = $em->getRepository('App:Planet')
+            ->createQueryBuilder('p')
+            ->join('p.sector', 's')
+            ->join('s.galaxy', 'g')
+            ->andWhere('g.server = :server')
+            ->setParameters(['server' => $server])
+            ->getQuery()
+            ->getResult();
 
         foreach ($planets as $planet) {
             $planet->setImageName(null);
             $em->remove($planet);
         }
 
-        $sectors = $em->getRepository('App:Sector')->findAll();
+        $sectors = $em->getRepository('App:Sector')
+            ->createQueryBuilder('s')
+            ->join('s.galaxy', 'g')
+            ->andWhere('g.server = :server')
+            ->setParameters(['server' => $server])
+            ->getQuery()
+            ->getResult();
 
         foreach ($sectors as $sector) {
             $em->remove($sector);
         }
 
-        $galaxys = $em->getRepository('App:Galaxy')->findAll();
+        $galaxies = $em->getRepository('App:Galaxy')->findBy(['server' => $server]);
 
-        foreach ($galaxys as $galaxy) {
+        foreach ($galaxies as $galaxy) {
             $em->remove($galaxy);
         }
 
-        $stats = $em->getRepository('App:Stats')->findAll();
-
-        foreach ($stats as $stat) {
-            $em->remove($stat);
-        }
-
-        $tracks = $em->getRepository('App:Track')->findAll();
-
-        foreach ($tracks as $track) {
-            $em->remove($track);
-        }
-
-        $allieds = $em->getRepository('App:Allied')->findAll();
-
-        foreach ($allieds as $allied) {
-            $em->remove($allied);
-        }
-
-        $wars = $em->getRepository('App:War')->findAll();
-
-        foreach ($wars as $war) {
-            $em->remove($war);
-        }
-
-        $pnas = $em->getRepository('App:Pna')->findAll();
-
-        foreach ($pnas as $pna) {
-            $em->remove($pna);
-        }
-
-        $proposals = $em->getRepository('App:Proposal')->findAll();
-
-        foreach ($proposals as $proposal) {
-            $em->remove($proposal);
-        }
-
-        $peaces = $em->getRepository('App:Peace')->findAll();
-
-        foreach ($peaces as $peace) {
-            $em->remove($peace);
-        }
-
-        $exchanges = $em->getRepository('App:Exchange')->findAll();
-
-        foreach ($exchanges as $exchange) {
-            $em->remove($exchange);
-        }
-
-        $grades = $em->getRepository('App:Grade')->findAll();
-
-        foreach ($grades as $grade) {
-            $em->remove($grade);
-        }
-
-        $allys = $em->getRepository('App:Ally')->findAll();
-
-        foreach ($allys as $ally) {
-            $em->remove($ally);
-        }
-
-        $views = $em->getRepository('App:View')->findAll();
-
-        foreach ($views as $view) {
-            $em->remove($view);
-        }
         $em->flush();
+
+        foreach ($server->getEvents() as $event) {
+            $em->remove($event);
+        }
 
         $em->remove($server);
 
@@ -728,7 +621,7 @@ class ServerController extends AbstractController
     }
 
     /**
-     * @Route("/destruction-galaxy/{galaxyId}", name="destroy_galaxy", requirements={"galaxyId"="\d+"})
+     * @Route("/destruction-galaxy/{galaxy}", name="destroy_galaxy", requirements={"galaxy"="\d+"})
      * @param Galaxy $galaxy
      * @return RedirectResponse
      */
@@ -742,6 +635,12 @@ class ServerController extends AbstractController
                     $em->remove($planet->getProduct());
                 }
                 foreach ($planet->getFleets() as $fleet) {
+                    $destination = $fleet->getDestination();
+                    if ($destination) {
+                        $destination->setFleet(null);
+                        $em->remove($destination);
+                    }
+                    $fleet->setDestination(null);
                     $em->remove($fleet);
                 }
                 foreach ($planet->getConstructions() as $construction) {

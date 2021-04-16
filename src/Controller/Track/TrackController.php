@@ -29,12 +29,11 @@ class TrackController extends AbstractController
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        if ($user && $user->getUsername() == 'Dev' || $ip == '77.141.214.214'
-            || $ip == '92.154.96.135' || stripos(strtoupper($u_agent), 'BOT') !== FALSE) {
+        if ($user && $user->getUsername() == 'Dev' || $user && $user->getUsername() == 'Admin' || $ip == '2a01:e0a:833:360:89c3:2f72:554:e60f'
+            || stripos(strtoupper($u_agent), 'BOT') !== FALSE) {
             return new Response ("");
         }
         $em = $this->getDoctrine()->getManager();
-        $now = new DateTime();
         $track = new Track();
 
         if ($user) {
@@ -115,25 +114,6 @@ class TrackController extends AbstractController
 
         $em->persist($track);
         $em->flush();
-
-        $firstFleet = $em->getRepository('App:Fleet')
-            ->createQueryBuilder('f')
-            ->join('f.planet', 'p')
-            ->select('p.id')
-            ->where('f.fightAt < :now')
-            ->andWhere('f.flightTime is null')
-            ->setParameters(['now' => $now])
-            ->getQuery()
-            ->setMaxResults(1)
-            ->getOneOrNullResult();
-
-        if ($firstFleet) {
-            $this->forward('App\Controller\Connected\Execute\FightController::fightAction', [
-                'firstFleet' => $firstFleet,
-                'now' => $now,
-                'em' => $em
-            ]);
-        }
 
         return new Response ("");
     }

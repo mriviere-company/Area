@@ -123,7 +123,7 @@ class User implements UserInterface, \Serializable
     public function getCharacter(Server $server)
     {
         foreach($this->characters as $character) {
-            if ($character->getServer() ==$server)
+            if ($character->getServer() == $server)
                 return $character;
         }
         return null;

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PlanetService extends AbstractController
 {
-    public function userRadarAction($sector, $gal)
+    public function userRadarAction($sector, $galaxy)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
@@ -24,7 +24,7 @@ class PlanetService extends AbstractController
                 ->select('case when p.radar is not null and p.skyRadar is not null then (p.radar + p.skyRadar) when p.radar is not null then p.radar when p.skyRadar is not null then p.skyRadar else 0 end as allRadar')
                 ->where('a.id = :ally')
                 ->andWhere('s.position = :sPos and g.position = :gPos')
-                ->setParameters(['ally' => $ally->getId(), 'sPos' => $sector, 'gPos' => $gal])
+                ->setParameters(['ally' => $ally->getId(), 'sPos' => $sector, 'gPos' => $galaxy])
                 ->setMaxResults(1)
                 ->orderBy('allRadar', 'DESC')
                 ->getQuery()
@@ -37,7 +37,7 @@ class PlanetService extends AbstractController
                 ->select('case when p.radar is not null and p.skyRadar is not null then (p.radar + p.skyRadar) when p.radar is not null then p.radar when p.skyRadar is not null then p.skyRadar else 0 end as allRadar')
                 ->where('p.character = :character')
                 ->andWhere('s.position = :sPos and g.position = :gPos')
-                ->setParameters(['character' => $character, 'sPos' => $sector, 'gPos' => $gal])
+                ->setParameters(['character' => $character, 'sPos' => $sector, 'gPos' => $galaxy])
                 ->setMaxResults(1)
                 ->orderBy('allRadar', 'DESC')
                 ->getQuery()

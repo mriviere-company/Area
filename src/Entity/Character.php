@@ -783,11 +783,11 @@ class Character
     /**
      * Add planet
      *
-     * @param \App\Entity\Planet $planet
+     * @param Planet $planet
      *
      * @return Character
      */
-    public function addPlanet(\App\Entity\Planet $planet)
+    public function addPlanet(Planet $planet)
     {
         $this->planets[] = $planet;
 
@@ -797,9 +797,9 @@ class Character
     /**
      * Remove planet
      *
-     * @param \App\Entity\Planet $planet
+     * @param Planet $planet
      */
-    public function removePlanet(\App\Entity\Planet $planet)
+    public function removePlanet(Planet $planet)
     {
         $this->planets->removeElement($planet);
     }
@@ -807,11 +807,11 @@ class Character
     /**
      * Add proposal
      *
-     * @param \App\Entity\Proposal $proposal
+     * @param Proposal $proposal
      *
      * @return Character
      */
-    public function addProposal(\App\Entity\Proposal $proposal)
+    public function addProposal(Proposal $proposal)
     {
         $this->proposals[] = $proposal;
 
@@ -821,9 +821,9 @@ class Character
     /**
      * Remove planet
      *
-     * @param \App\Entity\Proposal $proposal
+     * @param Proposal $proposal
      */
-    public function removeProposal(\App\Entity\Proposal $proposal)
+    public function removeProposal(Proposal $proposal)
     {
         $this->proposals->removeElement($proposal);
     }
@@ -3507,11 +3507,11 @@ class Character
     /**
      * Add stats
      *
-     * @param \App\Entity\Stats $stats
+     * @param Stats $stats
      *
      * @return Character
      */
-    public function addStats(\App\Entity\Stats $stats)
+    public function addStats(Stats $stats)
     {
         $this->stats[] = $stats;
 
@@ -3521,9 +3521,9 @@ class Character
     /**
      * Remove stats
      *
-     * @param \App\Entity\Stats $stats
+     * @param Stats $stats
      */
-    public function removeGalaxy(\App\Entity\Stats $stats)
+    public function removeStats(Stats $stats)
     {
         $this->stats->removeElement($stats);
     }

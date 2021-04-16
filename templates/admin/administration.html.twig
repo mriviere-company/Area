@@ -42,7 +42,7 @@
                             {% endif %}
                             <td class="text-center">
                             <span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mb-4" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.characters|number_format }) }}</span></span>
-                                <div><a class="confirm-button" href="{{ path('destroy_galaxy', {'galaxyId': galaxy.id}) }}">{{ 'galaxy.destroy'|trans }}</a></div>
+                                <div><a class="confirm-button" href="{{ path('destroy_galaxy', {'galaxy': galaxy.id}) }}">{{ 'galaxy.destroy'|trans }}</a></div>
                             </td>
                             {% set x = x + 1 %}
                         {% endfor %}
