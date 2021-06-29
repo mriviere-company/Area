@@ -21,10 +21,6 @@ class HomeController extends AbstractController
         $user = $this->getUser();
 
         if ($user) {
-            /*$usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($character);
-            if ($usePlanet) {
-                return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
-            }*/
             return $this->redirectToRoute('server_select');
         }
 

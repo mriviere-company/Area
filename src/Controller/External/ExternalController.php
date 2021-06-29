@@ -2,6 +2,7 @@
 
 namespace App\Controller\External;
 
+use Doctrine\ORM\NonUniqueResultException;
 use Swift_Mailer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,8 +19,9 @@ class ExternalController extends AbstractController
      * @param Swift_Mailer $mailer
      * @param $key
      * @return RedirectResponse
+     * @throws NonUniqueResultException
      */
-    public function recoveryPwAction(Swift_Mailer $mailer, $key)
+    public function recoveryPwAction(Swift_Mailer $mailer, $key): RedirectResponse
     {
         $userId = $key; //fixmr decrypt
         $em = $this->getDoctrine()->getManager();
@@ -62,7 +64,7 @@ class ExternalController extends AbstractController
      * @param $key
      * @return RedirectResponse
      */
-    public function confirmEmailAction(Request $request, $key)
+    public function confirmEmailAction(Request $request, $key): RedirectResponse
     {
         $userId = decrypt($key); //fixmr decrypt
         $em = $this->getDoctrine()->getManager();
@@ -90,7 +92,7 @@ class ExternalController extends AbstractController
      * @param $key
      * @return RedirectResponse
      */
-    public function deactivateNewletterAction(Request $request, $key)
+    public function deactivateNewletterAction(Request $request, $key): RedirectResponse
     {
         $userId = decrypt($key); //fixmr decrypt
         $em = $this->getDoctrine()->getManager();
@@ -117,7 +119,7 @@ class ExternalController extends AbstractController
      * @param Swift_Mailer $mailer
      * @return RedirectResponse
      */
-    public function mailAdminAction(Swift_Mailer $mailer)
+    public function mailAdminAction(Swift_Mailer $mailer): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('App:User')->findAll();

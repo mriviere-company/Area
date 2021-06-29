@@ -5,7 +5,6 @@ namespace App\Controller\Track;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Track;
-use DateTime;
 
 /**
  * Class TrackController
@@ -17,7 +16,7 @@ class TrackController extends AbstractController
      * @param $currentPage
      * @return Response
      */
-    public function trackAction($currentPage)
+    public function trackAction($currentPage): Response
     {
         $user = $this->getUser();
 

@@ -2,13 +2,14 @@
 
 namespace App\Controller\Security;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Swift_Mailer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
-use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\EventDispatcher\EventDispatcher;
@@ -26,8 +27,9 @@ class SecurityController extends AbstractController
      * @param Request $request
      * @param Swift_Mailer $mailer
      * @return RedirectResponse
+     * @throws NonUniqueResultException
      */
-    public function registerAction(Request $request, Swift_Mailer $mailer)
+    public function registerAction(Request $request, Swift_Mailer $mailer): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -124,8 +126,10 @@ class SecurityController extends AbstractController
      * @Route("/enregistrement-anonyme/", name="register_ghost_noSlash")
      * @param Request $request
      * @return RedirectResponse
+     * @throws NonUniqueResultException
+     * @throws NoResultException
      */
-    public function registerGhostAction(Request $request)
+    public function registerGhostAction(Request $request): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -180,7 +184,7 @@ class SecurityController extends AbstractController
      * @Route("/login", name="login")
      * @Route("/login/", name="login_noSlash")
      */
-    public function loginAction()
+    public function loginAction(): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
@@ -230,7 +234,7 @@ class SecurityController extends AbstractController
      * @Route("/au-revoir", name="erase_cookie")
      * @Route("/au-revoir/", name="erase_cookie_noSlash")
      */
-    public function eraseCookieAction()
+    public function eraseCookieAction(): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();

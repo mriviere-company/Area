@@ -4,12 +4,12 @@ namespace App\Controller\Security;
 
 use App\Entity\Event;
 use App\Entity\Ships;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Planet;
 use App\Entity\Sector;
 use App\Entity\Galaxy;
@@ -19,7 +19,6 @@ use App\Entity\Character;
 use App\Entity\Rank;
 use App\Entity\Fleet;
 use DateTime;
-use DateInterval;
 
 /**
  * @Route("/serveur")
@@ -32,7 +31,7 @@ class ServerController extends AbstractController
      * @return RedirectResponse
      * @throws Exception
      */
-    public function createServerAction(string $name)
+    public function createServerAction(string $name): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -119,8 +118,9 @@ class ServerController extends AbstractController
      * @Route("/creation-galaxie/{server}", name="create_galaxy", requirements={"server"="\d+"})
      * @param Server $server
      * @return RedirectResponse
+     * @throws NonUniqueResultException
      */
-    public function createGalaxyAction(Server $server)
+    public function createGalaxyAction(Server $server): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $image = [
@@ -376,7 +376,7 @@ class ServerController extends AbstractController
      * @param Server $server
      * @return RedirectResponse
      */
-    public function createServerLittleAction(Server $server)
+    public function createServerLittleAction(Server $server): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $image = [
@@ -463,7 +463,7 @@ class ServerController extends AbstractController
      * @param Server $server
      * @return RedirectResponse
      */
-    public function destroyServerAction(Server $server)
+    public function destroyServerAction(Server $server): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -625,7 +625,7 @@ class ServerController extends AbstractController
      * @param Galaxy $galaxy
      * @return RedirectResponse
      */
-    public function destroyGalaxyAction(Galaxy $galaxy)
+    public function destroyGalaxyAction(Galaxy $galaxy): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -677,7 +677,7 @@ class ServerController extends AbstractController
     /**
      * @Route("/destruction-secteur", name="destroy_sectors")
      */
-    public function destroySectorsAction()
+    public function destroySectorsAction(): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -727,7 +727,7 @@ class ServerController extends AbstractController
      * @param Server $server
      * @return RedirectResponse
      */
-    public function activeServerAction(Server $server)
+    public function activeServerAction(Server $server): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -743,7 +743,7 @@ class ServerController extends AbstractController
      * @param Server $server
      * @return RedirectResponse
      */
-    public function deactivateServerAction(Server $server)
+    public function deactivateServerAction(Server $server): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -759,7 +759,7 @@ class ServerController extends AbstractController
      * @param Server $server
      * @return RedirectResponse
      */
-    public function PveAction(Server $server)
+    public function PveAction(Server $server): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -775,7 +775,7 @@ class ServerController extends AbstractController
      * @param Server $server
      * @return RedirectResponse
      */
-    public function PvpAction(Server $server)
+    public function PvpAction(Server $server): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 

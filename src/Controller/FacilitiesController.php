@@ -17,7 +17,7 @@ class FacilitiesController extends AbstractController
      * @param $usePlanet
      * @return Response
      */
-    public function userReportAction($user, $usePlanet)
+    public function userReportAction($user, $usePlanet): Response
     {
         $return = " <span><a href='/connect/profil-joueur/" . $user->getId() . "/" . $usePlanet->getId() . "'>" . $user->getUserName() . "</a></span> ";
 
@@ -29,7 +29,7 @@ class FacilitiesController extends AbstractController
      * @param $usePlanet
      * @return Response
      */
-    public function coordinatesAction($planet, $usePlanet)
+    public function coordinatesAction($planet, $usePlanet): Response
     {
         $return = " " . $planet->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $planet->getSector()->getPosition() .
             "/" . $planet->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" .
@@ -43,7 +43,7 @@ class FacilitiesController extends AbstractController
      * @param $usePlanet
      * @return Response
      */
-    public function fleetManageAction($fleet, $usePlanet)
+    public function fleetManageAction($fleet, $usePlanet): Response
     {
         $return = " <span><a href='/connect/gerer-flotte/" . $fleet->getId() ."/" . $usePlanet->getId() . "'>" . $fleet->getName() . "</a></span> ";
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Share;
 
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,8 +18,9 @@ class ShareController extends AbstractController
      * @Route("/rapport/share/{id}", name="report_share_display")
      * @param string $key
      * @return Response
+     * @throws NonUniqueResultException
      */
-    public function reportSharePageAction(string $key)
+    public function reportSharePageAction(string $key): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -38,8 +40,9 @@ class ShareController extends AbstractController
      * @Route("/message/share/{id}", name="message_share_display")
      * @param string $key
      * @return Response
+     * @throws NonUniqueResultException
      */
-    public function messageSharePageAction(string $key)
+    public function messageSharePageAction(string $key): Response
     {
         $em = $this->getDoctrine()->getManager();
 
