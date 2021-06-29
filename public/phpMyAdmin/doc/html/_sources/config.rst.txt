@@ -20,7 +20,7 @@ the file. This file is for over-writing the defaults; if you wish to use the
 default value there's no need to add a line here.
 
 The parameters which relate to design (like colors) are placed in
-:file:`themes/themename/layout.inc.php`. You might also want to create
+:file:`themes/themename/scss/_variables.scss`. You might also want to create
 :file:`config.footer.inc.php` and :file:`config.header.inc.php` files to add
 your site specific code to be included on start and end of each page.
 
@@ -28,15 +28,6 @@ your site specific code to be included on start and end of each page.
 
     Some distributions (eg. Debian or Ubuntu) store :file:`config.inc.php` in
     ``/etc/phpmyadmin`` instead of within phpMyAdmin sources.
-
-.. warning::
-
-    :term:`Mac` users should note that if you are on a version before
-    :term:`Mac OS X`, PHP does not seem to
-    like :term:`Mac` end of lines character (``\r``). So
-    ensure you choose the option that allows to use the \*nix end of line
-    character (``\n``) in your text editor before saving a script you have
-    modified.
 
 Basic settings
 --------------
@@ -1037,6 +1028,10 @@ Server connection settings
     :type: string or false
     :default: ``''``
 
+    The table used by phpMyAdmin to store user name information for associating with user groups.
+    See the next entry on :config:option:`$cfg['Servers'][$i]['usergroups']` for more details
+    and the suggested settings.
+
 .. config:option:: $cfg['Servers'][$i]['usergroups']
 
     :type: string or false
@@ -1044,7 +1039,7 @@ Server connection settings
 
     Since release 4.1.0 you can create different user groups with menu items
     attached to them. Users can be assigned to these groups and the logged in
-    user would only see menu items configured to the usergroup he is assigned to.
+    user would only see menu items configured to the usergroup they are assigned to.
     To do this it needs two tables "usergroups" (storing allowed menu items for each
     user group) and "users" (storing users and their assignments to user groups).
 
@@ -1514,7 +1509,7 @@ Generic settings
     :default: true
 
     Enables check for latest versions using JavaScript on the main phpMyAdmin
-    page or by directly accessing :file:`version_check.php`.
+    page or by directly accessing `index.php?route=/version-check`.
 
     .. note::
 
@@ -1615,6 +1610,27 @@ Generic settings
         In some setups (like separate SSL proxy or load balancer) you might
         have to set :config:option:`$cfg['PmaAbsoluteUri']` for correct
         redirection.
+
+.. config:option:: $cfg['MysqlSslWarningSafeHosts']
+
+    :type: array
+    :default: ``['127.0.0.1', 'localhost']``
+
+    This search is case-sensitive and will match the exact string only.
+    If your setup does not use SSL but is safe because you are using a
+    local connection or private network, you can add your hostname or :term:`IP` to the list.
+    You can also remove the default entries to only include yours.
+
+    This check uses the value of :config:option:`$cfg['Servers'][$i]['host']`.
+
+    .. versionadded:: 5.1.0
+
+    Example configuration
+
+    .. code-block:: php
+
+        $cfg['MysqlSslWarningSafeHosts'] = ['127.0.0.1', 'localhost', 'mariadb.local'];
+
 
 .. config:option:: $cfg['ExecTimeLimit']
 
@@ -1780,6 +1796,22 @@ Cookie authentication options
         session and furthermore it makes impossible to recall user name from
         cookie.
 
+.. config:option:: $cfg['CookieSameSite']
+
+    :type: string
+    :default: ``'Strict'``
+
+    .. versionadded:: 5.1.0
+
+    It sets SameSite attribute of the Set-Cookie :term:`HTTP` response header.
+    Valid values are:
+
+    * ``Lax``
+    * ``Strict``
+    * ``None``
+
+    .. seealso:: `rfc6265 bis <https://tools.ietf.org/id/draft-ietf-httpbis-rfc6265bis-03.html#rfc.section.5.3.7>`_
+
 .. config:option:: $cfg['LoginCookieRecall']
 
     :type: boolean
@@ -1884,6 +1916,43 @@ Cookie authentication options
 
     .. versionadded:: 5.0.3
 
+.. config:option:: $cfg['CaptchaApi']
+
+    :type: string
+    :default: ``'https://www.google.com/recaptcha/api.js'``
+
+    .. versionadded:: 5.1.0
+
+    The URL for the reCaptcha v2 service's API, either Google's or a compatible one.
+
+.. config:option:: $cfg['CaptchaCsp']
+
+    :type: string
+    :default: ``'https://apis.google.com https://www.google.com/recaptcha/ https://www.gstatic.com/recaptcha/ https://ssl.gstatic.com/'``
+
+    .. versionadded:: 5.1.0
+
+    The Content-Security-Policy snippet (URLs from which to allow embedded content)
+    for the reCaptcha v2 service, either Google's or a compatible one.
+
+.. config:option:: $cfg['CaptchaRequestParam']
+
+    :type: string
+    :default: ``'g-recaptcha'``
+
+    .. versionadded:: 5.1.0
+
+    The request parameter used for the reCaptcha v2 service.
+
+.. config:option:: $cfg['CaptchaResponseParam']
+
+    :type: string
+    :default: ``'g-recaptcha-response'``
+
+    .. versionadded:: 5.1.0
+
+    The response parameter used for the reCaptcha v2 service.
+
 .. config:option:: $cfg['CaptchaLoginPublicKey']
 
     :type: string
@@ -1907,6 +1976,17 @@ Cookie authentication options
     .. seealso:: <https://developers.google.com/recaptcha/docs/v3>
 
     reCaptcha will be then used in :ref:`cookie`.
+
+.. config:option:: $cfg['CaptchaSiteVerifyURL']
+
+    :type: string
+    :default: ``''``
+
+    The URL for the reCaptcha service to do siteverify action.
+
+    reCaptcha will be then used in :ref:`cookie`.
+
+    .. versionadded:: 5.1.0
 
 Navigation panel setup
 ----------------------
@@ -2020,10 +2100,12 @@ Navigation panel setup
     :type: string
     :default: ``'index.php'``
 
-    Enter :term:`URL` where logo in the navigation panel will point to.
+    Enter the :term:`URL` where the logo in the navigation panel will point to.
     For use especially with self made theme which changes this.
-    For relative/internal URLs, you need to have leading `` ./ `` or trailing characters `` ? `` such as ``'./sql.php?'``.
+    For relative/internal URLs, you need to have leading `` ./ `` or trailing characters `` ? `` such as ``'./index.php?route=/server/sql?'``.
     For external URLs, you should include URL protocol schemes (``http`` or ``https``) with absolute URLs.
+
+    You may want to make the link open in a new browser tab, for that you need to use :config:option:`$cfg['NavigationLogoLinkWindow']`
 
 .. config:option:: $cfg['NavigationLogoLinkWindow']
 
@@ -2033,6 +2115,9 @@ Navigation panel setup
     Whether to open the linked page in the main window (``main``) or in a
     new one (``new``). Note: use ``new`` if you are linking to
     ``phpmyadmin.net``.
+
+    To open the link in the main window you will need to add the value of :config:option:`$cfg['NavigationLogoLink']`
+    to :config:option:`$cfg['CSPAllow']` because of the :term:`Content Security Policy` header.
 
 .. config:option:: $cfg['NavigationTreeDisplayItemFilterMinimum']
 
@@ -2777,7 +2862,7 @@ Web server settings
 
     This can be useful when you want to include some external JavaScript files
     in :file:`config.footer.inc.php` or :file:`config.header.inc.php`, which
-    would be normally not allowed by Content Security Policy.
+    would be normally not allowed by :term:`Content Security Policy`.
 
     To allow some sites, just list them within the string:
 
@@ -2800,7 +2885,7 @@ Web server settings
 Theme settings
 --------------
 
-    Please directly modify :file:`themes/themename/layout.inc.php`, although
+    Please directly modify :file:`themes/themename/scss/_variables.scss`, although
     your changes will be overwritten with the next update.
 
 Design customization
@@ -2889,6 +2974,16 @@ Design customization
     comments are displayed using a CSS-formatted dashed-line below the
     name of the column. The comment is shown as a tool-tip for that
     column.
+
+.. config:option:: $cfg['FirstDayOfCalendar']
+
+    :type: integer
+    :default: 0
+
+    This will define the first day of week in the calendar. The number
+    can be set from 0 to 6, which represents the seven days of the week,
+    Sunday to Saturday respectively. This value can also be configured by the user
+    in server settings -> features -> general -> First Day calendar field.
 
 Text fields
 -----------
@@ -3439,6 +3534,18 @@ Developer
 
     These settings might have huge effect on performance or security.
 
+.. config:option:: $cfg['environment']
+
+    :type: string
+    :default: ``'production'``
+
+    Sets the working environment.
+
+    This only needs to be changed when you are developing phpMyAdmin itself.
+    The ``development`` mode may display debug information in some places.
+
+    Possible values are ``'production'`` or ``'development'``.
+
 .. config:option:: $cfg['DBG']
 
     :type: array
@@ -3620,3 +3727,21 @@ server certificates and tell phpMyAdmin to use them:
     :config:option:`$cfg['Servers'][$i]['ssl_ca']`,
     :config:option:`$cfg['Servers'][$i]['ssl_verify']`,
     <https://bugs.php.net/bug.php?id=72048>
+
+reCaptcha using hCaptcha
+++++++++++++++++++++++++
+
+.. code-block:: php
+
+    $cfg['CaptchaApi'] = 'https://www.hcaptcha.com/1/api.js';
+    $cfg['CaptchaCsp'] = 'https://hcaptcha.com https://*.hcaptcha.com';
+    $cfg['CaptchaRequestParam'] = 'h-captcha';
+    $cfg['CaptchaResponseParam'] = 'h-captcha-response';
+    $cfg['CaptchaSiteVerifyURL'] = 'https://hcaptcha.com/siteverify';
+    // This is the secret key from hCaptcha dashboard
+    $cfg['CaptchaLoginPrivateKey'] = '0xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx';
+    // This is the site key from hCaptcha dashboard
+    $cfg['CaptchaLoginPublicKey'] = 'xxx-xxx-xxx-xxx-xxxx';
+
+.. seealso:: `hCaptcha website <https://www.hcaptcha.com/>`_
+.. seealso:: `hCaptcha Developer Guide <https://docs.hcaptcha.com/>`_

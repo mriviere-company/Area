@@ -68,7 +68,7 @@ class ArrayNode extends BaseNode implements PrototypeNodeInterface
     /**
      * Retrieves the children of this node.
      *
-     * @return array The children
+     * @return array<string, NodeInterface>
      */
     public function getChildren()
     {
@@ -342,7 +342,7 @@ class ArrayNode extends BaseNode implements PrototypeNodeInterface
      */
     protected function remapXml($value)
     {
-        foreach ($this->xmlRemappings as list($singular, $plural)) {
+        foreach ($this->xmlRemappings as [$singular, $plural]) {
             if (!isset($value[$singular])) {
                 continue;
             }
