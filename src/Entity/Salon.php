@@ -36,10 +36,9 @@ class Salon
     protected $contents;
 
     /**
-     * @ORM\OneToOne(targetEntity="Server", inversedBy="salon", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="server_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToMany(targetEntity="Server", inversedBy="salons")
      */
-    protected $server;
+    protected $servers;
 
     /**
      * @ORM\Column(name="name",type="string", length=30)

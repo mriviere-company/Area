@@ -31,7 +31,7 @@ objective: 'Zweck des Spiels'
 niobium: Niobium
 water: Wasser
 coin: Bitcoin
-universe: Universum
+univers: Universum
 forum: Forum
 workers: Arbeiter
 scientists: Wissenschaftlich
@@ -48,3 +48,5 @@ nextPlanet: 'Nächster Planet'
 tooltip.search: 'Sie können suchen !'
 tooltip.building: 'Sie können ein Gebäude bauen !'
 modifyOptions: 'Meine Optionen'
+parameters: Optionen
+crypto: Krypto

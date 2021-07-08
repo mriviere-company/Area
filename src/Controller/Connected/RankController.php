@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,6 +26,7 @@ class RankController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
         if ($usePlanet->getCharacter() != $character) {
@@ -38,6 +41,8 @@ class RankController extends AbstractController
             ->select('a.id, a.sigle, a.imageName, a.name, count(DISTINCT c.id) as characters, count(DISTINCT p) as planets, sum(DISTINCT r.point) as point, sum(DISTINCT r.oldPoint) as oldPoint, a.maxMembers, a.createdAt, a.politic')
             ->groupBy('a.id')
             ->where('a.rank is not null')
+            ->andWhere('c.server =:server')
+            ->setParameters(['server' => $server])
             ->orderBy('point', 'DESC')
             ->getQuery()
             ->getResult();
@@ -49,7 +54,8 @@ class RankController extends AbstractController
                 ->select('count(s) as numbers, sum(DISTINCT s.points) as ally, s.date')
                 ->groupBy('s.date')
                 ->where('c.ally = :ally')
-                ->setParameters(['ally' => $character->getAlly()])
+                ->andWhere('c.server =:server')
+                ->setParameters(['ally' => $character->getAlly(), 'server' => $server])
                 ->getQuery()
                 ->getResult();
 
@@ -60,7 +66,8 @@ class RankController extends AbstractController
                 ->groupBy('s.date')
                 ->where('c.ally != :ally')
                 ->andWhere('c.bot = false')
-                ->setParameters(['ally' => $character->getAlly()])
+                ->andWhere('c.server =:server')
+                ->setParameters(['ally' => $character->getAlly(), 'server' => $server])
                 ->getQuery()
                 ->getResult();
         } else {
@@ -80,11 +87,14 @@ class RankController extends AbstractController
      * @Route("/classement-joueurs/{usePlanet}", name="rank_user", requirements={"usePlanet"="\d+"})
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
     public function rankUserAction(Planet $usePlanet)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
+        $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
         if ($usePlanet->getCharacter() != $character) {
@@ -102,6 +112,8 @@ class RankController extends AbstractController
             ->andWhere('c.id != 1')
             ->andWhere('c.bot = false')
             ->andWhere('r.point > 200')
+            ->andWhere('c.server =:server')
+            ->setParameters(['server' => $server])
             ->orderBy('point', 'DESC')
             ->getQuery()
             ->setMaxResults(100)
@@ -112,12 +124,17 @@ class RankController extends AbstractController
             ->join('r.character', 'c')
             ->select('count(r.id) as nbrPlayer')
             ->where('c.bot = false')
+            ->andWhere('c.server =:server')
+            ->setParameters(['server' => $server])
             ->getQuery()
             ->getSingleScalarResult();
 
         $otherPoints = $em->getRepository('App:Stats')
             ->createQueryBuilder('s')
+            ->join('s.character', 'c')
             ->select('count(s) as numbers, sum(DISTINCT s.pdg) as allPdg, sum(DISTINCT s.points) as allPoint')
+            ->andWhere('c.server =:server')
+            ->setParameters(['server' => $server])
             ->groupBy('s.date')
             ->getQuery()
             ->getResult();

@@ -3,6 +3,7 @@
 namespace App\Controller\Connected\Ally;
 
 use App\Entity\Character;
+use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,6 +44,7 @@ class AllyController extends AbstractController
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
+     * @throws NonUniqueResultException
      */
     public function allyAction(Request $request, Planet $usePlanet)
     {
@@ -204,6 +206,7 @@ class AllyController extends AbstractController
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $now = new DateTime();
         $em = $this->getDoctrine()->getManager();
 
@@ -276,11 +279,13 @@ class AllyController extends AbstractController
             $server = $usePlanet->getSector()->getGalaxy()->getServer();
 
             $salon = new Salon($ally->getName(), $server);
+            $salon->setServer($server);
             $salon->addAlly($ally);
             $em->persist($salon);
 
             $salonPublic = new Salon('Ambassade - ' . $ally->getSigle(), $server);
             $salonPublic->addAlly($ally);
+            $salonPublic->setServer($server);
             $em->persist($salonPublic);
 
             $character->setAlly($ally);

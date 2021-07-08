@@ -18,24 +18,7 @@ class TopMenuController extends AbstractController
      */
     public function rulesAction(): Response
     {
-        $em = $this->getDoctrine()->getManager();
-
-        if($this->getUser()) {
-            $usePlanet = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.character', 'c')
-                ->where('c.username = :user')
-                ->setParameters(['user' => $this->getUser()->getUsername()])
-                ->getQuery()
-                ->setMaxResults(1)
-                ->getOneOrNullResult();
-        } else {
-            $usePlanet = null;
-        }
-
-        return $this->render('anonymous/rules.html.twig', [
-            'usePlanet' => $usePlanet,
-        ]);
+        return $this->render('anonymous/rules.html.twig');
     }
 
     /**
@@ -44,24 +27,7 @@ class TopMenuController extends AbstractController
      */
     public function mediasAction(): Response
     {
-        $em = $this->getDoctrine()->getManager();
-
-        if($this->getUser()) {
-            $usePlanet = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.character', 'c')
-                ->where('c.username = :user')
-                ->setParameters(['user' => $this->getUser()->getUsername()])
-                ->getQuery()
-                ->setMaxResults(1)
-                ->getOneOrNullResult();
-        } else {
-            $usePlanet = null;
-        }
-
-        return $this->render('anonymous/medias.html.twig', [
-            'usePlanet' => $usePlanet,
-        ]);
+        return $this->render('anonymous/medias.html.twig');
     }
 
     /**
@@ -70,49 +36,15 @@ class TopMenuController extends AbstractController
      */
     public function pointGameAction(): Response
     {
-        $em = $this->getDoctrine()->getManager();
-
-        if($this->getUser()) {
-            $usePlanet = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.character', 'c')
-                ->where('c.username = :user')
-                ->setParameters(['user' => $this->getUser()->getUsername()])
-                ->getQuery()
-                ->setMaxResults(1)
-                ->getOneOrNullResult();
-        } else {
-            $usePlanet = null;
-        }
-
-        return $this->render('anonymous/point_game.html.twig', [
-            'usePlanet' => $usePlanet,
-        ]);
+        return $this->render('anonymous/point_game.html.twig');
     }
 
     /**
-     * @Route("/whitepaper/{_locale}", name="whitepaper", defaults={"_locale" = "fr"}, requirements={"_locale" = "fr|en|de"})
-     * @Route("/whitepaper", name="whitepaper_noSlash")
+     * @Route("/crypto-currencie/{_locale}", name="crypto", defaults={"_locale" = "fr"}, requirements={"_locale" = "fr|en|de"})
+     * @Route("/crypto-currencie", name="crypto_noSlash")
      */
-    public function whitepaperAction(): Response
+    public function cryptoAction(): Response
     {
-        $em = $this->getDoctrine()->getManager();
-
-        if($this->getUser()) {
-            $usePlanet = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.character', 'c')
-                ->where('c.username = :user')
-                ->setParameters(['user' => $this->getUser()->getUsername()])
-                ->getQuery()
-                ->setMaxResults(1)
-                ->getOneOrNullResult();
-        } else {
-            $usePlanet = null;
-        }
-
-        return $this->render('anonymous/white_paper.html.twig', [
-            'usePlanet' => $usePlanet,
-        ]);
+        return $this->render('anonymous/crypto.html.twig');
     }
 }

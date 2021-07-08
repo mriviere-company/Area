@@ -2,7 +2,7 @@ version: 'beta v2.1'
 footer: 'Suivez nous sur facebook!'
 mriviere: 'Développé par mriviere'
 under.maj: 'MISE À JOUR EN COURS'
-media: Medias
+media: Médias
 adminMail: 'Mail global'
 serveur.activate: 'Activer'
 serveur.deactivate: 'Désactiver'
@@ -76,4 +76,4 @@ tooltip.zombie: 'Le niveau de la menace zombie vous indique quelle sera la puiss
 zombie.info: Zombie
 zombie.indic: 'Menace Zombie :'
 tooltip.missions: 'Mission zombie terminée !'
-whitepaper: Whitepaper
+crypto: Crypto

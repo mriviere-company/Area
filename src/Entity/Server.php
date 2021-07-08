@@ -90,10 +90,9 @@ class Server
 
 
     /**
-     * @ORM\OneToOne(targetEntity="Salon", mappedBy="server", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="salon_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToMany(targetEntity="Salon", mappedBy="servers", fetch="EXTRA_LAZY")
      */
-    protected $salon;
+    protected $salons;
 
     /**
      * Server constructor.
