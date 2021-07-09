@@ -6,12 +6,45 @@
 
 {% block body %}
     <div class="row">
-        <div class="offset-1 col-10">
-            <div class="unlogin-block text-more">
-                <div class="my-3">
-                    En construction...
+        <div class="col-3">
+            <a href="{{ path('whitepaper') }}">
+                <div class="unlogin-block text-more">
+                    <div class="my-3 text-argent">
+                        <h1 class="text-or text-center pb-5">{{ 'whitepaper.title'|trans }}</h1>
+                        {{ 'whitepaper.desc'|trans }}
+                    </div>
                 </div>
-            </div>
+            </a>
+        </div>
+        <div class="col-3">
+            <a href="{{ path('buy') }}">
+                <div class="unlogin-block text-more">
+                    <div class="my-3">
+                        <h1 class="text-or text-center pb-5">{{ 'buy.title'|trans }}</h1>
+                        {{ 'buy.desc'|trans }}
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-3">
+            <a href="{{ path('pools') }}">
+                <div class="unlogin-block text-more">
+                    <div class="my-3">
+                        <h1 class="text-or text-center pb-5">{{ 'pools.title'|trans }}</h1>
+                        {{ 'pools.desc'|trans }}
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-3">
+            <a href="{{ path('sell') }}">
+                <div class="unlogin-block text-more">
+                    <div class="my-3">
+                        <h1 class="text-or text-center pb-5">{{ 'sell.title'|trans }}</h1>
+                        {{ 'sell.desc'|trans }}
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 {% endblock %}

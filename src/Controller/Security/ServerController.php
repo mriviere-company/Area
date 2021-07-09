@@ -542,6 +542,7 @@ class ServerController extends AbstractController
 
             foreach ($character->getStats() as $stats) {
                 $character->removeStats($stats);
+                $em->remove($stats);
             }
 
             foreach ($character->getViews() as $view) {
@@ -566,7 +567,7 @@ class ServerController extends AbstractController
         }
         $em->flush();
 
-        $salons = $em->getRepository('App:Salon')->findBy(['server' => $server]);
+        $salons = $em->getRepository('App:Salon')->findAll();
 
         foreach ($salons as $salon) {
             foreach ($salon->getViews() as $view) {
