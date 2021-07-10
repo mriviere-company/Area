@@ -28,7 +28,8 @@ class TrackController extends AbstractController
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-        if ($user && $user->getUsername() == 'Dev' || $user && $user->getUsername() == 'Admin' || $ip == '2a01:e0a:833:360:89c3:2f72:554:e60f'
+        if ($user && $user->getUsername() == 'Dev' || $user && $user->getUsername() == 'Admin'
+            || $ip == '2a01:e0a:833:360:75f4:3076:c21:5e42'
             || stripos(strtoupper($u_agent), 'BOT') !== FALSE) {
             return new Response ("");
         }
@@ -103,6 +104,8 @@ class TrackController extends AbstractController
             $track->setPreviousPage('Linkedin');
         } elseif (stripos(strtoupper($referer), 'LNKD') !== FALSE) {
             $track->setPreviousPage('Linkedin');
+        } elseif (stripos(strtoupper($referer), 'TELEGRAM') !== FALSE) {
+            $track->setPreviousPage('Telegram');
         } elseif (stripos(strtoupper($referer), 'AVENOEL') !== FALSE) {
             $track->setPreviousPage('Avenoel');
         } else {

@@ -79,7 +79,7 @@
 }
 
 .unlogin-block {
-  margin-top: 12%;
+  margin-top: 3.5%;
   color: #fff;
   font-size: 1.5rem;
   vertical-align: middle!important;
@@ -89,6 +89,23 @@
   border: 1px solid rgba(0,0,0,.125);
   border-radius: 5px;
   padding: 1.5rem;
+}
+
+.crypto-block {
+  margin-top: 12%;
+  color: #fff;
+  font-size: 1.5rem;
+  vertical-align: middle!important;
+  min-height: 340px;
+  word-wrap: break-word;
+  background-image: $back-basic;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: 5px;
+  padding: 1.5rem;
+}
+
+.crypto-logo {
+  max-width: 150px;
 }
 
 .carousel-indicators .active {

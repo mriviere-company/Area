@@ -5,42 +5,46 @@
 {% block title %}{{ 'title'|trans }}{% endblock %}
 
 {% block body %}
-    <div class="row">
-        <div class="col-3">
+    <div class="row text-center">
+        <div class="col-xs-12 col-sm-6 col-md-3">
             <a href="{{ path('whitepaper') }}">
-                <div class="unlogin-block text-more">
-                    <div class="my-3 text-argent">
-                        <h1 class="text-or text-center pb-5">{{ 'whitepaper.title'|trans }}</h1>
+                <div class="crypto-block catch-border text-more">
+                    <div class="my-3">
+                        <h1 class="text-or text-center pb-4">{{ 'whitepaper.title'|trans }}</h1>
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="crypto-logo center pb-4" src="{{ asset('img/whitepaper_crypto.png') }}">
                         {{ 'whitepaper.desc'|trans }}
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-3">
+        <div class="col-xs-12 col-sm-6 col-md-3">
             <a href="{{ path('buy') }}">
-                <div class="unlogin-block text-more">
+                <div class="crypto-block catch-border text-more">
                     <div class="my-3">
-                        <h1 class="text-or text-center pb-5">{{ 'buy.title'|trans }}</h1>
+                        <h1 class="text-or pb-4">{{ 'buy.title'|trans }}</h1>
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="crypto-logo center pb-4" src="{{ asset('img/buy_crypto.png') }}">
                         {{ 'buy.desc'|trans }}
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-3">
+        <div class="col-xs-12 col-sm-6 col-md-3">
             <a href="{{ path('pools') }}">
-                <div class="unlogin-block text-more">
+                <div class="crypto-block catch-border text-more">
                     <div class="my-3">
-                        <h1 class="text-or text-center pb-5">{{ 'pools.title'|trans }}</h1>
+                        <h1 class="text-or text-center pb-4">{{ 'pools.title'|trans }}</h1>
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="crypto-logo center pb-4" src="{{ asset('img/pools_crypto.png') }}">
                         {{ 'pools.desc'|trans }}
                     </div>
                 </div>
             </a>
         </div>
-        <div class="col-3">
+        <div class="col-xs-12 col-sm-6 col-md-3">
             <a href="{{ path('sell') }}">
-                <div class="unlogin-block text-more">
+                <div class="crypto-block catch-border text-more">
                     <div class="my-3">
-                        <h1 class="text-or text-center pb-5">{{ 'sell.title'|trans }}</h1>
+                        <h1 class="text-or text-center pb-4">{{ 'sell.title'|trans }}</h1>
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="crypto-logo center pb-4" src="{{ asset('img/sell_crypto.png') }}">
                         {{ 'sell.desc'|trans }}
                     </div>
                 </div>

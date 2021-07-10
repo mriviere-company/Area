@@ -1,0 +1,13 @@
+title: 'Cryptocurrency'
+whitepaper:
+  title: Whitepaper
+  desc: 'Here you will find the strategy that will be put in place to develop our crypto.'
+sell:
+  title: Sale
+  desc: 'You want to easily sell your tokens.'
+buy:
+  title: Purchase
+  desc: 'Buy tokens and keep them to grow.'
+pools:
+  title: Pools
+  desc: 'Invest your tokens to collect a little more each week.'
