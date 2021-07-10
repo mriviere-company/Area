@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,8 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @method string getUserIdentifier()
  */
-class User implements UserInterface, \Serializable
+class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
     /**
      * @ORM\Column(type="integer")
@@ -103,9 +105,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getSpecUsername()
+    public function getSpecUsername(): ?string
     {
         $return = null;
         $name = ['Admin', 'Dev', 'Zombies'];
@@ -143,9 +145,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getServers()
+    public function getServers(): array
     {
         $servers = [];
         $x = 0;
@@ -167,17 +169,15 @@ class User implements UserInterface, \Serializable
     /**
      * @return string|null
      */
-    public function getSalt()
+    public function getSalt() : ?string
     {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
         return null;
     }
 
     /**
-     * @return string[]
+     * @return array
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         if ($this->getUsername() == 'Admin') {
             return ['ROLE_ADMIN'];
@@ -195,7 +195,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize(array(
             $this->id,
@@ -207,7 +207,7 @@ class User implements UserInterface, \Serializable
     /**
      * @param string $serialized
      */
-    public function unserialize($serialized)
+    public function unserialize(string $serialized)
     {
         list (
             $this->id,
@@ -221,7 +221,7 @@ class User implements UserInterface, \Serializable
      *
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -233,7 +233,7 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function setUsername($username)
+    public function setUsername(string $username): User
     {
         $this->username = $username;
 
@@ -245,7 +245,7 @@ class User implements UserInterface, \Serializable
      *
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -257,7 +257,7 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function setEmail($email)
+    public function setEmail(string $email): User
     {
         $this->email = $email;
 
@@ -269,7 +269,7 @@ class User implements UserInterface, \Serializable
      *
      * @return string
      */
-    public function getPassword()
+    public function getPassword() : ?string
     {
         return $this->password;
     }
@@ -281,7 +281,7 @@ class User implements UserInterface, \Serializable
      *
      * @return User
      */
-    public function setPassword($password)
+    public function setPassword(string $password): User
     {
         $this->password = $password;
 
@@ -289,9 +289,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getCheat()
+    public function getCheat(): int
     {
         return $this->cheat;
     }
@@ -305,9 +305,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getConfirmed()
+    public function getConfirmed(): bool
     {
         return $this->confirmed;
     }
@@ -321,9 +321,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getNewletter()
+    public function getNewletter(): int
     {
         return $this->newletter;
     }
@@ -387,11 +387,11 @@ class User implements UserInterface, \Serializable
     /**
      * Add character
      *
-     * @param \App\Entity\Character $characters
+     * @param Character $characters
      *
      * @return User
      */
-    public function addCharacter(\App\Entity\Character $characters)
+    public function addCharacter(Character $characters): User
     {
         $this->characters[] = $characters;
 
@@ -399,19 +399,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Remove character
-     *
-     * @param \App\Entity\Character $characters
+     * @return string|null
      */
-    public function removeCharacter(\App\Entity\Character $characters)
-    {
-        $this->characters->removeElement($characters);
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getIpAddress()
+    public function getIpAddress(): ?string
     {
         return $this->ipAddress;
     }
@@ -422,5 +412,10 @@ class User implements UserInterface, \Serializable
     public function setIpAddress($ipAddress): void
     {
         $this->ipAddress = $ipAddress;
+    }
+
+    public function __call($name, $arguments)
+    {
+        // TODO: Implement @method string getUserIdentifier()
     }
 }

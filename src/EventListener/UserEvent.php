@@ -2,16 +2,12 @@
 
 namespace App\EventListener;
 
-use App\Entity\User;
-use App\Entity\Report;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use DateTime;
-use Dateinterval;
 
 /**
  * Class KernelControllerListener
@@ -31,10 +27,12 @@ class UserEvent implements EventSubscriberInterface
      * @var TokenStorageInterface
      */
     private $token;
+
     /**
      * @var EntityManagerInterface
      */
     private $em;
+
     /**
      * KernelControllerListener constructor.
      * @param TokenStorageInterface $token
@@ -45,6 +43,7 @@ class UserEvent implements EventSubscriberInterface
         $this->token = $token;
         $this->em = $em;
     }
+
     /**
      * Returns an array of event names this subscriber wants to listen to.
      *
@@ -63,16 +62,17 @@ class UserEvent implements EventSubscriberInterface
      *
      * @return array The event names to listen to
      */
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(KernelEvents::CONTROLLER => "onCoreController");
     }
+
     /**
      * @param ControllerEvent $event
      */
     public function onCoreController(ControllerEvent $event)
     {
-        if($event->getRequestType() == HttpKernel::MASTER_REQUEST)
+        /*if($event->getRequestType() == HttpKernel::MASTER_REQUEST)
         {
             if($this->token->getToken()) {
                 $user = $this->token->getToken()->getUser();
@@ -80,6 +80,6 @@ class UserEvent implements EventSubscriberInterface
                 if ($user instanceof User) {
                 }
             }
-        }
+        }*/
     }
 }
