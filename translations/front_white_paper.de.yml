@@ -1,0 +1,30 @@
+title: 'Whitepaper'
+thanks: 'Herzlich willkommen! Ich danke Ihnen für Ihr Interesse an dem von mir durchgeführten Projekt.'
+goalofthecrypto:
+  title: 'Der Zweck unserer Kryptowährung'
+  desc: 'Belohnen Sie die besten Spieler im Spiel über eine Kryptowährung ohne Verkaufsgebühren und mit sehr geringen ökologischen Kosten (wie XRP).'
+generation:
+  title: 'Token-Generierung'
+  desc: 'Während einer Saison kann ein Spieler Token generieren, indem er Aktionen wie Invasionen, Schlachten oder Quests durchführt.'
+spent:
+  title: 'Verbraucht'
+  desc: 'Im Spiel gehaltene Token können bis zu einem bestimmten Limit für Käufe im Spiel ausgegeben werden.'
+transfertwallet:
+  title: 'Auf Wallet übertragen'
+  desc: 'Der Spieler kann seine Token am Ende einer Saison auf seine Brieftasche übertragen, wenn er in den Top 20 in Punkten oder in den Top 5 im Kampf ist (die Anzahl kann je nach Gesamtzahl der Spieler geändert werden). Wenn ein Spieler keine Token auf seine Wallet überweist, startet er die nächste Saison mit seinen Token und einem Bonus von +30%.'
+transferttogame:
+  title: 'Transfer zum Spiel'
+  desc: 'Vor oder nach einer Saison ist es möglich, Token aus Ihrem Wallet in das Spiel zu übertragen.'
+transfertingame:
+  title: 'Transfer zum Spiel'
+  desc: 'Es ist möglich, Ihre Token im Spiel mit einer Steuer von 8% an andere Spieler und mit einer Steuer von 6% an Ihre Allianz zu übertragen (die Token der Steuerrückerstattung an schwächere Spieler).'
+buy:
+  title: 'Kauf'
+  desc: 'Sie können Token jederzeit mit Ihrem Wallet kaufen.'
+sell:
+  title: 'Verkauf'
+  desc: 'Es ist jederzeit möglich, seine im Wallet gespeicherten Token zu verkaufen.'
+season:
+  title: 'Jahreszeit'
+  desc: 'Eine Saison dauert etwa 4 Monate und wird in der Regel von einem Monat Pause gefolgt.'
+  estimate: 'Geschätzte Jahreszeiten: 15. September - 15. Dezember / 05. Januar - 05. April / 01. Mai - 01. August.'

@@ -1,1 +1,30 @@
 title: 'Whitepaper'
+thanks: 'Tout d’abord bienvenue à toi ! Je te remercie pour ton intérêt dans le projet que je porte.'
+goalofthecrypto:
+  title: 'Le but de notre cryptomonnaie'
+  desc: 'Récompenser les meilleurs joueurs du jeu via une cryptomonnaie sans frais de vente et ayant un coût écologique très bas (comme le XRP).'
+generation:
+  title: 'Génération'
+  desc: 'Lors d’une saison, un joueur peut générer des tokens en faisant des actions tels que des invasions, combats ou quêtes.'
+spent:
+  title: 'Dépense'
+  desc: 'Les tokens détenus en jeu peuvent être dépensés dans une certaine limite dans des achats du jeu.'
+transfertwallet:
+  title: 'Transfert vers le portefeuille'
+  desc: 'Le joueur peut transférer ses tokens vers son portefeuille à la fin d’une saison s’il fait partie du Top 20 en points ou top 5 en combat (le chiffre peut être changé suivant le nombre de joueurs total). Si un joueur ne transfère aucun token vers son portefeuille, il commencera la prochaine saison avec ses tokens et un bonus de +30%.'
+transferttogame:
+  title: 'Transfert vers le jeu'
+  desc: 'Avant ou après une saison, il est possible de transférer des tokens de son portefeuille vers le jeu.'
+transfertingame:
+  title: 'Transfert dans le jeu'
+  desc: 'Il est possible de transférer ses tokens dans le jeu vers d’autres joueurs avec une taxe de 8% et vers son alliance avec une taxe de 6% (la taxe reverse les tokens aux joueurs les plus faibles).'
+buy:
+  title: 'Achat'
+  desc: 'Il est possible d’acheter des tokens à tout moment avec son portefeuille.'
+sell:
+  title: 'Vente'
+  desc: 'Il est possible de vendre ses tokens stockés dans le portefeuille à tout moment.'
+season:
+  title: 'Saison'
+  desc: 'Une saison dure environ 4 mois et est généralement suivie d’un mois de pause.'
+  estimate: 'Estimation des saisons : 15 septembre - 15 décembre / 05 janvier - 05 avril / 01 mai - 01 août.'

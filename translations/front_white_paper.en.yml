@@ -1,0 +1,30 @@
+title: 'Whitepaper'
+thanks: 'First of all welcome to you! I thank you for your interest in the project that I am carrying.'
+goalofthecrypto:
+  title: 'The purpose of our cryptocurrency'
+  desc: 'Reward the best players in the game via a cryptocurrency with no sales fees and having a very low ecological cost (such as XRP).'
+generation:
+  title: 'Generation'
+  desc: 'During a season, a player can generate tokens by doing actions such as invasions, battles or quests.'
+spent:
+  title: 'Spent'
+  desc: 'Tokens held in-game can be spent up to a certain limit on in-game purchases.'
+transfertwallet:
+  title: 'Transfer to wallet'
+  desc: 'The player can transfer his tokens to his wallet at the end of a season if he is in the Top 20 in points or top 5 in combat (the number can be changed depending on the total number of players). If a player does not transfer any tokens to their wallet, they will start the next season with their tokens and a + 30% bonus.'
+transferttogame:
+  title: 'Transfer to the game'
+  desc: 'Before or after a season, it is possible to transfer tokens from your wallet to the game.'
+transfertingame:
+  title: 'Transfer in-game'
+  desc: 'It is possible to transfer your tokens in the game to other players with an 8% tax and to your alliance with a 6% tax (the tax returns tokens to weaker players).'
+buy:
+  title: 'Purchase'
+  desc: 'You can buy tokens at any time with your wallet.'
+sell:
+  title: 'Sale'
+  desc: 'It is possible to sell its tokens stored in the wallet at any time.'
+season:
+  title: 'Season'
+  desc: 'A season lasts about 4 months and is usually followed by a month break.'
+  estimate: 'Estimated seasons: September 15 - December 15 / January 05 - April 05 / May 01 - August 01.'
