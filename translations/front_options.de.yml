@@ -1,0 +1,21 @@
+title: 'Meine Optionen'
+modifPassword: 'Kennwort ändern'
+planetOrder: 'Ordnung der Planeten'
+form.oldPassword: 'Altes Passwort'
+form.password: 'Neues Kennwort'
+form.confirmPassword: 'Kennwort bestätigen'
+form.newOptions: Speichern
+form.alpha: Alphabetisch
+form.pos: Position
+form.col: Kolonisation
+form.username: Pseudonym
+form.connectLast: 'Letzte Verbindung'
+newletter: 'Newletter'
+modifUsername: Pseudonym
+lastPlanet: 'Automatische Anmeldung'
+form.planetOrder : ''
+form.newletter: ''
+form.wallet_address: 'Wallet-Adresse'
+walletaddress: 'Ändern Sie die Adresse der Token-Wallet'
+howmanytokens: 'Token in der Brieftasche'
+'': ''

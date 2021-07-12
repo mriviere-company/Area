@@ -1,4 +1,4 @@
-title: 'Mes options'
+title: 'My options'
 modifPassword: 'Changer le mot de passe'
 planetOrder: 'Ordre des planètes'
 form.oldPassword: 'Ancien mdp'
@@ -15,4 +15,7 @@ modifUsername: Pseudonyme
 lastPlanet: 'Connexion auto'
 form.planetOrder : ''
 form.newletter: ''
+form.wallet_address: 'Adresse du portefeuille'
+walletaddress: 'Changer l''adresse du portefeuille de Tokens'
+howmanytokens: 'Tokens dans le portefeuille'
 '': ''

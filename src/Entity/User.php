@@ -78,6 +78,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     protected $connectLast;
 
     /**
+     * @ORM\Column(name="wallet_address",type="string", unique=true, nullable=true)
+     */
+    protected $walletAddress;
+
+    /**
      * @ORM\OneToMany(targetEntity="Character", mappedBy="user", fetch="EXTRA_LAZY")
      */
     protected $characters;
@@ -369,9 +374,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @return mixed
      */
-    public function getCharacters(): ArrayCollection
+    public function getCharacters()
     {
         return $this->characters;
     }
@@ -412,6 +417,22 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function setIpAddress($ipAddress): void
     {
         $this->ipAddress = $ipAddress;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getWalletAddress()
+    {
+        return $this->walletAddress;
+    }
+
+    /**
+     * @param mixed $walletAddress
+     */
+    public function setWalletAddress($walletAddress): void
+    {
+        $this->walletAddress = $walletAddress;
     }
 
     public function __call($name, $arguments)

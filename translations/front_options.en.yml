@@ -1,0 +1,21 @@
+title: 'Mes options'
+modifPassword: 'Change Password'
+planetOrder: 'Order of the planets'
+form.oldPassword: 'Old password'
+form.password: 'New Password'
+form.confirmPassword: 'Confirm password'
+form.newOptions: Save
+form.alpha: Alphabetical
+form.pos: Position
+form.col: Colonization
+form.username: Pseudonym
+form.connectLast: 'last connection'
+newletter: 'Newletter'
+modifUsername: Pseudonym
+lastPlanet: 'Auto login'
+form.planetOrder : ''
+form.newletter: ''
+form.wallet_address: 'Wallet address'
+walletaddress: 'Change the address of the Token wallet'
+howmanytokens: 'Tokens in the wallet'
+'': ''

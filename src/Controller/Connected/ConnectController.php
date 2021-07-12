@@ -144,10 +144,10 @@ class ConnectController extends AbstractController
     }
     /**
      * @Route("/selection-serveur/", name="server_select")
-     * @return RedirectResponse|Response
+     * @return Response
      * @throws Exception
      */
-    public function serverInterfaceAction()
+    public function serverInterfaceAction(): Response
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();

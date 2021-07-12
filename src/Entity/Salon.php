@@ -36,9 +36,10 @@ class Salon
     protected $contents;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Server", inversedBy="salons")
+     * @ORM\ManyToOne(targetEntity="Server", inversedBy="salons", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="server_id", referencedColumnName="id", onDelete="SET NULL", nullable=true)
      */
-    protected $servers;
+    protected $server;
 
     /**
      * @ORM\Column(name="name",type="string", length=30)
@@ -69,11 +70,11 @@ class Salon
     /**
      * Add character
      *
-     * @param \App\Entity\Character $character
+     * @param Character $character
      *
      * @return Salon
      */
-    public function addCharacter(\App\Entity\Character $character)
+    public function addCharacter(Character $character): Salon
     {
         $this->characters[] = $character;
 
@@ -83,9 +84,9 @@ class Salon
     /**
      * Remove character
      *
-     * @param \App\Entity\Character $character
+     * @param Character $character
      */
-    public function removeCharacter(\App\Entity\Character $character)
+    public function removeCharacter(Character $character)
     {
         $this->characters->removeElement($character);
     }
@@ -93,11 +94,11 @@ class Salon
     /**
      * Add view
      *
-     * @param \App\Entity\View $view
+     * @param View $view
      *
      * @return Salon
      */
-    public function addView(\App\Entity\View $view)
+    public function addView(View $view): Salon
     {
         $this->views[] = $view;
 
@@ -107,9 +108,9 @@ class Salon
     /**
      * Remove view
      *
-     * @param \App\Entity\View $view
+     * @param View $view
      */
-    public function removeView(\App\Entity\View $view)
+    public function removeView(View $view)
     {
         $this->views->removeElement($view);
     }
@@ -117,11 +118,11 @@ class Salon
     /**
      * Add content
      *
-     * @param \App\Entity\S_Content $content
+     * @param S_Content $content
      *
      * @return Salon
      */
-    public function addContent(\App\Entity\S_Content $content)
+    public function addContent(S_Content $content): Salon
     {
         $this->contents[] = $content;
 
@@ -131,9 +132,9 @@ class Salon
     /**
      * Remove content
      *
-     * @param \App\Entity\S_Content $content
+     * @param S_Content $content
      */
-    public function removeContent(\App\Entity\S_Content $content)
+    public function removeContent(S_Content $content)
     {
         $this->contents->removeElement($content);
     }
@@ -141,11 +142,11 @@ class Salon
     /**
      * Add ally
      *
-     * @param \App\Entity\Ally $ally
+     * @param Ally $ally
      *
      * @return Salon
      */
-    public function addAlly(\App\Entity\Ally $ally)
+    public function addAlly(Ally $ally): Salon
     {
         $this->allys[] = $ally;
 
@@ -155,9 +156,9 @@ class Salon
     /**
      * Remove ally
      *
-     * @param \App\Entity\Ally $ally
+     * @param Ally $ally
      */
-    public function removeAlly(\App\Entity\Ally $ally)
+    public function removeAlly(Ally $ally)
     {
         $this->allys->removeElement($ally);
     }
@@ -211,9 +212,9 @@ class Salon
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -251,9 +252,9 @@ class Salon
     }
 
     /**
-     * @return mixed
+     * @return Server
      */
-    public function getServer()
+    public function getServer(): Server
     {
         return $this->server;
     }

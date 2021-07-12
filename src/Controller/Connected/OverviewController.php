@@ -319,7 +319,7 @@ class OverviewController extends AbstractController
 
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 172800 . 'S'));
-        if($character->getGameOver() || $character->getAllPlanets() == 0) {
+        if(($user->getId() === 220 && $user->getMainCharacter()) || ($character && ($character->getGameOver() || $character->getAllPlanets() == 0))) {
             if($character->getColPlanets() == 0 && $character->getGameOver() == null) {
                 $character->setGameOver($character->getUserName());
 
@@ -509,6 +509,18 @@ class OverviewController extends AbstractController
                 ->orderBy('g.position', 'ASC')
                 ->getQuery()
                 ->getResult();
+
+            if ($user->getId() === 220) {
+                foreach ($character->getPlanets() as $planet) {
+                    $planet->setCharacter(null);
+                }
+                foreach ($character->getReports() as $report) {
+                    $em->remove($report);
+                }
+                $em->remove($character);
+                $em->flush();
+                return $this->redirectToRoute('server_select');
+            }
 
             return $this->render('connected/game_over.html.twig', [
                 'galaxys' => $galaxys,

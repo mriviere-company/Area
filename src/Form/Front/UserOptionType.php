@@ -100,6 +100,23 @@ class UserOptionType extends AbstractType
                     'required' => false
                 ]
             )
+            ->add(
+                'wallet_address',
+                null,
+                [
+                    'label' => 'form.wallet_address',
+                    'data' => null,
+                    'attr'  => [
+                        'placeholder' => 'form.wallet_address',
+                        'class' => 'game-input',
+                        'value' => $options['wallet_address'],
+                        'maxlength' => '30',
+                        'minlength' => '10',
+                        'autocomplete' => 'off',
+                    ],
+                    'required' => false
+                ]
+            )
             ->add('sendForm', SubmitType::class, ['label' => 'form.newOptions', 'attr' => ['class' => 'confirm-button float-right']]);
     }
 
@@ -108,7 +125,7 @@ class UserOptionType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(['username', 'newletter', 'connectLast']);
+        $resolver->setRequired(['username', 'newletter', 'connectLast', 'wallet_address']);
         $resolver->setDefaults(
             [
                 'data_class'         => null,

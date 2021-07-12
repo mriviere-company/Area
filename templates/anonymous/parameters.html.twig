@@ -47,6 +47,22 @@
                         {{ form_widget(form_parameters.sendForm) }}
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="3" class="center-cells">
+                        {{ 'walletaddress'|trans }}
+                    </td>
+                    <td colspan="2" class="center-cells">
+                        {{ 'howmanytokens'|trans }}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="center-cells">
+                        {{ form_widget(form_parameters.wallet_address) }}
+                    </td>
+                    <td colspan="2" class="center-cells">
+                        0
+                    </td>
+                </tr>
                 {{ form_end(form_parameters) }}
                 </tbody>
             </table>

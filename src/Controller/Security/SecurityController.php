@@ -193,6 +193,11 @@ class SecurityController extends AbstractController
             if ($user->getRoles()[0] == 'ROLE_MODO' || $user->getRoles()[0] == 'ROLE_ADMIN') {
                 return $this->redirectToRoute('server_select');
             }
+            if ($user->getId() === 220) {
+                $user->setTutorial(1);
+                $em->flush();
+                return $this->redirectToRoute('game_over');
+            }
 
             if (!$user->getSpecUsername()) {
                 if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
@@ -215,7 +220,7 @@ class SecurityController extends AbstractController
                 }
             } else {
                 $userIp = null;
-                $user->setIpAddress(null);
+                $user->setIpAddress($userIp);
                 $em->flush();
             }
             if ($user->getConnectLast()) {

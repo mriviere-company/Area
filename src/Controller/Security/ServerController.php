@@ -478,7 +478,7 @@ class ServerController extends AbstractController
             if ($character->getAlly()) {
                 $ally = $character->getAlly();
                 $character->setAlly(null);
-                foreach ($ally->getAllied() as $allied) {
+                foreach ($ally->getAllieds() as $allied) {
                     $em->remove($allied);
                 }
 
@@ -511,6 +511,13 @@ class ServerController extends AbstractController
 
             foreach ($character->getProposals() as $proposal) {
                 $character->removeProposal($proposal);
+            }
+
+            foreach ($character->getFleetLists() as $list) {
+                foreach ($list->getFleets() as $fleetL) {
+                    $fleetL->setFleetList(null);
+                }
+                $em->remove($list);
             }
 
             foreach ($character->getFleets() as $fleet) {
@@ -632,6 +639,7 @@ class ServerController extends AbstractController
 
         foreach ($galaxy->getSectors() as $sector) {
             foreach ($sector->getPlanets() as $planet) {
+                $planet->setImageName(null);
                 if ($planet->getProduct()) {
                     $em->remove($planet->getProduct());
                 }
@@ -647,7 +655,6 @@ class ServerController extends AbstractController
                 foreach ($planet->getConstructions() as $construction) {
                     $em->remove($construction);
                 }
-                $planet->setImageName(null);
                 $em->remove($planet);
             }
             $em->remove($sector);

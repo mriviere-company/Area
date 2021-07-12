@@ -88,9 +88,8 @@ class Server
      */
     protected $events;
 
-
     /**
-     * @ORM\ManyToMany(targetEntity="Salon", mappedBy="servers", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Salon", mappedBy="server", fetch="EXTRA_LAZY")
      */
     protected $salons;
 
@@ -114,6 +113,7 @@ class Server
         $this->characters = new ArrayCollection();
         $this->galaxys = new ArrayCollection();
         $this->events = new ArrayCollection();
+        $this->salons = new ArrayCollection();
         $this->dailyReport = $now;
         $this->production = $prod;
         $this->embargo = $now;
@@ -148,7 +148,7 @@ class Server
      *
      * @return Server
      */
-    public function addGalaxy(Galaxy $galaxys)
+    public function addGalaxy(Galaxy $galaxys): Server
     {
         $this->galaxys[] = $galaxys;
 
@@ -181,7 +181,6 @@ class Server
         $this->events = $events;
     }
 
-
     /**
      * Add event
      *
@@ -189,7 +188,7 @@ class Server
      *
      * @return Server
      */
-    public function addEvent(Event $events)
+    public function addEvent(Event $events): Server
     {
         $this->events[] = $events;
 
@@ -205,6 +204,7 @@ class Server
     {
         $this->events->removeElement($events);
     }
+
     /**
      * @return mixed
      */
@@ -228,7 +228,7 @@ class Server
      *
      * @return Server
      */
-    public function addCharacter(Character $characters)
+    public function addCharacter(Character $characters): Server
     {
         $this->characters[] = $characters;
 
@@ -328,7 +328,7 @@ class Server
     /**
      * @return null
      */
-    public function getEmbargo()
+    public function getEmbargo(): ?DateTime
     {
         return $this->embargo;
     }
@@ -350,25 +350,49 @@ class Server
     }
 
     /**
-     * @return null
-     */
-    public function getSalon()
-    {
-        return $this->salon;
-    }
-
-    /**
-     * @param null $salon
-     */
-    public function setSalon($salon): void
-    {
-        $this->salon = $salon;
-    }
-
-    /**
      * @return mixed
      */
-    public function getName()
+    public function getSalons()
+    {
+        return $this->salons;
+    }
+
+    /**
+     * @param ArrayCollection $salons
+     */
+    public function setSalons(ArrayCollection $salons): void
+    {
+        $this->salons = $salons;
+    }
+
+    /**
+     * Add salon
+     *
+     * @param Salon $salons
+     *
+     * @return Server
+     */
+    public function addSalon(Salon $salons): Server
+    {
+        $this->salons[] = $salons;
+
+        return $this;
+    }
+
+    /**
+     * Remove salon
+     *
+     * @param Salon $salons
+     */
+    public function removeSalon(Salon $salons)
+    {
+        $this->salons->removeElement($salons);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
     {
         return $this->name;
     }
