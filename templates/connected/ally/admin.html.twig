@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="front-block">
-        <div class="front-block-game">
+        <div class="front-block-second">
             {% if ally %}
                 <h1 class="text-center p-4">{{ 'ally.gradeTitle'|trans }}</h1>
                 <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
@@ -50,11 +50,6 @@
                                     <th class="tab-cells-name">{{ 'ally.canPeace'|trans }}</th>
                                     <th class="tab-cells-name">{{ 'ally.canKick'|trans }}</th>
                                     <th class="tab-cells-name">{{ 'ally.canWar'|trans }}</th>
-                                    <th class="tab-cells-name">{{ 'ally.canEdit'|trans }}</th>
-                                    <th class="tab-cells-name">{{ 'ally.seeMembers'|trans }}</th>
-                                    <th class="tab-cells-name">{{ 'ally.useFleets'|trans }}</th>
-                                    <th class="tab-cells-name">{{ 'ally.priority'|trans }}</th>
-                                    <th></th>
                                 </tr>
                                 <tr>
                                     <td class="center-cells pt-3">{{ form_widget(form_allyGrade.name) }}</td>
@@ -62,18 +57,27 @@
                                     <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.canPeace) }}</td>
                                     <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.canKick) }}</td>
                                     <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.canWar) }}</td>
+                                <tr>
+                                    <th class="tab-cells-name">{{ 'ally.priority'|trans }}</th>
+                                    <th class="tab-cells-name">{{ 'ally.canEdit'|trans }}</th>
+                                    <th class="tab-cells-name">{{ 'ally.seeMembers'|trans }}</th>
+                                    <th class="tab-cells-name">{{ 'ally.useFleets'|trans }}</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td class="center-cells pt-3">{{ form_widget(form_allyGrade.placement) }}</td>
                                     <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.canEdit) }}</td>
                                     <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.seeMembers) }}</td>
                                     <td class="center-cells cell-middle">{{ form_widget(form_allyGrade.useFleets) }}</td>
-                                    <td class="center-cells pt-3">{{ form_widget(form_allyGrade.placement) }}</td>
                                     <td class="center-cells">{{ form_widget(form_allyGrade.sendForm) }}</td>
                                 </tr>
                                 </tbody>
                             </table>
                             {{ form_end(form_allyGrade) }}
-                            <div class="pull-right mt-3">
-                                <span class="mr-3">{{ 'ally.deleteText'|trans }}</span>
-                                <a data-toggle="confirmation" data-placement="right" data-title="{{ 'ally.delete.question'|trans }}" href="{{ path('remove_ally', {'usePlanet': usePlanet.getId()}) }}" class="btn btn-lg btn-danger">{{ 'delete'|trans }}</a>
+                            <div class="row">
+                                <div class="offset-7 col-5">
+                                    <a data-toggle="confirmation" data-placement="right" data-title="{{ 'ally.delete.question'|trans }}" href="{{ path('remove_ally', {'usePlanet': usePlanet.getId()}) }}" class="btn btn-lg btn-danger">{{ 'delete'|trans }}</a>
+                                </div>
                             </div>
                         </div>
                     </div>

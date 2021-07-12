@@ -22,7 +22,7 @@ class Allied
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="allieds", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
 

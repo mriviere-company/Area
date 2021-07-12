@@ -12,7 +12,7 @@
         {% set totalgain = allWorkers / 10 %}
     {% endif %}
     <div class="front-block">
-        <table class="table table-striped borderOverview table-dark text-center back-banner hideForLittle">
+        <table class="table table-striped borderOverview table-dark text-center hideForLittle">
             <tbody>
             <tr>
                 <th class="tab-cells-name p-1 back-vert">
@@ -96,7 +96,7 @@
                     </td>
                     <td class="center-cells text-left">
                         {% if ally %}
-                            <div class="my-2"><span>{{ 'info.ally'|trans|raw }} : <span><a href="{{ path('rank_ally', {'usePlanet': usePlanet.getId()}) }}">[{{ ally.getSigle() }}] {{ ally.getName() }}</a></span></div>
+                            <div class="my-2"><span>{{ 'info.ally'|trans|raw }} : <span><a href="{{ path('rank_ally', {'usePlanet': usePlanet.getId()}) }}">[{{ ally.getSigle() }}] {{ ally.getName() }}</a></span></span></div>
                             <div class="my-2">{{ 'info.allyLevel'|trans|raw }} {{ ally.getLevel() }} / 10</div>
                             <div class="my-2">{{ 'info.allyMembers'|trans|raw }} {{ ally.getCharacters()|length }} / {{ ally.getMaxMembers()}}</div>
                             <div data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.maxPlanetsAlly'|trans }}" class="my-2">{{ 'info.allyPlanets'|trans|raw }} {{ ally.getPlanets()|number_format }} / {{ (ally.getPlanetsMax())|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" class="ml-2" height="15" src="{{ asset('img/planet9.png') }}"></div>

@@ -4,13 +4,13 @@
     <div class="logo mb-4">
         <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/logo.png') }}">
         <br>
-        <a target="_blank" href="http://area-control.forumactif.com/f8-mise-a-jour"><button class="text-orange my-2 text-less"><strong>{{ 'version'|trans }}</strong></button></a>
+        <a target="_blank" href="https://area-control.forumactif.com/f8-mise-a-jour"><button class="text-orange my-2 text-less"><strong>{{ 'version'|trans }}</strong></button></a>
             <div class="border-empire" data-toggle="tooltip" data-placement="top" title="{{ 'coin'|trans }}"><span id="bitcoin">{{ character.getBitcoin()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/coin.png') }}"></div>
         {% if character.getRank() %}<div class="border-empire" data-toggle="tooltip" data-placement="bottom" title="{{ 'market'|trans }}"><span id="pdg">{{ character.getRank().getWarPoint()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.png') }}"></div>{% endif %}
     </div>
     {% if app.user.getConfirmed() == 0 %}
         <a href="{{ path('confirm_account', {'usePlanet': usePlanet.getId()}) }}">
-            <div class="btn-left{% if app.request.attributes.get('_route') == 'confirm_account' %} currentBack{% endif %}">
+            <div class="btn-left{% if app.request.attributes.get('_route') == 'confirm_account' %} currentBack{% else %} warningBack{% endif %}">
                 <span class="text-orange">{{ 'confirm.account'|trans }}</span>
             </div>
         </a>
@@ -162,7 +162,7 @@
         </div>
     </a>
     <div class="btn-left separate"></div>
-    <a target="_blank" href="http://area-control.forumactif.com/">
+    <a target="_blank" href="https://area-control.forumactif.com/">
         <div class="btn-left">
             <span>{{ 'forum'|trans }}</span>
         </div>

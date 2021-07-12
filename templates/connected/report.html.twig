@@ -21,8 +21,8 @@
                 </tbody>
             </table>
         {% endif %}
-        <div class="front-block-game report">
-            <div class="float-right mb-3"><a class="btn-read-all" href="{{ path('report_all_view', {'usePlanet': usePlanet.getId()}) }}">{{ 'AllNewView'|trans }}</a></div>
+        <div class="front-block-second report">
+            <div class="float-right mb-3"><a class="btn-new" href="{{ path('report_all_view', {'usePlanet': usePlanet.getId()}) }}">{{ 'AllNewView'|trans }}</a></div>
             <ul class="nav nav-tabs mt-1" id="myTab" role="tablist">
                 <li class="nav-item">
                     <a{% if reportPage == 'defaut' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'defaut', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.defaut'|trans }} {% if character.getWhichViewsReport('defaut') %}<span class="text-vert">{{ character.getWhichViewsReport('defaut') }}</span>{% endif %}</a>

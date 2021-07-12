@@ -26,7 +26,6 @@ ally.memberName: Spitzname
 ally.memberDateJoin: Mitgliedschaft
 ally.memberPoint: Punkte
 ally.memberConnected: 'Online'
-ally.deleteText: 'Möchten Sie Ihre Allianz wirklich löschen ?'
 ally.proposalAt: 'Datum des Vorschlags'
 ally.cancelAsk: 'Angebot abbrechen'
 ally.cancel: 'Hier klicken, um abzubrechen'

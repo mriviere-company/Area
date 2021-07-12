@@ -28,9 +28,9 @@
 }
 
 .galaxy-info {
-  margin-top: 2rem;
+  margin: auto;
   color: #fff;
-  width: 671px;
+  max-width: 70%;
   background-color: $color-black;
   border: 1px solid white;
   padding: 1.5rem;
@@ -50,7 +50,7 @@ div.tooltip-inner {
   background: $color-black; //#3c3c3c
   color: #BCBCC0;
   text-align: left;
-  padding: 0px 5px;
+  padding: 0 5px;
   font-size: 1.5rem;
   border: 1px solid white;
 }

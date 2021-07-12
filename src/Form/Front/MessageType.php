@@ -100,7 +100,7 @@ class MessageType extends AbstractType
                     'required' => false
                 ]
             )
-            ->add('sendForm', SubmitType::class, ['label' => 'form.sendMessage', 'attr' => ['class' => 'confirm-button float-right mt-3']]);
+            ->add('sendForm', SubmitType::class, ['label' => 'form.sendMessage', 'attr' => ['class' => 'confirm-button mt-3']]);
     }
 
     /**

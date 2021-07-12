@@ -5,6 +5,7 @@ namespace App\Controller\Security;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Swift_Mailer;
+use Swift_Message;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -85,7 +86,7 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $message = (new \Swift_Message('Confirmation inscription'))
+            $message = (new Swift_Message('Confirmation inscription'))
                 ->setFrom('support@areauniverse.eu')
                 ->setTo($_POST['_email'])
                 ->setBody(

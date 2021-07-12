@@ -101,8 +101,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
   border: 1px solid silver;
   border-radius: 5px;
   option {
-    background-image: $back-form;
-    background: $color-black;
+    background: $back-form;
   }
 }
 
@@ -119,8 +118,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
   border: 1px solid silver;
   border-radius: 5px;
   option {
-    background-image: $back-form;
-    background: $color-black;
+    background: $back-form;
   }
 }
 
@@ -138,8 +136,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
   border: 1px solid silver;
   border-radius: 5px;
   option {
-    background-image: $back-blocked;
-    background: $color-black;
+    background: $back-blocked;
   }
 }
 
@@ -315,18 +312,17 @@ a:hover {
 
 @media screen and (min-width: 1025px) {
   .front-block {
-    margin: 7rem 6% 2% 21rem;
+    margin: auto;
     color: #fff;
-    max-width: 760px;
+    max-width: 70%;
     word-wrap: break-word;
   }
-  .front-block.galaxy {
-    margin: 2rem 6% 2% 21rem;
+  .front-block .galaxy {
+    max-width: 760px;
+    margin: auto;
   }
   .front-block.userPage {
-    margin: 7rem 0% 2% 8%;
-    display: inline-block;
-    padding: 0rem 1rem 2rem 1rem;
+    padding: 0 1rem 2rem 1rem;
     font-family: AppleGothic;
     font-size: 2rem;
     background-image: $back-basic;
@@ -337,15 +333,17 @@ a:hover {
 
 @media screen and (max-width: 1025px) {
   .front-block {
-    margin: 1rem 0 0 16rem;
+    margin: auto;
     color: #fff;
-    max-width: 760px;
+    max-width: 60%;
     word-wrap: break-word;
   }
+  .front-block .galaxy {
+    max-width: 760px;
+    margin: auto;
+  }
   .front-block.userPage {
-    margin: 1rem 0 0 5%;
-    display: inline-block;
-    padding: 0rem 1rem 2rem 1rem;
+    padding: 0 1rem 2rem 1rem;
     font-family: AppleGothic;
     font-size: 2rem;
     background-image: $back-basic;
@@ -355,9 +353,8 @@ a:hover {
 }
 
 .front-block-share {
-  margin: auto;
   max-width: 650px;
-  margin-top: 5rem;
+  margin: 5rem auto auto;
   color: #fff;
   width: fit-content;
   word-wrap: break-word;
@@ -499,10 +496,6 @@ li a {
   text-align: center;
 }
 
-.back-banner {
-  margin-top: -5rem;
-}
-
 .seller-table {
   width: fit-content!important;
 }
@@ -552,7 +545,7 @@ input {
 .currentPlanet {
   animation-name: bounce;
   border: 1px solid #DDD;
-  box-shadow:0px 0px 10px $color-turquoise;
+  box-shadow:0 0 10px $color-turquoise;
 }
 
 // Globals colors texts
@@ -583,15 +576,15 @@ input {
 }
 
 @-webkit-keyframes clignote-red {
-  0%{box-shadow: 0px 0px 20px #ff0000}
-  50%{box-shadow: 0px 0px 0px #ff0000}
-  100%{box-shadow: 0px 0px 20px #ff0000}
+  0%{box-shadow: 0 0 20px #ff0000}
+  50%{box-shadow: 0 0 0 #ff0000}
+  100%{box-shadow: 0 0 20px #ff0000}
 }
 
 @-webkit-keyframes clignote-turquoise {
-  0%{box-shadow: 0px 0px 20px $color-turquoise}
-  50%{box-shadow: 0px 0px 0px $color-turquoise}
-  100%{box-shadow: 0px 0px 20px $color-turquoise}
+  0%{box-shadow: 0 0 20px $color-turquoise}
+  50%{box-shadow: 0 0 0 $color-turquoise}
+  100%{box-shadow: 0 0 20px $color-turquoise}
 }
 
 .catch-border {
@@ -611,12 +604,12 @@ input {
 .bounce-border {
   border: 1px solid #DDD;
   text-shadow: 0 1px 0 white;
-  box-shadow:0px 0px 10px $color-turquoise;
+  box-shadow:0 0 10px $color-turquoise;
 }
 
 output {
   display: block;
-  padding-top: 0px;
+  padding-top: 0;
   color: $color-yellow;
 }
 .center {

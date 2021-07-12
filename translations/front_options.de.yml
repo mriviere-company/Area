@@ -11,7 +11,8 @@ form.col: Kolonisation
 form.username: Pseudonym
 form.connectLast: 'Letzte Verbindung'
 newletter: 'Newletter'
-modifUsername: Pseudonym
+modifcharacter: 'Pseudonym im Spiel'
+modifusername: 'Login-Spitzname'
 lastPlanet: 'Automatische Anmeldung'
 form.planetOrder : ''
 form.newletter: ''

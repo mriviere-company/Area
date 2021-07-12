@@ -28,7 +28,7 @@ class MoveFleetController extends AbstractController
         foreach ($fleets as $fleet) {
             $character = $fleet->getCharacter();
             $server = $fleet->getDestination()->getPlanet()->getSector()->getGalaxy()->getServer();
-            if ($character->getMerchant() == 1) {
+            if (!$character || $character->getMerchant() == 1) {
                 $em->remove($fleet->getDestination());
                 $em->remove($fleet);
             } else {
@@ -923,7 +923,7 @@ class MoveFleetController extends AbstractController
         $character = $fleet->getCharacter();
         $server = $fleet->getDestination()->getPlanet()->getSector()->getGalaxy()->getServer();
 
-        if ($character->getMerchant() == 1) {
+        if (!$character || $character->getMerchant() == 1) {
             $em->remove($fleet->getDestination());
             $em->remove($fleet);
         } else {

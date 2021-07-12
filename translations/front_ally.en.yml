@@ -26,7 +26,6 @@ ally.memberName: Nickname
 ally.memberDateJoin: Membership
 ally.memberPoint: Points
 ally.memberConnected: 'Online'
-ally.deleteText: 'Are you sure you want to delete your Alliance ?'
 ally.proposalAt: 'Proposal date'
 ally.cancelAsk: 'Cancel proposal'
 ally.cancel: 'Click here to cancel'

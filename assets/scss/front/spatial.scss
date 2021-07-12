@@ -9,11 +9,9 @@
 }
 
 .front-block.soldier {
-  width: 650px;
-  margin: auto;
+  width: 70%;
   padding: 1.5rem 1rem 5rem 1rem;
-  margin-bottom: 3rem;
-  margin-top: 6rem;
+  margin: auto;
   background-image: $back-basic;
   border-radius: 5px;
 }
@@ -96,7 +94,7 @@
   background-color: white;
   color: #FC7F23;
   font-weight: 800;
-  border-radius: 0px;
+  border-radius: 0;
 }
 
 .createFleet {

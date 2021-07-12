@@ -30,7 +30,7 @@
             <div class="text-more">{{ 'zombie.available.defense'|trans }} {{ planet.getSoldier() }}/{{ planet.getSoldierMax() }} <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-3" src="{{ asset('img/soldier.png') }}"> {{ planet.getTank() }}/500 <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-3" src="{{ asset('img/tanks.png') }}"></div>
             <div class="text-more mb-3">{{ 'zombie.attack'|trans }} <span class="mt-5 timerArea text-rouge" hidden>{% if character.getZombieAt() %}{{ character.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span></div>
         </div>
-        <div class="front-block-game mt-4">
+        <div class="front-block-second mt-4">
             <h2 class="text-center mb-3">{{ 'zombie.mission'|trans }}</h2>
             <div class="text-center mb-4" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.uranium'|trans }}">{{ 'zombie.speech'|trans }}<span class="glyphicon glyphicon-question-sign text-orange"></span></div>
                 <div class="offset-1 col-10 my-5">

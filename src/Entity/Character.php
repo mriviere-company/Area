@@ -45,7 +45,7 @@ class Character
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="characters", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
 
@@ -214,13 +214,13 @@ class Character
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet", mappedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $fleets;
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet_List", mappedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="fleet_list_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fleet_list_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $fleetLists;
 

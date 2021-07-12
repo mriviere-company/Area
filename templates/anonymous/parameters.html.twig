@@ -11,7 +11,7 @@
                 <tbody>
                 <tr>
                     <td width="140" class="center-cells">
-                        {{ 'modifUsername'|trans }}
+                        {{ 'modifusername'|trans }}
                     </td>
                     <td width="200" class="center-cells">
                         {{ 'modifPassword'|trans }}
@@ -31,9 +31,15 @@
                         {{ form_widget(form_parameters.username) }}
                     </td>
                     <td width="200" class="center-cells">
+                        {% if app.user.getConfirmed() == 1 %}
                         {{ form_widget(form_parameters.oldPassword) }}
                         {{ form_widget(form_parameters.password) }}
                         {{ form_widget(form_parameters.confirmPassword) }}
+                        {% else %}
+                            {{ form_widget(form_parameters.oldPassword,{attr: { disabled: 'disabled'}}) }}
+                            {{ form_widget(form_parameters.password,{attr: { disabled: 'disabled'}}) }}
+                            {{ form_widget(form_parameters.confirmPassword,{attr: { disabled: 'disabled'}}) }}
+                        {% endif %}
                     </td>
                     <td class="center-cells">
                         {{ form_widget(form_parameters.newletter) }}

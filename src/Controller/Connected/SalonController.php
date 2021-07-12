@@ -61,7 +61,7 @@ class SalonController extends AbstractController
             ->where('s.name = :public')
             ->orWhere('s.id = :id')
             ->AndWhere('s.server = :server')
-            ->setParameters(['public' => 'Public', 'id' => $id, 'server' => $server])
+            ->setParameters(['public' => $id, 'id' => $id, 'server' => $server])
             ->getQuery()
             ->getOneOrNullResult();
 

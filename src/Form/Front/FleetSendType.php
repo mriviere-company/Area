@@ -75,8 +75,8 @@ class FleetSendType extends AbstractType
                     'query_builder' => function (EntityRepository $er) use($options) {
                         return $er->createQueryBuilder('p')
                             ->join('p.character', 'c')
-                            ->where('u.id = :user')
-                            ->setParameter('user', $options['user'])
+                            ->where('c.id = :character')
+                            ->setParameter('character', $options['character'])
                             ->orderBy('p.name', 'ASC');
                     },
                     'choice_label' => 'name',
@@ -124,7 +124,7 @@ class FleetSendType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(['user']);
+        $resolver->setRequired(['character']);
         $resolver->setDefaults(
             [
                 'data_class'         => null,

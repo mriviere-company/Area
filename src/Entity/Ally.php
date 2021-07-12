@@ -26,13 +26,13 @@ class Ally
 
     /**
      * @ORM\OneToMany(targetEntity="Character", mappedBy="ally", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $characters;
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet", mappedBy="ally", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $fleets;
 

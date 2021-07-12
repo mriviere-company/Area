@@ -1,4 +1,4 @@
-title: 'My options'
+title: 'Mes options'
 modifPassword: 'Changer le mot de passe'
 planetOrder: 'Ordre des planètes'
 form.oldPassword: 'Ancien mdp'
@@ -8,10 +8,11 @@ form.newOptions: Sauvegarder
 form.alpha: Alphabétique
 form.pos: Position
 form.col: Colonisation
-form.username: Pseudonyme
+form.username: 'Pseudonyme'
 form.connectLast: 'Dernière connexion'
 newletter: 'Newletter'
-modifUsername: Pseudonyme
+modifcharacter: 'Pseudonyme en jeu'
+modifusername: 'Pseudo de connexion'
 lastPlanet: 'Connexion auto'
 form.planetOrder : ''
 form.newletter: ''

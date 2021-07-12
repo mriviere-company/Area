@@ -8,7 +8,7 @@
         {% set attacker = false %}
     {% endif %}
     {% set missionEnded = render(controller('App\\Service\\ZombieService::zombieIndicatorAction')) %}
-<nav class="navbar-right text-center pr-4 hideForLittle">
+<nav class="navbar-right text-center pr-4">
     {% if allPlanets|length <= 12 %}
         {% if allPlanets|length > 2 %}
             {% if allTuto > 22 %}<a href="{{ path('zombie', {'usePlanet': usePlanet.getId()}) }}">{% endif %}

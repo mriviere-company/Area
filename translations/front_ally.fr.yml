@@ -26,7 +26,6 @@ ally.memberName: Pseudo
 ally.memberDateJoin: Adhésion
 ally.memberPoint: Points
 ally.memberConnected: 'En ligne'
-ally.deleteText: 'Êtes-vous bien sûr de vouloir supprimer votre alliance ?'
 ally.proposalAt: 'Date de proposition'
 ally.cancelAsk: 'Annuler proposition'
 ally.cancel: 'Cliquez ici pour annuler'

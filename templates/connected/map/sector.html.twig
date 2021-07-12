@@ -27,7 +27,7 @@
     {% if sector.getPosition() - 1 == 0 %}
         {% set leftSector = 100 %}
     {% endif %}
-    <div class="front-block galaxy">
+    <div class="front-block">
         {% if app.user.getTutorial() == 15 or app.user.getTutorial() == 16 %}
         <table class="table table-striped borderOverview tutorial">
             <tbody>
@@ -43,7 +43,7 @@
             </tbody>
         </table>
         {% endif %}
-        <div class="map-block-sector">
+        <div class="map-block-sector galaxy">
             {{ form_start(form_navigate) }}
             <div class="row mb-2 navigate">
                 <div class="col-2 pt-1 text-more text-right">{{ form_label(form_navigate.galaxy) }}</div>

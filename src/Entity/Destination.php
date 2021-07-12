@@ -27,7 +27,7 @@ class Destination
 
     /**
      * @ORM\ManyToOne(targetEntity="Planet", inversedBy="destinations", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $planet;
 

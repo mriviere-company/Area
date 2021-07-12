@@ -1,4 +1,4 @@
-title: 'Mes options'
+title: 'My options'
 modifPassword: 'Change Password'
 planetOrder: 'Order of the planets'
 form.oldPassword: 'Old password'
@@ -11,7 +11,8 @@ form.col: Colonization
 form.username: Pseudonym
 form.connectLast: 'last connection'
 newletter: 'Newletter'
-modifUsername: Pseudonym
+modifcharacter: 'Pseudonym in game'
+modifusername: 'Login nickname'
 lastPlanet: 'Auto login'
 form.planetOrder : ''
 form.newletter: ''

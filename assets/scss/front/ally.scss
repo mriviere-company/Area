@@ -1,37 +1,14 @@
-.front-block-game {
-  color: #fff;
-  padding: 2rem;
-  position: absolute;
-  width: 760px;
-  word-wrap: break-word;
-  background-image: $back-basic;
-  border: 1px solid white;
-  border-radius: 5px;
-}
-
 .front-block-second {
   color: #fff;
   padding: 2rem;
-  width: 760px;
+  width: 100%;
   word-wrap: break-word;
   background-image: $back-basic;
   border: 1px solid white;
   border-radius: 5px;
 }
 
-.front-block-pre-game {
-  margin: 2rem 6% 2% 21rem;
-  color: #fff;
-  padding: 2rem;
-  position: absolute;
-  width: 750px;
-  word-wrap: break-word;
-  background-image: $back-basic;
-  border: 1px solid white;
-  border-radius: 5px;
-}
-
-.front-block-game #myTab li.nav-item a {
+.front-block #myTab li.nav-item a {
   color: orange;
 }
 
