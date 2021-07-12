@@ -515,8 +515,10 @@ class OverviewController extends AbstractController
                     $planet->setCharacter(null);
                 }
                 foreach ($character->getReports() as $report) {
+                    $report->setImageName(null);
                     $em->remove($report);
                 }
+                $character->setImageName(null);
                 $em->remove($character);
                 $em->flush();
                 return $this->redirectToRoute('server_select');

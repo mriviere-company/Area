@@ -502,6 +502,7 @@ class ServerController extends AbstractController
                     $em->remove($grade);
                 }
 
+                $ally->setImageName(null);
                 $em->remove($ally);
             }
 
@@ -570,6 +571,7 @@ class ServerController extends AbstractController
                 $em->remove($sContent);
             }
 
+            $character->setImageName(null);
             $em->remove($character);
         }
         $em->flush();
@@ -700,6 +702,7 @@ class ServerController extends AbstractController
                 foreach ($planet->getFleets() as $fleet) {
                     $fleet->setPlanet(null);
                 }
+                $planet->setImageName(null);
                 $em->remove($planet);
             }
         }
