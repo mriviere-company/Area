@@ -3,7 +3,9 @@
 namespace App\Controller\Connected\Execute;
 
 use App\Entity\Fleet;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
 use DateInterval;
@@ -19,8 +21,8 @@ class MoveFleetController extends AbstractController
      * @param $fleets
      * @param $now
      * @param $em
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @throws \Exception
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function centralizeFleetAction($fleets, $now, $em)
     {
@@ -52,6 +54,7 @@ class MoveFleetController extends AbstractController
                     $previousDestination = $fleet->getDestination();
                     if ($fleet->getFlightType() != '2') {
                         $previousDestination->setFleet(null);
+                        $fleet->setDestination(null);
                         $previousDestination->setPlanet(null);
                         $em->remove($previousDestination);
                         if ($newHome->getNbCdr() || $newHome->getWtCdr()) {
@@ -914,8 +917,8 @@ class MoveFleetController extends AbstractController
      * @param $fleet
      * @param $now
      * @param $em
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @throws \Exception
+     * @return RedirectResponse|Response
+     * @throws Exception
      */
     public function centralizeOneFleetAction($fleet, $now, $em)
     {
@@ -947,6 +950,7 @@ class MoveFleetController extends AbstractController
                 $previousDestination = $fleet->getDestination();
                 if ($fleet->getFlightType() != '2') {
                     $previousDestination->setFleet(null);
+                    $fleet->setDestination(null);
                     $previousDestination->setPlanet(null);
                     $em->remove($previousDestination);
                     if ($newHome->getNbCdr() || $newHome->getWtCdr()) {

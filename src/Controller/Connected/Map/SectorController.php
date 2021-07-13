@@ -274,7 +274,6 @@ class SectorController extends AbstractController
             $em->flush();
         }
 
-
         return $this->render('connected/map/sector.html.twig', [
             'form_navigate' => $form_navigate->createView(),
             'planets' => $planets,
@@ -286,7 +285,7 @@ class SectorController extends AbstractController
             'viewFleets' => $viewFleets,
             'fleetIn' => $fleetIn,
             'fleetOut' => $fleetOut,
-            'fleetCurrent' => $fleetCurrent,
+            'fleetCurrent' => $fleetCurrent
         ]);
     }
 

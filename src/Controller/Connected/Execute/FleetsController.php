@@ -51,6 +51,8 @@ class FleetsController extends AbstractController
             $reportNuclearDef->setCharacter($newHome->getCharacter());
             $dest = $nukeBomb->getDestination();
             $nukeBomb->setDestination(null);
+            $dest->setFleet(null);
+            $dest->setPlanet(null);
             $em->remove($dest);
             $em->remove($nukeBomb);
             if ($newHome->getMetropole() > 0) {
@@ -305,6 +307,9 @@ class FleetsController extends AbstractController
     public function destinationDeleteAction($dests, $em)
     {
         foreach ($dests as $dest) {
+            $dest->setPlanet(null);
+            $dest->getFleet()->setDestination(null);
+            $dest->setFleet(null);
             $em->remove($dest);
         }
         echo "Flush -> " . count($dests) . " ";

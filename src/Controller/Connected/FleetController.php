@@ -936,6 +936,7 @@ class FleetController  extends AbstractController
         $previousDestination = $fleetGive->getDestination();
         if (!$fleetGive->getFlightTime() && $previousDestination) {
             $previousDestination->setFleet(null);
+            $fleetGive->setDestination(null);
             $previousDestination->setPlanet(null);
             $em->remove($previousDestination);
             $em->flush();
