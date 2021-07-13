@@ -44,6 +44,7 @@ class OptionsController extends AbstractController
             $character->setUsername($form_prefers->get('username')->getData());
 
             $em->flush();
+            return $this->redirectToRoute('prefers', ['usePlanet' => $usePlanet->getId()]);
         }
 
         return $this->render('connected/options.html.twig', [

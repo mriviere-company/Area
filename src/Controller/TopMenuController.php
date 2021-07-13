@@ -82,6 +82,7 @@ class TopMenuController extends AbstractController
             $user->setNewletter($form_parameters->get('newletter')->getData());
 
             $em->flush();
+            return $this->redirectToRoute('parameters');
         }
 
         return $this->render('anonymous/parameters.html.twig', [
