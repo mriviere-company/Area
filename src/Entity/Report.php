@@ -24,7 +24,7 @@ class Report
 
     /**
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="reports", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
     protected $character;
 

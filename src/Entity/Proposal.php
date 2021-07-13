@@ -21,11 +21,13 @@ class Proposal
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="proposals", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id")
      */
     protected $ally;
 
     /**
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="proposals", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
     protected $character;
 

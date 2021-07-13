@@ -39,7 +39,7 @@ class Fleet
 
     /**
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="fleets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
     protected $character;
 
@@ -51,25 +51,25 @@ class Fleet
 
     /**
      * @ORM\ManyToOne(targetEntity="Fleet_List", inversedBy="fleets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="fleet_list_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fleet_list_id", referencedColumnName="id")
      */
     protected $fleetList;
 
     /**
      * @ORM\ManyToOne(targetEntity="Planet", inversedBy="fleets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
      */
     protected $planet;
 
     /**
      * @ORM\OneToOne(targetEntity="Destination", mappedBy="fleet", fetch="EXTRA_LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="destination_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="destination_id", referencedColumnName="id")
      */
     protected $destination;
 
     /**
      * @ORM\OneToOne(targetEntity="Heroe", inversedBy="fleet", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
      */
     protected $heroe;
 

@@ -20,7 +20,7 @@ class Rank
 
     /**
      * @ORM\OneToOne(targetEntity="Character", mappedBy="rank", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
     protected $character;
 

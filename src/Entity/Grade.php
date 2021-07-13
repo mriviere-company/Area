@@ -21,13 +21,12 @@ class Grade
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="grades", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id")
      */
     protected $ally;
 
     /**
-     * @ORM\OneToMany(targetEntity="Character", mappedBy="grade", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\OneToMany(targetEntity="Character", mappedBy="grade", fetch="EXTRA_LAZY", orphanRemoval=true)
      */
     protected $characters;
 

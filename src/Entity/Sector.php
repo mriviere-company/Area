@@ -22,7 +22,6 @@ class Sector
 
     /**
      * @ORM\OneToMany(targetEntity="Planet", mappedBy="sector", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
      */
     protected $planets;
 

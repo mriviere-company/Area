@@ -21,19 +21,19 @@ class Heroe
 
     /**
      * @ORM\OneToOne(targetEntity="Character", mappedBy="heroe", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
     protected $character;
 
     /**
      * @ORM\OneToOne(targetEntity="Fleet", mappedBy="heroe", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id")
      */
     protected $fleet;
 
     /**
      * @ORM\OneToOne(targetEntity="Planet", mappedBy="heroe", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
      */
     protected $planet;
 

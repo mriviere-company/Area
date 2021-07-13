@@ -206,7 +206,6 @@ class AllyController extends AbstractController
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $now = new DateTime();
         $em = $this->getDoctrine()->getManager();
 

@@ -27,7 +27,7 @@ class UserAllyType extends AbstractType
                         'placeholder' => 'form.name',
                         'class' => 'game-input',
                         'maxlength' => '15',
-                        'minlength' => '3',
+                        'minlength' => '2',
                         'autocomplete' => 'off',
                     ],
                     'required' => true
@@ -42,7 +42,7 @@ class UserAllyType extends AbstractType
                         'placeholder' => 'form.sigle',
                         'class' => 'game-input',
                         'maxlength' => '4',
-                        'minlength' => '2',
+                        'minlength' => '1',
                         'autocomplete' => 'off',
                     ],
                     'required' => true
@@ -57,7 +57,7 @@ class UserAllyType extends AbstractType
                         'placeholder' => 'form.slogan',
                         'class' => 'game-input',
                         'maxlength' => '30',
-                        'minlength' => '3',
+                        'minlength' => '1',
                         'autocomplete' => 'off',
                     ],
                     'required' => true

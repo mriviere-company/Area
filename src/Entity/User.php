@@ -78,7 +78,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     protected $connectLast;
 
     /**
-     * @ORM\Column(name="wallet_address",type="string", unique=true, nullable=true)
+     * @ORM\Column(name="wallet_address",type="string", length=60, unique=true, nullable=true)
      */
     protected $walletAddress;
 

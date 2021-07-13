@@ -45,7 +45,7 @@ class Character
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="characters", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id")
      */
     protected $ally;
 
@@ -70,7 +70,7 @@ class Character
     protected $zombieAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Proposal", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Proposal", mappedBy="character", fetch="EXTRA_LAZY", orphanRemoval=true)
      */
     protected $proposals;
 
@@ -81,6 +81,7 @@ class Character
 
     /**
      * @ORM\ManyToOne(targetEntity="Grade", inversedBy="characters", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="grade_id", referencedColumnName="id")
      */
     protected $grade;
 
@@ -90,14 +91,14 @@ class Character
     protected $quests;
 
     /**
-     * @ORM\OneToOne(targetEntity="Rank", inversedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="rank_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\OneToOne(targetEntity="Rank", inversedBy="character", fetch="EXTRA_LAZY", orphanRemoval=true)
+     * @ORM\JoinColumn(name="rank_id", referencedColumnName="id")
      */
     protected $rank;
 
     /**
      * @ORM\OneToOne(targetEntity="Heroe", inversedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
      */
     protected $heroe;
 
@@ -113,7 +114,7 @@ class Character
 
     /**
      * @ORM\OneToOne(targetEntity="Ships", inversedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ship_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="ship_id", referencedColumnName="id")
      */
     protected $ship;
 
@@ -214,13 +215,11 @@ class Character
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet", mappedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $fleets;
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet_List", mappedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="fleet_list_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $fleetLists;
 

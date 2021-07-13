@@ -22,7 +22,7 @@ class Pna
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="pnas", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id")
      */
     protected $ally;
 

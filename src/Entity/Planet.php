@@ -48,7 +48,7 @@ class Planet
 
     /**
      * @ORM\OneToOne(targetEntity="Heroe", inversedBy="planet", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
      */
     protected $heroe;
 
@@ -94,7 +94,7 @@ class Planet
 
     /**
      * @ORM\OneToOne(targetEntity="Product", mappedBy="planet", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     protected $product;
 
@@ -460,6 +460,7 @@ class Planet
 
     /**
      * @ORM\ManyToOne(targetEntity="Sector", inversedBy="planets", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="sector_id", referencedColumnName="id")
      */
     protected $sector;
 

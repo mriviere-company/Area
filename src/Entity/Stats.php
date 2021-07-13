@@ -22,7 +22,7 @@ class Stats
 
     /**
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="stats", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
      */
     protected $character;
 

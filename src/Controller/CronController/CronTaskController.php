@@ -3,6 +3,7 @@
 namespace App\Controller\CronController;
 
 use App\Entity\User;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,8 +20,9 @@ class CronTaskController extends AbstractController
      * @Route("/connect/carte-spatiale/construction/{opened}/", name="map_cron_task_character", requirements={"opened"="\d+"})
      * @param null $opened
      * @return Response
+     * @throws NonUniqueResultException
      */
-    public function cronTaskAction($opened = null)
+    public function cronTaskAction($opened = null): Response
     {
         $em = $this->getDoctrine()->getManager();
         $now = new DateTime();
@@ -588,18 +590,14 @@ class CronTaskController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $plas = $em->getRepository('App:Planet')
-            ->createQueryBuilder('p')
-            ->where('p.caserne > 0 or p.bunker > 0')
+        $grade = $em->getRepository('App:Rank')
+            ->createQueryBuilder('g')
+            ->where('g.id = :id')
+            ->setParameter('id', 34)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
 
-        foreach ($plas as $pla) {
-            $pla->setSoldierMax(25000 + ($pla->getCaserne() * 500) + ($pla->getBunker() * 5000));
-            if ($pla->getSoldier() > $pla->getSoldierMax()) {
-                $pla->setSoldier($pla->getSoldierMax());
-            }
-        }
+        $em->remove($grade);
         $em->flush();
         echo "<span style='color:#FF0000'>KO<span><br/>";
         exit;
