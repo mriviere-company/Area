@@ -13,6 +13,7 @@
   border: 1px solid silver;
   border-radius: 5px;
   option {
-    background: $back-form;
+    background-image: $back-form;
+    background: $color-black;
   }
 }

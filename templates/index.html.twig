@@ -36,7 +36,9 @@
                          </div>
                      </form>
                      <div class="mt-2">
-                         <button data-toggle="confirmation" data-placement="right" data-title="{{ 'register.question'|trans }}" class="confirm-button" href="{{ path('register_ghost') }}">{{ 'ghost.register'|trans }}</button>
+                         <a data-toggle="confirmation" data-placement="right" data-title="{{ 'register.question'|trans }}" href="{{ path('register_ghost') }}">
+                            <button class="confirm-button">{{ 'ghost.register'|trans }}</button>
+                         </a>
                      </div>
                  </div>
              {% endif %}
