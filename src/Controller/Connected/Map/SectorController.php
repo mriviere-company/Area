@@ -54,14 +54,14 @@ class SectorController extends AbstractController
             ->andWhere('f.flightType != :six or f.flightType is null')
             ->andWhere('s.id = :sector')
             ->andWhere('g.id = :galaxy')
-            ->setParameters(['now' => $now, 'six' => 6, 'sector' => $sector->getId(), 'galaxy' => $galaxy->getId()])
+            ->andWhere('g.server = :server')
+            ->setParameters(['now' => $now, 'six' => 6, 'sector' => $sector->getId(), 'galaxy' => $galaxy->getId(), 'server' => $server])
             ->getQuery()
             ->getResult();
 
         if ($fleets) {
             $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeFleetAction', [
                 'fleets'  => $fleets,
-                'server' => $server,
                 'now'  => $now,
                 'em'  => $em
             ]);
@@ -75,7 +75,8 @@ class SectorController extends AbstractController
             ->where('p.productAt < :now')
             ->andWhere('s.id = :sector')
             ->andWhere('g.id = :galaxy')
-            ->setParameters(['now' => $now, 'sector' => $sector->getId(), 'galaxy' => $galaxy->getId()])
+            ->andWhere('g.server = :server')
+            ->setParameters(['now' => $now, 'sector' => $sector->getId(), 'galaxy' => $galaxy->getId(), 'server' => $server])
             ->getQuery()
             ->getResult();
 

@@ -81,7 +81,7 @@ class Character
 
     /**
      * @ORM\ManyToOne(targetEntity="Grade", inversedBy="characters", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="grade_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="grade_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $grade;
 
@@ -92,13 +92,13 @@ class Character
 
     /**
      * @ORM\OneToOne(targetEntity="Rank", inversedBy="character", fetch="EXTRA_LAZY", orphanRemoval=true)
-     * @ORM\JoinColumn(name="rank_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="rank_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $rank;
 
     /**
      * @ORM\OneToOne(targetEntity="Heroe", inversedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $heroe;
 
@@ -114,7 +114,7 @@ class Character
 
     /**
      * @ORM\OneToOne(targetEntity="Ships", inversedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ship_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ship_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ship;
 

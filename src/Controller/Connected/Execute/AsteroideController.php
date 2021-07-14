@@ -22,7 +22,7 @@ class AsteroideController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function AsteroideAction($asteroides, $em)
+    public function AsteroideAction($asteroides, $em): Response
     {
         $nowAste = new DateTime();
 

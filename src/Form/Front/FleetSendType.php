@@ -106,7 +106,7 @@ class FleetSendType extends AbstractType
             ->add('sendForm', SubmitType::class, ['label' => 'form.sendFleet', 'attr' => ['class' => 'confirm-button']]);
     }
 
-    protected function getFlightType()
+    protected function getFlightType(): array
     {
         $translator = new Translator('front_fleet');
         return [

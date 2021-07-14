@@ -19,7 +19,7 @@ class FacilitiesController extends AbstractController
      */
     public function userReportAction($user, $usePlanet): Response
     {
-        $return = " <span><a href='/connect/profil-joueur/" . $user->getId() . "/" . $usePlanet->getId() . "'>" . $user->getUserName() . "</a></span> ";
+        $return = " <span><a href='/connect/profil-joueur/" . $user->getId() . "/" . $usePlanet->getId() . "'>" . $user->getUsername() . "</a></span> ";
 
         return new Response ($return);
     }

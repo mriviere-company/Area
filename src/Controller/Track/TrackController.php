@@ -20,7 +20,7 @@ class TrackController extends AbstractController
     {
         $user = $this->getUser();
 
-        $u_agent = $_SERVER['HTTP_USER_AGENT'];
+        $u_agent = substr($_SERVER['HTTP_USER_AGENT'], 0, 35);;
         if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif(isset($_SERVER['HTTP_CLIENT_IP'])) {
@@ -37,7 +37,7 @@ class TrackController extends AbstractController
         $track = new Track();
 
         if ($user) {
-            $track->setUsername($this->getUser()->getUserName());
+            $track->setUsername($this->getUser()->getUsername());
         }
 
         $track->setIp($ip);
@@ -74,7 +74,7 @@ class TrackController extends AbstractController
                 $referer ='';
             }
             else {
-                $referer = $_SERVER['HTTP_REFERER'];
+                $referer = substr($_SERVER['HTTP_REFERER'], 0, 45);
             }
         }
         else {
@@ -115,7 +115,7 @@ class TrackController extends AbstractController
         $track->setPage($currentPage);
 
         $em->persist($track);
-        $em->flush();
+        $em->flush($track);
 
         return new Response ("");
     }

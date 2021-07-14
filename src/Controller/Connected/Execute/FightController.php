@@ -75,9 +75,9 @@ class FightController extends AbstractController
                     $teamBlock[] = $fleetsWar->getCharacter()->getAlly()->getSigle();
                     $fleetsId[] = $fleetsWar->getId();
                 }
-            } elseif (in_array($fleetsWar->getCharacter()->getUserName(), $teamBlock) == false &&
+            } elseif (in_array($fleetsWar->getCharacter()->getUsername(), $teamBlock) == false &&
                 in_array($fleetsWar->getId(), $fleetsId) == false) {
-                $teamBlock[] = $fleetsWar->getCharacter()->getUserName();
+                $teamBlock[] = $fleetsWar->getCharacter()->getUsername();
                 $fleetsId[] = $fleetsWar->getId();
             }
         }
@@ -102,7 +102,7 @@ class FightController extends AbstractController
                         ${'oneBlock' . $team}->append($fleetsWar);
                         $isAttack[$team] = $fleetsWar->getAttack();
                     }
-                } elseif ($teamBlock[$team] == $fleetsWar->getCharacter()->getUserName()) {
+                } elseif ($teamBlock[$team] == $fleetsWar->getCharacter()->getUsername()) {
                     ${'oneBlock' . $team}->append($fleetsWar);
                     $isAttack[$team] = $fleetsWar->getAttack();
                 }

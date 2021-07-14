@@ -50,9 +50,6 @@ class FleetsController extends AbstractController
             $reportNuclearDef->setSendAt($now);
             $reportNuclearDef->setCharacter($newHome->getCharacter());
             $dest = $nukeBomb->getDestination();
-            $nukeBomb->setDestination(null);
-            $dest->setFleet(null);
-            $dest->setPlanet(null);
             $em->remove($dest);
             $em->remove($nukeBomb);
             if ($newHome->getMetropole() > 0) {
@@ -158,7 +155,7 @@ class FleetsController extends AbstractController
                         $reportRec->setSendAt($now);
                         $reportRec->setCharacter($fleetCdr->getCharacter());
                         $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
-                        $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
+                        $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
                         $em->persist($reportRec);
                         $fleetCdr->getUser()->setViewReport(false);
                     }
@@ -170,7 +167,7 @@ class FleetsController extends AbstractController
                     $reportRec->setSendAt($now);
                     $reportRec->setCharacter($fleetCdr->getCharacter());
                     $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
-                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
+                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
                     $em->persist($reportRec);
                     $fleetCdr->getUser()->setViewReport(false);
                     $fleetCdr->setRecycleAt(null);
@@ -205,7 +202,7 @@ class FleetsController extends AbstractController
                     $reportRec->setSendAt($now);
                     $reportRec->setCharacter($fleetCdr->getCharacter());
                     $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
-                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
+                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
                     $em->persist($reportRec);
                     $fleetCdr->getUser()->setViewReport(false);
                     $fleetCdr->setRecycleAt(null);
@@ -217,7 +214,7 @@ class FleetsController extends AbstractController
                     $reportRec->setSendAt($now);
                     $reportRec->setCharacter($fleetCdr->getCharacter());
                     $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getUser());
-                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
+                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getUser()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
                     $em->persist($reportRec);
                     $fleetCdr->getUser()->setViewReport(false);
                     $fleetCdr->setRecycleAt(null);
@@ -307,9 +304,6 @@ class FleetsController extends AbstractController
     public function destinationDeleteAction($dests, $em)
     {
         foreach ($dests as $dest) {
-            $dest->setPlanet(null);
-            $dest->getFleet()->setDestination(null);
-            $dest->setFleet(null);
             $em->remove($dest);
         }
         echo "Flush -> " . count($dests) . " ";

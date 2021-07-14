@@ -82,7 +82,7 @@ class SalonController extends AbstractController
             ->where('a.sigle = :sigle')
             ->orWhere('s.name = :name and s.server = :server')
             ->orWhere('c.username = :character')
-            ->setParameters(['sigle' => $sigle, 'server' => $server, 'name' => 'Public', 'character' => $character->getUserName()])
+            ->setParameters(['sigle' => $sigle, 'server' => $server, 'name' => 'Public', 'character' => $character->getUsername()])
             ->getQuery()
             ->getResult();
 

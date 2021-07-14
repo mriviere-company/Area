@@ -46,16 +46,13 @@ class MoveFleetController extends AbstractController
                     $report->setImageName("travel_report.jpg");
                     $report->setSendAt($now);
                     $report->setCharacter($character);
-                    $report->setContent("Bonjour dirigeant " . $character->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleet->getId() . "/" . $usePlanet->getId() . "'>" . $fleet->getName() . "</a></span>" . " vient d'arriver en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() . "/" . $newHome->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $newHome->getSector()->getGalaxy()->getPosition() . ":" . $newHome->getSector()->getPosition() . ":" . $newHome->getPosition() . "</a></span>.");
+                    $report->setContent("Bonjour dirigeant " . $character->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleet->getId() . "/" . $usePlanet->getId() . "'>" . $fleet->getName() . "</a></span>" . " vient d'arriver en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() . "/" . $newHome->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $newHome->getSector()->getGalaxy()->getPosition() . ":" . $newHome->getSector()->getPosition() . ":" . $newHome->getPosition() . "</a></span>.");
                     $character->setViewReport(false);
                     $oldPlanet = $fleet->getPlanet();
                     $fleet->setFlightTime(null);
                     $fleet->setPlanet($newHome);
                     $previousDestination = $fleet->getDestination();
                     if ($fleet->getFlightType() != '2') {
-                        $previousDestination->setFleet(null);
-                        $fleet->setDestination(null);
-                        $previousDestination->setPlanet(null);
                         $em->remove($previousDestination);
                         if ($newHome->getNbCdr() || $newHome->getWtCdr()) {
                             $fleet->setRecycleAt($nowReport);
@@ -211,8 +208,7 @@ class MoveFleetController extends AbstractController
                         }
                         if ($fleet->getFlightType() == '1' && $character->getZombie() == 0) {
                             $em->persist($report);
-                        }
-                        if ($fleet->getFlightType() == '2') {
+                        } elseif ($fleet->getFlightType() == '2') {
                             if ($newPlanet->getMerchant() == true) {
                                 $reportSell = new Report();
                                 $reportSell->setType('economic');
@@ -254,7 +250,7 @@ class MoveFleetController extends AbstractController
                                     $reportSell->setCharacter($newPlanet->getCharacter());
                                     $reportSell->setTitle("Dépôt de ressources");
                                     $reportSell->setImageName("depot_report.jpg");
-                                    $reportSell->setContent("Le joueur " . $newPlanet->getCharacter()->getUserName() . " vient de déposer des ressources sur votre planète " . $newPlanet->getSector()->getgalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . " " . number_format($fleet->getNiobium()) . " Niobium, " . number_format($fleet->getWater()) . " Eau, " . number_format($fleet->getWorker()) . " Travailleurs, " . number_format($fleet->getSoldier()) . " Soldats, " . number_format($fleet->getScientist()) . " Scientifiques.");
+                                    $reportSell->setContent("Le joueur " . $newPlanet->getCharacter()->getUsername() . " vient de déposer des ressources sur votre planète " . $newPlanet->getSector()->getgalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . " " . number_format($fleet->getNiobium()) . " Niobium, " . number_format($fleet->getWater()) . " Eau, " . number_format($fleet->getWorker()) . " Travailleurs, " . number_format($fleet->getSoldier()) . " Soldats, " . number_format($fleet->getScientist()) . " Scientifiques.");
                                     $em->persist($reportSell);
                                 }
                                 if ($newPlanet->getNiobium() + $fleet->getNiobium() <= $newPlanet->getNiobiumMax()) {
@@ -450,7 +446,7 @@ class MoveFleetController extends AbstractController
                                 $dSigle = $characterDefender->getAlly()->getSigle();
                             }
 
-                            if ($fleet->getPlanet()->getUser() && $fleet->getAllianceUser() && $character->getSigleAllied($dSigle) == null && $characterDefender->getZombie() == 0) {
+                            if ($fleet->getPlanet()->getUser() && $fleet->getAllianceCharacter() && $character->getSigleAllied($dSigle) == null && $characterDefender->getZombie() == 0) {
                                 if($dMilitary >= $aMilitary) {
                                     $warPointDef = round($aMilitary);
                                     if ($characterDefender->getPoliticPdg() > 0) {
@@ -480,10 +476,10 @@ class MoveFleetController extends AbstractController
 
                                     $reportDef->setTitle("Rapport de pillage : Victoire (défense)");
                                     $reportDef->setImageName("defend_win_report.jpg");
-                                    $reportDef->setContent("Le dirigeant " . $character->getUserName() . " a tenté de piller votre planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>). Il a échoué grâce a vos solides défenses. Vous avez éliminé <span class='text-vert'>" . number_format($soldierAtmp) . "</span> soldats et prit le contrôle des barges de l'attaquant.<br>Et vous remportez <span class='text-vert'>+" . number_format($warPointDef) . "</span> points de Guerre.");
+                                    $reportDef->setContent("Le dirigeant " . $character->getUsername() . " a tenté de piller votre planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>). Il a échoué grâce a vos solides défenses. Vous avez éliminé <span class='text-vert'>" . number_format($soldierAtmp) . "</span> soldats et prit le contrôle des barges de l'attaquant.<br>Et vous remportez <span class='text-vert'>+" . number_format($warPointDef) . "</span> points de Guerre.");
                                     $reportLoot->setTitle("Rapport de pillage : Défaite (attaque)");
                                     $reportLoot->setImageName("invade_lose_report.jpg");
-                                    $reportLoot->setContent("Le dirigeant " . $characterDefender->getUserName() . " vous attendait de pieds fermes. Sa planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) était trop renforcée pour vous. Vous tué tout de même <span class='text-vert'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-vert'>" . number_format($tankDtmp) ."</span> tanks. Tous vos soldats sont morts et vos barges sont restées sur la planète.<br>La prochaine fois, préparez votre attaque commandant.");
+                                    $reportLoot->setContent("Le dirigeant " . $characterDefender->getUsername() . " vous attendait de pieds fermes. Sa planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) était trop renforcée pour vous. Vous tué tout de même <span class='text-vert'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-vert'>" . number_format($tankDtmp) ."</span> tanks. Tous vos soldats sont morts et vos barges sont restées sur la planète.<br>La prochaine fois, préparez votre attaque commandant.");
                                 } else {
                                     $warPointAtt = round($soldierDtmp?$soldierDtmp:1 + $tankDtmp);
                                     if ($character->getPoliticPdg() > 0) {
@@ -532,7 +528,7 @@ class MoveFleetController extends AbstractController
                                     $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $warPointAtt);
                                     $reportDef->setTitle("Rapport de pillage : Défaite (défense)");
                                     $reportDef->setImageName("defend_lose_report.jpg");
-                                    $reportDef->setContent("Le dirigeant " . $character->getUserName() . " vient de piller (" . number_format(round($niobium)) . " niobiums" . number_format(round($water)) . " eaux" . number_format(round($uranium)) . " uraniums) votre planète " . $defender->getName() . " - (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>).  " . number_format(round($soldierAtmp)) . " soldats ennemis sont tout de même éliminé. C'est toujours ça de gagner. Vos <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-rouge'>" . number_format($tankDtmp) ."</span> tanks. Votre économie en a prit un coup, mais si vous étiez là pour planter des choux ça se serait ! Préparez la contre-attaque !");
+                                    $reportDef->setContent("Le dirigeant " . $character->getUsername() . " vient de piller (" . number_format(round($niobium)) . " niobiums" . number_format(round($water)) . " eaux" . number_format(round($uranium)) . " uraniums) votre planète " . $defender->getName() . " - (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>).  " . number_format(round($soldierAtmp)) . " soldats ennemis sont tout de même éliminé. C'est toujours ça de gagner. Vos <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-rouge'>" . number_format($tankDtmp) ."</span> tanks. Votre économie en a prit un coup, mais si vous étiez là pour planter des choux ça se serait ! Préparez la contre-attaque !");
                                     $reportLoot->setTitle("Rapport de pillage : Victoire (attaque)");
                                     $reportLoot->setImageName("invade_win_report.jpg");
                                     $reportLoot->setContent("Vos soldats ont fini de charger vos cargos ( <span class='text-vert'>" . number_format(round($niobium)) . " niobiums - " . number_format(round($water)) . " eaux - " . number_format(round($uranium)) . " uraniums </span>) et remontent dans les barges, le pillage de la planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) s'est bien passé. Vos pertes sont de <span class='text-rouge'>" . number_format(round($soldierAtmp)) . "</span> soldats. Mais les défenseurs ont aussi leurs pertes : <span class='text-vert'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-vert'>" . number_format($tankDtmp) ."</span> tanks.<br>Vous remportez <span class='text-vert'>+" . number_format($warPointAtt) . "</span> points de Guerre.");
@@ -631,7 +627,7 @@ class MoveFleetController extends AbstractController
                                 $dSigle = $characterDefender->getAlly()->getSigle();
                             }
 
-                            if($fleet->getPlanet()->getUser() && $fleet->getAllianceUser() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $character->getSigleAllied($dSigle) == null) {
+                            if($fleet->getPlanet()->getUser() && $fleet->getAllianceCharacter() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $character->getSigleAllied($dSigle) == null) {
                                 if($dMilitary >= $aMilitary) {
                                     if ($characterDefender->getZombie() == 0) {
                                         $warPointDef = round($aMilitary);
@@ -827,7 +823,7 @@ class MoveFleetController extends AbstractController
                                         }
                                     }
                                     if($characterDefender->getAllPlanets() == 0) {
-                                        $characterDefender->setGameOver($character->getUserName());
+                                        $characterDefender->setGameOver($character->getUsername());
                                         $characterDefender->setGrade(null);
                                         if ($character->getExecution()) {
                                             $character->setExecution($character->getExecution() . ', ' . $characterDefender->getUsername());
@@ -920,11 +916,10 @@ class MoveFleetController extends AbstractController
      * @return RedirectResponse|Response
      * @throws Exception
      */
-    public function centralizeOneFleetAction($fleet, $now, $em)
+    public function centralizeOneFleetAction($fleet, $server, $now, $em)
     {
         $nowReport = new DateTime();
         $character = $fleet->getCharacter();
-        $server = $fleet->getDestination()->getPlanet()->getSector()->getGalaxy()->getServer();
 
         if (!$character || $character->getMerchant() == 1) {
             $em->remove($fleet->getDestination());
@@ -942,16 +937,13 @@ class MoveFleetController extends AbstractController
                 $report->setImageName("travel_report.jpg");
                 $report->setSendAt($now);
                 $report->setCharacter($character);
-                $report->setContent("Bonjour dirigeant " . $character->getUserName() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleet->getId() . "/" . $usePlanet->getId() . "'>" . $fleet->getName() . "</a></span>" . " vient d'arriver en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() . "/" . $newHome->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $newHome->getSector()->getGalaxy()->getPosition() . ":" . $newHome->getSector()->getPosition() . ":" . $newHome->getPosition() . "</a></span>.");
+                $report->setContent("Bonjour dirigeant " . $character->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleet->getId() . "/" . $usePlanet->getId() . "'>" . $fleet->getName() . "</a></span>" . " vient d'arriver en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() . "/" . $newHome->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $newHome->getSector()->getGalaxy()->getPosition() . ":" . $newHome->getSector()->getPosition() . ":" . $newHome->getPosition() . "</a></span>.");
                 $character->setViewReport(false);
                 $oldPlanet = $fleet->getPlanet();
                 $fleet->setFlightTime(null);
                 $fleet->setPlanet($newHome);
                 $previousDestination = $fleet->getDestination();
                 if ($fleet->getFlightType() != '2') {
-                    $previousDestination->setFleet(null);
-                    $fleet->setDestination(null);
-                    $previousDestination->setPlanet(null);
                     $em->remove($previousDestination);
                     if ($newHome->getNbCdr() || $newHome->getWtCdr()) {
                         $fleet->setRecycleAt($nowReport);
@@ -1150,7 +1142,7 @@ class MoveFleetController extends AbstractController
                                 $reportSell->setCharacter($newPlanet->getCharacter());
                                 $reportSell->setTitle("Dépôt de ressources");
                                 $reportSell->setImageName("depot_report.jpg");
-                                $reportSell->setContent("Le joueur " . $newPlanet->getCharacter()->getUserName() . " vient de déposer des ressources sur votre planète " . $newPlanet->getSector()->getgalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . " " . number_format($fleet->getNiobium()) . " Niobium, " . number_format($fleet->getWater()) . " Eau, " . number_format($fleet->getWorker()) . " Travailleurs, " . number_format($fleet->getSoldier()) . " Soldats, " . number_format($fleet->getScientist()) . " Scientifiques.");
+                                $reportSell->setContent("Le joueur " . $newPlanet->getCharacter()->getUsername() . " vient de déposer des ressources sur votre planète " . $newPlanet->getSector()->getgalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . " " . number_format($fleet->getNiobium()) . " Niobium, " . number_format($fleet->getWater()) . " Eau, " . number_format($fleet->getWorker()) . " Travailleurs, " . number_format($fleet->getSoldier()) . " Soldats, " . number_format($fleet->getScientist()) . " Scientifiques.");
                                 $em->persist($reportSell);
                             }
                             if ($newPlanet->getNiobium() + $fleet->getNiobium() <= $newPlanet->getNiobiumMax()) {
@@ -1346,7 +1338,7 @@ class MoveFleetController extends AbstractController
                             $dSigle = $characterDefender->getAlly()->getSigle();
                         }
 
-                        if ($fleet->getPlanet()->getUser() && $fleet->getAllianceUser() && $character->getSigleAllied($dSigle) == null && $characterDefender->getZombie() == 0) {
+                        if ($fleet->getPlanet()->getUser() && $fleet->getAllianceCharacter() && $character->getSigleAllied($dSigle) == null && $characterDefender->getZombie() == 0) {
                             if($dMilitary >= $aMilitary) {
                                 $warPointDef = round($aMilitary);
                                 if ($characterDefender->getPoliticPdg() > 0) {
@@ -1376,10 +1368,10 @@ class MoveFleetController extends AbstractController
 
                                 $reportDef->setTitle("Rapport de pillage : Victoire (défense)");
                                 $reportDef->setImageName("defend_win_report.jpg");
-                                $reportDef->setContent("Le dirigeant " . $character->getUserName() . " a tenté de piller votre planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>). Il a échoué grâce a vos solides défenses. Vous avez éliminé <span class='text-vert'>" . number_format($soldierAtmp) . "</span> soldats et prit le contrôle des barges de l'attaquant.<br>Et vous remportez <span class='text-vert'>+" . number_format($warPointDef) . "</span> points de Guerre.");
+                                $reportDef->setContent("Le dirigeant " . $character->getUsername() . " a tenté de piller votre planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>). Il a échoué grâce a vos solides défenses. Vous avez éliminé <span class='text-vert'>" . number_format($soldierAtmp) . "</span> soldats et prit le contrôle des barges de l'attaquant.<br>Et vous remportez <span class='text-vert'>+" . number_format($warPointDef) . "</span> points de Guerre.");
                                 $reportLoot->setTitle("Rapport de pillage : Défaite (attaque)");
                                 $reportLoot->setImageName("invade_lose_report.jpg");
-                                $reportLoot->setContent("Le dirigeant " . $characterDefender->getUserName() . " vous attendait de pieds fermes. Sa planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) était trop renforcée pour vous. Vous tué tout de même <span class='text-vert'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-vert'>" . number_format($tankDtmp) ."</span> tanks. Tous vos soldats sont morts et vos barges sont restées sur la planète.<br>La prochaine fois, préparez votre attaque commandant.");
+                                $reportLoot->setContent("Le dirigeant " . $characterDefender->getUsername() . " vous attendait de pieds fermes. Sa planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) était trop renforcée pour vous. Vous tué tout de même <span class='text-vert'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-vert'>" . number_format($tankDtmp) ."</span> tanks. Tous vos soldats sont morts et vos barges sont restées sur la planète.<br>La prochaine fois, préparez votre attaque commandant.");
                             } else {
                                 $warPointAtt = round($soldierDtmp?$soldierDtmp:1 + $tankDtmp);
                                 if ($character->getPoliticPdg() > 0) {
@@ -1428,7 +1420,7 @@ class MoveFleetController extends AbstractController
                                 $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $warPointAtt);
                                 $reportDef->setTitle("Rapport de pillage : Défaite (défense)");
                                 $reportDef->setImageName("defend_lose_report.jpg");
-                                $reportDef->setContent("Le dirigeant " . $character->getUserName() . " vient de piller (" . number_format(round($niobium)) . " niobiums" . number_format(round($water)) . " eaux" . number_format(round($uranium)) . " uraniums) votre planète " . $defender->getName() . " - (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>).  " . number_format(round($soldierAtmp)) . " soldats ennemis sont tout de même éliminé. C'est toujours ça de gagner. Vos <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-rouge'>" . number_format($tankDtmp) ."</span> tanks. Votre économie en a prit un coup, mais si vous étiez là pour planter des choux ça se serait ! Préparez la contre-attaque !");
+                                $reportDef->setContent("Le dirigeant " . $character->getUsername() . " vient de piller (" . number_format(round($niobium)) . " niobiums" . number_format(round($water)) . " eaux" . number_format(round($uranium)) . " uraniums) votre planète " . $defender->getName() . " - (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanetDef->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>).  " . number_format(round($soldierAtmp)) . " soldats ennemis sont tout de même éliminé. C'est toujours ça de gagner. Vos <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-rouge'>" . number_format($tankDtmp) ."</span> tanks. Votre économie en a prit un coup, mais si vous étiez là pour planter des choux ça se serait ! Préparez la contre-attaque !");
                                 $reportLoot->setTitle("Rapport de pillage : Victoire (attaque)");
                                 $reportLoot->setImageName("invade_win_report.jpg");
                                 $reportLoot->setContent("Vos soldats ont fini de charger vos cargos ( <span class='text-vert'>" . number_format(round($niobium)) . " niobiums - " . number_format(round($water)) . " eaux - " . number_format(round($uranium)) . " uraniums </span>) et remontent dans les barges, le pillage de la planète " . $defender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $defender->getSector()->getPosition() . "/" . $defender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defender->getSector()->getGalaxy()->getPosition() . ":" . $defender->getSector()->getPosition() . ":" . $defender->getPosition() . "</a></span>) s'est bien passé. Vos pertes sont de <span class='text-rouge'>" . number_format(round($soldierAtmp)) . "</span> soldats. Mais les défenseurs ont aussi leurs pertes : <span class='text-vert'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-vert'>" . number_format($tankDtmp) ."</span> tanks.<br>Vous remportez <span class='text-vert'>+" . number_format($warPointAtt) . "</span> points de Guerre.");
@@ -1527,7 +1519,7 @@ class MoveFleetController extends AbstractController
                             $dSigle = $characterDefender->getAlly()->getSigle();
                         }
 
-                        if($fleet->getPlanet()->getUser() && $fleet->getAllianceUser() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $character->getSigleAllied($dSigle) == null) {
+                        if($fleet->getPlanet()->getUser() && $fleet->getAllianceCharacter() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $character->getSigleAllied($dSigle) == null) {
                             if($dMilitary >= $aMilitary) {
                                 if ($characterDefender->getZombie() == 0) {
                                     $warPointDef = round($aMilitary);
@@ -1723,7 +1715,7 @@ class MoveFleetController extends AbstractController
                                     }
                                 }
                                 if($characterDefender->getAllPlanets() == 0) {
-                                    $characterDefender->setGameOver($character->getUserName());
+                                    $characterDefender->setGameOver($character->getUsername());
                                     $characterDefender->setGrade(null);
                                     if ($character->getExecution()) {
                                         $character->setExecution($character->getExecution() . ', ' . $characterDefender->getUsername());

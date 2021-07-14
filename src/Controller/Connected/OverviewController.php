@@ -59,7 +59,6 @@ class OverviewController extends AbstractController
         if ($fleets) {
             $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeFleetAction', [
                 'fleets'  => $fleets,
-                'server' => $server,
                 'now'  => $now,
                 'em'  => $em
             ]);
@@ -321,7 +320,7 @@ class OverviewController extends AbstractController
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         if(($user->getId() === 220 && $user->getMainCharacter()) || ($character && ($character->getGameOver() || $character->getAllPlanets() == 0))) {
             if($character->getColPlanets() == 0 && $character->getGameOver() == null) {
-                $character->setGameOver($character->getUserName());
+                $character->setGameOver($character->getUsername());
 
                 $em->flush();
             }

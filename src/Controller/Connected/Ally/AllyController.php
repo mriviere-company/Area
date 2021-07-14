@@ -729,13 +729,13 @@ class AllyController extends AbstractController
                     if ($amountExchange <= $character->getBitcoin()) {
                         $character->setBitcoin($character->getBitcoin() - $amountExchange);
                         $ally->setBitcoin($ally->getBitcoin() + $amountExchange);
-                        $exchange = new Exchange($ally, $character->getUserName(), 0, 1, $amountExchange, $form_exchange->get('content')->getData());
+                        $exchange = new Exchange($ally, $character->getUsername(), 0, 1, $amountExchange, $form_exchange->get('content')->getData());
                         $em->persist($exchange);
                     }
                 } else {
                     if ($amountExchange <= $ally->getBitcoin()) {
                         $acepted = $character->getGrade()->getPlacement() == 1 || $ally->getPolitic() == 'communism' ? 1 : 0;
-                        $exchange = new Exchange($ally, $character->getUserName(), 0, $acepted, -$amountExchange, $form_exchange->get('content')->getData());
+                        $exchange = new Exchange($ally, $character->getUsername(), 0, $acepted, -$amountExchange, $form_exchange->get('content')->getData());
                         if ($acepted) {
                             $character->setBitcoin($character->getBitcoin() + $amountExchange);
                             $ally->setBitcoin($ally->getBitcoin() - $amountExchange);
@@ -748,13 +748,13 @@ class AllyController extends AbstractController
                     if($amountExchange <= $character->getRank()->getWarPoint()) {
                         $character->getRank()->setWarPoint(($character->getRank()->getWarPoint() - $amountExchange));
                         $ally->setPdg($ally->getPdg() + $amountExchange);
-                        $exchange = new Exchange($ally, $character->getUserName(), 1, 1, $amountExchange, $form_exchange->get('content')->getData());
+                        $exchange = new Exchange($ally, $character->getUsername(), 1, 1, $amountExchange, $form_exchange->get('content')->getData());
                         $em->persist($exchange);
                     }
                 } else {
                     if($amountExchange <= $ally->getPdg()) {
                         $acepted = $character->getGrade()->getPlacement() == 1 || $ally->getPolitic() == 'communism' ? 1 : 0;
-                        $exchange = new Exchange($ally, $character->getUserName(), 1, $acepted, -$amountExchange, $form_exchange->get('content')->getData());
+                        $exchange = new Exchange($ally, $character->getUsername(), 1, $acepted, -$amountExchange, $form_exchange->get('content')->getData());
                         if ($acepted) {
                             $character->getRank()->setWarPoint(($character->getRank()->getWarPoint() + $amountExchange));
                             $ally->setPdg($ally->getPdg() - $amountExchange);

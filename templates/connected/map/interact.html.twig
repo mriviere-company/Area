@@ -35,7 +35,7 @@
                     </td>
                 </tr>
             {% endif %}
-            {% if planet.getCharacter() and fleet.getAllianceUser() %}
+            {% if planet.getCharacter() and fleet.getAllianceCharacter() %}
                 <tr>
                     <td colspan="3" class="center-cells">
                         <span><a href="{{ path('send_sonde', {'usePlanet': usePlanet.getId(), 'id': planet.getId()}) }}">{{ 'interact.invader'|trans }}</a></span>
@@ -59,7 +59,7 @@
             {% if planet.getCharacter() and (render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': planet.getSector().getPosition(), 'galaxy': planet.getSector().getGalaxy().getPosition()})) > planet.getSkyBrouilleur() or planet.getOurFleet(character)) %}
                 <tr>
                     <td colspan="3" class="center-cells">
-                        <span><a href="{{ path('user_profil', {'characterProfil': planet.getCharacter().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.seeProfil'|trans }} {{ planet.getCharacter().getUserName() }}</a></span>
+                        <span><a href="{{ path('user_profil', {'characterProfil': planet.getCharacter().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.seeProfil'|trans }} {{ planet.getCharacter().getUsername() }}</a></span>
                     </td>
                 </tr>
             {% endif %}

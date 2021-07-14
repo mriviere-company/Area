@@ -131,14 +131,14 @@ class CharacterEvent implements EventSubscriberInterface
                                         if ($planet->getCargoI() != 0) {
                                             $planet->setCargoV(round($planet->getCargoI() / 2));
                                             $planet->setCargoI(0);
-                                            $this->em->flush($planet);
+                                            $this->em->flush();
                                         }
                                         if ($planet->getProduct()) {
                                             $product = $planet->getProduct();
                                             if ($product->getCargoI() != 0) {
                                                 $product->setCargoV(round($product->getCargoI() / 2));
                                                 $product->setCargoI(0);
-                                                $this->em->flush($product);
+                                                $this->em->flush();
                                             }
                                         }
                                     }
@@ -146,7 +146,7 @@ class CharacterEvent implements EventSubscriberInterface
                                         if ($fleet->getCargoI() != 0) {
                                             $fleet->setCargoV(round($fleet->getCargoI() / 2));
                                             $fleet->setCargoI(0);
-                                            $this->em->flush($fleet);
+                                            $this->em->flush();
                                         }
                                     }
                                 } elseif ($character->getCargo() == 5){
@@ -154,14 +154,14 @@ class CharacterEvent implements EventSubscriberInterface
                                         if ($planet->getCargoV() != 0) {
                                             $planet->setCargoX(round($planet->getCargoV() / 2));
                                             $planet->setCargoV(0);
-                                            $this->em->flush($planet);
+                                            $this->em->flush();
                                         }
                                         if ($planet->getProduct()) {
                                             $product = $planet->getProduct();
                                             if ($product->getCargoV() != 0) {
                                                 $product->setCargoX(round($product->getCargoV() / 2));
                                                 $product->setCargoV(0);
-                                                $this->em->flush($product);
+                                                $this->em->flush();
                                             }
                                         }
                                     }
@@ -169,7 +169,7 @@ class CharacterEvent implements EventSubscriberInterface
                                         if ($fleet->getCargoV() != 0) {
                                             $fleet->setCargoX(round($fleet->getCargoV() / 2));
                                             $fleet->setCargoV(0);
-                                            $this->em->flush($fleet);
+                                            $this->em->flush();
                                         }
                                     }
                                 }
@@ -237,7 +237,7 @@ class CharacterEvent implements EventSubscriberInterface
                                 $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
                                 $character->removeQuest($quest);
                             }
-                            $this->em->flush($character);
+                            $this->em->flush();
                         }
                     }
                 }

@@ -119,6 +119,7 @@ class AllPlanetsController extends AbstractController
             ->getQuery()
             ->getResult();
 
+        $em->clear();
         return $this->render('menu/_right_planet.html.twig', ['allPlanets' => $allPlanets, 'usePlanet' => $usePlanet]);
     }
 }

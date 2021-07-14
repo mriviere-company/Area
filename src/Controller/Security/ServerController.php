@@ -524,9 +524,6 @@ class ServerController extends AbstractController
             foreach ($character->getFleets() as $fleet) {
                 $destination = $fleet->getDestination();
                 if ($destination) {
-                    $destination->setFleet(null);
-                    $fleet->setDestination(null);
-                    $destination->setPlanet(null);
                     $em->remove($destination);
                 }
                 $fleet->setDestination(null);
@@ -650,9 +647,6 @@ class ServerController extends AbstractController
                 foreach ($planet->getFleets() as $fleet) {
                     $destination = $fleet->getDestination();
                     if ($destination) {
-                        $destination->setFleet(null);
-                        $fleet->setDestination(null);
-                        $destination->setPlanet(null);
                         $em->remove($destination);
                     }
                     $fleet->setDestination(null);
@@ -677,8 +671,6 @@ class ServerController extends AbstractController
             ->getResult();
 
         foreach ($destinations as $destination) {
-            $destination->setFleet(null);
-            $destination->setPlanet(null);
             $em->remove($destination);
         }
 

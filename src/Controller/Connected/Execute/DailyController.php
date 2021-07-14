@@ -21,7 +21,7 @@ class DailyController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function dailyLoadAction($server, $em)
+    public function dailyLoadAction($server, $em): Response
     {
         $now = clone $server->getDailyReport();
         $nowDaily = clone $server->getDailyReport();
@@ -106,7 +106,7 @@ class DailyController extends AbstractController
                             $gain = $gain - $lose;
                             $character->setBitcoin($character->getBitcoin() - $lose);
                             $otherAlly->setBitcoin($otherAlly->getBitcoin() + $lose);
-                            $exchange = new Exchange($otherAlly, $character->getUserName(), 0, 1, $lose, "Taxe liée à la paix.");
+                            $exchange = new Exchange($otherAlly, $character->getUsername(), 0, 1, $lose, "Taxe liée à la paix.");
                             $em->persist($exchange);
                             $report->setContent($report->getContent() . " La paix que vous avez signé envoi directement <span class='text-rouge'>" . number_format(round($lose)) . "</span> bitcoins à l'aliance [" . $otherAlly->getSigle() . "].<br>");
                         }

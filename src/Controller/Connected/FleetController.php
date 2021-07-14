@@ -63,7 +63,6 @@ class FleetController  extends AbstractController
         if ($fleets) {
             $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeFleetAction', [
                 'fleets'  => $fleets,
-                'server' => $server,
                 'now'  => $now,
                 'em'  => $em
             ]);
@@ -458,8 +457,7 @@ class FleetController  extends AbstractController
         $form_sendFleet = $this->createForm(FleetSendType::class, null, ["character" => $character->getId()]);
         $form_sendFleet->handleRequest($request);
 
-        if($fleetGive && $usePlanet) {
-        } else {
+        if(!$fleetGive || !$usePlanet) {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
 
@@ -935,9 +933,6 @@ class FleetController  extends AbstractController
         }
         $previousDestination = $fleetGive->getDestination();
         if (!$fleetGive->getFlightTime() && $previousDestination) {
-            $previousDestination->setFleet(null);
-            $fleetGive->setDestination(null);
-            $previousDestination->setPlanet(null);
             $em->remove($previousDestination);
             $em->flush();
         }

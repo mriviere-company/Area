@@ -17,15 +17,14 @@ class ChronosController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function userActivityAction($character, $now, $em)
+    public function userActivityAction($character, $now, $em): Response
     {
-        if ($character->getLastActivity()) {
-            $seconds = ($now->format('U') - ($character->getLastActivity()->format('U')));
-        } else {
+        if (!$character->getLastActivity()) {
             $character->setLastActivity($now);
             $em->flush($character);
-            $seconds = ($now->format('U') - ($character->getLastActivity()->format('U')));
         }
+        $seconds = ($now->format('U') - ($character->getLastActivity()->format('U')));
+
         return new Response ($seconds);
     }
 
@@ -35,15 +34,14 @@ class ChronosController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function planetActivityAction($planet, $now, $em)
+    public function planetActivityAction($planet, $now, $em): Response
     {
-        if ($planet->getLastActivity()) {
-            $seconds = ($now->format('U') - ($planet->getLastActivity()->format('U')));
-        } else {
+        if (!$planet->getLastActivity()) {
             $planet->setLastActivity($now);
             $em->flush($planet);
-            $seconds = ($now->format('U') - ($planet->getLastActivity()->format('U')));
         }
+        $seconds = ($now->format('U') - ($planet->getLastActivity()->format('U')));
+
         return new Response ($seconds);
     }
 }

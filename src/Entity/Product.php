@@ -19,7 +19,7 @@ class Product
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Planet", inversedBy="product", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Planet", inversedBy="product")
      * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
      */
     protected $planet;

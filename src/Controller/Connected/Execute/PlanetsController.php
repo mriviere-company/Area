@@ -240,7 +240,7 @@ class PlanetsController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function productsAction($products, $em)
+    public function productsAction($products, $em): Response
     {
         foreach ($products as $product) {
             $planetProduct = $product->getPlanet();
@@ -267,7 +267,6 @@ class PlanetsController extends AbstractController
             $planetProduct->setIronClad($planetProduct->getIronClad() + $product->getIronClad());
             $planetProduct->setDestroyer($planetProduct->getDestroyer() + $product->getDestroyer());
             $planetProduct->setSignature($planetProduct->getNbrSignatures());
-            $product->setPlanet(null);
             $em->remove($product);
             $em->flush();
         }

@@ -16,7 +16,7 @@ class AlliancesController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function pactsAction($pacts, $em)
+    public function pactsAction($pacts, $em): Response
     {
         foreach ($pacts as $pact) {
             $otherAlly = $em->getRepository('App:Ally')
@@ -70,7 +70,7 @@ class AlliancesController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function peacesAction($peaces, $em)
+    public function peacesAction($peaces, $em): Response
     {
         foreach ($peaces as $peace) {
             $em->remove($peace);

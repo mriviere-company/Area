@@ -117,7 +117,7 @@
                                 <th class="tab-cells-name">
                                     <span class="ml-3">
                                         {{ 'message.sendTo'|trans }}
-                                        <a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'characterProfil': message.getCharacter().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ message.getCharacter().getUserName() }}</a>
+                                        <a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'characterProfil': message.getCharacter().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ message.getCharacter().getUsername() }}</a>
                                         {% if message.getSender is null %}<span class="text-vert ml-3">{{ 'message.sendAnonym'|trans }}</span>{% endif %}
                                     </span>
                                     <span class="float-right">

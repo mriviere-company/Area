@@ -158,7 +158,7 @@ class PlanetController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function tankOneAction($planetTank, $em)
+    public function tankOneAction($planetTank, $em): Response
     {
         if ($planetTank->getTank() + $planetTank->getTankAtNbr() <= 500) {
             $planetTank->setTank($planetTank->getTank() + $planetTank->getTankAtNbr());
@@ -180,7 +180,7 @@ class PlanetController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function scientistOneAction($planetScientist, $em)
+    public function scientistOneAction($planetScientist, $em): Response
     {
         if ($planetScientist->getScientist() + $planetScientist->getScientistAtNbr() <= $planetScientist->getScientistMax()) {
             $planetScientist->setScientist($planetScientist->getScientist() + $planetScientist->getScientistAtNbr());
@@ -204,7 +204,7 @@ class PlanetController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function productOneAction($product, $em)
+    public function productOneAction($product, $em): Response
     {
         $planetProduct = $product->getPlanet();
         $planetProduct->setCargoI($planetProduct->getCargoI() + $product->getCargoI());
@@ -230,7 +230,6 @@ class PlanetController extends AbstractController
         $planetProduct->setIronClad($planetProduct->getIronClad() + $product->getIronClad());
         $planetProduct->setDestroyer($planetProduct->getDestroyer() + $product->getDestroyer());
         $planetProduct->setSignature($planetProduct->getNbrSignatures());
-        $product->setPlanet(null);
         $em->remove($product);
         $em->flush();
 

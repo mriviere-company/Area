@@ -43,7 +43,7 @@
             </div>
             <div class="col-8">
                 <div class="my-2 text-middle"><span
-                            class="glyphicon glyphicon-link text-orange"></span> {{ 'user.name'|trans }} {{ characterProfil.getUserName() }}
+                            class="glyphicon glyphicon-link text-orange"></span> {{ 'user.name'|trans }} {{ characterProfil.getUsername() }}
                 </div>
                 {% if characterProfil.getAlly() %}
                     {% if characterProfil.getAlly().getPolitic() != 'fascism' %}

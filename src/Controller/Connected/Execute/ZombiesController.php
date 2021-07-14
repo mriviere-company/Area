@@ -24,7 +24,7 @@ class ZombiesController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function zombiesAction($zUsers, $now, $em)
+    public function zombiesAction($zUsers, $now, $em): Response
     {
         foreach ($zUsers as $zUser) {
             $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($zUser);
@@ -151,7 +151,7 @@ class ZombiesController extends AbstractController
                     }
                     $em->flush();
                     if ($zUser->getAllPlanets() == 0) {
-                        $zUser->setGameOver($zombie->getUserName());
+                        $zUser->setGameOver($zombie->getUsername());
                         $zUser->setGrade(null);
                         foreach ($zUser->getFleets() as $tmpFleet) {
                             $tmpFleet->setCharacter($zombie);

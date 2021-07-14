@@ -100,7 +100,7 @@ class SpatialController extends AbstractController
                 $reportDef->setCharacter($character);
                 $reportDef->setTitle("Rapport d'invasion : Victoire (défense)");
                 $reportDef->setImageName("defend_win_report.jpg");
-                $reportDef->setContent("Bien joué ! Vos travailleurs et soldats ont repoussés l'invasion des " . $iaPlayer->getUserName() . " sur votre planète " . $usePlanet->getName() . " - (" . $usePlanet->getSector()->getgalaxy()->getPosition() . "." . $usePlanet->getSector()->getPosition() . "." . $usePlanet->getPosition() . ") . <span class='text-rouge'>100</span> zombies vous ont attaqués, tous ont été tués. Vous remportez <span class='text-vert'>+100</span> points de Guerre et <span class='text-vert'>+10.000 bitcoins</span>. Recrutez de nouveaux soldats !");
+                $reportDef->setContent("Bien joué ! Vos travailleurs et soldats ont repoussés l'invasion des " . $iaPlayer->getUsername() . " sur votre planète " . $usePlanet->getName() . " - (" . $usePlanet->getSector()->getgalaxy()->getPosition() . "." . $usePlanet->getSector()->getPosition() . "." . $usePlanet->getPosition() . ") . <span class='text-rouge'>100</span> zombies vous ont attaqués, tous ont été tués. Vous remportez <span class='text-vert'>+100</span> points de Guerre et <span class='text-vert'>+10.000 bitcoins</span>. Recrutez de nouveaux soldats !");
                 $usePlanet->setSoldier($usePlanet->getSoldier() - 2);
                 $character->setBitcoin($character->getBitcoin() + 10000);
                 $em->persist($reportDef);
@@ -108,13 +108,7 @@ class SpatialController extends AbstractController
                 $character->getRank()->setWarPoint(100);
                 $em->flush();
 
-                $form_spatialShip = null;
-                $form_spatialShip = $this->createForm(SpatialShipType::class);
-
-                return $this->render('connected/spatial.html.twig', [
-                    'usePlanet' => $usePlanet,
-                    'form_spatialShip' => $form_spatialShip->createView(),
-                ]);
+                return $this->redirectToRoute('spatial', ['usePlanet' => $usePlanet->getId()]);
             }
 
             $cargoI = abs($form_spatialShip->get('cargoI')->getData());

@@ -25,8 +25,8 @@
         {%- endblock -%}
 
         {%- block right_planet -%}
-            {% if character.getId() != 1 %}
-                {{ render(controller('App\\Controller\\Connected\\AllPlanetsController::allPlanetsAction', {'usePlanet': usePlanet.getId(), 'id': 1})) }}
+            {% if character.getUsername() != 'Zombie' and character.getUsername() != 'Aliens' %}
+                {{ render(controller('App\\Controller\\Connected\\AllPlanetsController::allPlanetsAction', {'usePlanet': usePlanet.getId()})) }}
             {% endif %}
         {%- endblock -%}
 

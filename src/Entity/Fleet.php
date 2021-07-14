@@ -39,37 +39,37 @@ class Fleet
 
     /**
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="fleets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $character;
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="fleets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $ally;
 
     /**
      * @ORM\ManyToOne(targetEntity="Fleet_List", inversedBy="fleets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="fleet_list_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="fleet_list_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $fleetList;
 
     /**
      * @ORM\ManyToOne(targetEntity="Planet", inversedBy="fleets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $planet;
 
     /**
-     * @ORM\OneToOne(targetEntity="Destination", mappedBy="fleet", fetch="EXTRA_LAZY", cascade={"persist"})
-     * @ORM\JoinColumn(name="destination_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Destination", mappedBy="fleet", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="destination_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $destination;
 
     /**
      * @ORM\OneToOne(targetEntity="Heroe", inversedBy="fleet", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $heroe;
 
@@ -313,15 +313,15 @@ class Fleet
         }
         if ($usePlanet) {
             if($this->getCharacter()->getAlly()) {
-                $return = "<span class='text-bleu'>[" . $this->getCharacter()->getAlly()->getSigle() . "] " . $this->getCharacter()->getAlly()->getName() . "</span> - " . "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getCharacter()->getUserName() . " -> "  . $this->getName() . $attack . "</a></span>";
+                $return = "<span class='text-bleu'>[" . $this->getCharacter()->getAlly()->getSigle() . "] " . $this->getCharacter()->getAlly()->getName() . "</span> - " . "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getCharacter()->getUsername() . " -> "  . $this->getName() . $attack . "</a></span>";
             } else {
-                $return = "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getCharacter()->getUserName() . " -> "  . $this->getName() . $attack . "</a></span>";
+                $return = "<span><a href='/connect/gerer-flotte/" . $this->getId() . "/" . $usePlanet->getId() . "'>" . $this->getCharacter()->getUsername() . " -> "  . $this->getName() . $attack . "</a></span>";
             }
         } else {
             if($this->getCharacter()->getAlly()) {
-                $return = "<span class='text-bleu'>[" . $this->getCharacter()->getAlly()->getSigle() . "]" . " " . $this->getCharacter()->getAlly()->getName() . "</span> - " . $this->getCharacter()->getUserName() . " -> " . $this->getName() . $attack;
+                $return = "<span class='text-bleu'>[" . $this->getCharacter()->getAlly()->getSigle() . "]" . " " . $this->getCharacter()->getAlly()->getName() . "</span> - " . $this->getCharacter()->getUsername() . " -> " . $this->getName() . $attack;
             } else {
-                $return = $this->getCharacter()->getUserName() . " -> "  . $this->getName() . $attack;
+                $return = $this->getCharacter()->getUsername() . " -> "  . $this->getName() . $attack;
             }
         }
         return $return;
