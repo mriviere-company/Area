@@ -24,7 +24,7 @@ class Sessions
     /**
      * @var string
      *
-     * @ORM\Column(name="sess_data", type="blob", length=65535, nullable=false)
+     * @ORM\Column(name="sess_data", type="longblob", length=65535, nullable=false)
      */
     private $sessData;
 

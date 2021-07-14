@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use DateTime;
+use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\HttpFoundation\File\File;
@@ -668,7 +670,7 @@ class Planet
      * must be able to accept an instance of 'File' as the bundle will inject one here
      * during Doctrine hydration.
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     * @param File|UploadedFile $image
      */
     public function setImageFile(?File $image = null): void
     {
@@ -677,7 +679,7 @@ class Planet
         if (null !== $image) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->updatedAt = new DateTimeImmutable();
         }
     }
 
@@ -702,6 +704,7 @@ class Planet
      */
     public function setRestartAll(): void
     {
+        $this->character = null;
         $this->centerSearch = null;
         $this->name = 'Inhabitée';
         $this->lastActivity = null;
@@ -905,14 +908,14 @@ class Planet
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getFleetNoFriends($character)
     {
         $fullFleet = [];
         $x = 0;
         foreach($this->fleets as $fleet) {
-            if($fleet->getCharacter() == $character || $fleet->getCharacter()->getAlly() == $character->getAlly()) {
+            if($fleet->getCharacter()->getId() === $character->getId() || $fleet->getCharacter()->getAlly()->getId() === $character->getAlly()->getId()) {
             } else {
                 $fullFleet[$x] = $fleet;
             }
@@ -921,13 +924,14 @@ class Planet
     }
 
     /**
+     * @param $name
      * @return int
      */
     public function getConstructionsLike($name): int
     {
         $nbr = 0;
         foreach($this->constructions as $construct) {
-            if($construct->getConstruct() == $name) {
+            if($construct->getConstruct() === $name) {
                 $nbr++;
             }
         }
@@ -951,6 +955,7 @@ class Planet
     }
 
     /**
+     * @param $character
      * @return int
      */
     public function getFleetsAbandon($character): int
@@ -961,7 +966,7 @@ class Planet
                 $planete = 0;
             } else {
                 if($fleet->getCharacter() != $character) {
-                    if($fleet->getAttack() == 1) {
+                    if($fleet->getAttack() === true) {
                         $planete = 1;
                     }
                     break;
@@ -978,10 +983,10 @@ class Planet
     {
         $id = $this->getId();
         foreach($this->getCharacter()->getPlanets() as $planet) {
-            if($planet->getId() == $this->getId()) {
+            if($planet->getId() === $this->getId()) {
                 return $id;
             }
-            if($planet->getEmpty() == false) {
+            if($planet->getEmpty() === false) {
                 $id = $planet->getId();
             }
         }
@@ -999,7 +1004,7 @@ class Planet
             if($next == 1) {
                 return $id;
             }
-            if($id == $this->getId()) {
+            if($id === $this->getId()) {
                 $next = 1;
             }
         }
@@ -1019,15 +1024,15 @@ class Planet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getOurAllyPact($character)
+    public function getOurAllyPact($character): ?string
     {
         if ($this->getCharacter()) {
             if ($this->getCharacter()->getAlly() && $character->getAlly()) {
                 if (count($this->getCharacter()->getAlly()->getAllieds()) > 0) {
                     foreach($this->getCharacter()->getAlly()->getAllieds() as $allied) {
-                        if($allied->getAllyTag() == $character->getAlly()->getSigle() && $allied->getAccepted() == 1) {
+                        if($allied->getAllyTag() === $character->getAlly()->getSigle() && $allied->getAccepted() === true) {
                             return 'pact';
                         }
                     }
@@ -1038,13 +1043,14 @@ class Planet
     }
 
     /**
-     * @return mixed
+     * @param $character
+     * @return string|null
      */
-    public function getOurFleet($character)
+    public function getOurFleet($character): ?string
     {
 
         foreach($this->getFleets() as $fleet) {
-            if ($fleet->getCharacter() == $character && $fleet->getFlightTime() == null) {
+            if ($fleet->getCharacter()->getId() === $character->getId() && $fleet->getFlightTime() == null) {
                 return 'hello';
             }
         }
@@ -1068,11 +1074,11 @@ class Planet
     /**
      * Add destination
      *
-     * @param \App\Entity\Destination $destination
+     * @param Destination $destination
      *
      * @return Planet
      */
-    public function addDestination(\App\Entity\Destination $destination)
+    public function addDestination(Destination $destination)
     {
         $this->destinations[] = $destination;
 
@@ -1082,9 +1088,9 @@ class Planet
     /**
      * Remove destination
      *
-     * @param \App\Entity\Destination $destination
+     * @param Destination $destination
      */
-    public function removeDestination(\App\Entity\Destination $destination)
+    public function removeDestination(Destination $destination)
     {
         $this->destinations->removeElement($destination);
     }

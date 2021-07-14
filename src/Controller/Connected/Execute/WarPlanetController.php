@@ -7,7 +7,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Report;
-use DateTime;
 
 /**
  * Class WarPlanetController
@@ -278,8 +277,7 @@ class WarPlanetController extends AbstractController
                             'planet25.png', 'planet26.png', 'planet27.png', 'planet28.png', 'planet29.png', 'planet30.png',
                             'planet31.png', 'planet32.png', 'planet33.png'
                         ];
-                        $planetDefender->setCharacter(null);
-                        $em->flush();
+
                         if ($character->getZombieAtt() > 9) {
                             $character->setZombieAtt(round($character->getZombieAtt() / 10));
                         }
@@ -345,7 +343,6 @@ class WarPlanetController extends AbstractController
             if ($characterDefender->getZombie() == 0) {
                 $em->persist($reportDef);
             }
-            $em->flush();
         } else {
             if (!$fleet->getAllianceCharacter() || $character->getSigleAllied($dSigle)) {
                 return new Response ("ally");
@@ -353,6 +350,7 @@ class WarPlanetController extends AbstractController
                 return new Response ("noplayer");
             }
         }
+        $em->flush();
 
         return new Response (null);
     }

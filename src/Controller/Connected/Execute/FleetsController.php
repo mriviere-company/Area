@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Execute;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Report;
@@ -21,20 +22,10 @@ class FleetsController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function nukeBombAction($nukeBombs, $now, $em)
+    public function nukeBombAction($nukeBombs, $now, $em): Response
     {
         foreach ($nukeBombs as $nukeBomb) {
-
-            $newHome = $em->getRepository('App:Planet')
-                ->createQueryBuilder('p')
-                ->join('p.sector', 's')
-                ->join('s.galaxy', 'g')
-                ->where('p.position = :planete')
-                ->andWhere('s.position = :sector')
-                ->andWhere('g.position = :galaxy')
-                ->setParameters(['planete' => $nukeBomb->getDestination()->getPlanet()->getPosition(), 'sector' => $nukeBomb->getDestination()->getPlanet()->getSector()->getPosition(), 'galaxy' => $nukeBomb->getDestination()->getPlanet()->getSector()->getGalaxy()->getPosition()])
-                ->getQuery()
-                ->getOneOrNullResult();
+            $newHome = $nukeBomb->getDestination()->getPlanet();
 
             $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($newHome->getCharacter());
             $reportNuclearAtt = new Report();
@@ -50,8 +41,8 @@ class FleetsController extends AbstractController
             $reportNuclearDef->setSendAt($now);
             $reportNuclearDef->setCharacter($newHome->getCharacter());
             $dest = $nukeBomb->getDestination();
-            $em->remove($dest);
             $em->remove($nukeBomb);
+            $em->remove($dest);
             if ($newHome->getMetropole() > 0) {
                 $newHome->setMetropole($newHome->getMetropole() - 1);
                 $newHome->setWorkerMax($newHome->getWorkerMax() - 40000);
@@ -105,9 +96,9 @@ class FleetsController extends AbstractController
      * @param $now
      * @param $em
      * @return Response
-     * @throws \Exception
+     * @throws Exception
      */
-    public function recycleAction($fleetCdrs, $now , $em)
+    public function recycleAction($fleetCdrs, $now , $em): Response
     {
         $tmpNoCdr = new DateTime();
         $tmpNoCdr->add(new DateInterval('PT' . 300 . 'S'));
@@ -240,7 +231,7 @@ class FleetsController extends AbstractController
      * @param $demoFleet
      * @return Response
      */
-    public function oneFleetAction($fleetRegroups, $demoFleet)
+    public function oneFleetAction($fleetRegroups, $demoFleet): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -301,7 +292,7 @@ class FleetsController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function destinationDeleteAction($dests, $em)
+    public function destinationDeleteAction($dests, $em): Response
     {
         foreach ($dests as $dest) {
             $em->remove($dest);

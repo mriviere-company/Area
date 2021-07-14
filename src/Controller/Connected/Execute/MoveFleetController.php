@@ -792,8 +792,7 @@ class MoveFleetController extends AbstractController
                                                 'planet25.png', 'planet26.png', 'planet27.png', 'planet28.png', 'planet29.png', 'planet30.png',
                                                 'planet31.png', 'planet32.png', 'planet33.png'
                                             ];
-                                            $defender->setCharacter(null);
-                                            $em->flush();
+
                                             if ($character->getZombieAtt() > 9) {
                                                 $character->setZombieAtt(round($character->getZombieAtt() / 10));
                                             }
@@ -1685,8 +1684,7 @@ class MoveFleetController extends AbstractController
                                             'planet25.png', 'planet26.png', 'planet27.png', 'planet28.png', 'planet29.png', 'planet30.png',
                                             'planet31.png', 'planet32.png', 'planet33.png'
                                         ];
-                                        $defender->setCharacter(null);
-                                        $em->flush();
+
                                         if ($character->getZombieAtt() > 9) {
                                             $character->setZombieAtt(round($character->getZombieAtt() / 10));
                                         }

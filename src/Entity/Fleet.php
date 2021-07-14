@@ -626,11 +626,14 @@ class Fleet
         if($this->getCharacter()->getAlly()) {
             $uAlly = $this->getCharacter()->getAlly()->getCharacters();
             $uFleet = $this->getPlanet()->getCharacter();
-            foreach ($uAlly as $character) {
-                if ($uFleet == $character) {
+            if (in_array($uFleet, get_object_vars($uAlly))) {
+                return null;
+            }
+            /*foreach ($uAlly as $character) {
+                if ($uFleet->getId() === $character->getId()) { // DEPRECATED
                     return null;
                 }
-            }
+            }*/
         } elseif ($this->getCharacter() == $this->getPlanet()->getCharacter()) {
             return null;
         }
