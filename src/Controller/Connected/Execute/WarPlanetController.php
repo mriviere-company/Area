@@ -293,6 +293,8 @@ class WarPlanetController extends AbstractController
                         }
                         $planetDefender->setRestartAll();
                         $planetDefender->setImageName($image[rand(0, 32)]);
+
+                        $em->flush();
                     } else {
                         $planetDefender->setCharacter($hydra);
                         $planetDefender->setWorker(125000);
@@ -339,6 +341,7 @@ class WarPlanetController extends AbstractController
                 $em->remove($fleet);
             }
             $em->persist($reportInv);
+
             if ($characterDefender->getZombie() == 0) {
                 $em->persist($reportDef);
             }
