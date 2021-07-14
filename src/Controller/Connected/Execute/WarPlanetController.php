@@ -23,7 +23,7 @@ class WarPlanetController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function invaderAction($usePlanet, $fleet, $character, $now, $em)
+    public function invaderAction($usePlanet, $fleet, $character, $now, $em): Response
     {
         $alea = rand(4, 8);
 
@@ -50,7 +50,7 @@ class WarPlanetController extends AbstractController
         }
 
         $planetDefender = $fleet->getPlanet();
-        $characterDefender= $planetDefender->getUser();
+        $characterDefender= $planetDefender->getCharacter();
         $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($characterDefender);
         $barbed = $characterDefender->getBarbedAdv();
         $dSoldier = $planetDefender->getSoldier() > 0 ? ($planetDefender->getSoldier() * 6) * $barbed : 0;
@@ -117,7 +117,7 @@ class WarPlanetController extends AbstractController
             $dSigle = $characterDefender->getAlly()->getSigle();
         }
 
-        if($fleet->getPlanet()->getUser() && $fleet->getAllianceCharacter() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $character->getSigleAllied($dSigle) == null) {
+        if($fleet->getPlanet()->getCharacter() && $fleet->getAllianceCharacter() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $character->getSigleAllied($dSigle) == null) {
             if($dMilitary >= $aMilitary) {
                 if ($characterDefender->getZombie() == 0) {
                     $warPointDef = round($aMilitary);
@@ -205,9 +205,9 @@ class WarPlanetController extends AbstractController
                     $planetDefender->setCharacter($character);
                     $em->flush();
                     if ($character->getNbrInvade()) {
-                        $character->NbrInvade($character->getNbrInvade() + 1);
+                        $character->setNbrInvade($character->getNbrInvade() + 1);
                     } else {
-                        $character->NbrInvade(1);
+                        $character->setNbrInvade(1);
                     }
                     $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
                     $reportDef->setImageName("defend_lose_report.jpg");
@@ -235,12 +235,12 @@ class WarPlanetController extends AbstractController
                 } else {
                     $warPointAtt = $warPointAtt / 50;
                     $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $warPointAtt);
-                    $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+                    $hydra = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
                     if ($characterDefender->getZombie() == 0) {
                         if ($character->getNbrInvade()) {
-                            $character->NbrInvade($character->getNbrInvade() + 1);
+                            $character->setNbrInvade($character->getNbrInvade() + 1);
                         } else {
-                            $character->NbrInvade(1);
+                            $character->setNbrInvade(1);
                         }
                         $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($characterDefender);
                         $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
@@ -309,12 +309,12 @@ class WarPlanetController extends AbstractController
                     }
                 }
                 if($characterDefender->getAllPlanets() == 0) {
-                    $characterDefender->setGameOver($user->getUsername());
+                    $characterDefender->setGameOver($character->getUsername());
                     $characterDefender->setGrade(null);
                     if ($character->getExecution()) {
-                        $character->Execution($character->getExecution() . ', ' . $characterDefender->getUsername());
+                        $character->setExecution($character->getExecution() . ', ' . $characterDefender->getUsername());
                     } else {
-                        $character->Execution($characterDefender->getUsername());
+                        $character->setExecution($characterDefender->getUsername());
                     }
                     $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $characterDefender->getRank()->getWarPoint());
                     $character->setBitcoin($character->getBitcoin() + $characterDefender->getBitcoin());
@@ -346,22 +346,23 @@ class WarPlanetController extends AbstractController
         } else {
             if (!$fleet->getAllianceCharacter() || $character->getSigleAllied($dSigle)) {
                 return new Response ("ally");
-            } elseif (!$fleet->getPlanet()->getUser()) {
+            } elseif (!$fleet->getPlanet()->getCharacter()) {
                 return new Response ("noplayer");
             }
         }
+
         return new Response (null);
     }
 
     /**
      * @param $usePlanet
      * @param $fleet
-     * @param $user
+     * @param $character
      * @param $now
      * @param $em
      * @return Response
      */
-    public function raidAction($usePlanet, $fleet, $user, $now, $em)
+    public function raidAction($usePlanet, $fleet, $character, $now, $em)
     {
         if ($fleet->getCharacter()->getPoliticBarge() > 0) {
             $barge = $fleet->getBarge() * 2500 * (1 + ($fleet->getCharacter()->getPoliticBarge() / 4));
@@ -386,7 +387,7 @@ class WarPlanetController extends AbstractController
         }
 
         $planetDefender = $fleet->getPlanet();
-        $characterDefender = $fleet->getPlanet()->getUser();
+        $characterDefender = $fleet->getPlanet()->getCharacter();
         $barbed = $characterDefender->getBarbedAdv();
         $dSoldier = $planetDefender->getSoldier() > 0 ? ($planetDefender->getSoldier() * 6) * $barbed : 0;
         $dTanks = $planetDefender->getTank() > 0 ? $planetDefender->getTank() * 3000 : 0;
@@ -430,7 +431,7 @@ class WarPlanetController extends AbstractController
         }
         $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($characterDefender);
 
-        if ($fleet->getPlanet()->getUser() && $fleet->getAllianceCharacter() && $fleet->getCharacter()->getSigleAllied($dSigle) == null && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $characterDefender->getZombie() == 0) {
+        if ($fleet->getPlanet()->getCharacter() && $fleet->getAllianceCharacter() && $fleet->getCharacter()->getSigleAllied($dSigle) == null && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $characterDefender->getZombie() == 0) {
             if($dMilitary >= $aMilitary) {
                 $warPointDef = round($aMilitary);
                 if ($characterDefender->getPoliticPdg() > 0) {
@@ -556,7 +557,7 @@ class WarPlanetController extends AbstractController
                 return new Response ("zombie");
             } elseif (!$fleet->getAllianceCharacter() || $fleet->getCharacter()->getSigleAllied($dSigle)) {
                 return new Response ("ally");
-            } elseif (!$fleet->getPlanet()->getUser()) {
+            } elseif (!$fleet->getPlanet()->getCharacter()) {
                 return new Response ("noplayer");
             }
         }

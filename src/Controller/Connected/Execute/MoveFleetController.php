@@ -715,9 +715,9 @@ class MoveFleetController extends AbstractController
                                         $defender->setCharacter($character);
                                         $em->flush();
                                         if ($character->getNbrInvade()) {
-                                            $character->NbrInvade($character->getNbrInvade() + 1);
+                                            $character->setNbrInvade($character->getNbrInvade() + 1);
                                         } else {
-                                            $character->NbrInvade(1);
+                                            $character->setNbrInvade(1);
                                         }
                                         $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
                                         $reportDef->setImageName("defend_lose_report.jpg");
@@ -744,7 +744,7 @@ class MoveFleetController extends AbstractController
                                     } else {
                                         $warPointAtt = $warPointAtt / 50;
                                         $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $warPointAtt);
-                                        $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+                                        $hydra = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
                                         if ($characterDefender->getZombie() == 0) {
                                             if ($character->getNbrInvade()) {
                                                 $character->setNbrInvade($character->getNbrInvade() + 1);
@@ -1637,7 +1637,7 @@ class MoveFleetController extends AbstractController
                                 } else {
                                     $warPointAtt = $warPointAtt / 50;
                                     $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $warPointAtt);
-                                    $hydra = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+                                    $hydra = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
                                     if ($characterDefender->getZombie() == 0) {
                                         if ($character->getNbrInvade()) {
                                             $character->setNbrInvade($character->getNbrInvade() + 1);

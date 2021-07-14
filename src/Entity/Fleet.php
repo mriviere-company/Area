@@ -619,9 +619,9 @@ class Fleet
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getAllianceCharacter()
+    public function getAllianceCharacter(): ?string
     {
         if($this->getCharacter()->getAlly()) {
             $uAlly = $this->getCharacter()->getAlly()->getCharacters();

@@ -465,6 +465,8 @@ class FleetController  extends AbstractController
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $fleetGive->setName($form_manageRenameFleet->get('name')->getData());
             $em->flush();
+
+            return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
         if($request->isXmlHttpRequest()) {
             $response = new JsonResponse();

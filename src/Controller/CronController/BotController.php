@@ -184,11 +184,11 @@ class BotController extends AbstractController
                         }
                     }
                     $user->setTutorial(60);
-                    $character->DailyConnect($now);
-                    //$character->LastActivity($now);
+                    $character->setDailyConnect($now);
+                    //$character->setLastActivity($now);
 
                     $ships = new Ships();
-                    $character->Ship($ships);
+                    $character->setShip($ships);
                     $ships->setCharacter($character);
                     $em->persist($ships);
 

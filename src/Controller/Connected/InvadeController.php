@@ -23,7 +23,7 @@ class InvadeController extends AbstractController
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function invaderAction(Fleet $fleet, Planet $usePlanet)
+    public function invaderAction(Fleet $fleet, Planet $usePlanet): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
@@ -60,7 +60,7 @@ class InvadeController extends AbstractController
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function raidAction(Fleet $fleet, Planet $usePlanet)
+    public function raidAction(Fleet $fleet, Planet $usePlanet): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();

@@ -101,7 +101,7 @@ class CharacterEvent implements EventSubscriberInterface
                         if ($character->getSearchAt()->format('U') < $now->format('U')) {
                             $research = $character->getSearch();
                             if ($research == 'onde') {
-                                $character->SetOnde($character->getOnde() + 1);
+                                $character->setOnde($character->getOnde() + 1);
                             } elseif ($research == 'industry') {
                                 $character->setIndustry($character->getIndustry() + 1);
                             } elseif ($research == 'discipline') {
@@ -174,17 +174,17 @@ class CharacterEvent implements EventSubscriberInterface
                                     }
                                 }
                             } elseif ($research == 'recycleur') {
-                                $character->Recycleur(1);
+                                $character->setRecycleur(1);
                             } elseif ($research == 'armement') {
-                                $character->Armement($character->getArmement() + 1);
+                                $character->setArmement($character->getArmement() + 1);
                             } elseif ($research == 'missile') {
-                                $character->Missile($character->getMissile() + 1);
+                                $character->setMissile($character->getMissile() + 1);
                             } elseif ($research == 'laser') {
-                                $character->Laser($character->getLaser() + 1);
+                                $character->setLaser($character->getLaser() + 1);
                             } elseif ($research == 'plasma') {
-                                $character->Plasma($character->getPlasma() + 1);
+                                $character->setPlasma($character->getPlasma() + 1);
                             } elseif ($research == 'lightShip') {
-                                $character->LightShip($character->getLightShip() + 1);
+                                $character->setLightShip($character->getLightShip() + 1);
                             } elseif ($research == 'heavyShip') {
                                 $character->setHeavyShip($character->getHeavyShip() + 1);
                             }
