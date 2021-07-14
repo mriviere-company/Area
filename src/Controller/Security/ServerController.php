@@ -35,7 +35,7 @@ class ServerController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
 
-        $server = new Server($name, 1, 0.1, 19, 30, 23, 00, 1);
+        $server = new Server($name, 1, 0.500, 19, 30, 23, 00, 1);
         $em->persist($server);
         $em->flush();
 

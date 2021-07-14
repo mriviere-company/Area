@@ -382,14 +382,14 @@ class FleetController  extends AbstractController
             }
         }
 
-        if (($fleetGive->getFlightType() != 6 || !$fleetGive->getFlightType()) && $fleetGive->getFlightTime() && $fleetGive->getFlightTime() < $now) {
+        /*if (($fleetGive->getFlightType() != 6 || !$fleetGive->getFlightType()) && $fleetGive->getFlightTime() && $fleetGive->getFlightTime() < $now) {
             $this->forward('App\Controller\Connected\Execute\MoveFleetController::centralizeOneFleetAction', [
                 'fleet'  => $fleetGive,
                 'server' => $server,
                 'now'  => $now,
                 'em'  => $em
             ]);
-        }
+        }*/
 
         if ($fleetGive->getPlanet()->getProduct() && $fleetGive->getPlanet()->getProduct()->getProductAt() < $now) {
             $this->forward('App\Controller\Connected\Execute\PlanetController::productOneAction', [
@@ -914,7 +914,7 @@ class FleetController  extends AbstractController
      * @return RedirectResponse
      * @throws Exception
      */
-    public function sendFleetAction(Request $request, Planet $usePlanet, Fleet $fleetGive)
+    public function sendFleetAction(Request $request, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();

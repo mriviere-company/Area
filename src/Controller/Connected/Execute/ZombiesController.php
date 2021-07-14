@@ -28,13 +28,13 @@ class ZombiesController extends AbstractController
     {
         foreach ($zUsers as $zUser) {
             $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($zUser);
-            $zombie = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+            $zombie = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
 
             $planetAtt = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
-                ->where('p.user = :user')
+                ->where('p.character = :character')
                 ->andWhere('p.radarAt is null and p.brouilleurAt is null')
-                ->setParameters(['user' => $zUser])
+                ->setParameters(['character' => $zUser])
                 ->orderBy('p.ground', 'ASC')
                 ->getQuery()
                 ->setMaxresults(1)

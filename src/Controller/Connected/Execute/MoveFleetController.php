@@ -675,7 +675,7 @@ class MoveFleetController extends AbstractController
                                             "sinon votre Empire ne tiendra pas longtemps. Vous avez tué <span class='text-vert'>" . number_format(round($soldierDtmp + ($workerDtmp / 6) + ($tankDtmp * 3000))) .
                                             "</span> zombies. Tous vos soldats sont morts et vos barges se sont égarées sur la planète.<br>N'abandonnez pas et sortez vos tripes !");
 
-                                        $character->ZombieAtt($character->getZombieAtt() + 10);
+                                        $character->setZombieAtt($character->getZombieAtt() + 10);
                                     } else {
                                         $reportDef->setTitle("Rapport d'invasion : Victoire (défense)");
                                         $reportDef->setImageName("defend_win_report.jpg");
@@ -911,6 +911,7 @@ class MoveFleetController extends AbstractController
 
     /**
      * @param $fleet
+     * @param $server
      * @param $now
      * @param $em
      * @return RedirectResponse|Response

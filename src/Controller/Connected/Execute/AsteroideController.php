@@ -57,12 +57,12 @@ class AsteroideController extends AbstractController
                     $newAsteroides->setCdr(true);
                     $newAsteroides->setImageName('cdr.png');
                     $newAsteroides->setName('Astéroïdes');
-                    $iaPlayer = $em->getRepository('App:User')->findOneBy(['zombie' => 1]);
+                    $iaPlayer = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
                     $planetZb = $em->getRepository('App:Planet')
                         ->createQueryBuilder('p')
-                        ->where('p.user = :user')
+                        ->where('p.character = :character')
                         ->andWhere('p.radarAt is null and p.brouilleurAt is null')
-                        ->setParameters(['user' => $iaPlayer])
+                        ->setParameters(['character' => $iaPlayer])
                         ->orderBy('p.ground', 'ASC')
                         ->getQuery()
                         ->setMaxresults(1)
