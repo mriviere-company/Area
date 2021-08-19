@@ -11,11 +11,9 @@
         <a class="btn-top" href="{{ path('point_game') }}">{{ 'objective'|trans }}</a>
         <a class="btn-top" href="{{ path('rules') }}">{{ 'rules'|trans }}</a>
         <a class="btn-top" href="{{ path('crypto') }}">{{ 'crypto'|trans }}</a>
-    </span>
-    <span>
-    <a href="{{ path('home') }}">
-        <img alt="{{ 'image'|trans({},'front_global') }}" width="80" src="{{ asset('img/logo00.png') }}">
-    </a>
+        <a class="btn-top-logo" href="{{ path('home') }}">
+            <img alt="{{ 'image'|trans({},'front_global') }}" width="80" src="{{ asset('img/logo00.png') }}">
+        </a>
         {% if app.request.get('_route') %}
             <a class="pl-1"
                href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}"><img

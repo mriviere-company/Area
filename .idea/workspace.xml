@@ -6,16 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/global.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bot.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/img/logo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/emails/new_email.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/new_email.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/emails/new_server.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/new_server.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/emails/registration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/registration.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/scss/front/_topMenu.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/front/_topMenu.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/slide00.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/public/img/slide00.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/menu/_top_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_top_menu.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/twig.yaml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -169,7 +162,8 @@
       <updated>1629372593483</updated>
       <workItem from="1629372596967" duration="138000" />
       <workItem from="1629373441467" duration="4601000" />
-      <workItem from="1629384159458" duration="58000" />
+      <workItem from="1629384159458" duration="738000" />
+      <workItem from="1629396144814" duration="1064000" />
     </task>
     <servers />
   </component>
