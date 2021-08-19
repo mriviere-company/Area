@@ -29,7 +29,8 @@
         "symfony/yaml": ">=5.0",
         "twig/extra-bundle": ">=3.1",
         "twig/twig": ">=2.0",
-        "vich/uploader-bundle": ">=1.8"
+        "vich/uploader-bundle": ">=1.8",
+      "ext-openssl": "*"
     },
   "require-dev": {
     "symfony/debug": ">=4.0",

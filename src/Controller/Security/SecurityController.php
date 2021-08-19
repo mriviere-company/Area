@@ -67,11 +67,13 @@ class SecurityController extends AbstractController
             } else {
                 $userIp = $_SERVER['REMOTE_ADDR'];
             }
+            $encryptedIp = openssl_encrypt($userIp, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
+
 
             $userSameIp = $em->getRepository('App:User')
                 ->createQueryBuilder('u')
                 ->where('u.ipAddress = :ip')
-                ->setParameters(['ip' => $userIp])
+                ->setParameters(['ip' => $encryptedIp])
                 ->getQuery()
                 ->getOneOrNullResult();
 
@@ -139,11 +141,12 @@ class SecurityController extends AbstractController
         } else {
             $userIp = $_SERVER['REMOTE_ADDR'];
         }
+        $encryptedIp = openssl_encrypt($userIp, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
 
         $userSameIp = $em->getRepository('App:User')
             ->createQueryBuilder('u')
             ->where('u.ipAddress = :ip')
-            ->setParameters(['ip' => $userIp])
+            ->setParameters(['ip' => $encryptedIp])
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -206,12 +209,13 @@ class SecurityController extends AbstractController
                 } else {
                     $userIp = $_SERVER['REMOTE_ADDR'];
                 }
+                $encryptedIp = openssl_encrypt($userIp, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
 
                 $userSameIp = $em->getRepository('App:User')
                     ->createQueryBuilder('u')
                     ->where('u.ipAddress = :ip')
                     ->andWhere('u.username != :user')
-                    ->setParameters(['user' => $user->getUsername(), 'ip' => $userIp])
+                    ->setParameters(['user' => $user->getUsername(), 'ip' => $encryptedIp])
                     ->getQuery()
                     ->getOneOrNullResult();
 

@@ -3,6 +3,7 @@ sensio_framework_extra:
         annotations: false
 
 framework:
+    esi: { enabled: true }
     secret: '%env(APP_SECRET)%'
     default_locale: fr
     csrf_protection: true

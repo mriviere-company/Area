@@ -29,7 +29,6 @@ class TrackController extends AbstractController
             $ip = $_SERVER['REMOTE_ADDR'];
         }
         if ($user && $user->getUsername() == 'Dev' || $user && $user->getUsername() == 'Admin'
-            || $ip == '2a01:e0a:833:360:75f4:3076:c21:5e42'
             || stripos(strtoupper($u_agent), 'BOT') !== FALSE) {
             return new Response ("");
         }
@@ -39,8 +38,8 @@ class TrackController extends AbstractController
         if ($user) {
             $track->setUsername($this->getUser()->getUsername());
         }
-
-        $track->setIp($ip);
+        $encryptedIp = openssl_encrypt($ip, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
+        $track->setIp($encryptedIp);
 
         if (stripos(strtoupper($u_agent), 'ANDROID') !== FALSE) {
             $track->setComputer('Android');
