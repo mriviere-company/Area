@@ -42,6 +42,26 @@
                      </div>
                  </div>
              {% endif %}
+            <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+            <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+            <script>
+                window.cookieconsent.initialise({
+                    cookie: {
+                        domain : "/",
+                        name: "area",
+                    },
+                    palette:{
+                        popup:  { background: "#e8ecf7"  },
+                        button: { background: "#181818"},
+                    },
+                    content:{
+                        message: "Les cookies sur le jeu ne sont utilisés que dans un but de faciliter la reconnexion au jeu. En continuant à utiliser le site vous acceptez les cookies.",
+                        link: '',
+                        href: 'https://area.mriviere.eu/',
+                        dismiss: 'Comprit !',
+                    },
+                });
+            </script>
         </div>
     {% endif %}
 {% endblock %}
