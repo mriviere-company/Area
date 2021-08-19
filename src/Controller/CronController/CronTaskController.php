@@ -41,7 +41,7 @@ class CronTaskController extends AbstractController
                 'now'  => $now,
                 'em' => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $asteroides = $em->getRepository('App:Planet')
@@ -58,7 +58,7 @@ class CronTaskController extends AbstractController
                 'asteroides'  => $asteroides,
                 'em' => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $dailyReports = $em->getRepository('App:Server')
@@ -78,7 +78,7 @@ class CronTaskController extends AbstractController
                         'em' => $em
                     ]
                 );
-                echo $cronValue->getContent() ? $cronValue->getContent() : "<span style='color:#FF0000'>KO<span><br/>";
+                echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
             }
         }
 
@@ -94,7 +94,7 @@ class CronTaskController extends AbstractController
                 'dests'  => $dests,
                 'em' => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         while (1) {
@@ -116,7 +116,7 @@ class CronTaskController extends AbstractController
                     'now' => $now,
                     'em'  => $em
                 ]);
-                echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+                echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
             } else {
                 break;
             }
@@ -136,7 +136,7 @@ class CronTaskController extends AbstractController
                 'now' => $now,
                 'em' => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $planetSoldiers = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans entraînement, zombie, invasion, pillage, planètes, daily.
@@ -168,7 +168,7 @@ class CronTaskController extends AbstractController
                 'planetTanks'  => $planetTanks,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $planetNuclears = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans overview, entraînement, chantier spatial.
@@ -184,7 +184,7 @@ class CronTaskController extends AbstractController
                 'planetNuclears'  => $planetNuclears,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $planetScientists = $em->getRepository('App:Planet') // Actualiser DONE
@@ -200,7 +200,7 @@ class CronTaskController extends AbstractController
                 'planetScientists'  => $planetScientists,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $prods = $em->getRepository('App:Product') // Actualiser DONE
@@ -215,7 +215,7 @@ class CronTaskController extends AbstractController
                 'prods'  => $prods,
                 'em' => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $products = $em->getRepository('App:Product') // Actualiser DONE
@@ -231,7 +231,7 @@ class CronTaskController extends AbstractController
                 'products'  => $products,
                 'em' => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $radars = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans overview, carte spatiale.
@@ -248,7 +248,7 @@ class CronTaskController extends AbstractController
                 'now' => $now,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $fleets = $em->getRepository('App:Fleet') // Actualiser DONE
@@ -266,7 +266,7 @@ class CronTaskController extends AbstractController
                 'now'  => $now,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $nukeBombs = $em->getRepository('App:Fleet')
@@ -284,7 +284,7 @@ class CronTaskController extends AbstractController
                 'now'  => $now,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $fleetCdrs = $em->getRepository('App:Fleet') // CHANGE ->  Flottes, carte spatiale, gérer flotte, combat.
@@ -305,7 +305,7 @@ class CronTaskController extends AbstractController
                 'now'  => $now,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $pacts = $em->getRepository('App:Allied')
@@ -321,7 +321,7 @@ class CronTaskController extends AbstractController
                 'pacts'  => $pacts,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $peaces = $em->getRepository('App:Peace')
@@ -337,7 +337,7 @@ class CronTaskController extends AbstractController
                 'peaces'  => $peaces,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $reports = $em->getRepository('App:Report')
@@ -377,7 +377,7 @@ class CronTaskController extends AbstractController
                 'now' => $now,
                 'em' => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $embargos = $em->getRepository('App:Planet')
@@ -401,7 +401,7 @@ class CronTaskController extends AbstractController
                 'now' => $now,
                 'em' => $em
             ]);
-            echo $cronValue->getContent() ? $cronValue->getContent() : "<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent() ?: "<span style='color:#FF0000'>KO<span><br/>";
         }
 
         if ($opened) {
