@@ -80,7 +80,6 @@ class AsteroideController extends AbstractController
                     $fleet->setPlanet($planetZb);
                     $destination = new Destination($fleet, $newAsteroides);
                     $em->persist($destination);
-                    $fleet->setDestination($destination);
                     $fleet->setFlightTime($timeAttAst);
                     $fleet->setAttack(1);
                     $fleet->setName('Horde');

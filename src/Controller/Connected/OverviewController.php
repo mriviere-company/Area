@@ -227,7 +227,6 @@ class OverviewController extends AbstractController
             ->getQuery()
             ->getResult();
 
-
         $oneHour = new DateTime();
         $oneHour->add(new DateInterval('PT' . 3600 . 'S'));
         $fleetMove = $em->getRepository('App:Fleet')
@@ -247,7 +246,6 @@ class OverviewController extends AbstractController
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
-
 
         if ($character->getOrderPlanet() == 'alpha') {
             $crit = 'p.name';

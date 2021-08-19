@@ -3,6 +3,7 @@ tooltip.planet: '%name%'
 tooltip.planetAlly: '[%ally%] %name%'
 tooltip.planetInfos: '<h4 class="text-blanc">Planète</h4>Terrain: %land% <img class="mb-1" src="/img/ground.png"> <br> Espace: %sky% <img class="mb-1" src="/img/sky.png"> <br> Radar: %radar% <br> Brouilleur: %brouilleur%'
 tooltip.planetOrbite: '%orbite%'
+tooltip.sunInfos: '<h4 class="text-blanc">Soleil</h4>'
 map.coming: 'Flottes entrant dans le secteur'
 map.fleetName: Joueur
 map.name: Flotte

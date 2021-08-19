@@ -313,7 +313,6 @@ class BotController extends AbstractController
                         $sonde->setFlightTime($move);
                         $destination = new Destination($sonde, $planet);
                         $em->persist($destination);
-                        $sonde->setDestination($destination);
                         $sonde->setFlightType(1);
                         $sonde->setCancelFlight($moreNow);
                         $em->persist($sonde);
@@ -339,7 +338,6 @@ class BotController extends AbstractController
                             $seller->setPlanet($planet);
                             $destination = new Destination($seller, $planetMerchant);
                             $em->persist($destination);
-                            $seller->setDestination($destination);
                             $seller->setFlightTime($sellTime);
                             $seller->setAttack(0);
                             $seller->setName('Cargos');

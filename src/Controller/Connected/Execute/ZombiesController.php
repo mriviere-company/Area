@@ -189,7 +189,6 @@ class ZombiesController extends AbstractController
             $fleetZb->setSignature($fleetZb->getNbrSignatures());
             $destination = new Destination($fleetZb, $planetAtt);
             $em->persist($destination);
-            $fleetZb->setDestination($destination);
             $fleetZb->setFlightTime($timeAtt);
             $fleetZb->setAttack(1);
             $fleetZb->setFlightType(1);

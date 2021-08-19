@@ -95,7 +95,6 @@ class FleetInteractController  extends AbstractController
             $now->add(new DateInterval('PT' . round($distance) . 'S'));
             $destination = new Destination($allFleet, $usePlanet);
             $em->persist($destination);
-            $allFleet->setDestination($destination);
             $allFleet->setFlightTime($now);
             $allFleet->setCancelFlight($moreNow);
             $allFleet->setSignature($allFleet->getNbrSignatures());
@@ -289,7 +288,6 @@ class FleetInteractController  extends AbstractController
                 $now->add(new DateInterval('PT' . round($distance) . 'S'));
                 $destination = new Destination($one, $usePlanet);
                 $em->persist($destination);
-                $one->setDestination($destination);
                 $one->setFlightTime($now);
                 $one->setCancelFlight($moreNow);
                 $one->setSignature($one->getNbrSignatures());

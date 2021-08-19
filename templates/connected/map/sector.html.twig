@@ -99,7 +99,11 @@
                         {% endif %}
                         <div class="float-right">
                             {% if planet.cdr == false %}
-                                <div><span data-html="true" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.planetInfos'|trans({'%land%': planet.ground, '%radar%': planet.radar + planet.skyRadar, '%brouilleur%': planet.skyBrouilleur, '%sky%': planet.sky}) }}">{% if planet.skyBrouilleur %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/radarjammed-known.gif') }}">{% elseif planet.radar or planet.skyRadar %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/radar.gif') }}">{% else %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/info.gif') }}">{% endif %}</span></div>
+                            {% if planet.sun == true %}
+                                <div><span data-html="true" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.sunInfos'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/info.gif') }}"></span></div>
+                            {% else %}
+                                <div><span data-html="true" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.planetInfos'|trans({'%land%': planet.ground, '%radar%': planet.radar + planet.skyRadar, '%brouilleur%': planet.skyBrouilleur??0, '%sky%': planet.sky}) }}">{% if planet.skyBrouilleur %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/radarjammed-known.gif') }}">{% elseif planet.radar or planet.skyRadar %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/radar.gif') }}">{% else %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/info.gif') }}">{% endif %}</span></div>
+                            {% endif %}
                             {% endif %}
                             {% if planet.fleets %}
                                 {% set colorFleet = 'none' %}

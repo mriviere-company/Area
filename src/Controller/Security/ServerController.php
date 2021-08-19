@@ -526,7 +526,6 @@ class ServerController extends AbstractController
                 if ($destination) {
                     $em->remove($destination);
                 }
-                $fleet->setDestination(null);
                 $fleet->setCharacter(null);
                 $fleet->setPlanet(null);
                 $character->removeFleet($fleet);
@@ -649,7 +648,6 @@ class ServerController extends AbstractController
                     if ($destination) {
                         $em->remove($destination);
                     }
-                    $fleet->setDestination(null);
                     $em->remove($fleet);
                 }
                 foreach ($planet->getConstructions() as $construction) {

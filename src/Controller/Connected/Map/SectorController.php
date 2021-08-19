@@ -172,7 +172,7 @@ class SectorController extends AbstractController
             ->leftJoin('c.ally', 'a')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->select('p.id, p.position, p.name, p.ground, p.sky, p.nbCdr, p.wtCdr, p.signature, p.imageName, p.empty, p.merchant, p.cdr, p.skyRadar, p.radar, p.skyBrouilleur, c.id as character, c.username as username, c.zombie as zombie, a.id as alliance, a.sigle as sigle, count(DISTINCT f) as fleets') // count(DISTINCT p) as planets, sum(DISTINCT r.warPoint) as pdg
+            ->select('p.id, p.position, p.name, p.ground, p.sun, p.sky, p.nbCdr, p.wtCdr, p.signature, p.imageName, p.empty, p.merchant, p.cdr, p.skyRadar, p.radar, p.skyBrouilleur, c.id as character, c.username as username, c.zombie as zombie, a.id as alliance, a.sigle as sigle, count(DISTINCT f) as fleets') // count(DISTINCT p) as planets, sum(DISTINCT r.warPoint) as pdg
             ->groupBy('p.id')
             ->where('s.id = :sector')
             ->andWhere('g.id = :galaxy')
@@ -393,7 +393,6 @@ class SectorController extends AbstractController
             $fleet->setFlightTime($now);
             $destination = new Destination($fleet, $planet);
             $em->persist($destination);
-            $fleet->setDestination($destination);
             if(($form_sendFleet->get('flightType')->getData() == '4' || $form_sendFleet->get('flightType')->getData() == '5') &&
                 (!$planet->getCharacter() || $fleet->getSoldier() == 0 || $fleet->getBarge() == 0 || $fleet->getSoldier() == null ||
                     $fleet->getBarge() == null)) {
@@ -502,7 +501,6 @@ class SectorController extends AbstractController
         $fleet->setFlightTime($now);
         $destination = new Destination($fleet, $planet);
         $em->persist($destination);
-        $fleet->setDestination($destination);
         $fleet->setFlightType(1);
         $fleet->setCancelFlight($moreNow);
         $character->setBitcoin($character->getBitcoin() - $carburant);
@@ -566,7 +564,6 @@ class SectorController extends AbstractController
         $fleet->setFlightTime($now);
         $destination = new Destination($fleet, $planet);
         $em->persist($destination);
-        $fleet->setDestination($destination);
         $fleet->setFlightType(6);
         $fleet->setSignature($fleet->getNbrSignatures());
         $em->persist($fleet);

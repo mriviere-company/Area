@@ -1029,7 +1029,6 @@ class FleetController  extends AbstractController
             $now->add(new DateInterval('PT' . round($distance) . 'S'));
             $destination = new Destination($fleetGive, $planetTake);
             $em->persist($destination);
-            $fleetGive->setDestination($destination);
             $fleetGive->setFlightTime($now);
             $fleetGive->setCancelFlight($moreNow);
             $fleetGive->setSignature($fleetGive->getNbrSignatures());

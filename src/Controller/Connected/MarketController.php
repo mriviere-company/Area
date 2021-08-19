@@ -219,7 +219,6 @@ class MarketController extends AbstractController
                     $fleet->setPlanet($planet);
                     $destination = new Destination($fleet, $planetMerchant);
                     $em->persist($destination);
-                    $fleet->setDestination($destination);
                     $fleet->setFlightTime($repor);
                     $fleet->setAttack(0);
                     $fleet->setName('Cargos');
