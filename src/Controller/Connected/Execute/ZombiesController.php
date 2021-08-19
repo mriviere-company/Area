@@ -18,23 +18,23 @@ use DateTime;
 class ZombiesController extends AbstractController
 {
     /**
-     * @param $zUsers
+     * @param $zCharacters
      * @param $now
      * @param $em
      * @return Response
      * @throws Exception
      */
-    public function zombiesAction($zUsers, $now, $em): Response
+    public function zombiesAction($zCharacters, $now, $em): Response
     {
-        foreach ($zUsers as $zUser) {
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($zUser);
+        foreach ($zCharacters as $zCharacter) {
+            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($zCharacter);
             $zombie = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
 
             $planetAtt = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
                 ->where('p.character = :character')
                 ->andWhere('p.radarAt is null and p.brouilleurAt is null')
-                ->setParameters(['character' => $zUser])
+                ->setParameters(['character' => $zCharacter])
                 ->orderBy('p.ground', 'ASC')
                 ->getQuery()
                 ->setMaxresults(1)
@@ -42,8 +42,8 @@ class ZombiesController extends AbstractController
 
             $planetZb = $em->getRepository('App:Planet')
                 ->createQueryBuilder('p')
-                ->where('p.user = :user')
-                ->setParameters(['user' => $zombie])
+                ->where('p.character = :character')
+                ->setParameters(['character' => $zombie])
                 ->orderBy('p.ground', 'DESC')
                 ->getQuery()
                 ->setMaxresults(1)
@@ -55,44 +55,44 @@ class ZombiesController extends AbstractController
                 return new Response ("KO<br/>");
             }
 
-            if ($zUser->getZombieAtt() > 0) {
+            if ($zCharacter->getZombieAtt() > 0) {
                 $reportDef = new Report();
                 $reportDef->setType('invade');
                 $reportDef->setSendAt($now);
-                $reportDef->setCharacter($zUser);
-                if ($zUser->getZombieAtt() >= 1 && $zUser->getTutorial() == 50) {
-                    $zUser->setTutorial(51);
+                $reportDef->setCharacter($zCharacter);
+                if ($zCharacter->getZombieAtt() >= 1 && $zCharacter->getUser()->getTutorial() == 50) {
+                    $zCharacter->getUser()->setTutorial(51);
                 }
 
-                $barbed = $zUser->getBarbedAdv();
+                $barbed = $zCharacter->getBarbedAdv();
                 $dSoldier = $planetAtt->getSoldier() > 0 ? ($planetAtt->getSoldier() * 6) * $barbed : 0;
                 $dTanks = $planetAtt->getTank() > 0 ? $planetAtt->getTank() * 3000 : 0;
                 $dWorker = $planetAtt->getWorker();
-                if ($zUser->getPoliticSoldierAtt() > 0) {
-                    $dSoldier = $dSoldier * (1 + ($zUser->getPoliticSoldierAtt() / 10));
+                if ($zCharacter->getPoliticSoldierAtt() > 0) {
+                    $dSoldier = $dSoldier * (1 + ($zCharacter->getPoliticSoldierAtt() / 10));
                 }
-                if ($zUser->getPoliticTankDef() > 0) {
-                    $dTanks = $dTanks * (1 + ($zUser->getPoliticTankDef() / 10));
+                if ($zCharacter->getPoliticTankDef() > 0) {
+                    $dTanks = $dTanks * (1 + ($zCharacter->getPoliticTankDef() / 10));
                 }
-                if ($zUser->getPoliticWorkerDef() > 0) {
-                    $dWorker = $dWorker * (1 + ($zUser->getPoliticWorkerDef() / 5));
+                if ($zCharacter->getPoliticWorkerDef() > 0) {
+                    $dWorker = $dWorker * (1 + ($zCharacter->getPoliticWorkerDef() / 5));
                 }
                 $dMilitary = $dWorker + $dSoldier + $dTanks;
-                $aMilitary = (500 * (($zUser->getZombieAtt() / 2) + 1) * 2 * round(1 + ($zUser->getTerraformation()) / 5));
-                $soldierAtmp = (500 * (($zUser->getZombieAtt() / 2) + 1));
+                $aMilitary = (500 * (($zCharacter->getZombieAtt() / 2) + 1) * 2 * round(1 + ($zCharacter->getTerraformation()) / 5));
+                $soldierAtmp = (500 * (($zCharacter->getZombieAtt() / 2) + 1));
 
                 if ($dMilitary > $aMilitary) {
-                    if ($zUser->getAlly()) {
-                        if ($zUser->getAlly()->getPolitic() == 'fascism') {
-                            $zUser->setZombieAtt($zUser->getZombieAtt() + 150);
+                    if ($zCharacter->getAlly()) {
+                        if ($zCharacter->getAlly()->getPolitic() == 'fascism') {
+                            $zCharacter->setZombieAtt($zCharacter->getZombieAtt() + 150);
                         } else {
-                            $zUser->setZombieAtt($zUser->getZombieAtt() + 200);
+                            $zCharacter->setZombieAtt($zCharacter->getZombieAtt() + 200);
                         }
                     } else {
-                        $zUser->setZombieAtt($zUser->getZombieAtt() + 100);
+                        $zCharacter->setZombieAtt($zCharacter->getZombieAtt() + 100);
                     }
                     $warPointDef = round($aMilitary / 10);
-                    $zUser->getRank()->setWarPoint($zUser->getRank()->getWarPoint() + $warPointDef);
+                    $zCharacter->getRank()->setWarPoint($zCharacter->getRank()->getWarPoint() + $warPointDef);
                     $aMilitary = $dSoldier - $aMilitary;
                     $reportDef->setType("zombie");
                     $reportDef->setTitle("Rapport invasion zombies : Victoire");
@@ -105,26 +105,26 @@ class ZombiesController extends AbstractController
                         $aMilitary = $dTanks - abs($aMilitary);
                         if ($aMilitary <= 0) {
                             $planetAtt->setTank(0);
-                            $planetAtt->setWorker($planetAtt->getWorker() + ($aMilitary / (1 + ($zUser->getPoliticWorkerDef() / 5))));
+                            $planetAtt->setWorker($planetAtt->getWorker() + ($aMilitary / (1 + ($zCharacter->getPoliticWorkerDef() / 5))));
                             $workerDtmp = $workerDtmp - $planetAtt->getWorker();
                             $reportDef->setContent("«Au secours !» des civils crient et cours dans tous les sens sur " . $planetAtt->getName() . " en <span><a href='/connect/carte-spatiale/" . $planetAtt->getSector()->getPosition() . "/" . $planetAtt->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetAtt->getSector()->getGalaxy()->getPosition() . ":" . $planetAtt->getSector()->getPosition() . ":" . $planetAtt->getPosition() . "</a></span>.<br>Vous n'aviez pas prévu suffisament de soldats et tanks pour faire face a la menace et des zombies envahissent les villes. Heureusement pour vous les travailleurs se réunissent et parviennent exterminer les zombies mais ce n'est pas grâce a vous.<br>" . number_format($soldierAtmp) . " zombies sont tués. <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> de vos soldats succombent aux mâchoires de ces infamies et <span class='text-rouge'>" . number_format($tankDtmp) . "</span> tanks sont mit hors de service. <span class='text-rouge'>" . number_format($workerDtmp) . "</span> de vos travailleurs sont retrouvés morts.<br>Vous ne remportez aucun points de Guerre pour avoir sacrifié vos civils.");
                             $em->persist($reportDef);
                         } else {
-                            $diviser = (1 + ($zUser->getPoliticTankDef() / 10)) * 3000;
+                            $diviser = (1 + ($zCharacter->getPoliticTankDef() / 10)) * 3000;
                             $planetAtt->setTank(round($aMilitary / $diviser));
                             $tankDtmp = $tankDtmp - $planetAtt->getTank();
                             $reportDef->setContent("Vos tanks ont suffit a arrêter les zombies pour cette fois-ci sur la planète " . $planetAtt->getName() . " en <span><a href='/connect/carte-spatiale/" . $planetAtt->getSector()->getPosition() . "/" . $planetAtt->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetAtt->getSector()->getGalaxy()->getPosition() . ":" . $planetAtt->getSector()->getPosition() . ":" . $planetAtt->getPosition() . "</a></span>.br>Mais pensez a rester sur vos gardes. Votre armée extermine " . number_format($soldierAtmp) . " zombies. <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> de vos soldats succombent aux mâchoires de ces infamies et <span class='text-rouge'>" . number_format($tankDtmp) . "</span> tanks sont mit hors de service.<br>Vous remportez <span class='text-vert'>+" . number_format($warPointDef) . "</span> points de Guerre.");
                             $em->persist($reportDef);
                         }
                     } else {
-                        $diviser = (1 + ($zUser->getPoliticSoldierAtt() / 10)) * (6 * $zUser->getBarbedAdv());
+                        $diviser = (1 + ($zCharacter->getPoliticSoldierAtt() / 10)) * (6 * $zCharacter->getBarbedAdv());
                         $planetAtt->setSoldier(round($aMilitary / $diviser));
                         $soldierDtmp = $soldierDtmp - $planetAtt->getSoldier();
                         $reportDef->setContent("Une attaque de zombie est déclarée sur " . $planetAtt->getName() . " en <span><a href='/connect/carte-spatiale/" . $planetAtt->getSector()->getPosition() . "/" . $planetAtt->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetAtt->getSector()->getGalaxy()->getPosition() . ":" . $planetAtt->getSector()->getPosition() . ":" . $planetAtt->getPosition() . "</a></span>.<br>Vous étiez préparé a cette éventualité et vos soldats exterminent " . number_format($soldierAtmp) . " zombies. <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> de vos soldats succombent aux mâchoires de ces infamies.<br>Vous remportez <span class='text-vert'>+" . number_format($warPointDef) . "</span> points de Guerre.");
                         $em->persist($reportDef);
                     }
                 } else {
-                    $zUser->setZombieAtt((round($zUser->getZombieAtt() / 2)));
+                    $zCharacter->setZombieAtt((round($zCharacter->getZombieAtt() / 2)));
                     $soldierDtmp = $planetAtt->getSoldier() != 0 ? $planetAtt->getSoldier() : 1;
                     $workerDtmp = $planetAtt->getWorker();
                     $tankDtmp = $planetAtt->getTank();
@@ -150,40 +150,40 @@ class ZombiesController extends AbstractController
                         $planetAtt->setCharacter(null);
                     }
                     $em->flush();
-                    if ($zUser->getAllPlanets() == 0) {
-                        $zUser->setGameOver($zombie->getUsername());
-                        $zUser->setGrade(null);
-                        foreach ($zUser->getFleets() as $tmpFleet) {
+                    if ($zCharacter->getAllPlanets() == 0) {
+                        $zCharacter->setGameOver($zombie->getUsername());
+                        $zCharacter->setGrade(null);
+                        foreach ($zCharacter->getFleets() as $tmpFleet) {
                             $tmpFleet->setCharacter($zombie);
                             $tmpFleet->setFleetList(null);
                         }
                     }
                 }
             } else {
-                if ($zUser->getAlly()) {
-                    if ($zUser->getAlly()->getPolitic() == 'fascism') {
-                        $zUser->setZombieAtt($zUser->getZombieAtt() + 150);
+                if ($zCharacter->getAlly()) {
+                    if ($zCharacter->getAlly()->getPolitic() == 'fascism') {
+                        $zCharacter->setZombieAtt($zCharacter->getZombieAtt() + 150);
                     } else {
-                        $zUser->setZombieAtt($zUser->getZombieAtt() + 200);
+                        $zCharacter->setZombieAtt($zCharacter->getZombieAtt() + 200);
                     }
                 } else {
-                    $zUser->setZombieAtt($zUser->getZombieAtt() + 100);
+                    $zCharacter->setZombieAtt($zCharacter->getZombieAtt() + 100);
                 }
             }
-            $zUser->setViewReport(false);
+            $zCharacter->setViewReport(false);
             $timeAtt = new DateTime();
             $timeAtt->add(new DateInterval('PT' . round(86400 * rand(1,3)) . 'S'));
             $nextZombie = new DateTime();
             $nextZombie->add(new DateInterval('PT' . round(12 * rand(1,5)) . 'H'));
-            $zUser->setZombieAt($nextZombie);
+            $zCharacter->setZombieAt($nextZombie);
             $fleetZb = new Fleet();
             $fleetZb->setName('Horde');
-            $fleetZb->setHunter(1 + round(($zUser->getAllShipsPoint() / (3 * rand(1, 5))) / 5));
-            $fleetZb->setHunterWar(1 + round(($zUser->getAllShipsPoint() / (4 * rand(1, 5))) / 5));
-            $fleetZb->setCorvet(1 + round(($zUser->getAllShipsPoint() / (5 * rand(1, 5))) / 5));
-            $fleetZb->setCorvetLaser(1 + round(($zUser->getAllShipsPoint() / (6 * rand(1, 5))) / 5));
-            $fleetZb->setCorvetWar(1 + round(($zUser->getAllShipsPoint() / (7 * rand(1, 5))) / 5));
-            $fleetZb->setFregate(1 + round(($zUser->getAllShipsPoint() / (8 * rand(1, 5))) / 5));
+            $fleetZb->setHunter(1 + round(($zCharacter->getAllShipsPoint() / (3 * rand(1, 5))) / 5));
+            $fleetZb->setHunterWar(1 + round(($zCharacter->getAllShipsPoint() / (4 * rand(1, 5))) / 5));
+            $fleetZb->setCorvet(1 + round(($zCharacter->getAllShipsPoint() / (5 * rand(1, 5))) / 5));
+            $fleetZb->setCorvetLaser(1 + round(($zCharacter->getAllShipsPoint() / (6 * rand(1, 5))) / 5));
+            $fleetZb->setCorvetWar(1 + round(($zCharacter->getAllShipsPoint() / (7 * rand(1, 5))) / 5));
+            $fleetZb->setFregate(1 + round(($zCharacter->getAllShipsPoint() / (8 * rand(1, 5))) / 5));
             $fleetZb->setCharacter($zombie);
             $fleetZb->setPlanet($planetZb);
             $fleetZb->setSignature($fleetZb->getNbrSignatures());
@@ -195,7 +195,7 @@ class ZombiesController extends AbstractController
             $fleetZb->setFlightType(1);
             $em->persist($fleetZb);
         }
-        echo "Flush -> " . count($zUsers) . " ";
+        echo "Flush -> " . count($zCharacters) . " ";
 
         $em->flush();
 

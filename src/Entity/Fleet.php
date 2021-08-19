@@ -62,8 +62,7 @@ class Fleet
     protected $planet;
 
     /**
-     * @ORM\OneToOne(targetEntity="Destination", inversedBy="fleet", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="destination_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\OneToOne(targetEntity="Destination", mappedBy="fleet", fetch="EXTRA_LAZY")
      */
     protected $destination;
 

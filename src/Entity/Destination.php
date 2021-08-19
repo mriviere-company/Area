@@ -20,7 +20,8 @@ class Destination
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fleet", mappedBy="destination", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Fleet", inversedBy="destination", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="destination_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $fleet;
 
