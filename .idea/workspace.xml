@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/framework.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Security/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Security/SecurityController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Track/TrackController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Track/TrackController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Kernel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Kernel.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
