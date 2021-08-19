@@ -20,8 +20,8 @@ class Ships
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Character", mappedBy="ship", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Character", inversedBy="ship", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $character;
 

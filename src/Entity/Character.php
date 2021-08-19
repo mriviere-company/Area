@@ -45,7 +45,7 @@ class Character
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="characters", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
 
@@ -113,8 +113,7 @@ class Character
     protected $stats;
 
     /**
-     * @ORM\OneToOne(targetEntity="Ships", inversedBy="character", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ship_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\OneToOne(targetEntity="Ships", mappedBy="character", fetch="EXTRA_LAZY")
      */
     protected $ship;
 
@@ -125,13 +124,13 @@ class Character
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="characters", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="Server", inversedBy="characters", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="server_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="server_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $server;
 
@@ -622,11 +621,11 @@ class Character
     /**
      * Add salon
      *
-     * @param \App\Entity\Salon $salon
+     * @param Salon $salon
      *
      * @return Character
      */
-    public function addSalon(\App\Entity\Salon $salon)
+    public function addSalon(Salon $salon)
     {
         $this->salons[] = $salon;
 
@@ -636,9 +635,9 @@ class Character
     /**
      * Remove salon
      *
-     * @param \App\Entity\Salon $salon
+     * @param Salon $salon
      */
-    public function removeSalon(\App\Entity\Salon $salon)
+    public function removeSalon(Salon $salon)
     {
         $this->salons->removeElement($salon);
     }
@@ -646,11 +645,11 @@ class Character
     /**
      * Add mission
      *
-     * @param \App\Entity\Mission $mission
+     * @param Mission $mission
      *
      * @return Character
      */
-    public function addMission(\App\Entity\Mission $mission)
+    public function addMission(Mission $mission)
     {
         $this->missions[] = $mission;
 
@@ -660,9 +659,9 @@ class Character
     /**
      * Remove mission
      *
-     * @param \App\Entity\Mission $mission
+     * @param Mission $mission
      */
-    public function removeMission(\App\Entity\Mission $mission)
+    public function removeMission(Mission $mission)
     {
         $this->missions->removeElement($mission);
     }
@@ -686,11 +685,11 @@ class Character
     /**
      * Add content
      *
-     * @param \App\Entity\S_Content $sContent
+     * @param S_Content $sContent
      *
      * @return Character
      */
-    public function addSContent(\App\Entity\S_Content $sContent)
+    public function addSContent(S_Content $sContent)
     {
         $this->sContents[] = $sContent;
 
@@ -700,9 +699,9 @@ class Character
     /**
      * Remove message
      *
-     * @param \App\Entity\S_Content $sContent
+     * @param S_Content $sContent
      */
-    public function removeSContent(\App\Entity\S_Content $sContent)
+    public function removeSContent(S_Content $sContent)
     {
         $this->sContents->removeElement($sContent);
     }
@@ -710,11 +709,11 @@ class Character
     /**
      * Add message
      *
-     * @param \App\Entity\Message $message
+     * @param Message $message
      *
      * @return Character
      */
-    public function addMessage(\App\Entity\Message $message)
+    public function addMessage(Message $message)
     {
         $this->messages[] = $message;
 
@@ -724,9 +723,9 @@ class Character
     /**
      * Remove message
      *
-     * @param \App\Entity\Message $message
+     * @param Message $message
      */
-    public function removeMessage(\App\Entity\Message $message)
+    public function removeMessage(Message $message)
     {
         $this->messages->removeElement($message);
     }
@@ -734,11 +733,11 @@ class Character
     /**
      * Add report
      *
-     * @param \App\Entity\Report $report
+     * @param Report $report
      *
      * @return Character
      */
-    public function addReport(\App\Entity\Report $report)
+    public function addReport(Report $report)
     {
         $this->reports[] = $report;
 
@@ -748,9 +747,9 @@ class Character
     /**
      * Remove report
      *
-     * @param \App\Entity\Report $report
+     * @param Report $report
      */
-    public function removeReport(\App\Entity\Report $report)
+    public function removeReport(Report $report)
     {
         $this->reports->removeElement($report);
     }
@@ -758,11 +757,11 @@ class Character
     /**
      * Add view
      *
-     * @param \App\Entity\View $view
+     * @param View $view
      *
      * @return Character
      */
-    public function addView(\App\Entity\View $view)
+    public function addView(View $view)
     {
         $this->views[] = $view;
 
@@ -772,9 +771,9 @@ class Character
     /**
      * Remove view
      *
-     * @param \App\Entity\View $view
+     * @param View $view
      */
-    public function removeView(\App\Entity\View $view)
+    public function removeView(View $view)
     {
         $this->views->removeElement($view);
     }
@@ -786,7 +785,7 @@ class Character
      *
      * @return Character
      */
-    public function addPlanet(Planet $planet)
+    public function addPlanet(Planet $planet): Character
     {
         $this->planets[] = $planet;
 

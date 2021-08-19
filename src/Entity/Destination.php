@@ -20,14 +20,13 @@ class Destination
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Fleet", inversedBy="destination", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="fleet_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Fleet", mappedBy="destination", fetch="EXTRA_LAZY")
      */
     protected $fleet;
 
     /**
      * @ORM\ManyToOne(targetEntity="Planet", inversedBy="destinations", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $planet;
 

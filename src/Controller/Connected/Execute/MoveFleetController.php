@@ -206,6 +206,7 @@ class MoveFleetController extends AbstractController
                             }
                             $fleet->setSignature($fleet->getNbrSignatures());
                         }
+                        $newPlaCharacter = $newPlanet->getCharacter();
                         if ($fleet->getFlightType() == '1' && $character->getZombie() == 0) {
                             $em->persist($report);
                         } elseif ($fleet->getFlightType() == '2') {
@@ -243,14 +244,14 @@ class MoveFleetController extends AbstractController
                                     $character->removeQuest($quest);
                                 }
                             } else {
-                                if ($newPlanet->getCharacter() && $character != $newPlanet->getCharacter()) {
+                                if ($newPlaCharacter && $character != $newPlaCharacter) {
                                     $reportSell = new Report();
                                     $reportSell->setType('move');
                                     $reportSell->setSendAt($nowReport);
-                                    $reportSell->setCharacter($newPlanet->getCharacter());
+                                    $reportSell->setCharacter($newPlaCharacter);
                                     $reportSell->setTitle("Dépôt de ressources");
                                     $reportSell->setImageName("depot_report.jpg");
-                                    $reportSell->setContent("Le joueur " . $newPlanet->getCharacter()->getUsername() . " vient de déposer des ressources sur votre planète " . $newPlanet->getSector()->getgalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . " " . number_format($fleet->getNiobium()) . " Niobium, " . number_format($fleet->getWater()) . " Eau, " . number_format($fleet->getWorker()) . " Travailleurs, " . number_format($fleet->getSoldier()) . " Soldats, " . number_format($fleet->getScientist()) . " Scientifiques.");
+                                    $reportSell->setContent("Le joueur " . $newPlaCharacter->getUsername() . " vient de déposer des ressources sur votre planète " . $newPlanet->getSector()->getgalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . " " . number_format($fleet->getNiobium()) . " Niobium, " . number_format($fleet->getWater()) . " Eau, " . number_format($fleet->getWorker()) . " Travailleurs, " . number_format($fleet->getSoldier()) . " Soldats, " . number_format($fleet->getScientist()) . " Scientifiques.");
                                     $em->persist($reportSell);
                                 }
                                 if ($newPlanet->getNiobium() + $fleet->getNiobium() <= $newPlanet->getNiobiumMax()) {
@@ -341,7 +342,7 @@ class MoveFleetController extends AbstractController
                                 $character->setBitcoin($character->getBitcoin() - $carburant);
                             }
                         } elseif ($fleet->getFlightType() == '3') {
-                            if ($fleet->getColonizer() && $newPlanet->getCharacter() == null &&
+                            if ($fleet->getColonizer() && $newPlaCharacter == null &&
                                 $newPlanet->getEmpty() == false && $newPlanet->getMerchant() == false &&
                                 $newPlanet->getCdr() == false && $character->getColPlanets() < 26 &&
                                 $character->getColPlanets() <= ($character->getTerraformation() + 1 + $character->getPoliticColonisation())) {
@@ -712,6 +713,7 @@ class MoveFleetController extends AbstractController
 
                                     if($character->getColPlanets() <= ($character->getTerraformation() + 1 + $character->getPoliticInvade()) && $characterDefender->getZombie() == 0) {
                                         $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $warPointAtt);
+                                        $characterDefender->removePlanet($defender);
                                         $defender->setCharacter($character);
                                         $em->flush();
                                         if ($character->getNbrInvade()) {
@@ -804,9 +806,11 @@ class MoveFleetController extends AbstractController
                                                     $fleet->setUranium($fleet->getUranium() + $place);
                                                 }
                                             }
+                                            $characterDefender->removePlanet($defender);
                                             $defender->setRestartAll();
                                             $defender->setImageName($image[rand(0, 32)]);
                                         } else {
+                                            $characterDefender->removePlanet($defender);
                                             $defender->setCharacter($hydra);
                                             $defender->setWorker(125000);
                                             if ($defender->getSoldierMax() >= 2500) {
@@ -1074,6 +1078,7 @@ class MoveFleetController extends AbstractController
                 }
                 if ($fleet->getFightAt() == null) {
                     $newPlanet = $fleet->getPlanet();
+                    $newPlaCharacter = $newPlanet->getCharacter();
 
                     if ($character->getZombie() == 1) {
                         $zbRegroups = $em->getRepository('App:Fleet')
@@ -1135,14 +1140,14 @@ class MoveFleetController extends AbstractController
                                 $character->removeQuest($quest);
                             }
                         } else {
-                            if ($newPlanet->getCharacter() && $character != $newPlanet->getCharacter()) {
+                            if ($newPlaCharacter && $character != $newPlaCharacter) {
                                 $reportSell = new Report();
                                 $reportSell->setType('move');
                                 $reportSell->setSendAt($nowReport);
-                                $reportSell->setCharacter($newPlanet->getCharacter());
+                                $reportSell->setCharacter($newPlaCharacter);
                                 $reportSell->setTitle("Dépôt de ressources");
                                 $reportSell->setImageName("depot_report.jpg");
-                                $reportSell->setContent("Le joueur " . $newPlanet->getCharacter()->getUsername() . " vient de déposer des ressources sur votre planète " . $newPlanet->getSector()->getgalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . " " . number_format($fleet->getNiobium()) . " Niobium, " . number_format($fleet->getWater()) . " Eau, " . number_format($fleet->getWorker()) . " Travailleurs, " . number_format($fleet->getSoldier()) . " Soldats, " . number_format($fleet->getScientist()) . " Scientifiques.");
+                                $reportSell->setContent("Le joueur " . $newPlaCharacter->getUsername() . " vient de déposer des ressources sur votre planète " . $newPlanet->getSector()->getgalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . " " . number_format($fleet->getNiobium()) . " Niobium, " . number_format($fleet->getWater()) . " Eau, " . number_format($fleet->getWorker()) . " Travailleurs, " . number_format($fleet->getSoldier()) . " Soldats, " . number_format($fleet->getScientist()) . " Scientifiques.");
                                 $em->persist($reportSell);
                             }
                             if ($newPlanet->getNiobium() + $fleet->getNiobium() <= $newPlanet->getNiobiumMax()) {
@@ -1233,7 +1238,7 @@ class MoveFleetController extends AbstractController
                             $character->setBitcoin($character->getBitcoin() - $carburant);
                         }
                     } elseif ($fleet->getFlightType() == '3') {
-                        if ($fleet->getColonizer() && $newPlanet->getCharacter() == null &&
+                        if ($fleet->getColonizer() && $newPlaCharacter == null &&
                             $newPlanet->getEmpty() == false && $newPlanet->getMerchant() == false &&
                             $newPlanet->getCdr() == false && $character->getColPlanets() < 26 &&
                             $character->getColPlanets() <= ($character->getTerraformation() + 1 + $character->getPoliticColonisation())) {
@@ -1604,6 +1609,7 @@ class MoveFleetController extends AbstractController
 
                                 if($character->getColPlanets() <= ($character->getTerraformation() + 1 + $character->getPoliticInvade()) && $characterDefender->getZombie() == 0) {
                                     $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $warPointAtt);
+                                    $characterDefender->removePlanet($defender);
                                     $defender->setCharacter($character);
                                     $em->flush();
                                     if ($character->getNbrInvade()) {
@@ -1696,9 +1702,11 @@ class MoveFleetController extends AbstractController
                                                 $fleet->setUranium($fleet->getUranium() + $place);
                                             }
                                         }
+                                        $characterDefender->removePlanet($defender);
                                         $defender->setRestartAll();
                                         $defender->setImageName($image[rand(0, 32)]);
                                     } else {
+                                        $characterDefender->removePlanet($defender);
                                         $defender->setCharacter($hydra);
                                         $defender->setWorker(125000);
                                         if ($defender->getSoldierMax() >= 2500) {

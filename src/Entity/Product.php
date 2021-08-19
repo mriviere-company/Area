@@ -20,7 +20,7 @@ class Product
 
     /**
      * @ORM\OneToOne(targetEntity="Planet", inversedBy="product")
-     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="planet_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $planet;
 

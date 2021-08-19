@@ -14,57 +14,57 @@
     {%- block footer -%}
     {%- endblock -%}
     <div class="front-block allyPage text-center text-middle pt-3">
-        <div class="my-4 text-more">[{{ ally.getSigle() }}] - {{ ally.getName() }} <span class="ml-4"><a
-                        href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'sigle': ally.getSigle()}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span>
+        <div class="my-4 text-more">[{{ allyPage.getSigle() }}] - {{ allyPage.getName() }} <span class="ml-4"><a
+                        href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'sigle': allyPage.getSigle()}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span>
         </div>
-        <h3 class="text-center text-or mb-4">{{ 'ally.level'|trans }}{{ ally.getLevel() }}</h3>
+        <h3 class="text-center text-or mb-4">{{ 'ally.level'|trans }}{{ allyPage.getLevel() }}</h3>
         <div class="my-3"><span
-                    class="glyphicon glyphicon-bullhorn text-jaune mr-3"></span> {{ ally.getPolitic()|trans }} :
-            '{{ ally.getSlogan() }}'
+                    class="glyphicon glyphicon-bullhorn text-jaune mr-3"></span> {{ allyPage.getPolitic()|trans }} :
+            '{{ allyPage.getSlogan() }}'
         </div>
-        {% if ally.imageName %}
+        {% if allyPage.imageName %}
             <div class="text-center"><img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450"
-                                          src="{{ vich_uploader_asset(ally, 'imageFile') }}"></div>
+                                          src="{{ vich_uploader_asset(allyPage, 'imageFile') }}"></div>
         {% else %}
             <div class="text-center"><img alt="{{ 'image'|trans({},'front_global') }}" height="300" width="450"
                                           src="{{ asset('img/ally.jpg') }}"></div>
         {% endif %}
-        <div class="ml-5 my-4 text-left">« {{ ally.getDescription() }} »</div>
+        <div class="ml-5 my-4 text-left">« {{ allyPage.getDescription() }} »</div>
         <div class="my-3">
             <span class="glyphicon glyphicon-king text-or mx-3" data-toggle="tooltip" data-placement="bottom"
-                  title="{{ 'ally.leader'|trans }}"></span> {% set x = 1 %}{% for user in ally.getCharacters() %}{% if user.getGrade() and user.getGrade().getPlacement() == 1 %}
+                  title="{{ 'ally.leader'|trans }}"></span> {% set x = 1 %}{% for user in allyPage.getCharacters() %}{% if user.getGrade() and user.getGrade().getPlacement() == 1 %}
                 <span class="text-or text-more">{% if x > 1 %} - </span>{% else %}{{ user.getGrade().getName() }}</span> :{% endif %}
                 <span class="text-more"><a
                         href="{{ path('user_profil', {'characterProfil': user.getId(), 'usePlanet': usePlanet.getId()}) }}"> {{ user.getUsername() }} </a>
                 </span>{% endif %}{% set x = x + 1 %}{% endfor %}
             <br>
-            {% if ally.getPolitic() != 'fascism' %}<span class="glyphicon glyphicon-briefcase text-argent mx-3"
+            {% if allyPage.getPolitic() != 'fascism' %}<span class="glyphicon glyphicon-briefcase text-argent mx-3"
                                                          data-toggle="tooltip" data-placement="bottom"
-                                                         title="{{ 'ally.diplomate'|trans }}"></span> {% set x = 1 %}{% for user in ally.getCharacters() %}{% if user.getGrade() and user.getGrade().getPlacement() == 2 %}
+                                                         title="{{ 'ally.diplomate'|trans }}"></span> {% set x = 1 %}{% for user in allyPage.getCharacters() %}{% if user.getGrade() and user.getGrade().getPlacement() == 2 %}
                 <span class="text-argent text-more">{% if x > 1 %} - </span>{% else %}{{ user.getGrade().getName() }}</span> :{% endif %}
                 <span class="text-more"><a
                         href="{{ path('user_profil', {'characterProfil': user.getId(), 'usePlanet': usePlanet.getId()}) }}"> {{ user.getUsername() }} </a>
                 </span>{% endif %}{% set x = x + 1 %}{% endfor %}
                 <br>
                 <span class="glyphicon glyphicon-inbox text-bronze mx-3" data-toggle="tooltip" data-placement="bottom"
-                      title="{{ 'ally.recruiter'|trans }}"></span> {% set x = 1 %}{% for user in ally.getCharacters() %}{% if user.getGrade() and user.getGrade().getPlacement() == 3 %}
+                      title="{{ 'ally.recruiter'|trans }}"></span> {% set x = 1 %}{% for user in allyPage.getCharacters() %}{% if user.getGrade() and user.getGrade().getPlacement() == 3 %}
                 <span class="text-bronze text-more">{% if x > 1 %} - </span>{% else %}{{ user.getGrade().getName() }}</span> :{% endif %}
                 <span class="text-more"><a
                         href="{{ path('user_profil', {'characterProfil': user.getId(), 'usePlanet': usePlanet.getId()}) }}"> {{ user.getUsername() }} </a>
                 </span>{% endif %}{% set x = x + 1 %}{% endfor %}{% endif %}
-            {% if ally.getPolitic() == 'democrat' %}<br><span class="glyphicon glyphicon-user text-vert mx-3"
+            {% if allyPage.getPolitic() == 'democrat' %}<br><span class="glyphicon glyphicon-user text-vert mx-3"
                                                               data-toggle="tooltip" data-placement="bottom"
-                                                              title="{{ 'ally.members'|trans }}"></span> {% set x = 1 %}{% for user in ally.getCharacters() %}{% if user.getGrade() and user.getGrade().getPlacement() != 1 and user.getGrade().getPlacement() != 2 and user.getGrade().getPlacement() != 3 %}
+                                                              title="{{ 'ally.members'|trans }}"></span> {% set x = 1 %}{% for user in allyPage.getCharacters() %}{% if user.getGrade() and user.getGrade().getPlacement() != 1 and user.getGrade().getPlacement() != 2 and user.getGrade().getPlacement() != 3 %}
                 <span class="text-bronze text-more">{% if x > 1 %} - </span>{% else %}{{ user.getGrade().getName() }}</span> :{% endif %}
                 <span class="text-more"><a
                         href="{{ path('user_profil', {'characterProfil': user.getId(), 'usePlanet': usePlanet.getId()}) }}"> {{ user.getUsername() }} </a>
                 </span>{% endif %}{% set x = x + 1 %}{% endfor %}{% endif %}
         </div>
         <div class="row">
-            {% if ally.getPolitic() == 'democrat' %}
+            {% if allyPage.getPolitic() == 'democrat' %}
                 <div class="col-6">
                     <div class="my-4 ml-5"><span
-                                class="glyphicon glyphicon-link text-orange"></span> {{ 'ally.nbr'|trans }} {{ ally.getCharacters()|length }}
+                                class="glyphicon glyphicon-link text-orange"></span> {{ 'ally.nbr'|trans }} {{ allyPage.getCharacters()|length }}
                     </div>
                     <div class="my-4 ml-5">
                         <span class="glyphicon glyphicon-link text-orange"></span> {{ 'ally.galaxy'|trans }}
@@ -75,18 +75,18 @@
                         {% endfor %}
                     </div>
                     <div class="my-4 ml-5"><span
-                                class="glyphicon glyphicon-link text-orange"></span> {{ 'ally.planet'|trans }} {{ ally.getPlanets() }}
+                                class="glyphicon glyphicon-link text-orange"></span> {{ 'ally.planet'|trans }} {{ allyPage.getPlanets() }}
                     </div>
                 </div>
             {% endif %}
-            <div class="{% if ally.getPolitic() == 'democrat' %}col-6{% else %}col-12{% endif %}">
+            <div class="{% if allyPage.getPolitic() == 'democrat' %}col-6{% else %}col-12{% endif %}">
                 <div class="my-4">
                     <span class="glyphicon glyphicon-ok-circle text-vert"></span> {{ 'ally.allied'|trans }}
                     <br>
                     {% set x = 1 %}
-                    {% for allied in ally.getAllieds()|filter(allied => allied.getAccepted() == 1) %}
+                    {% for allied in allyPage.getAllieds()|filter(allied => allied.getAccepted() == 1) %}
                         {% if x > 1 %} - {% endif %}<span class="text-vert"><a
-                                href="{{ path('ally_profil', {'allyCharacter': ally.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ allied.getAllytag() }}</a>
+                                href="{{ path('ally_profil', {'allyCharacter': allyPage.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ allied.getAllytag() }}</a>
                         </span>
                         {% set x = x + 1 %}
                     {% endfor %}
@@ -95,9 +95,9 @@
                     <span class="glyphicon glyphicon-comment text-bleu"></span> {{ 'ally.pna'|trans }}
                     <br>
                     {% set x = 1 %}
-                    {% for pna in ally.getPnas()|filter(pna => pna.getAccepted() == 1) %}
+                    {% for pna in allyPage.getPnas()|filter(pna => pna.getAccepted() == 1) %}
                         {% if x > 1 %} - {% endif %}<span class="text-bleu"><a
-                                href="{{ path('ally_profil', {'allyCharacter': ally.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ pna.getAllytag() }}</a>
+                                href="{{ path('ally_profil', {'allyCharacter': allyPage.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ pna.getAllytag() }}</a>
                         </span>
                         {% set x = x + 1 %}
                     {% endfor %}
@@ -106,9 +106,9 @@
                     <span class="glyphicon glyphicon-fire text-rouge"></span> {{ 'ally.war'|trans }}
                     <br>
                     {% set x = 1 %}
-                    {% for war in ally.getWars() %}
+                    {% for war in allyPage.getWars() %}
                         {% if x > 1 %} - {% endif %}<span class="text-rouge"><a
-                                href="{{ path('ally_profil', {'allyCharacter': ally.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ war.getAllytag() }}</a>
+                                href="{{ path('ally_profil', {'allyCharacter': allyPage.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ war.getAllytag() }}</a>
                         </span>
                         {% set x = x + 1 %}
                     {% endfor %}

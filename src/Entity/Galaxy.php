@@ -33,7 +33,7 @@ class Galaxy
 
     /**
      * @ORM\ManyToOne(targetEntity="Server", inversedBy="galaxys", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="server_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="server_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $server;
 

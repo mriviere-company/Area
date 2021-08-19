@@ -21,13 +21,13 @@ class View
 
     /**
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="views", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $character;
 
     /**
      * @ORM\ManyToOne(targetEntity="Salon", inversedBy="views", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="salon_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="salon_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $salon;
 

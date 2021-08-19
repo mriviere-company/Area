@@ -22,7 +22,7 @@ class Exchange
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="exchanges", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
 

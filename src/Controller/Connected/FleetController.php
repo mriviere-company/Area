@@ -359,14 +359,14 @@ class FleetController  extends AbstractController
     }
 
     /**
-     * @Route("/gerer-flotte/{fleetGive}/{usePlanet}", name="manage_fleet", requirements={"usePlanet"="\d+", "fleetGive"="\d+"})
+     * @Route("/gerer-flotte/{fleetGive}/{usePlanet}", name="manage_fleet", requirements={"fleetGive"="\d+", "usePlanet"="\d+"})
      * @param Request $request
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @return JsonResponse|RedirectResponse|Response
      * @throws Exception
      */
-    public function manageFleetAction(Request $request, Planet $usePlanet, Fleet $fleetGive)
+    public function manageFleetAction(Fleet $fleetGive, Planet $usePlanet, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();

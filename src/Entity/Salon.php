@@ -37,7 +37,7 @@ class Salon
 
     /**
      * @ORM\ManyToOne(targetEntity="Server", inversedBy="salons", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="server_id", referencedColumnName="id", nullable=true)
+     * @ORM\JoinColumn(name="server_id", referencedColumnName="id", nullable=true, onDelete="SET NULL")
      */
     protected $server;
 

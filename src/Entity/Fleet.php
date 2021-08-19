@@ -62,7 +62,7 @@ class Fleet
     protected $planet;
 
     /**
-     * @ORM\OneToOne(targetEntity="Destination", mappedBy="fleet", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Destination", inversedBy="fleet", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="destination_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $destination;
@@ -634,7 +634,8 @@ class Fleet
                     return null;
                 }
             }*/
-        } elseif ($this->getCharacter() == $this->getPlanet()->getCharacter()) {
+        }
+        if ($this->getCharacter()->getId() === $this->getPlanet()->getCharacter()->getId()) {
             return null;
         }
         return 'ok';

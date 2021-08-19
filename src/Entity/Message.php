@@ -22,7 +22,7 @@ class Message
 
     /**
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="messages", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $character;
 

@@ -22,7 +22,7 @@ class Mission
 
     /**
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="missions", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $character;
 

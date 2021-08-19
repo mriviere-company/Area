@@ -96,7 +96,6 @@ class Planet
 
     /**
      * @ORM\OneToOne(targetEntity="Product", mappedBy="planet", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $product;
 

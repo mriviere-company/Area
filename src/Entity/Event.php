@@ -32,7 +32,7 @@ class Event
 
     /**
      * @ORM\ManyToOne(targetEntity="Server", inversedBy="events", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="server_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="server_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $server;
 

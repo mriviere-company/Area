@@ -80,7 +80,7 @@ class ProfilController extends AbstractController
 
         return $this->render('connected/profil/ally.html.twig', [
             'usePlanet' => $usePlanet,
-            'ally' => $allyCharacter,
+            'allyPage' => $allyCharacter,
             'galaxys' => $galaxys
         ]);
     }
@@ -148,7 +148,7 @@ class ProfilController extends AbstractController
 
         return $this->render('connected/profil/modal_ally.html.twig', [
             'usePlanet' => $usePlanet,
-            'ally' => $allyCharacter,
+            'allyPage' => $allyCharacter,
             'galaxys' => $galaxys
         ]);
     }

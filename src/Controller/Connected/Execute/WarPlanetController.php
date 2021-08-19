@@ -201,8 +201,8 @@ class WarPlanetController extends AbstractController
 
                 if($fleet->getCharacter()->getColPlanets() <= ($fleet->getCharacter()->getTerraformation() + 1 + $character->getPoliticInvade()) && $characterDefender->getZombie() == 0) {
                     $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $warPointAtt);
+                    $characterDefender->removePlanet($planetDefender);
                     $planetDefender->setCharacter($character);
-                    $em->flush();
                     if ($character->getNbrInvade()) {
                         $character->setNbrInvade($character->getNbrInvade() + 1);
                     } else {
@@ -289,11 +289,11 @@ class WarPlanetController extends AbstractController
                                 $fleet->setUranium($fleet->getUranium() + $place);
                             }
                         }
+                        $characterDefender->removePlanet($planetDefender);
                         $planetDefender->setRestartAll();
                         $planetDefender->setImageName($image[rand(0, 32)]);
-
-                        $em->flush();
                     } else {
+                        $characterDefender->removePlanet($planetDefender);
                         $planetDefender->setCharacter($hydra);
                         $planetDefender->setWorker(125000);
                         if ($planetDefender->getSoldierMax() >= 2500) {
@@ -305,10 +305,9 @@ class WarPlanetController extends AbstractController
                         }
                         $planetDefender->setName('Base Zombie');
                         $planetDefender->setImageName('hydra_planet.png');
-                        $em->flush();
                     }
                 }
-                if($characterDefender->getAllPlanets() == 0) {
+                if($characterDefender->getAllPlanets() == 0 && $characterDefender->getZombie() == 0) {
                     $characterDefender->setGameOver($character->getUsername());
                     $characterDefender->setGrade(null);
                     if ($character->getExecution()) {
@@ -350,6 +349,7 @@ class WarPlanetController extends AbstractController
                 return new Response ("noplayer");
             }
         }
+
         $em->flush();
 
         return new Response (null);
@@ -363,7 +363,7 @@ class WarPlanetController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function raidAction($usePlanet, $fleet, $character, $now, $em)
+    public function raidAction($usePlanet, $fleet, $character, $now, $em): Response
     {
         if ($fleet->getCharacter()->getPoliticBarge() > 0) {
             $barge = $fleet->getBarge() * 2500 * (1 + ($fleet->getCharacter()->getPoliticBarge() / 4));

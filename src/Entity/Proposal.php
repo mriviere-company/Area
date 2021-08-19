@@ -21,13 +21,13 @@ class Proposal
 
     /**
      * @ORM\ManyToOne(targetEntity="Ally", inversedBy="proposals", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
 
     /**
      * @ORM\ManyToOne(targetEntity="Character", inversedBy="proposals", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $character;
 
