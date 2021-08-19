@@ -1,0 +1,19 @@
+{% extends 'anonymous/base.html.twig' %}
+
+{% trans_default_domain 'front_error' %}
+
+{% block title %}{{ 'title.404'|trans }}{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="offset-1 col-10">
+            <div class="unlogin-block text-more">
+                <div class="m-5 text-much-more">
+                    {{ 'error.desc'|trans }} <a href="{{ path('home') }}">{{ 'error.link'|trans }}</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

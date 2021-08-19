@@ -1,0 +1,7 @@
+title:
+  404: 'Error 404'
+  403: 'Error 403'
+  other: Error
+error:
+  desc: 'An error has occurred, it has been reported to the developer team, you can return to the game '
+  link: here

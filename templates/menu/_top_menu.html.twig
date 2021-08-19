@@ -16,15 +16,17 @@
     <a href="{{ path('home') }}">
         <img alt="{{ 'image'|trans({},'front_global') }}" width="80" src="{{ asset('img/logo.png') }}">
     </a>
-        <a class="pl-1"
-           href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}"><img
-                    alt="{{ 'image'|trans({},'front_global') }}" width="20" src="{{ asset('img/french.png') }}"></a>
-        <a class="pl-1"
-           href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}"><img
-                    alt="{{ 'image'|trans({},'front_global') }}" width="20" src="{{ asset('img/english.png') }}"></a>
-        <a class="pl-1"
-           href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'de'})) }}"><img
-                    alt="{{ 'image'|trans({},'front_global') }}" width="20" src="{{ asset('img/deutsch.png') }}"></a>
+        {% if app.request.get('_route') %}
+            <a class="pl-1"
+               href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'fr'})) }}"><img
+                        alt="{{ 'image'|trans({},'front_global') }}" width="20" src="{{ asset('img/french.png') }}"></a>
+            <a class="pl-1"
+               href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'en'})) }}"><img
+                        alt="{{ 'image'|trans({},'front_global') }}" width="20" src="{{ asset('img/english.png') }}"></a>
+            <a class="pl-1"
+               href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'de'})) }}"><img
+                        alt="{{ 'image'|trans({},'front_global') }}" width="20" src="{{ asset('img/deutsch.png') }}"></a>
+        {% endif %}
     </span>
     {% if app.user %}
         <a class="btn-top" href="{{ path('erase_cookie') }}">{{ 'logout'|trans }}</a>
