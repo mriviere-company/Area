@@ -177,7 +177,9 @@
             <span>{{ 'modifyOptions'|trans }}</span>
         </div>
     </a>
-    <div>
-        <a href="{{ path('server_select') }}" class="badge badge-warning my-4"><span>{{ 'server.change'|trans }}</span></a>
-    </div>
+    {% if app.user.confirmed == true %}
+        <div>
+            <a href="{{ path('server_select') }}" class="badge badge-warning my-4"><span>{{ 'server.change'|trans }}</span></a>
+        </div>
+    {% endif %}
 </nav>

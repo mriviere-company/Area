@@ -6,11 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/services.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/services.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/AdminController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/admin/dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/admin/dashboard.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/CharacterOptionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/CharacterOptionType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_admin.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_admin.fr.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,7 +162,7 @@
       <workItem from="1629372596967" duration="138000" />
       <workItem from="1629373441467" duration="4601000" />
       <workItem from="1629384159458" duration="738000" />
-      <workItem from="1629396144814" duration="18525000" />
+      <workItem from="1629396144814" duration="18974000" />
     </task>
     <servers />
   </component>
