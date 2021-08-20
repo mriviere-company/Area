@@ -58,11 +58,16 @@
             <div id="pagesNbrChart" data-pages-nbr-chart="{{ pagesNbrTab|json_encode }}"></div>
             <div id="computersChart" data-computers-chart="{{ computersTab|json_encode }}"></div>
             <div id="computersNbrChart" data-computers-nbr-chart="{{ computersNbrTab|json_encode }}"></div>
-            <canvas class="mb-5" id="usernameChart" height="250"></canvas>
-            <canvas class="mb-5" id="pageChart" height="250"></canvas>
-            <canvas class="mb-5" id="uniquePageChart" height="250"></canvas>
-            <canvas class="mb-5" id="computerChart" height="250"></canvas>
-            <canvas class="mb-5" id="refererChart" height="250"></canvas>
+            <h1 class="text-center text-bleu text-much-more">{{ 'subtitle.username'|trans }}</h1>
+            <canvas class="mb-5" id="usernameChart" height="200"></canvas>
+            <h1 class="text-center text-bleu text-much-more">{{ 'subtitle.pages'|trans }}</h1>
+            <canvas class="mb-5" id="pageChart" height="200"></canvas>
+            <h1 class="text-center text-bleu text-much-more">{{ 'subtitle.uniquepages'|trans }}</h1>
+            <canvas class="mb-5" id="uniquePageChart" height="200"></canvas>
+            <h1 class="text-center text-bleu text-much-more">{{ 'subtitle.computer'|trans }}</h1>
+            <canvas class="mb-5" id="computerChart" height="200"></canvas>
+            <h1 class="text-center text-bleu text-much-more">{{ 'subtitle.referer'|trans }}</h1>
+            <canvas class="mb-5" id="refererChart" height="200"></canvas>
             {{ encore_entry_script_tags('admin') }}
         </div>
     </div>

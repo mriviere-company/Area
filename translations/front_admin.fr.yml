@@ -1,3 +1,9 @@
 title: Administration
+subtitle:
+  username: 'Utilisateurs les plus actifs (clics)'
+  pages: 'Pages les plus consultées'
+  uniquepages: 'Pages les plus consultées par utilisateurs différents'
+  computer: 'OS les plus utilisés'
+  referer: 'Sites dont viennent les utilisateurs'
 nbr:
   connect: 'utilisateurs'

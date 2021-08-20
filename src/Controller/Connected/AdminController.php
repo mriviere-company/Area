@@ -3,6 +3,7 @@
 namespace App\Controller\Connected;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,6 +17,13 @@ use DateTime;
  */
 class AdminController extends AbstractController
 {
+    private $isDev;
+
+    public function __construct(ParameterBagInterface $appParams)
+    {
+        $this->isDev = $appParams->get('app.environment') === 'dev';
+    }
+
     /**
      * @Route("/administration-dashboard/{usePlanet}", name="admin_dashboard", requirements={"usePlanet"="\d+"})
      * @param Planet $usePlanet
@@ -30,7 +38,7 @@ class AdminController extends AbstractController
             $date = new DateTime();
         }
 
-        if ($user->getUsername() != 'Dev') {
+        if ($user->getUsername() != 'Dev' && !$this->isDev) {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
         }
 

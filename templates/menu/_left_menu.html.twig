@@ -20,7 +20,7 @@
             <span>{{ 'globalView'|trans }}</span>
         </div>
     </a>
-    {% if character.getUsername() == 'Dev' %}
+    {% if character.getUsername() == 'Dev' or app.environment == 'dev' %}
         <a href="{{ path('admin_dashboard', {'usePlanet': usePlanet.getId(), 'date': "now"|date('Y/m/d')}) }}">
             <div class="btn-left{% if app.request.attributes.get('_route') == 'admin_dashboard' %} currentBack{% endif %}">
                 <span class="text-orange">{{ 'admin'|trans }}</span>
