@@ -219,11 +219,11 @@ class Grade
     /**
      * Add character
      *
-     * @param \App\Entity\Character $character
+     * @param Character $character
      *
      * @return Grade
      */
-    public function addCharacter(\App\Entity\Character $character)
+    public function addCharacter(Character $character)
     {
         $this->characters[] = $character;
 
@@ -233,9 +233,9 @@ class Grade
     /**
      * Remove character
      *
-     * @param \App\Entity\Character $character
+     * @param Character $character
      */
-    public function removeCharacter(\App\Entity\Character $character)
+    public function removeCharacter(Character $character)
     {
         $this->characters->removeElement($character);
     }

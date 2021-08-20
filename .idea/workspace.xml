@@ -6,8 +6,30 @@
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Front/CharacterOptionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/CharacterOptionType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Allied.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Allied.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Ally.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Ally.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Character.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Character.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Destination.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Destination.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Event.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Event.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Exchange.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Exchange.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Fleet_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Fleet_List.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Galaxy.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Galaxy.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Grade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Grade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Heroe.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Heroe.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Message.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Message.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Mission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Mission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Peace.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Peace.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Pna.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Pna.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Quest.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Quest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Report.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Report.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/S_Content.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/S_Content.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Salon.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Salon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Sector.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Sector.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Server.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Server.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Ships.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Ships.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Stats.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Stats.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/View.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/War.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/War.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,7 +184,7 @@
       <workItem from="1629372596967" duration="138000" />
       <workItem from="1629373441467" duration="4601000" />
       <workItem from="1629384159458" duration="738000" />
-      <workItem from="1629396144814" duration="18974000" />
+      <workItem from="1629396144814" duration="19783000" />
     </task>
     <servers />
   </component>

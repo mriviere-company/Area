@@ -7,7 +7,6 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ORM\Table(name="event")

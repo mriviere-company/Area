@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Criteria;
@@ -54,11 +55,11 @@ class Sector
     /**
      * Add planet
      *
-     * @param \App\Entity\Planet $planet
+     * @param Planet $planet
      *
      * @return Sector
      */
-    public function addPlanet(\App\Entity\Planet $planet)
+    public function addPlanet(Planet $planet)
     {
         $this->planets[] = $planet;
 
@@ -66,7 +67,7 @@ class Sector
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getPlanets()
     {
@@ -79,9 +80,9 @@ class Sector
     /**
      * Remove planet
      *
-     * @param \App\Entity\Planet $planet
+     * @param Planet $planet
      */
-    public function removePlanet(\App\Entity\Planet $planet)
+    public function removePlanet(Planet $planet)
     {
         $this->planets->removeElement($planet);
     }

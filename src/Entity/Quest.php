@@ -76,11 +76,11 @@ class Quest
     /**
      * Add character
      *
-     * @param \App\Entity\Character $character
+     * @param Character $character
      *
      * @return Quest
      */
-    public function addCharacter(\App\Entity\Character $character)
+    public function addCharacter(Character $character)
     {
         $this->characters[] = $character;
 
@@ -90,9 +90,9 @@ class Quest
     /**
      * Remove character
      *
-     * @param \App\Entity\Character $character
+     * @param Character $character
      */
-    public function removeCharacter(\App\Entity\Character $character)
+    public function removeCharacter(Character $character)
     {
         $this->characters->removeElement($character);
     }

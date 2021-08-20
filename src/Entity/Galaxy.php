@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\Criteria;
 
 /**
  * @ORM\Table(name="galaxy")
@@ -84,11 +83,11 @@ class Galaxy
     /**
      * Add sector
      *
-     * @param \App\Entity\Sector $sector
+     * @param Sector $sector
      *
      * @return Galaxy
      */
-    public function addSector(\App\Entity\Sector $sector)
+    public function addSector(Sector $sector)
     {
         $this->sectors[] = $sector;
 
@@ -98,9 +97,9 @@ class Galaxy
     /**
      * Remove sector
      *
-     * @param \App\Entity\Sector $sector
+     * @param Sector $sector
      */
-    public function removeSector(\App\Entity\Sector $sector)
+    public function removeSector(Sector $sector)
     {
         $this->sectors->removeElement($sector);
     }

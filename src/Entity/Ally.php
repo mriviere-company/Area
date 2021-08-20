@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
@@ -206,11 +207,11 @@ class Ally
     /**
      * Add proposal
      *
-     * @param \App\Entity\Proposal $proposal
+     * @param Proposal $proposal
      *
      * @return Ally
      */
-    public function addProposal(\App\Entity\Proposal $proposal)
+    public function addProposal(Proposal $proposal)
     {
         $this->proposals[] = $proposal;
 
@@ -220,9 +221,9 @@ class Ally
     /**
      * Remove proposal
      *
-     * @param \App\Entity\Proposal $proposal
+     * @param Proposal $proposal
      */
-    public function removeProposal(\App\Entity\Proposal $proposal)
+    public function removeProposal(Proposal $proposal)
     {
         $this->proposals->removeElement($proposal);
     }
@@ -294,7 +295,7 @@ class Ally
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getCharacters()
     {
@@ -305,7 +306,7 @@ class Ally
     }
 
     /**
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getFleets()
     {
@@ -315,11 +316,11 @@ class Ally
     /**
      * Add fleet
      *
-     * @param \App\Entity\Fleet $fleet
+     * @param Fleet $fleet
      *
      * @return Ally
      */
-    public function addFleet(\App\Entity\Fleet $fleet)
+    public function addFleet(Fleet $fleet)
     {
         $this->fleets[] = $fleet;
 
@@ -329,9 +330,9 @@ class Ally
     /**
      * Remove fleet
      *
-     * @param \App\Entity\Fleet $fleet
+     * @param Fleet $fleet
      */
-    public function removeFleet(\App\Entity\Fleet $fleet)
+    public function removeFleet(Fleet $fleet)
     {
         $this->fleet->removeElement($fleet);
     }
@@ -339,11 +340,11 @@ class Ally
     /**
      * Add character
      *
-     * @param \App\Entity\Character $character
+     * @param Character $character
      *
      * @return Ally
      */
-    public function addCharacter(\App\Entity\Character $character)
+    public function addCharacter(Character $character)
     {
         $this->characters[] = $character;
 
@@ -353,9 +354,9 @@ class Ally
     /**
      * Remove character
      *
-     * @param \App\Entity\Character $character
+     * @param Character $character
      */
-    public function removeCharacter(\App\Entity\Character $character)
+    public function removeCharacter(Character $character)
     {
         $this->characters->removeElement($character);
     }
@@ -363,11 +364,11 @@ class Ally
     /**
      * Add ally pna
      *
-     * @param \App\Entity\Pna $pna
+     * @param Pna $pna
      *
      * @return Ally
      */
-    public function addAllyPna(\App\Entity\Pna $pna)
+    public function addAllyPna(Pna $pna)
     {
         $this->pnas[] = $pna;
 
@@ -377,9 +378,9 @@ class Ally
     /**
      * Remove ally pna
      *
-     * @param \App\Entity\Pna $pna
+     * @param Pna $pna
      */
-    public function removeAllyPna(\App\Entity\Pna $pna)
+    public function removeAllyPna(Pna $pna)
     {
         $this->pnas->removeElement($pna);
     }
@@ -387,11 +388,11 @@ class Ally
     /**
      * Add ally allied
      *
-     * @param \App\Entity\Allied $allied
+     * @param Allied $allied
      *
      * @return Ally
      */
-    public function addAllyAllied(\App\Entity\Allied $allied)
+    public function addAllyAllied(Allied $allied)
     {
         $this->allieds[] = $allied;
 
@@ -401,9 +402,9 @@ class Ally
     /**
      * Remove ally allied
      *
-     * @param \App\Entity\Allied $allied
+     * @param Allied $allied
      */
-    public function removeAllyAllied(\App\Entity\Allied $allied)
+    public function removeAllyAllied(Allied $allied)
     {
         $this->allieds->removeElement($allied);
     }
@@ -411,11 +412,11 @@ class Ally
     /**
      * Add ally war
      *
-     * @param \App\Entity\War $war
+     * @param War $war
      *
      * @return Ally
      */
-    public function addAllyWar(\App\Entity\War $war)
+    public function addAllyWar(War $war)
     {
         $this->wars[] = $war;
 
@@ -441,9 +442,9 @@ class Ally
     /**
      * Remove ally war
      *
-     * @param \App\Entity\War $war
+     * @param War $war
      */
-    public function removeAllyWar(\App\Entity\War $war)
+    public function removeAllyWar(War $war)
     {
         $this->wars->removeElement($war);
     }
@@ -451,11 +452,11 @@ class Ally
     /**
      * Add grade
      *
-     * @param \App\Entity\Grade $grade
+     * @param Grade $grade
      *
      * @return Ally
      */
-    public function addGrade(\App\Entity\Grade $grade)
+    public function addGrade(Grade $grade)
     {
         $this->grades[] = $grade;
 
@@ -465,9 +466,9 @@ class Ally
     /**
      * Remove grade
      *
-     * @param \App\Entity\Grade $grade
+     * @param Grade $grade
      */
-    public function removeGrade(\App\Entity\Grade $grade)
+    public function removeGrade(Grade $grade)
     {
         $this->grades->removeElement($grade);
     }
@@ -475,11 +476,11 @@ class Ally
     /**
      * Add salon
      *
-     * @param \App\Entity\Salon $salon
+     * @param Salon $salon
      *
      * @return Ally
      */
-    public function addSalon(\App\Entity\Salon $salon)
+    public function addSalon(Salon $salon)
     {
         $this->salons[] = $salon;
 
@@ -489,9 +490,9 @@ class Ally
     /**
      * Remove salon
      *
-     * @param \App\Entity\Salon $salon
+     * @param Salon $salon
      */
-    public function removeSalon(\App\Entity\Salon $salon)
+    public function removeSalon(Salon $salon)
     {
         $this->salons->removeElement($salon);
     }

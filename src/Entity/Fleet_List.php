@@ -121,11 +121,11 @@ class Fleet_List
     /**
      * Add fleet
      *
-     * @param \App\Entity\Fleet $fleet
+     * @param Fleet $fleet
      *
      * @return Fleet_list
      */
-    public function addFleet(\App\Entity\Fleet $fleet)
+    public function addFleet(Fleet $fleet)
     {
         $this->fleets[] = $fleet;
 
@@ -135,9 +135,9 @@ class Fleet_List
     /**
      * Remove fleet
      *
-     * @param \App\Entity\Fleet $fleet
+     * @param Fleet $fleet
      */
-    public function removeFleet(\App\Entity\Fleet $fleet)
+    public function removeFleet(Fleet $fleet)
     {
         $this->fleets->removeElement($fleet);
     }

@@ -1071,7 +1071,7 @@ class Character
     }
 
     /**
-     * @return null|\App\Entity\Peace
+     * @return null|Peace
      */
     public function getPeaces()
     {
@@ -2889,11 +2889,11 @@ class Character
     /**
      * Add quest
      *
-     * @param \App\Entity\Quest $quest
+     * @param Quest $quest
      *
      * @return Character
      */
-    public function addQuest(\App\Entity\Quest $quest)
+    public function addQuest(Quest $quest)
     {
         $this->quests[] = $quest;
 
@@ -2903,9 +2903,9 @@ class Character
     /**
      * Remove quest
      *
-     * @param \App\Entity\Quest $quest
+     * @param Quest $quest
      */
-    public function removeQuest(\App\Entity\Quest $quest)
+    public function removeQuest(Quest $quest)
     {
         $this->quests->removeElement($quest);
     }
@@ -2945,11 +2945,11 @@ class Character
     /**
      * Add fleet
      *
-     * @param \App\Entity\Fleet $fleet
+     * @param Fleet $fleet
      *
      * @return Character
      */
-    public function addFleet(\App\Entity\Fleet $fleet)
+    public function addFleet(Fleet $fleet)
     {
         $this->fleets[] = $fleet;
 
@@ -2959,9 +2959,9 @@ class Character
     /**
      * Remove fleet
      *
-     * @param \App\Entity\Fleet $fleet
+     * @param Fleet $fleet
      */
-    public function removeFleet(\App\Entity\Fleet $fleet)
+    public function removeFleet(Fleet $fleet)
     {
         $this->fleets->removeElement($fleet);
     }
