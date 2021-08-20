@@ -6,13 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/global.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/scss/front/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/front/_variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/scss/front/building.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/front/building.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/scss/front/research.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/front/research.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_building.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_building.fr.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_overview.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_overview.fr.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_search.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_search.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,6 +29,10 @@
       <filtered-out-file-type name="TAG" />
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/package.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/.gitignore" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
@@ -167,7 +167,7 @@
       <workItem from="1629372596967" duration="138000" />
       <workItem from="1629373441467" duration="4601000" />
       <workItem from="1629384159458" duration="738000" />
-      <workItem from="1629396144814" duration="21458000" />
+      <workItem from="1629396144814" duration="22428000" />
     </task>
     <servers />
   </component>
