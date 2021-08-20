@@ -530,7 +530,8 @@ input {
 }
 
 .blockedBack {
-  background-image: $back-blocked;
+  background-image: $back-blocked, $back-blocked-double;
+  background-repeat: no-repeat, repeat;
   background-color: $color-black;
 }
 
