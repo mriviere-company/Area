@@ -84,7 +84,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('home');
             }
 
-            $user = new User($_POST['_username'], $_POST['_email'], password_hash($_POST['_password'], PASSWORD_BCRYPT), $userIp, false);
+            $user = new User($_POST['_username'], $_POST['_email'], password_hash($_POST['_password'], PASSWORD_BCRYPT), $encryptedIp, false);
             $em->persist($user);
             $em->flush();
 
@@ -163,7 +163,7 @@ class SecurityController extends AbstractController
             ->getQuery()
             ->getSingleScalarResult();
 
-        $user = new User('Test' . $number, 'Test' . $number . '@areauniverse.eu', password_hash('connected', PASSWORD_BCRYPT), $userIp, false);
+        $user = new User('Test' . $number, 'Test' . $number . '@areauniverse.eu', password_hash('connected', PASSWORD_BCRYPT), $encryptedIp, false);
         $em->persist($user);
         $em->flush();
 
@@ -224,8 +224,7 @@ class SecurityController extends AbstractController
                     return $this->redirectToRoute('home');
                 }
             } else {
-                $userIp = null;
-                $user->setIpAddress($userIp);
+                $user->setIpAddress(null);
                 $em->flush();
             }
             if ($user->getConnectLast()) {

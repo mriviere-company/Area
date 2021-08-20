@@ -82,7 +82,7 @@ class ConfirmType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'App\Entity\User',
+                'data_class'         => null,
                 'translation_domain' => 'front_confirm',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',

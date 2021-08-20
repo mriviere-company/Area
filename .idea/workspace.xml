@@ -6,19 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/framework.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/framework.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/prod/monolog.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/prod/monolog.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/AsteroideController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/AsteroideController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/ZombiesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/ZombiesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/FleetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/FleetController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/FleetInteractController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/FleetInteractController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Map/SectorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Map/SectorController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/MarketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/MarketController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/OverviewController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/OverviewController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/CronController/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CronController/BotController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Security/ServerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Security/ServerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/map/sector.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/sector.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_map.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_map.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ConfirmController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ConfirmController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Security/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Security/SecurityController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/ConfirmType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/ConfirmType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/anonymous/medias.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/anonymous/medias.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -173,7 +164,7 @@
       <workItem from="1629372596967" duration="138000" />
       <workItem from="1629373441467" duration="4601000" />
       <workItem from="1629384159458" duration="738000" />
-      <workItem from="1629396144814" duration="14026000" />
+      <workItem from="1629396144814" duration="17246000" />
     </task>
     <servers />
   </component>

@@ -3,6 +3,7 @@
 namespace App\Controller\Connected;
 
 use Swift_Mailer;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -33,18 +34,20 @@ class ConfirmController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
         if($user->getConfirmed() == 1) {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $form_confirm = $this->createForm(ConfirmType::class, $user);
+        $form_confirm = $this->createForm(ConfirmType::class, null);
         $form_confirm->handleRequest($request);
 
         if ($form_confirm->isSubmitted() && $form_confirm->isValid()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $user->setConfirmed(1);
+            $user->setEmail($form_confirm->get('email')->getData());
+            $user->setPassword(password_hash($form_confirm->get('password')->getData(), PASSWORD_BCRYPT));
+            $user->setUsername($form_confirm->get('username')->getData());
             $em->flush();
 
             $message = (new \Swift_Message('Confirmation inscription'))
@@ -72,7 +75,11 @@ class ConfirmController extends AbstractController
             );
 
             $this->get('security.token_storage')->setToken($token);
-            $request->getSession()->set('main', serialize($token));
+            $request->getSession()->set('_security_main', serialize($token));
+
+            $event = new InteractiveLoginEvent($request, $token);
+            $dispatcher = new EventDispatcher();
+            $dispatcher->dispatch($event, "security.interactive_login");
 
             return $this->redirectToRoute('login');
         }
