@@ -133,7 +133,7 @@ class SpatialController extends AbstractController
             $croiser = abs($form_spatialShip->get('croiser')->getData());
             $ironClad = abs($form_spatialShip->get('ironClad')->getData());
             $destroyer = abs($form_spatialShip->get('destroyer')->getData());
-            $all_ships = (object) [['destroyer', $destroyer], ['ironclad', $ironClad], ['croiser', $croiser], ['fregateplasma', $fregatePlasma], ['corvetwar', $corvetWar], ['corvetlaser', $corvetLaser], ['corvet', $corvet], ['hunterheavy', $hunterWar], ['hunterheavy', $hunterHeavy], ['fregate', $fregate], ['sonde', $sonde], ['brouilleurship', $brouilleurShip], ['radarship', $radarShip], ['moonmaker', $moonMaker], ['barge', $barge], ['mothership', $motherShip], ['recycleur', $recycleur], ['colonizer', $colonizer], ['cargox', $cargoX], ['cargov', $cargoV], ['cargoi', $cargoI], ['hunter', $hunter]];
+            $all_ships = (object) [['destroyer', $destroyer], ['ironclad', $ironClad], ['croiser', $croiser], ['fregateplasma', $fregatePlasma], ['corvetwar', $corvetWar], ['corvetlaser', $corvetLaser], ['corvet', $corvet], ['hunterwar', $hunterWar], ['hunterheavy', $hunterHeavy], ['fregate', $fregate], ['sonde', $sonde], ['brouilleurship', $brouilleurShip], ['radarship', $radarShip], ['moonmaker', $moonMaker], ['barge', $barge], ['mothership', $motherShip], ['recycleur', $recycleur], ['colonizer', $colonizer], ['cargox', $cargoX], ['cargov', $cargoV], ['cargoi', $cargoI], ['hunter', $hunter]];
             $niobiumLess = 0;
             $waterLess = 0;
             $workerLess = 0;

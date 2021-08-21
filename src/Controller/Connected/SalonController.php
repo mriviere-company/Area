@@ -121,8 +121,8 @@ class SalonController extends AbstractController
                 ->getQuery()
                 ->getResult();
 
+            $response = new JsonResponse();
             if($newMessages || $character->getSalonAt() == null) {
-                $response = new JsonResponse();
                 $response->setData(
                     [
                         'has_error' => false,
@@ -131,16 +131,15 @@ class SalonController extends AbstractController
                 $character->setSalonAt($now);
 
                 $em->flush();
-                return $response;
             } else {
-                $response = new JsonResponse();
                 $response->setData(
                     [
                         'has_error' => true,
                     ]
                 );
-                return $response;
             }
+
+            return $response;
         }
 
         if ($form_message->isSubmitted() && $form_message->isValid() && ($character->getSalonBan() > $now || $character->getSalonBan() == null)) {

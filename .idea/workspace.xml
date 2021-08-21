@@ -6,9 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/SalonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/SalonController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/SpatialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/SpatialController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet/ships.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet/ships.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet_list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/map/fleet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/fleet.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/salon.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/salon.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/spatial.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/spatial.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +175,7 @@
       <workItem from="1629372596967" duration="138000" />
       <workItem from="1629373441467" duration="4601000" />
       <workItem from="1629384159458" duration="738000" />
-      <workItem from="1629396144814" duration="22428000" />
+      <workItem from="1629396144814" duration="27719000" />
     </task>
     <servers />
   </component>

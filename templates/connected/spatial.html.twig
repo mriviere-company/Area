@@ -381,7 +381,7 @@
 
                 </tr>
                 {% for fleet in usePlanet.getFleets() %}
-                    {% if fleet.getCharacter() == character and fleet.flightTime() is null %}
+                    {% if fleet.getCharacter().getId() == character.id and fleet.flightTime() is null %}
                         <tr>
                             <th class="text-center">
                                 {% if fleet.getAttack() == 1 %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/stance_attack.gif') }}">{% else %}<img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/stance_defend.gif') }}">{% endif %}<span><a class="ml-2" href="{{ path('manage_fleet', {'usePlanet': usePlanet.getId(), 'fleetGive': fleet.getId()}) }}">{{  fleet.getName() }}</a></span>{% if fleet.getFightAt() == null %} {% if fleet.getRecycleur() and fleet.getRecycleAt() %}<span data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.recycle'|trans }}" class="timerArea ml-3 float-right" hidden>{{ fleet.getRecycleAt()|date('Y/m/d H:i:s') }}</span> {% endif %}<span><a class="ml-3 float-right" href="{{ path('destroy_fleet', {'fleetGive': fleet.getId(), 'usePlanet': usePlanet.getId()}) }}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.drop'|trans }}"><span>{{ 'spatial.destroyFleet'|trans }}</span></a></span> {% else %}<span class="float-right text-rouge">{{ 'fleet.combat'|trans }}</span>{% endif %}

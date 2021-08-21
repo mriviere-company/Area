@@ -62,7 +62,7 @@
                                 {% endif %}
                             </tr>
                             {% for user in ally.getCharacters() %}
-                                <tr{% if user == character %} class="currentBack"{% elseif user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %} class="availableBack"{% endif %}>
+                                <tr{% if user.getId() == character.id %} class="currentBack"{% elseif user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %} class="availableBack"{% endif %}>
                                     <td class="center-cells">
                                         {% if character.getGrade().getPlacement() == 1 %}
                                             <button class="confirm-button" href="{{ path('ally_addUser_grade', {'newGradeUser': user.getId(), 'usePlanet': usePlanet.getId() }) }}" data-toggle="modal" data-target="#openModal">{% if user.getGrade() %}{{ user.getGrade().getName() }}{% else %}???{% endif %}</button> <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.changeGrade'|trans }}"></span>
@@ -82,8 +82,8 @@
                                     <td class="center-cells">
                                         {{ user.getJoinAllyAt()|date('d/m/Y') }}
                                     </td>
-                                    {% if user == character or character.getGrade().getCanKick() != 1 or (ally.getPolitic() == 'fascism' and ally.getWars()|length > 0 or ally.getPeaces()|length > 0) %}
-                                        {% if user == character and (ally.getPolitic() == 'fascism' and ally.getWars()|length == 0 and ally.getPeaces()|length == 0) %}
+                                    {% if user.getId() == character.id or character.getGrade().getCanKick() != 1 or (ally.getPolitic() == 'fascism' and ally.getWars()|length > 0 or ally.getPeaces()|length > 0) %}
+                                        {% if user.getId() == character.id and (ally.getPolitic() == 'fascism' and ally.getWars()|length == 0 and ally.getPeaces()|length == 0) %}
                                             <td class="center-cells">
                                             </td>
                                         {% endif %}
