@@ -230,9 +230,6 @@
     "symfony/options-resolver": {
         "version": "v4.0.8"
     },
-    "symfony/orm-pack": {
-        "version": "v1.0.8"
-    },
     "symfony/password-hasher": {
         "version": "v5.3.0"
     },
@@ -265,9 +262,6 @@
     },
     "symfony/polyfill-php81": {
         "version": "v1.23.0"
-    },
-    "symfony/profiler-pack": {
-        "version": "v1.0.3"
     },
     "symfony/property-access": {
         "version": "v4.0.8"

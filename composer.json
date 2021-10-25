@@ -4,8 +4,11 @@
     "require": {
         "php": "^7.3",
         "ext-iconv": "*",
+        "ext-openssl": "*",
+        "composer/package-versions-deprecated": "1.11.99.4",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/doctrine-migrations-bundle": "^2.0",
+        "doctrine/orm": "^2.9",
         "laminas/laminas-code": "^3.4",
         "sensio/framework-extra-bundle": ">=5.5",
         "symfony/asset": ">=5.0",
@@ -18,7 +21,7 @@
         "symfony/framework-bundle": ">=5.0",
         "symfony/intl": ">=5.0",
         "symfony/monolog-bundle": "^3.6",
-        "symfony/orm-pack": ">=1.0",
+        "symfony/proxy-manager-bridge": "5.*",
         "symfony/security-bundle": ">=5.0",
         "symfony/security-csrf": "5.*",
         "symfony/swiftmailer-bundle": ">=3.4",
@@ -29,13 +32,13 @@
         "symfony/yaml": ">=5.0",
         "twig/extra-bundle": ">=3.1",
         "twig/twig": ">=2.0",
-        "vich/uploader-bundle": ">=1.8",
-      "ext-openssl": "*"
+        "vich/uploader-bundle": ">=1.8"
     },
   "require-dev": {
-    "symfony/debug": ">=4.0",
-    "symfony/profiler-pack": ">=1"
-  },
+        "symfony/debug": ">=4.0",
+        "symfony/stopwatch": "5.*",
+        "symfony/web-profiler-bundle": "5.*"
+    },
     "config": {
         "preferred-install": {
             "*": "dist"

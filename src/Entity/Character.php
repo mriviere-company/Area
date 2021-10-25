@@ -1754,7 +1754,7 @@ class Character
         } elseif ($name == 'colonizer') {
             $return = 10800;
         } elseif ($name == 'recycleur') {
-            $return = 600;
+            $return = 900;
         } elseif ($name == 'sonde') {
             $return = 20;
         } elseif ($name == 'hunter') {
@@ -1806,25 +1806,25 @@ class Character
     {
         $return = 0;
         if($name == 'barge') {
-            $return = 50000;
-        } elseif ($name == 'mothership') {
-            $return = 175000;
-        } elseif ($name == 'brouilleurship') {
-            $return = 11000;
-        } elseif ($name == 'radarship') {
-            $return = 5000;
-        } elseif ($name == 'moonmaker') {
             $return = 500000;
+        } elseif ($name == 'mothership') {
+            $return = 1750000;
+        } elseif ($name == 'brouilleurship') {
+            $return = 110000;
+        } elseif ($name == 'radarship') {
+            $return = 50000;
+        } elseif ($name == 'moonmaker') {
+            $return = 5000000;
         } elseif ($name == 'cargoi') {
-            $return = 8000;
+            $return = 80000;
         } elseif ($name == 'cargov') {
-            $return = 22000;
+            $return = 220000;
         } elseif ($name == 'cargox') {
-            $return = 45000;
+            $return = 450000;
         } elseif ($name == 'colonizer') {
-            $return = 20000;
+            $return = 550000;
         } elseif ($name == 'recycleur') {
-            $return = 600;
+            $return = 220000;
         } elseif ($name == 'sonde') {
             $return = 10000;
         } elseif ($name == 'hunter') {
@@ -1847,7 +1847,7 @@ class Character
             $return = 20000;
         }
 
-        $return = round($return / 50);
+        $return = round($return / 10);
         if ($prod >= 0) {
             $return = round($return * $prod);
         }
@@ -1862,25 +1862,25 @@ class Character
     {
         $return = 0;
         if($name == 'barge') {
-            $return = 35000;
+            $return = 350000;
         } elseif ($name == 'mothership') {
-            $return = 95000;
+            $return = 950000;
         } elseif ($name == 'brouilleurship') {
-            $return = 13000;
+            $return = 130000;
         } elseif ($name == 'radarship') {
-            $return = 6000;
+            $return = 60000;
         } elseif ($name == 'moonmaker') {
-            $return = 230000;
+            $return = 2300000;
         } elseif ($name == 'cargoi') {
-            $return = 6500;
+            $return = 65000;
         } elseif ($name == 'cargov') {
-            $return = 15000;
+            $return = 150000;
         } elseif ($name == 'cargox') {
-            $return = 38000;
+            $return = 380000;
         } elseif ($name == 'colonizer') {
-            $return = 12000;
+            $return = 700000;
         } elseif ($name == 'recycleur') {
-            $return = 7000;
+            $return = 100000;
         } elseif ($name == 'hunter') {
             $return = 50;
         } elseif ($name == 'hunterheavy') {
@@ -1901,7 +1901,7 @@ class Character
             $return = 70000;
         }
 
-        $return = round($return / 50);
+        $return = round($return / 10);
         if ($prod >= 0) {
             $return = round($return * $prod);
         }
@@ -1995,7 +1995,7 @@ class Character
             $return = 200000;
         }
 
-        $return = round($return / 50);
+        $return = round($return / 10);
         if ($prod >= 0) {
             $return = round($return * $prod);
         }
@@ -2017,7 +2017,7 @@ class Character
             $return = 300;
         }
 
-        $return = round($return / 50);
+        $return = round($return / 10);
         if ($prod >= 0) {
             $return = round($return * $prod);
         }
