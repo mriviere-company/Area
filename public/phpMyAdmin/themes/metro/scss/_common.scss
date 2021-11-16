@@ -1,3 +1,5 @@
+@use "sass:math";
+
 #li_select_fontsize {
   display: none;
 }
@@ -2404,8 +2406,8 @@ form.append_fields_form .tblFooters {
 
   height: $height;
   width: $width;
-  margin-#{$left}: $height / -2;
-  margin-top: $width / -2;
+  margin-#{$left}: math.div($height, -2);
+  margin-top: math.div($width, -2);
   position: absolute;
   background: url("../img/col_pointer.png");
 }
