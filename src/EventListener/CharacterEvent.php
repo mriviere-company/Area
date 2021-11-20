@@ -93,7 +93,7 @@ class CharacterEvent implements EventSubscriberInterface
                         $reportDaily->setSendAt($now);
                         $reportDaily->setCharacter($character);
                         $reportDaily->setTitle("Bonus de connexion");
-                        $reportDaily->setImageName("sell_report.jpg");
+                        $reportDaily->setImageName("sell_report.webp");
                         $reportDaily->setContent("«Ah vous voilà de retour, voici l'argent.»<br>-Dépose <span class='text-vert'>+" . number_format($bonus) . "</span> bitcoins sur la table.<br>«Toutes les 24h comme convenu ?<br>Bien à demain.»");
                         $this->em->persist($reportDaily);
                     }

@@ -19,7 +19,7 @@
       </trans-unit>
       <trans-unit id="9QZR_kz" resname="tooltip.planetInfos">
         <source>tooltip.planetInfos</source>
-        <target><![CDATA[<h4 class="text-blanc">Planète</h4>Terrain: %land% <img class="mb-1" src="/img/ground.png"> <br> Espace: %sky% <img class="mb-1" src="/img/sky.png"> <br> Radar: %radar% <br> Brouilleur: %brouilleur%]]></target>
+        <target><![CDATA[<h4 class="text-blanc">Planète</h4>Terrain: %land% <img class="mb-1" src="/img/ground.webp"> <br> Espace: %sky% <img class="mb-1" src="/img/sky.webp"> <br> Radar: %radar% <br> Brouilleur: %brouilleur%]]></target>
       </trans-unit>
       <trans-unit id="J6hI.O1" resname="tooltip.planetOrbite">
         <source>tooltip.planetOrbite</source>
@@ -59,7 +59,7 @@
       </trans-unit>
       <trans-unit id="eis0VD." resname="tooltip.cdr">
         <source>tooltip.cdr</source>
-        <target><![CDATA[<h4 class="text-blanc">Ressources</h4>%niobium% Niobium  <img class="mb-1" src="/img/niobium.png"><br> %water% Water <img class="mb-1" src="/img/water.png">]]></target>
+        <target><![CDATA[<h4 class="text-blanc">Ressources</h4>%niobium% Niobium  <img class="mb-1" src="/img/niobium.webp"><br> %water% Water <img class="mb-1" src="/img/water.webp">]]></target>
       </trans-unit>
       <trans-unit id="C8hsIOM" resname="tooltip.brouillage">
         <source>tooltip.brouillage</source>

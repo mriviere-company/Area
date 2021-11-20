@@ -19,15 +19,15 @@
       </trans-unit>
       <trans-unit id="I9mUEG." resname="market.bitcoin">
         <source>market.bitcoin</source>
-        <target><![CDATA[Bictoins : 0.20 <img src="/img/pdg.png"> = 1 <img height="10" src="/img/coin.png">]]></target>
+        <target><![CDATA[Bictoins : 0.20 <img src="/img/pdg.webp"> = 1 <img height="10" src="/img/coin.webp">]]></target>
       </trans-unit>
       <trans-unit id="6WtuNkL" resname="market.worker">
         <source>market.worker</source>
-        <target><![CDATA[Travailleurs : 2 <img src="/img/pdg.png"> = 1 <img height="10" src="/img/worker.png">]]></target>
+        <target><![CDATA[Travailleurs : 2 <img src="/img/pdg.webp"> = 1 <img height="10" src="/img/worker.webp">]]></target>
       </trans-unit>
       <trans-unit id="HQAdJcf" resname="market.soldier">
         <source>market.soldier</source>
-        <target><![CDATA[Soldats : 5 <img src="/img/pdg.png"> = 1 <img height="10" src="/img/soldier.png">]]></target>
+        <target><![CDATA[Soldats : 5 <img src="/img/pdg.webp"> = 1 <img height="10" src="/img/soldier.webp">]]></target>
       </trans-unit>
       <trans-unit id="abOQ3g3" resname="form.planet">
         <source>form.planet</source>

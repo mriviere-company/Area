@@ -133,7 +133,7 @@ class ConnectController extends AbstractController
         $report->setSendAt($now);
         $report->setCharacter($character);
         $report->setTitle("Bienvenu parmis nous "  . $character->getUsername() . " !");
-        $report->setImageName("welcome_report.jpg");
+        $report->setImageName("welcome_report.webp");
         $report->setContent("Une épidémie s'est déclaré sur la Terre et en ce moment même il est fort a parier qu'elle est aux mains des hordes zombies. Vous et quelques autres commandant de vaisseaux spatiaux avez eu la chance de fuir avec un certains nombre de travailleurs/soldats. Remontez notre civilisation et préparez vous, les Zombies ne sont pas arrivés par hasard sur Terre... Bon courage commandant. (Pour recevoir de l'aide : La page Salon ou rendez-vous sur le discord)");
         $em->persist($report);
         $character->setViewReport(false);

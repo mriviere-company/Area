@@ -233,7 +233,7 @@ class MarketController extends AbstractController
             $reportSell->setSendAt($now);
             $reportSell->setCharacter($character);
             $reportSell->setTitle("Vente aux marchands");
-            $reportSell->setImageName("sell_report.jpg");
+            $reportSell->setImageName("sell_report.webp");
             $reportSell->setContent("Votre vente aux marchands vous a rapporté <span class='text-vert'>+" . number_format($gain) . "</span> bitcoins. Vous ne gagnez pas de points de Guerre dans les ventes automatiques, pour en gagner vendez directement aux Marchands.");
             $em->persist($reportSell);
             $character->setBitcoin($character->getBitcoin() + $gain);

@@ -129,11 +129,11 @@ class ZombieController extends AbstractController
                 $character->setZombieAtt($character->getZombieAtt() - $mission->getGain());
                 $mission->setMissionAt($nowMission);
                 $reportMission->setTitle("Mission d'élimination zombies");
-                $reportMission->setImageName("zombie_win_report.jpg");
+                $reportMission->setImageName("zombie_win_report.webp");
                 $reportMission->setContent("L'escouade militaire envoyée en mission est de retour, son capitaine vous fait son rapport :<br> <span class='text-vert'>-" . number_format($mission->getGain()) . "</span> menace zombie sur la planète.");
             } else {
                 $reportMission->setTitle("Échec mission");
-                $reportMission->setImageName("zombie_lose_report.jpg");
+                $reportMission->setImageName("zombie_lose_report.webp");
                 $loseSoldiers = ($planet->getSoldier() / rand(8,10));
                 $planet->setSoldier($planet->getSoldier() - $loseSoldiers);
                 $character->setZombieAtt($character->getZombieAtt() + $mission->getGain());
@@ -145,14 +145,14 @@ class ZombieController extends AbstractController
                 $zombieThreat = rand(1, 10);
                 $character->setZombieAtt($character->getZombieAtt() + $zombieThreat);
                 $reportMission->setTitle("Mission de récupération d'uranium");
-                $reportMission->setImageName("uranium_win_report.jpg");
+                $reportMission->setImageName("uranium_win_report.webp");
                 $reportMission->setContent("L'escouade militaire envoyée en mission est de retour, son capitaine vous fait son rapport :<br> <span class='text-vert'>+" . number_format($mission->getGain()) . "</span> uranium ont été récupérés en zone zombie.<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+" . $zombieThreat ."</span>.");
                 $planet->setUranium($planet->getUranium() + $mission->getGain());
                 $mission->setMissionAt($nowMission);
             } else {
                 $character->setZombieAtt($character->getZombieAtt() + $mission->getGain());
                 $reportMission->setTitle("Échec mission");
-                $reportMission->setImageName("zombie_lose_report.jpg");
+                $reportMission->setImageName("zombie_lose_report.webp");
                 $reportMission->setContent("Des hommes de l'escouade militaire envoyée reviennent progressivement par petit groupe.<br>Ils ne s'attendaient pas à une telle résistance...<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+". $mission->getGain() ."</span>.");
                 $mission->setMissionAt($nowMission);
             }
@@ -204,7 +204,7 @@ class ZombieController extends AbstractController
         $reportMission->setSendAt($now);
         $reportMission->setCharacter($character);
         $reportMission->setTitle("Mission d'élimination zombies");
-        $reportMission->setImageName("zombie_win_report.jpg");
+        $reportMission->setImageName("zombie_win_report.webp");
         $zombieAtt = $character->getZombieAtt();
         $zombieUranium = 0;
         $loseSoldiers = 0;

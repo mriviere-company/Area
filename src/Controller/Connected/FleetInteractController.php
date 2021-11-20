@@ -337,7 +337,7 @@ class FleetInteractController  extends AbstractController
             $reportSell->setSendAt($now);
             $reportSell->setCharacter($character);
             $reportSell->setTitle("Vente aux marchands");
-            $reportSell->setImageName("sell_report.jpg");
+            $reportSell->setImageName("sell_report.webp");
             if ($character->getPoliticMerchant() > 0) {
                 $gainSell = ($fleetGive->getNiobium() * 0.10) * (1 + ($character->getPoliticMerchant() / 20));
             } else {
@@ -403,7 +403,7 @@ class FleetInteractController  extends AbstractController
             $reportSell->setSendAt($now);
             $reportSell->setCharacter($character);
             $reportSell->setTitle("Vente aux marchands");
-            $reportSell->setImageName("sell_report.jpg");
+            $reportSell->setImageName("sell_report.webp");
             if ($character->getPoliticMerchant() > 0) {
                 $gainSell = ($fleetGive->getWater() * 0.25) * (1 + ($character->getPoliticMerchant() / 20));
             } else {
@@ -469,7 +469,7 @@ class FleetInteractController  extends AbstractController
             $reportSell->setSendAt($now);
             $reportSell->setCharacter($character);
             $reportSell->setTitle("Vente aux marchands");
-            $reportSell->setImageName("sell_report.jpg");
+            $reportSell->setImageName("sell_report.webp");
             if ($character->getPoliticMerchant() > 0) {
                 $gainSell = ($fleetGive->getSoldier() * 80) * (1 + ($character->getPoliticMerchant() / 20));
             } else {
@@ -535,7 +535,7 @@ class FleetInteractController  extends AbstractController
             $reportSell->setSendAt($now);
             $reportSell->setCharacter($character);
             $reportSell->setTitle("Vente aux marchands");
-            $reportSell->setImageName("sell_report.jpg");
+            $reportSell->setImageName("sell_report.webp");
             if ($character->getPoliticMerchant() > 0) {
                 $gainSell = ($fleetGive->getWorker() * 5) * (1 + ($character->getPoliticMerchant() / 20));
             } else {
@@ -601,7 +601,7 @@ class FleetInteractController  extends AbstractController
             $reportSell->setSendAt($now);
             $reportSell->setCharacter($character);
             $reportSell->setTitle("Vente aux marchands");
-            $reportSell->setImageName("sell_report.jpg");
+            $reportSell->setImageName("sell_report.webp");
             if ($character->getPoliticMerchant() > 0) {
                 $gainSell = ($fleetGive->getScientist() * 300) * (1 + ($character->getPoliticMerchant() / 20));
             } else {
@@ -662,7 +662,7 @@ class FleetInteractController  extends AbstractController
             $reportSell->setSendAt($now);
             $reportSell->setCharacter($character);
             $reportSell->setTitle("Vente aux marchands");
-            $reportSell->setImageName("sell_report.jpg");
+            $reportSell->setImageName("sell_report.webp");
             if ($character->getPoliticPdg() > 0) {
                 $newWarPointS = round((((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6) + ($fleetGive->getTank() * 5) + ($fleetGive->getUranium() * 10)) / 50000)) * (1 + ($character->getPoliticPdg() / 10)));
             } else {

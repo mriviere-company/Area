@@ -5,9 +5,337 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/.htaccess" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/global.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/scss/front/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/front/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/aeroponic_farm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/aeroponic_search.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/ally.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/armement.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/armement_ally.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/armor_ally.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/avatar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/back.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/back_blocus.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/back_build.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/back_build2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/back_build_r.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/back_build_r2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/back_free.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/barbed.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/barge_ally.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/blocked.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/blocked2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/bot_five.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/bot_four.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/bot_one.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/bot_three.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/bot_two.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/brouilleur.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/bunker.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/buy_crypto.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/cargo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/cargo_ally.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/caserne.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/cdr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/cdr_niobium.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/cdr_uranium.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/cdr_water.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/chantier.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/city.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/clover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/coin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/colonisation_ally.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/colonize_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/communism.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/communism.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/confirm.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/construct.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/construct2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/corvet.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/corvetLaser.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/corvetWar.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/cost_scientist.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/cost_soldier.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/cost_tank.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/croiser.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/daily_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/defend_lose_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/defend_win_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/democrat.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/democrat.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/destroyer.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/deutsch.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/embargo_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/english.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/expansion.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/extract.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/f_lose_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/f_win_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/farm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fascism.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fascism.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/public/img/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fight_lose_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fight_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fight_win_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fleets-enemy.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fleets-ground.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fleets.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/form-game.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/form.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fregate.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/fregatePlasma.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/french.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/galaxy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/go.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/ground.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/heavy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/heavyShip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/help.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/hunter.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/hunterHeavy.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/hunterWar.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/hydra_planet.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/hydre.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/hyper.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/industry.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/info.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/invade_ally.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/invade_lose_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/invade_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/invade_win_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/invader.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/ironClad.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/island.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/laser.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/light.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/lightShip.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/logo00.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/logo01.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/market.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/merchant.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/merchant_ally.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/metropole.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/military.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/mining.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/missile.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/missionB.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/missionT.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/moon1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/moon2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/moon3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/moon4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/moon5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/niobium.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/niobiumStock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/nuclear-mini.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/nuclear.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/nuclear.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/nuclear_attack.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/nuclear_base.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/open1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/open2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/open3.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/open5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/open6.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/orbital.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/pdg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/pdg_ally.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet14.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet15.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet17.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet18.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet19.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet20.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet21.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet22.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet23.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet24.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet25.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet26.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet27.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet28.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet29.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet30.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet31.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet32.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet33.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet34.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/planet9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/plasma.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/play.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/pools_crypto.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/prison.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/prod_ally.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/radar.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/radar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/radarjammed-known.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/radarjammed.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/ration.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/recyclage.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/recycle_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/recycleur_ally.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level1_0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level1_1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level3_0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level3_1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level3_2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level3_3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level5_0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level5_1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level5_2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level5_3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level5_4.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/level5_5.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/leveling1_0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/leveling3_0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/leveling3_1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/leveling3_2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/leveling5_0.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/leveling5_1.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/leveling5_2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/leveling5_3.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/research/leveling5_4.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/scanner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/scientist.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/search.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/search.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/search_ally.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/search_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sell_crypto.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sell_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/server.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/silos.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sky.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/skyRadar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/slave.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/slide00.JPG" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/slide01.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/slide02.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/slide03.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/slide04.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/slide05.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/soldier.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/soldier_att.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/soldier_sale.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/space.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/special-mini.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/special.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/stance_attack.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/stance_defend.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sun1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sun2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sun3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sun4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sun5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sun6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/sun7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/tank.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/tank_def.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/tanks.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/terra.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/travel_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/tuto.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/tuto2.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/uranium.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/uranium_win_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/urbain.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/utility.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/vradar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/wall2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/wall5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/war_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/water.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/waterStock.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/welcome_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/whitepaper_crypto.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/worker.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/worker_ally.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/worker_def.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/zombie_indic.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/zombie_lose_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/zombie_win_report.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Ally/AllyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Ally/AllyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ConnectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ConnectController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/DeployController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/DeployController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/AsteroideController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/AsteroideController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/DailyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/DailyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/FightController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/FightController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/FleetsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/FleetsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/MoveFleetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/MoveFleetController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/PlanetsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/PlanetsController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/WarPlanetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/WarPlanetController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/ZombiesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/ZombiesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/FleetInteractController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/FleetInteractController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/MarketController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/MarketController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/PlanetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/PlanetController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/SpatialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/SpatialController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ZombieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ZombieController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Security/ServerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Security/ServerController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventListener/CharacterEvent.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/CharacterEvent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/AllyImageType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/AllyImageType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/UserImageType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/UserImageType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/administration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/administration.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/anonymous/crypto.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/anonymous/crypto.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/anonymous/medias.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/anonymous/medias.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/anonymous/universe.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/anonymous/universe.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/add.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/bank.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/bank.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/exit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/exit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/noAlly.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/noAlly.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/pact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/pact.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/rank.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/rank.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/building.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/building.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet/split.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet/split.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet_list.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/game_over.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/game_over.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/map/sector.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/sector.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/map/universe.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/universe.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/market.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/market.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/overview.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/planet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/planet.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/play.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/play.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/profil/ally.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/profil/ally.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/profil/modal_ally.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/profil/modal_ally.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/profil/modal_user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/profil/modal_user.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/profil/player.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/profil/player.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/salon.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/salon.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/search.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ship_perso.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ship_perso.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/soldier.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/soldier.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/spatial.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/spatial.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/zombie.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/zombie.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/emails/new_email.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/new_email.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/emails/new_server.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/new_server.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/emails/recoveryPw.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/recoveryPw.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/emails/registration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/emails/registration.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu/_right_planet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_right_planet.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu/_top_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_top_menu.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/menu/_top_ressource.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_top_ressource.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_map.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_map.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_map.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_map.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_market.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_market.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_market.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_market.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_overview.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_overview.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_overview.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_overview.fr.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +504,7 @@
       <workItem from="1632906269254" duration="361000" />
       <workItem from="1635146418246" duration="1696000" />
       <workItem from="1637053883759" duration="1835000" />
-      <workItem from="1637406736491" duration="13585000" />
+      <workItem from="1637406736491" duration="16900000" />
     </task>
     <servers />
   </component>

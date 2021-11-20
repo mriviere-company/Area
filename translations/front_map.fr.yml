@@ -1,7 +1,7 @@
 title: 'Carte spatiale'
 tooltip.planet: '%name%'
 tooltip.planetAlly: '[%ally%] %name%'
-tooltip.planetInfos: '<h4 class="text-blanc">Planète</h4>Terrain: %land% <img class="mb-1" src="/img/ground.png"> <br> Espace: %sky% <img class="mb-1" src="/img/sky.png"> <br> Radar: %radar% <br> Brouilleur: %brouilleur%'
+tooltip.planetInfos: '<h4 class="text-blanc">Planète</h4>Terrain: %land% <img class="mb-1" src="/img/ground.webp"> <br> Espace: %sky% <img class="mb-1" src="/img/sky.webp"> <br> Radar: %radar% <br> Brouilleur: %brouilleur%'
 tooltip.planetOrbite: '%orbite%'
 tooltip.sunInfos: '<h4 class="text-blanc">Soleil</h4>'
 map.coming: 'Flottes entrant dans le secteur'
@@ -12,7 +12,7 @@ map.goTo: Vers
 map.time: Temps
 map.out: 'Flottes sortant du secteur'
 map.planetHostile: Occupée
-tooltip.cdr: '<h4 class="text-blanc">Ressources</h4>%niobium% Niobium  <img class="mb-1" src="/img/niobium.png"><br> %water% Water <img class="mb-1" src="/img/water.png">'
+tooltip.cdr: '<h4 class="text-blanc">Ressources</h4>%niobium% Niobium  <img class="mb-1" src="/img/niobium.webp"><br> %water% Water <img class="mb-1" src="/img/water.webp">'
 tooltip.brouillage: Brouillage
 map.current: 'Mouvement de flotte dans le secteur'
 sector.number: Secteur

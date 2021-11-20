@@ -28,8 +28,8 @@
                 <tbody>
                 <tr class="{% if character.getUtility() == 3 %}finish-search availableBack{% else %}access-search{% endif %}">
                     <th class="tab-cells-name">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/utility.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.utility'|trans|raw }}">{{ 'title.utility'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getUtility() %}{{ character.getUtility() }}{% else %}0{% endif %} / 3</button>
-                        {% if character.getUtility() != 3 %}<div class="mt-4">{% if (character.getUtility() + 1) * 2500 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getUtility() + 1) * 2500)|number_format }}</span>{% else %}{{ ((character.getUtility() + 1) * 2500)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/utility.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.utility'|trans|raw }}">{{ 'title.utility'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getUtility() %}{{ character.getUtility() }}{% else %}0{% endif %} / 3</button>
+                        {% if character.getUtility() != 3 %}<div class="mt-4">{% if (character.getUtility() + 1) * 2500 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getUtility() + 1) * 2500)|number_format }}</span>{% else %}{{ ((character.getUtility() + 1) * 2500)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                     </th>
                     {% if character.getUtility() == 3 %}
                     <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -41,7 +41,7 @@
                         </td>
                         <td width="101px" class="center-cells cell-middle">
                             {% if character.getSearch() == 'utility' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                 <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
@@ -58,7 +58,7 @@
                 {% if character.getUtility() <= 0 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/terra.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.terra'|trans|raw }}">{{ 'title.terraformation'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/terra.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.terra'|trans|raw }}">{{ 'title.terraformation'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.terraformation.blocked'|trans }}
@@ -70,8 +70,8 @@
                 {% else %}
                     <tr class="{% if character.getTerraformation() == 18 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/terra.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.terra'|trans|raw }}">{{ 'title.terraformation'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getTerraformation() %}{{ character.getTerraformation() }}{% else %}0{% endif %} / 18</button>
-                            {% if character.getTerraformation() != 18 %}<div class="mt-4">{% if (character.getTerraformation() + 1) * 12000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getTerraformation() + 1) * 12000)|number_format }}</span>{% else %}{{ ((character.getTerraformation() + 1) * 12000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/terra.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.terra'|trans|raw }}">{{ 'title.terraformation'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getTerraformation() %}{{ character.getTerraformation() }}{% else %}0{% endif %} / 18</button>
+                            {% if character.getTerraformation() != 18 %}<div class="mt-4">{% if (character.getTerraformation() + 1) * 12000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getTerraformation() + 1) * 12000)|number_format }}</span>{% else %}{{ ((character.getTerraformation() + 1) * 12000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getTerraformation() == 18 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -83,7 +83,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'terraformation' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
                                 {% else %}
                                     {% if character.getBitcoin() >= (character.getTerraformation() + 1) * 12000 and character.getTerraformation() < 18  and character.getUtility() > 0 and character.getSearchAt is null %}
@@ -100,7 +100,7 @@
                 {% if character.getUtility() <= 1 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cargo.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.cargo'|trans|raw }}">{{ 'title.cargo'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cargo.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.cargo'|trans|raw }}">{{ 'title.cargo'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.cargo.blocked'|trans }}
@@ -112,8 +112,8 @@
                 {% else %}
                     <tr class="{% if character.getCargo() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cargo.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.cargo'|trans|raw }}">{{ 'title.cargo'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getCargo() %}{{ character.getCargo() }}{% else %}0{% endif %} / 5</button>
-                            {% if character.getCargo() != 5 %}<div class="mt-4">{% if (character.getCargo() + 1) * 3500 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getCargo() + 1) * 3500)|number_format }}</span>{% else %}{{ ((character.getCargo() + 1) * 3500)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cargo.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.cargo'|trans|raw }}">{{ 'title.cargo'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getCargo() %}{{ character.getCargo() }}{% else %}0{% endif %} / 5</button>
+                            {% if character.getCargo() != 5 %}<div class="mt-4">{% if (character.getCargo() + 1) * 3500 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getCargo() + 1) * 3500)|number_format }}</span>{% else %}{{ ((character.getCargo() + 1) * 3500)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getCargo() == 5 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -125,7 +125,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'cargo' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -143,7 +143,7 @@
                 {% if character.getUtility() != 3 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/invader.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.barge'|trans|raw }}">{{ 'title.barge'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/invader.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.barge'|trans|raw }}">{{ 'title.barge'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.barge.blocked'|trans }}
@@ -155,8 +155,8 @@
                 {% else %}
                     <tr class="{% if character.getBarge() == 1 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/invader.png') }}">{% if character.getBarge() == false %}<button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.barge'|trans|raw }}">{{ 'title.barge'|trans|raw }} - {{ 'research.canBe'|trans }}</button>{% else %}{{ 'title.barge'|trans|raw }} - <span class="text-vert">{{ 'research.Activated'|trans }}</span>{% endif %}
-                            {% if character.getBarge() != 1 %}<div class="mt-4">{% if 35000 > character.getBitcoin() %}<span class="text-rouge">35.000</span>{% else %}35.000{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/invader.webp') }}">{% if character.getBarge() == false %}<button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.barge'|trans|raw }}">{{ 'title.barge'|trans|raw }} - {{ 'research.canBe'|trans }}</button>{% else %}{{ 'title.barge'|trans|raw }} - <span class="text-vert">{{ 'research.Activated'|trans }}</span>{% endif %}
+                            {% if character.getBarge() != 1 %}<div class="mt-4">{% if 35000 > character.getBitcoin() %}<span class="text-rouge">35.000</span>{% else %}35.000{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getBarge() == 1 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -168,7 +168,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'barge' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -186,7 +186,7 @@
                 {% if character.getUtility() != 3 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/recyclage.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.recycleur'|trans|raw }}">{{ 'title.recycleur'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/recyclage.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.recycleur'|trans|raw }}">{{ 'title.recycleur'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.recycleur.blocked'|trans }}
@@ -198,8 +198,8 @@
                 {% else %}
                     <tr class="{% if character.getRecycleur() == 1 %}finish-search availableBack{% else %}access-search{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/recyclage.png') }}">{% if character.getRecycleur() == false %}<button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.recylceur'|trans|raw }}">{{ 'title.recycleur'|trans|raw }} - {{ 'research.canBe'|trans }}</button>{% else %}{{ 'title.recycleur'|trans|raw }} - <span class="text-vert">{{ 'research.Activated'|trans }}</span>{% endif %}
-                            {% if character.getRecycleur() != 1 %}<div class="mt-4">{% if 16900 > character.getBitcoin() %}<span class="text-rouge">16.900</span>{% else %}16.900{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/recyclage.webp') }}">{% if character.getRecycleur() == false %}<button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.recylceur'|trans|raw }}">{{ 'title.recycleur'|trans|raw }} - {{ 'research.canBe'|trans }}</button>{% else %}{{ 'title.recycleur'|trans|raw }} - <span class="text-vert">{{ 'research.Activated'|trans }}</span>{% endif %}
+                            {% if character.getRecycleur() != 1 %}<div class="mt-4">{% if 16900 > character.getBitcoin() %}<span class="text-rouge">16.900</span>{% else %}16.900{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getRecycleur() == 1 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -211,7 +211,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'recycleur' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -228,8 +228,8 @@
                 {% endif %}
                 <tr class="{% if character.getOnde() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                     <th class="tab-cells-name">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/scanner.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.onde'|trans|raw }}">{{ 'title.onde'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getOnde() %}{{ character.getOnde() }}{% else %}0{% endif %} / 5</button>
-                        {% if character.getOnde() != 5 %}<div class="mt-4">{% if (character.getOnde() + 1) * 2300 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getOnde() + 1) * 2300)|number_format }}</span>{% else %}{{ ((character.getOnde() + 1) * 2300)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/scanner.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.onde'|trans|raw }}">{{ 'title.onde'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getOnde() %}{{ character.getOnde() }}{% else %}0{% endif %} / 5</button>
+                        {% if character.getOnde() != 5 %}<div class="mt-4">{% if (character.getOnde() + 1) * 2300 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getOnde() + 1) * 2300)|number_format }}</span>{% else %}{{ ((character.getOnde() + 1) * 2300)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                     </th>
                     {% if character.getOnde() == 5 %}
                         <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -241,7 +241,7 @@
                         </td>
                         <td width="101px" class="center-cells cell-middle">
                             {% if character.getSearch() == 'onde' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                 <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
@@ -257,8 +257,8 @@
                 </tr>
                 <tr class="{% if character.getHyperespace() == 1 %}finish-search availableBack{% else %}access-search{% endif %}">
                     <th class="tab-cells-name">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/hyper.png') }}">{% if character.getHyperespace() == false %}<button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.hyper'|trans|raw }}">{{ 'title.hyperespace'|trans|raw }} - {{ 'research.canBe'|trans }}</button>{% else %}{{ 'title.hyperespace'|trans|raw }} - <span class="text-vert">{{ 'research.Activated'|trans }}</span>{% endif %}
-                        {% if character.getHyperespace() == 0 %}<div class="mt-4">{% if 25000000 > character.getBitcoin() %}<span class="text-rouge">25.000.000</span>{% else %}25.000.000{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/hyper.webp') }}">{% if character.getHyperespace() == false %}<button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.hyper'|trans|raw }}">{{ 'title.hyperespace'|trans|raw }} - {{ 'research.canBe'|trans }}</button>{% else %}{{ 'title.hyperespace'|trans|raw }} - <span class="text-vert">{{ 'research.Activated'|trans }}</span>{% endif %}
+                        {% if character.getHyperespace() == 0 %}<div class="mt-4">{% if 25000000 > character.getBitcoin() %}<span class="text-rouge">25.000.000</span>{% else %}25.000.000{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                     </th>
                     {% if character.getHyperespace() == 1 %}
                         <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -270,7 +270,7 @@
                         </td>
                         <td width="101px" class="center-cells cell-middle">
                             {% if character.getSearch() == 'hyperespace' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                 <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
@@ -291,8 +291,8 @@
                 <tbody>
                 <tr class="{% if character.getAeroponicFarm() == 1 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                     <th class="tab-cells-name">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="62" src="{{ asset('img/aeroponic_farm.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans|raw }}">{{ 'title.aeroponicFarm'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getAeroponicFarm() %}{{ character.getAeroponicFarm() }}{% else %}0{% endif %} / 1</button>
-                        {% if character.getAeroponicFarm() != 1 %}<div class="mt-4">{% if (character.getAeroponicFarm() + 1) * 16000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getAeroponicFarm() + 1) * 16000)|number_format }}</span>{% else %}{{ ((character.getAeroponicFarm() + 1) * 16000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="62" src="{{ asset('img/aeroponic_farm.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans|raw }}">{{ 'title.aeroponicFarm'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getAeroponicFarm() %}{{ character.getAeroponicFarm() }}{% else %}0{% endif %} / 1</button>
+                        {% if character.getAeroponicFarm() != 1 %}<div class="mt-4">{% if (character.getAeroponicFarm() + 1) * 16000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getAeroponicFarm() + 1) * 16000)|number_format }}</span>{% else %}{{ ((character.getAeroponicFarm() + 1) * 16000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                     </th>
                     {% if character.getAeroponicFarm() == 1 %}
                         <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -304,7 +304,7 @@
                         </td>
                         <td width="101px" class="center-cells cell-middle">
                             {% if character.getSearch() == 'aeroponicFarm' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                 <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
@@ -320,8 +320,8 @@
                 </tr>
                 <tr class="{% if character.getDemography() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                     <th class="tab-cells-name">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/urbain.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.demography'|trans|raw }}">{{ 'title.demography'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getDemography() %}{{ character.getDemography() }}{% else %}0{% endif %} / 5</button>
-                        {% if character.getDemography() != 5 %}<div class="mt-4">{% if (character.getDemography() + 1) * 8000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getDemography() + 1) * 8000)|number_format }}</span>{% else %}{{ ((character.getDemography() + 1) * 8000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/urbain.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.demography'|trans|raw }}">{{ 'title.demography'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getDemography() %}{{ character.getDemography() }}{% else %}0{% endif %} / 5</button>
+                        {% if character.getDemography() != 5 %}<div class="mt-4">{% if (character.getDemography() + 1) * 8000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getDemography() + 1) * 8000)|number_format }}</span>{% else %}{{ ((character.getDemography() + 1) * 8000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                     </th>
                     {% if character.getDemography() == 5 %}
                         <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -333,7 +333,7 @@
                         </td>
                         <td width="101px" class="center-cells cell-middle">
                             {% if character.getSearch() == 'demography' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                 <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
@@ -350,7 +350,7 @@
                 {% if character.getDemography() <= 0 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/military.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.discipline'|trans|raw }}">{{ 'title.discipline'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/military.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.discipline'|trans|raw }}">{{ 'title.discipline'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.discipline.blocked'|trans }}
@@ -362,8 +362,8 @@
                 {% else %}
                     <tr class="{% if character.getDiscipline() == 3 %}finish-search availableBack{% else %}access-search{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/military.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.discipline'|trans|raw }}">{{ 'title.discipline'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getDiscipline() %}{{ character.getDiscipline() }}{% else %}0{% endif %} / 3</button>
-                            {% if character.getDiscipline() != 3 %}<div class="mt-4">{% if (character.getDiscipline() + 1) * 11700 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getDiscipline() + 1) * 11700)|number_format }}</span>{% else %}{{ ((character.getDiscipline() + 1) * 11700)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/military.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.discipline'|trans|raw }}">{{ 'title.discipline'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getDiscipline() %}{{ character.getDiscipline() }}{% else %}0{% endif %} / 3</button>
+                            {% if character.getDiscipline() != 3 %}<div class="mt-4">{% if (character.getDiscipline() + 1) * 11700 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getDiscipline() + 1) * 11700)|number_format }}</span>{% else %}{{ ((character.getDiscipline() + 1) * 11700)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getDiscipline() == 3 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -375,7 +375,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'discipline' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -393,7 +393,7 @@
                 {% if character.getDiscipline() != 3 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/barbed.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.barbed'|trans|raw }}">{{ 'title.barbed'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/barbed.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.barbed'|trans|raw }}">{{ 'title.barbed'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.barbed.blocked'|trans }}
@@ -405,8 +405,8 @@
                 {% else %}
                     <tr class="{% if character.getBarbed() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/barbed.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.barbed'|trans|raw }}">{{ 'title.barbed'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getBarbed() %}{{ character.getBarbed() }}{% else %}0{% endif %} / 5</button>
-                            {% if character.getBarbed() != 5 %}<div class="mt-4">{% if (character.getBarbed() + 1) * 200000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getBarbed() + 1) * 200000)|number_format }}</span>{% else %}{{ ((character.getBarbed() + 1) * 200000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/barbed.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.barbed'|trans|raw }}">{{ 'title.barbed'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getBarbed() %}{{ character.getBarbed() }}{% else %}0{% endif %} / 5</button>
+                            {% if character.getBarbed() != 5 %}<div class="mt-4">{% if (character.getBarbed() + 1) * 200000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getBarbed() + 1) * 200000)|number_format }}</span>{% else %}{{ ((character.getBarbed() + 1) * 200000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getBarbed() == 5 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -418,7 +418,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'barbed' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -436,7 +436,7 @@
                 {% if character.getDiscipline() != 3 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/tank.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.tank'|trans|raw }}">{{ 'title.tank'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/tank.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.tank'|trans|raw }}">{{ 'title.tank'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.tank.blocked'|trans }}
@@ -448,8 +448,8 @@
                 {% else %}
                     <tr class="{% if character.getTank() == 1 %}finish-search availableBack{% else %}access-search{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/tank.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.tank'|trans|raw }}">{{ 'title.tank'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getTank() %}{{ character.getTank() }}{% else %}0{% endif %} / 1</button>
-                            {% if character.getTank() != 1 %}<div class="mt-4">{% if (character.getTank() + 1) * 40000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getTank() + 1) * 40000)|number_format }}</span>{% else %}{{ ((character.getTank() + 1) * 40000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/tank.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.tank'|trans|raw }}">{{ 'title.tank'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getTank() %}{{ character.getTank() }}{% else %}0{% endif %} / 1</button>
+                            {% if character.getTank() != 1 %}<div class="mt-4">{% if (character.getTank() + 1) * 40000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getTank() + 1) * 40000)|number_format }}</span>{% else %}{{ ((character.getTank() + 1) * 40000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getTank() == 1 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -461,7 +461,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'tank' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -479,7 +479,7 @@
                 {% if character.getTerraformation() <= 17 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/expansion.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.expansion'|trans|raw }}">{{ 'title.expansion'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/expansion.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.expansion'|trans|raw }}">{{ 'title.expansion'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.expansion.blocked'|trans }}
@@ -491,8 +491,8 @@
                 {% else %}
                     <tr class="{% if character.getExpansion() == 2 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/expansion.jpg') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.expansion'|trans|raw }}">{{ 'title.expansion'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getExpansion() %}{{ character.getExpansion() }}{% else %}0{% endif %} / 2</button>
-                            {% if character.getExpansion() != 2 %}<div class="mt-4">{% if (character.getExpansion() + 1) * 75000 > character.getRank().getWarPoint() %}<span class="text-rouge">{{ ((character.getExpansion() + 1) * 75000)|number_format }}</span>{% else %}{{ ((character.getExpansion() + 1) * 75000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'pdgImg'|trans }}" src="{{ asset('img/pdg.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/expansion.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.expansion'|trans|raw }}">{{ 'title.expansion'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getExpansion() %}{{ character.getExpansion() }}{% else %}0{% endif %} / 2</button>
+                            {% if character.getExpansion() != 2 %}<div class="mt-4">{% if (character.getExpansion() + 1) * 75000 > character.getRank().getWarPoint() %}<span class="text-rouge">{{ ((character.getExpansion() + 1) * 75000)|number_format }}</span>{% else %}{{ ((character.getExpansion() + 1) * 75000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'pdgImg'|trans }}" src="{{ asset('img/pdg.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getExpansion() == 2 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -504,7 +504,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'expansion' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -526,8 +526,8 @@
                 <tbody>
                 <tr class="{% if character.getArmement() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                     <th class="tab-cells-name">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/armement.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.armement'|trans|raw }}">{{ 'title.armement'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getArmement() %}{{ character.getArmement() }}{% else %}0{% endif %} / 5</button>
-                        {% if character.getArmement() != 5 %}<div class="mt-4">{% if (character.getArmement() + 1) * 2000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getArmement() + 1) * 2000)|number_format }}</span>{% else %}{{ ((character.getArmement() + 1) * 2000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/armement.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.armement'|trans|raw }}">{{ 'title.armement'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getArmement() %}{{ character.getArmement() }}{% else %}0{% endif %} / 5</button>
+                        {% if character.getArmement() != 5 %}<div class="mt-4">{% if (character.getArmement() + 1) * 2000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getArmement() + 1) * 2000)|number_format }}</span>{% else %}{{ ((character.getArmement() + 1) * 2000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                     </th>
                     {% if character.getArmement() == 5 %}
                         <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -539,7 +539,7 @@
                         </td>
                         <td width="101px" class="center-cells cell-middle">
                             {% if character.getSearch() == 'armement' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                 <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
@@ -556,7 +556,7 @@
                 {% if character.getArmement() <= 0 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/missile.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.missile'|trans|raw }}">{{ 'title.missile'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/missile.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.missile'|trans|raw }}">{{ 'title.missile'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.missile.blocked'|trans }}
@@ -568,8 +568,8 @@
                 {% else %}
                     <tr class="{% if character.getMissile() == 3 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/missile.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.missile'|trans|raw }}">{{ 'title.missile'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getMissile() %}{{ character.getMissile() }}{% else %}0{% endif %} / 3</button>
-                            {% if character.getMissile() != 3 %}<div class="mt-4">{% if (character.getMissile() + 1) * 2600 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getMissile() + 1) * 2600)|number_format }}</span>{% else %}{{ ((character.getMissile() + 1) * 2600)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/missile.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.missile'|trans|raw }}">{{ 'title.missile'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getMissile() %}{{ character.getMissile() }}{% else %}0{% endif %} / 3</button>
+                            {% if character.getMissile() != 3 %}<div class="mt-4">{% if (character.getMissile() + 1) * 2600 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getMissile() + 1) * 2600)|number_format }}</span>{% else %}{{ ((character.getMissile() + 1) * 2600)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getMissile() == 3 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -581,7 +581,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'missile' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -599,7 +599,7 @@
                 {% if character.getArmement() <= 2 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/laser.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.laser'|trans|raw }}">{{ 'title.laser'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/laser.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.laser'|trans|raw }}">{{ 'title.laser'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.laser.blocked'|trans }}
@@ -611,8 +611,8 @@
                 {% else %}
                     <tr class="{% if character.getLaser() == 3 %}finish-search availableBack{% else %}access-search{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/laser.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.laser'|trans|raw }}">{{ 'title.laser'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getLaser() %}{{ character.getLaser() }}{% else %}0{% endif %} / 3</button>
-                            {% if character.getLaser() != 3 %}<div class="mt-4">{% if (character.getLaser() + 1) * 13000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getLaser() + 1) * 13000)|number_format }}</span>{% else %}{{ ((character.getLaser() + 1) * 13000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/laser.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.laser'|trans|raw }}">{{ 'title.laser'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getLaser() %}{{ character.getLaser() }}{% else %}0{% endif %} / 3</button>
+                            {% if character.getLaser() != 3 %}<div class="mt-4">{% if (character.getLaser() + 1) * 13000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getLaser() + 1) * 13000)|number_format }}</span>{% else %}{{ ((character.getLaser() + 1) * 13000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getLaser() == 3 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -624,7 +624,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'laser' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -642,7 +642,7 @@
                 {% if character.getArmement() != 5 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/plasma.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.plasma'|trans|raw }}">{{ 'title.plasma'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/plasma.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.plasma'|trans|raw }}">{{ 'title.plasma'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.plasma.blocked'|trans }}
@@ -654,8 +654,8 @@
                 {% else %}
                     <tr class="{% if character.getPlasma() == 3 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/plasma.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.plasma'|trans|raw }}">{{ 'title.plasma'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPlasma() %}{{ character.getPlasma() }}{% else %}0{% endif %} / 3</button>
-                            {% if character.getPlasma() != 3 %}<div class="mt-4">{% if (character.getPlasma() + 1) * 29000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPlasma() + 1) * 29000)|number_format }}</span>{% else %}{{ ((character.getPlasma() + 1) * 29000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/plasma.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.plasma'|trans|raw }}">{{ 'title.plasma'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPlasma() %}{{ character.getPlasma() }}{% else %}0{% endif %} / 3</button>
+                            {% if character.getPlasma() != 3 %}<div class="mt-4">{% if (character.getPlasma() + 1) * 29000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPlasma() + 1) * 29000)|number_format }}</span>{% else %}{{ ((character.getPlasma() + 1) * 29000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getPlasma() == 3 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -667,7 +667,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'plasma' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -689,8 +689,8 @@
                 <tbody>
                 <tr class="{% if character.getIndustry() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                     <th class="tab-cells-name">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/industry.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.industry'|trans|raw }}">{{ 'title.industry'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getIndustry() %}{{ character.getIndustry() }}{% else %}0{% endif %} / 5</button>
-                        {% if character.getIndustry() != 5 %}<div class="mt-4">{% if (character.getIndustry() + 1) * 1500 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getIndustry() + 1) * 1500)|number_format }}</span>{% else %}{{ ((character.getIndustry() + 1) * 1500)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/industry.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.industry'|trans|raw }}">{{ 'title.industry'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getIndustry() %}{{ character.getIndustry() }}{% else %}0{% endif %} / 5</button>
+                        {% if character.getIndustry() != 5 %}<div class="mt-4">{% if (character.getIndustry() + 1) * 1500 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getIndustry() + 1) * 1500)|number_format }}</span>{% else %}{{ ((character.getIndustry() + 1) * 1500)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                     </th>
                     {% if character.getIndustry() == 5 %}
                         <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -702,7 +702,7 @@
                         </td>
                         <td width="101px" class="center-cells cell-middle">
                             {% if character.getSearch() == 'industry' %}
-                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                 <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                             {% else %}
@@ -719,7 +719,7 @@
                 {% if character.getIndustry() <= 2 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/lightShip.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.light'|trans|raw }}">{{ 'title.lightShip'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/lightShip.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.light'|trans|raw }}">{{ 'title.lightShip'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.lightShip.blocked'|trans }}
@@ -731,8 +731,8 @@
                 {% else %}
                     <tr class="{% if character.getLightShip() == 3 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/lightShip.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.light'|trans|raw }}">{{ 'title.lightShip'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getLightShip() %}{{ character.getLightShip() }}{% else %}0{% endif %} / 3</button>
-                            {% if character.getLightShip() != 3 %}<div class="mt-4">{% if (character.getLightShip() + 1) * 9000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getLightShip() + 1) * 9000)|number_format }}</span>{% else %}{{ ((character.getLightShip() + 1) * 9000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/lightShip.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.light'|trans|raw }}">{{ 'title.lightShip'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getLightShip() %}{{ character.getLightShip() }}{% else %}0{% endif %} / 3</button>
+                            {% if character.getLightShip() != 3 %}<div class="mt-4">{% if (character.getLightShip() + 1) * 9000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getLightShip() + 1) * 9000)|number_format }}</span>{% else %}{{ ((character.getLightShip() + 1) * 9000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getLightShip() == 3 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -744,7 +744,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'lightShip' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -762,7 +762,7 @@
                 {% if character.getIndustry() != 5 %}
                     <tr class="blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/heavyShip.png') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.heavy'|trans|raw }}">{{ 'title.heavyShip'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/heavyShip.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.heavy'|trans|raw }}">{{ 'title.heavyShip'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'research.heavyShip.blocked'|trans }}
@@ -774,8 +774,8 @@
                 {% else %}
                     <tr class="{% if character.getHeavyShip() == 3 %}finish-search availableBack{% else %}access-search{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/heavyShip.png') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.heavy'|trans|raw }}">{{ 'title.heavyShip'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getHeavyShip() %}{{ character.getHeavyShip() }}{% else %}0{% endif %} / 3</button>
-                            {% if character.getHeavyShip() != 3 %}<div class="mt-4">{% if (character.getHeavyShip() + 1) * 42000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getHeavyShip() + 1) * 42000)|number_format }}</span>{% else %}{{ ((character.getHeavyShip() + 1) * 42000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/heavyShip.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.heavy'|trans|raw }}">{{ 'title.heavyShip'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getHeavyShip() %}{{ character.getHeavyShip() }}{% else %}0{% endif %} / 3</button>
+                            {% if character.getHeavyShip() != 3 %}<div class="mt-4">{% if (character.getHeavyShip() + 1) * 42000 > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getHeavyShip() + 1) * 42000)|number_format }}</span>{% else %}{{ ((character.getHeavyShip() + 1) * 42000)|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getHeavyShip() == 3 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -787,7 +787,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'heavyShip' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -810,7 +810,7 @@
                 {% if ally == null %}
                 <tr class="blockedBack">
                     <th class="tab-cells-name">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/ally.jpg') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.ally'|trans|raw }}">{{ 'title.ally'|trans|raw }}</button>
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/ally.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.ally'|trans|raw }}">{{ 'title.ally'|trans|raw }}</button>
                     </th>
                     <td class="center-cells cell-middle">
                         {{ 'research.ally.blocked'|trans }}
@@ -823,8 +823,8 @@
                 {% if ally and ally.getPolitic == 'communism' %}
                     <tr class="{% if character.getPoliticRecycleur() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/recycleur_ally.jpg') }}"><button class="text-orange">{{ 'title.recycleur.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticRecycleur() %}{{ character.getPoliticRecycleur() }}{% else %}0{% endif %} / 5</button>
-                            {% if character.getPoliticRecycleur() != 5 %}<div class="mt-4">{% if (character.getPoliticRecycleur() + 1) * character.getResearchCost('recycleur_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticRecycleur() + 1) * character.getResearchCost('recycleur_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticRecycleur() + 1) * character.getResearchCost('recycleur_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/recycleur_ally.webp') }}"><button class="text-orange">{{ 'title.recycleur.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticRecycleur() %}{{ character.getPoliticRecycleur() }}{% else %}0{% endif %} / 5</button>
+                            {% if character.getPoliticRecycleur() != 5 %}<div class="mt-4">{% if (character.getPoliticRecycleur() + 1) * character.getResearchCost('recycleur_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticRecycleur() + 1) * character.getResearchCost('recycleur_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticRecycleur() + 1) * character.getResearchCost('recycleur_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getPoliticRecycleur() == 5 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -836,7 +836,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'recycleur_ally' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -853,7 +853,7 @@
                     {% if ally.getLevel() <= 0 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/worker_def.jpg') }}"><button class="text-orange mt-3">{{ 'title.worker.def.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/worker_def.webp') }}"><button class="text-orange mt-3">{{ 'title.worker.def.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.one.ally.blocked'|trans }}
@@ -865,8 +865,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticWorkerDef() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/worker_def.jpg') }}"><button class="text-orange">{{ 'title.worker.def.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticWorkerDef() %}{{ character.getPoliticWorkerDef() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticWorkerDef() != 5 %}<div class="mt-4">{% if (character.getPoliticWorkerDef() + 1) * character.getResearchCost('worker_def_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticWorkerDef() + 1) * character.getResearchCost('worker_def_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticWorkerDef() + 1) * character.getResearchCost('worker_def_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/worker_def.webp') }}"><button class="text-orange">{{ 'title.worker.def.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticWorkerDef() %}{{ character.getPoliticWorkerDef() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticWorkerDef() != 5 %}<div class="mt-4">{% if (character.getPoliticWorkerDef() + 1) * character.getResearchCost('worker_def_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticWorkerDef() + 1) * character.getResearchCost('worker_def_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticWorkerDef() + 1) * character.getResearchCost('worker_def_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticWorkerDef() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -878,7 +878,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'worker_def_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -900,7 +900,7 @@
                     {% if ally.getLevel() <= 1 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/armement_ally.jpg') }}"><button class="text-orange mt-3">{{ 'title.armement.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/armement_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.armement.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.two.ally.blocked'|trans }}
@@ -912,8 +912,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticArmement() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/armement_ally.jpg') }}"><button class="text-orange">{{ 'title.armement.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticArmement() %}{{ character.getPoliticArmement() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticArmement() != 5 %}<div class="mt-4">{% if (character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/armement_ally.webp') }}"><button class="text-orange">{{ 'title.armement.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticArmement() %}{{ character.getPoliticArmement() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticArmement() != 5 %}<div class="mt-4">{% if (character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticArmement() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -925,7 +925,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'armement_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -943,7 +943,7 @@
                     {% if ally.getLevel() <= 2 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cost_soldier.jpg') }}"><button class="text-orange mt-3">{{ 'title.cost.soldier.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cost_soldier.webp') }}"><button class="text-orange mt-3">{{ 'title.cost.soldier.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.three.ally.blocked'|trans }}
@@ -955,8 +955,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticCostSoldier() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cost_soldier.jpg') }}"><button class="text-orange">{{ 'title.cost.soldier.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticCostSoldier() %}{{ character.getPoliticCostSoldier() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticCostSoldier() != 5 %}<div class="mt-4">{% if (character.getPoliticCostSoldier() + 1) * character.getResearchCost('cost_soldier_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticCostSoldier() + 1) * character.getResearchCost('cost_soldier_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticCostSoldier() + 1) * character.getResearchCost('cost_soldier_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cost_soldier.webp') }}"><button class="text-orange">{{ 'title.cost.soldier.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticCostSoldier() %}{{ character.getPoliticCostSoldier() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticCostSoldier() != 5 %}<div class="mt-4">{% if (character.getPoliticCostSoldier() + 1) * character.getResearchCost('cost_soldier_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticCostSoldier() + 1) * character.getResearchCost('cost_soldier_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticCostSoldier() + 1) * character.getResearchCost('cost_soldier_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticCostSoldier() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -968,7 +968,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'cost_soldier_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -986,7 +986,7 @@
                     {% if ally.getLevel() <= 3 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/soldier_sale.jpg') }}"><button class="text-orange mt-3">{{ 'title.soldier.sale.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/soldier_sale.webp') }}"><button class="text-orange mt-3">{{ 'title.soldier.sale.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.four.ally.blocked'|trans }}
@@ -998,8 +998,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticSoldierSale() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/soldier_sale.jpg') }}"><button class="text-orange">{{ 'title.soldier.sale.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticSoldierSale() %}{{ character.getPoliticSoldierSale() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticSoldierSale() != 5 %}<div class="mt-4">{% if (character.getPoliticSoldierSale() + 1) * character.getResearchCost('soldier_sale_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticSoldierSale() + 1) * character.getResearchCost('soldier_sale_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticSoldierSale() + 1) * character.getResearchCost('soldier_sale_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/soldier_sale.webp') }}"><button class="text-orange">{{ 'title.soldier.sale.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticSoldierSale() %}{{ character.getPoliticSoldierSale() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticSoldierSale() != 5 %}<div class="mt-4">{% if (character.getPoliticSoldierSale() + 1) * character.getResearchCost('soldier_sale_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticSoldierSale() + 1) * character.getResearchCost('soldier_sale_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticSoldierSale() + 1) * character.getResearchCost('soldier_sale_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticSoldierSale() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1011,7 +1011,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'soldier_sale_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1033,7 +1033,7 @@
                     {% if ally.getLevel() <= 4 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/invade_ally.png') }}"><button class="text-orange mt-3">{{ 'title.invade.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/invade_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.invade.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.five.ally.blocked'|trans }}
@@ -1045,8 +1045,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticInvade() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/invade_ally.png') }}"><button class="text-orange">{{ 'title.invade.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticInvade() %}{{ character.getPoliticInvade() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticInvade() != 5 %}<div class="mt-4">{% if (character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/invade_ally.webp') }}"><button class="text-orange">{{ 'title.invade.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticInvade() %}{{ character.getPoliticInvade() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticInvade() != 5 %}<div class="mt-4">{% if (character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticInvade() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1058,7 +1058,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'invade_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1076,7 +1076,7 @@
                     {% if ally.getLevel() <= 5 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/pdg_ally.png') }}"><button class="text-orange mt-3">{{ 'title.pdg.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/pdg_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.pdg.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.six.ally.blocked'|trans }}
@@ -1088,8 +1088,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticPdg() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/pdg_ally.png') }}"><button class="text-orange">{{ 'title.pdg.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticPdg() %}{{ character.getPoliticPdg() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticPdg() != 5 %}<div class="mt-4">{% if (character.getPoliticPdg() + 1) * character.getResearchCost('pdg_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticPdg() + 1) * character.getResearchCost('pdg_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticPdg() + 1) * character.getResearchCost('pdg_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/pdg_ally.webp') }}"><button class="text-orange">{{ 'title.pdg.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticPdg() %}{{ character.getPoliticPdg() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticPdg() != 5 %}<div class="mt-4">{% if (character.getPoliticPdg() + 1) * character.getResearchCost('pdg_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticPdg() + 1) * character.getResearchCost('pdg_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticPdg() + 1) * character.getResearchCost('pdg_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticPdg() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1101,7 +1101,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'pdg_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1120,8 +1120,8 @@
                 {% if ally and ally.getPolitic == 'fascism' %}
                     <tr class="{% if character.getPoliticWorker() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/worker_ally.jpg') }}"><button class="text-orange">{{ 'title.worker.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticWorker() %}{{ character.getPoliticWorker() }}{% else %}0{% endif %} / 5</button>
-                            {% if character.getPoliticWorker() != 5 %}<div class="mt-4">{% if (character.getPoliticWorker() + 1) * character.getResearchCost('worker_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticWorker() + 1) * character.getResearchCost('worker_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticWorker() + 1) * character.getResearchCost('worker_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/worker_ally.webp') }}"><button class="text-orange">{{ 'title.worker.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticWorker() %}{{ character.getPoliticWorker() }}{% else %}0{% endif %} / 5</button>
+                            {% if character.getPoliticWorker() != 5 %}<div class="mt-4">{% if (character.getPoliticWorker() + 1) * character.getResearchCost('worker_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticWorker() + 1) * character.getResearchCost('worker_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticWorker() + 1) * character.getResearchCost('worker_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getPoliticWorker() == 5 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1133,7 +1133,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'worker_ally' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -1150,7 +1150,7 @@
                     {% if ally.getLevel() <= 0 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/armement_ally.jpg') }}"><button class="text-orange mt-3">{{ 'title.armement.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/armement_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.armement.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.one.ally.blocked'|trans }}
@@ -1162,8 +1162,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticArmement() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/armement_ally.jpg') }}"><button class="text-orange">{{ 'title.armement.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticArmement() %}{{ character.getPoliticArmement() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticArmement() != 5 %}<div class="mt-4">{% if (character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/armement_ally.webp') }}"><button class="text-orange">{{ 'title.armement.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticArmement() %}{{ character.getPoliticArmement() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticArmement() != 5 %}<div class="mt-4">{% if (character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticArmement() + 1) * character.getResearchCost('armement_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticArmement() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1175,7 +1175,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'armement_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1193,7 +1193,7 @@
                     {% if ally.getLevel() <= 1 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/barge_ally.jpg') }}"><button class="text-orange mt-3">{{ 'title.barge.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/barge_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.barge.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.two.ally.blocked'|trans }}
@@ -1205,8 +1205,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticBarge() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/barge_ally.jpg') }}"><button class="text-orange">{{ 'title.barge.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticBarge() %}{{ character.getPoliticBarge() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticBarge() != 5 %}<div class="mt-4">{% if (character.getPoliticBarge() + 1) * character.getResearchCost('barge_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticBarge() + 1) * character.getResearchCost('barge_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticBarge() + 1) * character.getResearchCost('barge_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/barge_ally.webp') }}"><button class="text-orange">{{ 'title.barge.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticBarge() %}{{ character.getPoliticBarge() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticBarge() != 5 %}<div class="mt-4">{% if (character.getPoliticBarge() + 1) * character.getResearchCost('barge_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticBarge() + 1) * character.getResearchCost('barge_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticBarge() + 1) * character.getResearchCost('barge_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticBarge() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1218,7 +1218,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'barge_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1236,7 +1236,7 @@
                     {% if ally.getLevel() <= 2 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/soldier_att.jpg') }}"><button class="text-orange mt-3">{{ 'title.soldier.att.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/soldier_att.webp') }}"><button class="text-orange mt-3">{{ 'title.soldier.att.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.three.ally.blocked'|trans }}
@@ -1248,8 +1248,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticSoldierAtt() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/soldier_att.jpg') }}"><button class="text-orange">{{ 'title.soldier.att.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticSoldierAtt() %}{{ character.getPoliticSoldierAtt() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticSoldierAtt() != 5 %}<div class="mt-4">{% if (character.getPoliticSoldierAtt() + 1) * character.getResearchCost('soldier_att_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticSoldierAtt() + 1) * character.getResearchCost('soldier_att_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticSoldierAtt() + 1) * character.getResearchCost('soldier_att_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/soldier_att.webp') }}"><button class="text-orange">{{ 'title.soldier.att.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticSoldierAtt() %}{{ character.getPoliticSoldierAtt() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticSoldierAtt() != 5 %}<div class="mt-4">{% if (character.getPoliticSoldierAtt() + 1) * character.getResearchCost('soldier_att_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticSoldierAtt() + 1) * character.getResearchCost('soldier_att_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticSoldierAtt() + 1) * character.getResearchCost('soldier_att_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticSoldierAtt() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1261,7 +1261,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'soldier_att_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1279,7 +1279,7 @@
                     {% if ally.getLevel() <= 3 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cost_tank.jpg') }}"><button class="text-orange mt-3">{{ 'title.cost.tank.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cost_tank.webp') }}"><button class="text-orange mt-3">{{ 'title.cost.tank.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.four.ally.blocked'|trans }}
@@ -1291,8 +1291,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticCostTank() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cost_tank.jpg') }}"><button class="text-orange">{{ 'title.cost.tank.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticCostTank() %}{{ character.getPoliticCostTank() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticCostTank() != 5 %}<div class="mt-4">{% if (character.getPoliticCostTank() + 1) * character.getResearchCost('cost_tank_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticCostTank() + 1) * character.getResearchCost('cost_tank_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticCostTank() + 1) * character.getResearchCost('cost_tank_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cost_tank.webp') }}"><button class="text-orange">{{ 'title.cost.tank.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticCostTank() %}{{ character.getPoliticCostTank() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticCostTank() != 5 %}<div class="mt-4">{% if (character.getPoliticCostTank() + 1) * character.getResearchCost('cost_tank_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticCostTank() + 1) * character.getResearchCost('cost_tank_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticCostTank() + 1) * character.getResearchCost('cost_tank_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticCostTank() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1304,7 +1304,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'cost_tank_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1322,7 +1322,7 @@
                     {% if ally.getLevel() <= 4 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/tank_def.jpeg') }}"><button class="text-orange mt-3">{{ 'title.tank.def.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/tank_def.webp') }}"><button class="text-orange mt-3">{{ 'title.tank.def.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.five.ally.blocked'|trans }}
@@ -1334,8 +1334,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticTankDef() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/tank_def.jpeg') }}"><button class="text-orange">{{ 'title.tank.def.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticTankDef() %}{{ character.getPoliticTankDef() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticTankDef() != 5 %}<div class="mt-4">{% if (character.getPoliticTankDef() + 1) * character.getResearchCost('tank_def_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticTankDef() + 1) * character.getResearchCost('tank_def_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticTankDef() + 1) * character.getResearchCost('tank_def_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/tank_def.webp') }}"><button class="text-orange">{{ 'title.tank.def.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticTankDef() %}{{ character.getPoliticTankDef() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticTankDef() != 5 %}<div class="mt-4">{% if (character.getPoliticTankDef() + 1) * character.getResearchCost('tank_def_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticTankDef() + 1) * character.getResearchCost('tank_def_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticTankDef() + 1) * character.getResearchCost('tank_def_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticTankDef() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1347,7 +1347,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'tank_def_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1365,7 +1365,7 @@
                     {% if ally.getLevel() <= 5 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/invade_ally.png') }}"><button class="text-orange mt-3">{{ 'title.invade.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/invade_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.invade.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.six.ally.blocked'|trans }}
@@ -1377,8 +1377,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticInvade() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/invade_ally.png') }}"><button class="text-orange">{{ 'title.invade.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticInvade() %}{{ character.getPoliticInvade() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticInvade() != 5 %}<div class="mt-4">{% if (character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/invade_ally.webp') }}"><button class="text-orange">{{ 'title.invade.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticInvade() %}{{ character.getPoliticInvade() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticInvade() != 5 %}<div class="mt-4">{% if (character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticInvade() + 1) * character.getResearchCost('invade_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticInvade() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1390,7 +1390,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'invade_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1409,8 +1409,8 @@
                 {% if ally and ally.getPolitic == 'democrat' %}
                     <tr class="{% if character.getPoliticProd() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/prod_ally.jpg') }}"><button class="text-orange">{{ 'title.prod.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticProd() %}{{ character.getPoliticProd() }}{% else %}0{% endif %} / 5</button>
-                            {% if character.getPoliticProd() != 5 %}<div class="mt-4">{% if (character.getPoliticProd() + 1) * character.getResearchCost('prod_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticProd() + 1) * character.getResearchCost('prod_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticProd() + 1) * character.getResearchCost('prod_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/prod_ally.webp') }}"><button class="text-orange">{{ 'title.prod.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticProd() %}{{ character.getPoliticProd() }}{% else %}0{% endif %} / 5</button>
+                            {% if character.getPoliticProd() != 5 %}<div class="mt-4">{% if (character.getPoliticProd() + 1) * character.getResearchCost('prod_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticProd() + 1) * character.getResearchCost('prod_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticProd() + 1) * character.getResearchCost('prod_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                         </th>
                         {% if character.getPoliticProd() == 5 %}
                             <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1422,7 +1422,7 @@
                             </td>
                             <td width="101px" class="center-cells cell-middle">
                                 {% if character.getSearch() == 'prod_ally' %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                     <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                 {% else %}
@@ -1439,7 +1439,7 @@
                     {% if ally.getLevel() <= 0 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/search_ally.jpg') }}"><button class="text-orange mt-3">{{ 'title.search.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/search_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.search.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.one.ally.blocked'|trans }}
@@ -1451,8 +1451,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticSearch() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/search_ally.jpg') }}"><button class="text-orange">{{ 'title.search.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticSearch() %}{{ character.getPoliticSearch() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticSearch() != 5 %}<div class="mt-4">{% if (character.getPoliticSearch() + 1) * character.getResearchCost('search_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticSearch() + 1) * character.getResearchCost('search_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticSearch() + 1) * character.getResearchCost('search_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/search_ally.webp') }}"><button class="text-orange">{{ 'title.search.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticSearch() %}{{ character.getPoliticSearch() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticSearch() != 5 %}<div class="mt-4">{% if (character.getPoliticSearch() + 1) * character.getResearchCost('search_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticSearch() + 1) * character.getResearchCost('search_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticSearch() + 1) * character.getResearchCost('search_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticSearch() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1464,7 +1464,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'search_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1482,7 +1482,7 @@
                     {% if ally.getLevel() <= 1 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cost_scientist.jpg') }}"><button class="text-orange mt-3">{{ 'title.cost.scientist.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cost_scientist.webp') }}"><button class="text-orange mt-3">{{ 'title.cost.scientist.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.two.ally.blocked'|trans }}
@@ -1494,8 +1494,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticCostScientist() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cost_scientist.jpg') }}"><button class="text-orange">{{ 'title.cost.scientist.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticCostScientist() %}{{ character.getPoliticCostScientist() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticCostScientist() != 5 %}<div class="mt-4">{% if (character.getPoliticCostScientist() + 1) * character.getResearchCost('cost_scientist_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticCostScientist() + 1) * character.getResearchCost('cost_scientist_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticCostScientist() + 1) * character.getResearchCost('cost_scientist_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cost_scientist.webp') }}"><button class="text-orange">{{ 'title.cost.scientist.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticCostScientist() %}{{ character.getPoliticCostScientist() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticCostScientist() != 5 %}<div class="mt-4">{% if (character.getPoliticCostScientist() + 1) * character.getResearchCost('cost_scientist_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticCostScientist() + 1) * character.getResearchCost('cost_scientist_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticCostScientist() + 1) * character.getResearchCost('cost_scientist_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticCostScientist() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1507,7 +1507,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'cost_scientist_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1525,7 +1525,7 @@
                     {% if ally.getLevel() <= 2 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cargo_ally.png') }}"><button class="text-orange mt-3">{{ 'title.cargo.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/cargo_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.cargo.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.three.ally.blocked'|trans }}
@@ -1537,8 +1537,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticCargo() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cargo_ally.png') }}"><button class="text-orange">{{ 'title.cargo.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticCargo() %}{{ character.getPoliticCargo() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticCargo() != 5 %}<div class="mt-4">{% if (character.getPoliticCargo() + 1) * character.getResearchCost('cargo_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticCargo() + 1) * character.getResearchCost('cargo_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticCargo() + 1) * character.getResearchCost('cargo_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/cargo_ally.webp') }}"><button class="text-orange">{{ 'title.cargo.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticCargo() %}{{ character.getPoliticCargo() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticCargo() != 5 %}<div class="mt-4">{% if (character.getPoliticCargo() + 1) * character.getResearchCost('cargo_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticCargo() + 1) * character.getResearchCost('cargo_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticCargo() + 1) * character.getResearchCost('cargo_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticCargo() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1550,7 +1550,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'cargo_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1568,7 +1568,7 @@
                     {% if ally.getLevel() <= 3 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/armor_ally.jpg') }}"><button class="text-orange mt-3">{{ 'title.armor.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/armor_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.armor.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.four.ally.blocked'|trans }}
@@ -1580,8 +1580,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticArmor() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/armor_ally.jpg') }}"><button class="text-orange">{{ 'title.armor.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticArmor() %}{{ character.getPoliticArmor() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticArmor() != 5 %}<div class="mt-4">{% if (character.getPoliticArmor() + 1) * character.getResearchCost('armor_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticArmor() + 1) * character.getResearchCost('armor_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticArmor() + 1) * character.getResearchCost('armor_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/armor_ally.webp') }}"><button class="text-orange">{{ 'title.armor.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticArmor() %}{{ character.getPoliticArmor() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticArmor() != 5 %}<div class="mt-4">{% if (character.getPoliticArmor() + 1) * character.getResearchCost('armor_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticArmor() + 1) * character.getResearchCost('armor_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticArmor() + 1) * character.getResearchCost('armor_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticArmor() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1593,7 +1593,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'armor_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1611,7 +1611,7 @@
                     {% if ally.getLevel() <= 4 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/merchant_ally.png') }}"><button class="text-orange mt-3">{{ 'title.merchant.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/merchant_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.merchant.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.five.ally.blocked'|trans }}
@@ -1623,8 +1623,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticMerchant() == 5 %}finish-search availableBack{% else %}access-search{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/merchant_ally.png') }}"><button class="text-orange">{{ 'title.merchant.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticMerchant() %}{{ character.getPoliticMerchant() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticMerchant() != 5 %}<div class="mt-4">{% if (character.getPoliticMerchant() + 1) * character.getResearchCost('merchant_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticMerchant() + 1) * character.getResearchCost('merchant_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticMerchant() + 1) * character.getResearchCost('merchant_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/merchant_ally.webp') }}"><button class="text-orange">{{ 'title.merchant.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticMerchant() %}{{ character.getPoliticMerchant() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticMerchant() != 5 %}<div class="mt-4">{% if (character.getPoliticMerchant() + 1) * character.getResearchCost('merchant_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticMerchant() + 1) * character.getResearchCost('merchant_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticMerchant() + 1) * character.getResearchCost('merchant_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticMerchant() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1636,7 +1636,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'merchant_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}
@@ -1654,7 +1654,7 @@
                     {% if ally.getLevel() <= 5 %}
                         <tr class="blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/colonisation_ally.png') }}"><button class="text-orange mt-3">{{ 'title.colonisation.ally'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/colonisation_ally.webp') }}"><button class="text-orange mt-3">{{ 'title.colonisation.ally'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'research.six.ally.blocked'|trans }}
@@ -1666,8 +1666,8 @@
                     {% else %}
                         <tr class="{% if character.getPoliticColonisation() == 5 %}finish-search availableBack{% else %}access-search-2{% endif %}">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/colonisation_ally.png') }}"><button class="text-orange">{{ 'title.colonisation.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticColonisation() %}{{ character.getPoliticColonisation() }}{% else %}0{% endif %} / 5</button>
-                                {% if character.getPoliticColonisation() != 5 %}<div class="mt-4">{% if (character.getPoliticColonisation() + 1) * character.getResearchCost('colonisation_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticColonisation() + 1) * character.getResearchCost('colonisation_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticColonisation() + 1) * character.getResearchCost('colonisation_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}"></div>{% endif %}
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/colonisation_ally.webp') }}"><button class="text-orange">{{ 'title.colonisation.ally'|trans|raw }} - {{ 'research.level'|trans|raw }} {% if character.getPoliticColonisation() %}{{ character.getPoliticColonisation() }}{% else %}0{% endif %} / 5</button>
+                                {% if character.getPoliticColonisation() != 5 %}<div class="mt-4">{% if (character.getPoliticColonisation() + 1) * character.getResearchCost('colonisation_ally') > character.getBitcoin() %}<span class="text-rouge">{{ ((character.getPoliticColonisation() + 1) * character.getResearchCost('colonisation_ally'))|number_format }}</span>{% else %}{{ ((character.getPoliticColonisation() + 1) * character.getResearchCost('colonisation_ally'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></div>{% endif %}
                             </th>
                             {% if character.getPoliticColonisation() == 5 %}
                                 <td colspan="2" width="101px" class="center-cells cell-middle">
@@ -1679,7 +1679,7 @@
                                 </td>
                                 <td width="101px" class="center-cells cell-middle">
                                     {% if character.getSearch() == 'colonisation_ally' %}
-                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.gif') }}">
+                                        <img alt="{{ 'image'|trans({},'front_global') }}" width="30" src="{{ asset('img/search.webp') }}">
                                         <div class="timerArea" hidden>{{ character.getSearchAt()|date('Y/m/d H:i:s') }}</div>
 
                                     {% else %}

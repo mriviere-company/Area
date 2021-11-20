@@ -24,7 +24,7 @@ class AllyImageType extends AbstractType
                     'required' => false,
                     'attr'  => [
                         'class'       => '',
-                        'accept'      => '.jpg,.jpeg,.bmp,.png',
+                        'accept'      => '.jpg,.jpeg,.bmp,.webp',
                         'autocomplete' => 'off',
                         'data-max-size' => '1'
                     ]

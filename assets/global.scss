@@ -34,7 +34,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
   body.area {
     margin: 0 auto;
     color: #fff;
-    background: $back-wall-unconnected no-repeat top, $back-wall repeat bottom;
+    background: $back-wall-connected no-repeat top, $back-wall repeat bottom;
     background-attachment: fixed;
     background-size: cover;
     background-color: $color-black;

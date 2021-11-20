@@ -551,7 +551,7 @@
       </trans-unit>
       <trans-unit id="gJx_zZG" resname="tooltip.dailyCost">
         <source>tooltip.dailyCost</source>
-        <target><![CDATA[Coût des troupes : <span class="text-rouge">-%soldier%</span> <img src='/img/coin.png'><br>Coût des vaisseaux : <span class="text-rouge">-%ship%</span> <img src='/img/coin.png'><br>Coût des bâtiments : <span class="text-rouge">-%build%</span> <img src='/img/coin.png'><br>Dépenses totales : <span class="text-rouge">-%bitcoin% <img src='/img/coin.png'></span><br>Gain total : <span class="text-vert">+%gain% <img src='/img/coin.png'></span>]]></target>
+        <target><![CDATA[Coût des troupes : <span class="text-rouge">-%soldier%</span> <img src='/img/coin.webp'><br>Coût des vaisseaux : <span class="text-rouge">-%ship%</span> <img src='/img/coin.webp'><br>Coût des bâtiments : <span class="text-rouge">-%build%</span> <img src='/img/coin.webp'><br>Dépenses totales : <span class="text-rouge">-%bitcoin% <img src='/img/coin.webp'></span><br>Gain total : <span class="text-vert">+%gain% <img src='/img/coin.webp'></span>]]></target>
       </trans-unit>
       <trans-unit id="X_zrZv." resname="0">
         <source>0</source>

@@ -96,7 +96,7 @@ class ZombiesController extends AbstractController
                     $aMilitary = $dSoldier - $aMilitary;
                     $reportDef->setType("zombie");
                     $reportDef->setTitle("Rapport invasion zombies : Victoire");
-                    $reportDef->setImageName("zombie_win_report.jpg");
+                    $reportDef->setImageName("zombie_win_report.webp");
                     $soldierDtmp = $planetAtt->getSoldier();
                     $workerDtmp = $planetAtt->getWorker();
                     $tankDtmp = $planetAtt->getTank();
@@ -130,7 +130,7 @@ class ZombiesController extends AbstractController
                     $tankDtmp = $planetAtt->getTank();
                     $reportDef->setTitle("Rapport invasion zombies : Défaite");
                     $reportDef->setType("zombie");
-                    $reportDef->setImageName("zombie_lose_report.jpg");
+                    $reportDef->setImageName("zombie_lose_report.webp");
                     $reportDef->setContent("Vous recevez des rapports de toutes parts vous signalant des zombies sur la planète " . $planetAtt->getName() . " en <span><a href='/connect/carte-spatiale/" . $planetAtt->getSector()->getPosition() . "/" . $planetAtt->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetAtt->getSector()->getGalaxy()->getPosition() . ":" . $planetAtt->getSector()->getPosition() . ":" . $planetAtt->getPosition() . "</a></span>.<br>Mais vous tardez a réagir et le manque de préparation lui est fatale.<br>Vous recevez ces derniers mots de votre Gouverneur local «Salopard! Vous étiez censé nous protéger, ou est l'armée !»<br> Les dernières images de la planète vous montre des zombies envahissant le moindre recoin de la planète.<br>Vos <span class='text-rouge'>" . number_format($soldierDtmp) . "</span> soldats, <span class='text-rouge'>" . number_format($tankDtmp) . "</span> tanks et <span class='text-rouge'>" . number_format($workerDtmp) . "</span> travailleurs sont tous mort. Votre empire en a pris un coup, mais il vous reste des planètes, remettez vous en question! Consolidez vos positions et allez détuire les nids de zombies!");
                     $em->persist($reportDef);
                     $planetAtt->setWorker(125000);
@@ -143,7 +143,7 @@ class ZombiesController extends AbstractController
                             $planetAtt->setSoldierMax(500);
                         }
                         $planetAtt->setName('Base Zombie');
-                        $planetAtt->setImageName('hydra_planet.png');
+                        $planetAtt->setImageName('hydra_planet.webp');
                         $planetAtt->setCharacter($zombie);
                     } else {
                         $planetAtt->setName('Inhabitée');

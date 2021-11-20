@@ -361,7 +361,7 @@ class PlanetsController extends AbstractController
             $reportEmbargo->setSendAt($now);
             $reportEmbargo->setCharacter($embargo->getUser());
             $reportEmbargo->setTitle("Votre planète est sous embargo !");
-            $reportEmbargo->setImageName("embargo_report.jpg");
+            $reportEmbargo->setImageName("embargo_report.webp");
             $reportEmbargo->setContent("Votre planète <span class='text-vert'>" . $embargo->getName() . "</span> subit actuellement l'embargo d'une flotte hostile !<br>Vous avez perdu <span class='text-rouge'>" . number_format($food) . "</span> rations, <span class='text-rouge'>" . number_format($worker) . "</span> travailleurs et <span class='text-rouge'>" . number_format($soldier) . "</span> soldats.");
             $em->persist($reportEmbargo);
         }

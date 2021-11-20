@@ -22,7 +22,7 @@
                 <tr>
                     <td>
                         <span class="mr-5">{{ 'server'|trans }} {{ server.id }}</span>
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4" src="{{ asset('img/server.png') }}">
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4" src="{{ asset('img/server.webp') }}">
                         {% if server.open == 1 %}
                             <span class="text-vert">{{ 'server.open'|trans }}</span> -
                         {% else %}
@@ -47,7 +47,7 @@
                 <tr>
                     {% endif %}
                     <td class="text-center">
-                        <a href="{{ path('connect_server', {'galaxy': galaxy.id, 'server': server.id}) }}"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.characters|number_format }) }}</span></span></a>
+                        <a href="{{ path('connect_server', {'galaxy': galaxy.id, 'server': server.id}) }}"><span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}" src="{{ asset('img/galaxy.webp') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.characters|number_format }) }}</span></span></a>
                     </td>
                     {% set x = x + 1 %}
                     {% endfor %}
@@ -56,6 +56,6 @@
             </table>
         {% endfor %}
         <div><a class="my-4" href="{{ path('erase_cookie') }}"><button class="text-rouge m-5 text-more p-3">{{ 'disconnect'|trans }}</button></a></div>
-    <div class="mt-3"><img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/go.jpg') }}"></div>
+    <div class="mt-3"><img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/go.webp') }}"></div>
     </div>
 {% endblock %}

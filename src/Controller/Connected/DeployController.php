@@ -121,7 +121,7 @@ class DeployController extends AbstractController
             $planet->setWtProduction(0);
             $planet->setScientist(0);
             $planet->setName('Lune');
-            $image = ['moon1.png', 'moon2.png', 'moon3.png', 'moon4.png', 'moon5.png'];
+            $image = ['moon1.webp', 'moon2.webp', 'moon3.webp', 'moon4.webp', 'moon5.webp'];
             $planet->setImageName($image[rand(0, 4)]);
             if ($planet->getNbCdr() < 750000 && $planet->getWtCdr() < 750000) {
                 $planet->setGround(rand(100, 150));

@@ -26,7 +26,7 @@
                 {% else %}
                     <div class="text-center mt-2"><img alt="{{ 'image'|trans({},'front_global') }}"
                                                        class="border-solid-img" height="64" width="64"
-                                                       src="{{ asset('img/avatar.png') }}"></div>
+                                                       src="{{ asset('img/avatar.webp') }}"></div>
                 {% endif %}
                 {% if characterProfil.getAlly() %}
                     {% if characterProfil.getAlly.imageName %}
@@ -37,7 +37,7 @@
                     {% else %}
                         <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}"
                                                            class="border-solid-img" height="42" width="64"
-                                                           src="{{ asset('img/ally.jpg') }}"></div>
+                                                           src="{{ asset('img/ally.webp') }}"></div>
                     {% endif %}
                 {% endif %}
             </div>

@@ -31,13 +31,13 @@ class FleetsController extends AbstractController
             $reportNuclearAtt = new Report();
             $reportNuclearAtt->setType('fight');
             $reportNuclearAtt->setTitle("Votre missile nucléaire a touché sa cible !");
-            $reportNuclearAtt->setImageName("nuclear_attack.png");
+            $reportNuclearAtt->setImageName("nuclear_attack.webp");
             $reportNuclearAtt->setSendAt($now);
             $reportNuclearAtt->setCharacter($nukeBomb->getCharacter());
             $reportNuclearDef = new Report();
             $reportNuclearDef->setType('fight');
             $reportNuclearDef->setTitle("Un missile nucléaire vous a frappé !");
-            $reportNuclearDef->setImageName("nuclear_attack.png");
+            $reportNuclearDef->setImageName("nuclear_attack.webp");
             $reportNuclearDef->setSendAt($now);
             $reportNuclearDef->setCharacter($newHome->getCharacter());
             $dest = $nukeBomb->getDestination();
@@ -142,7 +142,7 @@ class FleetsController extends AbstractController
                         $reportRec = new Report();
                         $reportRec->setType('move');
                         $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
-                        $reportRec->setImageName("recycle_report.jpg");
+                        $reportRec->setImageName("recycle_report.webp");
                         $reportRec->setSendAt($now);
                         $reportRec->setCharacter($fleetCdr->getCharacter());
                         $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getCharacter());
@@ -154,7 +154,7 @@ class FleetsController extends AbstractController
                     $reportRec = new Report();
                     $reportRec->setType('move');
                     $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
-                    $reportRec->setImageName("recycle_report.jpg");
+                    $reportRec->setImageName("recycle_report.webp");
                     $reportRec->setSendAt($now);
                     $reportRec->setCharacter($fleetCdr->getCharacter());
                     $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getCharacter());
@@ -189,7 +189,7 @@ class FleetsController extends AbstractController
                     $reportRec = new Report();
                     $reportRec->setType('move');
                     $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
-                    $reportRec->setImageName("recycle_report.jpg");
+                    $reportRec->setImageName("recycle_report.webp");
                     $reportRec->setSendAt($now);
                     $reportRec->setCharacter($fleetCdr->getCharacter());
                     $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getCharacter());
@@ -201,7 +201,7 @@ class FleetsController extends AbstractController
                     $reportRec = new Report();
                     $reportRec->setType('move');
                     $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
-                    $reportRec->setImageName("recycle_report.jpg");
+                    $reportRec->setImageName("recycle_report.webp");
                     $reportRec->setSendAt($now);
                     $reportRec->setCharacter($fleetCdr->getCharacter());
                     $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getCharacter());

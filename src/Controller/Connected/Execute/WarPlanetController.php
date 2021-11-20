@@ -158,7 +158,7 @@ class WarPlanetController extends AbstractController
                 }
                 if ($characterDefender->getZombie() == 1) {
                     $reportInv->setTitle("Rapport contre attaque : Défaite");
-                    $reportInv->setImageName("zombie_lose_report.jpg");
+                    $reportInv->setImageName("zombie_lose_report.webp");
                     $reportInv->setContent("Vous pensiez partir pour une promenade de santé mais la réalité vous rattrape vite... Vous avez envoyé tout vos soldats au casse-pipe.<br>Pire, vous avez attirer l'attention des zombies et fait monter la menace de 10 points ! Vous avez interêt a prendre vite" .
                         $this->forward('App\Controller\FacilitiesController::coordinatesAction', ['planet' => $planetDefender, 'usePlanet' => $usePlanet])->getContent() .
                         "sinon votre Empire ne tiendra pas longtemps. Vous avez tué <span class='text-vert'>" .
@@ -167,7 +167,7 @@ class WarPlanetController extends AbstractController
                     $character->setZombieAtt($character->getZombieAtt() + 10);
                 } else {
                     $reportDef->setTitle("Rapport d'invasion : Victoire (défense)");
-                    $reportDef->setImageName("defend_win_report.jpg");
+                    $reportDef->setImageName("defend_win_report.webp");
                     $reportDef->setContent("Bien joué ! Vos travailleurs et soldats ont repoussé l'invasion du joueur" .
                         $this->forward('App\Controller\FacilitiesController::userReportAction', ['character' => $character, 'usePlanet' => $usePlanetDef])->getContent() .
                         "sur votre planète" . $this->forward('App\Controller\FacilitiesController::coordinatesAction', ['planet' => $planetDefender, 'usePlanet' => $usePlanetDef])->getContent() .
@@ -176,7 +176,7 @@ class WarPlanetController extends AbstractController
                         number_format($warPointDef) . "</span> points de Guerre.");
 
                     $reportInv->setTitle("Rapport d'invasion : Défaite (attaque)");
-                    $reportInv->setImageName("invade_lose_report.jpg");
+                    $reportInv->setImageName("invade_lose_report.webp");
                     $reportInv->setContent("'AH AH AH AH' le rire de " .
                         $this->forward('App\Controller\FacilitiesController::userReportAction', ['character' => $characterDefender, 'usePlanet' => $usePlanet])->getContent() .
                         " résonne à vos oreilles d'un curieuse façon. Votre sang bouillonne vous l'a vouliez cette planète. Qu'il rigole donc, vous reviendrez prendre " .
@@ -209,7 +209,7 @@ class WarPlanetController extends AbstractController
                         $character->setNbrInvade(1);
                     }
                     $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
-                    $reportDef->setImageName("defend_lose_report.jpg");
+                    $reportDef->setImageName("defend_lose_report.webp");
 
                     $reportDef->setContent("Mais QUI ? QUI !!! Vous as donné un commandant si médiocre" .
                         $this->forward('App\Controller\FacilitiesController::userReportAction', ['character' => $character, 'usePlanet' => $usePlanetDef])->getContent() .
@@ -220,7 +220,7 @@ class WarPlanetController extends AbstractController
                         number_format($workerDtmp) . "</span> travailleurs sont tous mort. Votre empire en a pris un coup, mais il vous reste des planètes, il est l'heure de la revanche !");
 
                     $reportInv->setTitle("Rapport d'invasion : Victoire (attaque)");
-                    $reportInv->setImageName("invade_win_report.jpg");
+                    $reportInv->setImageName("invade_win_report.webp");
                     $reportInv->setContent("Vous débarquez après que la planète ait été prise et vous installez sur le trône de" .
                         $this->forward('App\Controller\FacilitiesController::userReportAction', ['character' => $characterDefender, 'usePlanet' => $usePlanet])->getContent() .
                         ". Qu'il est bon d'entendre ses pleurs lointains... La planète" .
@@ -243,7 +243,7 @@ class WarPlanetController extends AbstractController
                         }
                         $usePlanetDef = $em->getRepository('App:Planet')->findByFirstPlanet($characterDefender);
                         $reportDef->setTitle("Rapport d'invasion : Défaite (défense)");
-                        $reportDef->setImageName("defend_lose_report.jpg");
+                        $reportDef->setImageName("defend_lose_report.webp");
                         $reportDef->setContent("Mais QUI ? QUI !!! Vous as donné un commandant si médiocre" .
                             $this->forward('App\Controller\FacilitiesController::userReportAction', ['character' => $character, 'usePlanet' => $usePlanetDef])->getContent() .
                             "n'a pas eu à faire grand chose pour prendre votre planète" .
@@ -253,7 +253,7 @@ class WarPlanetController extends AbstractController
                             number_format($workerDtmp) . "</span> travailleurs sont tous mort. Votre empire en a pris un coup, mais il vous reste des planètes, il est l'heure de la revanche !");
 
                         $reportInv->setTitle("Rapport d'invasion : Victoire (attaque)");
-                        $reportInv->setImageName("invade_win_report.jpg");
+                        $reportInv->setImageName("invade_win_report.webp");
                         $reportInv->setContent("Vous débarquez après que la planète ait été prise et vous installez sur le trône de" .
                             $this->forward('App\Controller\FacilitiesController::userReportAction', ['character' => $characterDefender, 'usePlanet' => $usePlanet])->getContent() .
                             ". Qu'il est bon d'entendre ses pleurs lointains... La planète " .
@@ -265,17 +265,17 @@ class WarPlanetController extends AbstractController
                             number_format($warPointAtt) . "</span> points de Guerre.");
                     } else {
                         $reportInv->setTitle("Rapport contre attaque : Victoire");
-                        $reportInv->setImageName("zombie_win_report.jpg");
+                        $reportInv->setImageName("zombie_win_report.webp");
                         $reportInv->setContent("Vos soldats débarquent sur la planète zombie et sortent l'artillerie lourde ! Les rues s'emplissent de morts mais l'entraînement prévaut sur la peur et vous purgez cette planète de cette peste macabre.<br> La planète " . $planetDefender->getName() . " en (" . "<span><a href='/connect/carte-spatiale/" . $planetDefender->getSector()->getPosition() . "/" . $planetDefender->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $planetDefender->getSector()->getGalaxy()->getPosition() . ":" . $planetDefender->getSector()->getPosition() . ":" . $planetDefender->getPosition() . "</a></span>) est désormais libre. Et votre indice d'attaque zombie est divisé par 10. Lors de l'assaut vous dénombrez <span class='text-rouge'>" . number_format(round($soldierAtmp)) . "</span> pertes parmis vos soldats. Mais vous avez exterminé <span class='text-vert'>" . number_format(round($soldierDtmp + ($workerDtmp / 6) + ($tankDtmp * 3000))) . "</span> zombies ! <br>Et vous remportez <span class='text-vert'>+" . number_format($warPointAtt) . "</span> points de Guerre ainsi que <span class='text-vert'>+10</span> uraniums.");
                     }
                     if ($characterDefender->getZombie() == 1) {
                         $image = [
-                            'planet1.png', 'planet2.png', 'planet3.png', 'planet4.png', 'planet5.png', 'planet6.png',
-                            'planet7.png', 'planet8.png', 'planet9.png', 'planet10.png', 'planet11.png', 'planet12.png',
-                            'planet13.png', 'planet14.png', 'planet15.png', 'planet16.png', 'planet17.png', 'planet18.png',
-                            'planet19.png', 'planet20.png', 'planet21.png', 'planet22.png', 'planet23.png', 'planet24.png',
-                            'planet25.png', 'planet26.png', 'planet27.png', 'planet28.png', 'planet29.png', 'planet30.png',
-                            'planet31.png', 'planet32.png', 'planet33.png'
+                            'planet1.webp', 'planet2.webp', 'planet3.webp', 'planet4.webp', 'planet5.webp', 'planet6.webp',
+                            'planet7.webp', 'planet8.webp', 'planet9.webp', 'planet10.webp', 'planet11.webp', 'planet12.webp',
+                            'planet13.webp', 'planet14.webp', 'planet15.webp', 'planet16.webp', 'planet17.webp', 'planet18.webp',
+                            'planet19.webp', 'planet20.webp', 'planet21.webp', 'planet22.webp', 'planet23.webp', 'planet24.webp',
+                            'planet25.webp', 'planet26.webp', 'planet27.webp', 'planet28.webp', 'planet29.webp', 'planet30.webp',
+                            'planet31.webp', 'planet32.webp', 'planet33.webp'
                         ];
 
                         if ($character->getZombieAtt() > 9) {
@@ -304,7 +304,7 @@ class WarPlanetController extends AbstractController
                             $planetDefender->setSoldierMax(500);
                         }
                         $planetDefender->setName('Base Zombie');
-                        $planetDefender->setImageName('hydra_planet.png');
+                        $planetDefender->setImageName('hydra_planet.webp');
                     }
                 }
                 if($characterDefender->getAllPlanets() == 0 && $characterDefender->getZombie() == 0) {
@@ -461,7 +461,7 @@ class WarPlanetController extends AbstractController
                 }
 
                 $reportDef->setTitle("Rapport de pillage : Victoire (défense)");
-                $reportDef->setImageName("defend_win_report.jpg");
+                $reportDef->setImageName("defend_win_report.webp");
                 $reportDef->setContent("Le dirigeant" . $this->forward('App\Controller\FacilitiesController::userReportAction', ['user' => $fleet->getCharacter(), 'usePlanet' => $usePlanetDef])->getContent() .
                     "a tenté de piller votre planète" .
                     $this->forward('App\Controller\FacilitiesController::coordinatesAction', ['planet' => $planetDefender, 'usePlanet' => $usePlanetDef])->getContent() .
@@ -470,7 +470,7 @@ class WarPlanetController extends AbstractController
                     "</span> points de Guerre.");
 
                 $reportLoot->setTitle("Rapport de pillage : Défaite (attaque)");
-                $reportLoot->setImageName("invade_lose_report.jpg");
+                $reportLoot->setImageName("invade_lose_report.webp");
                 $reportLoot->setContent("Le dirigeant" . $this->forward('App\Controller\FacilitiesController::userReportAction', ['character' => $characterDefender, 'usePlanet' => $usePlanet])->getContent() .
                     " vous attendait de pieds fermes. Sa planète " .
                     $this->forward('App\Controller\FacilitiesController::coordinatesAction', ['planet' => $planetDefender, 'usePlanet' => $usePlanet])->getContent() .
@@ -525,7 +525,7 @@ class WarPlanetController extends AbstractController
                 }
                 $fleet->getCharacter()->getRank()->setWarPoint($fleet->getCharacter()->getRank()->getWarPoint() + $warPointAtt);
                 $reportDef->setTitle("Rapport de pillage : Défaite (défense)");
-                $reportDef->setImageName("defend_lose_report.jpg");
+                $reportDef->setImageName("defend_lose_report.webp");
                 $reportDef->setContent("Le dirigeant" . $this->forward('App\Controller\FacilitiesController::userReportAction', ['user' => $fleet->getCharacter(), 'usePlanet' => $usePlanetDef])->getContent() .
                     " vient de piller (" . number_format(round($niobium)) . " niobiums" . number_format(round($water)) . " eaux" . number_format(round($uranium)) . " uraniums) votre planète" .
                     $this->forward('App\Controller\FacilitiesController::coordinatesAction', ['planet' => $planetDefender, 'usePlanet' => $usePlanetDef])->getContent() .
@@ -534,7 +534,7 @@ class WarPlanetController extends AbstractController
                     "</span> tanks. Votre économie en a pris un coup, mais si vous étiez là pour planter des choux ça se serait ! Préparez la contre-attaque !");
 
                 $reportLoot->setTitle("Rapport de pillage : Victoire (attaque)");
-                $reportLoot->setImageName("invade_win_report.jpg");
+                $reportLoot->setImageName("invade_win_report.webp");
                 $reportLoot->setContent("Vos soldats ont fini de charger vos cargos ( <span class='text-vert'>" . number_format(round($niobium)) . " niobiums - " . number_format(round($water)) .
                     " eaux - " . number_format(round($uranium)) . " uraniums </span>) et remontent dans les barges, le pillage de la planète " .
                     $this->forward('App\Controller\FacilitiesController::coordinatesAction', ['planet' => $planetDefender, 'usePlanet' => $usePlanet])->getContent() .

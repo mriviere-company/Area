@@ -230,7 +230,7 @@ class AllyController extends AbstractController
 
             $ally->addCharacter($character);
             $ally->setMaxMembers(1);
-            $ally->setImageName('democrat.jpg');
+            $ally->setImageName('democrat.webp');
             $ally->setBitcoin(1);
             $ally->setPdg(1);
             $em->persist($ally);
@@ -242,7 +242,7 @@ class AllyController extends AbstractController
                 $mGrade = new Grade($ally, "Citoyen", 3, false, false, false, false, false, false, false);
                 $lGrade = new Grade($ally, "Mineur", 5, false, false, false, false, false, false, false);
                 $ally->setMaxMembers(3);
-                $ally->setImageName('democrat.jpg');
+                $ally->setImageName('democrat.webp');
                 $ally->setBitcoin(25000);
                 $ally->setPdg(0);
             } elseif ($form_ally->get('politic')->getData() == 'fascism') {
@@ -251,7 +251,7 @@ class AllyController extends AbstractController
                 $mGrade = new Grade($ally, "Soldat", 3, false, false, false, false, false, false, false);
                 $lGrade = new Grade($ally, "Apirant", 5, false, false, false, false, false, false, false);
                 $ally->setMaxMembers(2);
-                $ally->setImageName('fascism.jpg');
+                $ally->setImageName('fascism.webp');
                 $ally->setBitcoin(15000);
                 $ally->setPdg(2000);
             } elseif ($form_ally->get('politic')->getData() == 'communism'){
@@ -260,7 +260,7 @@ class AllyController extends AbstractController
                 $sGrade = new Grade($ally, "Camarade", 1, true, true, true, true, true, true, true);
                 $lGrade = new Grade($ally, "Goulag", 2, false, false, false, false, false, false, false);
                 $ally->setMaxMembers(4);
-                $ally->setImageName('communism.jpg');
+                $ally->setImageName('communism.webp');
                 $ally->setBitcoin(0);
                 $ally->setPdg(250);
                 $ally->setTaxe(75);

@@ -389,7 +389,7 @@ class FightController extends AbstractController
                 if ($usePlanet) {
                     $reportWinDef->setContent($reportWinDef->getContent() . "Vous avez gagné le combat en (" . "<span><a href='/connect/carte-spatiale/" . $defenderWin->getPlanet()->getSector()->getPosition() . "/" . $defenderWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $defenderWin->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $defenderWin->getPlanet()->getSector()->getPosition() . ":" . $defenderWin->getPlanet()->getPosition() . "</a></span>) , vous remportez <span class='text-vert'>+" . number_format($warPointA) . "</span> points de Guerre");
                 }
-                $reportWinDef->setImageName("fight_win_report.jpg");
+                $reportWinDef->setImageName("fight_win_report.webp");
                 $defenderWin->getCharacter()->setViewReport(false);
                 $quest = $defenderWin->getCharacter()->checkQuests('destroy_fleet');
                 if($quest) {
@@ -406,7 +406,7 @@ class FightController extends AbstractController
                 $reportLoseA->setSendAt($now);
                 $reportLoseA->setContent("<table class=\"table table-striped table-bordered table-dark\"><tbody><tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 1</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSAtt . " tir(s) pour percer les boucliers</th></tr>");
                 $reportLoseA->setTitle("Rapport de combat : Défaite");
-                $reportLoseA->setImageName("fight_lose_report.jpg");
+                $reportLoseA->setImageName("fight_lose_report.webp");
                 $reportLoseA->setCharacter($attackerLose->getCharacter());
                 foreach ($blockAtt as $fleetB) {
                     $player = $fleetB->getFleetTags(null);
@@ -516,7 +516,7 @@ class FightController extends AbstractController
                 $reportWinAtt->setSendAt($now);
                 $reportWinAtt->setContent("<table class=\"table table-striped table-bordered table-dark\"><tbody><tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 1</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSDef . " tir(s) pour percer les boucliers</th></tr>");
                 $reportWinAtt->setTitle("Rapport de combat : Victoire");
-                $reportWinAtt->setImageName("fight_win_report.jpg");
+                $reportWinAtt->setImageName("fight_win_report.webp");
                 $reportWinAtt->setCharacter($attackerWin->getCharacter());
                 foreach ($blockDef as $fleetA) {
                     $player = $fleetA->getFleetTags(null);
@@ -554,7 +554,7 @@ class FightController extends AbstractController
                 $reportLoseB->setSendAt($now);
                 $reportLoseB->setContent("<table class=\"table table-striped table-bordered table-dark\"><tbody><tr><th class=\"tab-cells-name p-1 ml-2\">Groupe de combat 1</th><th class=\"tab-cells-name p-1 ml-2\">" . $countSAtt . " tir(s) pour percer les boucliers</th></tr>");
                 $reportLoseB->setTitle("Rapport de combat : Défaite");
-                $reportLoseB->setImageName("fight_lose_report.jpg");
+                $reportLoseB->setImageName("fight_lose_report.webp");
                 $reportLoseB->setCharacter($defenderLose->getCharacter());
                 foreach ($blockAtt as $fleetB) {
                     $player = $fleetB->getFleetTags(null);
@@ -668,7 +668,7 @@ class FightController extends AbstractController
             $reportLoseUtilB = new Report();
             $reportLoseUtilB->setType('fight');
             $reportLoseUtilB->setSendAt($now);
-            $reportLoseUtilB->setImageName("f_lose_report.jpg");
+            $reportLoseUtilB->setImageName("f_lose_report.webp");
             $reportLoseUtilB->setContent("Votre flotte utilitaire " . $removeTwo->getName() . " ne dispose pas des technologies nécessaires à l'identification des vaisseaux ennemis (" . $removeTwo->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $removeTwo->getPlanet()->getSector()->getPosition() . "." . $removeTwo->getPlanet()->getPosition() . ") .");
             $reportLoseUtilB->setTitle("Rapport de combat : Défaite");
             $reportLoseUtilB->setCharacter($removeTwo->getCharacter());
@@ -680,7 +680,7 @@ class FightController extends AbstractController
             $reportWinUtilB = new Report();
             $reportWinUtilB->setType('fight');
             $reportWinUtilB->setSendAt($now);
-            $reportWinUtilB->setImageName("f_win_report.jpg");
+            $reportWinUtilB->setImageName("f_win_report.webp");
             $reportWinUtilB->setContent("Vous venez de détruire une flotte utilitaire en (" . $reportWin->getPlanet()->getSector()->getGalaxy()->getPosition() . "." . $reportWin->getPlanet()->getSector()->getPosition() . "." . $reportWin->getPlanet()->getPosition() . ") .");
             $reportWinUtilB->setTitle("Rapport de combat : Victoire");
             $reportWinUtilB->setCharacter($reportWin->getCharacter());

@@ -85,7 +85,7 @@ class ServerController extends AbstractController
         $iaZombie->setBitcoin(100);
         $iaZombie->setZombie(1);
         $iaZombie->setBot(1);
-        $iaZombie->setImageName('hydre.png');
+        $iaZombie->setImageName('hydre.webp');
         $rank = new Rank($iaZombie);
         $em->persist($rank);
         $iaZombie->setRank($rank);
@@ -100,7 +100,7 @@ class ServerController extends AbstractController
         $iaAlien->setBitcoin(100);
         $iaAlien->setAlien(1);
         $iaAlien->setBot(1);
-        $iaAlien->setImageName('hydre.png');
+        $iaAlien->setImageName('hydre.webp');
         $rank = new Rank($iaAlien);
         $em->persist($rank);
         $iaAlien->setRank($rank);
@@ -124,14 +124,14 @@ class ServerController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $image = [
-            'planet1.png', 'planet2.png', 'planet3.png', 'planet4.png', 'planet5.png', 'planet6.png',
-            'planet7.png', 'planet8.png', 'planet9.png', 'planet10.png', 'planet11.png', 'planet12.png',
-            'planet13.png', 'planet14.png', 'planet15.png', 'planet16.png', 'planet17.png', 'planet18.png',
-            'planet19.png', 'planet20.png', 'planet21.png', 'planet22.png', 'planet23.png', 'planet24.png',
-            'planet25.png', 'planet26.png', 'planet27.png', 'planet28.png', 'planet29.png', 'planet30.png',
-            'planet31.png', 'planet32.png', 'planet33.png'
+            'planet1.webp', 'planet2.webp', 'planet3.webp', 'planet4.webp', 'planet5.webp', 'planet6.webp',
+            'planet7.webp', 'planet8.webp', 'planet9.webp', 'planet10.webp', 'planet11.webp', 'planet12.webp',
+            'planet13.webp', 'planet14.webp', 'planet15.webp', 'planet16.webp', 'planet17.webp', 'planet18.webp',
+            'planet19.webp', 'planet20.webp', 'planet21.webp', 'planet22.webp', 'planet23.webp', 'planet24.webp',
+            'planet25.webp', 'planet26.webp', 'planet27.webp', 'planet28.webp', 'planet29.webp', 'planet30.webp',
+            'planet31.webp', 'planet32.webp', 'planet33.webp'
         ];
-        $imageSun = ['sun1.png', 'sun2.png', 'sun3.png', 'sun4.png', 'sun5.png', 'sun6.png'];
+        $imageSun = ['sun1.webp', 'sun2.webp', 'sun3.webp', 'sun4.webp', 'sun5.webp', 'sun6.webp'];
         $planetPve = ["1", "10", "91", "100", "12", "19", "82", "89", "23", "28", "73", "78", "34", "37", "64", "67", "45", "46", "55", "56"];
         $planetPveOne = ["1", "10", "91", "100"];
         $planetPveTwo = ["12", "19", "82", "89"];
@@ -178,7 +178,7 @@ class ServerController extends AbstractController
                     if ((in_array($nbrSector, $planetPve)) && (($alreadyBot1 == false && rand(0, 8) == 1) || $alreadyBot1 == false && $nbrPlanet == 25)) {
                         $alreadyBot1 = true;
                         if (in_array($nbrSector, $planetPveOne)) {
-                            $planet = new Planet(null, 'Fort Marchand I', 500, 150, $nbrPlanet, $sector, 'merchant.png',  1, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand I', 500, 150, $nbrPlanet, $sector, 'merchant.webp',  1, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(200);
                             $fleet->setCorvetWar(25);
@@ -191,7 +191,7 @@ class ServerController extends AbstractController
                             $fleet->setSignature($fleet->getNbrSignatures());
                             $em->persist($fleet);
                         } elseif (in_array($nbrSector, $planetPveTwo)) {
-                            $planet = new Planet(null, 'Fort Marchand II', 1000, 300, $nbrPlanet, $sector, 'merchant.png',  2, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand II', 1000, 300, $nbrPlanet, $sector, 'merchant.webp',  2, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(2000);
                             $fleet->setCorvetWar(250);
@@ -204,7 +204,7 @@ class ServerController extends AbstractController
                             $fleet->setSignature($fleet->getNbrSignatures());
                             $em->persist($fleet);
                         } elseif (in_array($nbrSector, $planetPveThree)) {
-                            $planet = new Planet(null, 'Fort Marchand III', 1500, 450, $nbrPlanet, $sector, 'merchant.png',  3, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand III', 1500, 450, $nbrPlanet, $sector, 'merchant.webp',  3, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(20000);
                             $fleet->setCorvetWar(2500);
@@ -217,7 +217,7 @@ class ServerController extends AbstractController
                             $fleet->setSignature($fleet->getNbrSignatures());
                             $em->persist($fleet);
                         } elseif (in_array($nbrSector, $planetPveFour)) {
-                            $planet = new Planet(null, 'Fort Marchand IV', 3000, 600, $nbrPlanet, $sector, 'merchant.png',  4, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand IV', 3000, 600, $nbrPlanet, $sector, 'merchant.webp',  4, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(200000);
                             $fleet->setCorvetWar(25000);
@@ -230,7 +230,7 @@ class ServerController extends AbstractController
                             $fleet->setSignature($fleet->getNbrSignatures());
                             $em->persist($fleet);
                         } else {
-                            $planet = new Planet(null, 'Fort Marchand V', 4000, 800, $nbrPlanet, $sector, 'merchant.png',  5, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand V', 4000, 800, $nbrPlanet, $sector, 'merchant.webp',  5, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(2000000);
                             $fleet->setCorvetWar(250000);
@@ -247,25 +247,25 @@ class ServerController extends AbstractController
                         $alreadyBot2 = true;
                         $fleetBot = new Fleet();
                         if (in_array($nbrSector, $iaLevelOn)) {
-                            $planet = new Planet($iaPlayer, 'Fort Hydra I', 0, 0, $nbrPlanet, $sector, 'bot_one.gif',  0, null, false, false);
+                            $planet = new Planet($iaPlayer, 'Fort Hydra I', 0, 0, $nbrPlanet, $sector, 'bot_one.webp',  0, null, false, false);
                             $fleetBot->setHunterWar(rand(5, 200));
                         } elseif (in_array($nbrSector, $iaLevelTwo)) {
-                            $planet = new Planet($iaPlayer, 'Fort Hydra II', 0, 0, $nbrPlanet, $sector, 'bot_two.gif',  0, null, false, false);
+                            $planet = new Planet($iaPlayer, 'Fort Hydra II', 0, 0, $nbrPlanet, $sector, 'bot_two.webp',  0, null, false, false);
                             $fleetBot->setHunterWar(rand(5000, 20000));
                             $fleetBot->setCorvetWar(rand(500, 1500));
                         } elseif (in_array($nbrSector, $iaLevelThree)) {
-                            $planet = new Planet($iaPlayer, 'Fort Hydra III', 0, 0, $nbrPlanet, $sector, 'bot_three.gif',  0, null, false, false);
+                            $planet = new Planet($iaPlayer, 'Fort Hydra III', 0, 0, $nbrPlanet, $sector, 'bot_three.webp',  0, null, false, false);
                             $fleetBot->setHunterWar(rand(80000, 250000));
                             $fleetBot->setCorvetWar(rand(40000, 80000));
                             $fleetBot->setFregatePlasma(rand(20000, 40000));
                         } elseif (in_array($nbrSector, $iaLevelFour)) {
-                            $planet = new Planet($iaPlayer, 'Fort Hydra IV', 0, 0, $nbrPlanet, $sector, 'bot_four.gif',  0, null, false, false);
+                            $planet = new Planet($iaPlayer, 'Fort Hydra IV', 0, 0, $nbrPlanet, $sector, 'bot_four.webp',  0, null, false, false);
                             $fleetBot->setHunterWar(rand(650000, 1250000));
                             $fleetBot->setCorvetWar(rand(180000, 380000));
                             $fleetBot->setFregatePlasma(rand(60000, 80000));
                             $fleetBot->setDestroyer(rand(10000, 20000));
                         } else {
-                            $planet = new Planet($iaPlayer, 'Fort Hydra V', 0, 0, $nbrPlanet, $sector, 'bot_five.gif',  0, null, false, false);
+                            $planet = new Planet($iaPlayer, 'Fort Hydra V', 0, 0, $nbrPlanet, $sector, 'bot_five.webp',  0, null, false, false);
                             $fleetBot->setHunterWar(rand(1250000, 3250000));
                             $fleetBot->setCorvetWar(rand(380000, 780000));
                             $fleetBot->setFregatePlasma(rand(80000, 120000));
@@ -282,7 +282,7 @@ class ServerController extends AbstractController
                         if (rand(1, 19) < 6) {
                             $planet = new Planet(null, 'Vide', 0, 0, $nbrPlanet, $sector, null,  0, null,false, true);
                         } elseif (rand(0, 65) < 2) {
-                            $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_niobium.png',  0, 'niobium', false, false);
+                            $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_niobium.webp',  0, 'niobium', false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(rand(50, 3000));
                             $fleet->setCorvetWar(rand(50, 200));
@@ -295,7 +295,7 @@ class ServerController extends AbstractController
                             $fleet->setSignature($fleet->getNbrSignatures());
                             $em->persist($fleet);
                         } elseif (rand(0, 70) < 2) {
-                            $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_water.png',  0, 'water', false, false);
+                            $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_water.webp',  0, 'water', false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(rand(50, 3000));
                             $fleet->setCorvetWar(rand(50, 200));
@@ -308,7 +308,7 @@ class ServerController extends AbstractController
                             $fleet->setSignature($fleet->getNbrSignatures());
                             $em->persist($fleet);
                         } elseif (rand(0, 90) < 2) {
-                            $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_uranium.png',  0, 'uranium', false, false);
+                            $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_uranium.webp',  0, 'uranium', false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(rand(50, 3000));
                             $fleet->setCorvetWar(rand(50, 200));
@@ -380,12 +380,12 @@ class ServerController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $image = [
-            'planet1.png', 'planet2.png', 'planet3.png', 'planet4.png', 'planet5.png', 'planet6.png',
-            'planet7.png', 'planet8.png', 'planet9.png', 'planet10.png', 'planet11.png', 'planet12.png',
-            'planet13.png', 'planet14.png', 'planet15.png', 'planet16.png', 'planet17.png', 'planet18.png',
-            'planet19.png', 'planet20.png', 'planet21.png', 'planet22.png', 'planet23.png', 'planet24.png',
-            'planet25.png', 'planet26.png', 'planet27.png', 'planet28.png', 'planet29.png', 'planet30.png',
-            'planet31.png', 'planet32.png', 'planet33.png'
+            'planet1.webp', 'planet2.webp', 'planet3.webp', 'planet4.webp', 'planet5.webp', 'planet6.webp',
+            'planet7.webp', 'planet8.webp', 'planet9.webp', 'planet10.webp', 'planet11.webp', 'planet12.webp',
+            'planet13.webp', 'planet14.webp', 'planet15.webp', 'planet16.webp', 'planet17.webp', 'planet18.webp',
+            'planet19.webp', 'planet20.webp', 'planet21.webp', 'planet22.webp', 'planet23.webp', 'planet24.webp',
+            'planet25.webp', 'planet26.webp', 'planet27.webp', 'planet28.webp', 'planet29.webp', 'planet30.webp',
+            'planet31.webp', 'planet32.webp', 'planet33.webp'
         ];
         $x = 1;
         while($x < 6) {
@@ -404,7 +404,7 @@ class ServerController extends AbstractController
                         $planet->setMerchant(true);
                         $planet->setGround(400);
                         $planet->setSky(80);
-                        $planet->setImageName('merchant.png');
+                        $planet->setImageName('merchant.webp');
                         $planet->setName('Marchands');
                         $planet->setSector($sector);
                         $planet->setPosition($nbrPlanet);
@@ -418,7 +418,7 @@ class ServerController extends AbstractController
                         } elseif (rand(0, 101) < 1) {
                             $planet = new Planet();
                             $planet->setCdr(true);
-                            $planet->setImageName('cdr.png');
+                            $planet->setImageName('cdr.webp');
                             $planet->setName('Astéroïdes');
                             $planet->setSector($sector);
                             $planet->setPosition($nbrPlanet);

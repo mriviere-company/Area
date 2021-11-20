@@ -35,7 +35,7 @@
                 </ul>
                 {% if character.getGrade().getPlacement() == 1 %}
                     <div class="my-5 text-center">
-                        {% if ally.getLevel() < 10 %}{% set x = 1 %}{% for info in ally.getLevelCost()  %} {% if x == 1 %}{{ 'ally.levelUpMembers'|trans }} {{ info|number_format }} <a href="{{ path('ally_level', {'usePlanet': usePlanet.getId()}) }}" class="confirm-button">{{ 'ally.levelUp'|trans }}</a>{% elseif x == 2 %}{{ 'ally.levelUpCost'|trans }} {{ info|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.png') }}">{% elseif x == 3 %}{{ info|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'pdgImg'|trans }}" src="{{ asset('img/pdg.png') }}">{% endif %}{% set x = x + 1 %}{% endfor %}{% endif %}
+                        {% if ally.getLevel() < 10 %}{% set x = 1 %}{% for info in ally.getLevelCost()  %} {% if x == 1 %}{{ 'ally.levelUpMembers'|trans }} {{ info|number_format }} <a href="{{ path('ally_level', {'usePlanet': usePlanet.getId()}) }}" class="confirm-button">{{ 'ally.levelUp'|trans }}</a>{% elseif x == 2 %}{{ 'ally.levelUpCost'|trans }} {{ info|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}">{% elseif x == 3 %}{{ info|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'pdgImg'|trans }}" src="{{ asset('img/pdg.webp') }}">{% endif %}{% set x = x + 1 %}{% endfor %}{% endif %}
                     </div>
                 {% endif %}
                 <div class="tab-content" id="myTabContent">
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                         {{ form_end(form_exchange) }}
-                        <h3 class="mx-3 my-3"><span class="float-left mb-3">{{ 'ally.foundTotal'|trans }} {{ ally.getBitcoin()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/coin.png') }}"></span><span class="float-right mb-3">{{ 'ally.pdgTotal'|trans }} {{ ally.getPdg()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.png') }}"></span></h3>
+                        <h3 class="mx-3 my-3"><span class="float-left mb-3">{{ 'ally.foundTotal'|trans }} {{ ally.getBitcoin()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/coin.webp') }}"></span><span class="float-right mb-3">{{ 'ally.pdgTotal'|trans }} {{ ally.getPdg()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.webp') }}"></span></h3>
                         <table class="table table-striped table-bordered table-dark text-center mt-4">
                             <tbody>
                             <tr>

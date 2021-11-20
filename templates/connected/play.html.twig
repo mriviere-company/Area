@@ -30,7 +30,7 @@
                 {% endif %}
                     <div class="text-more">{{ 'server'|trans }} {{ server.id }} - {{ server.name }}</div>
                     <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block"
-                         src="{{ asset('img/server.png') }}">
+                         src="{{ asset('img/server.webp') }}">
                     <div>
                         {% if server.open == 1 %}
                             <span class="text-vert">{{ 'server.open'|trans }}</span> -
@@ -59,7 +59,7 @@
                                     <span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block"
                                                data-toggle="tooltip" data-placement="top"
                                                title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}"
-                                               src="{{ asset('img/galaxy.png') }}"><span
+                                               src="{{ asset('img/galaxy.webp') }}"><span
                                                 class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span
                                                 class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': (galaxy.characters == 0 ? 0 : (galaxy.characters - 1))|number_format }) }}</span></span>
                                     {% if server.id in app.user.getServers() or server.open == 1 %}

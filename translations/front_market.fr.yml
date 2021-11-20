@@ -1,9 +1,9 @@
 title: 'Points de Guerre'
 market.text: 'Bienvenue à vous, que désirez-vous acheter avec vos points de guerre ?'
 market.planet: 'Sélectionner planète'
-market.bitcoin: 'Bictoins : 1 <img src="/img/pdg.png"> = 10 <img height="10" src="/img/coin.png">'
-market.worker: 'Travailleurs : 1 <img src="/img/pdg.png"> = 100 <img height="10" src="/img/worker.png">'
-market.soldier: 'Soldats : 1 <img src="/img/pdg.png"> = 20 <img height="10" src="/img/soldier.png">'
+market.bitcoin: 'Bictoins : 1 <img src="/img/pdg.webp"> = 10 <img height="10" src="/img/coin.webp">'
+market.worker: 'Travailleurs : 1 <img src="/img/pdg.webp"> = 100 <img height="10" src="/img/worker.webp">'
+market.soldier: 'Soldats : 1 <img src="/img/pdg.webp"> = 20 <img height="10" src="/img/soldier.webp">'
 form.planet: Planète
 form.nbr: nombre
 form.buyMarket: Acheter

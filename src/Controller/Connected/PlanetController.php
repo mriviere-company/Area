@@ -131,7 +131,7 @@ class PlanetController extends AbstractController
             $reportColo->setSendAt($now);
             $reportColo->setCharacter($character);
             $reportColo->setTitle("Colonisation de planète");
-            $reportColo->setImageName("colonize_report.jpg");
+            $reportColo->setImageName("colonize_report.webp");
             $reportColo->setContent("Vous venez de coloniser une planète inhabitée en : (" .  $newPlanet->getSector()->getgalaxy()->getPosition() . "." . $newPlanet->getSector()->getPosition() . "." . $newPlanet->getPosition() . ") . Cette planète fait désormais partie de votre Empire, pensez à la renommer sur la page Planètes.");
             $character->setViewReport(false);
             $em->persist($reportColo);
@@ -201,7 +201,7 @@ class PlanetController extends AbstractController
                 $abandonPlanet->setSoldierMax(500);
             }
             $abandonPlanet->setName('Base Zombie');
-            $abandonPlanet->setImageName('hydra_planet.png');
+            $abandonPlanet->setImageName('hydra_planet.webp');
         }
 
         $em->flush();

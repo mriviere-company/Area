@@ -59,7 +59,7 @@ class DailyController extends AbstractController
             $report = new Report();
             $report->setType('economic');
             $report->setTitle("Rapport de l'empire");
-            $report->setImageName("daily_report.jpg");
+            $report->setImageName("daily_report.webp");
             $report->setSendAt($now);
             $report->setCharacter($character);
             $ally = $character->getAlly();

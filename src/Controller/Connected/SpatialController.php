@@ -99,7 +99,7 @@ class SpatialController extends AbstractController
                 $reportDef->setSendAt($now);
                 $reportDef->setCharacter($character);
                 $reportDef->setTitle("Rapport d'invasion : Victoire (défense)");
-                $reportDef->setImageName("defend_win_report.jpg");
+                $reportDef->setImageName("defend_win_report.webp");
                 $reportDef->setContent("Bien joué ! Vos travailleurs et soldats ont repoussés l'invasion des " . $iaPlayer->getUsername() . " sur votre planète " . $usePlanet->getName() . " - (" . $usePlanet->getSector()->getgalaxy()->getPosition() . "." . $usePlanet->getSector()->getPosition() . "." . $usePlanet->getPosition() . ") . <span class='text-rouge'>100</span> zombies vous ont attaqués, tous ont été tués. Vous remportez <span class='text-vert'>+100</span> points de Guerre et <span class='text-vert'>+10.000 bitcoins</span>. Recrutez de nouveaux soldats !");
                 $usePlanet->setSoldier($usePlanet->getSoldier() - 2);
                 $character->setBitcoin($character->getBitcoin() + 10000);

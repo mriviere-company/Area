@@ -55,7 +55,7 @@ class AsteroideController extends AbstractController
                 if ($newAsteroides) {
                     $newAsteroides->setEmpty(false);
                     $newAsteroides->setCdr(true);
-                    $newAsteroides->setImageName('cdr.png');
+                    $newAsteroides->setImageName('cdr.webp');
                     $newAsteroides->setName('Astéroïdes');
                     $iaPlayer = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
                     $planetZb = $em->getRepository('App:Planet')

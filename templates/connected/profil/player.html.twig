@@ -12,13 +12,13 @@
                 {% if characterProfil.imageName %}
                     <div class="text-center mt-2 ml-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="90" width="90" src="{{ vich_uploader_asset(character, 'imageFile') }}"></div>
                 {% else %}
-                    <div class="text-center mt-2 ml-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="90" width="90" src="{{ asset('img/avatar.png') }}"></div>
+                    <div class="text-center mt-2 ml-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="90" width="90" src="{{ asset('img/avatar.webp') }}"></div>
                 {% endif %}
                 {% if characterProfil.getAlly() %}
                     {% if characterProfil.getAlly.imageName %}
                         <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="120" width="120" src="{{ vich_uploader_asset(characterProfil.getAlly, 'imageFile') }}"></div>
                     {% else %}
-                        <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="120" width="120" src="{{ asset('img/ally.jpg') }}"></div>
+                        <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="120" width="120" src="{{ asset('img/ally.webp') }}"></div>
                     {% endif %}
                 {% endif %}
             </div>

@@ -15,7 +15,7 @@
                         <tr>
                             <td>
                                 <span class="mx-5">{{ 'server'|trans }} {{ server.id }}</span>
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" src="{{ asset('img/server.png') }}">
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mr-4 mb-4" src="{{ asset('img/server.webp') }}">
                                 {% if server.open == 1 %}
                                     <a class="confirm-button text-vert" href="{{ path('deactive_server', {'server': server.id}) }}">{{ 'server.open'|trans }}</a>
                                 {% else %}
@@ -41,7 +41,7 @@
                         <tr>
                             {% endif %}
                             <td class="text-center">
-                            <span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mb-4" src="{{ asset('img/galaxy.png') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.characters|number_format }) }}</span></span>
+                            <span><img alt="{{ 'image'|trans({},'front_global') }}" class="galaxy-block mb-4" src="{{ asset('img/galaxy.webp') }}"><span class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.characters|number_format }) }}</span></span>
                                 <div><a class="confirm-button" href="{{ path('destroy_galaxy', {'galaxy': galaxy.id}) }}">{{ 'galaxy.destroy'|trans }}</a></div>
                             </td>
                             {% set x = x + 1 %}
