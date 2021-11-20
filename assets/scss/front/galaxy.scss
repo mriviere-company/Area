@@ -70,48 +70,56 @@ div.tooltip-inner span a.manage {
 .pp-mine {
   font-weight: 600;
   color: $color-turquoise!important;
-  font-size: 1.2rem!important;
+  font-size: 1vw!important;
+  white-space: nowrap;
 }
 
 .pp-no {
   font-weight: 600;
   color: $color-black!important;
-  font-size: 1.2rem!important;
+  font-size: 1vw!important;
+  white-space: nowrap;
 }
 
 .pp-ally {
   font-weight: 600;
   color: $color-green!important;
-  font-size: 1.2rem!important;
+  font-size: 1vw!important;
+  white-space: nowrap;
 }
 
 .pp-peace {
   font-weight: 600;
   color: #ff66ff!important;
-  font-size: 1.2rem!important;
+  font-size: 1vw!important;
+  white-space: nowrap;
 }
 
 .pp-ia {
   font-weight: 600;
   color: $color-pink!important;
-  font-size: 1.2rem!important;
+  font-size: 1vw!important;
+  white-space: nowrap;
 }
 .pp-col {
   font-weight: 600;
   color: silver;
-  font-size: 1.2rem!important;
+  font-size: 1vw!important;
+  white-space: nowrap;
 }
 
 .pp-cdr {
   font-weight: 600;
   color: $color-yellow;
-  font-size: 1.2rem!important;
+  font-size: 1vw!important;
+  white-space: nowrap;
 }
 
 .pp-enemy {
   font-weight: 600;
   color: $color-red;
-  font-size: 1.2rem!important;
+  font-size: 1vw!important;
+  white-space: nowrap;
 }
 
 .pp-mine2 {
@@ -154,7 +162,7 @@ div.tooltip-inner span a.manage {
   color: #fff;
   .center-cells a {
     line-height: 10px; //galaxy100
-    font-size: 0.7rem; //galaxy100
+    font-size: 0.6vw; //galaxy100
     letter-spacing: 1px; // 5 en galaxy100
     color: gainsboro;
     text-decoration: none;
