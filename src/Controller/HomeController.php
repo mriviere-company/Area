@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -14,7 +16,7 @@ class HomeController extends AbstractController
     /**
      * @Route("/{_locale}", name="home", defaults={"_locale" = "fr"}, requirements={"_locale" = "fr|en|de"})
      */
-    public function index()
+    public function index(): RedirectResponse|Response
     {
         $em = $this->getDoctrine()->getManager();
         $servers = $em->getRepository('App:Server')->findBy(['open' => 1]);
