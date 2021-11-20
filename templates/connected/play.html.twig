@@ -23,8 +23,8 @@
         {% for server in servers %}
             <div class="row mb-5">
                 {% if server.id in app.user.getServers() %}
-                    <a href="{{ path('connected_server', {'server': server.id}) }}">
-                        <div class="offset-3 col-6 table-dark text-center borderOverview p-4 mr-4">
+                    <a class="offset-3 col-6" href="{{ path('connected_server', {'server': server.id}) }}">
+                        <div class="table-dark text-center borderOverview p-4 mr-4">
                 {% else %}
                         <div class="offset-1 offset-xl-2 col-md-5 col-xl-3 table-dark text-center borderOverview p-4 mr-4">
                 {% endif %}
@@ -45,7 +45,8 @@
                         <span class="text-orange">{{ 'galaxy.players'|trans({'%players%': server.characters|number_format }) }}</span>
                     </div>
                     {% if server.id in app.user.getServers() %}
-                        </a>
+                        </div>
+                    </a>
                     {% endif %}
                 </div>
                 {% if server.id not in app.user.getServers() %}
