@@ -52,7 +52,7 @@
                 <tbody>
                     <tr class="access-build">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/mining.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.miner'|trans({'%product%': ((((usePlanet.getMiner() + 1) * 15)) * 60 * bonus)|round})|raw }}"><strong>{{ 'building.mining'|trans }} x {% if usePlanet.getMiner() %}{{ usePlanet.getMiner() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/mining.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.miner'|trans({'%product%': ((((usePlanet.getMiner() + 1) * 15)) * 60 * bonus)|round})|raw }}"><strong>{{ 'building.mining'|trans }} x {% if usePlanet.getMiner() %}{{ usePlanet.getMiner() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * character.getBuildingNiobium('miner') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * character.getBuildingNiobium('miner'))|number_format }}</span>{% else %}{{ ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * character.getBuildingNiobium('miner'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * character.getBuildingWater('miner') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * character.getBuildingWater('miner'))|number_format }}</span>{% else %}{{ ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * character.getBuildingWater('miner'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if character.getBuildingGroundPlace('miner') + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('miner') }}</span>{% else %}{{ character.getBuildingGroundPlace('miner') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -75,7 +75,7 @@
                                 {% elseif planetNb >= ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * character.getBuildingNiobium('miner')) and planetWt >= ((usePlanet.getMiner() + 1 + usePlanet.getConstructionsLike('miner')) * character.getBuildingWater('miner')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('miner') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'miner', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <a  class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -91,7 +91,7 @@
                     </tr>
                     <tr class="access-build-2">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/extract.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.extract'|trans({'%product%': ((((usePlanet.getExtractor() + 1) * 10)) * 60 * bonus)|round})|raw }}"><strong>{{ 'building.extract'|trans }} x {% if usePlanet.getExtractor() %}{{ usePlanet.getExtractor() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/extract.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.extract'|trans({'%product%': ((((usePlanet.getExtractor() + 1) * 10)) * 60 * bonus)|round})|raw }}"><strong>{{ 'building.extract'|trans }} x {% if usePlanet.getExtractor() %}{{ usePlanet.getExtractor() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * character.getBuildingNiobium('extractor') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * character.getBuildingNiobium('extractor'))|number_format }}</span>{% else %}{{ ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * character.getBuildingNiobium('extractor'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * character.getBuildingWater('extractor') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * character.getBuildingWater('extractor'))|number_format }}</span>{% else %}{{ ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * character.getBuildingWater('extractor'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if character.getBuildingGroundPlace('extractor') + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('extractor') }}</span>{% else %}{{ character.getBuildingGroundPlace('extractor') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -114,7 +114,7 @@
                                 {% elseif planetNb >= ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * character.getBuildingNiobium('extractor')) and planetWt >= ((usePlanet.getExtractor() + 1 + usePlanet.getConstructionsLike('extractor')) * character.getBuildingWater('extractor')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('extractor') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'extractor', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -130,7 +130,7 @@
                     </tr>
                     <tr class="access-build-2">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/farm.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.farm'|trans({'%product%': ((((usePlanet.getFarm() + 1) * 18)) * 60 * bonus)|round})|raw }}"><strong>{{ 'building.farm'|trans }} x {% if usePlanet.getFarm() %}{{ usePlanet.getFarm() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/farm.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.farm'|trans({'%product%': ((((usePlanet.getFarm() + 1) * 18)) * 60 * bonus)|round})|raw }}"><strong>{{ 'building.farm'|trans }} x {% if usePlanet.getFarm() %}{{ usePlanet.getFarm() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * character.getBuildingNiobium('farm') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * character.getBuildingNiobium('farm'))|number_format }}</span>{% else %}{{ ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * character.getBuildingNiobium('farm'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * character.getBuildingWater('farm') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * character.getBuildingWater('farm'))|number_format }}</span>{% else %}{{ ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * character.getBuildingWater('farm'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if character.getBuildingGroundPlace('farm') + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('farm') }}</span>{% else %}{{ character.getBuildingGroundPlace('farm') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -153,7 +153,7 @@
                                 {% elseif planetNb >= ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * character.getBuildingNiobium('farm')) and planetWt >= ((usePlanet.getFarm() + 1 + usePlanet.getConstructionsLike('farm')) * character.getBuildingWater('farm')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('farm') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'farm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -170,7 +170,7 @@
                     {% if (character.getCargo() <= 1 and usePlanet.getAeroponicFarm() == 0) or character.getAeroponicFarm() <= 0 %}
                         <tr class="blocked-building blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/aeroponic_farm.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans({'%product%': ((((usePlanet.getAeroponicFarm() + 1) * 25)) * 60)|round})|raw }}">{{ 'building.aeroponicFarm'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/aeroponic_farm.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans({'%product%': ((((usePlanet.getAeroponicFarm() + 1) * 25)) * 60)|round})|raw }}">{{ 'building.aeroponicFarm'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'building.aeroponicFarm.blocked'|trans }}
@@ -182,7 +182,7 @@
                     {% else %}
                         <tr class="access-build-2">
                             <td class="center-cells">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/aeroponic_farm.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans({'%product%': (((usePlanet.getAeroponicFarm() + 1) * 25)) * 60})|raw }}"><strong>{{ 'building.aeroponicFarm'|trans }} x {% if usePlanet.getAeroponicFarm() %}{{ usePlanet.getAeroponicFarm() }}{% else %}0{% endif %}</strong></button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/aeroponic_farm.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.aeroponicFarm'|trans({'%product%': (((usePlanet.getAeroponicFarm() + 1) * 25)) * 60})|raw }}"><strong>{{ 'building.aeroponicFarm'|trans }} x {% if usePlanet.getAeroponicFarm() %}{{ usePlanet.getAeroponicFarm() }}{% else %}0{% endif %}</strong></button>
                                 <div class="mt-4">{% if (usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * character.getBuildingNiobium('aeroponicFarm') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * character.getBuildingNiobium('aeroponicFarm'))|number_format }}</span>{% else %}{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * character.getBuildingNiobium('aeroponicFarm'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * character.getBuildingWater('aeroponicFarm') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * character.getBuildingWater('aeroponicFarm'))|number_format }}</span>{% else %}{{ ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * character.getBuildingWater('aeroponicFarm'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                                 <div class="mt-4">{% if character.getBuildingSkyPlace('aeroponicFarm') + usePlanet.getSkyPlace() > usePlanet.getSky() %}<span class="text-rouge">{{ character.getBuildingSkyPlace('aeroponicFarm') }}</span>{% else %}{{ character.getBuildingSkyPlace('aeroponicFarm') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'skyImg'|trans }}" src="{{ asset('img/sky.webp') }}"></div>
                             </td>
@@ -205,7 +205,7 @@
                                     {% elseif planetNb >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * character.getBuildingNiobium('aeroponicFarm')) and planetWt >= ((usePlanet.getAeroponicFarm() + 1 + usePlanet.getConstructionsLike('aeroponicFarm')) * character.getBuildingWater('aeroponicFarm')) and usePlanet.getSkyPlace() + character.getBuildingSkyPlace('aeroponicFarm') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
                                         <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'aeroponicFarm', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                     {% else %}
-                                        <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                        <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                     {% endif %}
                                 {% endif %}
                             </td>
@@ -229,7 +229,7 @@
                 {% if character.getCargo() <= 1 and usePlanet.getNiobiumStock() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/niobiumStock.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.niobiumStock'|trans|raw }}">{{ 'building.niobiumStock'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/niobiumStock.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.niobiumStock'|trans|raw }}">{{ 'building.niobiumStock'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.niobiumStock.blocked'|trans }}
@@ -241,7 +241,7 @@
                 {% else %}
                     <tr class="access-build">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/niobiumStock.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.niobiumStock'|trans|raw }}"><strong>{{ 'building.niobiumStock'|trans }} x {% if usePlanet.getNiobiumStock() %}{{ usePlanet.getNiobiumStock() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/niobiumStock.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.niobiumStock'|trans|raw }}"><strong>{{ 'building.niobiumStock'|trans }} x {% if usePlanet.getNiobiumStock() %}{{ usePlanet.getNiobiumStock() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getNiobiumStock() + 1) * character.getBuildingNiobium('niobiumStock') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getNiobiumStock() + 1) * character.getBuildingNiobium('niobiumStock'))|number_format }}</span>{% else %}{{ ((usePlanet.getNiobiumStock() + 1) * character.getBuildingNiobium('niobiumStock'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getNiobiumStock() + 1) * character.getBuildingWater('niobiumStock') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getNiobiumStock() + 1) * character.getBuildingWater('niobiumStock'))|number_format }}</span>{% else %}{{ ((usePlanet.getNiobiumStock() + 1) * character.getBuildingWater('niobiumStock'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 3 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('niobiumStock') }}</span>{% else %}{{ character.getBuildingGroundPlace('niobiumStock') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -265,7 +265,7 @@
                                 {% elseif planetNb >= ((usePlanet.getNiobiumStock() + 1 + usePlanet.getConstructionsLike('niobiumStock')) * character.getBuildingNiobium('niobiumStock')) and planetWt >= ((usePlanet.getNiobiumStock() + 1 + usePlanet.getConstructionsLike('niobiumStock')) * character.getBuildingWater('niobiumStock')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('niobiumStock') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'niobiumStock', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -283,7 +283,7 @@
                 {% if character.getCargo() <= 1 and usePlanet.getWaterStock() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/waterStock.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.waterStock'|trans|raw }}">{{ 'building.waterStock'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/waterStock.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.waterStock'|trans|raw }}">{{ 'building.waterStock'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.waterStock.blocked'|trans }}
@@ -295,7 +295,7 @@
                 {% else %}
                     <tr class="access-build-2">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/waterStock.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.waterStock'|trans|raw }}"><strong>{{ 'building.waterStock'|trans }} x {% if usePlanet.getWaterStock() %}{{ usePlanet.getWaterStock() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/waterStock.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.waterStock'|trans|raw }}"><strong>{{ 'building.waterStock'|trans }} x {% if usePlanet.getWaterStock() %}{{ usePlanet.getWaterStock() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getWaterStock() + 1) * character.getBuildingNiobium('waterStock') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getWaterStock() + 1) * character.getBuildingNiobium('waterStock'))|number_format }}</span>{% else %}{{ ((usePlanet.getWaterStock() + 1) * character.getBuildingNiobium('waterStock'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getWaterStock() + 1) * character.getBuildingWater('waterStock') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getWaterStock() + 1) * character.getBuildingWater('waterStock'))|number_format }}</span>{% else %}{{ ((usePlanet.getWaterStock() + 1) * character.getBuildingWater('waterStock'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 3 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('waterStock') }}</span>{% else %}{{ character.getBuildingGroundPlace('waterStock') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -319,7 +319,7 @@
                                 {% elseif planetNb >= ((usePlanet.getWaterStock() + 1 + usePlanet.getConstructionsLike('waterStock')) * character.getBuildingNiobium('waterStock')) and planetWt >= ((usePlanet.getWaterStock() + 1 + usePlanet.getConstructionsLike('waterStock')) * character.getBuildingWater('waterStock')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('waterStock') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'waterStock', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -337,7 +337,7 @@
                 {% if (character.getCargo() <= 1 and usePlanet.getSilos() == 0) or character.getAeroponicFarm() <= 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/silos.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.silos'|trans|raw }}">{{ 'building.silos'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/silos.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.silos'|trans|raw }}">{{ 'building.silos'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.silos.blocked'|trans }}
@@ -349,7 +349,7 @@
                 {% else %}
                     <tr class="access-build">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/silos.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.silos'|trans|raw }}"><strong>{{ 'building.silos'|trans }} x {% if usePlanet.getSilos() %}{{ usePlanet.getSilos() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/silos.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.silos'|trans|raw }}"><strong>{{ 'building.silos'|trans }} x {% if usePlanet.getSilos() %}{{ usePlanet.getSilos() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getSilos() + 1) * character.getBuildingNiobium('silos') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getSilos() + 1) * character.getBuildingNiobium('silos'))|number_format }}</span>{% else %}{{ ((usePlanet.getSilos() + 1) * character.getBuildingNiobium('silos'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getSilos() + 1) * character.getBuildingWater('silos') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getSilos() + 1) * character.getBuildingWater('silos'))|number_format }}</span>{% else %}{{ ((usePlanet.getSilos() + 1) * character.getBuildingWater('silos'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 3 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('silos') }}</span>{% else %}{{ character.getBuildingGroundPlace('silos') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -373,7 +373,7 @@
                                 {% elseif planetNb >= ((usePlanet.getSilos() + 1 + usePlanet.getConstructionsLike('silos')) * character.getBuildingNiobium('silos')) and planetWt >= ((usePlanet.getSilos() + 1 + usePlanet.getConstructionsLike('silos')) * character.getBuildingWater('silos')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('silos') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'silos', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -395,7 +395,7 @@
                 <tbody>
                 <tr class="access-build">
                     <td class="center-cells">
-                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/search.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.search'|trans|raw }}"><strong>{{ 'building.search'|trans }} x {% if usePlanet.getCenterSearch() %}{{ usePlanet.getCenterSearch() }}{% else %}0{% endif %}</strong></button>
+                        <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/search.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.search'|trans|raw }}"><strong>{{ 'building.search'|trans }} x {% if usePlanet.getCenterSearch() %}{{ usePlanet.getCenterSearch() }}{% else %}0{% endif %}</strong></button>
                         <div class="mt-4">{% if (usePlanet.getCenterSearch() + 1) * character.getBuildingNiobium('centerSearch') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getCenterSearch() + 1) * character.getBuildingNiobium('centerSearch'))|number_format }}</span>{% else %}{{ ((usePlanet.getCenterSearch() + 1) * character.getBuildingNiobium('centerSearch'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getCenterSearch() + 1) * character.getBuildingWater('centerSearch') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getCenterSearch() + 1) * character.getBuildingWater('centerSearch'))|number_format }}</span>{% else %}{{ ((usePlanet.getCenterSearch() + 1) * character.getBuildingWater('centerSearch'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                         <div class="mt-4">{% if 5 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('centerSearch') }}</span>{% else %}{{ character.getBuildingGroundPlace('centerSearch') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                     </td>
@@ -418,7 +418,7 @@
                             {% elseif planetNb >= ((usePlanet.getCenterSearch() + 1 + usePlanet.getConstructionsLike('centerSearch')) * character.getBuildingNiobium('centerSearch')) and planetWt >= ((usePlanet.getCenterSearch() + 1 + usePlanet.getConstructionsLike('centerSearch')) * character.getBuildingWater('centerSearch')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('centerSearch') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                 <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'centerSearch', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                             {% else %}
-                                <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                             {% endif %}
                         {% endif %}
                     </td>
@@ -436,7 +436,7 @@
                 {% if character.getDemography() <= 0 and usePlanet.getCity() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/city.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.city'|trans|raw }}">{{ 'building.city'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/city.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.city'|trans|raw }}">{{ 'building.city'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.city.blocked'|trans }}
@@ -448,7 +448,7 @@
                 {% else %}
                     <tr class="access-build-2">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/city.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.city'|trans|raw }}"><strong>{{ 'building.city'|trans }} x {% if usePlanet.getCity() %}{{ usePlanet.getCity() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/city.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.city'|trans|raw }}"><strong>{{ 'building.city'|trans }} x {% if usePlanet.getCity() %}{{ usePlanet.getCity() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getCity() + 1) * character.getBuildingNiobium('city') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getCity() + 1) * character.getBuildingNiobium('city'))|number_format }}</span>{% else %}{{ ((usePlanet.getCity() + 1) * character.getBuildingNiobium('city'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getCity() + 1) * character.getBuildingWater('city') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getCity() + 1) * character.getBuildingWater('city'))|number_format }}</span>{% else %}{{ ((usePlanet.getCity() + 1) * character.getBuildingWater('city'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 6 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('city') }}</span>{% else %}{{ character.getBuildingGroundPlace('city') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -472,7 +472,7 @@
                                 {% elseif planetNb >= ((usePlanet.getCity() + 1 + usePlanet.getConstructionsLike('city')) * character.getBuildingNiobium('city')) and planetWt >= ((usePlanet.getCity() + 1 + usePlanet.getConstructionsLike('city')) * character.getBuildingWater('city')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('city') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'city', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -490,7 +490,7 @@
                 {% if character.getDemography() <= 4 and usePlanet.getMetropole() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/metropole.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.metropole'|trans|raw }}">{{ 'building.metropole'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/metropole.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.metropole'|trans|raw }}">{{ 'building.metropole'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.metropole.blocked'|trans }}
@@ -502,7 +502,7 @@
                 {% else %}
                     <tr class="access-build">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/metropole.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.metropole'|trans|raw }}"><strong>{{ 'building.metropole'|trans }} x {% if usePlanet.getMetropole() %}{{ usePlanet.getMetropole() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/metropole.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.metropole'|trans|raw }}"><strong>{{ 'building.metropole'|trans }} x {% if usePlanet.getMetropole() %}{{ usePlanet.getMetropole() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getMetropole() + 1) * character.getBuildingNiobium('metropole') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getMetropole() + 1) * character.getBuildingNiobium('metropole'))|number_format }}</span>{% else %}{{ ((usePlanet.getMetropole() + 1) * character.getBuildingNiobium('metropole'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getMetropole() + 1) * character.getBuildingWater('metropole') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getMetropole() + 1) * character.getBuildingWater('metropole'))|number_format }}</span>{% else %}{{ ((usePlanet.getMetropole() + 1) * character.getBuildingWater('metropole'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 6 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('metropole') }}</span>{% else %}{{ character.getBuildingGroundPlace('metropole') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"><span class="ml-4">{% if 6 + usePlanet.getSkyPlace() > usePlanet.getSky() %}<span class="text-rouge">{{ character.getBuildingSkyPlace('metropole') }}</span>{% else %}{{ character.getBuildingSkyPlace('metropole') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'skyImg'|trans }}" src="{{ asset('img/sky.webp') }}"></span></div>
                         </td>
@@ -526,7 +526,7 @@
                                 {% elseif planetNb >= ((usePlanet.getMetropole() + 1 + usePlanet.getConstructionsLike('metropole')) * character.getBuildingNiobium('metropole')) and planetWt >= ((usePlanet.getMetropole() + 1 + usePlanet.getConstructionsLike('metropole')) * character.getBuildingWater('metropole')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('metropole') <= usePlanet.getGround() and usePlanet.getSkyPlace() + character.getBuildingSkyPlace('metropole') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'metropole', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -545,7 +545,7 @@
                     {% if character.getDiscipline() <= 0 and usePlanet.getCaserne() == 0 %}
                         <tr class="blocked-building blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/slave.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.slave'|trans|raw }}">{{ 'building.slave'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/slave.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.slave'|trans|raw }}">{{ 'building.slave'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'building.slave.blocked'|trans }}
@@ -557,7 +557,7 @@
                     {% else %}
                         <tr class="access-build-2">
                             <td class="center-cells">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/slave.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.slave'|trans|raw }}"><strong>{{ 'building.slave'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/slave.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.slave'|trans|raw }}"><strong>{{ 'building.slave'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
                                 <div class="mt-4">{% if (usePlanet.getCaserne() + 1) * character.getBuildingNiobium('slave') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * character.getBuildingNiobium('slave'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * character.getBuildingNiobium('slave'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getCaserne() + 1) * character.getBuildingWater('slave') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * character.getBuildingWater('slave'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * character.getBuildingWater('slave'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                                 <div class="mt-4">{% if 6 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('slave') }}</span>{% else %}{{ character.getBuildingGroundPlace('slave') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                             </td>
@@ -581,7 +581,7 @@
                                     {% elseif planetNb >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('slave')) * character.getBuildingNiobium('slave')) and planetWt >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('slave')) * character.getBuildingWater('slave')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('slave') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                         <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'slave', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                     {% else %}
-                                        <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                        <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                     {% endif %}
                                 {% endif %}
                             </td>
@@ -605,7 +605,7 @@
                 {% if character.getDiscipline() <= 0 and usePlanet.getCaserne() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/caserne.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.caserne'|trans|raw }}">{{ 'building.caserne'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/caserne.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.caserne'|trans|raw }}">{{ 'building.caserne'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.caserne.blocked'|trans }}
@@ -617,7 +617,7 @@
                 {% else %}
                     <tr class="access-build-2">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/caserne.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.caserne'|trans|raw }}"><strong>{{ 'building.caserne'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/caserne.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.caserne'|trans|raw }}"><strong>{{ 'building.caserne'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getCaserne() + 1) * character.getBuildingNiobium('caserne') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * character.getBuildingNiobium('caserne'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * character.getBuildingNiobium('caserne'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getCaserne() + 1) * character.getBuildingWater('caserne') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * character.getBuildingWater('caserne'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * character.getBuildingWater('caserne'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 6 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('caserne') }}</span>{% else %}{{ character.getBuildingGroundPlace('caserne') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -641,7 +641,7 @@
                                 {% elseif planetNb >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('caserne')) * character.getBuildingNiobium('caserne')) and planetWt >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('caserne')) * character.getBuildingWater('caserne')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('caserne') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'caserne', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -659,7 +659,7 @@
                 {% if character.getDiscipline() != 3 and usePlanet.getBunker() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/bunker.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.bunker'|trans|raw }}">{{ 'building.bunker'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/bunker.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.bunker'|trans|raw }}">{{ 'building.bunker'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.bunker.blocked'|trans }}
@@ -671,7 +671,7 @@
                 {% else %}
                     <tr class="access-build">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/bunker.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.bunker'|trans|raw }}"><strong>{{ 'building.bunker'|trans }} x {% if usePlanet.getBunker() %}{{ usePlanet.getBunker() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/bunker.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.bunker'|trans|raw }}"><strong>{{ 'building.bunker'|trans }} x {% if usePlanet.getBunker() %}{{ usePlanet.getBunker() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getBunker() + 1) * character.getBuildingNiobium('bunker') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getBunker() + 1) * character.getBuildingNiobium('bunker'))|number_format }}</span>{% else %}{{ ((usePlanet.getBunker() + 1) * character.getBuildingNiobium('bunker'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getBunker() + 1) * character.getBuildingWater('bunker') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getBunker() + 1) * character.getBuildingWater('bunker'))|number_format }}</span>{% else %}{{ ((usePlanet.getBunker() + 1) * character.getBuildingWater('bunker'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 10 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('bunker') }}</span>{% else %}{{ character.getBuildingGroundPlace('bunker') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -695,7 +695,7 @@
                                 {% elseif planetNb >= ((usePlanet.getBunker() + 1 + usePlanet.getConstructionsLike('bunker')) * character.getBuildingNiobium('bunker')) and planetWt >= ((usePlanet.getBunker() + 1 + usePlanet.getConstructionsLike('bunker')) * character.getBuildingWater('bunker')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('bunker') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'bunker', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -714,7 +714,7 @@
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
                             <a href="{{ path('jail', {'usePlanet': usePlanet.getId()}) }}">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3 catch-border" width="40" src="{{ asset('img/prison.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}">{{ 'building.prison'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3 catch-border" width="40" src="{{ asset('img/prison.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}">{{ 'building.prison'|trans|raw }}</button>
                             </a>
                         </th>
                         <td class="center-cells cell-middle">
@@ -730,7 +730,7 @@
                             <a href="{{ path('jail', {'usePlanet': usePlanet.getId()}) }}">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3 catch-border" src="{{ asset('img/prison.webp') }}">
                             </a>
-                            <button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}"><strong>{{ 'building.prison'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
+                            <button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.prison'|trans|raw }}"><strong>{{ 'building.prison'|trans }} x {% if usePlanet.getCaserne() %}{{ usePlanet.getCaserne() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getCaserne() + 1) * character.getBuildingNiobium('prison') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * character.getBuildingNiobium('prison'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * character.getBuildingNiobium('prison'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getCaserne() + 1) * character.getBuildingWater('prison') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getCaserne() + 1) * character.getBuildingWater('prison'))|number_format }}</span>{% else %}{{ ((usePlanet.getCaserne() + 1) * character.getBuildingWater('prison'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 6 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('prison') }}</span>{% else %}{{ character.getBuildingGroundPlace('prison') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -754,7 +754,7 @@
                                 {% elseif planetNb >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('prison')) * character.getBuildingNiobium('prison')) and planetWt >= ((usePlanet.getCaserne() + 1 + usePlanet.getConstructionsLike('prison')) * character.getBuildingWater('prison')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('prison') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'prison', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -777,7 +777,7 @@
                 {% if usePlanet.getUranium() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/nuclear_base.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.nuclearBase'|trans|raw }}">{{ 'building.nuclearBase'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/nuclear_base.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.nuclearBase'|trans|raw }}">{{ 'building.nuclearBase'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.nuclearBase.blocked'|trans }}
@@ -789,7 +789,7 @@
                 {% else %}
                     <tr class="access-build">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/nuclear_base.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.nuclearBase'|trans|raw }}"><strong>{{ 'building.nuclearBase'|trans }} x {% if usePlanet.getNuclearBase() %}{{ usePlanet.getNuclearBase() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/nuclear_base.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.nuclearBase'|trans|raw }}"><strong>{{ 'building.nuclearBase'|trans }} x {% if usePlanet.getNuclearBase() %}{{ usePlanet.getNuclearBase() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getNuclearBase() + 1) * character.getBuildingNiobium('nuclearBase') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getNuclearBase() + 1) * character.getBuildingNiobium('nuclearBase'))|number_format }}</span>{% else %}{{ ((usePlanet.getNuclearBase() + 1) * character.getBuildingNiobium('nuclearBase'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"></div>
                             <div class="mt-4">{% if 2 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('nuclearBase') }}</span>{% else %}{{ character.getBuildingGroundPlace('nuclearBase') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -813,7 +813,7 @@
                                 {% elseif planetNb >= ((usePlanet.getNuclearBase() + 1 + usePlanet.getConstructionsLike('nuclearBase')) * character.getBuildingNiobium('nuclearBase')) and planetWt >= ((usePlanet.getNuclearBase() + 1 + usePlanet.getConstructionsLike('nuclearBase')) * character.getBuildingWater('nuclearBase')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('nuclearBase') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'nuclearBase', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -831,7 +831,7 @@
                 {% if character.getIndustry() <= 0 and usePlanet.getSpaceShip() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/chantier.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.chantier'|trans|raw }}">{{ 'building.chantier'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/chantier.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.chantier'|trans|raw }}">{{ 'building.chantier'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.chantier.blocked'|trans }}
@@ -843,7 +843,7 @@
                 {% else %}
                     <tr class="access-build-2">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/chantier.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.chantier'|trans|raw }}"><strong>{{ 'building.chantier'|trans }} x {% if usePlanet.getSpaceShip() %}{{ usePlanet.getSpaceShip() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/chantier.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.chantier'|trans|raw }}"><strong>{{ 'building.chantier'|trans }} x {% if usePlanet.getSpaceShip() %}{{ usePlanet.getSpaceShip() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getSpaceShip() + 1) * character.getBuildingNiobium('spaceShip') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getSpaceShip() + 1) * character.getBuildingNiobium('spaceShip'))|number_format }}</span>{% else %}{{ ((usePlanet.getSpaceShip() + 1) * character.getBuildingNiobium('spaceShip'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getSpaceShip() + 1) * character.getBuildingWater('spaceShip') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getSpaceShip() + 1) * character.getBuildingWater('spaceShip'))|number_format }}</span>{% else %}{{ ((usePlanet.getSpaceShip() + 1) * character.getBuildingWater('spaceShip'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 2 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('spaceShip') }}</span>{% else %}{{ character.getBuildingGroundPlace('spaceShip') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"><span class="ml-4">{% if 1 + usePlanet.getSkyPlace() > usePlanet.getSky() %}<span class="text-rouge">{{ character.getBuildingSkyPlace('spaceShip') }}</span>{% else %}{{ character.getBuildingSkyPlace('spaceShip') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'skyImg'|trans }}" src="{{ asset('img/sky.webp') }}"></span></div>
                         </td>
@@ -867,7 +867,7 @@
                                 {% elseif planetNb >= ((usePlanet.getSpaceShip() + 1 + usePlanet.getConstructionsLike('spaceShip')) * character.getBuildingNiobium('spaceShip')) and planetWt >= ((usePlanet.getSpaceShip() + 1 + usePlanet.getConstructionsLike('spaceShip')) * character.getBuildingWater('spaceShip')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('spaceShip') <= usePlanet.getGround() and usePlanet.getSkyPlace() + character.getBuildingSkyPlace('spaceShip') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'spaceShip', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -885,7 +885,7 @@
                 {% if character.getLightShip() <= 0 and usePlanet.getLightUsine() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/light.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.light'|trans|raw }}">{{ 'building.light'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/light.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.light'|trans|raw }}">{{ 'building.light'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.light.blocked'|trans }}
@@ -897,7 +897,7 @@
                 {% else %}
                     <tr class="access-build">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/light.webp') }}">{% if usePlanet.getLightUsine() == 0 %}<button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.light'|trans|raw }}"><strong>{{ 'building.light'|trans }} {{ 'building.canBe'|trans }}</strong></button>{% else %}{{ 'building.light'|trans }} <span class="text-vert2">{{ 'building.Activated'|trans }}</span>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/light.webp') }}">{% if usePlanet.getLightUsine() == 0 %}<button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.light'|trans|raw }}"><strong>{{ 'building.light'|trans }} {{ 'building.canBe'|trans }}</strong></button>{% else %}{{ 'building.light'|trans }} <span class="text-vert2">{{ 'building.Activated'|trans }}</span>{% endif %}
                             <div class="mt-4">{% if (usePlanet.getLightUsine() + 1) * character.getBuildingNiobium('lightUsine') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getLightUsine() + 1) * character.getBuildingNiobium('lightUsine'))|number_format }}</span>{% else %}{{ ((usePlanet.getLightUsine() + 1) * character.getBuildingNiobium('lightUsine'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getLightUsine() + 1) * character.getBuildingWater('lightUsine') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getLightUsine() + 1) * character.getBuildingWater('lightUsine'))|number_format }}</span>{% else %}{{ ((usePlanet.getLightUsine() + 1) * character.getBuildingWater('lightUsine'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 6 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('lightUsine') }}</span>{% else %}{{ character.getBuildingGroundPlace('lightUsine') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -936,7 +936,7 @@
                 {% if character.getHeavyShip() <= 0 and usePlanet.getHeavyUsine() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/heavy.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.heavy'|trans|raw }}">{{ 'building.heavy'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/heavy.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.heavy'|trans|raw }}">{{ 'building.heavy'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.heavy.blocked'|trans }}
@@ -948,7 +948,7 @@
                 {% else %}
                     <tr class="access-build">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/heavy.webp') }}">{% if usePlanet.getHeavyUsine() == 0 %}<button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.heavy'|trans|raw }}"><strong>{{ 'building.heavy'|trans }} {{ 'building.canBe'|trans }}</strong></button>{% else %}{{ 'building.heavy'|trans }} <span class="text-vert2">{{ 'building.Activated'|trans }}</span>{% endif %}
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/heavy.webp') }}">{% if usePlanet.getHeavyUsine() == 0 %}<button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.heavy'|trans|raw }}"><strong>{{ 'building.heavy'|trans }} {{ 'building.canBe'|trans }}</strong></button>{% else %}{{ 'building.heavy'|trans }} <span class="text-vert2">{{ 'building.Activated'|trans }}</span>{% endif %}
                             <div class="mt-4">{% if (usePlanet.getHeavyUsine() + 1) * character.getBuildingNiobium('heavyUsine') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getHeavyUsine() + 1) * character.getBuildingNiobium('heavyUsine'))|number_format }}</span>{% else %}{{ ((usePlanet.getHeavyUsine() + 1) * character.getBuildingNiobium('heavyUsine'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getHeavyUsine() + 1) * character.getBuildingWater('heavyUsine') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getHeavyUsine() + 1) * character.getBuildingWater('heavyUsine'))|number_format }}</span>{% else %}{{ ((usePlanet.getHeavyUsine() + 1) * character.getBuildingWater('heavyUsine'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 12 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('heavyUsine') }}</span>{% else %}{{ character.getBuildingGroundPlace('heavyUsine') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -992,7 +992,7 @@
                 {% if character.getOnde() <= 0 and usePlanet.getRadar() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/radar.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.radar'|trans|raw }}">{{ 'building.radar'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/radar.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.radar'|trans|raw }}">{{ 'building.radar'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.radar.blocked'|trans }}
@@ -1004,7 +1004,7 @@
                 {% else %}
                     <tr class="access-build-2">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/radar.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.radar'|trans|raw }}"><strong>{{ 'building.radar'|trans }} x {% if usePlanet.getRadar() %}{{ usePlanet.getRadar() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/radar.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.radar'|trans|raw }}"><strong>{{ 'building.radar'|trans }} x {% if usePlanet.getRadar() %}{{ usePlanet.getRadar() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getRadar() + 1) * character.getBuildingNiobium('radar') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getRadar() + 1) * character.getBuildingNiobium('radar'))|number_format }}</span>{% else %}{{ ((usePlanet.getRadar() + 1) * character.getBuildingNiobium('radar'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getRadar() + 1) * character.getBuildingWater('radar') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getRadar() + 1) * character.getBuildingWater('radar'))|number_format }}</span>{% else %}{{ ((usePlanet.getRadar() + 1) * character.getBuildingWater('radar'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 2 + usePlanet.getGroundPlace() > usePlanet.getGround() %}<span class="text-rouge">{{ character.getBuildingGroundPlace('radar') }}</span>{% else %}{{ character.getBuildingGroundPlace('radar') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'groundImg'|trans }}" src="{{ asset('img/ground.webp') }}"></div>
                         </td>
@@ -1028,7 +1028,7 @@
                                 {% elseif planetNb >= ((usePlanet.getRadar() + 1 + usePlanet.getConstructionsLike('radar')) * character.getBuildingNiobium('radar')) and planetWt >= ((usePlanet.getRadar() + 1 + usePlanet.getConstructionsLike('radar')) * character.getBuildingWater('radar')) and usePlanet.getGroundPlace() + character.getBuildingGroundPlace('radar') <= usePlanet.getGround() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'radar', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -1046,7 +1046,7 @@
                 {% if character.getOnde() <= 2 and usePlanet.getSkyRadar() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/skyRadar.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.skyRadar'|trans|raw }}">{{ 'building.skyRadar'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/skyRadar.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.skyRadar'|trans|raw }}">{{ 'building.skyRadar'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.skyRadar.blocked'|trans }}
@@ -1058,7 +1058,7 @@
                 {% else %}
                     <tr class="access-build">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/skyRadar.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.skyRadar'|trans|raw }}"><strong>{{ 'building.skyRadar'|trans }} x {% if usePlanet.getSkyRadar() %}{{ usePlanet.getSkyRadar() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/skyRadar.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.skyRadar'|trans|raw }}"><strong>{{ 'building.skyRadar'|trans }} x {% if usePlanet.getSkyRadar() %}{{ usePlanet.getSkyRadar() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getSkyRadar() + 1) * character.getBuildingNiobium('skyRadar') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getSkyRadar() + 1) * character.getBuildingNiobium('skyRadar'))|number_format }}</span>{% else %}{{ ((usePlanet.getSkyRadar() + 1) * character.getBuildingNiobium('skyRadar'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getSkyRadar() + 1) * character.getBuildingWater('skyRadar') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getSkyRadar() + 1) * character.getBuildingWater('skyRadar'))|number_format }}</span>{% else %}{{ ((usePlanet.getSkyRadar() + 1) * character.getBuildingWater('skyRadar'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 2 + usePlanet.getSkyPlace() > usePlanet.getSky() %}<span class="text-rouge">{{ character.getBuildingSkyPlace('skyRadar') }}</span>{% else %}{{ character.getBuildingSkyPlace('skyRadar') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'skyImg'|trans }}" src="{{ asset('img/sky.webp') }}"></div>
                         </td>
@@ -1082,7 +1082,7 @@
                                 {% elseif planetNb >= ((usePlanet.getSkyRadar() + 1 + usePlanet.getConstructionsLike('skyRadar')) * character.getBuildingNiobium('skyRadar')) and planetWt >= ((usePlanet.getSkyRadar() + 1 + usePlanet.getConstructionsLike('skyRadar')) * character.getBuildingWater('skyRadar')) and usePlanet.getSkyPlace() + character.getBuildingSkyPlace('skyRadar') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'skyRadar', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -1100,7 +1100,7 @@
                 {% if character.getOnde() != 5 and usePlanet.getSkyBrouilleur() == 0 %}
                     <tr class="blocked-building blockedBack">
                         <th class="tab-cells-name">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/brouilleur.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.brouilleur'|trans|raw }}">{{ 'building.brouilleur'|trans|raw }}</button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/brouilleur.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.brouilleur'|trans|raw }}">{{ 'building.brouilleur'|trans|raw }}</button>
                         </th>
                         <td class="center-cells cell-middle">
                             {{ 'building.brouilleur.blocked'|trans }}
@@ -1112,7 +1112,7 @@
                 {% else %}
                     <tr class="access-build-2">
                         <td class="center-cells">
-                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/brouilleur.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.brouilleur'|trans|raw }}"><strong>{{ 'building.brouilleur'|trans }} x {% if usePlanet.getSkyBrouilleur() %}{{ usePlanet.getSkyBrouilleur() }}{% else %}0{% endif %}</strong></button>
+                            <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/brouilleur.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.brouilleur'|trans|raw }}"><strong>{{ 'building.brouilleur'|trans }} x {% if usePlanet.getSkyBrouilleur() %}{{ usePlanet.getSkyBrouilleur() }}{% else %}0{% endif %}</strong></button>
                             <div class="mt-4">{% if (usePlanet.getSkyBrouilleur() + 1) * character.getBuildingNiobium('skyBrouilleur') > usePlanet.getNiobium() %}<span class="text-rouge">{{ ((usePlanet.getSkyBrouilleur() + 1) * character.getBuildingNiobium('skyBrouilleur'))|number_format }}</span>{% else %}{{ ((usePlanet.getSkyBrouilleur() + 1) * character.getBuildingNiobium('skyBrouilleur'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"><span class="ml-4">{% if (usePlanet.getSkyBrouilleur() + 1) * character.getBuildingWater('skyBrouilleur') > usePlanet.getWater() %}<span class="text-rouge">{{ ((usePlanet.getSkyBrouilleur() + 1) * character.getBuildingWater('skyBrouilleur'))|number_format }}</span>{% else %}{{ ((usePlanet.getSkyBrouilleur() + 1) * character.getBuildingWater('skyBrouilleur'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'waterImg'|trans }}" src="{{ asset('img/water.webp') }}"></span></div>
                             <div class="mt-4">{% if 4 + usePlanet.getSkyPlace() > usePlanet.getSky() %}<span class="text-rouge">{{ character.getBuildingSkyPlace('skyBrouilleur') }}</span>{% else %}{{ character.getBuildingSkyPlace('skyBrouilleur') }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'skyImg'|trans }}" src="{{ asset('img/sky.webp') }}"></div>
                         </td>
@@ -1136,7 +1136,7 @@
                                 {% elseif planetNb >= ((usePlanet.getSkyBrouilleur() + 1 + usePlanet.getConstructionsLike('skyBrouilleur')) * character.getBuildingNiobium('skyBrouilleur')) and planetWt >= ((usePlanet.getSkyBrouilleur() + 1 + usePlanet.getConstructionsLike('skyBrouilleur')) * character.getBuildingWater('skyBrouilleur')) and usePlanet.getSkyPlace() + character.getBuildingSkyPlace('skyBrouilleur') <= usePlanet.getSky() and usePlanet.getConstructAt() %}
                                     <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'skyBrouilleur', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                 {% else %}
-                                    <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                    <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                 {% endif %}
                             {% endif %}
                         </td>
@@ -1160,7 +1160,7 @@
                     {% if character.getExpansion() <= 0 and usePlanet.getIsland() == 0 %}
                         <tr class="blocked-building blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/island.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.island'|trans|raw }}">{{ 'building.island'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/island.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.island'|trans|raw }}">{{ 'building.island'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'building.island.blocked'|trans }}
@@ -1172,7 +1172,7 @@
                     {% else %}
                         <tr class="access-build">
                             <td class="center-cells">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/island.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.island'|trans|raw }}"><strong>{{ 'building.island'|trans }} x {% if usePlanet.getIsland() %}{{ usePlanet.getIsland() }}{% else %}0{% endif %}</strong></button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/island.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.island'|trans|raw }}"><strong>{{ 'building.island'|trans }} x {% if usePlanet.getIsland() %}{{ usePlanet.getIsland() }}{% else %}0{% endif %}</strong></button>
                                 <div class="mt-4"><span class="ml-4">{% if (usePlanet.getIsland + 1) * character.getBuildingWarPoint('island') > usePlanet.getCharacter().getRank().getWarPoint() %}<span class="text-rouge">{{ ((usePlanet.getIsland() + 1) * character.getBuildingWarPoint('island'))|number_format }}</span>{% else %}{{ ((usePlanet.getIsland() + 1) * character.getBuildingWarPoint('island'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'pdgImg'|trans }}" src="{{ asset('img/pdg.webp') }}"></span></div>
                             </td>
                             <td class="center-cells cell-middle">
@@ -1194,7 +1194,7 @@
                                     {% elseif planetPdg >= ((usePlanet.getIsland() + 1 + usePlanet.getConstructionsLike('island')) * character.getBuildingWarPoint('island')) and usePlanet.getConstructAt() %}
                                         <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'island', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                     {% else %}
-                                        <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                        <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                     {% endif %}
                                 {% endif %}
                             </td>
@@ -1210,7 +1210,7 @@
                     {% if character.getExpansion() != 2 and usePlanet.getOrbital() == 0 %}
                         <tr class="blocked-building blockedBack">
                             <th class="tab-cells-name">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/orbital.webp') }}"><button class="text-orange mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.orbital'|trans|raw }}">{{ 'building.orbital'|trans|raw }}</button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" width="40" src="{{ asset('img/orbital.webp') }}"><button class="text-marron mt-3" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.orbital'|trans|raw }}">{{ 'building.orbital'|trans|raw }}</button>
                             </th>
                             <td class="center-cells cell-middle">
                                 {{ 'building.orbital.blocked'|trans }}
@@ -1222,7 +1222,7 @@
                     {% else %}
                         <tr class="access-build-2">
                             <td class="center-cells">
-                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/orbital.webp') }}"><button class="text-orange" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.orbital'|trans|raw }}"><strong>{{ 'building.orbital'|trans }} x {% if usePlanet.getOrbital() %}{{ usePlanet.getOrbital() }}{% else %}0{% endif %}</strong></button>
+                                <img alt="{{ 'image'|trans({},'front_global') }}" class="float-left building-img ml-3" src="{{ asset('img/orbital.webp') }}"><button class="text-marron" data-toggle="popover" data-trigger="focus" title="{{ 'popover.title'|trans }}" data-html="true" data-content="{{ 'popover.orbital'|trans|raw }}"><strong>{{ 'building.orbital'|trans }} x {% if usePlanet.getOrbital() %}{{ usePlanet.getOrbital() }}{% else %}0{% endif %}</strong></button>
                                 <div class="mt-4"><span class="ml-4">{% if (usePlanet.getOrbital + 1) * character.getBuildingWarPoint('orbital') > usePlanet.getCharacter().getRank().getWarPoint() %}<span class="text-rouge">{{ ((usePlanet.getOrbital() + 1) * character.getBuildingWarPoint('orbital'))|number_format }}</span>{% else %}{{ ((usePlanet.getOrbital() + 1) * character.getBuildingWarPoint('orbital'))|number_format }}{% endif %} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'pdgImg'|trans }}" src="{{ asset('img/pdg.webp') }}"></span></div>
                             </td>
                             <td class="center-cells cell-middle">
@@ -1244,7 +1244,7 @@
                                     {% elseif planetPdg >= ((usePlanet.getOrbital() + 1 + usePlanet.getConstructionsLike('orbital')) * character.getBuildingWarPoint('orbital')) and usePlanet.getConstructAt() %}
                                         <a class="btn btn-lg btn-start mt-5" href="{{ path('build_building', {'building': 'orbital', 'usePlanet': usePlanet.getId()}) }}">{{ 'building.buildList'|trans }}</a>
                                     {% else %}
-                                        <a class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</a>
+                                        <span class="btn btn-lg btn-secondary mt-5" disabled>{{ 'building.build'|trans }}</span>
                                     {% endif %}
                                 {% endif %}
                             </td>
