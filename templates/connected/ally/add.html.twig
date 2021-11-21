@@ -14,7 +14,7 @@
         <div class="front-block-second">
             {% if ally %}
                 <h1 class="text-center p-4">{{ 'ally.addTitle'|trans }}</h1>
-                <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+                <ul class="nav nav-tabs mt-4" id="myTab">
                     <li class="nav-item">
                         <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCharacters()|length }} {{ 'ally.members'|trans }}</a>
                     </li>

@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="front-block display-message">
-        <ul class="nav nav-tabs mt-1" id="myTab" role="tablist">
+        <ul class="nav nav-tabs mt-1" id="myTab">
             {% for tmpSalon in salons %}
                 {% if tmpSalon.getId() == salon.getId() %}
                     <li class="nav-item">

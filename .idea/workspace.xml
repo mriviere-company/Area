@@ -6,7 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/overview.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/add.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/admin.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/bank.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/bank.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/exit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/exit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/pact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/pact.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/report.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/report.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/salon.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/salon.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +185,7 @@
       <workItem from="1632906269254" duration="361000" />
       <workItem from="1635146418246" duration="1696000" />
       <workItem from="1637053883759" duration="1835000" />
-      <workItem from="1637406736491" duration="28484000" />
+      <workItem from="1637406736491" duration="29615000" />
     </task>
     <servers />
   </component>
