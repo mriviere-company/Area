@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/scss/front/galaxy.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/front/galaxy.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_map.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_map.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_market.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_market.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_overview.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_overview.fr.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +181,7 @@
       <workItem from="1632906269254" duration="361000" />
       <workItem from="1635146418246" duration="1696000" />
       <workItem from="1637053883759" duration="1835000" />
-      <workItem from="1637406736491" duration="22900000" />
+      <workItem from="1637406736491" duration="24812000" />
     </task>
     <servers />
   </component>
