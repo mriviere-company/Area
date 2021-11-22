@@ -32,13 +32,13 @@ if ($trustedHosts = $_SERVER['TRUSTED_HOSTS'] ?? false) {
     Request::setTrustedHosts(explode(',', $trustedHosts));
 }
 
-//$policy = "default-src 'self' 'unsafe-inline';" . "script-src 'self' 'unsafe-inline'";
+$policy = "default-src 'self' 'unsafe-inline';";
 $kernel = new Kernel($env, $debug);
 $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->setPublic();
 $response->setMaxAge(290304000);
 $response->headers->addCacheControlDirective('must-revalidate', true);
-//$response->headers->set('Content-Security-Policy', $policy);
+$response->headers->set('Content-Security-Policy', $policy);
 $response->send();
 $kernel->terminate($request, $response);

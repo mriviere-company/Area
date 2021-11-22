@@ -7,8 +7,8 @@
         {% block stylesheets %}
             <link rel="shortcut icon" type="image/x-image" href="/img/favicon.ico"/>
             {{ encore_entry_link_tags('global') }}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+            <link href="/import/bootstrap/css/bootstrap.min.css"  rel="stylesheet" />
+            <link href="/import/fontawesome/css/all.min.css"  rel="stylesheet" />
         {% endblock %}
     </head>
     <body class="area">
@@ -36,9 +36,9 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('main') }}
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.js" integrity="sha256-DrT5NfxfbHvMHux31Lkhxg42LY6of8TaYyK50jnxRnM=" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+            <script type = "text/javascript" src="/import/jquery-3.6.0.min.js"></script>
+            <script type = "text/javascript" src="/import/bootstrap/js/bootstrap.min.js"></script>
+            <script type = "text/javascript" src="/import/Chart.min.js"></script>
         {% endblock %}
         <div class="modal fade" id="createFleetModal" tabindex="-1" role="dialog" aria-labelledby="createFleetModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
