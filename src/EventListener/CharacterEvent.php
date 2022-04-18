@@ -31,11 +31,11 @@ class CharacterEvent implements EventSubscriberInterface
     /**
      * @var TokenStorageInterface
      */
-    private $token;
+    private TokenStorageInterface $token;
     /**
      * @var EntityManagerInterface
      */
-    private $em;
+    private EntityManagerInterface $em;
     /**
      * KernelControllerListener constructor.
      * @param TokenStorageInterface $token

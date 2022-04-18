@@ -2,10 +2,11 @@
 
 namespace App\Controller\Connected;
 
-use Swift_Mailer;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,10 +28,10 @@ class ConfirmController extends AbstractController
      * @Route("/confirmation-compte/{usePlanet}", name="confirm_account", requirements={"usePlanet"="\d+"})
      * @param Request $request
      * @param Planet $usePlanet
-     * @param Swift_Mailer $mailer
+     * @param MailerInterface $mailer
      * @return RedirectResponse|Response
      */
-    public function confirmAction(Request $request, Planet $usePlanet, Swift_Mailer $mailer)
+    public function confirmAction(Request $request, Planet $usePlanet, MailerInterface $mailer)
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
@@ -50,10 +51,11 @@ class ConfirmController extends AbstractController
             $user->setUsername($form_confirm->get('username')->getData());
             $em->flush();
 
-            $message = (new \Swift_Message('Confirmation inscription'))
-                ->setFrom('support@areauniverse.eu')
-                ->setTo($form_confirm->get('email')->getData())
-                ->setBody(
+            $message = (new Email())
+                ->subject('Confirmation inscription')
+                ->from('support@areauniverse.eu')
+                ->to($form_confirm->get('email')->getData())
+                ->text(
                     $this->renderView(
                         'emails/registration.html.twig',
                         [

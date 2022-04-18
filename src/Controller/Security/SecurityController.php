@@ -4,8 +4,8 @@ namespace App\Controller\Security;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Swift_Mailer;
-use Swift_Message;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
@@ -26,11 +26,12 @@ class SecurityController extends AbstractController
      * @Route("/enregistrement", name="register")
      * @Route("/enregistrement/", name="register_noSlash")
      * @param Request $request
-     * @param Swift_Mailer $mailer
+     * @param MailerInterface $mailer
      * @return RedirectResponse
      * @throws NonUniqueResultException
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function registerAction(Request $request, Swift_Mailer $mailer): RedirectResponse
+    public function registerAction(Request $request, MailerInterface $mailer): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -88,10 +89,11 @@ class SecurityController extends AbstractController
             $em->persist($user);
             $em->flush();
 
-            $message = (new Swift_Message('Confirmation inscription'))
-                ->setFrom('support@areauniverse.eu')
-                ->setTo($_POST['_email'])
-                ->setBody(
+            $message = (new Email())
+                ->subject('Confirmation inscription')
+                ->from('support@areauniverse.eu')
+                ->to($_POST['_email'])
+                ->text(
                     $this->renderView(
                         'emails/registration.html.twig',
                         [

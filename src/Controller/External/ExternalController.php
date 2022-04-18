@@ -3,8 +3,9 @@
 namespace App\Controller\External;
 
 use Doctrine\ORM\NonUniqueResultException;
-use Swift_Mailer;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,12 +17,12 @@ class ExternalController extends AbstractController
 {
     /**
      * @Route("/nouveau-password/{key}", name="recoveryPw", requirements={"key"="\d+"})
-     * @param Swift_Mailer $mailer
+     * @param MailerInterface $mailer
      * @param $key
      * @return RedirectResponse
      * @throws NonUniqueResultException
      */
-    public function recoveryPwAction(Swift_Mailer $mailer, $key): RedirectResponse
+    public function recoveryPwAction(MailerInterface $mailer, $key): RedirectResponse
     {
         $userId = $key; //fixmr decrypt
         $em = $this->getDoctrine()->getManager();
@@ -41,10 +42,11 @@ class ExternalController extends AbstractController
             $userPw->setPassword(password_hash($newPassword, PASSWORD_BCRYPT));
             $em->flush();
 
-            $message = (new \Swift_Message('Nouveau mot de passe'))
-                ->setFrom('support@areauniverse.eu')
-                ->setTo($userPw->getEmail())
-                ->setBody(
+            $message = (new Email())
+                ->subject('Nouveau mot de passe')
+                ->from('support@areauniverse.eu')
+                ->to($userPw->getEmail())
+                ->text(
                     $this->renderView(
                         'emails/recoveryPw.html.twig',
                         ['password' => $newPassword]
@@ -116,20 +118,21 @@ class ExternalController extends AbstractController
     /**
      * @Route("/mail-admin", name="mail_while")
      * @Route("/mail-admin/", name="mail_while_noSlash")
-     * @param Swift_Mailer $mailer
+     * @param MailerInterface $mailer
      * @return RedirectResponse
      */
-    public function mailAdminAction(Swift_Mailer $mailer): RedirectResponse
+    public function mailAdminAction(MailerInterface $mailer): RedirectResponse
     {
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('App:User')->findAll();
 
         foreach($users as $user) {
             if (stripos(strtoupper($user->getEmail()), 'FAKE') == FALSE) {
-                $message = (new \Swift_Message('Area Universe de retour en 2020'))
-                    ->setFrom('support@areauniverse.eu')
-                    ->setTo($user->getEmail())
-                    ->setBody(
+                $message = (new Email())
+                    ->subject('Area Universe de retour en 2022')
+                    ->from('support@areauniverse.eu')
+                    ->to($user->getEmail())
+                    ->text(
                         $this->renderView(
                             'emails/new_server.html.twig',
                             [
