@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Research;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,14 +20,15 @@ class PoliticController extends AbstractController
 {
     /**
      * @Route("/lancer-recherche/{search}/{usePlanet}", name="research_ally", requirements={"search"="\w+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param string $search
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchAllyAction(string $search, Planet $usePlanet)
+    public function researchAllyAction(ManagerRegistry $doctrine, string $search, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());

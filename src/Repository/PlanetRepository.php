@@ -13,7 +13,8 @@ class PlanetRepository extends EntityRepository
      * @return mixed
      * @throws NonUniqueResultException
      */
-    public function findByCurrentPlanet($id, $character) {
+    public function findByCurrentPlanet($id, $character): mixed
+    {
         return $this->createQueryBuilder('p')
             ->where('p.id = :id')
             ->andWhere('p.character = :character')
@@ -27,7 +28,8 @@ class PlanetRepository extends EntityRepository
      * @return mixed
      * @throws NonUniqueResultException
      */
-    public function findByFirstPlanet($character) {
+    public function findByFirstPlanet($character): mixed
+    {
         if ($character) {
             $request = $this->createQueryBuilder('p')
                 ->where('p.character = :character')

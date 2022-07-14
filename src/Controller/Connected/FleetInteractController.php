@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,13 +25,14 @@ class FleetInteractController  extends AbstractController
 {
     /**
      * @Route("/regroupement-flottes/{usePlanet}", name="fleets_regroup", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function fleetsRegroupAction(Planet $usePlanet)
+    public function fleetsRegroupAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);
@@ -111,13 +113,14 @@ class FleetInteractController  extends AbstractController
 
     /**
      * @Route("/regroupement-vaisseaux/{usePlanet}", name="ships_regroup", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
-     * @throws Exception
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function shipsRegroupAction(Planet $usePlanet)
+    public function shipsRegroupAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);
@@ -305,13 +308,14 @@ class FleetInteractController  extends AbstractController
 
     /**
      * @Route("/decharger-niobium/{fleetGive}/{usePlanet}", name="discharge_fleet_niobium", requirements={"usePlanet"="\d+", "fleetGive"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @return RedirectResponse
      */
-    public function dischargeNiobiumFleetAction(Planet $usePlanet, Fleet $fleetGive)
+    public function dischargeNiobiumFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -326,7 +330,7 @@ class FleetInteractController  extends AbstractController
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
         
-        if($planetTake->getMerchant() == true) {
+        if($planetTake->getMerchant()) {
             if ($character->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getNiobium() / 6) / 50000) * (1 + ($character->getPoliticPdg() / 10)));
             } else {
@@ -372,13 +376,14 @@ class FleetInteractController  extends AbstractController
 
     /**
      * @Route("/decharger-water/{fleetGive}/{usePlanet}", name="discharge_fleet_water", requirements={"usePlanet"="\d+", "fleetGive"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @return RedirectResponse
      */
-    public function dischargeWaterFleetAction(Planet $usePlanet, Fleet $fleetGive)
+    public function dischargeWaterFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -392,7 +397,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant() == true) {
+        if($planetTake->getMerchant()) {
             if ($character->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getWater() / 3) / 50000) * (1 + ($character->getPoliticPdg() / 10)));
             } else {
@@ -438,13 +443,14 @@ class FleetInteractController  extends AbstractController
 
     /**
      * @Route("/decharger-soldat/{fleetGive}/{usePlanet}", name="discharge_fleet_soldier", requirements={"usePlanet"="\d+", "fleetGive"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @return RedirectResponse
      */
-    public function dischargeSoldierFleetAction(Planet $usePlanet, Fleet $fleetGive)
+    public function dischargeSoldierFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -458,7 +464,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant() == true) {
+        if($planetTake->getMerchant()) {
             if ($character->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getSoldier() * 10) / 50000) * (1 + ($character->getPoliticPdg() / 10)));
             } else {
@@ -504,13 +510,14 @@ class FleetInteractController  extends AbstractController
 
     /**
      * @Route("/decharger-travailleurs/{fleetGive}/{usePlanet}", name="discharge_fleet_worker", requirements={"usePlanet"="\d+", "fleetGive"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @return RedirectResponse
      */
-    public function dischargeWorkerFleetAction(Planet $usePlanet, Fleet $fleetGive)
+    public function dischargeWorkerFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -524,7 +531,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant() == true) {
+        if($planetTake->getMerchant()) {
             if ($character->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getWorker() * 50) / 50000) * (1 + ($character->getPoliticPdg() / 10)));
             } else {
@@ -570,13 +577,14 @@ class FleetInteractController  extends AbstractController
 
     /**
      * @Route("/decharger-scientifique/{fleetGive}/{usePlanet}", name="discharge_fleet_scientist", requirements={"usePlanet"="\d+", "fleetGive"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @return RedirectResponse
      */
-    public function dischargeScientistFleetAction(Planet $usePlanet, Fleet $fleetGive)
+    public function dischargeScientistFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -590,7 +598,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant() == true) {
+        if($planetTake->getMerchant()) {
             if ($character->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getScientist() * 100) / 50000) * (1 + ($character->getPoliticPdg() / 10)));
             } else {
@@ -636,13 +644,14 @@ class FleetInteractController  extends AbstractController
 
     /**
      * @Route("/decharger-tout/{fleetGive}/{usePlanet}", name="discharge_fleet_all", requirements={"usePlanet"="\d+", "fleetGive"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @return RedirectResponse
      */
-    public function dischargeAllFleetAction(Planet $usePlanet, Fleet $fleetGive)
+    public function dischargeAllFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -656,7 +665,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant() == true) {
+        if($planetTake->getMerchant()) {
             $reportSell = new Report();
             $reportSell->setType('economic');
             $reportSell->setSendAt($now);

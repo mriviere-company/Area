@@ -8,7 +8,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class LocaleSubscriber implements EventSubscriberInterface
 {
-    private $defaultLocale;
+    private mixed $defaultLocale;
 
     public function __construct($defaultLocale = 'fr')
     {
@@ -31,7 +31,7 @@ class LocaleSubscriber implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(
             // must be registered before (i.e. with a higher priority than) the default Locale listener

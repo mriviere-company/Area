@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Research;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +20,14 @@ class ArmementController extends AbstractController
 {
     /**
      * @Route("/rechercher-armement/{usePlanet}", name="research_armement", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchArmementAction(Planet $usePlanet)
+    public function researchArmementAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -54,13 +56,14 @@ class ArmementController extends AbstractController
 
     /**
      * @Route("/rechercher-missile/{usePlanet}", name="research_missile", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchMissileAction(Planet $usePlanet)
+    public function researchMissileAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -86,13 +89,14 @@ class ArmementController extends AbstractController
 
     /**
      * @Route("/rechercher-laser/{usePlanet}", name="research_laser", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchLaserAction(Planet $usePlanet)
+    public function researchLaserAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -118,13 +122,14 @@ class ArmementController extends AbstractController
 
     /**
      * @Route("/rechercher-plasma/{usePlanet}", name="research_plasma", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchPlasmaAction(Planet $usePlanet)
+    public function researchPlasmaAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());

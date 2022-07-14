@@ -2,15 +2,16 @@
 
 namespace App\Service;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use DateTime;
 
 class ZombieService extends AbstractController
 {
-    public function zombieIndicatorAction()
+    public function zombieIndicatorAction(ManagerRegistry $doctrine): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getMainCharacter();
         $now = new DateTime();

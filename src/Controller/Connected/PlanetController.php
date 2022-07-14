@@ -4,6 +4,8 @@ namespace App\Controller\Connected;
 
 use App\Entity\Fleet;
 use App\Entity\Report;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,13 +24,15 @@ class PlanetController extends AbstractController
 {
     /**
      * @Route("/planete/{usePlanet}", name="planet", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
+     * @throws NonUniqueResultException
      */
-    public function planetAction(Request $request, Planet $usePlanet)
+    public function planetAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -101,12 +105,13 @@ class PlanetController extends AbstractController
 
     /**
      * @Route("/colonisation-planete/{fleet}/", name="colonizer_planet", requirements={"fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Fleet $fleet
      * @return RedirectResponse
      */
-    public function colonizeAction(Fleet $fleet)
+    public function colonizeAction(ManagerRegistry $doctrine, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getMainCharacter();
@@ -114,8 +119,8 @@ class PlanetController extends AbstractController
         $newPlanet = $colonize->getPlanet();
 
         if($colonize->getColonizer() && $newPlanet->getCharacter() == null &&
-            $newPlanet->getEmpty() == false && $newPlanet->getMerchant() == false &&
-            $newPlanet->getCdr() == false && $colonize->getCharacter()->getColPlanets() < 26 &&
+            !$newPlanet->getEmpty() && !$newPlanet->getMerchant() &&
+            !$newPlanet->getCdr() && $colonize->getCharacter()->getColPlanets() < 26 &&
             $colonize->getCharacter()->getColPlanets() <= ($character->getTerraformation() + 1 + $character->getPoliticColonisation())) {
 
             $colonize->setColonizer($colonize->getColonizer() - 1);
@@ -148,13 +153,14 @@ class PlanetController extends AbstractController
 
     /**
      * @Route("/planete-abandon/{abandonPlanet}/{usePlanet}", name="planet_abandon", requirements={"usePlanet"="\d+","abandonPlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Planet $abandonPlanet
      * @return RedirectResponse
      */
-    public function planetAbandonAction(Planet $usePlanet, Planet $abandonPlanet)
+    public function planetAbandonAction(ManagerRegistry $doctrine, Planet $usePlanet, Planet $abandonPlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         
@@ -222,7 +228,7 @@ class PlanetController extends AbstractController
 
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet == $abandonPlanet) {
+        if ($usePlanet === $abandonPlanet) {
             $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($character);
         }
 

@@ -2,7 +2,8 @@
 
 namespace App\Controller\Connected;
 
-use Exception;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,12 +23,14 @@ class ZombieController extends AbstractController
 {
     /**
      * @Route("/zombie/{usePlanet}", name="zombie", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
+     * @throws NonUniqueResultException
      */
-    public function ZombieAction(Planet $usePlanet)
+    public function ZombieAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -92,14 +95,15 @@ class ZombieController extends AbstractController
 
     /**
      * @Route("/finir-mission/{mission}/{usePlanet}", name="mission_finish", requirements={"usePlanet"="\d+", "mission"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Mission $mission
      * @param Planet $usePlanet
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function zombieFinishAction(Mission $mission, Planet $usePlanet)
+    public function zombieFinishAction(ManagerRegistry $doctrine, Mission $mission, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -174,13 +178,14 @@ class ZombieController extends AbstractController
 
     /**
      * @Route("/finir-missions/{usePlanet}", name="mission_finish_all", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function zombieFinishAllAction(Planet $usePlanet)
+    public function zombieFinishAllAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();

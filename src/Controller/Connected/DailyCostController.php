@@ -20,7 +20,7 @@ class DailyCostController extends AbstractController
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function helpNewAction(Planet $usePlanet)
+    public function helpNewAction(Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());

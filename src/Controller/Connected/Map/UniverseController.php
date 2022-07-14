@@ -2,6 +2,9 @@
 
 namespace App\Controller\Connected\Map;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,12 +17,15 @@ class UniverseController extends AbstractController
     /**
      * @Route("/univers/", name="universe_unconnected")
      * @Route("/univers/{usePlanet}", name="universe", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet|null $usePlanet
      * @return RedirectResponse|Response
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function universeAction(Planet $usePlanet = null)
+    public function universeAction(ManagerRegistry $doctrine, Planet $usePlanet = null): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $server = $usePlanet ? $usePlanet->getSector()->getGalaxy()->getServer() : $planet = $em->getRepository(
             'App:Server'
         )->createQueryBuilder('s')->getQuery()->setMaxresults(1)->getOneOrNullResult();

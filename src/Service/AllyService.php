@@ -2,16 +2,16 @@
 
 namespace App\Service;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class AllyService extends AbstractController
 {
-    public function willSeeAction($sector, $gal)
+    public function willSeeAction(ManagerRegistry $doctrine, $sector, $gal): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
-        $ally = $character->getAlly();
 
         return new Response (null);
     }

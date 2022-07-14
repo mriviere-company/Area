@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +24,15 @@ class OverviewController extends AbstractController
 {
     /**
      * @Route("/empire/{usePlanet}", name="overview", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function overviewAction(Request $request, Planet $usePlanet)
+    public function overviewAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);
@@ -308,9 +311,9 @@ class OverviewController extends AbstractController
     /**
      * @Route("/game-over/", name="game_over")
      */
-    public function gameOverAction()
+    public function gameOverAction(ManagerRegistry $doctrine): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getMainCharacter();
 
@@ -390,11 +393,11 @@ class OverviewController extends AbstractController
                 if ($character->getAlly()) {
                     $ally = $character->getAlly();
                     if (count($ally->getCharacters()) == 1 || ($ally->getPolitic() == 'fascism' && $character->getGrade()->getPlacement() == 1)) {
-                        foreach ($ally->getCharacters() as $character) {
-                        $character->setAlly(null);
-                        $character->setGrade(null);
-                        $character->setAllyBan($now);
-                    }
+                        foreach ($ally->getCharacters() as $characterTmp) {
+                            $characterTmp->setAlly(null);
+                            $characterTmp->setGrade(null);
+                            $characterTmp->setAllyBan($now);
+                        }
                         foreach ($ally->getFleets() as $fleet) {
                             $fleet->setAlly(null);
                         }

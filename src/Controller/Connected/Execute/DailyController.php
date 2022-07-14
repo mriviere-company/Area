@@ -91,7 +91,7 @@ class DailyController extends AbstractController
                 $character->addQuest($questTwo);
                 if($ally->getPeaces()) {
                     foreach($ally->getPeaces() as $peace) {
-                        if($peace->getType() == false && $peace->getAccepted() == 1) {
+                        if(!$peace->getType() && $peace->getAccepted() == 1) {
                             $otherAlly = $em->getRepository('App:Ally')
                                 ->createQueryBuilder('a')
                                 ->where('a.sigle = :sigle')

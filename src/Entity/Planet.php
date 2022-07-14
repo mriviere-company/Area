@@ -965,7 +965,7 @@ class Planet
                 $planete = 0;
             } else {
                 if($fleet->getCharacter() != $character) {
-                    if($fleet->getAttack() === true) {
+                    if($fleet->getAttack()) {
                         $planete = 1;
                     }
                     break;
@@ -985,7 +985,7 @@ class Planet
             if($planet->getId() === $this->getId()) {
                 return $id;
             }
-            if($planet->getEmpty() === false) {
+            if($planet->getEmpty()) {
                 $id = $planet->getId();
             }
         }
@@ -1031,7 +1031,7 @@ class Planet
             if ($this->getCharacter()->getAlly() && $character->getAlly()) {
                 if (count($this->getCharacter()->getAlly()->getAllieds()) > 0) {
                     foreach($this->getCharacter()->getAlly()->getAllieds() as $allied) {
-                        if($allied->getAllyTag() === $character->getAlly()->getSigle() && $allied->getAccepted() === true) {
+                        if($allied->getAllyTag() === $character->getAlly()->getSigle() && $allied->getAccepted()) {
                             return 'pact';
                         }
                     }

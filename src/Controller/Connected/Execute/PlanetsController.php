@@ -22,7 +22,7 @@ class PlanetsController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function buildingsAction($planets, $now, $em)
+    public function buildingsAction($planets, $now, $em): Response
     {
         $nextPlanets = [];
         foreach ($planets as $planet) {
@@ -113,7 +113,7 @@ class PlanetsController extends AbstractController
                             $planet->setConstruct($construction->getConstruct());
                             $planet->setConstructAt($timeLimit);
                             $em->remove($construction);
-                            array_push($nextPlanets, $planet);
+                            $nextPlanets[] = $planet;
                     } else {
                             $planet->setConstruct($construction->getConstruct());
                             $planet->setConstructAt($constructTime->add(new DateInterval('PT' . $construction->getConstructTime() . 'S')));
@@ -141,7 +141,7 @@ class PlanetsController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function soldiersAction($planetSoldiers, $em)
+    public function soldiersAction($planetSoldiers, $em): Response
     {
         foreach ($planetSoldiers as $soldierAt) {
             if ($soldierAt->getSoldier() + $soldierAt->getSoldierAtNbr() <= $soldierAt->getSoldierMax()) {
@@ -165,7 +165,7 @@ class PlanetsController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function tanksAction($planetTanks, $em)
+    public function tanksAction($planetTanks, $em): Response
     {
         foreach ($planetTanks as $tankAt) {
             if ($tankAt->getTank() + $tankAt->getTankAtNbr() <= 500) {
@@ -189,7 +189,7 @@ class PlanetsController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function nuclearsAction($planetNuclears, $em)
+    public function nuclearsAction($planetNuclears, $em): Response
     {
         foreach ($planetNuclears as $nuclear) {
             if ($nuclear->getNuclearBomb() + $nuclear->getNuclearAtNbr() <= $nuclear->getNuclearBase()) {
@@ -214,7 +214,7 @@ class PlanetsController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function scientistsAction($planetScientists, $em)
+    public function scientistsAction($planetScientists, $em): Response
     {
         foreach ($planetScientists as $scientistAt) {
             if ($scientistAt->getScientist() + $scientistAt->getScientistAtNbr() <= $scientistAt->getScientistMax()) {
@@ -280,10 +280,10 @@ class PlanetsController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function radarsAction($radars, $now, $em)
+    public function radarsAction($radars, $now, $em): Response
     {
         foreach ($radars as $radar) {
-            if($radar->getRadarAt() < $now && $radar->getMoon() == false) {
+            if($radar->getRadarAt() < $now && !$radar->getMoon()) {
                 if(!$radar->getRadarAt()) {
                     $radar->setCharacter(null);
                 }
@@ -291,7 +291,7 @@ class PlanetsController extends AbstractController
                 $radar->setSkyRadar(0);
                 $radar->setRadarAt(null);
             }
-            if($radar->getBrouilleurAt() < $now && $radar->getMoon() == false) {
+            if($radar->getBrouilleurAt() < $now && !$radar->getMoon()) {
                 if(!$radar->getBrouilleurAt()) {
                     $radar->setCharacter(null);
                 }
@@ -299,7 +299,7 @@ class PlanetsController extends AbstractController
                 $radar->setSkyBrouilleur(0);
                 $radar->setBrouilleurAt(null);
             }
-            if($radar->getMoon() == true) {
+            if($radar->getMoon()) {
                 $radar->setSkyBrouilleur(0);
                 $radar->setBrouilleurAt(null);
                 $radar->setSkyRadar(0);
@@ -318,7 +318,7 @@ class PlanetsController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function productionDeleteAction($prods, $em)
+    public function productionDeleteAction($prods, $em): Response
     {
         foreach ($prods as $prod) {
             $em->remove($prod);
@@ -337,7 +337,7 @@ class PlanetsController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function embargoPlanetAction($embargos, $now, $em)
+    public function embargoPlanetAction($embargos, $now, $em): Response
     {
         $nowEmbargo = new DateTime();
         $nowEmbargo->add(new DateInterval('PT' . (3600) . 'S'));

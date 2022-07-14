@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +20,14 @@ class ProfilController extends AbstractController
 {
     /**
      * @Route("/profil-joueur/{characterProfil}/{usePlanet}", name="user_profil", requirements={"usePlanet"="\d+", "characterProfil"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Character $characterProfil
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function userProfilAction(Character $characterProfil, Planet $usePlanet)
+    public function userProfilAction(ManagerRegistry $doctrine, Character $characterProfil, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -53,13 +55,14 @@ class ProfilController extends AbstractController
 
     /**
      * @Route("/profil-alliance/{allyCharacter}/{usePlanet}", name="ally_profil", requirements={"usePlanet"="\d+", "allyCharacter"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Ally $allyCharacter
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function allyProfilAction(Ally $allyCharacter, Planet $usePlanet)
+    public function allyProfilAction(ManagerRegistry $doctrine, Ally $allyCharacter, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -87,13 +90,14 @@ class ProfilController extends AbstractController
 
     /**
      * @Route("/profil-joueur-popup/{characterProfil}/{usePlanet}", name="user_profil_modal", requirements={"usePlanet"="\d+", "characterProfil"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Character $characterProfil
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function userProfilModalAction(Character $characterProfil, Planet $usePlanet)
+    public function userProfilModalAction(ManagerRegistry $doctrine, Character $characterProfil, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -121,13 +125,14 @@ class ProfilController extends AbstractController
 
     /**
      * @Route("/profil-alliance-popup/{allyCharacter}/{usePlanet}", name="ally_profil_modal", requirements={"usePlanet"="\d+", "allyCharacter"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Ally $allyCharacter
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function allyProfilModalAction(Ally $allyCharacter, Planet $usePlanet)
+    public function allyProfilModalAction(ManagerRegistry $doctrine, Ally $allyCharacter, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 

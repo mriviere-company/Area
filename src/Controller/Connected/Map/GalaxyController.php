@@ -3,6 +3,9 @@
 namespace App\Controller\Connected\Map;
 
 use App\Entity\Galaxy;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -20,14 +23,17 @@ class GalaxyController extends AbstractController
 {
     /**
      * @Route("/galaxie/{galaxy}/{usePlanet}", name="galaxy", requirements={"id"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Galaxy $galaxy
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function galaxyAction(Request $request, Galaxy $galaxy, Planet $usePlanet)
+    public function galaxyAction(ManagerRegistry $doctrine, Request $request, Galaxy $galaxy, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);

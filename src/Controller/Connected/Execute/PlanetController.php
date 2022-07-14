@@ -21,10 +21,10 @@ class PlanetController extends AbstractController
      * @return Response
      * @throws Exception
      */
-    public function buildingOneAction($planet, $now, $em)
+    public function buildingOneAction($planet, $now, $em): Response
     {
         $build = $planet->getConstruct();
-        if($build == 'destruct') {
+        if ($build == 'destruct') {
         } elseif ($build == 'miner') {
             $planet->setMiner($planet->getMiner() + 1);
             $planet->setNbProduction(($planet->getMiner() * 22));
@@ -106,15 +106,13 @@ class PlanetController extends AbstractController
             $constructTime = new DateTime();
             foreach ($planet->getConstructions() as $construction) {
                 $timeLimit = $planet->getConstructAt()->add(new DateInterval('PT' . $construction->getConstructTime() . 'S'));
-                    if ($timeLimit < $now) {
-                        $planet->setConstruct($construction->getConstruct());
-                        $planet->setConstructAt($timeLimit);
-                        $em->remove($construction);
+                $planet->setConstruct($construction->getConstruct());
+                if ($timeLimit < $now) {
+                    $planet->setConstructAt($timeLimit);
                 } else {
-                        $planet->setConstruct($construction->getConstruct());
-                        $planet->setConstructAt($constructTime->add(new DateInterval('PT' . $construction->getConstructTime() . 'S')));
-                        $em->remove($construction);
-                    }
+                    $planet->setConstructAt($constructTime->add(new DateInterval('PT' . $construction->getConstructTime() . 'S')));
+                }
+                $em->remove($construction);
                 break;
             }
         } else {
@@ -136,7 +134,7 @@ class PlanetController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function soldierOneAction($planetSoldier, $em)
+    public function soldierOneAction($planetSoldier, $em): Response
     {
         if ($planetSoldier->getSoldier() + $planetSoldier->getSoldierAtNbr() <= $planetSoldier->getSoldierMax()) {
             $planetSoldier->setSoldier($planetSoldier->getSoldier() + $planetSoldier->getSoldierAtNbr());

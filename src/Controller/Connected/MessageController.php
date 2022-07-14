@@ -3,6 +3,7 @@
 namespace App\Controller\Connected;
 
 use App\Entity\Character;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,12 +26,13 @@ class MessageController extends AbstractController
 {
     /**
      * @Route("/message/{usePlanet}", name="message", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      * @throws Exception
      */
-    public function messageAction(Request $request, Planet $usePlanet)
+    public function messageAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -42,7 +44,7 @@ class MessageController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $nowDel = new DateTime();
         $nowDel->sub(new DateInterval('PT' . 1209600 . 'S'));
@@ -114,12 +116,13 @@ class MessageController extends AbstractController
 
     /**
      * @Route("/repondre/{userRecever}/{usePlanet}", name="message_responde", requirements={"usePlanet"="\d+", "userRecever"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @param Character $userRecever
      * @return RedirectResponse|Response
      */
-    public function messageRespondeAction(Request $request, Planet $usePlanet, Character $userRecever)
+    public function messageRespondeAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet, Character $userRecever): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -135,7 +138,7 @@ class MessageController extends AbstractController
         if($character->getSalonBan() > $now) {
             return $this->redirectToRoute('message', ['usePlanet' => $usePlanet->getId()]);
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $form_message = $this->createForm(MessageRespondeType::class);
         $form_message->handleRequest($request);
@@ -168,13 +171,14 @@ class MessageController extends AbstractController
 
     /**
      * @Route("/message-view/{message}/{usePlanet}", name="message_view", requirements={"usePlanet"="\d+", "message"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Message $message
      * @return RedirectResponse
      */
-    public function messageViewAction(Planet $usePlanet, Message $message)
+    public function messageViewAction(ManagerRegistry $doctrine, Planet $usePlanet, Message $message): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -192,13 +196,14 @@ class MessageController extends AbstractController
 
     /**
      * @Route("/message-share/{message}/{usePlanet}", name="message_share", requirements={"usePlanet"="\d+", "message"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Message $message
      * @return RedirectResponse
      */
-    public function messageShareAction(Planet $usePlanet, Message $message)
+    public function messageShareAction(ManagerRegistry $doctrine, Planet $usePlanet, Message $message): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -220,12 +225,13 @@ class MessageController extends AbstractController
 
     /**
      * @Route("/message-view-all/{usePlanet}/", name="message_all_view", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function messageAllViewAction(Planet $usePlanet)
+    public function messageAllViewAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 

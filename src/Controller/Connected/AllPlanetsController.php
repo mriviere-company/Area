@@ -2,6 +2,9 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -14,9 +17,9 @@ use DateTime;
  */
 class AllPlanetsController extends AbstractController
 {
-    public function allPlanetsAction(Planet $usePlanet)
+    public function allPlanetsAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();

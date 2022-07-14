@@ -4,6 +4,7 @@ namespace App\Controller\CronController;
 
 use App\Entity\User;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,13 +19,14 @@ class CronTaskController extends AbstractController
      * @Route("/construction/{opened}/", name="cron_task_character", requirements={"opened"="\d+"})
      * @Route("/connect/construction/{opened}/", name="connect_cron_task_character", requirements={"opened"="\d+"})
      * @Route("/connect/carte-spatiale/construction/{opened}/", name="map_cron_task_character", requirements={"opened"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param null $opened
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function cronTaskAction($opened = null): Response
+    public function cronTaskAction(ManagerRegistry $doctrine, $opened = null): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
 
         $characterGOs = $em->getRepository('App:Character')
@@ -152,7 +154,7 @@ class CronTaskController extends AbstractController
                 'planetSoldiers'  => $planetSoldiers,
                 'em'  => $em
             ]);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent() ?? "<span style='color:#FF0000'>KO<span><br/>";
         }
 
         $planetTanks = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans entraînement, zombie, invasion, pillage, planètes, daily.
@@ -416,9 +418,9 @@ class CronTaskController extends AbstractController
     /**
      * @Route("/make-miner/", name="make_miner")
      */
-    public function makeMinerAction()
+    public function makeMinerAction(ManagerRegistry $doctrine)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $planets = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')
@@ -448,9 +450,9 @@ class CronTaskController extends AbstractController
     /**
      * @Route("/delete-reports/", name="delete_reportss")
      */
-    public function deleteReportAction()
+    public function deleteReportAction(ManagerRegistry $doctrine)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $stats = $em->getRepository('App:Report')
             ->createQueryBuilder('r')
@@ -473,9 +475,9 @@ class CronTaskController extends AbstractController
     /**
      * @Route("/new-bot/", name="new_bot")
      */
-    public function newBotAction()
+    public function newBotAction(ManagerRegistry $doctrine)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $fiveWeeks = new DateTime();
         $fiveWeeks->sub(new DateInterval('PT' . 3888000 . 'S'));
 
@@ -498,9 +500,9 @@ class CronTaskController extends AbstractController
     /**
      * @Route("/regroupement/", name="horde_regroup")
      */
-    public function HordeYesAction()
+    public function HordeYesAction(ManagerRegistry $doctrine)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $hydra = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
         $count = 0;
 
@@ -548,9 +550,9 @@ class CronTaskController extends AbstractController
     /**
      * @Route("/mission-new/", name="mission_new")
      */
-    public function missionNewAction()
+    public function missionNewAction(ManagerRegistry $doctrine)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $missions = $em->getRepository('App:Mission')->findAll();
 
@@ -566,9 +568,9 @@ class CronTaskController extends AbstractController
     /**
      * @Route("/test/", name="test")
      */
-    public function testAction()
+    public function testAction(ManagerRegistry $doctrine)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $importedUsers = $em->getRepository('App:ImportUser')
             ->createQueryBuilder('iu')
             ->getQuery()
@@ -586,9 +588,9 @@ class CronTaskController extends AbstractController
     /**
      * @Route("/soldierNew/", name="soldier_new")
      */
-    public function soldierNewAction()
+    public function soldierNewAction(ManagerRegistry $doctrine)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $grade = $em->getRepository('App:Rank')
             ->createQueryBuilder('g')
@@ -606,9 +608,9 @@ class CronTaskController extends AbstractController
     /**
      * @Route("/stockNew/", name="stock_new")
      */
-    public function stockAction()
+    public function stockAction(ManagerRegistry $doctrine)
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $plas = $em->getRepository('App:Planet')
             ->createQueryBuilder('p')

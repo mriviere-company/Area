@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Research;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +20,14 @@ class ExplorerController extends AbstractController
 {
     /**
      * @Route("/rechercher-onde/{usePlanet}", name="research_onde", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchOndeAction(Planet $usePlanet)
+    public function researchOndeAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -56,13 +58,14 @@ class ExplorerController extends AbstractController
 
     /**
      * @Route("/rechercher-terraformation/{usePlanet}", name="research_terraformation", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchTerraformationAction(Planet $usePlanet)
+    public function researchTerraformationAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -90,13 +93,14 @@ class ExplorerController extends AbstractController
 
     /**
      * @Route("/rechercher-cargo/{usePlanet}", name="research_cargo", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchCargoAction(Planet $usePlanet)
+    public function researchCargoAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -124,13 +128,14 @@ class ExplorerController extends AbstractController
 
     /**
      * @Route("/rechercher-recyclage/{usePlanet}", name="research_recyclage", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchRecyclageAction(Planet $usePlanet)
+    public function researchRecyclageAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -158,13 +163,14 @@ class ExplorerController extends AbstractController
 
     /**
      * @Route("/rechercher-barge/{usePlanet}", name="research_barge", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchBargeAction(Planet $usePlanet)
+    public function researchBargeAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -192,13 +198,14 @@ class ExplorerController extends AbstractController
 
     /**
      * @Route("/rechercher-utilitaire/{usePlanet}", name="research_utility", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchUtilityAction(Planet $usePlanet)
+    public function researchUtilityAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -229,13 +236,14 @@ class ExplorerController extends AbstractController
 
     /**
      * @Route("/rechercher-hyperespace/{usePlanet}", name="research_hyperespace", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchHyperespaceAction(Planet $usePlanet)
+    public function researchHyperespaceAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());

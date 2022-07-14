@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +20,14 @@ class ReportController extends AbstractController
     /**
      * @Route("/rapport/{usePlanet}", name="report", requirements={"usePlanet"="\d+"})
      * @Route("/rapport/{id}/{usePlanet}", name="report_id", requirements={"id"="\w+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param string $id
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function reportAction(string $id = 'defaut', Planet $usePlanet)
+    public function reportAction(ManagerRegistry $doctrine, string $id = 'defaut', Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -84,13 +86,14 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report-view/{report}/{usePlanet}", name="report_view", requirements={ "report"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Report $report
      * @return RedirectResponse
      */
-    public function reportViewAction(Planet $usePlanet, Report $report)
+    public function reportViewAction(ManagerRegistry $doctrine, Planet $usePlanet, Report $report): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -107,13 +110,14 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/supprimer-rapport/{report}/{usePlanet}", name="report_delete", requirements={"usePlanet"="\d+", "report"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Report $report
      * @return RedirectResponse
      */
-    public function reportDeleteAction(Planet $usePlanet, Report $report)
+    public function reportDeleteAction(ManagerRegistry $doctrine, Planet $usePlanet, Report $report): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -131,13 +135,14 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/rapport-share/{id}/{usePlanet}", name="report_share", requirements={"usePlanet"="\d+", "id"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Report $id
      * @return RedirectResponse
      */
-    public function reportShareAction(Planet $usePlanet, Report $id)
+    public function reportShareAction(ManagerRegistry $doctrine, Planet $usePlanet, Report $id): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -159,12 +164,13 @@ class ReportController extends AbstractController
 
     /**
      * @Route("/report-view-all/{usePlanet}/", name="report_all_view", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function reportAllViewAction(Planet $usePlanet)
+    public function reportAllViewAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 

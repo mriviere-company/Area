@@ -2,6 +2,9 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -26,13 +29,16 @@ class AdminController extends AbstractController
 
     /**
      * @Route("/administration-dashboard/{usePlanet}", name="admin_dashboard", requirements={"usePlanet"="\d+"})
-     * @param Planet $usePlanet
+     * @param ManagerRegistry $doctrine
+     * @param  $usePlanet
      * @param null $date
      * @return RedirectResponse|Response
+     * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function adminDashboardAction(Planet $usePlanet, $date = null)
+    public function adminDashboardAction(ManagerRegistry $doctrine, $usePlanet, $date = null): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         if (!$date) {
             $date = new DateTime();

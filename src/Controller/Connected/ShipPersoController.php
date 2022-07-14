@@ -3,6 +3,7 @@
 namespace App\Controller\Connected;
 
 use App\Entity\Ships;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,14 +24,15 @@ class ShipPersoController extends AbstractController
 {
     /**
      * @Route("/vaisseaux-personalisation/{usePlanet}", name="ship_perso", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      * @throws Exception
      */
-    public function shipAction(Request $request, Planet $usePlanet)
+    public function shipAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $ship = $character->getShip();
@@ -179,12 +181,13 @@ class ShipPersoController extends AbstractController
 
     /**
      * @Route("/vaisseaux-reinitialisation/{usePlanet}", name="ship_retry", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function shipRetryAction(Planet $usePlanet)
+    public function shipRetryAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $ship = $character->getShip();

@@ -5,7 +5,7 @@ namespace App\EventListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
@@ -72,7 +72,7 @@ class UserEvent implements EventSubscriberInterface
      */
     public function onCoreController(ControllerEvent $event)
     {
-        /*if($event->getRequestType() == HttpKernel::MASTER_REQUEST)
+        /*if($event->getRequestType() == HttpKernelInterface::MAIN_REQUEST)
         {
             if($this->token->getToken()) {
                 $user = $this->token->getToken()->getUser();

@@ -2,7 +2,8 @@
 
 namespace App\Controller\Connected;
 
-use Exception;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,15 +28,16 @@ class SalonController extends AbstractController
     /**
      * @Route("/salon/{usePlanet}", name="salon", requirements={"usePlanet"="\d+"})
      * @Route("/salon/{usePlanet}/{id}", name="salon_id", requirements={"usePlanet"="\d+", "id"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @param mixed $id
      * @return JsonResponse|RedirectResponse|Response
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function salonAction(Request $request, Planet $usePlanet, $id = 'Public')
+    public function salonAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet, string $id = 'Public'): RedirectResponse|JsonResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);
@@ -101,8 +103,6 @@ class SalonController extends AbstractController
             }
         }
         if($ok == 0) {
-            var_dump($salon->getId());
-            var_dump(count($salons)); exit;
             return $this->redirectToRoute('salon', ['usePlanet' => $usePlanet->getId()]);
         }
 
@@ -144,7 +144,7 @@ class SalonController extends AbstractController
 
         if ($form_message->isSubmitted() && $form_message->isValid() && ($character->getSalonBan() > $now || $character->getSalonBan() == null)) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            if (substr($form_message->get('content')->getData(), 0, 8) == 'https://' || substr($form_message->get('content')->getData(), 0, 7) == 'http://') {
+            if (str_starts_with($form_message->get('content')->getData(), 'https://')) {
                 $content = '<span><a target="_blank" href="' . $form_message->get('content')->getData() . '">' . $form_message->get('content')->getData() . '</a></span>';
             } else {
                 $content = nl2br($form_message->get('content')->getData());
@@ -223,13 +223,15 @@ class SalonController extends AbstractController
 
     /**
      * @Route("/rejoindre-salon/{sigle}/{usePlanet}", name="ally_join_salon", requirements={"sigle"="\w+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param $sigle
      * @param Planet $usePlanet
      * @return RedirectResponse
+     * @throws NonUniqueResultException
      */
-    public function addSalonAction($sigle, Planet $usePlanet)
+    public function addSalonAction(ManagerRegistry $doctrine, $sigle, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -253,13 +255,14 @@ class SalonController extends AbstractController
 
     /**
      * @Route("/quitter-salon/{salon}/{usePlanet}", name="ally_leave_salon", requirements={"salon"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Salon $salon
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function leaveSalonAction(Salon $salon, Planet $usePlanet)
+    public function leaveSalonAction(ManagerRegistry $doctrine, Salon $salon, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 

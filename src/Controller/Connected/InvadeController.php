@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,13 +19,14 @@ class InvadeController extends AbstractController
 {
     /**
      * @Route("/hello-we-come-for-you/{fleet}/{usePlanet}", name="invader_planet", requirements={"fleet"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Fleet $fleet
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function invaderAction(Fleet $fleet, Planet $usePlanet): RedirectResponse
+    public function invaderAction(ManagerRegistry $doctrine, Fleet $fleet, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -55,13 +57,14 @@ class InvadeController extends AbstractController
 
     /**
      * @Route("/merci-pour-les-ressources/{fleet}/{usePlanet}", name="raid_planet", requirements={"fleet"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Fleet $fleet
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function raidAction(Fleet $fleet, Planet $usePlanet): RedirectResponse
+    public function raidAction(ManagerRegistry $doctrine, Fleet $fleet, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();

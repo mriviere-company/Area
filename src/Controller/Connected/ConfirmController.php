@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,7 +18,6 @@ use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\Planet;
-use DateTime;
 
 /**
  * @Route("/connect")
@@ -26,21 +27,23 @@ class ConfirmController extends AbstractController
 {
     /**
      * @Route("/confirmation-compte/{usePlanet}", name="confirm_account", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @param MailerInterface $mailer
      * @return RedirectResponse|Response
+     * @throws TransportExceptionInterface
      */
-    public function confirmAction(Request $request, Planet $usePlanet, MailerInterface $mailer)
+    public function confirmAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet, MailerInterface $mailer): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
 
         if($user->getConfirmed() == 1) {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $form_confirm = $this->createForm(ConfirmType::class, null);
+        $form_confirm = $this->createForm(ConfirmType::class);
         $form_confirm->handleRequest($request);
 
         if ($form_confirm->isSubmitted() && $form_confirm->isValid()) {
@@ -71,7 +74,6 @@ class ConfirmController extends AbstractController
 
             $token = new UsernamePasswordToken(
                 $user,
-                null,
                 'main',
                 $user->getRoles()
             );

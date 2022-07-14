@@ -3,6 +3,8 @@
 namespace App\Controller\Connected;
 
 use App\Entity\Character;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,14 +28,15 @@ class ConnectController extends AbstractController
     /**
      * @Route("/connection/{galaxy}/{server}", name="connect_server", requirements={"galaxy"="\d+", "server"="\d+"})
      * @Route("/connection/{server}", name="connected_server", requirements={"server"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Galaxy|null $galaxy
      * @param Server $server
      * @return RedirectResponse|Response
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function connectServerAction(Galaxy $galaxy = null, Server $server)
+    public function connectServerAction(ManagerRegistry $doctrine, Galaxy $galaxy = null, Server $server): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($server);
@@ -142,14 +145,15 @@ class ConnectController extends AbstractController
 
         return $this->redirectToRoute('overview', ['usePlanet' => $planet->getId()]);
     }
+
     /**
      * @Route("/selection-serveur/", name="server_select")
+     * @param ManagerRegistry $doctrine
      * @return Response
-     * @throws Exception
      */
-    public function serverInterfaceAction(): Response
+    public function serverInterfaceAction(ManagerRegistry $doctrine): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
 
         $servers = $em->getRepository('App:Server')

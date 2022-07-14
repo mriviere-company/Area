@@ -551,7 +551,7 @@ class Ally
             }
         }
         foreach ($this->getPeaces() as $peace) {
-            if ($peace->getAllyTag() == $sigle && $peace->getAccepted() == true) {
+            if ($peace->getAllyTag() == $sigle && $peace->getAccepted()) {
                 return $sigle;
             }
         }
@@ -566,17 +566,17 @@ class Ally
         if($sigles) {
             foreach ($sigles as $sigle) {
                 foreach ($this->getPnas() as $pna) {
-                    if ($pna->getAllyTag() == $sigle && $pna->getAccepted() == true) {
+                    if ($pna->getAllyTag() == $sigle && $pna->getAccepted()) {
                         return $pna->getAllyTag();
                     }
                 }
                 foreach ($this->getAllieds() as $pact) {
-                    if ($pact->getAllyTag() == $sigle && $pact->getAccepted() == true) {
+                    if ($pact->getAllyTag() == $sigle && $pact->getAccepted()) {
                         return $pact->getAllyTag();
                     }
                 }
                 foreach ($this->getPeaces() as $peace) {
-                    if ($peace->getAllyTag() == $sigle && $peace->getAccepted() == true) {
+                    if ($peace->getAllyTag() == $sigle && $peace->getAccepted()) {
                         return $peace->getAllyTag();
                     }
                 }
@@ -609,7 +609,7 @@ class Ally
 
         foreach($this->getCharacters() as $character) {
             foreach ($character->getPlanets() as $planet) {
-                if($planet->getEmpty() == false) {
+                if(!$planet->getEmpty()) {
                     $return++;
                 }
             }

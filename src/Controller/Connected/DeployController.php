@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,14 +17,15 @@ class DeployController extends AbstractController
 {
     /**
      * @Route("/deployer-radar/{fleet}/{usePlanet}", name="deploy_radar", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function deployRadarAction(Planet $usePlanet, Fleet $fleet)
+    public function deployRadarAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 7200 . 'S'));
         $user = $this->getUser();
@@ -34,7 +36,7 @@ class DeployController extends AbstractController
         }
         $planet = $fleet->getPlanet();
 
-        if($fleet->getRadarShip() && $planet->getEmpty() == true) {
+        if($fleet->getRadarShip() && $planet->getEmpty()) {
             $fleet->setRadarShip($fleet->getRadarShip() - 1);
             if($planet->getSkyRadar()) {
                 $planet->setSkyRadar($planet->getSkyRadar() + 1);
@@ -56,14 +58,15 @@ class DeployController extends AbstractController
 
     /**
      * @Route("/deployer-brouilleur/{fleet}/{usePlanet}", name="deploy_brouilleur", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function deployBrouilleurAction(Planet $usePlanet, Fleet $fleet)
+    public function deployBrouilleurAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 3600 . 'S'));
         $user = $this->getUser();
@@ -74,7 +77,7 @@ class DeployController extends AbstractController
         }
         $planet = $fleet->getPlanet();
 
-        if($fleet->getBrouilleurShip() && $planet->getEmpty() == true) {
+        if($fleet->getBrouilleurShip() && $planet->getEmpty()) {
             $fleet->setBrouilleurShip($fleet->getBrouilleurShip() - 1);
             if($planet->getSkyBrouilleur()) {
                 $planet->setSkyBrouilleur($planet->getSkyBrouilleur() + 1);
@@ -96,13 +99,14 @@ class DeployController extends AbstractController
 
     /**
      * @Route("/deployer-lunar/{fleet}/{usePlanet}", name="deploy_moonMaker", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleet
      * @return RedirectResponse
      */
-    public function deployMoonMakerAction(Planet $usePlanet, Fleet $fleet)
+    public function deployMoonMakerAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -111,7 +115,7 @@ class DeployController extends AbstractController
         }
         $planet = $fleet->getPlanet();
 
-        if($fleet->getMoonMaker() && $planet->getEmpty() == true && $planet->getCdr() == false &&
+        if($fleet->getMoonMaker() && $planet->getEmpty() && !$planet->getCdr() &&
             $planet->getNbCdr() > 750000 && $planet->getWtCdr() > 750000) {
             $fleet->setMoonMaker($fleet->getMoonMaker() - 1);
             $planet->setCharacter($fleet->getCharacter());
@@ -156,14 +160,15 @@ class DeployController extends AbstractController
 
     /**
      * @Route("/relancer-recyclage/{fleet}/{usePlanet}", name="recycle_again", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function recycleAgainAction(Planet $usePlanet, Fleet $fleet)
+    public function recycleAgainAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 300 . 'S'));
         $user = $this->getUser();

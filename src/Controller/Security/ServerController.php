@@ -5,6 +5,7 @@ namespace App\Controller\Security;
 use App\Entity\Event;
 use App\Entity\Ships;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -18,7 +19,6 @@ use App\Entity\Salon;
 use App\Entity\Character;
 use App\Entity\Rank;
 use App\Entity\Fleet;
-use DateTime;
 
 /**
  * @Route("/serveur")
@@ -27,13 +27,14 @@ class ServerController extends AbstractController
 {
     /**
      * @Route("/creation-serveur/{name}", name="create_server", requirements={"name"="\w+"})
+     * @param ManagerRegistry $doctrine
      * @param string $name
      * @return RedirectResponse
      * @throws Exception
      */
-    public function createServerAction(string $name): RedirectResponse
+    public function createServerAction(ManagerRegistry $doctrine, string $name): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $server = new Server($name, 1, 0.500, 19, 30, 23, 00, 1);
         $em->persist($server);
@@ -116,13 +117,14 @@ class ServerController extends AbstractController
 
     /**
      * @Route("/creation-galaxie/{server}", name="create_galaxy", requirements={"server"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Server $server
      * @return RedirectResponse
      * @throws NonUniqueResultException
      */
-    public function createGalaxyAction(Server $server): RedirectResponse
+    public function createGalaxyAction(ManagerRegistry $doctrine, Server $server): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $image = [
             'planet1.webp', 'planet2.webp', 'planet3.webp', 'planet4.webp', 'planet5.webp', 'planet6.webp',
             'planet7.webp', 'planet8.webp', 'planet9.webp', 'planet10.webp', 'planet11.webp', 'planet12.webp',
@@ -137,7 +139,7 @@ class ServerController extends AbstractController
         $planetPveTwo = ["12", "19", "82", "89"];
         $planetPveThree = ["23", "28", "73", "78"];
         $planetPveFour = ["34", "37", "64", "67"];
-        $planetPveFive = ["45", "46", "55", "56"];
+        //$planetPveFive = ["45", "46", "55", "56"];
 
         $sectorPositions = [
             '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53',
@@ -149,7 +151,7 @@ class ServerController extends AbstractController
         $iaLevelTwo = ["42", "52", "49", "59", "15", "16", "85", "86"];
         $iaLevelThree = ["43", "53", "48", "58", "25", "26", "75", "76"];
         $iaLevelFour = ["44", "54", "47", "57", "35", "36", "65", "66"];
-        $iaLevelFive = ["45", "46", "55", "56"];
+        //$iaLevelFive = ["45", "46", "55", "56"];
 
         $iaPlayer = $em->getRepository('App:Character')
             ->createQueryBuilder('c')
@@ -175,7 +177,7 @@ class ServerController extends AbstractController
                 if ($nbrPlanet == 13) {
                     $planet = new Planet(null, 'Soleil', 0, 0, $nbrPlanet, $sector, $imageSun[rand(0, 5)],  0, null,true, false);
                 } else {
-                    if ((in_array($nbrSector, $planetPve)) && (($alreadyBot1 == false && rand(0, 8) == 1) || $alreadyBot1 == false && $nbrPlanet == 25)) {
+                    if ((in_array($nbrSector, $planetPve)) && ((!$alreadyBot1 && rand(0, 8) == 1) || !$alreadyBot1 && $nbrPlanet == 25)) {
                         $alreadyBot1 = true;
                         if (in_array($nbrSector, $planetPveOne)) {
                             $planet = new Planet(null, 'Fort Marchand I', 500, 150, $nbrPlanet, $sector, 'merchant.webp',  1, null, false, false);
@@ -184,12 +186,6 @@ class ServerController extends AbstractController
                             $fleet->setCorvetWar(25);
                             $fleet->setFregatePlasma(2);
                             $fleet->setDestroyer(1);
-                            $fleet->setCharacter($iaPlayer);
-                            $fleet->setPlanet($planet);
-                            $fleet->setAttack(1);
-                            $fleet->setName('Horde');
-                            $fleet->setSignature($fleet->getNbrSignatures());
-                            $em->persist($fleet);
                         } elseif (in_array($nbrSector, $planetPveTwo)) {
                             $planet = new Planet(null, 'Fort Marchand II', 1000, 300, $nbrPlanet, $sector, 'merchant.webp',  2, null, false, false);
                             $fleet = new Fleet();
@@ -197,12 +193,6 @@ class ServerController extends AbstractController
                             $fleet->setCorvetWar(250);
                             $fleet->setFregatePlasma(20);
                             $fleet->setDestroyer(10);
-                            $fleet->setCharacter($iaPlayer);
-                            $fleet->setPlanet($planet);
-                            $fleet->setAttack(1);
-                            $fleet->setName('Horde');
-                            $fleet->setSignature($fleet->getNbrSignatures());
-                            $em->persist($fleet);
                         } elseif (in_array($nbrSector, $planetPveThree)) {
                             $planet = new Planet(null, 'Fort Marchand III', 1500, 450, $nbrPlanet, $sector, 'merchant.webp',  3, null, false, false);
                             $fleet = new Fleet();
@@ -210,12 +200,6 @@ class ServerController extends AbstractController
                             $fleet->setCorvetWar(2500);
                             $fleet->setFregatePlasma(200);
                             $fleet->setDestroyer(100);
-                            $fleet->setCharacter($iaPlayer);
-                            $fleet->setPlanet($planet);
-                            $fleet->setAttack(1);
-                            $fleet->setName('Horde');
-                            $fleet->setSignature($fleet->getNbrSignatures());
-                            $em->persist($fleet);
                         } elseif (in_array($nbrSector, $planetPveFour)) {
                             $planet = new Planet(null, 'Fort Marchand IV', 3000, 600, $nbrPlanet, $sector, 'merchant.webp',  4, null, false, false);
                             $fleet = new Fleet();
@@ -223,12 +207,6 @@ class ServerController extends AbstractController
                             $fleet->setCorvetWar(25000);
                             $fleet->setFregatePlasma(2000);
                             $fleet->setDestroyer(1000);
-                            $fleet->setCharacter($iaPlayer);
-                            $fleet->setPlanet($planet);
-                            $fleet->setAttack(1);
-                            $fleet->setName('Horde');
-                            $fleet->setSignature($fleet->getNbrSignatures());
-                            $em->persist($fleet);
                         } else {
                             $planet = new Planet(null, 'Fort Marchand V', 4000, 800, $nbrPlanet, $sector, 'merchant.webp',  5, null, false, false);
                             $fleet = new Fleet();
@@ -236,14 +214,14 @@ class ServerController extends AbstractController
                             $fleet->setCorvetWar(250000);
                             $fleet->setFregatePlasma(20000);
                             $fleet->setDestroyer(10000);
-                            $fleet->setCharacter($iaPlayer);
-                            $fleet->setPlanet($planet);
-                            $fleet->setAttack(1);
-                            $fleet->setName('Horde');
-                            $fleet->setSignature($fleet->getNbrSignatures());
-                            $em->persist($fleet);
                         }
-                    } elseif ((in_array($nbrSector, $sectorPositions)) && (($alreadyBot2 == false && rand(0, 8) == 1) || $alreadyBot2 == false && $nbrPlanet == 24)) {
+                        $fleet->setCharacter($iaPlayer);
+                        $fleet->setPlanet($planet);
+                        $fleet->setAttack(1);
+                        $fleet->setName('Horde');
+                        $fleet->setSignature($fleet->getNbrSignatures());
+                        $em->persist($fleet);
+                    } elseif ((in_array($nbrSector, $sectorPositions)) && ((!$alreadyBot2 && rand(0, 8) == 1) || !$alreadyBot2 && $nbrPlanet == 24)) {
                         $alreadyBot2 = true;
                         $fleetBot = new Fleet();
                         if (in_array($nbrSector, $iaLevelOn)) {
@@ -373,12 +351,13 @@ class ServerController extends AbstractController
 
     /**
      * @Route("/creation-univers-petit/{server}", name="create_little", requirements={"server"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Server $server
      * @return RedirectResponse
      */
-    public function createServerLittleAction(Server $server): RedirectResponse
+    public function createServerLittleAction(ManagerRegistry $doctrine, Server $server): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $image = [
             'planet1.webp', 'planet2.webp', 'planet3.webp', 'planet4.webp', 'planet5.webp', 'planet6.webp',
             'planet7.webp', 'planet8.webp', 'planet9.webp', 'planet10.webp', 'planet11.webp', 'planet12.webp',
@@ -460,12 +439,13 @@ class ServerController extends AbstractController
 
     /**
      * @Route("/destruction-univers/{server}", name="destroy_server", requirements={"server"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Server $server
      * @return RedirectResponse
      */
-    public function destroyServerAction(Server $server): RedirectResponse
+    public function destroyServerAction(ManagerRegistry $doctrine, Server $server): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $characters = $em->getRepository('App:Character')->findBy(['server' => $server]);
 
@@ -630,12 +610,13 @@ class ServerController extends AbstractController
 
     /**
      * @Route("/destruction-galaxy/{galaxy}", name="destroy_galaxy", requirements={"galaxy"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Galaxy $galaxy
      * @return RedirectResponse
      */
-    public function destroyGalaxyAction(Galaxy $galaxy): RedirectResponse
+    public function destroyGalaxyAction(ManagerRegistry $doctrine, Galaxy $galaxy): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         foreach ($galaxy->getSectors() as $sector) {
             foreach ($sector->getPlanets() as $planet) {
@@ -683,9 +664,9 @@ class ServerController extends AbstractController
     /**
      * @Route("/destruction-secteur", name="destroy_sectors")
      */
-    public function destroySectorsAction(): RedirectResponse
+    public function destroySectorsAction(ManagerRegistry $doctrine): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $sectors = $em->getRepository('App:Sector')
             ->createQueryBuilder('s')
@@ -731,12 +712,13 @@ class ServerController extends AbstractController
 
     /**
      * @Route("/activer-connexion/{server}", name="active_server", requirements={"server"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Server $server
      * @return RedirectResponse
      */
-    public function activeServerAction(Server $server): RedirectResponse
+    public function activeServerAction(ManagerRegistry $doctrine, Server $server): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $server->setOpen(1);
 
@@ -747,12 +729,13 @@ class ServerController extends AbstractController
 
     /**
      * @Route("/desactiver-connexion/{server}", name="deactive_server", requirements={"server"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Server $server
      * @return RedirectResponse
      */
-    public function deactivateServerAction(Server $server): RedirectResponse
+    public function deactivateServerAction(ManagerRegistry $doctrine, Server $server): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $server->setOpen(0);
 
@@ -763,12 +746,13 @@ class ServerController extends AbstractController
 
     /**
      * @Route("/activer-pve/{server}", name="pve_server", requirements={"server"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Server $server
      * @return RedirectResponse
      */
-    public function PveAction(Server $server): RedirectResponse
+    public function PveAction(ManagerRegistry $doctrine, Server $server): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $server->setPvp(0);
 
@@ -779,12 +763,13 @@ class ServerController extends AbstractController
 
     /**
      * @Route("/activer-pvp/{server}", name="pvp_server", requirements={"server"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Server $server
      * @return RedirectResponse
      */
-    public function PvpAction(Server $server): RedirectResponse
+    public function PvpAction(ManagerRegistry $doctrine, Server $server): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $server->setPvp(1);
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Building;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +20,14 @@ class DestroyController extends AbstractController
 {
     /**
      * @Route("/detruire-mine/{usePlanet}", name="building_remove_mine", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveMineAction(Planet $usePlanet)
+    public function buildingRemoveMineAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -52,13 +54,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-puit/{usePlanet}", name="building_remove_extract", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveExtractAction(Planet $usePlanet)
+    public function buildingRemoveExtractAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -85,13 +88,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-ferme/{usePlanet}", name="building_remove_farm", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveFarmAction(Planet $usePlanet)
+    public function buildingRemoveFarmAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -118,13 +122,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-ferme-aeroponique/{usePlanet}", name="building_remove_aeroponic_farm", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveAeroponicFarmAction(Planet $usePlanet)
+    public function buildingRemoveAeroponicFarmAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -150,13 +155,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-stockage-niobium/{usePlanet}", name="building_remove_niobiumStock", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveNiobiumStockAction(Planet $usePlanet)
+    public function buildingRemoveNiobiumStockAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -183,13 +189,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-stockage-eau/{usePlanet}", name="building_remove_waterStock", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveWaterStockAction(Planet $usePlanet)
+    public function buildingRemoveWaterStockAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -216,13 +223,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-silos/{usePlanet}", name="building_remove_silos", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveSilosAction(Planet $usePlanet)
+    public function buildingRemoveSilosAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -249,13 +257,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-laboratoire/{usePlanet}", name="building_remove_search", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveSearchAction(Planet $usePlanet)
+    public function buildingRemoveSearchAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -284,13 +293,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-ville/{usePlanet}", name="building_remove_city", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveCityAction(Planet $usePlanet)
+    public function buildingRemoveCityAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -319,13 +329,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-metropole/{usePlanet}", name="building_remove_metropole", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveMetropoleAction(Planet $usePlanet)
+    public function buildingRemoveMetropoleAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -356,13 +367,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-chantier-spatiale/{usePlanet}", name="building_remove_spaceShipyard", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveSpaceShipyardAction(Planet $usePlanet)
+    public function buildingRemoveSpaceShipyardAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -392,13 +404,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-usine-legere/{usePlanet}", name="building_remove_lightUsine", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveLightUsineAction(Planet $usePlanet)
+    public function buildingRemoveLightUsineAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -427,13 +440,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-usine-lourde/{usePlanet}", name="building_remove_heavyUsine", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveHeavyUsineAction(Planet $usePlanet)
+    public function buildingRemoveHeavyUsineAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -462,13 +476,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-caserne/{usePlanet}", name="building_remove_caserne", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveCaserneAction(Planet $usePlanet)
+    public function buildingRemoveCaserneAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -497,13 +512,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-bunker/{usePlanet}", name="building_remove_bunker", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveBunkerAction(Planet $usePlanet)
+    public function buildingRemoveBunkerAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -532,13 +548,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-nucleaire/{usePlanet}", name="building_remove_nuclear", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveNuclearAction(Planet $usePlanet)
+    public function buildingRemoveNuclearAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -566,13 +583,14 @@ class DestroyController extends AbstractController
 
     /**
      * @Route("/detruire-radar/{usePlanet}", name="building_remove_radar", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function buildingRemoveRadarAction(Planet $usePlanet)
+    public function buildingRemoveRadarAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -600,9 +618,9 @@ class DestroyController extends AbstractController
     /**
      * @Route("/detruire-radar-espace/{usePlanet}", name="building_remove_skyRadar", requirements={"usePlanet"="\d+"})
      */
-    public function buildingRemoveSkyRadarAction(Planet $usePlanet)
+    public function buildingRemoveSkyRadarAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -629,9 +647,9 @@ class DestroyController extends AbstractController
     /**
      * @Route("/detruire-brouilleur/{usePlanet}", name="building_remove_brouilleur", requirements={"usePlanet"="\d+"})
      */
-    public function buildingRemoveBrouilleurAction(Planet $usePlanet)
+    public function buildingRemoveBrouilleurAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());

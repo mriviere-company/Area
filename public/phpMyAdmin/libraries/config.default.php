@@ -34,6 +34,7 @@ declare(strict_types=1);
  * an error message if phpMyAdmin cannot auto-detect the correct value.
  *
  * @global string $cfg['PmaAbsoluteUri']
+ * @psalm-suppress PossiblyUndefinedGlobalVariable
  */
 $cfg['PmaAbsoluteUri'] = '';
 
@@ -577,8 +578,7 @@ $cfg['Servers'][$i]['tracking_version_auto_create'] = false;
  *
  * @global string $cfg['Servers'][$i]['tracking_default_statements']
  */
-$cfg['Servers'][$i]['tracking_default_statements']
-    = 'CREATE TABLE,ALTER TABLE,DROP TABLE,RENAME TABLE,CREATE INDEX,' .
+$cfg['Servers'][$i]['tracking_default_statements'] = 'CREATE TABLE,ALTER TABLE,DROP TABLE,RENAME TABLE,CREATE INDEX,' .
       'DROP INDEX,INSERT,UPDATE,DELETE,TRUNCATE,REPLACE,CREATE VIEW,' .
       'ALTER VIEW,DROP VIEW,CREATE DATABASE,ALTER DATABASE,DROP DATABASE';
 
@@ -607,6 +607,13 @@ $cfg['Servers'][$i]['tracking_add_drop_table'] = true;
 $cfg['Servers'][$i]['tracking_add_drop_database'] = true;
 
 /**
+ * Whether to show or hide detailed MySQL/MariaDB connection errors on the login page.
+ *
+ * @global bool $cfg['Servers'][$i]['hide_connection_errors']
+ */
+$cfg['Servers'][$i]['hide_connection_errors'] = false;
+
+/**
  * Default server (0 = no default server)
  *
  * If you have more than one server configured, you can set $cfg['ServerDefault']
@@ -619,7 +626,7 @@ $cfg['Servers'][$i]['tracking_add_drop_database'] = true;
  */
 $cfg['ServerDefault'] = 1;
 
-/*
+/**
  * Other core phpMyAdmin settings
  */
 
@@ -786,7 +793,12 @@ $cfg['Confirm'] = true;
 /**
  * sets SameSite attribute of the Set-Cookie HTTP response header
  *
- * @global boolean $cfg['CookieSameSite']
+ * Valid values are:
+ *    - Lax
+ *    - Strict
+ *    - None
+ *
+ * @global string $cfg['CookieSameSite']
  */
  $cfg['CookieSameSite'] = 'Strict';
 
@@ -833,6 +845,20 @@ $cfg['UseDbSearch'] = true;
  * @global boolean $cfg['IgnoreMultiSubmitErrors']
  */
 $cfg['IgnoreMultiSubmitErrors'] = false;
+
+/**
+ * Define whether phpMyAdmin will encrypt sensitive data from the URL query string.
+ *
+ * @global bool $cfg['URLQueryEncryption']
+ */
+$cfg['URLQueryEncryption'] = false;
+
+/**
+ * A secret key used to encrypt/decrypt the URL query string. Should be 32 bytes long.
+ *
+ * @global string $cfg['URLQueryEncryptionSecretKey']
+ */
+$cfg['URLQueryEncryptionSecretKey'] = '';
 
 /**
  * allow login to any user entered server in cookie based authentication
@@ -1173,7 +1199,8 @@ $cfg['ShowCreateDb'] = true;
  * Database structure
  */
 
-/** show charset column in database structure (true|false)?
+/**
+ * show charset column in database structure (true|false)?
  *
  * @global boolean $cfg['ShowDbStructureCharset']
  */
@@ -1758,8 +1785,7 @@ $cfg['Export']['latex_structure_caption'] = 'strLatexStructure';
 /**
  * @global string $cfg['Export']['latex_structure_continued_caption']
  */
-$cfg['Export']['latex_structure_continued_caption']
-    = 'strLatexStructure strLatexContinued';
+$cfg['Export']['latex_structure_continued_caption'] = 'strLatexStructure strLatexContinued';
 
 /**
  * @global string $cfg['Export']['latex_data_caption']
@@ -1829,6 +1855,11 @@ $cfg['Export']['json_pretty_print'] = false;
  * @global string $cfg['Export']['json_unicode']
  */
 $cfg['Export']['json_unicode'] = true;
+
+/**
+ * @global string $cfg['Export']['remove_definer_from_definitions']
+ */
+$cfg['Export']['remove_definer_from_definitions'] = false;
 
 /**
  * @global string $cfg['Export']['sql_structure_or_data']
@@ -2517,7 +2548,7 @@ $cfg['CharTextareaCols'] = 40;
  *
  * @global integer $cfg['CharTextareaRows']
  */
-$cfg['CharTextareaRows'] = 2;
+$cfg['CharTextareaRows'] = 7;
 
 /**
  * Max field data length in browse mode for all non-numeric fields
@@ -2793,7 +2824,6 @@ if (defined('TEMP_DIR')) {
 } else {
     $cfg['TempDir'] = ROOT_PATH . 'tmp' . DIRECTORY_SEPARATOR;
 }
-
 
 /**
  * Misc. settings

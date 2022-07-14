@@ -4,6 +4,7 @@ namespace App\Controller\Connected;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,12 +20,13 @@ class RankController extends AbstractController
 {
     /**
      * @Route("/classement-alliance/{usePlanet}", name="rank_ally", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function rankAction(Planet $usePlanet)
+    public function rankAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -85,14 +87,15 @@ class RankController extends AbstractController
 
     /**
      * @Route("/classement-joueurs/{usePlanet}", name="rank_user", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function rankUserAction(Planet $usePlanet)
+    public function rankUserAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());

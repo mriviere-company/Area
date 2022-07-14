@@ -2,6 +2,7 @@
 
 namespace App\Controller\Track;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Track;
@@ -13,14 +14,15 @@ use App\Entity\Track;
 class TrackController extends AbstractController
 {
     /**
+     * @param ManagerRegistry $doctrine
      * @param $currentPage
      * @return Response
      */
-    public function trackAction($currentPage): Response
+    public function trackAction(ManagerRegistry $doctrine, $currentPage): Response
     {
         $user = $this->getUser();
 
-        $u_agent = substr($_SERVER['HTTP_USER_AGENT'], 0, 35);;
+        $u_agent = substr($_SERVER['HTTP_USER_AGENT'], 0, 35);
         if(isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
         } elseif(isset($_SERVER['HTTP_CLIENT_IP'])) {
@@ -32,7 +34,7 @@ class TrackController extends AbstractController
             || stripos(strtoupper($u_agent), 'BOT') !== FALSE) {
             return new Response ("");
         }
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $track = new Track();
 
         if ($user) {
@@ -43,29 +45,19 @@ class TrackController extends AbstractController
 
         if (stripos(strtoupper($u_agent), 'ANDROID') !== FALSE) {
             $track->setComputer('Android');
-            $track->setBrowser($u_agent);
         } elseif (stripos(strtoupper($u_agent), 'WINDOWS') !== FALSE) {
             $track->setComputer('Windows');
-            $track->setBrowser($u_agent);
         } elseif (stripos(strtoupper($u_agent), 'MACINTOSH') !== FALSE) {
             $track->setComputer('Mac');
-            $track->setBrowser($u_agent);
         } elseif (stripos(strtoupper($u_agent), 'LINUX') !== FALSE) {
             $track->setComputer('Linux');
-            $track->setBrowser($u_agent);
         } elseif (stripos(strtoupper($u_agent), 'IPHONE') !== FALSE) {
             $track->setComputer('Iphone');
-            $track->setBrowser($u_agent);
         } elseif (stripos(strtoupper($u_agent), 'IPAD') !== FALSE) {
             $track->setComputer('Ipad');
-            $track->setBrowser($u_agent);
         } elseif (stripos(strtoupper($u_agent), 'FACEBOOK') !== FALSE) {
             $track->setComputer('Facebook');
-            $track->setBrowser($u_agent);
-        } else {
-            $track->setBrowser($u_agent);
         }
-
         $track->setBrowser($u_agent);
 
         if (isset($_SERVER['HTTP_REFERER'])) {

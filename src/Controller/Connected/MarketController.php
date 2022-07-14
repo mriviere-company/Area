@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,13 +27,15 @@ class MarketController extends AbstractController
 {
     /**
      * @Route("/marchands/{usePlanet}", name="market", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
+     * @throws NonUniqueResultException
      */
-    public function marketAction(Request $request, Planet $usePlanet)
+    public function marketAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -108,13 +112,14 @@ class MarketController extends AbstractController
 
     /**
      * @Route("/planete-ajouter-marchand/{usePlanet}/{planet}", name="planet_seller_add", requirements={"usePlanet"="\d+","planet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Planet $planet
      * @return RedirectResponse
      */
-    public function planetAddAction(Planet $usePlanet, Planet $planet)
+    public function planetAddAction(ManagerRegistry $doctrine, Planet $usePlanet, Planet $planet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -137,9 +142,9 @@ class MarketController extends AbstractController
     /**
      * @Route("/planete-enlever-marchand/{planet}/{usePlanet}", name="planet_seller_sub", requirements={"usePlanet"="\d+","planet"="\d+"})
      */
-    public function planetSubAction(Planet $usePlanet, Planet $planet)
+    public function planetSubAction(ManagerRegistry $doctrine, Planet $usePlanet, Planet $planet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -161,13 +166,14 @@ class MarketController extends AbstractController
 
     /**
      * @Route("/vente-auto-marchand/{usePlanet}/", name="planets_seller", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function sellMerchantAction(Planet $usePlanet)
+    public function sellMerchantAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 

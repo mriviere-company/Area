@@ -3,10 +3,11 @@
 namespace App\Controller\CronController;
 
 use App\Entity\Construction;
+use Doctrine\Persistence\ManagerRegistry;
+use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\User;
 use App\Entity\Ships;
 use App\Entity\Rank;
 use App\Entity\Destination;
@@ -22,7 +23,7 @@ class BotController extends AbstractController
      */
     public function createBotAction()
     {
-        /*$em = $this->getDoctrine()->getManager();
+        /*$em = $doctrine->getManager();
         $now = new DateTime();
         $creation = $now;
         $nickeNames = $em->getRepository('App:NickName')->findAll();
@@ -104,17 +105,16 @@ class BotController extends AbstractController
     /**
      * @Route("/manage-bot/", name="manage_the_bot")
      */
-    public function manageBotAction()
+    #[NoReturn] public function manageBotAction(ManagerRegistry $doctrine)
     {
-        exit;
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $move = new DateTime();
         $messageTime = new DateTime();
         $messageTime->sub(new DateInterval('PT' . rand(1, 400) . 'S'));
         $messageSent = 1;
 
-        if (1 == 1) {
+        if (true) {
             $user = $em->getRepository('App:User')
                 ->createQueryBuilder('u')
                 ->where('u.bot = true')
@@ -125,7 +125,7 @@ class BotController extends AbstractController
                 ->getQuery()
                 ->getOneOrNullResult();
 
-
+            $character = null;
             if ($character) {
 
                 $planet = $em->getRepository('App:Planet')
@@ -276,7 +276,7 @@ class BotController extends AbstractController
                         ->setMaxResults(1)
                         ->getOneOrNullResult();
 
-                    if ($fPlanet && $planet) {
+                    if ($planet) {
                         $sFleet = $fPlanet->getSector()->getPosition();
                         $sector = $planet->getSector()->getPosition();
                         $planete = $planet->getPosition();
@@ -508,9 +508,9 @@ class BotController extends AbstractController
         exit;
     }
 
-    public function buildBuildingBotAction($usePlanet, $building, $user)
+    public function buildBuildingBotAction(ManagerRegistry $doctrine, $usePlanet, $building, $user): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
 
         $level = $user->getWhichBuilding($building, $usePlanet) + 1;

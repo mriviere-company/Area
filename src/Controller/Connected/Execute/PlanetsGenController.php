@@ -18,7 +18,7 @@ class PlanetsGenController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function planetsGenAction($character, $seconds, $now, $em)
+    public function planetsGenAction($character, $seconds, $now, $em): Response
     {
         if ($character->getPoliticWorker() > 0) {
             $workerBonus = (1 + ($character->getPoliticWorker() / 5));
@@ -26,7 +26,7 @@ class PlanetsGenController extends AbstractController
             $workerBonus = 1;
         }
         foreach ($character->getPlanets() as $planet) {
-            if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and $planet->getMoon() == false) {
+            if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and $planet->getMoon()) {
                 $nbProd = ($planet->getNbProduction() * $seconds) / 600;
                 $wtProd = ($planet->getWtProduction() * $seconds) / 600;
                 $fdProd = ($planet->getFdProduction() * $seconds) / 600;
@@ -81,7 +81,7 @@ class PlanetsGenController extends AbstractController
                 }
                 $planet->setLastActivity($now);
                 $em->flush($planet);
-            } elseif ($planet->getMoon() == true) {
+            } elseif ($planet->getMoon()) {
                 $fdProd = ($planet->getFdProduction() * $seconds) / 60;
                 $workerMore = (($planet->getWorkerProduction() * $workerBonus * $seconds) / 60);
 
@@ -134,7 +134,7 @@ class PlanetsGenController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function planetGenAction($character, $planet, $seconds, $now, $em)
+    public function planetGenAction($character, $planet, $seconds, $now, $em): Response
     {
         if ($character->getPoliticWorker() > 0) {
             $workerBonus = (1 + ($character->getPoliticWorker() / 5));
@@ -142,7 +142,7 @@ class PlanetsGenController extends AbstractController
             $workerBonus = 1;
         }
 
-        if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and $planet->getMoon() == false) {
+        if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and !$planet->getMoon()) {
             $nbProd = ($planet->getNbProduction() * $seconds) / 600;
             $wtProd = ($planet->getWtProduction() * $seconds) / 600;
             $fdProd = ($planet->getFdProduction() * $seconds) / 600;
@@ -197,7 +197,7 @@ class PlanetsGenController extends AbstractController
             }
             $planet->setLastActivity($now);
             $em->flush($planet);
-        } elseif ($planet->getMoon() == true) {
+        } elseif ($planet->getMoon()) {
             $fdProd = ($planet->getFdProduction() * $seconds) / 60;
             $workerMore = (($planet->getWorkerProduction() * $workerBonus * $seconds) / 60);
 

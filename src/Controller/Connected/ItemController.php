@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,10 +19,11 @@ class ItemController extends AbstractController
 {
     /**
      * @Route("/inventaire/{usePlanet}", name="item", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function itemAction(Planet $usePlanet)
+    public function itemAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());

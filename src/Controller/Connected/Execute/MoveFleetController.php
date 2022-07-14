@@ -210,7 +210,7 @@ class MoveFleetController extends AbstractController
                         if ($fleet->getFlightType() == '1' && $character->getZombie() == 0) {
                             $em->persist($report);
                         } elseif ($fleet->getFlightType() == '2') {
-                            if ($newPlanet->getMerchant() == true) {
+                            if ($newPlanet->getMerchant()) {
                                 $reportSell = new Report();
                                 $reportSell->setType('economic');
                                 $reportSell->setSendAt($nowReport);
@@ -343,8 +343,8 @@ class MoveFleetController extends AbstractController
                             }
                         } elseif ($fleet->getFlightType() == '3') {
                             if ($fleet->getColonizer() && $newPlaCharacter == null &&
-                                $newPlanet->getEmpty() == false && $newPlanet->getMerchant() == false &&
-                                $newPlanet->getCdr() == false && $character->getColPlanets() < 26 &&
+                                !$newPlanet->getEmpty() && !$newPlanet->getMerchant() &&
+                                !$newPlanet->getCdr() && $character->getColPlanets() < 26 &&
                                 $character->getColPlanets() <= ($character->getTerraformation() + 1 + $character->getPoliticColonisation())) {
 
                                 $fleet->setColonizer($fleet->getColonizer() - 1);
@@ -1106,7 +1106,7 @@ class MoveFleetController extends AbstractController
                         $em->persist($report);
                     }
                     if ($fleet->getFlightType() == '2') {
-                        if ($newPlanet->getMerchant() == true) {
+                        if ($newPlanet->getMerchant()) {
                             $reportSell = new Report();
                             $reportSell->setType('economic');
                             $reportSell->setSendAt($nowReport);
@@ -1239,8 +1239,8 @@ class MoveFleetController extends AbstractController
                         }
                     } elseif ($fleet->getFlightType() == '3') {
                         if ($fleet->getColonizer() && $newPlaCharacter == null &&
-                            $newPlanet->getEmpty() == false && $newPlanet->getMerchant() == false &&
-                            $newPlanet->getCdr() == false && $character->getColPlanets() < 26 &&
+                            !$newPlanet->getEmpty() && !$newPlanet->getMerchant() &&
+                            !$newPlanet->getCdr() && $character->getColPlanets() < 26 &&
                             $character->getColPlanets() <= ($character->getTerraformation() + 1 + $character->getPoliticColonisation())) {
 
                             $fleet->setColonizer($fleet->getColonizer() - 1);

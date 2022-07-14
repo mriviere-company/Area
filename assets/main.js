@@ -471,7 +471,7 @@ function manageAttackFleetForm() {
             type: "POST",
             data: {name: 'attack', data: content},
             success: function(response){
-                if(response.war == true) {
+                if(response.war === true) {
                     location = location;
                 }
             }

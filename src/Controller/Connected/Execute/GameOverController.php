@@ -17,7 +17,7 @@ class GameOverController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function gameOverCronAction($userGOs, $now, $em)
+    public function gameOverCronAction($userGOs, $now, $em): Response
     {
         foreach ($userGOs as $userGO) {
             foreach ($userGO->getFleetLists() as $list) {

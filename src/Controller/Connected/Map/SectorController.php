@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected\Map;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,15 +29,17 @@ class SectorController extends AbstractController
 {
     /**
      * @Route("/carte-spatiale/{sector}/{galaxy}/{usePlanet}", name="map", requirements={"sector"="\d+", "galaxy"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Sector $sector
      * @param Galaxy $galaxy
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
+     * @throws NonUniqueResultException
      */
-    public function mapAction(Request $request, Sector $sector, Galaxy $galaxy, Planet $usePlanet)
+    public function mapAction(ManagerRegistry $doctrine, Request $request, Sector $sector, Galaxy $galaxy, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);
@@ -292,13 +296,14 @@ class SectorController extends AbstractController
 
     /**
      * @Route("/flotte-orbite/{planet}/{usePlanet}", name="fleet_sector", requirements={"planet"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $planet
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function fleetAction(Planet $planet, Planet $usePlanet)
+    public function fleetAction(ManagerRegistry $doctrine, Planet $planet, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -323,15 +328,16 @@ class SectorController extends AbstractController
 
     /**
      * @Route("/interaction-planete/{planet}/{usePlanet}", name="planet_interact", requirements={"planet"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $planet
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      * @throws Exception
      */
-    public function planetInteractAction(Request $request, Planet $planet, Planet $usePlanet)
+    public function planetInteractAction(ManagerRegistry $doctrine, Request $request, Planet $planet, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);
@@ -427,14 +433,15 @@ class SectorController extends AbstractController
 
     /**
      * @Route("/envoyer-sonde/{planet}/{usePlanet}", name="send_sonde", requirements={"planet"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $planet
      * @param Planet $usePlanet
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function sendSondeAction(Planet $planet, Planet $usePlanet)
+    public function sendSondeAction(ManagerRegistry $doctrine, Planet $planet, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);
@@ -519,14 +526,15 @@ class SectorController extends AbstractController
 
     /**
      * @Route("/envoyer-missiles/{planet}/{usePlanet}", name="send_nuclear", requirements={"planet"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $planet
      * @param Planet $usePlanet
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function sendNuclearAction(Planet $planet, Planet $usePlanet)
+    public function sendNuclearAction(ManagerRegistry $doctrine, Planet $planet, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();

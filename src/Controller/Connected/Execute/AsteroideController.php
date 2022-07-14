@@ -75,7 +75,7 @@ class AsteroideController extends AbstractController
                     $fleet->setHunterWar(300 * $alea);
                     $fleet->setCorvetWar(50 * $alea);
                     $fleet->setFregatePlasma(3 * $alea);
-                    $fleet->setDestroyer(1 * $alea);
+                    $fleet->setDestroyer($alea);
                     $fleet->setCharacter($iaPlayer);
                     $fleet->setPlanet($planetZb);
                     $destination = new Destination($fleet, $newAsteroides);

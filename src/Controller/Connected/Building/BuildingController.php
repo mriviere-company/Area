@@ -3,6 +3,7 @@
 namespace App\Controller\Connected\Building;
 
 use App\Entity\Construction;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,12 +22,13 @@ class BuildingController extends AbstractController
 {
     /**
      * @Route("/batiment/{usePlanet}", name="building", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function buildingAction(Planet $usePlanet)
+    public function buildingAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -68,14 +70,15 @@ class BuildingController extends AbstractController
 
     /**
      * @Route("/construire-batiment/{building}/{usePlanet}", name="build_building", requirements={"building"="\w+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param $building
      * @return RedirectResponse|Response
      * @throws Exception
      */
-    public function buildBuildingAction(Planet $usePlanet, $building)
+    public function buildBuildingAction(ManagerRegistry $doctrine, Planet $usePlanet, $building): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -148,14 +151,15 @@ class BuildingController extends AbstractController
 
     /**
      * @Route("/annuler-construction/{cancelPlanet}/{usePlanet}", name="cancel_construction", requirements={"usePlanet"="\d+", "cancelPlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Planet $cancelPlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function cancelConstructionAction(Planet $usePlanet,Planet $cancelPlanet)
+    public function cancelConstructionAction(ManagerRegistry $doctrine, Planet $usePlanet,Planet $cancelPlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -189,7 +193,7 @@ class BuildingController extends AbstractController
         }
         $em->flush();
 
-        if ($cancelPlanet == $usePlanet) {
+        if ($cancelPlanet === $usePlanet) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
@@ -197,13 +201,14 @@ class BuildingController extends AbstractController
 
     /**
      * @Route("/annuler-construction-liste/{construction}/{usePlanet}", name="building_listCancel", requirements={"construction"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Construction $construction
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function buildingListCancelAction(Construction $construction, Planet $usePlanet)
+    public function buildingListCancelAction(ManagerRegistry $doctrine, Construction $construction, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 

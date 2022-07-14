@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected\Ally;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,13 +28,14 @@ class PactController extends AbstractController
 {
     /**
      * @Route("/accepter-pacte/{pact}/{usePlanet}", name="ally_acceptAllied", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Allied $pact
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function pactAcceptAction(Allied $pact, Planet $usePlanet)
+    public function pactAcceptAction(ManagerRegistry $doctrine, Allied $pact, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -54,13 +57,14 @@ class PactController extends AbstractController
 
     /**
      * @Route("/refuser-pacte/{pact}/{usePlanet}", name="ally_refuseAllied", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Allied $pact
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function pactRefuseAction(Allied $pact, Planet $usePlanet)
+    public function pactRefuseAction(ManagerRegistry $doctrine, Allied $pact, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -77,13 +81,14 @@ class PactController extends AbstractController
 
     /**
      * @Route("/accepter-pna/{pact}/{usePlanet}", name="ally_acceptPna", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Pna $pact
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function pnaAcceptAction(Pna $pact, Planet $usePlanet)
+    public function pnaAcceptAction(ManagerRegistry $doctrine, Pna $pact, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -105,13 +110,14 @@ class PactController extends AbstractController
 
     /**
      * @Route("/refuser-pna/{pact}/{usePlanet}", name="ally_refusePna", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Pna $pact
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function pnaRefuseAction(Pna $pact, Planet $usePlanet)
+    public function pnaRefuseAction(ManagerRegistry $doctrine, Pna $pact, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -128,13 +134,15 @@ class PactController extends AbstractController
 
     /**
      * @Route("/detruire-pna/{pact}/{usePlanet}", name="ally_remove_pna", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Pna $pact
      * @param Planet $usePlanet
      * @return RedirectResponse
+     * @throws NonUniqueResultException
      */
-    public function allyPnaRefuseAction(Pna $pact, Planet $usePlanet)
+    public function allyPnaRefuseAction(ManagerRegistry $doctrine, Pna $pact, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -171,14 +179,15 @@ class PactController extends AbstractController
 
     /**
      * @Route("/detruire-pacte/{pact}/{usePlanet}", name="ally_remove_pact", requirements={"pact"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Allied $pact
      * @param Planet $usePlanet
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function allyPactRefuseAction(Allied $pact, Planet $usePlanet)
+    public function allyPactRefuseAction(ManagerRegistry $doctrine, Allied $pact, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -210,26 +219,26 @@ class PactController extends AbstractController
             $pact2->setDismissBy($character->getAlly()->getSigle());
             $pact->setDismissAt($now);
             $pact->setDismissBy($character->getAlly()->getSigle());
-            $em->flush();
         } else {
             $em->remove($pact);
-            $em->flush();
         }
+        $em->flush();
 
         return $this->redirectToRoute('ally_page_pacts', ['usePlanet' => $usePlanet->getId()]);
     }
 
     /**
      * @Route("/faire-la-paix/{war}/{usePlanet}", name="ally_make_peace", requirements={"war"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param War $war
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      * @throws Exception
      */
-    public function allyMakePeaceAction(Request $request, War $war, Planet $usePlanet)
+    public function allyMakePeaceAction(ManagerRegistry $doctrine, Request $request, War $war, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $ally = $character->getAlly();
@@ -269,14 +278,15 @@ class PactController extends AbstractController
 
     /**
      * @Route("/accepter-paix/{id}/{usePlanet}", name="ally_accept_peace", requirements={"id"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param int $id
      * @param Planet $usePlanet
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function allyAcceptPeaceAction(int $id, Planet $usePlanet)
+    public function allyAcceptPeaceAction(ManagerRegistry $doctrine, int $id, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $ally = $character->getAlly();
@@ -350,13 +360,15 @@ class PactController extends AbstractController
 
     /**
      * @Route("/refuser-paix/{peace}/{usePlanet}", name="ally_remove_peace", requirements={"peace"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Peace $peace
      * @param Planet $usePlanet
      * @return RedirectResponse
+     * @throws NonUniqueResultException
      */
-    public function allyRemovePeaceAction(Peace $peace, Planet $usePlanet)
+    public function allyRemovePeaceAction(ManagerRegistry $doctrine, Peace $peace, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -382,14 +394,10 @@ class PactController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        if($peace2) {
+        if($peace2)
             $em->remove($peace2);
-            $em->remove($peace);
-            $em->flush();
-        } else {
-            $em->remove($peace);
-            $em->flush();
-        }
+        $em->remove($peace);
+        $em->flush();
 
         return $this->redirectToRoute('ally_page_pacts', ['usePlanet' => $usePlanet->getId()]);
     }

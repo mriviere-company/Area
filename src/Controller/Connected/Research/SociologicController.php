@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Research;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +20,14 @@ class SociologicController extends AbstractController
 {
     /**
      * @Route("/rechercher-aeroponique/{usePlanet}", name="research_aeroponic", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchAeroponicAction(Planet $usePlanet)
+    public function researchAeroponicAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -56,13 +58,14 @@ class SociologicController extends AbstractController
 
     /**
      * @Route("/rechercher-demographie/{usePlanet}", name="research_demography", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchDemographyAction(Planet $usePlanet)
+    public function researchDemographyAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -93,13 +96,14 @@ class SociologicController extends AbstractController
 
     /**
      * @Route("/rechercher-discipline/{usePlanet}", name="research_discipline", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchDisciplineAction(Planet $usePlanet)
+    public function researchDisciplineAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -127,13 +131,14 @@ class SociologicController extends AbstractController
 
     /**
      * @Route("/rechercher-barbele/{usePlanet}", name="research_barbed", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchBarbedAction(Planet $usePlanet)
+    public function researchBarbedAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -161,13 +166,14 @@ class SociologicController extends AbstractController
 
     /**
      * @Route("/rechercher-tank/{usePlanet}", name="research_tank", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchTankAction(Planet $usePlanet)
+    public function researchTankAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -196,9 +202,9 @@ class SociologicController extends AbstractController
     /**
      * @Route("/rechercher-expansion/{usePlanet}", name="research_expansion", requirements={"usePlanet"="\d+"})
      */
-    public function researchExpansionAction(Planet $usePlanet)
+    public function researchExpansionAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());

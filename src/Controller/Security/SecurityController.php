@@ -4,6 +4,8 @@ namespace App\Controller\Security;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -25,15 +27,16 @@ class SecurityController extends AbstractController
     /**
      * @Route("/enregistrement", name="register")
      * @Route("/enregistrement/", name="register_noSlash")
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param MailerInterface $mailer
      * @return RedirectResponse
      * @throws NonUniqueResultException
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
-    public function registerAction(Request $request, MailerInterface $mailer): RedirectResponse
+    public function registerAction(ManagerRegistry $doctrine, Request $request, MailerInterface $mailer): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($_POST) {
             $userSameName = $em->getRepository('App:User')
@@ -63,11 +66,7 @@ class SecurityController extends AbstractController
                     return $this->redirectToRoute('home');
                 }
             }
-            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            } else {
-                $userIp = $_SERVER['REMOTE_ADDR'];
-            }
+            $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
             $encryptedIp = openssl_encrypt($userIp, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
 
 
@@ -109,7 +108,6 @@ class SecurityController extends AbstractController
 
             $token = new UsernamePasswordToken(
                 $user,
-                null,
                 'main',
                 $user->getRoles()
             );
@@ -129,20 +127,17 @@ class SecurityController extends AbstractController
     /**
      * @Route("/enregistrement-anonyme", name="register_ghost")
      * @Route("/enregistrement-anonyme/", name="register_ghost_noSlash")
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @return RedirectResponse
-     * @throws NonUniqueResultException
      * @throws NoResultException
+     * @throws NonUniqueResultException
      */
-    public function registerGhostAction(Request $request): RedirectResponse
+    public function registerGhostAction(ManagerRegistry $doctrine, Request $request): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
-        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-            $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else {
-            $userIp = $_SERVER['REMOTE_ADDR'];
-        }
+        $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
         $encryptedIp = openssl_encrypt($userIp, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
 
         $userSameIp = $em->getRepository('App:User')
@@ -171,7 +166,6 @@ class SecurityController extends AbstractController
 
         $token = new UsernamePasswordToken(
             $user,
-            null,
             'main',
             $user->getRoles()
         );
@@ -190,9 +184,9 @@ class SecurityController extends AbstractController
      * @Route("/login", name="login")
      * @Route("/login/", name="login_noSlash")
      */
-    public function loginAction(): RedirectResponse
+    public function loginAction(ManagerRegistry $doctrine): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
 
         if($user) {
@@ -206,11 +200,7 @@ class SecurityController extends AbstractController
             }
 
             if (!$user->getSpecUsername()) {
-                if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-                    $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'];
-                } else {
-                    $userIp = $_SERVER['REMOTE_ADDR'];
-                }
+                $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
                 $encryptedIp = openssl_encrypt($userIp, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
 
                 $userSameIp = $em->getRepository('App:User')
@@ -221,7 +211,7 @@ class SecurityController extends AbstractController
                     ->getQuery()
                     ->getOneOrNullResult();
 
-                if($userSameIp && !$user->getSpecUsername()) {
+                if($userSameIp) {
                     $this->addFlash("fail", "Vous avez déjà le compte : " . $userSameIp->getUsername());
                     return $this->redirectToRoute('home');
                 }
@@ -245,9 +235,9 @@ class SecurityController extends AbstractController
      * @Route("/au-revoir", name="erase_cookie")
      * @Route("/au-revoir/", name="erase_cookie_noSlash")
      */
-    public function eraseCookieAction(): RedirectResponse
+    public function eraseCookieAction(ManagerRegistry $doctrine): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
 
         $rememberMes = $em->getRepository('App:RemembermeToken')

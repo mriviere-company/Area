@@ -2,6 +2,8 @@
 
 namespace App\Controller\Connected;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,12 +34,13 @@ class FleetController  extends AbstractController
 {
     /**
      * @Route("/flotte/{usePlanet}", name="fleet", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function fleetAction(Planet $usePlanet)
+    public function fleetAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);
@@ -143,13 +146,14 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/flotte-liste/{usePlanet}", name="fleet_list", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function fleetListAction(Request $request, Planet $usePlanet)
+    public function fleetListAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -207,14 +211,15 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/flotte-liste-ajouter/{usePlanet}/{fleetList}/{fleet}", name="fleet_list_add", requirements={"usePlanet"="\d+","fleetList"="\d+","fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet_List $fleetList
      * @param Fleet $fleet
      * @return RedirectResponse
      */
-    public function fleetListAddAction(Planet $usePlanet, Fleet_List $fleetList, Fleet $fleet)
+    public function fleetListAddAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet_List $fleetList, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -240,14 +245,15 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/flotte-liste-sub/{usePlanet}/{fleetList}/{fleet}", name="fleet_list_sub", requirements={"usePlanet"="\d+","fleetList"="\d+","fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet_List $fleetList
      * @param Fleet $fleet
      * @return RedirectResponse
      */
-    public function fleetListSubAction(Planet $usePlanet, Fleet_List $fleetList, Fleet $fleet)
+    public function fleetListSubAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet_List $fleetList, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -270,13 +276,14 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/flotte-liste-destroy/{fleetList}/{usePlanet}", name="fleet_list_destroy", requirements={"usePlanet"="\d+","fleetList"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet_List $fleetList
      * @return RedirectResponse
      */
-    public function fleetListDestroyAction(Planet $usePlanet, Fleet_List $fleetList)
+    public function fleetListDestroyAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet_List $fleetList): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -302,13 +309,14 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/flotte-alliance-ajouter/{usePlanet}/{fleet}", name="fleet_ally_add", requirements={"usePlanet"="\d+","fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleet
      * @return RedirectResponse
      */
-    public function fleetAllyAddAction(Planet $usePlanet, Fleet $fleet)
+    public function fleetAllyAddAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -332,13 +340,14 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/flotte-alliance-sub/{usePlanet}/{fleet}", name="fleet_ally_sub", requirements={"usePlanet"="\d+","fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleet
      * @return RedirectResponse
      */
-    public function fleetAllySubAction(Planet $usePlanet, Fleet $fleet)
+    public function fleetAllySubAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -360,15 +369,16 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/gerer-flotte/{fleetGive}/{usePlanet}", name="manage_fleet", requirements={"fleetGive"="\d+", "usePlanet"="\d+"})
-     * @param Request $request
-     * @param Planet $usePlanet
+     * @param ManagerRegistry $doctrine
      * @param Fleet $fleetGive
+     * @param Planet $usePlanet
+     * @param Request $request
      * @return JsonResponse|RedirectResponse|Response
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function manageFleetAction(Fleet $fleetGive, Planet $usePlanet, Request $request)
+    public function manageFleetAction(ManagerRegistry $doctrine, Fleet $fleetGive, Planet $usePlanet, Request $request): RedirectResponse|JsonResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $character = $user->getCharacter($server);
@@ -754,14 +764,15 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/detruire-flotte/{fleetGive}/{usePlanet}", name="destroy_fleet", requirements={"usePlanet"="\d+", "fleetGive"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function destroyFleetAction(Planet $usePlanet, Fleet $fleetGive)
+    public function destroyFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -910,15 +921,16 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/envoyer-flotte/{fleetGive}/{usePlanet}", name="send_fleet", requirements={"usePlanet"="\d+", "fleetGive"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function sendFleetAction(Request $request, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
+    public function sendFleetAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet, Fleet $fleetGive): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
         $now = new DateTime();
@@ -1032,7 +1044,8 @@ class FleetController  extends AbstractController
             $fleetGive->setFlightTime($now);
             $fleetGive->setCancelFlight($moreNow);
             $fleetGive->setSignature($fleetGive->getNbrSignatures());
-            if($form_sendFleet->get('flightType')->getData() == '2' && ($planetTake->getCharacter() || $planetTake->getMerchant() == true)) {
+            if($form_sendFleet->get('flightType')->getData() == '2' && ($planetTake->getCharacter() || $planetTake->getMerchant(
+                    ))) {
                 $fleetGive->setFlightType(2);
                 $carburant = $carburant * 2;
             }
@@ -1071,15 +1084,16 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/fusionner-flotte/{fleetGive}/{fleetTake}/{usePlanet}", name="fusion_fleet", requirements={"usePlanet"="\d+", "fleetGive"="\d+", "fleetTake"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleetGive
      * @param Fleet $fleetTake
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function fusionFleetAction(Planet $usePlanet, Fleet $fleetGive, Fleet $fleetTake)
+    public function fusionFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleetGive, Fleet $fleetTake): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -1220,15 +1234,16 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/gerer-vaisseaux/{fleet}/{usePlanet}", name="ships_manage", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @param Fleet $fleet
      * @return RedirectResponse|Response
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function shipsManageAction(Request $request, Planet $usePlanet, Fleet $fleet)
+    public function shipsManageAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet, Fleet $fleet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -1586,15 +1601,16 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/scinder-flotte/{oldFleet}/{usePlanet}", name="fleet_split", requirements={"usePlanet"="\d+", "oldFleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @param Fleet $oldFleet
      * @return RedirectResponse|Response
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function splitFleetAction(Request $request, Planet $usePlanet, Fleet $oldFleet)
+    public function splitFleetAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet, Fleet $oldFleet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 
@@ -1833,14 +1849,15 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/annuler-flotte/{fleet}/{usePlanet}", name="cancel_fleet", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleet
      * @return RedirectResponse
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function cancelFleetAction(Planet $usePlanet, Fleet $fleet)
+    public function cancelFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
@@ -1954,13 +1971,14 @@ class FleetController  extends AbstractController
 
     /**
      * @Route("/abandonner-flotte/{fleet}/{usePlanet}", name="abandon_fleet", requirements={"usePlanet"="\d+", "fleet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @param Fleet $fleet
      * @return RedirectResponse
      */
-    public function abandonFleetAction(Planet $usePlanet, Fleet $fleet)
+    public function abandonFleetAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
 

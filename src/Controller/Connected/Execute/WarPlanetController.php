@@ -186,7 +186,7 @@ class WarPlanetController extends AbstractController
                         "</span> travailleurs à l'ennemi. Tous vos soldats sont morts et vos barges sont restées sur la planète.<br>Courage commandant.");
                 }
             } else {
-                $warPointAtt = round(($soldierDtmp?$soldierDtmp:1 + ($workerDtmp / 10)) * 1);
+                $warPointAtt = round(($soldierDtmp ?? 1 + ($workerDtmp / 10)) * 1);
                 if ($character->getPoliticPdg() > 0) {
                     $warPointAtt = round($warPointAtt * (1 + ($character->getPoliticPdg() / 10)));
                 }
@@ -479,7 +479,7 @@ class WarPlanetController extends AbstractController
                     "</span> tanks. Tous vos soldats sont morts et vos barges sont restées sur la planète.<br>La prochaine fois, préparez votre attaque commandant.");
 
             } else {
-                $warPointAtt = round($soldierDtmp ? $soldierDtmp : 1 + $tankDtmp);
+                $warPointAtt = round($soldierDtmp ?? 1 + $tankDtmp);
                 if ($fleet->getCharacter()->getPoliticPdg() > 0) {
                     $warPointAtt = round(($warPointAtt * (1 + ($fleet->getCharacter()->getPoliticPdg() / 10))) / 600);
                 }

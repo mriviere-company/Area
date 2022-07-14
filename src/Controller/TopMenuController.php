@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Front\UserOptionType;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,12 +54,13 @@ class TopMenuController extends AbstractController
     /**
      * @Route("/mes-options/{_locale}", name="parameters", defaults={"_locale" = "fr"}, requirements={"_locale" = "fr|en|de"})
      * @Route("/mes-options", name="parameters_noSlash")
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @return Response
      */
-    public function optionsAction(Request $request): Response
+    public function optionsAction(ManagerRegistry $doctrine, Request $request): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
 
         $form_parameters = $this->createForm(UserOptionType::class, null, [

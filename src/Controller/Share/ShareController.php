@@ -3,10 +3,10 @@
 namespace App\Controller\Share;
 
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Class ShareController
@@ -16,13 +16,14 @@ class ShareController extends AbstractController
 {
     /**
      * @Route("/rapport/share/{id}", name="report_share_display")
+     * @param ManagerRegistry $doctrine
      * @param string $key
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function reportSharePageAction(string $key): Response
+    public function reportSharePageAction(ManagerRegistry $doctrine, string $key): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $report = $em->getRepository('App:Report')
             ->createQueryBuilder('r')
@@ -38,13 +39,14 @@ class ShareController extends AbstractController
 
     /**
      * @Route("/message/share/{id}", name="message_share_display")
+     * @param ManagerRegistry $doctrine
      * @param string $key
      * @return Response
      * @throws NonUniqueResultException
      */
-    public function messageSharePageAction(string $key): Response
+    public function messageSharePageAction(ManagerRegistry $doctrine, string $key): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $message = $em->getRepository('App:Message')
             ->createQueryBuilder('r')

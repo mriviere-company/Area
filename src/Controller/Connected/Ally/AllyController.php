@@ -4,6 +4,7 @@ namespace App\Controller\Connected\Ally;
 
 use App\Entity\Character;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,16 +42,17 @@ class AllyController extends AbstractController
 {
     /**
      * @Route("/alliance/{usePlanet}", name="ally", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      * @throws NonUniqueResultException
      */
-    public function allyAction(Request $request, Planet $usePlanet)
+    public function allyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
@@ -153,14 +155,15 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/attribution-grade/{newGradeUser}/{usePlanet}", name="ally_addUser_grade", requirements={"newGradeUser"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Character $newGradeUser
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function allyAddUserGradeAction(Request $request, Character $newGradeUser, Planet $usePlanet)
+    public function allyAddUserGradeAction(ManagerRegistry $doctrine, Request $request, Character $newGradeUser, Planet $usePlanet): RedirectResponse|Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $ally = $character->getAlly();
@@ -174,8 +177,7 @@ class AllyController extends AbstractController
 
         if (($form_userAttrGrade->isSubmitted() && $form_userAttrGrade->isValid())) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            if ($ally->getPolitic() == 'fascism' && $form_userAttrGrade->get('grade')->getData()->getPlacement() == 1) {
-            } else {
+            if ($ally->getPolitic() != 'fascism' && $form_userAttrGrade->get('grade')->getData()->getPlacement() != 1) {
                 if (($character->getGrade()->getPlacement() == 1 && $newGradeUser->getId() == $character->getId()) && $form_userAttrGrade->get('grade')->getData()->getPlacement() != 1) {
                     return $this->redirectToRoute('ally', ['usePlanet' => $usePlanet->getId()]);
                 }
@@ -198,16 +200,17 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/cherche-alliance/{usePlanet}", name="ally_blank", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function noAllyAction(Request $request, Planet $usePlanet)
+    public function noAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
@@ -315,13 +318,14 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/supprimer-alliance/{usePlanet}", name="remove_ally", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function removeAllyAction(Planet $usePlanet)
+    public function removeAllyAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         $user = $this->getUser();
@@ -438,13 +442,14 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/quitter-alliance/{usePlanet}", name="leave_ally", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function leaveAllyAction(Planet $usePlanet)
+    public function leaveAllyAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         $user = $this->getUser();
@@ -492,14 +497,15 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/exclusion-alliance/{kicked}/{usePlanet}", name="ally_kick", requirements={"kicked"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param User $kicked
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function kickAllyAction(User $kicked, Planet $usePlanet)
+    public function kickAllyAction(ManagerRegistry $doctrine, User $kicked, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         $user = $this->getUser();
@@ -547,13 +553,14 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/rejoindre-alliance/{proposal}/{usePlanet}", name="ally_accept", requirements={"proposal"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Proposal $proposal
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function allyAcceptAction(Proposal $proposal, Planet $usePlanet)
+    public function allyAcceptAction(ManagerRegistry $doctrine, Proposal $proposal, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -588,13 +595,14 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/refuser-alliance/{proposal}/{usePlanet}", name="ally_refuse", requirements={"proposal"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Proposal $proposal
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function allyRefusetAction(Proposal $proposal, Planet $usePlanet)
+    public function allyRefusetAction(ManagerRegistry $doctrine, Proposal $proposal, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         if ($usePlanet->getCharacter() != $character) {
@@ -609,13 +617,14 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/annuler-alliance/{proposal}/{usePlanet}", name="ally_cancel", requirements={"proposal"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Proposal $proposal
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function allyCanceltAction(Proposal $proposal, Planet $usePlanet)
+    public function allyCanceltAction(ManagerRegistry $doctrine, Proposal $proposal, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         if ($usePlanet->getCharacter() != $character) {
@@ -630,16 +639,17 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/bye-bye-les-losers/{usePlanet}", name="ally_page_exit", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function exitPageAllyAction(Request $request, Planet $usePlanet)
+    public function exitPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $ally = $character->getAlly();
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
@@ -690,15 +700,16 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/reserve-commune/{usePlanet}", name="ally_page_bank", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function bankPageAllyAction(Request $request, Planet $usePlanet)
+    public function bankPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
 
         if ($usePlanet->getCharacter() != $character) {
@@ -776,15 +787,16 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/accepter-echange/{id}/{usePlanet}", name="ally_accept_exchange", requirements={"id"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Exchange $id
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function allyAcceptExchangeAction(Exchange $id, Planet $usePlanet)
+    public function allyAcceptExchangeAction(ManagerRegistry $doctrine, Exchange $id, Planet $usePlanet): RedirectResponse
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
@@ -813,15 +825,16 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/refuser-echange/{id}/{usePlanet}", name="ally_refuse_exchange", requirements={"id"="\d+", "usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Exchange $id
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function allyRefuseExchangeAction(Exchange $id, Planet $usePlanet)
+    public function allyRefuseExchangeAction(ManagerRegistry $doctrine, Exchange $id, Planet $usePlanet): RedirectResponse
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
@@ -839,17 +852,18 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/ajouter-des-membres/{usePlanet}", name="ally_page_add", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
-    public function addPageAllyAction(Request $request, Planet $usePlanet)
+    public function addPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
@@ -917,15 +931,16 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/alliance-level/{usePlanet}", name="ally_level", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function allylevelAction(Planet $usePlanet)
+    public function allylevelAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $ally = $character->getAlly();
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
@@ -950,15 +965,16 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/administration-alliance/{usePlanet}", name="ally_page_admin", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function adminPageAllyAction(Request $request, Planet $usePlanet)
+    public function adminPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');
@@ -1004,16 +1020,18 @@ class AllyController extends AbstractController
 
     /**
      * @Route("/ambassade-interne/{usePlanet}", name="ally_page_pacts", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
+     * @throws NonUniqueResultException
      */
-    public function pactPageAllyAction(Request $request, Planet $usePlanet)
+    public function pactPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         if ($usePlanet->getCharacter() != $character) {
             return $this->redirectToRoute('home');

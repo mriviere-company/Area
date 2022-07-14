@@ -19,7 +19,7 @@ class FightController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function fightAction($firstFleet, $now, $em)
+    public function fightAction($firstFleet, $now, $em): Response
     {
         $winner = null;
 
@@ -52,7 +52,7 @@ class FightController extends AbstractController
                     'demoFleet'  => $demoFleet,
                     'em'  => $em
                 ]);
-                echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+                echo $cronValue->getContent() ?? "<span style='color:#FF0000'>KO<span><br/>";
             }
         }
 
@@ -70,13 +70,13 @@ class FightController extends AbstractController
         $fleetsId = [];
         foreach ($fleetsWars as $fleetsWar) {
             if ($fleetsWar->getCharacter()->getAlly()) {
-                if (in_array($fleetsWar->getCharacter()->getAlly()->getSigle(), $teamBlock) == false && $fleetsWar->getCharacter()->getAlly()->getSigleAlliedArray($teamBlock) == null &&
-                    in_array($fleetsWar->getId(), $fleetsId) == false) {
+                if (!in_array($fleetsWar->getCharacter()->getAlly()->getSigle(), $teamBlock) && $fleetsWar->getCharacter()->getAlly()->getSigleAlliedArray($teamBlock) == null &&
+                    !in_array($fleetsWar->getId(), $fleetsId)) {
                     $teamBlock[] = $fleetsWar->getCharacter()->getAlly()->getSigle();
                     $fleetsId[] = $fleetsWar->getId();
                 }
-            } elseif (in_array($fleetsWar->getCharacter()->getUsername(), $teamBlock) == false &&
-                in_array($fleetsWar->getId(), $fleetsId) == false) {
+            } elseif (!in_array($fleetsWar->getCharacter()->getUsername(), $teamBlock) &&
+                !in_array($fleetsWar->getId(), $fleetsId)) {
                 $teamBlock[] = $fleetsWar->getCharacter()->getUsername();
                 $fleetsId[] = $fleetsWar->getId();
             }
@@ -111,7 +111,7 @@ class FightController extends AbstractController
         $team1 = $tmpcount - 1;
         $team2 = $tmpcount - 2;
 
-        if ($isAttack[$team1] == true || $isAttack[$team2] == true) {
+        if ($isAttack[$team1] || $isAttack[$team2]) {
             $winner = self::attackAction(${'oneBlock' . $team1}, ${'oneBlock' . $team2}, $now, $em);
         } else {
             while ($isAttack[$team2--] == true) {
@@ -160,7 +160,7 @@ class FightController extends AbstractController
      * @param $blockDef
      * @param $now
      * @param $em
-     * @return |null
+     * @return mixed |null
      */
     public function attackAction($blockAtt, $blockDef, $now, $em)
     {
@@ -288,13 +288,13 @@ class FightController extends AbstractController
         if($attAll > 0 && $defAll < 1) {
             echo "BA Util Win : ";
             $cronValue = self::utilitFightAction($blockDef, $blockAtt, $debrisDefNiobium, $debrisDefWater, $now, $em);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent() ?? "<span style='color:#FF0000'>KO<span><br/>";
             return($blockAtt);
         }
         if($defAll > 0 && $attAll < 1) {
             echo "BB Util Win : ";
             $cronValue = self::utilitFightAction($blockDef, $blockAtt, $debrisAttNiobium, $debrisAttWater, $now, $em);
-            echo $cronValue->getContent()?$cronValue->getContent():"<span style='color:#FF0000'>KO<span><br/>";
+            echo $cronValue->getContent() ?? "<span style='color:#FF0000'>KO<span><br/>";
             return($blockDef);
         }
 
@@ -662,7 +662,7 @@ class FightController extends AbstractController
      * @param $em
      * @return Response
      */
-    public function utilitFightAction($blockA, $blockB, $debrisNb, $debrisWt, $now, $em)
+    public function utilitFightAction($blockA, $blockB, $debrisNb, $debrisWt, $now, $em): Response
     {
         foreach($blockA as $removeTwo) {
             $reportLoseUtilB = new Report();

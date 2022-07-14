@@ -933,17 +933,17 @@ class Character
         $ally = $this->getAlly();
         if($sigle && $ally) {
             foreach ($ally->getPnas() as $pna) {
-                if ($pna->getAllyTag() == $sigle && $pna->getAccepted() == true) {
+                if ($pna->getAllyTag() == $sigle && $pna->getAccepted()) {
                     return $pna->getAllyTag();
                 }
             }
             foreach ($ally->getAllieds() as $pact) {
-                if ($pact->getAllyTag() == $sigle && $pact->getAccepted() == true) {
+                if ($pact->getAllyTag() == $sigle && $pact->getAccepted()) {
                     return $pact->getAllyTag();
                 }
             }
             foreach ($ally->getPeaces() as $peace) {
-                if ($peace->getAllyTag() == $sigle && $peace->getAccepted() == true) {
+                if ($peace->getAllyTag() == $sigle && $peace->getAccepted()) {
                     return $peace->getAllyTag();
                 }
             }
@@ -959,12 +959,12 @@ class Character
         $ally = $this->getAlly();
         if($sigle && $ally) {
             foreach ($ally->getPnas() as $pna) {
-                if ($pna->getAllyTag() == $sigle && $pna->getAccepted() == true) {
+                if ($pna->getAllyTag() == $sigle && $pna->getAccepted()) {
                     return 'toto';
                 }
             }
             foreach ($ally->getAllieds() as $pact) {
-                if ($pact->getAllyTag() == $sigle && $pact->getAccepted() == true) {
+                if ($pact->getAllyTag() == $sigle && $pact->getAccepted()) {
                     return 'toto';
                 }
             }
@@ -1078,7 +1078,7 @@ class Character
         if($this->getAlly()) {
             if($this->getAlly()->getPeaces()) {
                 foreach($this->getAlly()->getPeaces() as $peace) {
-                    if($peace->getAccepted() == 1 && $peace->getType() == false) {
+                    if($peace->getAccepted() == 1 && !$peace->getType()) {
                         return $peace;
                     }
                 }
@@ -2357,7 +2357,7 @@ class Character
     {
         $nbr = 0;
         foreach($this->planets as $planet) {
-            if($planet->getEmpty() == false) {
+            if(!$planet->getEmpty()) {
                 $nbr = $nbr + 1;
             }
         }
@@ -2371,7 +2371,7 @@ class Character
     {
         $nbr = 0;
         foreach($this->planets as $planet) {
-            if($planet->getMoon() == false && $planet->getEmpty() == false) {
+            if(!$planet->getMoon() && !$planet->getEmpty()) {
                 $nbr = $nbr + 1;
             }
         }
@@ -2385,7 +2385,7 @@ class Character
     {
         $nbr = 0;
         foreach($this->planets as $planet) {
-            if($planet->getMoon() == true) {
+            if($planet->getMoon()) {
                 $nbr = $nbr + 1;
             }
         }

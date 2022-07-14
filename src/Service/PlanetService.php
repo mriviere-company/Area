@@ -2,14 +2,15 @@
 
 namespace App\Service;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
 class PlanetService extends AbstractController
 {
-    public function userRadarAction($sector, $galaxy)
+    public function userRadarAction(ManagerRegistry $doctrine, $sector, $galaxy): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getMainCharacter();
         $ally = $character->getAlly();
@@ -51,9 +52,9 @@ class PlanetService extends AbstractController
         return new Response (null);
     }
 
-    public function planetsAttackedAction()
+    public function planetsAttackedAction(ManagerRegistry $doctrine): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getMainCharacter();
         $ally = $character->getAlly();
@@ -107,9 +108,9 @@ class PlanetService extends AbstractController
         return new Response (null);
     }
 
-    public function planetAttackedAction($planet)
+    public function planetAttackedAction(ManagerRegistry $doctrine, $planet): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $user = $this->getUser();
         $character = $user->getMainCharacter();
         $ally = $character->getAlly();

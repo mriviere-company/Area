@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Research;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,13 +20,14 @@ class MilitaryController extends AbstractController
 {
     /**
      * @Route("/rechercher-industrie/{usePlanet}", name="research_industry", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchIndustryAction(Planet $usePlanet)
+    public function researchIndustryAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -56,13 +58,14 @@ class MilitaryController extends AbstractController
 
     /**
      * @Route("/rechercher-vaisseaux-leger/{usePlanet}", name="research_light_ship", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchLightShipAction(Planet $usePlanet)
+    public function researchLightShipAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
@@ -90,13 +93,14 @@ class MilitaryController extends AbstractController
 
     /**
      * @Route("/rechercher-vaisseaux-lourd/{usePlanet}", name="research_heavy_ship", requirements={"usePlanet"="\d+"})
+     * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchHeavyShipAction(Planet $usePlanet)
+    public function researchHeavyShipAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
         $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());

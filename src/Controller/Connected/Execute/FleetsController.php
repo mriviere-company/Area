@@ -2,6 +2,7 @@
 
 namespace App\Controller\Connected\Execute;
 
+use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -227,13 +228,14 @@ class FleetsController extends AbstractController
     }
 
     /**
+     * @param ManagerRegistry $doctrine
      * @param $fleetRegroups
      * @param $demoFleet
      * @return Response
      */
-    public function oneFleetAction($fleetRegroups, $demoFleet): Response
+    public function oneFleetAction(ManagerRegistry $doctrine, $fleetRegroups, $demoFleet): Response
     {
-        $em = $this->getDoctrine()->getManager();
+        $em = $doctrine->getManager();
 
         $one = new Fleet();
         $one->setCharacter($demoFleet->getCharacter());
