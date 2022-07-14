@@ -1,4 +1,7 @@
 {
+    "composer/package-versions-deprecated": {
+        "version": "1.11.99.4"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -80,15 +83,6 @@
     "monolog/monolog": {
         "version": "2.2.0"
     },
-    "ocramius/package-versions": {
-        "version": "1.5.1"
-    },
-    "ocramius/proxy-manager": {
-        "version": "2.1.1"
-    },
-    "php": {
-        "version": "7.3"
-    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -130,9 +124,6 @@
             "version": "3.3",
             "ref": "e3868d2f4a5104f19f844fe551099a00c6562527"
         }
-    },
-    "symfony/debug": {
-        "version": "v4.4.2"
     },
     "symfony/dependency-injection": {
         "version": "v4.0.8"
@@ -193,9 +184,6 @@
             "version": "4.4",
             "ref": "f8fd4ddb9b477510f8f4bce2b9c054ab428c0120"
         }
-    },
-    "symfony/http-client-contracts": {
-        "version": "v2.0.1"
     },
     "symfony/http-foundation": {
         "version": "v4.0.8"
@@ -305,9 +293,6 @@
     "symfony/security-csrf": {
         "version": "v4.2.0"
     },
-    "symfony/security-guard": {
-        "version": "v4.2.0"
-    },
     "symfony/security-http": {
         "version": "v4.2.0"
     },
@@ -343,9 +328,6 @@
             "version": "3.3",
             "ref": "f75ac166398e107796ca94cc57fa1edaa06ec47f"
         }
-    },
-    "symfony/twig-pack": {
-        "version": "v1.0.1"
     },
     "symfony/validator": {
         "version": "v4.0.8"
@@ -400,11 +382,5 @@
             "version": "1.5",
             "ref": "c4f5755b37fb65b9c6a3cbdae91205c15a137ed4"
         }
-    },
-    "zendframework/zend-code": {
-        "version": "3.3.0"
-    },
-    "zendframework/zend-eventmanager": {
-        "version": "3.2.0"
     }
 }

@@ -11,7 +11,6 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Table(name="app_users")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @method string getUserIdentifier()
  */
 class User implements PasswordAuthenticatedUserInterface, UserInterface
 {
@@ -433,6 +432,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     public function setWalletAddress($walletAddress): void
     {
         $this->walletAddress = $walletAddress;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->getUsername ?? $this->getEmail;
     }
 
     public function __call($name, $arguments)

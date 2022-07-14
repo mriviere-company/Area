@@ -36,7 +36,7 @@
         "vich/uploader-bundle": ">=1.8"
     },
   "require-dev": {
-        "symfony/debug": ">=4.0",
+        "symfony/error-handler": "*",
         "symfony/stopwatch": "5.*",
         "symfony/web-profiler-bundle": "5.*"
     },
@@ -44,7 +44,10 @@
         "preferred-install": {
             "*": "dist"
         },
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "symfony/flex": true
+        }
     },
     "autoload": {
         "psr-4": {

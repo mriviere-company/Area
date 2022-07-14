@@ -9,11 +9,10 @@ use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
-    public function handle(Request $request, AccessDeniedException $accessDeniedException)
+    public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
     {
-        return $this->redirectToRoute('home');
-        /*$content = "Vous n'êtes pas autorisé dans cette partie du site.";
+        $content = "Vous n'êtes pas autorisé dans cette partie du site.";
 
-        return new Response($content, 403);*/
+        return new Response($content, 403);
     }
 }

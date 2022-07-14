@@ -2,7 +2,7 @@ security:
     enable_authenticator_manager: true
     password_hashers:
         App\Entity\User: auto
-        Symfony\Component\Security\Core\User\User: auto
+        Symfony\Component\Security\Core\User\InMemoryUser: auto
     role_hierarchy:
         ROLE_ADMIN: [ ROLE_MODO, ROLE_USER ]
     providers:
