@@ -25,9 +25,9 @@ class Salon
     protected $allys;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Character", inversedBy="salons")
+     * @ORM\ManyToMany(targetEntity="Commander", inversedBy="salons")
      */
-    private $characters;
+    private $commanders;
 
     /**
      * @ORM\OneToMany(targetEntity="S_Content", mappedBy="salon", fetch="EXTRA_LAZY")
@@ -60,34 +60,34 @@ class Salon
     {
         $this->name = $name;
         $this->server = $server;
-        $this->characters = new ArrayCollection();
+        $this->commanders = new ArrayCollection();
         $this->allys = new ArrayCollection();
         $this->contents = new ArrayCollection();
         $this->views = new ArrayCollection();
     }
 
     /**
-     * Add character
+     * Add commander
      *
-     * @param Character $character
+     * @param Commander $commander
      *
      * @return Salon
      */
-    public function addCharacter(Character $character): Salon
+    public function addCommander(Commander $commander): Salon
     {
-        $this->characters[] = $character;
+        $this->commanders[] = $commander;
 
         return $this;
     }
 
     /**
-     * Remove character
+     * Remove commander
      *
-     * @param Character $character
+     * @param Commander $commander
      */
-    public function removeCharacter(Character $character)
+    public function removeCommander(Commander $commander)
     {
-        $this->characters->removeElement($character);
+        $this->commanders->removeElement($commander);
     }
 
     /**
@@ -181,17 +181,17 @@ class Salon
     /**
      * @return mixed
      */
-    public function getCharacters()
+    public function getCommanders()
     {
-        return $this->characters;
+        return $this->commanders;
     }
 
     /**
-     * @param mixed $characters
+     * @param mixed $commanders
      */
-    public function setCharacters($characters): void
+    public function setCommanders($commanders): void
     {
-        $this->characters = $characters;
+        $this->commanders = $commanders;
     }
 
     /**

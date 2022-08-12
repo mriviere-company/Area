@@ -2,7 +2,7 @@
 
 namespace App\Controller\Connected;
 
-use App\Entity\Character;
+use App\Entity\Commander;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -39,25 +39,25 @@ class ConnectController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($server);
+        $commander = $user->getCommander($server);
 
-        if (!$character) {
-            $character = new Character($user, $user->getUsername(), $server);
-            $em->persist($character);
+        if (!$commander) {
+            $commander = new Commander($user, $user->getUsername(), $server);
+            $em->persist($commander);
             $em->flush();
         }
 
-        $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($character);
+        $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($commander);
 
         if($usePlanet) {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $planet = $em->getRepository('App:Planet')
+        $planet = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->where('p.character is null')
+            ->where('p.commander is null')
             ->andWhere('p.ground = 25')
             ->andWhere('p.sky = 5')
             ->andWhere('g.id = :id')
@@ -67,7 +67,7 @@ class ConnectController extends AbstractController
             ->getOneOrNullResult();
 
         if($planet) {
-            $planet->setCharacter($character);
+            $planet->setCommander($commander);
             $planet->setName('Nova Terra');
             $planet->setSonde(10);
             $planet->setRadar(1);
@@ -85,12 +85,12 @@ class ConnectController extends AbstractController
             $planet->setWorker(25000);
             $planet->setSoldier(20);
             $planet->setColonizer(1);
-            $character->addPlanet($planet);
+            $commander->addPlanet($planet);
             foreach ($planet->getFleets() as $fleet) {
-                if ($fleet->getCharacter()->getZombie() == 1) {
+                if ($fleet->getCommander()->getZombie() == 1) {
                     $em->remove($fleet);
                 } else {
-                    $fleet->setPlanet($fleet->getCharacter()->getFirstPlanetFleet());
+                    $fleet->setPlanet($fleet->getCommander()->getFirstPlanetFleet());
                 }
             }
         } else {
@@ -98,7 +98,7 @@ class ConnectController extends AbstractController
             return $this->redirectToRoute('server_select');
         }
 
-        $salon = $em->getRepository('App:Salon')
+        $salon = $doctrine->getRepository(Salon::class)
             ->createQueryBuilder('s')
             ->where('s.name = :name')
             ->andWhere('s.server = :server')
@@ -106,40 +106,40 @@ class ConnectController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        if (!$character->getShip()) {
+        if (!$commander->getShip()) {
             $ships = new Ships();
-            $character->setShip($ships);
-            $ships->setCharacter($character);
+            $commander->setShip($ships);
+            $ships->setCommander($commander);
             $em->persist($ships);
         }
-        $rank = new Rank($character);
+        $rank = new Rank($commander);
         $em->persist($rank);
-        $character->setRank($rank);
-        $character->setDailyConnect($now);
+        $commander->setRank($rank);
+        $commander->setDailyConnect($now);
         $nextZombie = new DateTime();
         $nextZombie->add(new DateInterval('PT' . 144 . 'H'));
-        $character->setZombieAt($nextZombie);
-        $character->setGameOver(null);
-        $salon->removeCharacter($character);
-        $salon->addCharacter($character);
-        foreach ($character->getQuests() as $quest) {
-            $character->removeQuest($quest);
+        $commander->setZombieAt($nextZombie);
+        $commander->setGameOver(null);
+        $salon->removeCommander($commander);
+        $salon->addCommander($commander);
+        foreach ($commander->getQuests() as $quest) {
+            $commander->removeQuest($quest);
         }
-        $questOne = $em->getRepository('App:Quest')->findOneById(2);
-        $questTwo = $em->getRepository('App:Quest')->findOneById(4);
-        $questTree = $em->getRepository('App:Quest')->findOneById(50);
-        $character->addQuest($questOne);
-        $character->addQuest($questTwo);
-        $character->addQuest($questTree);
+        $questOne = $doctrine->getRepository(Quest::class)->findOneById(2);
+        $questTwo = $doctrine->getRepository(Quest::class)->findOneById(4);
+        $questTree = $doctrine->getRepository(Quest::class)->findOneById(50);
+        $commander->addQuest($questOne);
+        $commander->addQuest($questTwo);
+        $commander->addQuest($questTree);
 
         $report = new Report();
         $report->setSendAt($now);
-        $report->setCharacter($character);
-        $report->setTitle("Bienvenu parmis nous "  . $character->getUsername() . " !");
+        $report->setCommander($commander);
+        $report->setTitle("Bienvenu parmis nous "  . $commander->getUsername() . " !");
         $report->setImageName("welcome_report.webp");
         $report->setContent("Une épidémie s'est déclaré sur la Terre et en ce moment même il est fort a parier qu'elle est aux mains des hordes zombies. Vous et quelques autres commandant de vaisseaux spatiaux avez eu la chance de fuir avec un certains nombre de travailleurs/soldats. Remontez notre civilisation et préparez vous, les Zombies ne sont pas arrivés par hasard sur Terre... Bon courage commandant. (Pour recevoir de l'aide : La page Salon ou rendez-vous sur le discord)");
         $em->persist($report);
-        $character->setViewReport(false);
+        $commander->setViewReport(false);
 
         $em->flush();
 
@@ -156,22 +156,22 @@ class ConnectController extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
 
-        $servers = $em->getRepository('App:Server')
+        $servers = $doctrine->getRepository(Server::class)
             ->createQueryBuilder('s')
-            ->leftJoin('s.characters', 'c')
-            ->select('s.id, count(DISTINCT c.id) as characters, s.open, s.pvp, s.name')
+            ->leftJoin('s.commanders', 'c')
+            ->select('s.id, count(DISTINCT c.id) as commanders, s.open, s.pvp, s.name')
             ->groupBy('s.id')
             ->orderBy('s.id', 'ASC')
             ->getQuery()
             ->getResult();
 
-        $galaxys = $em->getRepository('App:Galaxy')
+        $galaxys = $doctrine->getRepository(Galaxy::class)
             ->createQueryBuilder('g')
             ->join('g.server', 'ss')
             ->join('g.sectors', 's')
             ->join('s.planets', 'p')
-            ->leftJoin('p.character', 'c')
-            ->select('g.id, g.position, count(DISTINCT c.id) as characters, ss.id as server')
+            ->leftJoin('p.commander', 'c')
+            ->select('g.id, g.position, count(DISTINCT c.id) as commanders, ss.id as server')
             ->groupBy('g.id')
             ->orderBy('g.position', 'ASC')
             ->getQuery()

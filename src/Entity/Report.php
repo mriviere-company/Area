@@ -22,10 +22,10 @@ class Report
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="reports", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="reports", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\Column(name="title",type="string", length=75)
@@ -148,17 +148,17 @@ class Report
     /**
      * @return mixed
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param mixed $character
+     * @param mixed $commander
      */
-    public function setCharacter($character): void
+    public function setCommander($commander): void
     {
-        $this->character = $character;
+        $this->commander = $commander;
     }
 
     /**

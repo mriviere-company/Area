@@ -16,10 +16,10 @@
                 <div class="pt-2 float-left"><img alt="{{ 'image'|trans({},'front_global') }}" height="32" width="32" src="{{ asset('img/zombie_indic.webp') }}"></div>
                 <div class="float-right">
                     <div class="mt-2">
-                        {{ 'zombie.indic'|trans }} {{ character.getZombieAtt() }}{% if missionEnded %}*{% endif %}
+                        {{ 'zombie.indic'|trans }} {{ commander.getZombieAtt() }}{% if missionEnded %}*{% endif %}
                     </div>
                     <div class="mt-2">
-                        <span class="mt-5 timerArea" hidden>{% if character.getZombieAt() %}{{ character.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span>
+                        <span class="mt-5 timerArea" hidden>{% if commander.getZombieAt() %}{{ commander.getZombieAt()|date('Y/m/d H:i:s') }}{% endif %}</span>
                     </div>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="ml-2">
                     {% if usePlanet.getSignature() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.ships'|trans }}">{% if usePlanet.getSignature() > 1000000 %}({{ (usePlanet.getSignature() / 1000000)|number_format(1) }}M){% elseif usePlanet.getSignature() > 1000 %}({{ (usePlanet.getSignature() / 1000)|number_format }}K){% else %}({{ usePlanet.getSignature()|number_format }}){% endif %} <span class="glyphicon glyphicon-plane"></span></span>{% endif %}
-                    {% if (usePlanet.getCaserne() > 0 or usePlanet.getBunker() > 0) and usePlanet.getLightUsine() > 0 and character.getTank() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.tanks'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/tanks.webp') }}"></span>{% endif %}
+                    {% if (usePlanet.getCaserne() > 0 or usePlanet.getBunker() > 0) and usePlanet.getLightUsine() > 0 and commander.getTank() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.tanks'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/tanks.webp') }}"></span>{% endif %}
                     {% if usePlanet.getCaserne() > 0 or usePlanet.bunker > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.caserne'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/soldier.webp') }}"></span>{% endif %}
                     {% if usePlanet.getCenterSearch() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.scientists'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/scientist.webp') }}"></span>{% endif %}
                     {% if usePlanet.getUranium() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.uranium'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/uranium.webp') }}"></span>{% endif %}
@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="ml-2">
                                     {% if planet.signature > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.ships'|trans }}">{% if planet.signature > 1000000 %}({{ (planet.signature / 1000000)|number_format(1) }}M){% elseif planet.signature > 1000 %}({{ (planet.signature / 1000)|number_format }}K){% else %}({{ planet.signature|number_format }}){% endif %} <span class="glyphicon glyphicon-plane"></span></span>{% endif %}
-                                    {% if (planet.caserne > 0 or planet.bunker > 0) and planet.lightUsine > 0 and character.getTank() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.tanks'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/tanks.webp') }}"></span>{% endif %}
+                                    {% if (planet.caserne > 0 or planet.bunker > 0) and planet.lightUsine > 0 and commander.getTank() > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.tanks'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/tanks.webp') }}"></span>{% endif %}
                                     {% if planet.caserne > 0 or planet.bunker > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.caserne'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="12" src="{{ asset('img/soldier.webp') }}"></span>{% endif %}
                                     {% if planet.centerSearch > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.scientists'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/scientist.webp') }}"></span>{% endif %}
                                     {% if planet.uranium > 0 %}<span data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.uranium'|trans }}"><img alt="{{ 'image'|trans({},'front_global') }}" height="10" src="{{ asset('img/uranium.webp') }}"></span>{% endif %}

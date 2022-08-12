@@ -26,7 +26,7 @@
                 </tbody>
             </table>
         {% endif %}
-        {% if character.getZombie() == 0 %}
+        {% if commander.getZombie() == 0 %}
             <div class="front-block-second">
                 {% if quests %}
                     <div class="mb-4">
@@ -93,25 +93,25 @@
                         {{ 'market.bitcoin'|trans|raw }}
                     </div>
                     <div class="col-2 mb-3">
-                        {{ form_widget(form_market.bitcoin,{attr: { max: character.getRank().getWarPoint() }}) }}
+                        {{ form_widget(form_market.bitcoin,{attr: { max: commander.getRank().getWarPoint() }}) }}
                     </div>
                     <div class="col-4">
                         {{ 'market.worker'|trans|raw }}
                     </div>
                     <div class="col-2">
-                        {{ form_widget(form_market.worker,{attr: { max: character.getRank().getWarPoint() }}) }}
+                        {{ form_widget(form_market.worker,{attr: { max: commander.getRank().getWarPoint() }}) }}
                     </div>
                     <div class="col-4">
                         {{ 'market.soldier'|trans|raw }}
                     </div>
                     <div class="col-2">
-                        {{ form_widget(form_market.soldier,{attr: { max: character.getRank().getWarPoint() }}) }}
+                        {{ form_widget(form_market.soldier,{attr: { max: commander.getRank().getWarPoint() }}) }}
                     </div>
                     <div class="col-12 mt-5">
                         {{ form_widget(form_market.sendForm) }}
                     </div>
                     <div class="col-12 mt-5">
-                        {{ 'market.pdg'|trans }} {{ character.getRank().getWarPoint()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.webp') }}"> {{ 'market.pdgs'|trans }}
+                        {{ 'market.pdg'|trans }} {{ commander.getRank().getWarPoint()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.webp') }}"> {{ 'market.pdgs'|trans }}
                     </div>
                 </div>
                 {{ form_end(form_market) }}

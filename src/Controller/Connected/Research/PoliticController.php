@@ -31,27 +31,27 @@ class PoliticController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getWhichResearch($search) + 1;
-        $characterBt = $character->getBitcoin();
-        $cost = $character->getResearchCost($search);
-        $time = $character->getResearchTime($search);
+        $level = $commander->getWhichResearch($search) + 1;
+        $commanderBt = $commander->getBitcoin();
+        $cost = $commander->getResearchCost($search);
+        $time = $commander->getResearchTime($search);
 
-        if(($characterBt < ($level * $cost)) ||
-            ($level == 6 || $character->getSearchAt() > $now) ||
-            $character->getWhichResearch($search) === 0) {
+        if(($commanderBt < ($level * $cost)) ||
+            ($level == 6 || $commander->getSearchAt() > $now) ||
+            $commander->getWhichResearch($search) === 0) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * $time / $character->getScientistProduction())) . 'S'));
-        $character->setSearch($search);
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * $cost));
+        $now->add(new DateInterval('PT' . round(($level * $time / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch($search);
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * $cost));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);

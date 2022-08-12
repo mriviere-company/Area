@@ -34,37 +34,37 @@ class PlanetController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if($character->getGameOver()) {
+        if($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $otherPoints = $em->getRepository('App:Stats')
+        $otherPoints = $doctrine->getRepository(Stats::class)
             ->createQueryBuilder('s')
-            ->join('s.character', 'c')
+            ->join('s.commander', 'c')
             ->select('count(s) as numbers, sum(DISTINCT s.bitcoin) as allBitcoin')
             ->groupBy('s.date')
             ->andWhere('c.bot = false')
             ->getQuery()
             ->getResult();
 
-        $planetsSeller = $em->getRepository('App:Planet')
+        $planetsSeller = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
-            ->where('p.character = :character')
+            ->where('p.commander = :commander')
             ->andWhere('p.autoSeller = true')
-            ->setParameters(['character' => $character])
+            ->setParameters(['commander' => $commander])
             ->getQuery()
             ->getResult();
 
-        $planetsNoSell = $em->getRepository('App:Planet')
+        $planetsNoSell = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
-            ->where('p.character = :character')
+            ->where('p.commander = :commander')
             ->andWhere('p.autoSeller = false')
-            ->setParameters(['character' => $character])
+            ->setParameters(['commander' => $commander])
             ->getQuery()
             ->getResult();
 
@@ -73,11 +73,11 @@ class PlanetController extends AbstractController
 
         if ($form_manageRenamePlanet->isSubmitted() && $form_manageRenamePlanet->isValid()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $renamePlanet = $em->getRepository('App:Planet')
+            $renamePlanet = $doctrine->getRepository(Planet::class)
                 ->createQueryBuilder('p')
                 ->where('p.id = :id')
-                ->andWhere('p.character = :character')
-                ->setParameters(['id' => $form_manageRenamePlanet->get('id')->getData(), 'character' => $character])
+                ->andWhere('p.commander = :commander')
+                ->setParameters(['id' => $form_manageRenamePlanet->get('id')->getData(), 'commander' => $commander])
                 ->getQuery()
                 ->getOneOrNullResult();
 
@@ -114,36 +114,36 @@ class PlanetController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getMainCharacter();
-        $colonize = $em->getRepository('App:Fleet')->find(['id' => $fleet]);
+        $commander = $user->getMainCommander();
+        $colonize = $doctrine->getRepository(Fleet::class)->find(['id' => $fleet]);
         $newPlanet = $colonize->getPlanet();
 
-        if($colonize->getColonizer() && $newPlanet->getCharacter() == null &&
+        if($colonize->getColonizer() && $newPlanet->getCommander() == null &&
             !$newPlanet->getEmpty() && !$newPlanet->getMerchant() &&
-            !$newPlanet->getCdr() && $colonize->getCharacter()->getColPlanets() < 26 &&
-            $colonize->getCharacter()->getColPlanets() <= ($character->getTerraformation() + 1 + $character->getPoliticColonisation())) {
+            !$newPlanet->getCdr() && $colonize->getCommander()->getColPlanets() < 26 &&
+            $colonize->getCommander()->getColPlanets() <= ($commander->getTerraformation() + 1 + $commander->getPoliticColonisation())) {
 
             $colonize->setColonizer($colonize->getColonizer() - 1);
-            $newPlanet->setCharacter($colonize->getCharacter());
+            $newPlanet->setCommander($colonize->getCommander());
             $newPlanet->setName('Colonie');
             $newPlanet->setSoldier(20);
             $newPlanet->setScientist(0);
-            $newPlanet->setNbColo(count($fleet->getCharacter()->getPlanets()) + 1);
+            $newPlanet->setNbColo(count($fleet->getCommander()->getPlanets()) + 1);
             if($colonize->getNbrShips() == 0) {
                 $em->remove($colonize);
             }
             $reportColo = new Report();
             $reportColo->setSendAt($now);
-            $reportColo->setCharacter($character);
+            $reportColo->setCommander($commander);
             $reportColo->setTitle("Colonisation de planète");
             $reportColo->setImageName("colonize_report.webp");
             $reportColo->setContent("Vous venez de coloniser une planète inhabitée en : (" .  $newPlanet->getSector()->getgalaxy()->getPosition() . "." . $newPlanet->getSector()->getPosition() . "." . $newPlanet->getPosition() . ") . Cette planète fait désormais partie de votre Empire, pensez à la renommer sur la page Planètes.");
-            $character->setViewReport(false);
+            $commander->setViewReport(false);
             $em->persist($reportColo);
-            $quest = $character->checkQuests('colonize');
+            $quest = $commander->checkQuests('colonize');
             if($quest) {
-                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
-                $character->removeQuest($quest);
+                $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());
+                $commander->removeQuest($quest);
             }
             $em->flush();
         }
@@ -162,13 +162,13 @@ class PlanetController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
         
-        if ($usePlanet->getCharacter() != $character || $abandonPlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $abandonPlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $fleetComing = $em->getRepository('App:Fleet')
+        $fleetComing = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->join('f.destination', 'd')
             ->join('d.planet', 'dp')
@@ -178,13 +178,13 @@ class PlanetController extends AbstractController
             ->andWhere('dp.position = :planete')
             ->andWhere('s.position = :sector')
             ->andWhere('g.position = :galaxy')
-            ->andWhere('f.character != :character')
+            ->andWhere('f.commander != :commander')
             ->andWhere('f.attack = true')
-            ->setParameters(['planete' => $abandonPlanet->getPosition(), 'sector' => $abandonPlanet->getSector()->getPosition(), 'galaxy' => $abandonPlanet->getSector()->getGalaxy()->getPosition(), 'character' => $character])
+            ->setParameters(['planete' => $abandonPlanet->getPosition(), 'sector' => $abandonPlanet->getSector()->getPosition(), 'galaxy' => $abandonPlanet->getSector()->getGalaxy()->getPosition(), 'commander' => $commander])
             ->getQuery()
             ->getResult();
 
-        if($abandonPlanet->getFleetsAbandon($character) == 1 || $fleetComing) {
+        if($abandonPlanet->getFleetsAbandon($commander) == 1 || $fleetComing) {
             return $this->redirectToRoute('planet', ['usePlanet' => $usePlanet->getId()]);
         }
 
@@ -192,12 +192,12 @@ class PlanetController extends AbstractController
             if($abandonPlanet->getWorker() < 10000) {
                 $abandonPlanet->setWorker(10000);
             }
-            $abandonPlanet->setCharacter(null);
+            $abandonPlanet->setCommander(null);
             $abandonPlanet->setName('Abandonnée');
         } else {
-            $hydra = $em->getRepository('App:character')->findOneBy(['zombie' => 1]);
+            $hydra = $doctrine->getRepository(Commander::class)->findOneBy(['zombie' => 1]);
 
-            $abandonPlanet->setCharacter($hydra);
+            $abandonPlanet->setCommander($hydra);
             $abandonPlanet->setWorker(125000);
             if ($abandonPlanet->getSoldierMax() >= 500) {
                 $abandonPlanet->setSoldier($abandonPlanet->getSoldierMax());
@@ -212,14 +212,14 @@ class PlanetController extends AbstractController
 
         $em->flush();
 
-        if($character->getColPlanets() == 0) {
-            $hydra = $em->getRepository('App:character')->findOneBy(['zombie' => 1]);
-            foreach ($character->getFleets() as $fleet) {
+        if($commander->getColPlanets() == 0) {
+            $hydra = $doctrine->getRepository(Commander::class)->findOneBy(['zombie' => 1]);
+            foreach ($commander->getFleets() as $fleet) {
                 if($fleet->getFleetList()) {
                     $fleet->getFleetList()->removeFleet($fleet);
                     $fleet->setFleetList(null);
                 }
-                $fleet->setCharacter($hydra);
+                $fleet->setCommander($hydra);
                 $fleet->setName('Incursion H');
                 $fleet->setAttack(true);
             }
@@ -229,7 +229,7 @@ class PlanetController extends AbstractController
             return $this->redirectToRoute('game_over');
         }
         if ($usePlanet === $abandonPlanet) {
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($character);
+            $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($commander);
         }
 
         return $this->redirectToRoute('planet', ['usePlanet' => $usePlanet->getId()]);

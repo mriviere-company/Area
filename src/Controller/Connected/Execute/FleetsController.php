@@ -28,19 +28,19 @@ class FleetsController extends AbstractController
         foreach ($nukeBombs as $nukeBomb) {
             $newHome = $nukeBomb->getDestination()->getPlanet();
 
-            $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($newHome->getCharacter());
+            $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($newHome->getCommander());
             $reportNuclearAtt = new Report();
             $reportNuclearAtt->setType('fight');
             $reportNuclearAtt->setTitle("Votre missile nucléaire a touché sa cible !");
             $reportNuclearAtt->setImageName("nuclear_attack.webp");
             $reportNuclearAtt->setSendAt($now);
-            $reportNuclearAtt->setCharacter($nukeBomb->getCharacter());
+            $reportNuclearAtt->setCommander($nukeBomb->getCommander());
             $reportNuclearDef = new Report();
             $reportNuclearDef->setType('fight');
             $reportNuclearDef->setTitle("Un missile nucléaire vous a frappé !");
             $reportNuclearDef->setImageName("nuclear_attack.webp");
             $reportNuclearDef->setSendAt($now);
-            $reportNuclearDef->setCharacter($newHome->getCharacter());
+            $reportNuclearDef->setCommander($newHome->getCommander());
             $dest = $nukeBomb->getDestination();
             $em->remove($nukeBomb);
             $em->remove($dest);
@@ -51,7 +51,7 @@ class FleetsController extends AbstractController
                 if ($newHome->getWorker() > $newHome->getWorkerMax()) {
                     $newHome->setWorker($newHome->getWorkerMax());
                 }
-                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Une métropole a été détruite, ses terrains et ses espaces sont désormais radioactifs. Il provenait du Dirigeant " . $nukeBomb->getCharacter()->getUsername() . ".");
+                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Une métropole a été détruite, ses terrains et ses espaces sont désormais radioactifs. Il provenait du Dirigeant " . $nukeBomb->getCommander()->getUsername() . ".");
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Une métropole a été détruite.");
             } elseif ($newHome->getCity() > 0) {
                 $newHome->setCity($newHome->getCity() - 1);
@@ -60,7 +60,7 @@ class FleetsController extends AbstractController
                 if ($newHome->getWorker() > $newHome->getWorkerMax()) {
                     $newHome->setWorker($newHome->getWorkerMax());
                 }
-                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Une ville a été détruite, ses terrains sont désormais radioactifs. Il provenait du Dirigeant " . $nukeBomb->getCharacter()->getUsername() . ".");
+                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Une ville a été détruite, ses terrains sont désormais radioactifs. Il provenait du Dirigeant " . $nukeBomb->getCommander()->getUsername() . ".");
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Une ville a été détruite.");
             } elseif ($newHome->getBunker() > 0) {
                 $newHome->setBunker($newHome->getBunker() - 1);
@@ -68,7 +68,7 @@ class FleetsController extends AbstractController
                 if ($newHome->getSoldier() > $newHome->getSoldierMax()) {
                     $newHome->setSoldier($newHome->getSoldierMax());
                 }
-                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Un bunker a été détruit, ses terrains sont désormais radioactifs. Il provenait du Dirigeant " . $nukeBomb->getCharacter()->getUsername() . ".");
+                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span>. Un bunker a été détruit, ses terrains sont désormais radioactifs. Il provenait du Dirigeant " . $nukeBomb->getCommander()->getUsername() . ".");
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Un bunker a été détruit.");
             } elseif ($newHome->getCaserne() > 0) {
                 $newHome->setCaserne($newHome->getCaserne() - 1);
@@ -76,10 +76,10 @@ class FleetsController extends AbstractController
                 if ($newHome->getSoldier() > $newHome->getSoldierMax()) {
                     $newHome->setSoldier($newHome->getSoldierMax());
                 }
-                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span> Une caserne a été détruite, ses terrains sont désormais radioactifs. Il provenait du Dirigeant " . $nukeBomb->getCharacter()->getUsername() . ".");
+                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span> Une caserne a été détruite, ses terrains sont désormais radioactifs. Il provenait du Dirigeant " . $nukeBomb->getCommander()->getUsername() . ".");
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Une caserne a été détruite.");
             } else {
-                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span> Par chance votre planète n'avait aucune infrastructures ciblées. Il provenait du Dirigeant " . $nukeBomb->getCharacter()->getUsername() . ".");
+                $reportNuclearDef->setContent("Un missile vient de frapper votre planète " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $newHome->getPosition() . ")</a></span> Par chance votre planète n'avait aucune infrastructures ciblées. Il provenait du Dirigeant " . $nukeBomb->getCommander()->getUsername() . ".");
                 $reportNuclearAtt->setContent("Votre missile vient de frapper la planète adverse " . $newHome->getName() . " en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getId() ."/" . $newHome->getSector()->getGalaxy()->getId() ."/" . $usePlanet->getId() . "'>(" . $newHome->getSector()->getGalaxy()->getPosition() . "." . $newHome->getSector()->getPosition() . "." . $usePlanet->getPosition() . ")</a></span>. Aucune infrastructure n'a été détruite.");
             }
             $em->persist($reportNuclearAtt);
@@ -104,8 +104,8 @@ class FleetsController extends AbstractController
         $tmpNoCdr = new DateTime();
         $tmpNoCdr->add(new DateInterval('PT' . 300 . 'S'));
         foreach ($fleetCdrs as $fleetCdr) {
-            if ($fleetCdr->getCharacter()->getPoliticRecycleur() > 0) {
-                $recycle = $fleetCdr->getRecycleur() * (50 + ($fleetCdr->getCharacter()->getPoliticRecycleur() * 400));
+            if ($fleetCdr->getCommander()->getPoliticRecycleur() > 0) {
+                $recycle = $fleetCdr->getRecycleur() * (50 + ($fleetCdr->getCommander()->getPoliticRecycleur() * 400));
             } else {
                 $recycle = $fleetCdr->getRecycleur() * 50;
             }
@@ -145,11 +145,11 @@ class FleetsController extends AbstractController
                         $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
                         $reportRec->setImageName("recycle_report.webp");
                         $reportRec->setSendAt($now);
-                        $reportRec->setCharacter($fleetCdr->getCharacter());
-                        $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getCharacter());
-                        $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCharacter()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
+                        $reportRec->setCommander($fleetCdr->getCommander());
+                        $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($fleetCdr->getCommander());
+                        $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCommander()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
                         $em->persist($reportRec);
-                        $fleetCdr->getCharacter()->setViewReport(false);
+                        $fleetCdr->getCommander()->setViewReport(false);
                     }
                 } elseif ($fleetCdr->getCargoPlace() == $fleetCdr->getCargoFull()) {
                     $reportRec = new Report();
@@ -157,11 +157,11 @@ class FleetsController extends AbstractController
                     $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
                     $reportRec->setImageName("recycle_report.webp");
                     $reportRec->setSendAt($now);
-                    $reportRec->setCharacter($fleetCdr->getCharacter());
-                    $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getCharacter());
-                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCharacter()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
+                    $reportRec->setCommander($fleetCdr->getCommander());
+                    $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($fleetCdr->getCommander());
+                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCommander()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
                     $em->persist($reportRec);
-                    $fleetCdr->getCharacter()->setViewReport(false);
+                    $fleetCdr->getCommander()->setViewReport(false);
                     $fleetCdr->setRecycleAt(null);
                 } else {
                     $fleetCdr->setRecycleAt($tmpNoCdr);
@@ -192,11 +192,11 @@ class FleetsController extends AbstractController
                     $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
                     $reportRec->setImageName("recycle_report.webp");
                     $reportRec->setSendAt($now);
-                    $reportRec->setCharacter($fleetCdr->getCharacter());
-                    $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getCharacter());
-                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCharacter()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
+                    $reportRec->setCommander($fleetCdr->getCommander());
+                    $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($fleetCdr->getCommander());
+                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCommander()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
                     $em->persist($reportRec);
-                    $fleetCdr->getCharacter()->setViewReport(false);
+                    $fleetCdr->getCommander()->setViewReport(false);
                     $fleetCdr->setRecycleAt(null);
                 } elseif ($fleetCdr->getCargoPlace() == $fleetCdr->getCargoFull()) {
                     $reportRec = new Report();
@@ -204,20 +204,20 @@ class FleetsController extends AbstractController
                     $reportRec->setTitle("Votre flotte " . $fleetCdr->getName() . " a arrêté de recycler!");
                     $reportRec->setImageName("recycle_report.webp");
                     $reportRec->setSendAt($now);
-                    $reportRec->setCharacter($fleetCdr->getCharacter());
-                    $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($fleetCdr->getCharacter());
-                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCharacter()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
+                    $reportRec->setCommander($fleetCdr->getCommander());
+                    $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($fleetCdr->getCommander());
+                    $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCommander()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
                     $em->persist($reportRec);
-                    $fleetCdr->getCharacter()->setViewReport(false);
+                    $fleetCdr->getCommander()->setViewReport(false);
                     $fleetCdr->setRecycleAt(null);
                 } else {
                     $fleetCdr->setRecycleAt($tmpNoCdr);
                 }
             }
-            $quest = $fleetCdr->getCharacter()->checkQuests('recycle');
+            $quest = $fleetCdr->getCommander()->checkQuests('recycle');
             if($quest) {
-                $fleetCdr->getCharacter()->getRank()->setWarPoint($fleetCdr->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
-                $fleetCdr->getCharacter()->removeQuest($quest);
+                $fleetCdr->getCommander()->getRank()->setWarPoint($fleetCdr->getCommander()->getRank()->getWarPoint() + $quest->getGain());
+                $fleetCdr->getCommander()->removeQuest($quest);
             }
         }
         echo "Flush -> " . count($fleetCdrs) . " ";
@@ -238,7 +238,7 @@ class FleetsController extends AbstractController
         $em = $doctrine->getManager();
 
         $one = new Fleet();
-        $one->setCharacter($demoFleet->getCharacter());
+        $one->setCommander($demoFleet->getCommander());
         $one->setPlanet($demoFleet->getPlanet());
         $one->setName($demoFleet->getName());
         $one->setAttack($demoFleet->getAttack());
@@ -277,7 +277,7 @@ class FleetsController extends AbstractController
             $one->setFood($one->getFood() + $fleetRegroup->getFood());
             $one->setUranium($one->getUranium() + $fleetRegroup->getUranium());
             $one->setNuclearBomb($one->getNuclearBomb() + $fleetRegroup->getNuclearBomb());
-            $fleetRegroup->setCharacter(null);
+            $fleetRegroup->setCommander(null);
             $em->remove($fleetRegroup);
         }
         $one->setSignature($one->getNbrSignatures());

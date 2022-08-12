@@ -6,8 +6,8 @@
 
 {% block body %}
     {#<script type="text/javascript" src="{{ asset('build/flight.js') }}"></script> a remettre plus tard si besoin#}
-    {% if fleet.getCharacter().getId() == character.id or (fleet.getAlly().getId() == ally.id and character.getGrade().getPlacement() == 1) and fleet.fightAt() is null and fleet.flightTime() is null and fleet.getPlanet().getCharacter() == character and fleet.getPlanet().getRadarAt() == null and fleet.getPlanet().getBrouilleurAt() == null %}
-    {% set cargoBonus = 1.2 + (character.getPoliticCargo() / 5) %}
+    {% if fleet.getCommander().getId() == commander.id or (fleet.getAlly().getId() == ally.id and commander.getGrade().getPlacement() == 1) and fleet.fightAt() is null and fleet.flightTime() is null and fleet.getPlanet().getCommander() == commander and fleet.getPlanet().getRadarAt() == null and fleet.getPlanet().getBrouilleurAt() == null %}
+    {% set cargoBonus = 1.2 + (commander.getPoliticCargo() / 5) %}
     {% set multiple = fleet.getMotherShip() > 0 ? 1.1 : 1 %}
         <div class="front-block editFleet">
             {{ form_start(form_spatialShip) }}

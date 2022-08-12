@@ -26,10 +26,10 @@ class Proposal
     protected $ally;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="proposals", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="proposals", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\Column(name="proposalAt",type="datetime")
@@ -39,12 +39,12 @@ class Proposal
     /**
      * Proposal constructor.
      * @param Ally $ally
-     * @param Character $character
+     * @param Commander $commander
      */
-    public function __construct(Ally $ally, Character $character)
+    public function __construct(Ally $ally, Commander $commander)
     {
         $this->ally = $ally;
-        $this->character = $character;
+        $this->commander = $commander;
         $this->proposalAt = new DateTime();
     }
 
@@ -67,17 +67,17 @@ class Proposal
     /**
      * @return mixed
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param mixed $character
+     * @param mixed $commander
      */
-    public function setCharacter($character): void
+    public function setCommander($commander): void
     {
-        $this->character = $character;
+        $this->commander = $commander;
     }
 
     /**

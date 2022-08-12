@@ -23,7 +23,7 @@ tooltip.fleetQuit: 'Ce cadre vous montre les flottes qui sortent de ce secteur.'
 sector.profilUser: 'voir profil'
 sector.manageFleet: gestion
 fleet.combat: 'en combat'
-tooltip.radarInfos: '<h4 class="text-blanc">Radar</h4><br>%character% <br> Radar: %radar% <br> Brouilleur: %brouilleur%'
+tooltip.radarInfos: '<h4 class="text-blanc">Radar</h4><br>%commander% <br> Radar: %radar% <br> Brouilleur: %brouilleur%'
 galaxy.number: Galaxie
 sector.tutorial: 'Sur cette page vous pouvez découvrir les autres planètes de votre secteur ainsi que les flottes en mouvements au dessous. Prenez le temps de regarder les informations de chaque planète inhabitée (en blanc) n''ayant pas déjà un joueur et notez celle avec le plus de terrain. Nous allons la coloniser !<br>Cliquez sur la planète en question puis dans le menu déroulant selectionné la flotte avec le colonisateur puis l''option coloniser et «Envoyer» !!'
 sector.tutorialBis: 'En regardant en dessous de la carte vous pouvez maintenant distinguer votre flotte avec son heure d''arrivée, il n''y a plus qu''a attendre qu''elle arrive ! Nous avons bien le temps de faire un tour sur la page des «Objectifs».'

@@ -19,9 +19,9 @@ class Rank
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Character", mappedBy="rank", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Commander", mappedBy="rank", fetch="EXTRA_LAZY")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\Column(name="warPoint",type="bigint", options={"unsigned":true})
@@ -50,11 +50,11 @@ class Rank
 
     /**
      * Rank constructor.
-     * @param Character $character
+     * @param Commander $commander
      */
-    public function __construct(Character $character)
+    public function __construct(Commander $commander)
     {
-        $this->character = $character;
+        $this->commander = $commander;
         $this->warPoint = 0;
         $this->point = 100;
         $this->oldPoint = 0;
@@ -65,17 +65,17 @@ class Rank
     /**
      * @return mixed
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param mixed $character
+     * @param mixed $commander
      */
-    public function setCharacter($character): void
+    public function setCommander($commander): void
     {
-        $this->character = $character;
+        $this->commander = $commander;
     }
 
     /**

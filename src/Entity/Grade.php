@@ -26,9 +26,9 @@ class Grade
     protected $ally;
 
     /**
-     * @ORM\OneToMany(targetEntity="Character", mappedBy="grade", fetch="EXTRA_LAZY", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Commander", mappedBy="grade", fetch="EXTRA_LAZY", orphanRemoval=true)
      */
-    protected $characters;
+    protected $commanders;
 
     /**
      * @ORM\Column(name="placement",type="smallint", options={"unsigned":true})
@@ -101,7 +101,7 @@ class Grade
         $this->canEdit = $edit;
         $this->seeMembers = $see;
         $this->useFleets = $use;
-        $this->characters = new ArrayCollection();
+        $this->commanders = new ArrayCollection();
     }
 
     /**
@@ -217,43 +217,43 @@ class Grade
     }
 
     /**
-     * Add character
+     * Add commander
      *
-     * @param Character $character
+     * @param Commander $commander
      *
      * @return Grade
      */
-    public function addCharacter(Character $character)
+    public function addCommander(Commander $commander)
     {
-        $this->characters[] = $character;
+        $this->commanders[] = $commander;
 
         return $this;
     }
 
     /**
-     * Remove character
+     * Remove commander
      *
-     * @param Character $character
+     * @param Commander $commander
      */
-    public function removeCharacter(Character $character)
+    public function removeCommander(Commander $commander)
     {
-        $this->characters->removeElement($character);
+        $this->commanders->removeElement($commander);
     }
 
     /**
      * @return mixed
      */
-    public function getCharacters()
+    public function getCommanders()
     {
-        return $this->characters;
+        return $this->commanders;
     }
 
     /**
-     * @param mixed $characters
+     * @param mixed $commanders
      */
-    public function setcharacters($characters): void
+    public function setcommanders($commanders): void
     {
-        $this->characters = $characters;
+        $this->commanders = $commanders;
     }
 
     /**

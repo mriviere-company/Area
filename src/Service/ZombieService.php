@@ -13,16 +13,16 @@ class ZombieService extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getMainCharacter();
+        $commander = $user->getMainCommander();
         $now = new DateTime();
 
-            $mission = $em->getRepository('App:Mission')
+            $mission = $doctrine->getRepository(Mission::class)
                 ->createQueryBuilder('m')
                 ->select('m.id')
-                ->where('m.character = :character')
+                ->where('m.commander = :commander')
                 ->andWhere('m.missionAt < :now')
                 ->andWhere('m.type <= :level')
-                ->setParameters(['character' => $character, 'now' => $now, 'level' => $character->getLevel()])
+                ->setParameters(['commander' => $commander, 'now' => $now, 'level' => $commander->getLevel()])
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();

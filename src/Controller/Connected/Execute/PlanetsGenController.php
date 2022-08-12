@@ -12,20 +12,20 @@ use Symfony\Component\HttpFoundation\Response;
 class PlanetsGenController extends AbstractController
 {
     /**
-     * @param $character
+     * @param $commander
      * @param $seconds
      * @param $now
      * @param $em
      * @return Response
      */
-    public function planetsGenAction($character, $seconds, $now, $em): Response
+    public function planetsGenAction($commander, $seconds, $now, $em): Response
     {
-        if ($character->getPoliticWorker() > 0) {
-            $workerBonus = (1 + ($character->getPoliticWorker() / 5));
+        if ($commander->getPoliticWorker() > 0) {
+            $workerBonus = (1 + ($commander->getPoliticWorker() / 5));
         } else {
             $workerBonus = 1;
         }
-        foreach ($character->getPlanets() as $planet) {
+        foreach ($commander->getPlanets() as $planet) {
             if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and $planet->getMoon()) {
                 $nbProd = ($planet->getNbProduction() * $seconds) / 600;
                 $wtProd = ($planet->getWtProduction() * $seconds) / 600;
@@ -48,11 +48,11 @@ class PlanetsGenController extends AbstractController
                     }
                 }
 
-                if ($character->getAlly()) {
-                    if ($character->getPoliticProd() > 0) {
-                        $niobium = $planet->getNiobium() + ($nbProd * (1.2 + ($character->getPoliticProd() / 14)));
-                        $water = $planet->getWater() + ($wtProd * (1.2 + ($character->getPoliticProd() / 14)));
-                        $food = $planet->getFood() + ($fdProd * (1.2 + ($character->getPoliticProd() / 14)));
+                if ($commander->getAlly()) {
+                    if ($commander->getPoliticProd() > 0) {
+                        $niobium = $planet->getNiobium() + ($nbProd * (1.2 + ($commander->getPoliticProd() / 14)));
+                        $water = $planet->getWater() + ($wtProd * (1.2 + ($commander->getPoliticProd() / 14)));
+                        $food = $planet->getFood() + ($fdProd * (1.2 + ($commander->getPoliticProd() / 14)));
 
                     } else {
                         $niobium = $planet->getNiobium() + ($nbProd * 1.2);
@@ -101,9 +101,9 @@ class PlanetsGenController extends AbstractController
                     }
                 }
 
-                if ($character->getAlly()) {
-                    if ($character->getPoliticProd() > 0) {
-                        $food = $planet->getFood() + ($fdProd * (1.2 + ($character->getPoliticProd() / 14)));
+                if ($commander->getAlly()) {
+                    if ($commander->getPoliticProd() > 0) {
+                        $food = $planet->getFood() + ($fdProd * (1.2 + ($commander->getPoliticProd() / 14)));
 
                     } else {
                         $food = $planet->getFood() + ($fdProd * 1.2);
@@ -120,24 +120,24 @@ class PlanetsGenController extends AbstractController
                 $em->flush($planet);
             }
         }
-        $character->setLastActivity($now);
-        $em->flush($character);
+        $commander->setLastActivity($now);
+        $em->flush($commander);
 
         return new Response (null);
     }
 
     /**
-     * @param $character
+     * @param $commander
      * @param $planet
      * @param $seconds
      * @param $now
      * @param $em
      * @return Response
      */
-    public function planetGenAction($character, $planet, $seconds, $now, $em): Response
+    public function planetGenAction($commander, $planet, $seconds, $now, $em): Response
     {
-        if ($character->getPoliticWorker() > 0) {
-            $workerBonus = (1 + ($character->getPoliticWorker() / 5));
+        if ($commander->getPoliticWorker() > 0) {
+            $workerBonus = (1 + ($commander->getPoliticWorker() / 5));
         } else {
             $workerBonus = 1;
         }
@@ -164,11 +164,11 @@ class PlanetsGenController extends AbstractController
                 }
             }
 
-            if ($character->getAlly()) {
-                if ($character->getPoliticProd() > 0) {
-                    $niobium = $planet->getNiobium() + ($nbProd * (1.2 + ($character->getPoliticProd() / 14)));
-                    $water = $planet->getWater() + ($wtProd * (1.2 + ($character->getPoliticProd() / 14)));
-                    $food = $planet->getFood() + ($fdProd * (1.2 + ($character->getPoliticProd() / 14)));
+            if ($commander->getAlly()) {
+                if ($commander->getPoliticProd() > 0) {
+                    $niobium = $planet->getNiobium() + ($nbProd * (1.2 + ($commander->getPoliticProd() / 14)));
+                    $water = $planet->getWater() + ($wtProd * (1.2 + ($commander->getPoliticProd() / 14)));
+                    $food = $planet->getFood() + ($fdProd * (1.2 + ($commander->getPoliticProd() / 14)));
 
                 } else {
                     $niobium = $planet->getNiobium() + ($nbProd * 1.2);
@@ -217,9 +217,9 @@ class PlanetsGenController extends AbstractController
                 }
             }
 
-            if ($character->getAlly()) {
-                if ($character->getPoliticProd() > 0) {
-                    $food = $planet->getFood() + ($fdProd * (1.2 + ($character->getPoliticProd() / 14)));
+            if ($commander->getAlly()) {
+                if ($commander->getPoliticProd() > 0) {
+                    $food = $planet->getFood() + ($fdProd * (1.2 + ($commander->getPoliticProd() / 14)));
 
                 } else {
                     $food = $planet->getFood() + ($fdProd * 1.2);
@@ -235,8 +235,8 @@ class PlanetsGenController extends AbstractController
             $planet->setLastActivity($now);
             $em->flush($planet);
         }
-        $character->setLastActivity($now);
-        $em->flush($character);
+        $commander->setLastActivity($now);
+        $em->flush($commander);
 
         return new Response (null);
     }

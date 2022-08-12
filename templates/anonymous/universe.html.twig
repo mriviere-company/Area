@@ -13,7 +13,7 @@
                                                     title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}"
                                                     src="{{ asset('img/galaxy.webp') }}"><span
                             class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span
-                            class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.characters|number_format }) }}</span></span></a>
+                            class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.commanders|number_format }) }}</span></span></a>
         {% endfor %}
         <div class="mt-3 galaxy-info text-center">
             {{ 'universe.domination'|trans }}{% for dom in doms %}<span class="ml-3">(<a

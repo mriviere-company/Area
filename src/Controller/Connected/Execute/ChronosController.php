@@ -12,18 +12,18 @@ use Symfony\Component\HttpFoundation\Response;
 class ChronosController extends AbstractController
 {
     /**
-     * @param $character
+     * @param $commander
      * @param $now
      * @param $em
      * @return Response
      */
-    public function userActivityAction($character, $now, $em): Response
+    public function userActivityAction($commander, $now, $em): Response
     {
-        if (!$character->getLastActivity()) {
-            $character->setLastActivity($now);
-            $em->flush($character);
+        if (!$commander->getLastActivity()) {
+            $commander->setLastActivity($now);
+            $em->flush($commander);
         }
-        $seconds = ($now->format('U') - ($character->getLastActivity()->format('U')));
+        $seconds = ($now->format('U') - ($commander->getLastActivity()->format('U')));
 
         return new Response ($seconds);
     }

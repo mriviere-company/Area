@@ -43,23 +43,23 @@ class FleetController  extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
-        $character = $user->getCharacter($server);
+        $commander = $user->getCommander($server);
         $now = new DateTime();
 
-        if($character->getGameOver()) {
+        if($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $fleets = $em->getRepository('App:Fleet')
+        $fleets = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->where('f.flightTime < :now')
             ->andWhere('f.flightType != :six or f.flightType is null')
-            ->andWhere('f.character = :character')
-            ->setParameters(['now' => $now, 'six' => 6, 'character' => $character])
+            ->andWhere('f.commander = :commander')
+            ->setParameters(['now' => $now, 'six' => 6, 'commander' => $commander])
             ->getQuery()
             ->getResult();
 
@@ -71,12 +71,12 @@ class FleetController  extends AbstractController
             ]);
         }
 
-        $products = $em->getRepository('App:Product')
+        $products = $doctrine->getRepository(Product::class)
             ->createQueryBuilder('p')
             ->join('p.planet', 'pp')
             ->where('p.productAt < :now')
-            ->andWhere('pp.character = :character')
-            ->setParameters(['now' => $now, 'character' => $character])
+            ->andWhere('pp.commander = :commander')
+            ->setParameters(['now' => $now, 'commander' => $commander])
             ->getQuery()
             ->getResult();
 
@@ -87,45 +87,45 @@ class FleetController  extends AbstractController
             ]);
         }
 
-        $fleetGiveMove = $em->getRepository('App:Fleet')
+        $fleetGiveMove = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
-            ->where('f.character = :character')
+            ->where('f.commander = :commander')
             ->andWhere('f.flightTime is not null')
-            ->setParameters(['character' => $character])
+            ->setParameters(['commander' => $commander])
             ->orderBy('f.flightTime')
             ->getQuery()
             ->getResult();
 
-        $fleetUsePlanet = $em->getRepository('App:Fleet')
+        $fleetUsePlanet = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->andWhere('f.flightTime is null')
             ->andWhere('f.planet = :planet')
             ->setParameters(['planet' => $usePlanet])
-            ->orderBy('f.character')
+            ->orderBy('f.commander')
             ->getQuery()
             ->getResult();
 
-        $fleetPlanets = $em->getRepository('App:Fleet')
+        $fleetPlanets = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->join('f.planet', 'p')
             ->join('p.sector', 's')
-            ->where('f.character = :character')
+            ->where('f.commander = :commander')
             ->andWhere('f.flightTime is null')
             ->andWhere('f.planet != :planet')
             ->andWhere('f.planet in (:planets)')
-            ->setParameters(['character' => $character, 'planet' => $usePlanet, 'planets' => $character->getPlanets()])
+            ->setParameters(['commander' => $commander, 'planet' => $usePlanet, 'planets' => $commander->getPlanets()])
             ->orderBy('s.position, p.position')
             ->getQuery()
             ->getResult();
 
-        $fleetOther = $em->getRepository('App:Fleet')
+        $fleetOther = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->join('f.planet', 'p')
             ->join('p.sector', 's')
-            ->where('f.character = :character')
+            ->where('f.commander = :commander')
             ->andWhere('f.flightTime is null')
             ->andWhere('f.planet not in (:planets)')
-            ->setParameters(['character' => $character, 'planets' => $character->getPlanets()])
+            ->setParameters(['commander' => $commander, 'planets' => $commander->getPlanets()])
             ->orderBy('s.position, p.position')
             ->getQuery()
             ->getResult();
@@ -155,13 +155,13 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if($character->getGameOver()) {
+        if($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -171,17 +171,17 @@ class FleetController  extends AbstractController
 
         if ($form_listCreate->isSubmitted()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            if(count($character->getFleetLists()) >= 10) {
+            if(count($commander->getFleetLists()) >= 10) {
                 $this->addFlash("fail", "Vous avez atteint la limite (10) de Cohortes autorisées par l'Instance.");
                 return $this->redirectToRoute('fleet_list', ['usePlanet' => $usePlanet->getId()]);
             }
 
-            $fleetList = new Fleet_List($character, $form_listCreate->get('name')->getData(), $form_listCreate->get('priority')->getData());
+            $fleetList = new Fleet_List($commander, $form_listCreate->get('name')->getData(), $form_listCreate->get('priority')->getData());
             $em->persist($fleetList);
-            $quest = $character->checkQuests('cohort');
+            $quest = $commander->checkQuests('cohort');
             if($quest) {
-                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
-                $character->removeQuest($quest);
+                $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());
+                $commander->removeQuest($quest);
             }
             if(($user->getTutorial() == 12)) {
                 $user->setTutorial(13);
@@ -189,10 +189,10 @@ class FleetController  extends AbstractController
             $em->flush();
         }
 
-        $fleetLists = $em->getRepository('App:Fleet_List')
+        $fleetLists = $doctrine->getRepository(Fleet_List::class)
             ->createQueryBuilder('f')
-            ->where('f.character = :character')
-            ->setParameters(['character' => $character])
+            ->where('f.commander = :commander')
+            ->setParameters(['commander' => $commander])
             ->orderBy('f.priority')
             ->getQuery()
             ->getResult();
@@ -221,17 +221,17 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        if($character->getGameOver()) {
+        if($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
-        if($character == $fleetList->getCharacter()) {
+        if($commander == $fleetList->getCommander()) {
             $fleetList->addFleet($fleet);
             $fleet->setFleetList($fleetList);
             if(($user->getTutorial() == 13)) {
@@ -255,17 +255,17 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        if ($character->getGameOver()) {
+        if ($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
-        if ($character == $fleetList->getCharacter()) {
+        if ($commander == $fleetList->getCommander()) {
             $fleetList->removeFleet($fleet);
             $fleet->setFleetList(null);
             $em->flush();
@@ -285,17 +285,17 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        if ($character->getGameOver()) {
+        if ($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
-        if ($character == $fleetList->getCharacter()) {
+        if ($commander == $fleetList->getCommander()) {
             foreach($fleetList->getFleets() as $fleet) {
                 $fleetList->removeFleet($fleet);
                 $fleet->setFleetList(null);
@@ -318,19 +318,19 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        if ($character->getGameOver()) {
+        if ($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
-        if ($character == $fleet->getCharacter() && $character->getAlly()) {
-            if (count($character->getAlly()->getFleets()) < round(count($character->getAlly()->getCharacters()) / 2)) {
-                $fleet->setAlly($character->getAlly());
+        if ($commander == $fleet->getCommander() && $commander->getAlly()) {
+            if (count($commander->getAlly()->getFleets()) < round(count($commander->getAlly()->getCommanders()) / 2)) {
+                $fleet->setAlly($commander->getAlly());
                 $em->flush();
             }
         }
@@ -349,17 +349,17 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        if ($character->getGameOver()) {
+        if ($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
 
-        if ($character == $fleet->getCharacter() && $character->getAlly()) {
+        if ($commander == $fleet->getCommander() && $commander->getAlly()) {
             $fleet->setAlly(null);
             $em->flush();
         }
@@ -381,13 +381,13 @@ class FleetController  extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
-        $character = $user->getCharacter($server);
+        $commander = $user->getCommander($server);
         $now = new DateTime();
 
-        if ($usePlanet->getCharacter() != $character || $fleetGive->getCharacter() != $character) {
-            if (!$character->getAlly()) {
+        if ($usePlanet->getCommander() != $commander || $fleetGive->getCommander() != $commander) {
+            if (!$commander->getAlly()) {
                 return $this->redirectToRoute('home');
-            } elseif ($character->getGrade()->getPlacement() != 1 || $fleetGive->getCharacter()->getAlly() != $character->getAlly()) {
+            } elseif ($commander->getGrade()->getPlacement() != 1 || $fleetGive->getCommander()->getAlly() != $commander->getAlly()) {
                 return $this->redirectToRoute('home');
             }
         }
@@ -464,7 +464,7 @@ class FleetController  extends AbstractController
         $form_manageAttackFleet = $this->createForm(FleetAttackType::class, $fleetGive);
         $form_manageAttackFleet->handleRequest($request);
 
-        $form_sendFleet = $this->createForm(FleetSendType::class, null, ["character" => $character->getId()]);
+        $form_sendFleet = $this->createForm(FleetSendType::class, null, ["commander" => $commander->getId()]);
         $form_sendFleet->handleRequest($request);
 
         if(!$fleetGive || !$usePlanet) {
@@ -501,7 +501,7 @@ class FleetController  extends AbstractController
                 }
                 $fleetGive->setAttack($request->get('data'));
 
-                $eAlly = $character->getAllyEnnemy();
+                $eAlly = $commander->getAllyEnnemy();
                 $warAlly = [];
                 $x = 0;
                 foreach ($eAlly as $tmp) {
@@ -509,7 +509,7 @@ class FleetController  extends AbstractController
                     $x++;
                 }
 
-                $fAlly = $character->getAllyFriends();
+                $fAlly = $commander->getAllyFriends();
                 $friendAlly = [];
                 $x = 0;
                 foreach ($fAlly as $tmp) {
@@ -522,33 +522,33 @@ class FleetController  extends AbstractController
                     $friendAlly = ['impossible', 'personne'];
                 }
 
-                if($character->getAlly()) {
-                    $allyF = $character->getAlly();
+                if($commander->getAlly()) {
+                    $allyF = $commander->getAlly();
                 } else {
                     $allyF = 'wedontexistsok';
                 }
 
-                $fleets = $em->getRepository('App:Fleet')
+                $fleets = $doctrine->getRepository(Fleet::class)
                     ->createQueryBuilder('f')
-                    ->join('f.character', 'c')
+                    ->join('f.commander', 'c')
                     ->leftJoin('c.ally', 'a')
                     ->where('f.planet = :planet')
                     ->andWhere('f.attack = true OR a.sigle in (:ally)')
-                    ->andWhere('f.character != :character')
+                    ->andWhere('f.commander != :commander')
                     ->andWhere('f.flightTime is null')
                     ->andWhere('c.ally is null OR a.sigle not in (:friend)')
                     ->andWhere('c.ally is null OR c.ally != :myAlly')
-                    ->setParameters(['planet' => $usePlanet, 'ally' => $warAlly, 'character' => $character, 'friend' => $friendAlly, 'myAlly' => $allyF])
+                    ->setParameters(['planet' => $usePlanet, 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
                     ->getQuery()
                     ->getResult();
 
-                $fleetFight = $em->getRepository('App:Fleet')
+                $fleetFight = $doctrine->getRepository(Fleet::class)
                     ->createQueryBuilder('f')
                     ->where('f.planet = :planet')
-                    ->andWhere('f.character != :character')
+                    ->andWhere('f.commander != :commander')
                     ->andWhere('f.fightAt is not null')
                     ->andWhere('f.flightTime is null')
-                    ->setParameters(['planet' => $usePlanet, 'character' => $character])
+                    ->setParameters(['planet' => $usePlanet, 'commander' => $commander])
                     ->getQuery()
                     ->setMaxResults(1)
                     ->getOneOrNullResult();
@@ -557,13 +557,13 @@ class FleetController  extends AbstractController
                     $fleetGive->setFightAt($fleetFight->getFightAt());
                 } elseif ($fleets) {
                     foreach ($fleets as $setWar) {
-                        if($setWar->getCharacter()->getAlly()) {
+                        if($setWar->getCommander()->getAlly()) {
                             $fleetArm = $fleetGive->getMissile() + $fleetGive->getLaser() + $fleetGive->getPlasma();
                             if($fleetArm > 0) {
                                 $fleetGive->setAttack(1);
                             }
                             foreach ($eAlly as $tmp) {
-                                if ($setWar->getCharacter()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                                if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
                                     $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                                     if($fleetArm > 0) {
                                         $setWar->setAttack(1);
@@ -572,7 +572,7 @@ class FleetController  extends AbstractController
                             }
                         }
                     }
-                    $allFleets = $em->getRepository('App:Fleet')
+                    $allFleets = $doctrine->getRepository(Fleet::class)
                         ->createQueryBuilder('f')
                         ->where('f.planet = :planet')
                         ->andWhere('f.flightTime is null')
@@ -774,12 +774,12 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $fleetGive->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleetGive->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
-        $eAlly = $character->getAllyEnnemy();
+        $eAlly = $commander->getAllyEnnemy();
         $warAlly = [];
         $x = 0;
         foreach ($eAlly as $tmp) {
@@ -787,7 +787,7 @@ class FleetController  extends AbstractController
             $x++;
         }
 
-        $fAlly = $character->getAllyFriends();
+        $fAlly = $commander->getAllyFriends();
         $friendAlly = [];
         $x = 0;
         foreach ($fAlly as $tmp) {
@@ -800,33 +800,33 @@ class FleetController  extends AbstractController
             $friendAlly = ['impossible', 'personne'];
         }
 
-        if($character->getAlly()) {
-            $allyF = $character->getAlly();
+        if($commander->getAlly()) {
+            $allyF = $commander->getAlly();
         } else {
             $allyF = 'wedontexistsok';
         }
 
-        $fleets = $em->getRepository('App:Fleet')
+        $fleets = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
-            ->join('f.character', 'c')
+            ->join('f.commander', 'c')
             ->leftJoin('c.ally', 'a')
             ->where('f.planet = :planet')
             ->andWhere('f.attack = true OR a.sigle in (:ally)')
-            ->andWhere('f.character != :character')
+            ->andWhere('f.commander != :commander')
             ->andWhere('f.flightTime is null')
             ->andWhere('c.ally is null OR a.sigle not in (:friend)')
             ->andWhere('c.ally is null OR c.ally != :myAlly')
-            ->setParameters(['planet' => $fleetGive->getPlanet(), 'ally' => $warAlly, 'character' => $character, 'friend' => $friendAlly, 'myAlly' => $allyF])
+            ->setParameters(['planet' => $fleetGive->getPlanet(), 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
             ->getQuery()
             ->getResult();
 
-        $fleetFight = $em->getRepository('App:Fleet')
+        $fleetFight = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->where('f.planet = :planet')
-            ->andWhere('f.character != :character')
+            ->andWhere('f.commander != :commander')
             ->andWhere('f.fightAt is not null')
             ->andWhere('f.flightTime is null')
-            ->setParameters(['planet' => $fleetGive->getPlanet(), 'character' => $character])
+            ->setParameters(['planet' => $fleetGive->getPlanet(), 'commander' => $commander])
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
@@ -835,13 +835,13 @@ class FleetController  extends AbstractController
             $fleetGive->setFightAt($fleetFight->getFightAt());
         } elseif ($fleets) {
             foreach ($fleets as $setWar) {
-                if($setWar->getCharacter()->getAlly()) {
+                if($setWar->getCommander()->getAlly()) {
                     $fleetArm = $fleetGive->getMissile() + $fleetGive->getLaser() + $fleetGive->getPlasma();
                     if($fleetArm > 0) {
                         $fleetGive->setAttack(1);
                     }
                     foreach ($eAlly as $tmp) {
-                        if ($setWar->getCharacter()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                        if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
                             $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                             if($fleetArm > 0) {
                                 $setWar->setAttack(1);
@@ -850,7 +850,7 @@ class FleetController  extends AbstractController
                     }
                 }
             }
-            $allFleets = $em->getRepository('App:Fleet')
+            $allFleets = $doctrine->getRepository(Fleet::class)
                 ->createQueryBuilder('f')
                 ->where('f.planet = :planet')
                 ->andWhere('f.flightTime is null')
@@ -936,12 +936,12 @@ class FleetController  extends AbstractController
         $now = new DateTime();
         $moreNow = new DateTime();
         $moreNow->add(new DateInterval('PT' . 120 . 'S'));
-        $character = $user->getCharacter($server);
+        $commander = $user->getCommander($server);
 
-        if ($usePlanet->getCharacter() != $character || $fleetGive->getCharacter() != $character) {
-            if (!$character->getAlly()) {
+        if ($usePlanet->getCommander() != $commander || $fleetGive->getCommander() != $commander) {
+            if (!$commander->getAlly()) {
                 return $this->redirectToRoute('home');
-            } elseif ($character->getGrade()->getPlacement() != 1 || $fleetGive->getCharacter()->getAlly() != $character->getAlly()) {
+            } elseif ($commander->getGrade()->getPlacement() != 1 || $fleetGive->getCommander()->getAlly() != $commander->getAlly()) {
                 return $this->redirectToRoute('home');
             }
         }
@@ -951,7 +951,7 @@ class FleetController  extends AbstractController
             $em->flush();
         }
 
-        $form_sendFleet = $this->createForm(FleetSendType::class, null, ["character" => $character->getId()]);
+        $form_sendFleet = $this->createForm(FleetSendType::class, null, ["commander" => $commander->getId()]);
         $form_sendFleet->handleRequest($request);
 
         if($fleetGive && $usePlanet) {
@@ -960,7 +960,7 @@ class FleetController  extends AbstractController
         }
         if ($form_sendFleet->isSubmitted() && $form_sendFleet->isValid()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $sectorDestroy = $em->getRepository('App:Sector')
+            $sectorDestroy = $doctrine->getRepository(Sector::class)
                 ->createQueryBuilder('s')
                 ->where('s.position = :sector')
                 ->andWhere('s.destroy = true')
@@ -981,7 +981,7 @@ class FleetController  extends AbstractController
                     return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
                 }
             } else {
-                if($character->getHyperespace() == 1) {
+                if($commander->getHyperespace() == 1) {
                     $galaxy = $form_sendFleet->get('galaxy')->getData();
                 } else {
                     $galaxy = $fleetGive->getPlanet()->getSector()->getGalaxy()->getPosition();
@@ -993,7 +993,7 @@ class FleetController  extends AbstractController
                     return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
                 }
 
-                $planetTake = $em->getRepository('App:Planet')
+                $planetTake = $doctrine->getRepository(Planet::class)
                     ->createQueryBuilder('p')
                     ->join('p.sector', 's')
                     ->join('s.galaxy', 'g')
@@ -1029,7 +1029,7 @@ class FleetController  extends AbstractController
                 $price = $base / 3;
             }
             $carburant = round($price * ($fleetGive->getNbrSignatures() / 200));
-            if($carburant > $character->getBitcoin()) {
+            if($carburant > $commander->getBitcoin()) {
                 return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
             }
             if($fleetGive->getMotherShip()) {
@@ -1044,13 +1044,13 @@ class FleetController  extends AbstractController
             $fleetGive->setFlightTime($now);
             $fleetGive->setCancelFlight($moreNow);
             $fleetGive->setSignature($fleetGive->getNbrSignatures());
-            if($form_sendFleet->get('flightType')->getData() == '2' && ($planetTake->getCharacter() || $planetTake->getMerchant(
+            if($form_sendFleet->get('flightType')->getData() == '2' && ($planetTake->getCommander() || $planetTake->getMerchant(
                     ))) {
                 $fleetGive->setFlightType(2);
                 $carburant = $carburant * 2;
             }
-            if($form_sendFleet->get('flightType')->getData() == '3' && ($planetTake->getCharacter() || $fleetGive->getColonizer() == 0 || $fleetGive->getColonizer() == null)) {
-                if($planetTake->getCharacter()) {
+            if($form_sendFleet->get('flightType')->getData() == '3' && ($planetTake->getCommander() || $fleetGive->getColonizer() == 0 || $fleetGive->getColonizer() == null)) {
+                if($planetTake->getCommander()) {
                     $this->addFlash("fail", "Cette planète a déjà un occupant.");
                 }
                 if($fleetGive->getColonizer() == 0 || $fleetGive->getColonizer() == null) {
@@ -1060,9 +1060,9 @@ class FleetController  extends AbstractController
             }
 
             if(($form_sendFleet->get('flightType')->getData() == '4' || $form_sendFleet->get('flightType')->getData() == '5') &&
-                (!$planetTake->getCharacter() || $fleetGive->getSoldier() == 0 || $fleetGive->getBarge() == 0 || $fleetGive->getSoldier() == null
+                (!$planetTake->getCommander() || $fleetGive->getSoldier() == 0 || $fleetGive->getBarge() == 0 || $fleetGive->getSoldier() == null
                 || $fleetGive->getBarge() == null)) {
-                if(!$planetTake->getCharacter()) {
+                if(!$planetTake->getCommander()) {
                     $this->addFlash("fail", "Cette planète est inoccupée.");
                 }
                 if($fleetGive->getSoldier() == 0 || $fleetGive->getSoldier() == null) {
@@ -1075,7 +1075,7 @@ class FleetController  extends AbstractController
             }
 
             $fleetGive->setFlightType($form_sendFleet->get('flightType')->getData());
-            $character->setBitcoin($character->getBitcoin() - $carburant);
+            $commander->setBitcoin($commander->getBitcoin() - $carburant);
 
             $em->flush();
         }
@@ -1095,13 +1095,13 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $fleetGive->getCharacter() != $user || $fleetTake->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleetGive->getCommander() != $user || $fleetTake->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $eAlly = $character->getAllyEnnemy();
+        $eAlly = $commander->getAllyEnnemy();
         $warAlly = [];
         $x = 0;
         foreach ($eAlly as $tmp) {
@@ -1109,7 +1109,7 @@ class FleetController  extends AbstractController
             $x++;
         }
 
-        $fAlly = $character->getAllyFriends();
+        $fAlly = $commander->getAllyFriends();
         $friendAlly = [];
         $x = 0;
         foreach ($fAlly as $tmp) {
@@ -1122,33 +1122,33 @@ class FleetController  extends AbstractController
             $friendAlly = ['impossible', 'personne'];
         }
 
-        if($character->getAlly()) {
-            $allyF = $character->getAlly();
+        if($commander->getAlly()) {
+            $allyF = $commander->getAlly();
         } else {
             $allyF = 'wedontexistsok';
         }
 
-        $fleets = $em->getRepository('App:Fleet')
+        $fleets = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
-            ->join('f.character', 'c')
+            ->join('f.commander', 'c')
             ->leftJoin('c.ally', 'a')
             ->where('f.planet = :planet')
             ->andWhere('f.attack = true OR a.sigle in (:ally)')
-            ->andWhere('f.character != :character')
+            ->andWhere('f.commander != :commander')
             ->andWhere('f.flightTime is null')
             ->andWhere('c.ally is null OR a.sigle not in (:friend)')
             ->andWhere('c.ally is null OR c.ally != :myAlly')
-            ->setParameters(['planet' => $fleetGive->getPlanet(), 'ally' => $warAlly, 'character' => $character, 'friend' => $friendAlly, 'myAlly' => $allyF])
+            ->setParameters(['planet' => $fleetGive->getPlanet(), 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
             ->getQuery()
             ->getResult();
 
-        $fleetFight = $em->getRepository('App:Fleet')
+        $fleetFight = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->where('f.planet = :planet')
-            ->andWhere('f.character != :character')
+            ->andWhere('f.commander != :commander')
             ->andWhere('f.fightAt is not null')
             ->andWhere('f.flightTime is null')
-            ->setParameters(['planet' => $fleetGive->getPlanet(), 'character' => $character])
+            ->setParameters(['planet' => $fleetGive->getPlanet(), 'commander' => $commander])
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
@@ -1157,13 +1157,13 @@ class FleetController  extends AbstractController
             $fleetGive->setFightAt($fleetFight->getFightAt());
         } elseif ($fleets) {
             foreach ($fleets as $setWar) {
-                if($setWar->getCharacter()->getAlly()) {
+                if($setWar->getCommander()->getAlly()) {
                     $fleetArm = $fleetGive->getMissile() + $fleetGive->getLaser() + $fleetGive->getPlasma();
                     if($fleetArm > 0) {
                         $fleetGive->setAttack(1);
                     }
                     foreach ($eAlly as $tmp) {
-                        if ($setWar->getCharacter()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                        if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
                             $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                             if($fleetArm > 0) {
                                 $setWar->setAttack(1);
@@ -1172,7 +1172,7 @@ class FleetController  extends AbstractController
                     }
                 }
             }
-            $allFleets = $em->getRepository('App:Fleet')
+            $allFleets = $doctrine->getRepository(Fleet::class)
                 ->createQueryBuilder('f')
                 ->where('f.planet = :planet')
                 ->andWhere('f.flightTime is null')
@@ -1245,13 +1245,13 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $eAlly = $character->getAllyEnnemy();
+        $eAlly = $commander->getAllyEnnemy();
         $warAlly = [];
         $x = 0;
         foreach ($eAlly as $tmp) {
@@ -1259,7 +1259,7 @@ class FleetController  extends AbstractController
             $x++;
         }
 
-        $fAlly = $character->getAllyFriends();
+        $fAlly = $commander->getAllyFriends();
         $friendAlly = [];
         $x = 0;
         foreach ($fAlly as $tmp) {
@@ -1272,33 +1272,33 @@ class FleetController  extends AbstractController
             $friendAlly = ['impossible', 'personne'];
         }
 
-        if($character->getAlly()) {
-            $allyF = $character->getAlly();
+        if($commander->getAlly()) {
+            $allyF = $commander->getAlly();
         } else {
             $allyF = 'wedontexistsok';
         }
 
-        $fleets = $em->getRepository('App:Fleet')
+        $fleets = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
-            ->join('f.character', 'c')
+            ->join('f.commander', 'c')
             ->leftJoin('c.ally', 'a')
             ->where('f.planet = :planet')
             ->andWhere('f.attack = true OR a.sigle in (:ally)')
-            ->andWhere('f.character != :character')
+            ->andWhere('f.commander != :commander')
             ->andWhere('f.flightTime is null')
             ->andWhere('c.ally is null OR a.sigle not in (:friend)')
             ->andWhere('c.ally is null OR c.ally != :myAlly')
-            ->setParameters(['planet' => $fleet->getPlanet(), 'ally' => $warAlly, 'character' => $character, 'friend' => $friendAlly, 'myAlly' => $allyF])
+            ->setParameters(['planet' => $fleet->getPlanet(), 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
             ->getQuery()
             ->getResult();
 
-        $fleetFight = $em->getRepository('App:Fleet')
+        $fleetFight = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->where('f.planet = :planet')
-            ->andWhere('f.character != :character')
+            ->andWhere('f.commander != :commander')
             ->andWhere('f.fightAt is not null')
             ->andWhere('f.flightTime is null')
-            ->setParameters(['planet' => $fleet->getPlanet(), 'character' => $character])
+            ->setParameters(['planet' => $fleet->getPlanet(), 'commander' => $commander])
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
@@ -1307,13 +1307,13 @@ class FleetController  extends AbstractController
             $fleet->setFightAt($fleetFight->getFightAt());
         } elseif ($fleets) {
             foreach ($fleets as $setWar) {
-                if($setWar->getCharacter()->getAlly()) {
+                if($setWar->getCommander()->getAlly()) {
                     $fleetArm = $fleet->getMissile() + $fleet->getLaser() + $fleet->getPlasma();
                     if($fleetArm > 0) {
                         $fleet->setAttack(1);
                     }
                     foreach ($eAlly as $tmp) {
-                        if ($setWar->getCharacter()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                        if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
                             $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                             if($fleetArm > 0) {
                                 $setWar->setAttack(1);
@@ -1322,7 +1322,7 @@ class FleetController  extends AbstractController
                     }
                 }
             }
-            $allFleets = $em->getRepository('App:Fleet')
+            $allFleets = $doctrine->getRepository(Fleet::class)
                 ->createQueryBuilder('f')
                 ->where('f.planet = :planet')
                 ->andWhere('f.flightTime is null')
@@ -1612,13 +1612,13 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $oldFleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $oldFleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $eAlly = $character->getAllyEnnemy();
+        $eAlly = $commander->getAllyEnnemy();
         $warAlly = [];
         $x = 0;
         foreach ($eAlly as $tmp) {
@@ -1626,7 +1626,7 @@ class FleetController  extends AbstractController
             $x++;
         }
 
-        $fAlly = $character->getAllyFriends();
+        $fAlly = $commander->getAllyFriends();
         $friendAlly = [];
         $x = 0;
         foreach ($fAlly as $tmp) {
@@ -1639,33 +1639,33 @@ class FleetController  extends AbstractController
             $friendAlly = ['impossible', 'personne'];
         }
 
-        if($character->getAlly()) {
-            $allyF = $character->getAlly();
+        if($commander->getAlly()) {
+            $allyF = $commander->getAlly();
         } else {
             $allyF = 'wedontexistsok';
         }
 
-        $fleets = $em->getRepository('App:Fleet')
+        $fleets = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
-            ->join('f.character', 'c')
+            ->join('f.commander', 'c')
             ->leftJoin('c.ally', 'a')
             ->where('f.planet = :planet')
             ->andWhere('f.attack = true OR a.sigle in (:ally)')
-            ->andWhere('f.character != :character')
+            ->andWhere('f.commander != :commander')
             ->andWhere('f.flightTime is null')
             ->andWhere('c.ally is null OR a.sigle not in (:friend)')
             ->andWhere('c.ally is null OR c.ally != :myAlly')
-            ->setParameters(['planet' => $oldFleet->getPlanet(), 'ally' => $warAlly, 'character' => $character, 'friend' => $friendAlly, 'myAlly' => $allyF])
+            ->setParameters(['planet' => $oldFleet->getPlanet(), 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
             ->getQuery()
             ->getResult();
 
-        $fleetFight = $em->getRepository('App:Fleet')
+        $fleetFight = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->where('f.planet = :planet')
-            ->andWhere('f.character != :character')
+            ->andWhere('f.commander != :commander')
             ->andWhere('f.fightAt is not null')
             ->andWhere('f.flightTime is null')
-            ->setParameters(['planet' => $oldFleet->getPlanet(), 'character' => $character])
+            ->setParameters(['planet' => $oldFleet->getPlanet(), 'commander' => $commander])
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
@@ -1674,13 +1674,13 @@ class FleetController  extends AbstractController
             $oldFleet->setFightAt($fleetFight->getFightAt());
         } elseif ($fleets) {
             foreach ($fleets as $setWar) {
-                if($setWar->getCharacter()->getAlly()) {
+                if($setWar->getCommander()->getAlly()) {
                     $fleetArm = $oldFleet->getMissile() + $oldFleet->getLaser() + $oldFleet->getPlasma();
                     if($fleetArm > 0) {
                         $oldFleet->setAttack(1);
                     }
                     foreach ($eAlly as $tmp) {
-                        if ($setWar->getCharacter()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                        if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
                             $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                             if($fleetArm > 0) {
                                 $setWar->setAttack(1);
@@ -1689,7 +1689,7 @@ class FleetController  extends AbstractController
                     }
                 }
             }
-            $allFleets = $em->getRepository('App:Fleet')
+            $allFleets = $doctrine->getRepository(Fleet::class)
                 ->createQueryBuilder('f')
                 ->where('f.planet = :planet')
                 ->andWhere('f.flightTime is null')
@@ -1710,7 +1710,7 @@ class FleetController  extends AbstractController
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $oldFleet->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
 
-        if(count($character->getFleets()) >= 100) {
+        if(count($commander->getFleets()) >= 100) {
             $this->addFlash("fail", "Vous avez atteint la limite (100) de flottes autorisées par l'Instance.");
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $oldFleet->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
@@ -1792,7 +1792,7 @@ class FleetController  extends AbstractController
             $fleet->setWorker($form_spatialShip->get('worker')->getData());
             $fleet->setScientist($form_spatialShip->get('scientist')->getData());
             $fleet->setSignature($fleet->getNbrSignatures());
-            $fleet->setCharacter($character);
+            $fleet->setCommander($commander);
             $fleet->setPlanet($oldFleet->getPlanet());
             if ($form_spatialShip->get('name')->getData()) {
                 $fleet->setName($form_spatialShip->get('name')->getData());
@@ -1859,10 +1859,10 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
 
-        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -1871,7 +1871,7 @@ class FleetController  extends AbstractController
             $fleet->setCancelFlight(null);
             $em->remove($fleet->getDestination());
 
-            $eAlly = $character->getAllyEnnemy();
+            $eAlly = $commander->getAllyEnnemy();
             $warAlly = [];
             $x = 0;
             foreach ($eAlly as $tmp) {
@@ -1879,7 +1879,7 @@ class FleetController  extends AbstractController
                 $x++;
             }
 
-            $fAlly = $character->getAllyFriends();
+            $fAlly = $commander->getAllyFriends();
             $friendAlly = [];
             $x = 0;
             foreach ($fAlly as $tmp) {
@@ -1892,33 +1892,33 @@ class FleetController  extends AbstractController
                 $friendAlly = ['impossible', 'personne'];
             }
 
-            if($character->getAlly()) {
-                $allyF = $character->getAlly();
+            if($commander->getAlly()) {
+                $allyF = $commander->getAlly();
             } else {
                 $allyF = 'wedontexistsok';
             }
 
-            $fleets = $em->getRepository('App:Fleet')
+            $fleets = $doctrine->getRepository(Fleet::class)
                 ->createQueryBuilder('f')
-                ->join('f.character', 'c')
+                ->join('f.commander', 'c')
                 ->leftJoin('c.ally', 'a')
                 ->where('f.planet = :planet')
                 ->andWhere('f.attack = true OR a.sigle in (:ally)')
-                ->andWhere('f.character != :character')
+                ->andWhere('f.commander != :commander')
                 ->andWhere('f.flightTime is null')
                 ->andWhere('c.ally is null OR a.sigle not in (:friend)')
                 ->andWhere('c.ally is null OR c.ally != :myAlly')
-                ->setParameters(['planet' => $fleet->getPlanet(), 'ally' => $warAlly, 'character' => $character, 'friend' => $friendAlly, 'myAlly' => $allyF])
+                ->setParameters(['planet' => $fleet->getPlanet(), 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
                 ->getQuery()
                 ->getResult();
 
-            $fleetFight = $em->getRepository('App:Fleet')
+            $fleetFight = $doctrine->getRepository(Fleet::class)
                 ->createQueryBuilder('f')
                 ->where('f.planet = :planet')
-                ->andWhere('f.character != :character')
+                ->andWhere('f.commander != :commander')
                 ->andWhere('f.fightAt is not null')
                 ->andWhere('f.flightTime is null')
-                ->setParameters(['planet' => $fleet->getPlanet(), 'character' => $character])
+                ->setParameters(['planet' => $fleet->getPlanet(), 'commander' => $commander])
                 ->getQuery()
                 ->setMaxResults(1)
                 ->getOneOrNullResult();
@@ -1927,13 +1927,13 @@ class FleetController  extends AbstractController
                 $fleet->setFightAt($fleetFight->getFightAt());
             } elseif ($fleets) {
                 foreach ($fleets as $setWar) {
-                    if($setWar->getCharacter()->getAlly()) {
+                    if($setWar->getCommander()->getAlly()) {
                         $fleetArm = $fleet->getMissile() + $fleet->getLaser() + $fleet->getPlasma();
                         if($fleetArm > 0) {
                             $fleet->setAttack(1);
                         }
                         foreach ($eAlly as $tmp) {
-                            if ($setWar->getCharacter()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                            if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
                                 $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                                 if($fleetArm > 0) {
                                     $setWar->setAttack(1);
@@ -1942,7 +1942,7 @@ class FleetController  extends AbstractController
                         }
                     }
                 }
-                $allFleets = $em->getRepository('App:Fleet')
+                $allFleets = $doctrine->getRepository(Fleet::class)
                     ->createQueryBuilder('f')
                     ->where('f.planet = :planet')
                     ->andWhere('f.flightTime is null')
@@ -1980,16 +1980,16 @@ class FleetController  extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         if($fleet->getFlightTime() == null and $fleet->getFightAt() == null) {
-            $zombie = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
+            $zombie = $doctrine->getRepository(Commander::class)->findOneBy(['zombie' => 1]);
             $fleet->setFleetList(null);
-            $fleet->setCharacter($zombie);
+            $fleet->setCommander($zombie);
             $em->flush();
         }
 

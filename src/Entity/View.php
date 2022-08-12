@@ -19,10 +19,10 @@ class View
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="views", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="views", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\ManyToOne(targetEntity="Salon", inversedBy="views", fetch="EXTRA_LAZY")
@@ -32,12 +32,12 @@ class View
 
     /**
      * View constructor.
-     * @param Character $character
+     * @param Commander $commander
      * @param Salon $salon
      */
-    public function __construct(Character $character, Salon $salon)
+    public function __construct(Commander $commander, Salon $salon)
     {
-        $this->character = $character;
+        $this->commander = $commander;
         $this->salon = $salon;
     }
 
@@ -52,17 +52,17 @@ class View
     /**
      * @return mixed
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param mixed $character
+     * @param mixed $commander
      */
-    public function setCharacter($character): void
+    public function setCommander($commander): void
     {
-        $this->character = $character;
+        $this->commander = $commander;
     }
 
     /**

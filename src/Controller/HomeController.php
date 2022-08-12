@@ -20,7 +20,7 @@ class HomeController extends AbstractController
     public function index(ManagerRegistry $doctrine): RedirectResponse|Response
     {
         $em = $doctrine->getManager();
-        $servers = $em->getRepository('App:Server')->findBy(['open' => 1]);
+        $servers = $doctrine->getRepository(Server::class)->findBy(['open' => 1]);
         $user = $this->getUser();
 
         if ($user) {

@@ -31,9 +31,9 @@ class BuildingController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -81,33 +81,33 @@ class BuildingController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getWhichBuilding($building, $usePlanet) + 1;
-        $pdg = $character->getBuildingWarPoint($building);
-        $time = $character->getBuildingTime($building);
-        $niobium = $character->getBuildingNiobium($building);
-        $water = $character->getBuildingWater($building);
-        $restrict = $character->getBuildingRestrict($building, $level, $usePlanet);
+        $level = $commander->getWhichBuilding($building, $usePlanet) + 1;
+        $pdg = $commander->getBuildingWarPoint($building);
+        $time = $commander->getBuildingTime($building);
+        $niobium = $commander->getBuildingNiobium($building);
+        $water = $commander->getBuildingWater($building);
+        $restrict = $commander->getBuildingRestrict($building, $level, $usePlanet);
         $usePlanetNb = $usePlanet->getNiobium();
         $usePlanetWt = $usePlanet->getWater();
-        $userPdg = $character->getRank()->getWarPoint();
-        $newGround = $usePlanet->getGroundPlace() + $character->getBuildingGroundPlace($building);
-        $newSky = $usePlanet->getSkyPlace() + $character->getBuildingSkyPlace($building);
-        if ($character->getBot() == 1) {
-            $usePlanetNb = $character->getBuildingNiobium($building) + 1;
-            $usePlanetWt = $character->getBuildingWater($building) + 1;
+        $userPdg = $commander->getRank()->getWarPoint();
+        $newGround = $usePlanet->getGroundPlace() + $commander->getBuildingGroundPlace($building);
+        $newSky = $usePlanet->getSkyPlace() + $commander->getBuildingSkyPlace($building);
+        if ($commander->getBot() == 1) {
+            $usePlanetNb = $commander->getBuildingNiobium($building) + 1;
+            $usePlanetWt = $commander->getBuildingWater($building) + 1;
             $restrict = 'continue';
         }
 
         if((!$restrict || $newGround > $usePlanet->getGround()) ||
             ($newSky > $usePlanet->getSky() || $niobium > $usePlanetNb) ||
             ($water > $usePlanetWt || $pdg > $userPdg)) {
-            if ($character->getBot() == 1) {
+            if ($commander->getBot() == 1) {
                 return new Response ('false');
             }
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
@@ -117,10 +117,10 @@ class BuildingController extends AbstractController
             $construction = new Construction($usePlanet, $building, $level * $time);
             $usePlanet->setGroundPlace($newGround);
             $usePlanet->setSkyPlace($newSky);
-            if ($character->getBot() == 0) {
+            if ($commander->getBot() == 0) {
                 $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
                 $usePlanet->setWater($usePlanetWt - ($level * $water));
-                $character->getRank()->setWarPoint($userPdg - ($level * $pdg));
+                $commander->getRank()->setWarPoint($userPdg - ($level * $pdg));
             }
             $em->persist($construction);
             if(($user->getTutorial() == 6)) {
@@ -132,10 +132,10 @@ class BuildingController extends AbstractController
             $usePlanet->setSkyPlace($newSky);
             $usePlanet->setConstruct($building);
             $usePlanet->setConstructAt($now);
-            if ($character->getBot() == 0) {
+            if ($commander->getBot() == 0) {
                 $usePlanet->setNiobium($usePlanetNb - ($level * $niobium));
                 $usePlanet->setWater($usePlanetWt - ($level * $water));
-                $character->getRank()->setWarPoint($userPdg - ($level * $pdg));
+                $commander->getRank()->setWarPoint($userPdg - ($level * $pdg));
             }
             if(($user->getTutorial() == 5)) {
                 $user->setTutorial(6);
@@ -143,7 +143,7 @@ class BuildingController extends AbstractController
         }
         $em->flush();
 
-        if ($character->getBot() == 1) {
+        if ($commander->getBot() == 1) {
             return new Response ('true');
         }
         return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
@@ -162,22 +162,22 @@ class BuildingController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $cancelPlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $cancelPlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $building = $cancelPlanet->getConstruct();
-        $level = $character->getWhichBuilding($building, $cancelPlanet) + 1;
+        $level = $commander->getWhichBuilding($building, $cancelPlanet) + 1;
         if ($building == 'destruct') {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
         } else {
-            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * $character->getBuildingNiobium($building)));
-            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * $character->getBuildingWater($building)));
-            $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + ($level * $character->getBuildingWarPoint($building)));
-            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - $character->getBuildingGroundPlace($building));
-            $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - $character->getBuildingSkyPlace($building));
+            $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * $commander->getBuildingNiobium($building)));
+            $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * $commander->getBuildingWater($building)));
+            $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + ($level * $commander->getBuildingWarPoint($building)));
+            $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - $commander->getBuildingGroundPlace($building));
+            $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - $commander->getBuildingSkyPlace($building));
         }
         if(count($cancelPlanet->getConstructions()) > 0) {
             $constructTime = new DateTime();
@@ -210,19 +210,19 @@ class BuildingController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $construction->getPlanet() != $usePlanet) {
+        if ($usePlanet->getCommander() != $commander || $construction->getPlanet() != $usePlanet) {
             return $this->redirectToRoute('home');
         }
         $cancelPlanet = $construction->getPlanet();
         $building = $cancelPlanet->getConstruct();
-        $level = $character->getWhichBuilding($building, $cancelPlanet) + 1;
-        $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * $character->getBuildingNiobium($building)));
-        $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * $character->getBuildingWater($building)));
-        $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + ($level * $character->getBuildingWarPoint($building)));
-        $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - $character->getBuildingGroundPlace($building));
-        $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - $character->getBuildingSkyPlace($building));
+        $level = $commander->getWhichBuilding($building, $cancelPlanet) + 1;
+        $cancelPlanet->setNiobium($cancelPlanet->getNiobium() + ($level * $commander->getBuildingNiobium($building)));
+        $cancelPlanet->setWater($cancelPlanet->getWater() + ($level * $commander->getBuildingWater($building)));
+        $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + ($level * $commander->getBuildingWarPoint($building)));
+        $cancelPlanet->setGroundPlace($cancelPlanet->getGroundPlace() - $commander->getBuildingGroundPlace($building));
+        $cancelPlanet->setSkyPlace($cancelPlanet->getSkyPlace() - $commander->getBuildingSkyPlace($building));
 
         $em->remove($construction);
         $em->flush();

@@ -48,7 +48,7 @@ class AdminController extends AbstractController
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $referers = $em->getRepository('App:Track')
+        $referers = $doctrine->getRepository(Track::class)
             ->createQueryBuilder('t')
             ->select('DISTINCT(t.previousPage) as previousPage, count(DISTINCT CONCAT(t.previousPage, t.ip)) as nbrPreviousPage')
             ->groupBy('previousPage')
@@ -58,7 +58,7 @@ class AdminController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $computers = $em->getRepository('App:Track')
+        $computers = $doctrine->getRepository(Track::class)
             ->createQueryBuilder('t')
             ->select('DISTINCT(t.computer) as computer, count(DISTINCT CONCAT(t.computer, t.ip)) as nbrComputer')
             ->groupBy('computer')
@@ -68,7 +68,7 @@ class AdminController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $pages = $em->getRepository('App:Track')
+        $pages = $doctrine->getRepository(Track::class)
             ->createQueryBuilder('t')
             ->select('DISTINCT(t.page) as page, count(t.page) as nbrPage')
             ->groupBy('page')
@@ -79,7 +79,7 @@ class AdminController extends AbstractController
             ->setMaxResults(10)
             ->getResult();
 
-        $uniquePages = $em->getRepository('App:Track')
+        $uniquePages = $doctrine->getRepository(Track::class)
             ->createQueryBuilder('t')
             ->select('DISTINCT(t.page) as uniquePage, count(DISTINCT CONCAT(t.page, t.ip)) as nbrPage')
             ->groupBy('uniquePage')
@@ -90,7 +90,7 @@ class AdminController extends AbstractController
             ->setMaxResults(10)
             ->getResult();
 
-        $ip = $em->getRepository('App:Track')
+        $ip = $doctrine->getRepository(Track::class)
             ->createQueryBuilder('t')
             ->select('count(DISTINCT t.ip) as nbrIp')
             ->where('t.date < :date')
@@ -98,7 +98,7 @@ class AdminController extends AbstractController
             ->getQuery()
             ->getSingleScalarResult();
 
-        $usernames = $em->getRepository('App:Track')
+        $usernames = $doctrine->getRepository(Track::class)
             ->createQueryBuilder('t')
             ->select('DISTINCT(t.username) as username, count(t.username) as nbrUsername')
             ->groupBy('username')

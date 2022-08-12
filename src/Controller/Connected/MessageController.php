@@ -2,7 +2,7 @@
 
 namespace App\Controller\Connected;
 
-use App\Entity\Character;
+use App\Entity\Commander;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,12 +35,12 @@ class MessageController extends AbstractController
     public function messageAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if($character->getGameOver()) {
+        if($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -49,7 +49,7 @@ class MessageController extends AbstractController
         $nowDel = new DateTime();
         $nowDel->sub(new DateInterval('PT' . 1209600 . 'S'));
 
-        $removeMessages = $em->getRepository('App:Message')
+        $removeMessages = $doctrine->getRepository(Message::class)
             ->createQueryBuilder('m')
             ->where('m.sendAt < :now')
             ->setParameters(['now' => $nowDel])
@@ -63,42 +63,42 @@ class MessageController extends AbstractController
         }
         $em->flush();
 
-        $messages = $em->getRepository('App:Message')
+        $messages = $doctrine->getRepository(Message::class)
             ->createQueryBuilder('m')
             ->where('m.idSender = :id')
-            ->setParameters(['id' => $character->getId()])
+            ->setParameters(['id' => $commander->getId()])
             ->orderBy('m.sendAt', 'DESC')
             ->getQuery()
             ->getResult();
 
-        $messagesR = $em->getRepository('App:Message')
+        $messagesR = $doctrine->getRepository(Message::class)
             ->createQueryBuilder('m')
-            ->where('m.character = :character')
-            ->setParameters(['character' => $character])
+            ->where('m.commander = :commander')
+            ->setParameters(['commander' => $commander])
             ->orderBy('m.sendAt', 'DESC')
             ->getQuery()
             ->getResult();
 
-        $character->setViewMessage(true);
+        $commander->setViewMessage(true);
 
         $em->flush();
 
         $form_message = $this->createForm(MessageType::class);
         $form_message->handleRequest($request);
 
-        if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $character->getBitcoin() &&
-            ($character->getSalonBan() > $now || $character->getSalonBan() == null)) {
+        if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $commander->getBitcoin() &&
+            ($commander->getSalonBan() > $now || $commander->getSalonBan() == null)) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $recever = $form_message->get('character')->getData();
-            $message = new Message($form_message->get('character')->getData(), nl2br($form_message->get('title')->getData()), nl2br($form_message->get('content')->getData()), abs($form_message->get('bitcoin')->getData()), $character->getId(), $form_message->get('anonymous')->getData() ? $character->getUsername() : null);
+            $recever = $form_message->get('commander')->getData();
+            $message = new Message($form_message->get('commander')->getData(), nl2br($form_message->get('title')->getData()), nl2br($form_message->get('content')->getData()), abs($form_message->get('bitcoin')->getData()), $commander->getId(), $form_message->get('anonymous')->getData() ? $commander->getUsername() : null);
             $recever->setBitcoin($recever->getBitcoin() + abs($form_message->get('bitcoin')->getData()));
             $recever->setViewMessage(false);
-            $character->setBitcoin($character->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
+            $commander->setBitcoin($commander->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
             $em->persist($message);
-            $quest = $character->checkQuests('private_message');
+            $quest = $commander->checkQuests('private_message');
             if($quest) {
-                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
-                $character->removeQuest($quest);
+                $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());
+                $commander->removeQuest($quest);
             }
 
             $em->flush();
@@ -119,23 +119,23 @@ class MessageController extends AbstractController
      * @param ManagerRegistry $doctrine
      * @param Request $request
      * @param Planet $usePlanet
-     * @param Character $userRecever
+     * @param Commander $userRecever
      * @return RedirectResponse|Response
      */
-    public function messageRespondeAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet, Character $userRecever): RedirectResponse|Response
+    public function messageRespondeAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet, Commander $userRecever): RedirectResponse|Response
     {
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if($character->getGameOver()) {
+        if($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
         $now = new DateTime();
 
-        if($character->getSalonBan() > $now) {
+        if($commander->getSalonBan() > $now) {
             return $this->redirectToRoute('message', ['usePlanet' => $usePlanet->getId()]);
         }
         $em = $doctrine->getManager();
@@ -143,19 +143,19 @@ class MessageController extends AbstractController
         $form_message = $this->createForm(MessageRespondeType::class);
         $form_message->handleRequest($request);
 
-        if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $character->getBitcoin()) {
+        if ($form_message->isSubmitted() && $form_message->isValid() && abs($form_message->get('bitcoin')->getData()) < $commander->getBitcoin()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
 
-            $message = new Message($userRecever, nl2br($form_message->get('title')->getData()), nl2br($form_message->get('content')->getData()), abs($form_message->get('bitcoin')->getData()), $character->getId(), $form_message->get('anonymous')->getData() ? $character->getUsername() : null);
+            $message = new Message($userRecever, nl2br($form_message->get('title')->getData()), nl2br($form_message->get('content')->getData()), abs($form_message->get('bitcoin')->getData()), $commander->getId(), $form_message->get('anonymous')->getData() ? $commander->getUsername() : null);
 
             $userRecever->setBitcoin($userRecever->getBitcoin() + abs($form_message->get('bitcoin')->getData()));
             $userRecever->setViewMessage(false);
-            $character->setBitcoin($character->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
+            $commander->setBitcoin($commander->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
             $em->persist($message);
-            $quest = $character->checkQuests('private_message');
+            $quest = $commander->checkQuests('private_message');
             if($quest) {
-                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
-                $character->removeQuest($quest);
+                $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());
+                $commander->removeQuest($quest);
             }
 
             $em->flush();
@@ -180,9 +180,9 @@ class MessageController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -205,9 +205,9 @@ class MessageController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
         if ($user == $message->getUser()) {
@@ -233,17 +233,17 @@ class MessageController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $messages = $em->getRepository('App:Message')
+        $messages = $doctrine->getRepository(Message::class)
             ->createQueryBuilder('m')
             ->where('m.newMessage = true')
-            ->andWhere('m.character = :character')
-            ->setParameters(['character' => $character])
+            ->andWhere('m.commander = :commander')
+            ->setParameters(['commander' => $commander])
             ->getQuery()
             ->getResult();
 

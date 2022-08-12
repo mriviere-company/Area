@@ -26,8 +26,8 @@ class BotController extends AbstractController
         /*$em = $doctrine->getManager();
         $now = new DateTime();
         $creation = $now;
-        $nickeNames = $em->getRepository('App:NickName')->findAll();
-        $salon = $em->getRepository('App:Salon')
+        $nickeNames = $doctrine->getRepository(NickName::class)->findAll();
+        $salon = $doctrine->getRepository(Salon::class)
         ->createQueryBuilder('s')
         ->where('s.name = :name')
         ->setParameters(['name' => 'Public'])
@@ -48,10 +48,10 @@ class BotController extends AbstractController
             $user->setLastActivity($now);
             $user->setNewletter(false);
             // image de profil
-            $em->persist($character);
+            $em->persist($commander);
             $em->flush();
 
-            $planet = $em->getRepository('App:Planet')
+            $planet = $doctrine->getRepository(Planet::class)
                 ->createQueryBuilder('p')
                 ->join('p.sector', 's')
                 ->where('p.user is null')
@@ -62,7 +62,7 @@ class BotController extends AbstractController
                 ->getOneOrNullResult();
 
             if($planet) {
-                $planet->setCharacter($character);
+                $planet->setCommander($commander);
                 $planet->setName('Terra Nova');
                 $planet->setSonde(10);
                 $planet->setRadar(2);
@@ -82,21 +82,21 @@ class BotController extends AbstractController
                 $planet->setColonizer(1);
                 $user->addPlanet($planet);
                 foreach ($planet->getFleets() as $fleet) {
-                    if ($fleet->getCharacter()->getZombie() == 1) {
+                    if ($fleet->getCommander()->getZombie() == 1) {
                         $em->remove($fleet);
                     } else {
-                        $fleet->setPlanet($fleet->getCharacter()->getFirstPlanetFleet());
+                        $fleet->setPlanet($fleet->getCommander()->getFirstPlanetFleet());
                     }
                 }
             }
             $ships = new Ships();
             $user->setShip($ships);
-            $ships->setCharacter($character);
+            $ships->setCommander($commander);
             $em->persist($ships);
             $rank = new Rank($user);
             $em->persist($rank);
             $user->setRank($rank);
-            $salon->addUser($character);
+            $salon->addUser($commander);
         }
         $em->flush();
         exit;*/
@@ -115,7 +115,7 @@ class BotController extends AbstractController
         $messageSent = 1;
 
         if (true) {
-            $user = $em->getRepository('App:User')
+            $user = $doctrine->getRepository(User::class)
                 ->createQueryBuilder('u')
                 ->where('u.bot = true')
                 ->andWhere('u.rank is null')
@@ -125,10 +125,10 @@ class BotController extends AbstractController
                 ->getQuery()
                 ->getOneOrNullResult();
 
-            $character = null;
-            if ($character) {
+            $commander = null;
+            if ($commander) {
 
-                $planet = $em->getRepository('App:Planet')
+                $planet = $doctrine->getRepository(Planet::class)
                     ->createQueryBuilder('p')
                     ->join('p.sector', 's')
                     ->join('s.galaxy', 'g')
@@ -142,7 +142,7 @@ class BotController extends AbstractController
                     ->getOneOrNullResult();
 
                 if (!$planet) {
-                    $planet = $em->getRepository('App:Planet')
+                    $planet = $doctrine->getRepository(Planet::class)
                         ->createQueryBuilder('p')
                         ->join('p.sector', 's')
                         ->join('s.galaxy', 'g')
@@ -157,7 +157,7 @@ class BotController extends AbstractController
                 }
 
                 if ($planet) {
-                    $planet->setCharacter($character);
+                    $planet->setCommander($commander);
                     $planet->setName('Terra Nova');
                     $planet->setSonde(10);
                     $planet->setRadar(2);
@@ -177,22 +177,22 @@ class BotController extends AbstractController
                     $planet->setColonizer(1);
                     $user->addPlanet($planet);
                     foreach ($planet->getFleets() as $fleet) {
-                        if ($fleet->getCharacter()->getZombie() == 1) {
+                        if ($fleet->getCommander()->getZombie() == 1) {
                             $em->remove($fleet);
                         } else {
-                            $fleet->setPlanet($fleet->getCharacter()->getFirstPlanetFleet());
+                            $fleet->setPlanet($fleet->getCommander()->getFirstPlanetFleet());
                         }
                     }
                     $user->setTutorial(60);
-                    $character->setDailyConnect($now);
-                    //$character->setLastActivity($now);
+                    $commander->setDailyConnect($now);
+                    //$commander->setLastActivity($now);
 
                     $ships = new Ships();
-                    $character->setShip($ships);
-                    $ships->setCharacter($character);
+                    $commander->setShip($ships);
+                    $ships->setCommander($commander);
                     $em->persist($ships);
 
-                    $rank = new Rank($character);
+                    $rank = new Rank($commander);
                     $em->persist($rank);
                 }
             }
@@ -200,7 +200,7 @@ class BotController extends AbstractController
             $em->flush();
         }
 
-        $bots = $em->getRepository('App:User')
+        $bots = $doctrine->getRepository(User::class)
             ->createQueryBuilder('u')
             ->join('u.planets', 'p')
             ->join('u.rank', 'r')
@@ -208,14 +208,14 @@ class BotController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $merchant = $em->getRepository('App:User')->findOneBy(['merchant' => 1]);
-        $planetMerchant = $em->getRepository('App:Planet')
+        $merchant = $doctrine->getRepository(User::class)->findOneBy(['merchant' => 1]);
+        $planetMerchant = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->andWhere('p.merchant = true')
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
-        $salon = $em->getRepository('App:Salon')
+        $salon = $doctrine->getRepository(Salon::class)
             ->createQueryBuilder('s')
             ->where('s.name = :name')
             ->setParameters(['name' => 'Public'])
@@ -224,7 +224,7 @@ class BotController extends AbstractController
 
         foreach ($bots as $bot) {
             if (rand(1, 5) == 2) {
-                $cPlanet = $em->getRepository('App:Planet')
+                $cPlanet = $doctrine->getRepository(Planet::class)
                     ->createQueryBuilder('p')
                     ->where('p.user = :user')
                     ->andWhere('p.groundPlace < p.ground or p.island < 5')
@@ -235,7 +235,7 @@ class BotController extends AbstractController
                     ->getOneOrNullResult();
 
                 if (!$bot->getAlly()) {
-                    $proposal = $em->getRepository('App:Proposal')
+                    $proposal = $doctrine->getRepository(Proposal::class)
                         ->createQueryBuilder('p')
                         ->where('p.user = :user')
                         ->setParameters(['user' => $bot])
@@ -255,7 +255,7 @@ class BotController extends AbstractController
 
                 $move->add(new DateInterval('PT' . rand(1, 60) . 'S'));
                 if (rand(1, 500) == 501) {
-                    $fPlanet = $em->getRepository('App:Planet')
+                    $fPlanet = $doctrine->getRepository(Planet::class)
                         ->createQueryBuilder('p')
                         ->where('p.user = :user')
                         ->setParameters(['user' => $bot])
@@ -263,9 +263,9 @@ class BotController extends AbstractController
                         ->setMaxResults(1)
                         ->getOneOrNullResult();
 
-                    $planet = $em->getRepository('App:Planet')
+                    $planet = $doctrine->getRepository(Planet::class)
                         ->createQueryBuilder('p')
-                        ->join('p.character', 'c')
+                        ->join('p.commander', 'c')
                         ->join('p.sector', 's')
                         ->join('s.galaxy', 'g')
                         ->where('u.bot = false')
@@ -300,12 +300,12 @@ class BotController extends AbstractController
                         }
                         $sonde = new Fleet();
                         $sonde->setSonde(1);
-                        $sonde->setCharacter($bot);
+                        $sonde->setCommander($bot);
                         $sonde->setPlanet($fPlanet);
                         $sonde->setName('Auto Sonde');
                         $sonde->setSignature($sonde->getNbrSignatures());
                         $speed = $sonde->getSpeed();
-                        $server = $em->getRepository('App:Server')->find(['id' => 1]);
+                        $server = $doctrine->getRepository(Server::class)->find(['id' => 1]);
                         $distance = $speed * $base * 1000 * $server->getSpeed();
                         $move->add(new DateInterval('PT' . round($distance) . 'S'));
                         $moreNow = new DateTime();
@@ -321,7 +321,7 @@ class BotController extends AbstractController
                 }
 
                 if (rand(1, 1500) == 1501) {
-                    $planetsSeller = $em->getRepository('App:Planet')
+                    $planetsSeller = $doctrine->getRepository(Planet::class)
                         ->createQueryBuilder('p')
                         ->where('p.user = :user')
                         ->setParameters(['user' => $bot])
@@ -334,7 +334,7 @@ class BotController extends AbstractController
                             $sellTime->add(new DateInterval('PT' . 1200 . 'S'));
                             $seller = new Fleet();
                             $seller->setHunter(1);
-                            $seller->setCharacter($merchant);
+                            $seller->setCommander($merchant);
                             $seller->setPlanet($planet);
                             $destination = new Destination($seller, $planetMerchant);
                             $em->persist($destination);
@@ -355,7 +355,7 @@ class BotController extends AbstractController
                     $body = $allMessages[mt_rand(0, count($allMessages) - 1)];
                     $message = new S_Content($bot, nl2br($body), $salon);
                     $em->persist($message);
-                    $userViews = $em->getRepository('App:User')
+                    $userViews = $doctrine->getRepository(User::class)
                         ->createQueryBuilder('u')
                         ->where('u.bot = false')
                         ->getQuery()
@@ -458,7 +458,7 @@ class BotController extends AbstractController
                     $bot->setTerraformation(count($bot->getPlanets()) + 1);
 
                     if ($bot->getFirstPlanetFleet()) {
-                        $newPlanet = $em->getRepository('App:Planet')
+                        $newPlanet = $doctrine->getRepository(Planet::class)
                             ->createQueryBuilder('p')
                             ->join('p.sector', 's')
                             ->join('s.galaxy', 'g')
@@ -470,13 +470,13 @@ class BotController extends AbstractController
                             ->getOneOrNullResult();
 
                         if ($newPlanet) {
-                            $newPlanet->setCharacter($bot);
+                            $newPlanet->setCommander($bot);
                             $newPlanet->setName('Colonie');
                             $newPlanet->setSoldier(200);
                             $newPlanet->setScientist(0);
                             $newPlanet->setNbColo(count($bot->getPlanets()) + 1);
                         } else {
-                            $newPlanet = $em->getRepository('App:Planet')
+                            $newPlanet = $doctrine->getRepository(Planet::class)
                                 ->createQueryBuilder('p')
                                 ->join('p.sector', 's')
                                 ->join('s.galaxy', 'g')
@@ -488,7 +488,7 @@ class BotController extends AbstractController
                                 ->getOneOrNullResult();
 
                             if ($newPlanet) {
-                                $newPlanet->setCharacter($bot);
+                                $newPlanet->setCommander($bot);
                                 $newPlanet->setName('Colonie');
                                 $newPlanet->setSoldier(200);
                                 $newPlanet->setScientist(0);

@@ -83,8 +83,8 @@ class GameOverController extends AbstractController
             $userGO->setZombieAtt(1);
             if ($userGO->getAlly()) {
                 $ally = $userGO->getAlly();
-                if (count($ally->getCharacters()) == 1 || ($ally->getPolitic() == 'fascism' && $userGO->getGrade()->getPlacement() == 1)) {
-                    foreach ($ally->getCharacters() as $userGO) {
+                if (count($ally->getCommanders()) == 1 || ($ally->getPolitic() == 'fascism' && $userGO->getGrade()->getPlacement() == 1)) {
+                    foreach ($ally->getCommanders() as $userGO) {
                         $userGO->setAlly(null);
                         $userGO->setGrade(null);
                         $userGO->setAllyBan($now);
@@ -125,21 +125,21 @@ class GameOverController extends AbstractController
                     }
                     $em->flush();
 
-                    $pnas = $em->getRepository('App:Pna')
+                    $pnas = $doctrine->getRepository(Pna::class)
                         ->createQueryBuilder('p')
                         ->where('p.allyTag = :allytag')
                         ->setParameters(['allytag' => $ally->getSigle()])
                         ->getQuery()
                         ->getResult();
 
-                    $pacts = $em->getRepository('App:Allied')
+                    $pacts = $doctrine->getRepository(Allied::class)
                         ->createQueryBuilder('a')
                         ->where('a.allyTag = :allytag')
                         ->setParameters(['allytag' => $ally->getSigle()])
                         ->getQuery()
                         ->getResult();
 
-                    $wars = $em->getRepository('App:War')
+                    $wars = $doctrine->getRepository(War::class)
                         ->createQueryBuilder('w')
                         ->where('w.allyTag = :allytag')
                         ->setParameters(['allytag' => $ally->getSigle()])
@@ -169,7 +169,7 @@ class GameOverController extends AbstractController
                 $salon->removeUser($userGO);
             }
 
-            $salon = $em->getRepository('App:Salon')
+            $salon = $doctrine->getRepository(Salon::class)
                 ->createQueryBuilder('s')
                 ->where('s.name = :name')
                 ->setParameters(['name' => 'Public'])

@@ -25,7 +25,7 @@ class DailyController extends AbstractController
     {
         $now = clone $server->getDailyReport();
         $nowDaily = clone $server->getDailyReport();
-        $characters = $em->getRepository('App:Character')
+        $commanders = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->join('c.planets', 'p')
             ->join('p.sector', 's')
@@ -40,9 +40,9 @@ class DailyController extends AbstractController
             ->getResult();
 
         $x = 1;
-        foreach ($characters as $character) {
+        foreach ($commanders as $commander) {
 
-            $maxQuest = count($character->getWhichQuest()) - 1;
+            $maxQuest = count($commander->getWhichQuest()) - 1;
             $first = rand(0, $maxQuest);
             $second = $first;
             $third = $second;
@@ -53,27 +53,27 @@ class DailyController extends AbstractController
             while ($third == $first or $third == $second) {
                 $third = rand(0, $maxQuest);
             }
-            $questOne = $em->getRepository('App:Quest')->findOneByName($character->getWhichQuest()[$first]);
-            $questTwo = $em->getRepository('App:Quest')->findOneByName($character->getWhichQuest()[$second]);
-            $questTree = $em->getRepository('App:Quest')->findOneByName($character->getWhichQuest()[$third]);
+            $questOne = $doctrine->getRepository(Quest::class)->findOneByName($commander->getWhichQuest()[$first]);
+            $questTwo = $doctrine->getRepository(Quest::class)->findOneByName($commander->getWhichQuest()[$second]);
+            $questTree = $doctrine->getRepository(Quest::class)->findOneByName($commander->getWhichQuest()[$third]);
             $report = new Report();
             $report->setType('economic');
             $report->setTitle("Rapport de l'empire");
             $report->setImageName("daily_report.webp");
             $report->setSendAt($now);
-            $report->setCharacter($character);
-            $ally = $character->getAlly();
-            $nbrQuests = count($character->getQuests());
+            $report->setCommander($commander);
+            $ally = $commander->getAlly();
+            $nbrQuests = count($commander->getQuests());
             if ($nbrQuests) {
-                foreach ($character->getQuests() as $quest) {
-                    $character->removeQuest($quest);
+                foreach ($commander->getQuests() as $quest) {
+                    $commander->removeQuest($quest);
                 }
             }
-            $character->addQuest($questOne);
+            $commander->addQuest($questOne);
             $worker = 0;
             $planetPoint= 0;
             $buildingCost = 0;
-            foreach ($character->getPlanets() as $planet) {
+            foreach ($commander->getPlanets() as $planet) {
                 if ($planet->getConstructAt() && $planet->getConstructAt() < $now) {
                     $this->forward('App\Controller\Connected\Execute\PlanetController::buildingOneAction', [
                         'planet'  => $planet,
@@ -88,11 +88,11 @@ class DailyController extends AbstractController
             $gain = $worker / 10;
             $lose = null;
             if($ally) {
-                $character->addQuest($questTwo);
+                $commander->addQuest($questTwo);
                 if($ally->getPeaces()) {
                     foreach($ally->getPeaces() as $peace) {
                         if(!$peace->getType() && $peace->getAccepted() == 1) {
-                            $otherAlly = $em->getRepository('App:Ally')
+                            $otherAlly = $doctrine->getRepository(Ally::class)
                                 ->createQueryBuilder('a')
                                 ->where('a.sigle = :sigle')
                                 ->setParameter('sigle', $peace->getAllyTag())
@@ -101,59 +101,59 @@ class DailyController extends AbstractController
 
                             $lose = (($peace->getTaxe() / 100) * $gain);
                             if($lose < 0) {
-                                $lose = (($peace->getTaxe() / 100) * $character->getBitcoin());
+                                $lose = (($peace->getTaxe() / 100) * $commander->getBitcoin());
                             }
                             $gain = $gain - $lose;
-                            $character->setBitcoin($character->getBitcoin() - $lose);
+                            $commander->setBitcoin($commander->getBitcoin() - $lose);
                             $otherAlly->setBitcoin($otherAlly->getBitcoin() + $lose);
-                            $exchange = new Exchange($otherAlly, $character->getUsername(), 0, 1, $lose, "Taxe liée à la paix.");
+                            $exchange = new Exchange($otherAlly, $commander->getUsername(), 0, 1, $lose, "Taxe liée à la paix.");
                             $em->persist($exchange);
                             $report->setContent($report->getContent() . " La paix que vous avez signé envoi directement <span class='text-rouge'>" . number_format(round($lose)) . "</span> bitcoins à l'aliance [" . $otherAlly->getSigle() . "].<br>");
                         }
                     }
                 }
-                $characterBitcoin = $character->getBitcoin();
+                $commanderBitcoin = $commander->getBitcoin();
                 $newGain = $gain /  (1 + $ally->getTaxe() / 100);
                 $taxe = $gain - $newGain;
                 $gain = $newGain;
-                $character->setBitcoin($characterBitcoin - $taxe);
+                $commander->setBitcoin($commanderBitcoin - $taxe);
                 $report->setContent(" Le montant envoyé dans les fonds de votre alliance s'élève à <span class='text-rouge'>" . number_format(round($taxe)) . "</span> bitcoins.<br>");
                 $allyBitcoin = $ally->getBitcoin();
                 $allyBitcoin = $allyBitcoin + $taxe;
                 $ally->setBitcoin($allyBitcoin);
             } else {
-                $questAlly = $em->getRepository('App:Quest')->findOneById(50);
-                $character->addQuest($questAlly);
+                $questAlly = $doctrine->getRepository(Quest::class)->findOneById(50);
+                $commander->addQuest($questAlly);
             }
-            $character->addQuest($questTree);
-            $troops = $character->getAllTroops();
-            $ship = $character->getAllShipsCost();
-            $cost = $character->getBitcoin();
+            $commander->addQuest($questTree);
+            $troops = $commander->getAllTroops();
+            $ship = $commander->getAllShipsCost();
+            $cost = $commander->getBitcoin();
             $report->setContent($report->getContent() . " Le travail fourni par vos travailleurs vous rapporte <span class='text-vert'>+" . number_format(round($gain)) . "</span> bitcoins.");
             $empireCost = $troops + $ship + $buildingCost;
             $cost = $cost - $empireCost + ($gain);
             $report->setContent($report->getContent() . " L'entretien de votre empire vous coûte cependant <span class='text-rouge'>" . number_format(round($empireCost)) . "</span> bitcoins.<br>");
-            $point = round(round($worker / 100) + round($character->getAllShipsPoint() / 10) + round($troops / 50) + $planetPoint);
-            $character->setBitcoin($cost);
+            $point = round(round($worker / 100) + round($commander->getAllShipsPoint() / 10) + round($troops / 50) + $planetPoint);
+            $commander->setBitcoin($cost);
 
-            if ($character->getBitcoin() < 0) {
-                foreach ($character->getFleetLists() as $list) {
+            if ($commander->getBitcoin() < 0) {
+                foreach ($commander->getFleetLists() as $list) {
                     foreach ($list->getFleets() as $fleetL) {
                         $fleetL->setFleetList(null);
                     }
                     $em->remove($list);
                 }
-                foreach($character->getFleets() as $fleet) {
+                foreach($commander->getFleets() as $fleet) {
                     if ($fleet->getDestination()) {
                         $em->remove($fleet->getDestination());
                     }
                     $em->remove($fleet);
                 }
-                if ($character->getMissions()) {
-                    foreach($character->getMissions() as $mission) {
+                if ($commander->getMissions()) {
+                    foreach($commander->getMissions() as $mission) {
                         $em->remove($mission);
                     }
-                foreach ($character->getPlanets() as $planet) {
+                foreach ($commander->getPlanets() as $planet) {
                     $product = $planet->getProduct();
                     $planet->setSonde(0);
                     $planet->setCargoI(0);
@@ -191,7 +191,7 @@ class DailyController extends AbstractController
                     }
                 }
                 $economicGO = 1;
-                $character->setBitcoin(5000);
+                $commander->setBitcoin(5000);
             }
             if ($gain - $empireCost > 0) {
                 $color = '<span class="text-vert">+';
@@ -200,18 +200,18 @@ class DailyController extends AbstractController
             }
             if ($nbrQuests == 0) {
                 $report->setContent($report->getContent() . " Ce qui vous donne un revenu de " . $color . number_format(round($gain - $empireCost)) . "</span> bitcoins. Comme vous avez terminé toutes les quêtes vous recevez un bonus de 20.000 PDG ! Bonne journée suprême Commandant.");
-                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + 250);
+                $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + 250);
             } else {
                 $report->setContent($report->getContent() . " Ce qui vous donne un revenu de " . $color . number_format(round($gain - $empireCost)) . "</span> bitcoins.<br>Bonne journée Commandant.");
             }
-            if ($point - $character->getRank()->getOldPoint() > 0) {
-                $character->setExperience($character->getExperience() + ($point - $character->getRank()->getOldPoint()));
+            if ($point - $commander->getRank()->getOldPoint() > 0) {
+                $commander->setExperience($commander->getExperience() + ($point - $commander->getRank()->getOldPoint()));
             }
-            $character->getRank()->setOldPoint($character->getRank()->getPoint());
-            $character->getRank()->setPoint($point);
-            $character->setViewReport(false);
+            $commander->getRank()->setOldPoint($commander->getRank()->getPoint());
+            $commander->getRank()->setPoint($point);
+            $commander->setViewReport(false);
 
-            $stats = new Stats($character, $character->getBitcoin(), $point, $character->getRank()->getWarPoint(),  $character->getZombieAtt());
+            $stats = new Stats($commander, $commander->getBitcoin(), $point, $commander->getRank()->getWarPoint(),  $commander->getZombieAtt());
             $em->persist($stats);
 
             if ($economicGO == 1) {
@@ -224,7 +224,7 @@ class DailyController extends AbstractController
 
         $em->flush();
 
-        $charactersUp = $em->getRepository('App:Character')
+        $commandersUp = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->join('c.rank', 'r')
             ->where('c.id != 1')
@@ -234,21 +234,21 @@ class DailyController extends AbstractController
             ->getResult();
 
         $x = 1;
-        foreach ($charactersUp as $character) {
-            $character->getRank()->setOldPosition($character->getRank()->getPosition());
-            $character->getRank()->setPosition($x);
+        foreach ($commandersUp as $commander) {
+            $commander->getRank()->setOldPosition($commander->getRank()->getPosition());
+            $commander->getRank()->setPosition($x);
             $x++;
         }
 
-        $allys = $em->getRepository('App:Ally')->findAll();
+        $allys = $doctrine->getRepository(Ally::class)->findAll();
 
         foreach ($allys as $ally) {
-            $ally->setRank($ally->getCharactersPoint());
+            $ally->setRank($ally->getCommandersPoint());
         }
         $nowDaily->add(new DateInterval('P1D'));
 
         $server->setDailyReport($nowDaily);
-        echo "Flush -> " . count($characters) . " ";
+        echo "Flush -> " . count($commanders) . " ";
 
         $em->flush();
 

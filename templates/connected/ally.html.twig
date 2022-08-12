@@ -24,7 +24,7 @@
                 <div class="text-center my-2">"{{ ally.getSlogan() }}"</div>
                 <ul class="nav nav-tabs mt-4" id="myTab">
                     <li class="nav-item">
-                        <a class="nav-link active" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="true">{{ ally.getCharacters()|length }} {{ 'ally.members'|trans }}</a>
+                        <a class="nav-link active" id="members-tab" data-toggle="tab" href="#members" role="tab" aria-controls="members" aria-selected="true">{{ ally.getCommanders()|length }} {{ 'ally.members'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_bank', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.found'|trans }}</a>
@@ -35,7 +35,7 @@
                     <li class="nav-item">
                         <a href="{{ path('ally_page_add', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.add'|trans }}</a>
                     </li>
-                    {% if character.getGrade().getPlacement() == 1 %}
+                    {% if commander.getGrade().getPlacement() == 1 %}
                         <li class="nav-item">
                             <a href="{{ path('ally_page_admin', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.admin'|trans }}</a>
                         </li>
@@ -56,22 +56,22 @@
                                 <th class="tab-cells-name">{{ 'ally.memberConnected'|trans }}</th>
                                 <th class="tab-cells-name">{{ 'ally.memberPoint'|trans }}</th>
                                 <th class="tab-cells-name">{{ 'ally.memberDateJoin'|trans }}</th>
-                                {% if character.getGrade().getCanKick() != 1 or (ally.getPolitic() == 'fascism' and ally.getWars()|length > 0 or ally.getPeaces()|length > 0) %}
+                                {% if commander.getGrade().getCanKick() != 1 or (ally.getPolitic() == 'fascism' and ally.getWars()|length > 0 or ally.getPeaces()|length > 0) %}
                                 {% else %}
                                     <th class="tab-cells-name">{{ 'ally.memberKick'|trans }}</th>
                                 {% endif %}
                             </tr>
-                            {% for user in ally.getCharacters() %}
-                                <tr{% if user.getId() == character.id %} class="currentBack"{% elseif user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %} class="availableBack"{% endif %}>
+                            {% for user in ally.getCommanders() %}
+                                <tr{% if user.getId() == commander.id %} class="currentBack"{% elseif user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %} class="availableBack"{% endif %}>
                                     <td class="center-cells">
-                                        {% if character.getGrade().getPlacement() == 1 %}
+                                        {% if commander.getGrade().getPlacement() == 1 %}
                                             <button class="confirm-button" href="{{ path('ally_addUser_grade', {'newGradeUser': user.getId(), 'usePlanet': usePlanet.getId() }) }}" data-toggle="modal" data-target="#openModal">{% if user.getGrade() %}{{ user.getGrade().getName() }}{% else %}???{% endif %}</button> <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.changeGrade'|trans }}"></span>
                                         {% else %}
                                             {% if user.getGrade() %}{{ user.getGrade().getName() }}{% else %}???{% endif %}
                                         {% endif %}
                                     </td>
                                     <td class="center-cells">
-                                        <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'characterProfil': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getUsername() }}</a></span>
+                                        <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'commanderProfil': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getUsername() }}</a></span>
                                     </td>
                                     <td class="center-cells">
                                         {% if user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %}{{ user.getLastActivity()|date('H:i') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}
@@ -82,8 +82,8 @@
                                     <td class="center-cells">
                                         {{ user.getJoinAllyAt()|date('d/m/Y') }}
                                     </td>
-                                    {% if user.getId() == character.id or character.getGrade().getCanKick() != 1 or (ally.getPolitic() == 'fascism' and ally.getWars()|length > 0 or ally.getPeaces()|length > 0) %}
-                                        {% if user.getId() == character.id and (ally.getPolitic() == 'fascism' and ally.getWars()|length == 0 and ally.getPeaces()|length == 0) %}
+                                    {% if user.getId() == commander.id or commander.getGrade().getCanKick() != 1 or (ally.getPolitic() == 'fascism' and ally.getWars()|length > 0 or ally.getPeaces()|length > 0) %}
+                                        {% if user.getId() == commander.id and (ally.getPolitic() == 'fascism' and ally.getWars()|length == 0 and ally.getPeaces()|length == 0) %}
                                             <td class="center-cells">
                                             </td>
                                         {% endif %}
@@ -113,7 +113,7 @@
                         </div>
                         {{ form_start(form_allyVote) }}
                         <div class="form-group">
-                            {{ form_widget(form_allyVote.character) }}
+                            {{ form_widget(form_allyVote.commander) }}
                         </div>
                         <div class="form-group text-center mt-5">
                             {{ form_widget(form_allyVote.sendForm) }}

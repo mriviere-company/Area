@@ -11,7 +11,7 @@
                 <h1 class="text-center p-4">{{ 'ally.banktitle'|trans }} <small>({{ 'ally.taxe'|trans }} {{ ally.getTaxe() }}%)</small></h1>
                 <ul class="nav nav-tabs mt-4" id="myTab">
                     <li class="nav-item">
-                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCharacters()|length }} {{ 'ally.members'|trans }}</a>
+                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCommanders()|length }} {{ 'ally.members'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" id="bank-tab" data-toggle="tab" href="#bank" role="tab" aria-controls="bank" aria-selected="false">{{ 'ally.found'|trans }}</a>
@@ -22,7 +22,7 @@
                     <li class="nav-item">
                         <a href="{{ path('ally_page_add', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.add'|trans }}</a>
                     </li>
-                    {% if character.getGrade().getPlacement() == 1 %}
+                    {% if commander.getGrade().getPlacement() == 1 %}
                         <li class="nav-item">
                             <a href="{{ path('ally_page_admin', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.admin'|trans }}</a>
                         </li>
@@ -33,7 +33,7 @@
                         </li>
                     {% endif %}
                 </ul>
-                {% if character.getGrade().getPlacement() == 1 %}
+                {% if commander.getGrade().getPlacement() == 1 %}
                     <div class="my-5 text-center">
                         {% if ally.getLevel() < 10 %}{% set x = 1 %}{% for info in ally.getLevelCost()  %} {% if x == 1 %}{{ 'ally.levelUpMembers'|trans }} {{ info|number_format }} <a href="{{ path('ally_level', {'usePlanet': usePlanet.getId()}) }}" class="confirm-button">{{ 'ally.levelUp'|trans }}</a>{% elseif x == 2 %}{{ 'ally.levelUpCost'|trans }} {{ info|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}">{% elseif x == 3 %}{{ info|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'pdgImg'|trans }}" src="{{ asset('img/pdg.webp') }}">{% endif %}{% set x = x + 1 %}{% endfor %}{% endif %}
                     </div>
@@ -80,7 +80,7 @@
                                     <td class="center-cells">{% if exchange.getType() == 1 %}{{ 'ally.pdgDonate'|trans }}{% else %}{{ 'ally.bitcoinDonate'|trans }}{% endif %}</td>
                                     <td class="center-cells">{% if exchange.getAmount() > 0 %}<span class="text-vert">+{{ exchange.getAmount()|number_format }}</span>{% else %}<span class="text-rouge">{{ exchange.getAmount()|number_format }}</span>{% endif %}</td>
                                     <td class="center-cells">{{ exchange.getContent() }}</td>
-                                    <td class="center-cells">{% if exchange.getAmount() < 0 %}{% if exchange.getAccepted() == 1 %}<span class="text-vert">{{ 'ally.exchangeAccepted'|trans }}</span>{% else %}{% if character.getGrade().getPlacement() == 1 %}<span><a href="{{ path('ally_accept_exchange',{'id': exchange.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'ally.exchangeAccept'|trans }}</a></span> / <span><a href="{{ path('ally_refuse_exchange',{'id': exchange.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'ally.exchangeRefuse'|trans }}</a></span>{% else %}<span class="text-rouge">{{ 'ally.exchangeWaiting'|trans }}</span>{% endif %}{% endif %} - {% endif %}{{ exchange.getCreatedAT()|date('d/m/Y H:i') }}</td>
+                                    <td class="center-cells">{% if exchange.getAmount() < 0 %}{% if exchange.getAccepted() == 1 %}<span class="text-vert">{{ 'ally.exchangeAccepted'|trans }}</span>{% else %}{% if commander.getGrade().getPlacement() == 1 %}<span><a href="{{ path('ally_accept_exchange',{'id': exchange.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'ally.exchangeAccept'|trans }}</a></span> / <span><a href="{{ path('ally_refuse_exchange',{'id': exchange.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'ally.exchangeRefuse'|trans }}</a></span>{% else %}<span class="text-rouge">{{ 'ally.exchangeWaiting'|trans }}</span>{% endif %}{% endif %} - {% endif %}{{ exchange.getCreatedAT()|date('d/m/Y H:i') }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

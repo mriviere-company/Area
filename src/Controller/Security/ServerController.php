@@ -16,7 +16,7 @@ use App\Entity\Sector;
 use App\Entity\Galaxy;
 use App\Entity\Server;
 use App\Entity\Salon;
-use App\Entity\Character;
+use App\Entity\Commander;
 use App\Entity\Rank;
 use App\Entity\Fleet;
 
@@ -80,9 +80,9 @@ class ServerController extends AbstractController
         $em->persist($salon);
         $em->flush();
 
-        $iaZombieUser = $em->getRepository('App:User')->findOneBy(['id' => 1]);
+        $iaZombieUser = $doctrine->getRepository(User::class)->findOneBy(['id' => 1]);
 
-        $iaZombie = new Character($iaZombieUser, 'Zombie', $server);
+        $iaZombie = new Commander($iaZombieUser, 'Zombie', $server);
         $iaZombie->setBitcoin(100);
         $iaZombie->setZombie(1);
         $iaZombie->setBot(1);
@@ -93,11 +93,11 @@ class ServerController extends AbstractController
         $em->persist($iaZombie);
         $ships = new Ships();
         $iaZombie->setShip($ships);
-        $ships->setCharacter($iaZombie);
+        $ships->setCommander($iaZombie);
         $em->persist($ships);
         $em->flush();
 
-        $iaAlien = new Character($iaZombieUser, 'Aliens', $server);
+        $iaAlien = new Commander($iaZombieUser, 'Aliens', $server);
         $iaAlien->setBitcoin(100);
         $iaAlien->setAlien(1);
         $iaAlien->setBot(1);
@@ -108,7 +108,7 @@ class ServerController extends AbstractController
         $em->persist($iaAlien);
         $ships = new Ships();
         $iaAlien->setShip($ships);
-        $ships->setCharacter($iaAlien);
+        $ships->setCommander($iaAlien);
         $em->persist($ships);
         $em->flush();
 
@@ -153,7 +153,7 @@ class ServerController extends AbstractController
         $iaLevelFour = ["44", "54", "47", "57", "35", "36", "65", "66"];
         //$iaLevelFive = ["45", "46", "55", "56"];
 
-        $iaPlayer = $em->getRepository('App:Character')
+        $iaPlayer = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->where('c.alien = true')
             ->andWhere('c.server =:server')
@@ -161,7 +161,7 @@ class ServerController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        $nbrGalaxy = $em->getRepository('App:Galaxy')->findBy(['server' => $server]);
+        $nbrGalaxy = $doctrine->getRepository(Galaxy::class)->findBy(['server' => $server]);
         $nbrSector = 1;
         $nbrPlanets = 0;
         $galaxy = new Galaxy($server, count($nbrGalaxy) + 1, );
@@ -215,7 +215,7 @@ class ServerController extends AbstractController
                             $fleet->setFregatePlasma(20000);
                             $fleet->setDestroyer(10000);
                         }
-                        $fleet->setCharacter($iaPlayer);
+                        $fleet->setCommander($iaPlayer);
                         $fleet->setPlanet($planet);
                         $fleet->setAttack(1);
                         $fleet->setName('Horde');
@@ -250,7 +250,7 @@ class ServerController extends AbstractController
                             $fleetBot->setDestroyer(rand(50000, 90000));
                         }
                         $iaPlayer->addPlanet($planet);
-                        $fleetBot->setCharacter($iaPlayer);
+                        $fleetBot->setCommander($iaPlayer);
                         $fleetBot->setPlanet($planet);
                         $fleetBot->setAttack(1);
                         $fleetBot->setName('Horde');
@@ -266,7 +266,7 @@ class ServerController extends AbstractController
                             $fleet->setCorvetWar(rand(50, 200));
                             $fleet->setFregatePlasma(rand(20, 100));
                             $fleet->setDestroyer(rand(1, 50));
-                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setCommander($iaPlayer);
                             $fleet->setPlanet($planet);
                             $fleet->setAttack(1);
                             $fleet->setName('Horde');
@@ -279,7 +279,7 @@ class ServerController extends AbstractController
                             $fleet->setCorvetWar(rand(50, 200));
                             $fleet->setFregatePlasma(rand(20, 100));
                             $fleet->setDestroyer(rand(1, 50));
-                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setCommander($iaPlayer);
                             $fleet->setPlanet($planet);
                             $fleet->setAttack(1);
                             $fleet->setName('Horde');
@@ -292,7 +292,7 @@ class ServerController extends AbstractController
                             $fleet->setCorvetWar(rand(50, 200));
                             $fleet->setFregatePlasma(rand(20, 100));
                             $fleet->setDestroyer(rand(1, 50));
-                            $fleet->setCharacter($iaPlayer);
+                            $fleet->setCommander($iaPlayer);
                             $fleet->setPlanet($planet);
                             $fleet->setAttack(1);
                             $fleet->setName('Horde');
@@ -321,7 +321,7 @@ class ServerController extends AbstractController
         }
         $em->flush();
 
-        $putFleets = $em->getRepository('App:Planet')
+        $putFleets = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
@@ -337,7 +337,7 @@ class ServerController extends AbstractController
             $fleet->setCorvetWar(rand(380000, 780000));
             $fleet->setFregatePlasma(rand(80000, 120000));
             $fleet->setDestroyer(rand(50000, 90000));
-            $fleet->setCharacter($iaPlayer);
+            $fleet->setCommander($iaPlayer);
             $fleet->setPlanet($putFleet);
             $fleet->setAttack(1);
             $fleet->setName('Horde');
@@ -447,17 +447,17 @@ class ServerController extends AbstractController
     {
         $em = $doctrine->getManager();
 
-        $characters = $em->getRepository('App:Character')->findBy(['server' => $server]);
+        $commanders = $doctrine->getRepository(Commander::class)->findBy(['server' => $server]);
 
-        foreach ($characters as $character) {
-            $ship = $character->getShip();
-            if ($ship && $character->getId() != 1) {
-                $character->setShip(null);
+        foreach ($commanders as $commander) {
+            $ship = $commander->getShip();
+            if ($ship && $commander->getId() != 1) {
+                $commander->setShip(null);
                 $em->remove($ship);
             }
-            if ($character->getAlly()) {
-                $ally = $character->getAlly();
-                $character->setAlly(null);
+            if ($commander->getAlly()) {
+                $ally = $commander->getAlly();
+                $commander->setAlly(null);
                 foreach ($ally->getAllieds() as $allied) {
                     $em->remove($allied);
                 }
@@ -486,32 +486,32 @@ class ServerController extends AbstractController
                 $em->remove($ally);
             }
 
-            if ($character->getRank()) {
-                $em->remove($character->getRank());
+            if ($commander->getRank()) {
+                $em->remove($commander->getRank());
             }
 
-            foreach ($character->getProposals() as $proposal) {
-                $character->removeProposal($proposal);
+            foreach ($commander->getProposals() as $proposal) {
+                $commander->removeProposal($proposal);
             }
 
-            foreach ($character->getFleetLists() as $list) {
+            foreach ($commander->getFleetLists() as $list) {
                 foreach ($list->getFleets() as $fleetL) {
                     $fleetL->setFleetList(null);
                 }
                 $em->remove($list);
             }
 
-            foreach ($character->getFleets() as $fleet) {
+            foreach ($commander->getFleets() as $fleet) {
                 $destination = $fleet->getDestination();
                 if ($destination) {
                     $em->remove($destination);
                 }
-                $fleet->setCharacter(null);
+                $fleet->setCommander(null);
                 $fleet->setPlanet(null);
-                $character->removeFleet($fleet);
+                $commander->removeFleet($fleet);
             }
 
-            foreach ($character->getPlanets() as $planet) {
+            foreach ($commander->getPlanets() as $planet) {
                 $product = $planet->getProduct();
                 if ($product) {
                     $product->setPlanet(null);
@@ -523,38 +523,38 @@ class ServerController extends AbstractController
                         $em->remove($contruction);
                     }
                 }
-                $planet->setCharacter(null);
+                $planet->setCommander(null);
             }
 
-            foreach ($character->getStats() as $stats) {
-                $character->removeStats($stats);
+            foreach ($commander->getStats() as $stats) {
+                $commander->removeStats($stats);
                 $em->remove($stats);
             }
 
-            foreach ($character->getViews() as $view) {
+            foreach ($commander->getViews() as $view) {
                 $em->remove($view);
             }
 
-            foreach ($character->getReports() as $report) {
-                $report->setCharacter(null);
+            foreach ($commander->getReports() as $report) {
+                $report->setCommander(null);
                 $report->setImageName(null);
                 $em->remove($report);
             }
 
-            foreach ($character->getMessages() as $message) {
+            foreach ($commander->getMessages() as $message) {
                 $em->remove($message);
             }
 
-            foreach ($character->getSContents() as $sContent) {
+            foreach ($commander->getSContents() as $sContent) {
                 $em->remove($sContent);
             }
 
-            $character->setImageName(null);
-            $em->remove($character);
+            $commander->setImageName(null);
+            $em->remove($commander);
         }
         $em->flush();
 
-        $salons = $em->getRepository('App:Salon')->findAll();
+        $salons = $doctrine->getRepository(Salon::class)->findAll();
 
         foreach ($salons as $salon) {
             foreach ($salon->getViews() as $view) {
@@ -563,7 +563,7 @@ class ServerController extends AbstractController
             $em->remove($salon);
         }
 
-        $planets = $em->getRepository('App:Planet')
+        $planets = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
@@ -577,7 +577,7 @@ class ServerController extends AbstractController
             $em->remove($planet);
         }
 
-        $sectors = $em->getRepository('App:Sector')
+        $sectors = $doctrine->getRepository(Sector::class)
             ->createQueryBuilder('s')
             ->join('s.galaxy', 'g')
             ->andWhere('g.server = :server')
@@ -589,7 +589,7 @@ class ServerController extends AbstractController
             $em->remove($sector);
         }
 
-        $galaxies = $em->getRepository('App:Galaxy')->findBy(['server' => $server]);
+        $galaxies = $doctrine->getRepository(Galaxy::class)->findBy(['server' => $server]);
 
         foreach ($galaxies as $galaxy) {
             $em->remove($galaxy);
@@ -639,7 +639,7 @@ class ServerController extends AbstractController
             $em->remove($sector);
         }
 
-        $destinations = $em->getRepository('App:Destination')
+        $destinations = $doctrine->getRepository(Destination::class)
             ->createQueryBuilder('d')
             ->join('d.planet', 'p')
             ->join('p.sector', 's')
@@ -668,7 +668,7 @@ class ServerController extends AbstractController
     {
         $em = $doctrine->getManager();
 
-        $sectors = $em->getRepository('App:Sector')
+        $sectors = $doctrine->getRepository(Sector::class)
             ->createQueryBuilder('s')
             ->where('s.destroy = true')
             ->getQuery()
@@ -684,7 +684,7 @@ class ServerController extends AbstractController
             }
         }
 
-        $fleets = $em->getRepository('App:Fleet')
+        $fleets = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->where('f.planet is null')
             ->andWhere('f.flightTime is null')
@@ -695,15 +695,15 @@ class ServerController extends AbstractController
             $em->remove($fleet);
         }
 
-        $characters = $em->getRepository('App:Character')
+        $commanders = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->join('c.planets', 'p')
             ->where('p.id is null')
             ->getQuery()
             ->getResult();
 
-        foreach ($characters as $character) {
-            $character->setGameOver(1);
+        foreach ($commanders as $commander) {
+            $commander->setGameOver(1);
         }
         $em->flush();
 

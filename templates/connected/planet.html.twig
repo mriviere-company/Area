@@ -6,7 +6,7 @@
 
 {% block body %}
     {% if ally %}
-        {% set bonus = 1.2 + (character.getPoliticProd() / 14) %}
+        {% set bonus = 1.2 + (commander.getPoliticProd() / 14) %}
     {% else %}
         {% set bonus = 1 %}
     {% endif %}
@@ -75,14 +75,14 @@
                     <a class="confirm-button" href="{{ path('planets_seller', {'usePlanet': usePlanet.getId()}) }}">{{ 'market.sellAll'|trans }}</a>
                 </div>
             </div>
-            {% if character.getStats()|length > 7 %}
+            {% if commander.getStats()|length > 7 %}
                 {% set points = [] %}
                 {% set otherBitcoin = [] %}
                 {% set date = [] %}
                 {% for otherPoint in otherPoints %}
                     {% set otherBitcoin = otherBitcoin|merge([(otherPoint['allBitcoin'] / otherPoint['numbers'])|round]) %}
                 {% endfor %}
-                {% for stat in character.getStats() %}
+                {% for stat in commander.getStats() %}
                     {% set points = points|merge([stat.getBitcoin()|round]) %}
                     {% set date = date|merge([stat.getDate()|date("d/m/Y")]) %}
                 {% endfor %}
@@ -148,7 +148,7 @@
                             <div {% if app.user.getTutorial() < 50 %}class="tutorial-hide" {% endif %}data-toggle="tooltip" data-placement="bottom" title="{{ 'tooltip.ships'|trans }}"><span><a href="{{ path('spatial', {'usePlanet': planet.getId()}) }}">{{ planet.getShipOn() }} <img alt="{{ 'image'|trans({},'front_global') }}" height="15" src="{{ asset('img/utility.webp') }}"></a></span></div>
                         </td>
                         <td class="center-cells text-center cell-middle">
-                            <div class="my-3" data-toggle="tooltip" data-placement="bottom" title="{{ 'planet.worker'|trans({'%product%': ((planet.getWorkerProduction() * 60) * (character.getPoliticWorker() ? character.getPoliticWorker() / 5 : 1) )|number_format }) }}">{% if planet.getWorker() > 1000000 %}{{ (planet.getWorker() / 1000000)|number_format(2) }}M{% elseif planet.getWorker() > 1000 %}{{ (planet.getWorker() / 1000)|number_format }}K{% else %}{{ planet.getWorker()|number_format }}{% endif %}<span class="text-middle">/</span>{% if planet.getWorkerMax() > 1000000 %}{{ (planet.getWorkerMax() / 1000000)|number_format(2) }}M{% else %}{{ (planet.getWorkerMax() / 1000)|number_format }}K{% endif %}  <img alt="{{ 'image'|trans({},'front_global') }}" height="15" src="{{ asset('img/worker.webp') }}"></div>
+                            <div class="my-3" data-toggle="tooltip" data-placement="bottom" title="{{ 'planet.worker'|trans({'%product%': ((planet.getWorkerProduction() * 60) * (commander.getPoliticWorker() ? commander.getPoliticWorker() / 5 : 1) )|number_format }) }}">{% if planet.getWorker() > 1000000 %}{{ (planet.getWorker() / 1000000)|number_format(2) }}M{% elseif planet.getWorker() > 1000 %}{{ (planet.getWorker() / 1000)|number_format }}K{% else %}{{ planet.getWorker()|number_format }}{% endif %}<span class="text-middle">/</span>{% if planet.getWorkerMax() > 1000000 %}{{ (planet.getWorkerMax() / 1000000)|number_format(2) }}M{% else %}{{ (planet.getWorkerMax() / 1000)|number_format }}K{% endif %}  <img alt="{{ 'image'|trans({},'front_global') }}" height="15" src="{{ asset('img/worker.webp') }}"></div>
                             <div class="my-3" data-toggle="tooltip" data-placement="bottom" title="{{ 'scientist'|trans }}">{{ planet.getScientist()|number_format }}<span class="text-middle">/</span>{{ planet.getScientistMax()|number_format }} <img alt="{{ 'image'|trans({},'front_global') }}" height="15" src="{{ asset('img/scientist.webp') }}"></div>
                         </td>
                     </tr>

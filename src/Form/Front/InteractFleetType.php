@@ -28,11 +28,11 @@ class InteractFleetType extends AbstractType
                     'label' => 'form.fleet',
                     'query_builder' => function (EntityRepository $er) use($options) {
                         return $er->createQueryBuilder('f')
-                            ->join('f.character', 'c')
-                            ->where('c.id = :character')
+                            ->join('f.commander', 'c')
+                            ->where('c.id = :commander')
                             ->andWhere('f.flightTime is null')
                             ->andWhere('f.fightAt is null')
-                            ->setParameters(['character' => $options['character']])
+                            ->setParameters(['commander' => $options['commander']])
                             ->orderBy('f.name', 'ASC');
                     },
                     'choice_label' => 'name',
@@ -77,7 +77,7 @@ class InteractFleetType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(['character']);
+        $resolver->setRequired(['commander']);
         $resolver->setDefaults(
             [
                 'data_class'         => null,

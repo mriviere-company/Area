@@ -20,10 +20,10 @@ class Stats
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="stats", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="stats", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\Column(name="bitcoin",type="bigint")
@@ -52,15 +52,15 @@ class Stats
 
     /**
      * Stats constructor.
-     * @param Character $character
+     * @param Commander $commander
      * @param int $bitcoin
      * @param int $points
      * @param int $pdg
      * @param int $zombie
      */
-    public function __construct(Character $character, int $bitcoin, int $points, int $pdg, int $zombie)
+    public function __construct(Commander $commander, int $bitcoin, int $points, int $pdg, int $zombie)
     {
-        $this->character = $character;
+        $this->commander = $commander;
         $this->bitcoin = $bitcoin;
         $this->points = $points;
         $this->pdg = $pdg;
@@ -76,17 +76,17 @@ class Stats
     /**
      * @return mixed
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param mixed $character
+     * @param mixed $commander
      */
-    public function setCharacter($character): void
+    public function setCommander($commander): void
     {
-        $this->character = $character;
+        $this->commander = $commander;
     }
 
     /**

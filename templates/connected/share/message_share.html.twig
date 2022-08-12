@@ -22,7 +22,7 @@
                         <th class="tab-cells-name">
                             <span class="ml-3">
                                 {{ 'message.sender'|trans }}
-                                {% if message.getSender() %}{{ message.getSender() }}{% else %}{{ 'message.anonymousSender'|trans }}{% endif %} {{ 'to'|trans }} {{ message.getCharacter().getUsername() }}
+                                {% if message.getSender() %}{{ message.getSender() }}{% else %}{{ 'message.anonymousSender'|trans }}{% endif %} {{ 'to'|trans }} {{ message.getCommander().getUsername() }}
                             </span>
                             <span class="float-right pl-4">
                                 {{ 'message.bitcoinRe'|trans }}

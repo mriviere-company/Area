@@ -21,18 +21,18 @@ class AllPlanetsController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $planetSoldiers = $em->getRepository('App:Planet')
+        $planetSoldiers = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->where('p.soldierAt < :now')
-            ->andWhere('p.character = :character')
-            ->setParameters(['now' => $now, 'character' => $character])
+            ->andWhere('p.commander = :commander')
+            ->setParameters(['now' => $now, 'commander' => $commander])
             ->getQuery()
             ->getResult();
 
@@ -43,11 +43,11 @@ class AllPlanetsController extends AbstractController
             ]);
         }
 
-        $planetTanks = $em->getRepository('App:Planet')
+        $planetTanks = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->where('p.tankAt < :now')
-            ->andWhere('p.character = :character')
-            ->setParameters(['now' => $now, 'character' => $character])
+            ->andWhere('p.commander = :commander')
+            ->setParameters(['now' => $now, 'commander' => $commander])
             ->getQuery()
             ->getResult();
 
@@ -58,11 +58,11 @@ class AllPlanetsController extends AbstractController
             ]);
         }
 
-        $planetScientists = $em->getRepository('App:Planet')
+        $planetScientists = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->where('p.scientistAt < :now')
-            ->andWhere('p.character = :character')
-            ->setParameters(['now' => $now, 'character' => $character])
+            ->andWhere('p.commander = :commander')
+            ->setParameters(['now' => $now, 'commander' => $commander])
             ->getQuery()
             ->getResult();
 
@@ -73,12 +73,12 @@ class AllPlanetsController extends AbstractController
             ]);
         }
 
-        $products = $em->getRepository('App:Product')
+        $products = $doctrine->getRepository(Product::class)
             ->createQueryBuilder('p')
             ->join('p.planet', 'pp')
             ->where('p.productAt < :now')
-            ->andWhere('pp.character = :character')
-            ->setParameters(['now' => $now, 'character' => $character])
+            ->andWhere('pp.commander = :commander')
+            ->setParameters(['now' => $now, 'commander' => $commander])
             ->getQuery()
             ->getResult();
 
@@ -90,39 +90,39 @@ class AllPlanetsController extends AbstractController
         }
 
         $seconds = $this->forward('App\Controller\Connected\Execute\ChronosController::userActivityAction', [
-            'character' => $character,
+            'commander' => $commander,
             'now'  => $now,
             'em' => $em]);
 
         if ($seconds->getContent() >= 60) {
             $this->forward('App\Controller\Connected\Execute\PlanetsGenController::planetsGenAction', [
-                'character' => $character,
+                'commander' => $commander,
                 'seconds' => $seconds->getContent(),
                 'now'  => $now,
                 'em' => $em]);
         }
 
-        if ($character->getOrderPlanet() == 'alpha') {
+        if ($commander->getOrderPlanet() == 'alpha') {
             $crit = 'p.name';
-        } elseif ($character->getOrderPlanet() == 'colo') {
+        } elseif ($commander->getOrderPlanet() == 'colo') {
             $crit = 'p.nbColo';
         } else {
             $crit = 'p.id';
         }
         $order = 'ASC';
 
-        $allPlanets = $em->getRepository('App:Planet')
+        $allPlanets = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
             ->select('p.id, p.position, p.name, p.caserne, p.wtCdr, p.nbCdr, p.signature, p.bunker, p.centerSearch, p. lightUsine, p.uranium, p.empty, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, p.construct, p.ground, p.groundPlace, p.sky, p.skyPlace, p.imageName, p.radarAt, p.brouilleurAt, p.moon')
-            ->where('p.character = :character')
-            ->setParameters(['character' => $character])
+            ->where('p.commander = :commander')
+            ->setParameters(['commander' => $commander])
             ->orderBy($crit, $order)
             ->getQuery()
             ->getResult();
 
         $em->clear();
-        return $this->render('menu/_right_planet.html.twig', ['allPlanets' => $allPlanets, 'usePlanet' => $usePlanet, 'character' => $character]);
+        return $this->render('menu/_right_planet.html.twig', ['allPlanets' => $allPlanets, 'usePlanet' => $usePlanet, 'commander' => $commander]);
     }
 }

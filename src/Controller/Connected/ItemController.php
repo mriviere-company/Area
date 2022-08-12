@@ -26,9 +26,9 @@ class ItemController extends AbstractController
     public function itemAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 

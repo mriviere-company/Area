@@ -11,11 +11,11 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Table(name="app_character")
- * @ORM\Entity(repositoryClass="App\Repository\CharacterRepository")
+ * @ORM\Table(name="app_commander")
+ * @ORM\Entity(repositoryClass="App\Repository\CommanderRepository")
  * @Vich\Uploadable
  */
-class Character
+class Commander
 {
     /**
      * @ORM\Column(type="integer")
@@ -44,7 +44,7 @@ class Character
     protected $experience;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ally", inversedBy="characters", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Ally", inversedBy="commanders", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
@@ -70,7 +70,7 @@ class Character
     protected $zombieAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Proposal", mappedBy="character", fetch="EXTRA_LAZY", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Proposal", mappedBy="commander", fetch="EXTRA_LAZY", orphanRemoval=true)
      */
     protected $proposals;
 
@@ -80,67 +80,67 @@ class Character
     protected $joinAllyAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Grade", inversedBy="characters", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Grade", inversedBy="commanders", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="grade_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $grade;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Quest", inversedBy="characters")
+     * @ORM\ManyToMany(targetEntity="Quest", inversedBy="commanders")
      */
     protected $quests;
 
     /**
-     * @ORM\OneToOne(targetEntity="Rank", inversedBy="character", fetch="EXTRA_LAZY", orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="Rank", inversedBy="commander", fetch="EXTRA_LAZY", orphanRemoval=true)
      * @ORM\JoinColumn(name="rank_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $rank;
 
     /**
-     * @ORM\OneToOne(targetEntity="Heroe", inversedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Heroe", inversedBy="commander", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="heroe_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $heroe;
 
     /**
-     * @ORM\OneToMany(targetEntity="Mission", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Mission", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $missions;
 
     /**
-     * @ORM\OneToMany(targetEntity="Stats", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Stats", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $stats;
 
     /**
-     * @ORM\OneToOne(targetEntity="Ships", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Ships", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $ship;
 
     /**
-     * @ORM\OneToMany(targetEntity="Planet", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Planet", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $planets;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="characters", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="commanders", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Server", inversedBy="characters", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Server", inversedBy="commanders", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="server_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $server;
 
     /**
-     * @ORM\OneToMany(targetEntity="Message", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Message", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Salon", mappedBy="characters", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Salon", mappedBy="commanders", fetch="EXTRA_LAZY")
      */
     protected $salons;
 
@@ -155,17 +155,17 @@ class Character
     protected $salonBan;
 
     /**
-     * @ORM\OneToMany(targetEntity="S_Content", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="S_Content", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $sContents;
 
     /**
-     * @ORM\OneToMany(targetEntity="Report", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Report", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $reports;
 
     /**
-     * @ORM\OneToMany(targetEntity="View", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="View", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $views;
 
@@ -213,12 +213,12 @@ class Character
     protected $voteName;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fleet", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Fleet", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $fleets;
 
     /**
-     * @ORM\OneToMany(targetEntity="Fleet_List", mappedBy="character", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Fleet_List", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $fleetLists;
 
@@ -494,7 +494,7 @@ class Character
     private $updatedAt;
 
     /**
-     * Character constructor.
+     * Commander constructor.
      * @param User $user
      * @param string $username
      * @param $server
@@ -623,7 +623,7 @@ class Character
      *
      * @param Salon $salon
      *
-     * @return Character
+     * @return Commander
      */
     public function addSalon(Salon $salon)
     {
@@ -647,7 +647,7 @@ class Character
      *
      * @param Mission $mission
      *
-     * @return Character
+     * @return Commander
      */
     public function addMission(Mission $mission)
     {
@@ -687,7 +687,7 @@ class Character
      *
      * @param S_Content $sContent
      *
-     * @return Character
+     * @return Commander
      */
     public function addSContent(S_Content $sContent)
     {
@@ -711,7 +711,7 @@ class Character
      *
      * @param Message $message
      *
-     * @return Character
+     * @return Commander
      */
     public function addMessage(Message $message)
     {
@@ -735,7 +735,7 @@ class Character
      *
      * @param Report $report
      *
-     * @return Character
+     * @return Commander
      */
     public function addReport(Report $report)
     {
@@ -759,7 +759,7 @@ class Character
      *
      * @param View $view
      *
-     * @return Character
+     * @return Commander
      */
     public function addView(View $view)
     {
@@ -783,9 +783,9 @@ class Character
      *
      * @param Planet $planet
      *
-     * @return Character
+     * @return Commander
      */
-    public function addPlanet(Planet $planet): Character
+    public function addPlanet(Planet $planet): Commander
     {
         $this->planets[] = $planet;
 
@@ -807,7 +807,7 @@ class Character
      *
      * @param Proposal $proposal
      *
-     * @return Character
+     * @return Commander
      */
     public function addProposal(Proposal $proposal)
     {
@@ -975,10 +975,10 @@ class Character
     /**
      * @return string
      */
-    public function getFleetsColor($character, $sigle): string
+    public function getFleetsColor($commander, $sigle): string
     {
         $color = 'pp-enemy';
-        if ($this->getId() == $character) {
+        if ($this->getId() == $commander) {
             return 'pp-mine';
         }
         if ($this->getAlly() and $sigle) {
@@ -2891,7 +2891,7 @@ class Character
      *
      * @param Quest $quest
      *
-     * @return Character
+     * @return Commander
      */
     public function addQuest(Quest $quest)
     {
@@ -2947,7 +2947,7 @@ class Character
      *
      * @param Fleet $fleet
      *
-     * @return Character
+     * @return Commander
      */
     public function addFleet(Fleet $fleet)
     {
@@ -3507,7 +3507,7 @@ class Character
      *
      * @param Stats $stats
      *
-     * @return Character
+     * @return Commander
      */
     public function addStats(Stats $stats)
     {

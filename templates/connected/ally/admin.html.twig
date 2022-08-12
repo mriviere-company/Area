@@ -11,7 +11,7 @@
                 <h1 class="text-center p-4">{{ 'ally.gradeTitle'|trans }}</h1>
                 <ul class="nav nav-tabs mt-4" id="myTab">
                     <li class="nav-item">
-                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCharacters()|length }} {{ 'ally.members'|trans }}</a>
+                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCommanders()|length }} {{ 'ally.members'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_bank', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.found'|trans }}</a>
@@ -22,7 +22,7 @@
                     <li class="nav-item">
                         <a href="{{ path('ally_page_add', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.add'|trans }}</a>
                     </li>
-                    {% if character.getGrade().getPlacement() == 1 %}
+                    {% if commander.getGrade().getPlacement() == 1 %}
                         <li class="nav-item">
                             <a class="nav-link active" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">{{ 'ally.admin'|trans }}</a>
                         </li>

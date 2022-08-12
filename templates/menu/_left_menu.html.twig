@@ -5,8 +5,8 @@
         <img class="logo" alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/logo01.webp') }}">
         <br>
         <a href="https://area-control.forumactif.com/f8-mise-a-jour" rel="noopener noreferrer" target="_blank"><button class="text-marron my-2 text-less"><strong>{{ 'version'|trans }}</strong></button></a>
-            <div class="border-empire" data-toggle="tooltip" data-placement="top" title="{{ 'coin'|trans }}"><span id="bitcoin">{{ character.getBitcoin()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/coin.webp') }}"></div>
-        {% if character.getRank() %}<div class="border-empire" data-toggle="tooltip" data-placement="bottom" title="{{ 'market'|trans }}"><span id="pdg">{{ character.getRank().getWarPoint()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.webp') }}"></div>{% endif %}
+            <div class="border-empire" data-toggle="tooltip" data-placement="top" title="{{ 'coin'|trans }}"><span id="bitcoin">{{ commander.getBitcoin()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/coin.webp') }}"></div>
+        {% if commander.getRank() %}<div class="border-empire" data-toggle="tooltip" data-placement="bottom" title="{{ 'market'|trans }}"><span id="pdg">{{ commander.getRank().getWarPoint()|number_format }}</span> <img alt="{{ 'image'|trans({},'front_global') }}" src="{{ asset('img/pdg.webp') }}"></div>{% endif %}
     </div>
     {% if app.user.getConfirmed() == 0 %}
         <a href="{{ path('confirm_account', {'usePlanet': usePlanet.getId()}) }}">
@@ -41,11 +41,11 @@
             </div>
         </a>
     </div>
-    {% if character.getQuests()|length > 0 %}
+    {% if commander.getQuests()|length > 0 %}
         <div{% if allTuto < 16 %} class="tutorial-hide"{% endif %}>
             <a href="{{ path('market', {'usePlanet': usePlanet.getId()}) }}">
                 <div class="btn-left{% if app.request.attributes.get('_route') == 'market' %} currentBack{% endif %}{% if allTuto == 16 %} tutorial-show{% endif %}">
-                    <span>{{ 'quest'|trans }} {{ character.getQuests()|length }}/3</span>
+                    <span>{{ 'quest'|trans }} {{ commander.getQuests()|length }}/3</span>
                 </div>
             </a>
         </div>
@@ -62,16 +62,16 @@
     </div>
     <div{% if allTuto < 2 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('planet', {'usePlanet': usePlanet.getId()}) }}">
-            <div class="btn-left{{ character.getRessourceFull() }}{% if app.request.attributes.get('_route') == 'planet' %} currentBack{% endif %}{% if allTuto == 2 %} tutorial-show{% endif %}">
+            <div class="btn-left{{ commander.getRessourceFull() }}{% if app.request.attributes.get('_route') == 'planet' %} currentBack{% endif %}{% if allTuto == 2 %} tutorial-show{% endif %}">
                 <span>{{ 'planet'|trans }}</span>
             </div>
         </a>
     </div>
-    {% if character.checkResearch() %}
+    {% if commander.checkResearch() %}
         <div{% if allTuto < 7 %} class="tutorial-hide"{% endif %}>
             <a href="{{ path('search', {'usePlanet': usePlanet.getId()}) }}">
-                <div class="btn-left{% if allTuto == 7 %} tutorial-show{% elseif character.getSearch() is null %} availableBack{% endif %}{% if app.request.attributes.get('_route') == 'search' %} currentBack{% endif %}">
-                    <span>{{ 'search'|trans }}</span>{% if character.getSearch() is null %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.search'|trans }}"></span>{% endif %}
+                <div class="btn-left{% if allTuto == 7 %} tutorial-show{% elseif commander.getSearch() is null %} availableBack{% endif %}{% if app.request.attributes.get('_route') == 'search' %} currentBack{% endif %}">
+                    <span>{{ 'search'|trans }}</span>{% if commander.getSearch() is null %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.search'|trans }}"></span>{% endif %}
                 </div>
             </a>
         </div>
@@ -79,11 +79,11 @@
     <div{% if allTuto < 17 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}">
             <div class="btn-left{% if app.request.attributes.get('_route') == 'ally_blank' or app.request.attributes.get('_route') == 'ally' %} currentBack{% endif %}{% if allTuto == 17 %} tutorial-show{% endif %}">
-                <span>{{ 'ally'|trans }}{% if character.getProposals() and ally is null %} (<small>{{ character.getProposals()|length }}</small>){% endif %}</span>
+                <span>{{ 'ally'|trans }}{% if commander.getProposals() and ally is null %} (<small>{{ commander.getProposals()|length }}</small>){% endif %}</span>
             </div>
         </a>
     </div>
-    {% if character.getQuests()|length == 0 %}
+    {% if commander.getQuests()|length == 0 %}
         <div{% if allTuto < 16 %} class="tutorial-hide"{% endif %}>
             <a href="{{ path('market', {'usePlanet': usePlanet.getId()}) }}">
                 <div class="btn-left{% if app.request.attributes.get('_route') == 'market' %} currentBack{% endif %}{% if allTuto == 16 %} tutorial-show{% endif %}">
@@ -136,8 +136,8 @@
     {% endif %}
     <div{% if allTuto < 18 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('ship_perso', {'usePlanet': usePlanet.getId()}) }}">
-            <div class="btn-left{% if app.request.attributes.get('_route') == 'ship_perso' %} currentBack{% endif %}{% if character.getShip().getLastUpdate()|date('Y/m/d H:i:s') < "now"|date('Y/m/d H:i:s') and character.getShip().getRemainingPoints() > 0 %} availableBack{% endif %}{% if allTuto == 18 %} tutorial-show{% endif %}">
-                <span>{{ 'ship.perso'|trans }}</span>{% if character.getShip().getMax() > 0 and character.getShip().getRemainingPoints() > 0 %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipsFree'|trans }}"></span>{% endif %}
+            <div class="btn-left{% if app.request.attributes.get('_route') == 'ship_perso' %} currentBack{% endif %}{% if commander.getShip().getLastUpdate()|date('Y/m/d H:i:s') < "now"|date('Y/m/d H:i:s') and commander.getShip().getRemainingPoints() > 0 %} availableBack{% endif %}{% if allTuto == 18 %} tutorial-show{% endif %}">
+                <span>{{ 'ship.perso'|trans }}</span>{% if commander.getShip().getMax() > 0 and commander.getShip().getRemainingPoints() > 0 %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipsFree'|trans }}"></span>{% endif %}
             </div>
         </a>
     </div>
@@ -145,20 +145,20 @@
     <div{% if allTuto < 50 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('message', {'usePlanet': usePlanet.getId()}) }}">
             <div class="btn-left{% if app.request.attributes.get('_route') == 'message' %} currentBack{% endif %}">
-                {% if character.getViewMessage() == false %}<div class="text-orange glyphicon glyphicon-envelope"></div> {% endif %}<span>{{ 'message'|trans }}</span>
+                {% if commander.getViewMessage() == false %}<div class="text-orange glyphicon glyphicon-envelope"></div> {% endif %}<span>{{ 'message'|trans }}</span>
             </div>
         </a>
     </div>
     <div{% if allTuto < 24 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('salon', {'usePlanet': usePlanet.getId()}) }}">
             <div class="btn-left{% if app.request.attributes.get('_route') == 'salon' %} currentBack{% endif %}{% if allTuto == 24 %} tutorial-show{% endif %}">
-                <span>{% if character.getViewSalon() %}<span class="text-vert">{{ character.getViewSalon() }}</span> {% elseif character.getSalonAt() == null %}<div class="text-vert glyphicon glyphicon-comment"></div> {% endif %}{{ 'salon'|trans }}</span>
+                <span>{% if commander.getViewSalon() %}<span class="text-vert">{{ commander.getViewSalon() }}</span> {% elseif commander.getSalonAt() == null %}<div class="text-vert glyphicon glyphicon-comment"></div> {% endif %}{{ 'salon'|trans }}</span>
             </div>
         </a>
     </div>
     <a href="{{ path('report', {'usePlanet': usePlanet.getId()}) }}">
         <div class="btn-left{% if app.request.attributes.get('_route') == 'report' %} currentBack{% endif %}{% if allTuto == 1 or allTuto == 23 %} tutorial-show{% endif %}">
-            {% if character.getWhichViewsReport('all') %}<span class="text-vert">{{ character.getWhichViewsReport('all') }}</span> {% endif %}<span>{{ 'report'|trans }}</span>
+            {% if commander.getWhichViewsReport('all') %}<span class="text-vert">{{ commander.getWhichViewsReport('all') }}</span> {% endif %}<span>{{ 'report'|trans }}</span>
         </div>
     </a>
     <div class="btn-left separate"></div>

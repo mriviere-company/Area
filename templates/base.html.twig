@@ -12,9 +12,9 @@
         {% endblock %}
     </head>
     <body class="area">
-        {% set character = app.user.getMainCharacter() %}
-        {% set ally = character.getAlly() %}
-        {% set allPlanets = character.getPlanets() %}
+        {% set commander = app.user.getMainCommander() %}
+        {% set ally = commander.getAlly() %}
+        {% set allPlanets = commander.getPlanets() %}
         {% set allTuto = app.user.getTutorial() %}
 
         {%- block left_menu -%}
@@ -26,7 +26,7 @@
         {%- endblock -%}
 
         {%- block right_planet -%}
-            {% if character.getUsername() != 'Zombie' and character.getUsername() != 'Aliens' %}
+            {% if commander.getUsername() != 'Zombie' and commander.getUsername() != 'Aliens' %}
                 {{ render(controller('App\\Controller\\Connected\\AllPlanetsController::allPlanetsAction', {'usePlanet': usePlanet.getId()})) }}
             {% endif %}
         {%- endblock -%}

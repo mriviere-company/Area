@@ -20,9 +20,9 @@ class Quest
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Character", mappedBy="quests", fetch="EXTRA_LAZY")
+     * @ORM\ManyToMany(targetEntity="Commander", mappedBy="quests", fetch="EXTRA_LAZY")
      */
-    protected $characters;
+    protected $commanders;
 
     /**
      * @ORM\Column(name="gain",type="integer", options={"unsigned":true})
@@ -37,7 +37,7 @@ class Quest
 
     public function __construct()
     {
-        $this->characters = new ArrayCollection();
+        $this->commanders = new ArrayCollection();
         $this->gain = 500;
     }
 
@@ -74,43 +74,43 @@ class Quest
     }
 
     /**
-     * Add character
+     * Add commander
      *
-     * @param Character $character
+     * @param Commander $commander
      *
      * @return Quest
      */
-    public function addCharacter(Character $character)
+    public function addCommander(Commander $commander)
     {
-        $this->characters[] = $character;
+        $this->commanders[] = $commander;
 
         return $this;
     }
 
     /**
-     * Remove character
+     * Remove commander
      *
-     * @param Character $character
+     * @param Commander $commander
      */
-    public function removeCharacter(Character $character)
+    public function removeCommander(Commander $commander)
     {
-        $this->characters->removeElement($character);
+        $this->commanders->removeElement($commander);
     }
 
     /**
      * @return mixed
      */
-    public function getCharacters()
+    public function getCommanders()
     {
-        return $this->characters;
+        return $this->commanders;
     }
 
     /**
-     * @param mixed $characters
+     * @param mixed $commanders
      */
-    public function setcharacters($characters): void
+    public function setcommanders($commanders): void
     {
-        $this->characters = $characters;
+        $this->commanders = $commanders;
     }
 
     public function getId()

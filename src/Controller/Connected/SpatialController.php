@@ -37,13 +37,13 @@ class SpatialController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
 
-        if($character->getGameOver()) {
+        if($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
         if ($usePlanet->getProduct() && $usePlanet->getProduct()->getProductAt() < $now) {
@@ -85,12 +85,12 @@ class SpatialController extends AbstractController
                 $product->setDestroyer(1);
                 $product->setProductAt($now);
                 $em->persist($product);
-                $iaPlayer = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
+                $iaPlayer = $doctrine->getRepository(Commander::class)->findOneBy(['zombie' => 1]);
                 $fleet = new Fleet();
                 $fleet->setHunter(10);
                 $fleet->setCorvet(5);
                 $fleet->setBarge(1);
-                $fleet->setCharacter($iaPlayer);
+                $fleet->setCommander($iaPlayer);
                 $fleet->setPlanet($usePlanet);
                 $fleet->setAttack(1);
                 $fleet->setName('Horde');
@@ -99,15 +99,15 @@ class SpatialController extends AbstractController
                 $reportDef = new Report();
                 $reportDef->setType('invade');
                 $reportDef->setSendAt($now);
-                $reportDef->setCharacter($character);
+                $reportDef->setCommander($commander);
                 $reportDef->setTitle("Rapport d'invasion : Victoire (défense)");
                 $reportDef->setImageName("defend_win_report.webp");
                 $reportDef->setContent("Bien joué ! Vos travailleurs et soldats ont repoussés l'invasion des " . $iaPlayer->getUsername() . " sur votre planète " . $usePlanet->getName() . " - (" . $usePlanet->getSector()->getgalaxy()->getPosition() . "." . $usePlanet->getSector()->getPosition() . "." . $usePlanet->getPosition() . ") . <span class='text-rouge'>100</span> zombies vous ont attaqués, tous ont été tués. Vous remportez <span class='text-vert'>+100</span> points de Guerre et <span class='text-vert'>+10.000 bitcoins</span>. Recrutez de nouveaux soldats !");
                 $usePlanet->setSoldier($usePlanet->getSoldier() - 2);
-                $character->setBitcoin($character->getBitcoin() + 10000);
+                $commander->setBitcoin($commander->getBitcoin() + 10000);
                 $em->persist($reportDef);
-                $character->setViewReport(false);
-                $character->getRank()->setWarPoint(100);
+                $commander->setViewReport(false);
+                $commander->getRank()->setWarPoint(100);
                 $em->flush();
 
                 return $this->redirectToRoute('spatial', ['usePlanet' => $usePlanet->getId()]);
@@ -144,37 +144,37 @@ class SpatialController extends AbstractController
             $bitcoinLess = 0;
             $time = 0;
             foreach ($all_ships as $one_ship) {
-                $niobiumLess = $niobiumLess + $character->getNbShips($one_ship[0], $one_ship[1]);
-                $waterLess = $waterLess + $character->getWtShips($one_ship[0], $one_ship[1]);
-                $workerLess = $workerLess + $character->getWkShips($one_ship[0], $one_ship[1]);
-                $soldierLess = $soldierLess + $character->getSdShips($one_ship[0], $one_ship[1]);
-                $warPoint = $warPoint + $character->getPdgShips($one_ship[0], $one_ship[1]);
-                $bitcoinLess = $bitcoinLess + $character->getBtShips($one_ship[0], $one_ship[1]);
-                $time = $time + $character->getTime($one_ship[0], $one_ship[1], 0);
+                $niobiumLess = $niobiumLess + $commander->getNbShips($one_ship[0], $one_ship[1]);
+                $waterLess = $waterLess + $commander->getWtShips($one_ship[0], $one_ship[1]);
+                $workerLess = $workerLess + $commander->getWkShips($one_ship[0], $one_ship[1]);
+                $soldierLess = $soldierLess + $commander->getSdShips($one_ship[0], $one_ship[1]);
+                $warPoint = $warPoint + $commander->getPdgShips($one_ship[0], $one_ship[1]);
+                $bitcoinLess = $bitcoinLess + $commander->getBtShips($one_ship[0], $one_ship[1]);
+                $time = $time + $commander->getTime($one_ship[0], $one_ship[1], 0);
             }
             $time = round($time / $usePlanet->getShipProduction());
             $now->add(new DateInterval('PT' . round($time) . 'S'));
 
             if (($usePlanet->getNiobium() < $niobiumLess || $usePlanet->getWater() < $waterLess) ||
-                ($usePlanet->getWorker() < $workerLess) || ($cargoI && $character->getCargo() < 1) ||
+                ($usePlanet->getWorker() < $workerLess) || ($cargoI && $commander->getCargo() < 1) ||
                 ($usePlanet->getSoldier() < $soldierLess) ||
-                ($cargoV && $character->getCargo() < 3) || ($cargoX && $character->getCargo() < 5) ||
-                ($colonizer && $character->getTerraformation() == 0) || ($recycleur && $character->getRecycleur() == 0) ||
-                ($barge && $character->getBarge() == 0) || ($hunter && ($character->getIndustry() == 0 || $character->getMissile() == 0)) ||
-                ($fregate && ($character->getLaser() < 1 || $character->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0)) ||
-                ($hunterHeavy && ($character->getMissile() < 2 || $usePlanet->getLightUsine() == 0)) ||
-                ($corvet && ($character->getMissile() != 3 || $usePlanet->getLightUsine() == 0 || $character->getLightShip() < 2)) ||
-                ($corvetLaser && ($character->getMissile() != 3 || $usePlanet->getLightUsine() == 0 || $character->getLightShip() != 3 || $character->getLaser() < 1)) ||
-                ($fregatePlasma && ($character->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0 || $character->getPlasma() < 1 || $character->getLaser() < 1)) ||
-                ($croiser && ($character->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0 || $character->getPlasma() < 2 || $character->getLaser() < 2)) ||
-                ($ironClad && ($character->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0 || $character->getHeavyShip() < 2 || $character->getPlasma() != 3 || $character->getLaser() != 3)) ||
-                ($destroyer && ($character->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0 || $character->getHeavyShip() != 3 || $character->getPlasma() != 3 || $character->getLaser() != 3)) ||
-                ($moonMaker && ($character->getTerraformation() < 15 || $usePlanet->getHeavyUsine() == 0)) ||
-                ($radarShip && ($character->getOnde() < 3 || $usePlanet->getLightUsine() == 0)) ||
-                ($brouilleurShip && ($character->getOnde() < 5 || $usePlanet->getLightUsine() == 0)) ||
-                ($motherShip && ($character->getUtility() != 3 || $usePlanet->getHeavyUsine() == 0)) ||
-                ($warPoint > $character->getRank()->getWarPoint() || $bitcoinLess > $character->getBitcoin()) ||
-                ($character->getColonizer() && $colonizer) || ($motherShip && $character->getMotherShip()))
+                ($cargoV && $commander->getCargo() < 3) || ($cargoX && $commander->getCargo() < 5) ||
+                ($colonizer && $commander->getTerraformation() == 0) || ($recycleur && $commander->getRecycleur() == 0) ||
+                ($barge && $commander->getBarge() == 0) || ($hunter && ($commander->getIndustry() == 0 || $commander->getMissile() == 0)) ||
+                ($fregate && ($commander->getLaser() < 1 || $commander->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0)) ||
+                ($hunterHeavy && ($commander->getMissile() < 2 || $usePlanet->getLightUsine() == 0)) ||
+                ($corvet && ($commander->getMissile() != 3 || $usePlanet->getLightUsine() == 0 || $commander->getLightShip() < 2)) ||
+                ($corvetLaser && ($commander->getMissile() != 3 || $usePlanet->getLightUsine() == 0 || $commander->getLightShip() != 3 || $commander->getLaser() < 1)) ||
+                ($fregatePlasma && ($commander->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0 || $commander->getPlasma() < 1 || $commander->getLaser() < 1)) ||
+                ($croiser && ($commander->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0 || $commander->getPlasma() < 2 || $commander->getLaser() < 2)) ||
+                ($ironClad && ($commander->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0 || $commander->getHeavyShip() < 2 || $commander->getPlasma() != 3 || $commander->getLaser() != 3)) ||
+                ($destroyer && ($commander->getMissile() != 3 || $usePlanet->getHeavyUsine() == 0 || $commander->getHeavyShip() != 3 || $commander->getPlasma() != 3 || $commander->getLaser() != 3)) ||
+                ($moonMaker && ($commander->getTerraformation() < 15 || $usePlanet->getHeavyUsine() == 0)) ||
+                ($radarShip && ($commander->getOnde() < 3 || $usePlanet->getLightUsine() == 0)) ||
+                ($brouilleurShip && ($commander->getOnde() < 5 || $usePlanet->getLightUsine() == 0)) ||
+                ($motherShip && ($commander->getUtility() != 3 || $usePlanet->getHeavyUsine() == 0)) ||
+                ($warPoint > $commander->getRank()->getWarPoint() || $bitcoinLess > $commander->getBitcoin()) ||
+                ($commander->getColonizer() && $colonizer) || ($motherShip && $commander->getMotherShip()))
             {
                 return $this->redirectToRoute('spatial', ['usePlanet' => $usePlanet->getId()]);
             }
@@ -243,13 +243,13 @@ class SpatialController extends AbstractController
             $usePlanet->setWater($usePlanet->getWater() - $waterLess);
             $usePlanet->setWorker($usePlanet->getWorker() - $workerLess);
             $usePlanet->setSoldier($usePlanet->getSoldier() - $soldierLess);
-            $character->getRank()->setWarPoint($character->getRank()->getWarPoint() - $warPoint);
-            $character->setBitcoin($character->getBitcoin() - $bitcoinLess);
+            $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() - $warPoint);
+            $commander->setBitcoin($commander->getBitcoin() - $bitcoinLess);
             $em->persist($product);
-            $quest = $character->checkQuests('ships');
+            $quest = $commander->checkQuests('ships');
             if($quest) {
-                $character->getRank()->setWarPoint($character->getRank()->getWarPoint() + $quest->getGain());
-                $character->removeQuest($quest);
+                $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());
+                $commander->removeQuest($quest);
             }
 
             $em->flush();
@@ -279,14 +279,14 @@ class SpatialController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
 
-        if(count($character->getFleets()) >= 100) {
+        if(count($commander->getFleets()) >= 100) {
             $this->addFlash("fail", "Vous avez atteint la limite (100) de flottes autorisées par l'Instance.");
             return $this->redirectToRoute('spatial', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -351,7 +351,7 @@ class SpatialController extends AbstractController
             $fleet->setIronClad($form_createFleet->get('ironClad')->getData());
             $fleet->setDestroyer($form_createFleet->get('destroyer')->getData());
 
-            $eAlly = $character->getAllyEnnemy();
+            $eAlly = $commander->getAllyEnnemy();
             $warAlly = [];
             $x = 0;
             foreach ($eAlly as $tmp) {
@@ -359,7 +359,7 @@ class SpatialController extends AbstractController
                 $x++;
             }
 
-            $fAlly = $character->getAllyFriends();
+            $fAlly = $commander->getAllyFriends();
             $friendAlly = [];
             $x = 0;
             foreach ($fAlly as $tmp) {
@@ -372,33 +372,33 @@ class SpatialController extends AbstractController
                 $friendAlly = ['impossible', 'personne'];
             }
 
-            if($character->getAlly()) {
-                $allyF = $character->getAlly();
+            if($commander->getAlly()) {
+                $allyF = $commander->getAlly();
             } else {
                 $allyF = 'wedontexistsok';
             }
 
-            $fleets = $em->getRepository('App:Fleet')
+            $fleets = $doctrine->getRepository(Fleet::class)
                 ->createQueryBuilder('f')
-                ->join('f.character', 'c')
+                ->join('f.commander', 'c')
                 ->leftJoin('c.ally', 'a')
                 ->where('f.planet = :planet')
                 ->andWhere('f.attack = true OR a.sigle in (:ally)')
-                ->andWhere('f.character != :character')
+                ->andWhere('f.commander != :commander')
                 ->andWhere('f.flightTime is null')
                 ->andWhere('c.ally is null OR a.sigle not in (:friend)')
                 ->andWhere('c.ally is null OR c.ally != :myAlly')
-                ->setParameters(['planet' => $usePlanet, 'ally' => $warAlly, 'character' => $character, 'friend' => $friendAlly, 'myAlly' => $allyF])
+                ->setParameters(['planet' => $usePlanet, 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
                 ->getQuery()
                 ->getResult();
 
-            $fleetFight = $em->getRepository('App:Fleet')
+            $fleetFight = $doctrine->getRepository(Fleet::class)
                 ->createQueryBuilder('f')
                 ->where('f.planet = :planet')
-                ->andWhere('f.character != :character')
+                ->andWhere('f.commander != :commander')
                 ->andWhere('f.fightAt is not null')
                 ->andWhere('f.flightTime is null')
-                ->setParameters(['planet' => $usePlanet, 'character' => $character])
+                ->setParameters(['planet' => $usePlanet, 'commander' => $commander])
                 ->getQuery()
                 ->setMaxResults(1)
                 ->getOneOrNullResult();
@@ -407,13 +407,13 @@ class SpatialController extends AbstractController
                 $fleet->setFightAt($fleetFight->getFightAt());
             } elseif ($fleets) {
                 foreach ($fleets as $setWar) {
-                    if($setWar->getCharacter()->getAlly()) {
+                    if($setWar->getCommander()->getAlly()) {
                         $fleetArm = $fleet->getMissile() + $fleet->getLaser() + $fleet->getPlasma();
                         if($fleetArm > 0) {
                             $fleet->setAttack(1);
                         }
                         foreach ($eAlly as $tmp) {
-                            if ($setWar->getCharacter()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                            if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
                                 $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                                 if($fleetArm > 0) {
                                     $setWar->setAttack(1);
@@ -422,7 +422,7 @@ class SpatialController extends AbstractController
                         }
                     }
                 }
-                $allFleets = $em->getRepository('App:Fleet')
+                $allFleets = $doctrine->getRepository(Fleet::class)
                     ->createQueryBuilder('f')
                     ->where('f.planet = :planet')
                     ->andWhere('f.flightTime is null')
@@ -445,7 +445,7 @@ class SpatialController extends AbstractController
             if (($usePlanet->getNbCdr() > 0 || $usePlanet->getWtCdr() > 0) && $fleet->getRecycleur() > 0) {
                 $fleet->setRecycleAt($now);
             }
-            $fleet->setCharacter($character);
+            $fleet->setCommander($commander);
             $fleet->setPlanet($usePlanet);
             if ($form_createFleet->get('name')->getData()) {
                 $fleet->setName($form_createFleet->get('name')->getData());

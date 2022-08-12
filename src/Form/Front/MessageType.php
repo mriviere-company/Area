@@ -9,7 +9,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use App\Entity\Character;
+use App\Entity\Commander;
 
 class MessageType extends AbstractType
 {
@@ -33,11 +33,11 @@ class MessageType extends AbstractType
                 ]
             )
             ->add(
-                'character',
+                'commander',
                 EntityType::class,
                 [
-                    'class' => Character::class,
-                    'label' => 'form.character',
+                    'class' => Commander::class,
+                    'label' => 'form.commander',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('c')
                             ->where('c.rank is not null')
@@ -45,7 +45,7 @@ class MessageType extends AbstractType
                     },
                     'choice_label' => 'username',
                     'attr'  => [
-                        'placeholder' => 'form.character',
+                        'placeholder' => 'form.commander',
                         'class' => 'game-input',
                         'autocomplete' => 'off',
                     ],

@@ -6,28 +6,28 @@
 
 {% block body %}
     <div class="front-block userPage pt-4">
-        <div class="my-2 text-center"><span class="glyphicon glyphicon-star text-orange"></span> {{ 'user.level'|trans }} {{ characterProfil.getLevel() }}</div>
+        <div class="my-2 text-center"><span class="glyphicon glyphicon-star text-orange"></span> {{ 'user.level'|trans }} {{ commanderProfil.getLevel() }}</div>
         <div class="row">
             <div class="col-4">
-                {% if characterProfil.imageName %}
-                    <div class="text-center mt-2 ml-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="90" width="90" src="{{ vich_uploader_asset(character, 'imageFile') }}"></div>
+                {% if commanderProfil.imageName %}
+                    <div class="text-center mt-2 ml-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="90" width="90" src="{{ vich_uploader_asset(commander, 'imageFile') }}"></div>
                 {% else %}
                     <div class="text-center mt-2 ml-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="90" width="90" src="{{ asset('img/avatar.webp') }}"></div>
                 {% endif %}
-                {% if characterProfil.getAlly() %}
-                    {% if characterProfil.getAlly.imageName %}
-                        <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="120" width="120" src="{{ vich_uploader_asset(characterProfil.getAlly, 'imageFile') }}"></div>
+                {% if commanderProfil.getAlly() %}
+                    {% if commanderProfil.getAlly.imageName %}
+                        <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="120" width="120" src="{{ vich_uploader_asset(commanderProfil.getAlly, 'imageFile') }}"></div>
                     {% else %}
                         <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}" class="border-solid-img" height="120" width="120" src="{{ asset('img/ally.webp') }}"></div>
                     {% endif %}
                 {% endif %}
             </div>
             <div class="col-8">
-                <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.name'|trans }} {{ characterProfil.getUsername() }}</div>
-                {% if characterProfil.getAlly() %}
-                    {% if characterProfil.getAlly().getPolitic() != 'fascism' %}
-                        <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.planet'|trans }} {{ characterProfil.getAllPlanets() }}</div>
-                        {% if characterProfil.getAlly().getPolitic() == 'democrat' %}<div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.first.planet'|trans }} {{ characterProfil.getFirstPlanet(usePlanet)|raw  }}</div>{% endif %}
+                <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.name'|trans }} {{ commanderProfil.getUsername() }}</div>
+                {% if commanderProfil.getAlly() %}
+                    {% if commanderProfil.getAlly().getPolitic() != 'fascism' %}
+                        <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.planet'|trans }} {{ commanderProfil.getAllPlanets() }}</div>
+                        {% if commanderProfil.getAlly().getPolitic() == 'democrat' %}<div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.first.planet'|trans }} {{ commanderProfil.getFirstPlanet(usePlanet)|raw  }}</div>{% endif %}
                         <div class="my-2">
                             <span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.galaxy'|trans }}
                             {% set x = 1 %}
@@ -38,7 +38,7 @@
                         </div>
                     {% endif %}
                 {% else %}
-                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.planet'|trans }} {{ characterProfil.getAllPlanets() }}</div>
+                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.planet'|trans }} {{ commanderProfil.getAllPlanets() }}</div>
                     <div class="my-2">
                         <span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.galaxy'|trans }}
                         {% set x = 1 %}
@@ -48,17 +48,17 @@
                         {% endfor %}
                     </div>
                 {% endif %}
-                <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.ally'|trans }} {% if characterProfil.getAlly() %}<span><a data-toggle="modal" data-target="#allyModal" href="{{ path('ally_profil_modal', {'allyCharacter': characterProfil.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ characterProfil.getAlly().getName() }}</a></span>{% else %}{{ 'user.allyNone'|trans }}{% endif %}</div>
-                {% if characterProfil.getAlly() %}<div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.politic'|trans }} {{ characterProfil.getAlly().getPolitic()|trans }}</div>{% endif %}
-                {% if characterProfil.getNbrInvade() %}
-                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.invade'|trans }} {{ characterProfil.getNbrInvade() }}</div>
+                <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.ally'|trans }} {% if commanderProfil.getAlly() %}<span><a data-toggle="modal" data-target="#allyModal" href="{{ path('ally_profil_modal', {'allyCommander': commanderProfil.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ commanderProfil.getAlly().getName() }}</a></span>{% else %}{{ 'user.allyNone'|trans }}{% endif %}</div>
+                {% if commanderProfil.getAlly() %}<div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.politic'|trans }} {{ commanderProfil.getAlly().getPolitic()|trans }}</div>{% endif %}
+                {% if commanderProfil.getNbrInvade() %}
+                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.invade'|trans }} {{ commanderProfil.getNbrInvade() }}</div>
                 {% endif %}
-                {% if characterProfil.getExecution() %}
-                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.execution'|trans }} {{ characterProfil.getExecution() }}</div>
+                {% if commanderProfil.getExecution() %}
+                    <div class="my-2"><span class="glyphicon glyphicon-link text-orange"></span> {{ 'user.execution'|trans }} {{ commanderProfil.getExecution() }}</div>
                 {% endif %}
             </div>
         </div>
-        <div class="my-4 text-center pb-3"><a class="confirm-button" data-toggle="modal" data-target="#respondeModal" href="{{ path('message_responde', {'userRecever': characterProfil.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'responde'|trans }}</a></div>
+        <div class="my-4 text-center pb-3"><a class="confirm-button" data-toggle="modal" data-target="#respondeModal" href="{{ path('message_responde', {'userRecever': commanderProfil.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'responde'|trans }}</a></div>
     </div>
     <div class="modal fade" id="allyModal" tabindex="-1" role="dialog" aria-labelledby="allyModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

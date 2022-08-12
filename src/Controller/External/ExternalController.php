@@ -26,14 +26,14 @@ class ExternalController extends AbstractController
      * @throws NonUniqueResultException
      * @throws TransportExceptionInterface
      */
-    public function recoveryPwAction(ManagerRegistry $doctrine, MailerInterface $mailer, $key): RedirectResponse
+    public function recoveryPwAction(ManagerRegistry $doctrine, MailerInterface $mailer, $key = null): RedirectResponse
     {
         $userId = $key; //fixmr decrypt
         $em = $doctrine->getManager();
         if($this->getUser()) {
             return $this->redirectToRoute('home');
         }
-        $userPw = $em->getRepository('App:User')
+        $userPw = $doctrine->getRepository(User::class)
             ->createQueryBuilder('u')
             ->where('u.id = :user')
             ->setParameter('user', $userId)
@@ -75,7 +75,7 @@ class ExternalController extends AbstractController
     {
         $userId = decrypt($key); //fixmr decrypt
         $em = $doctrine->getManager();
-        $user = $em->getRepository('App:User')->find(['id' => $userId]);
+        $user = $doctrine->getRepository(User::class)->find(['id' => $userId]);
         $user->setEmailConfirm(1);
         $em->flush();
 
@@ -103,7 +103,7 @@ class ExternalController extends AbstractController
     {
         $userId = decrypt($key); //fixmr decrypt
         $em = $doctrine->getManager();
-        $user = $em->getRepository('App:User')->find(['id' => $userId]);
+        $user = $doctrine->getRepository(User::class)->find(['id' => $userId]);
         $user->setNewletter(1);
         $em->flush();
 
@@ -130,7 +130,7 @@ class ExternalController extends AbstractController
     public function mailAdminAction(ManagerRegistry $doctrine, MailerInterface $mailer): RedirectResponse
     {
         $em = $doctrine->getManager();
-        $users = $em->getRepository('App:User')->findAll();
+        $users = $doctrine->getRepository(User::class)->findAll();
 
         foreach($users as $user) {
             if (!stripos(strtoupper($user->getEmail()), 'FAKE')) {

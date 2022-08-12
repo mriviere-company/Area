@@ -25,7 +25,7 @@ class ShareController extends AbstractController
     {
         $em = $doctrine->getManager();
 
-        $report = $em->getRepository('App:Report')
+        $report = $doctrine->getRepository(Report::class)
             ->createQueryBuilder('r')
             ->andWhere('r.shareKey = :key')
             ->setParameters(['key' => $key])
@@ -48,7 +48,7 @@ class ShareController extends AbstractController
     {
         $em = $doctrine->getManager();
 
-        $message = $em->getRepository('App:Message')
+        $message = $doctrine->getRepository(Message::class)
             ->createQueryBuilder('r')
             ->andWhere('r.shareKey = :key')
             ->setParameters(['key' => $key])

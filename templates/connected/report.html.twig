@@ -25,22 +25,22 @@
             <div class="float-right mb-3"><a class="btn-new" href="{{ path('report_all_view', {'usePlanet': usePlanet.getId()}) }}">{{ 'AllNewView'|trans }}</a></div>
             <ul class="nav nav-tabs mt-1" id="myTab">
                 <li class="nav-item">
-                    <a{% if reportPage == 'defaut' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'defaut', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.defaut'|trans }} {% if character.getWhichViewsReport('defaut') %}<span class="text-vert">{{ character.getWhichViewsReport('defaut') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'defaut' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'defaut', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.defaut'|trans }} {% if commander.getWhichViewsReport('defaut') %}<span class="text-vert">{{ commander.getWhichViewsReport('defaut') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'zombie' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'zombie', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.zombie'|trans }} {% if character.getWhichViewsReport('zombie') %}<span class="text-vert">{{ character.getWhichViewsReport('zombie') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'zombie' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'zombie', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.zombie'|trans }} {% if commander.getWhichViewsReport('zombie') %}<span class="text-vert">{{ commander.getWhichViewsReport('zombie') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'fight' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'fight', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.fight'|trans }} {% if character.getWhichViewsReport('fight') %}<span class="text-vert">{{ character.getWhichViewsReport('fight') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'fight' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'fight', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.fight'|trans }} {% if commander.getWhichViewsReport('fight') %}<span class="text-vert">{{ commander.getWhichViewsReport('fight') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'invade' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'invade', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.invade'|trans }} {% if character.getWhichViewsReport('invade') %}<span class="text-vert">{{ character.getWhichViewsReport('invade') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'invade' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'invade', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.invade'|trans }} {% if commander.getWhichViewsReport('invade') %}<span class="text-vert">{{ commander.getWhichViewsReport('invade') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'economic' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'economic', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.economic'|trans }} {% if character.getWhichViewsReport('economic') %}<span class="text-vert">{{ character.getWhichViewsReport('economic') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'economic' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'economic', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.economic'|trans }} {% if commander.getWhichViewsReport('economic') %}<span class="text-vert">{{ commander.getWhichViewsReport('economic') }}</span>{% endif %}</a>
                 </li>
                 <li class="nav-item">
-                    <a{% if reportPage == 'move' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'move', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.move'|trans }} {% if character.getWhichViewsReport('move') %}<span class="text-vert">{{ character.getWhichViewsReport('move') }}</span>{% endif %}</a>
+                    <a{% if reportPage == 'move' %} class="nav-link active"{% endif %} href="{{ path('report_id', {'id': 'move', 'usePlanet': usePlanet.getId()}) }}" >{{ 'report.move'|trans }} {% if commander.getWhichViewsReport('move') %}<span class="text-vert">{{ commander.getWhichViewsReport('move') }}</span>{% endif %}</a>
                 </li>
             </ul>
             {% for report in reports|slice(0, 40) %}

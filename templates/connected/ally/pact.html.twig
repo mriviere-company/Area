@@ -16,7 +16,7 @@
                 <h1 class="text-center p-4">{{ 'ally.pactsTitle'|trans }}</h1>
                 <ul class="nav nav-tabs mt-4" id="myTab">
                     <li class="nav-item">
-                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCharacters()|length }} {{ 'ally.members'|trans }}</a>
+                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCommanders()|length }} {{ 'ally.members'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_bank', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.found'|trans }}</a>
@@ -27,7 +27,7 @@
                     <li class="nav-item">
                         <a href="{{ path('ally_page_add', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.add'|trans }}</a>
                     </li>
-                    {% if character.getGrade().getPlacement() == 1 %}
+                    {% if commander.getGrade().getPlacement() == 1 %}
                         <li class="nav-item">
                             <a href="{{ path('ally_page_admin', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.admin'|trans }}</a>
                         </li>
@@ -40,7 +40,7 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="pacts" role="tabpanel" aria-labelledby="pacts-tab">
-                        {% if character.getGrade().getCanPeace() == 1 or character.getGrade().getCanWar() == 1 %}
+                        {% if commander.getGrade().getCanPeace() == 1 or commander.getGrade().getCanWar() == 1 %}
                             {{ form_start(form_allyPact) }}
                             <div class="row mt-5">
                                 <div class="offset-1 col-3 form-group">
@@ -234,13 +234,13 @@
                                 {% endif %}
                             </th>
                             <th class="tab-cells-name p-2">
-                                <span><a data-toggle="modal" data-target="#allyModal" href="{{ path('ally_profil_modal', {'allyCharacter': ally.getId(), 'usePlanet': usePlanet.getId()}) }}">[{{ ally.getSigle() }}] {{ ally.getName() }}</a></span>
+                                <span><a data-toggle="modal" data-target="#allyModal" href="{{ path('ally_profil_modal', {'allyCommander': ally.getId(), 'usePlanet': usePlanet.getId()}) }}">[{{ ally.getSigle() }}] {{ ally.getName() }}</a></span>
                             </th>
                             <th class="tab-cells-name p-2">
                                 {{ ally.getPolitic()|trans }}
                             </th>
                             <th class="tab-cells-name p-2">
-                                {{ ally.getCharacters()|length }} / {{ ally.maxMembers }}
+                                {{ ally.getCommanders()|length }} / {{ ally.maxMembers }}
                             </th>
                             <th class="tab-cells-name p-2">
                                 {{ ally.getCreatedAt()|date('d/m/Y') }}

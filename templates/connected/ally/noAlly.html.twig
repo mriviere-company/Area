@@ -24,7 +24,7 @@
         <div class="front-block-second">
             {% if ally %}
             {% else %}
-                {% if character.getAllyBan()|date('Y/m/d H:i:s') < "now"|date('Y/m/d H:i:s') %}<h3 class="text-center text-orange mb-5">{{ 'ally.banAlly'|trans }} <span class="timerArea" hidden>{{ character.getAllyBan()|date('Y/m/d H:i:s') }}</span></h3>{% endif %}
+                {% if commander.getAllyBan()|date('Y/m/d H:i:s') < "now"|date('Y/m/d H:i:s') %}<h3 class="text-center text-orange mb-5">{{ 'ally.banAlly'|trans }} <span class="timerArea" hidden>{{ commander.getAllyBan()|date('Y/m/d H:i:s') }}</span></h3>{% endif %}
                 {{ form_start(form_ally) }}
                 <div class="row">
                     <div class="offset-1 col-4 form-group">
@@ -62,7 +62,7 @@
                         <th class="tab-cells-name">{{ 'ally.acceptProp'|trans }}</th>
                         <th class="tab-cells-name">{{ 'ally.refuseProp'|trans }}</th>
                     </tr>
-                    {% for proposal in character.getProposals() %}
+                    {% for proposal in commander.getProposals() %}
                         <tr>
                             <td class="center-cells">
                                 {% if proposal.getAlly().getImageName() %}
@@ -70,7 +70,7 @@
                                 {% else %}
                                     <img alt="{{ 'image'|trans({},'front_global') }}" height="10" width="15" src="{{ asset('img/ally.webp') }}">
                                 {% endif %}
-                                <span><a href="{{ path('ally_profil', {'allyCharacter': proposal.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ proposal.getAlly().getName() }}</a></span>
+                                <span><a href="{{ path('ally_profil', {'allyCommander': proposal.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ proposal.getAlly().getName() }}</a></span>
                             </td>
                             <td class="center-cells">
                                 {{ proposal.getProposalAt()|date('d/m/Y H:i') }}

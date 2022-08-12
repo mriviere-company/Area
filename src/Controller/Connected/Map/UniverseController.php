@@ -26,16 +26,16 @@ class UniverseController extends AbstractController
     public function universeAction(ManagerRegistry $doctrine, Planet $usePlanet = null): RedirectResponse|Response
     {
         $em = $doctrine->getManager();
-        $server = $usePlanet ? $usePlanet->getSector()->getGalaxy()->getServer() : $planet = $em->getRepository(
-            'App:Server'
+        $server = $usePlanet ? $usePlanet->getSector()->getGalaxy()->getServer() : $planet = $doctrine->getRepository(
+            Server::class
         )->createQueryBuilder('s')->getQuery()->setMaxresults(1)->getOneOrNullResult();
 
-        $galaxys = $em->getRepository('App:Galaxy')
+        $galaxys = $doctrine->getRepository(Galaxy::class)
             ->createQueryBuilder('g')
             ->join('g.sectors', 's')
             ->join('s.planets', 'p')
-            ->join('p.character', 'c')
-            ->select('g.id, g.position, count(DISTINCT c.id) as characters')
+            ->join('p.commander', 'c')
+            ->select('g.id, g.position, count(DISTINCT c.id) as commanders')
             ->groupBy('g.id')
             ->orderBy('g.position', 'ASC')
             ->where('g.server = :server')
@@ -43,9 +43,9 @@ class UniverseController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $doms = $em->getRepository('App:Ally')
+        $doms = $doctrine->getRepository(Ally::class)
             ->createQueryBuilder('a')
-            ->join('a.characters', 'c')
+            ->join('a.commanders', 'c')
             ->join('c.planets', 'p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
@@ -58,12 +58,12 @@ class UniverseController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $totalPlanet = $em->getRepository('App:Server')
+        $totalPlanet = $doctrine->getRepository(Server::class)
             ->createQueryBuilder('s')
             ->join('s.galaxys', 'g')
             ->join('g.sectors', 'se')
             ->join('se.planets', 'p')
-            ->join('p.character', 'c')
+            ->join('p.commander', 'c')
             ->join('c.ally', 'a')
             ->select('count(p) as number')
             ->where('g.server = :server')
@@ -73,12 +73,12 @@ class UniverseController extends AbstractController
             ->getOneOrNullResult();
 
         if ($totalPlanet) {
-            $totalPlanet = $em->getRepository('App:Server')
+            $totalPlanet = $doctrine->getRepository(Server::class)
                 ->createQueryBuilder('s')
                 ->join('s.galaxys', 'g')
                 ->join('g.sectors', 'se')
                 ->join('se.planets', 'p')
-                ->join('p.character', 'c')
+                ->join('p.commander', 'c')
                 ->join('c.ally', 'a')
                 ->select('count(p) as number')
                 ->where('g.server = :server')

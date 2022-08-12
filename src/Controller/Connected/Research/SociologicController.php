@@ -30,24 +30,24 @@ class SociologicController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getAeroponicFarm() + 1;
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getAeroponicFarm() + 1;
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < ($level * 16000)) ||
-            ($level == 1 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < ($level * 16000)) ||
+            ($level == 1 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 480 / $character->getScientistProduction())) . 'S'));
-        $character->setSearch('aeroponicFarm');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * 16000));
+        $now->add(new DateInterval('PT' . round(($level * 480 / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch('aeroponicFarm');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * 16000));
         if(($user->getTutorial() == 8)) {
             $user->setTutorial(9);
         }
@@ -68,24 +68,24 @@ class SociologicController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getDemography() + 1;
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getDemography() + 1;
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < ($level * 8000)) ||
-            ($level == 6 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < ($level * 8000)) ||
+            ($level == 6 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 480 / $character->getScientistProduction())) . 'S'));
-        $character->setSearch('demography');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * 8000));
+        $now->add(new DateInterval('PT' . round(($level * 480 / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch('demography');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * 8000));
         if(($user->getTutorial() == 8)) {
             $user->setTutorial(9);
         }
@@ -106,24 +106,24 @@ class SociologicController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getDiscipline() + 1;
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getDiscipline() + 1;
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < ($level * 11700) || $character->getDemography() == 0) ||
-            ($level == 4 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < ($level * 11700) || $commander->getDemography() == 0) ||
+            ($level == 4 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 930 / $character->getScientistProduction())) . 'S'));
-        $character->setSearch('discipline');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * 11700));
+        $now->add(new DateInterval('PT' . round(($level * 930 / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch('discipline');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * 11700));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -141,24 +141,24 @@ class SociologicController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getBarbed() + 1;
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getBarbed() + 1;
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < ($level * 200000) || $character->getDiscipline() != 3) ||
-            ($level == 6 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < ($level * 200000) || $commander->getDiscipline() != 3) ||
+            ($level == 6 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 1200 / $character->getScientistProduction())) . 'S'));
-        $character->setSearch('barbed');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * 200000));
+        $now->add(new DateInterval('PT' . round(($level * 1200 / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch('barbed');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * 200000));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -176,24 +176,24 @@ class SociologicController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getTank() + 1;
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getTank() + 1;
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < ($level * 40000) || $character->getDiscipline() != 3) ||
-            ($level == 2 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < ($level * 40000) || $commander->getDiscipline() != 3) ||
+            ($level == 2 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 2000 / $character->getScientistProduction())) . 'S'));
-        $character->setSearch('tank');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * 40000));
+        $now->add(new DateInterval('PT' . round(($level * 2000 / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch('tank');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * 40000));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -207,24 +207,24 @@ class SociologicController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getExpansion() + 1;
-        $userPdg = $character->getRank()->getWarPoint();
+        $level = $commander->getExpansion() + 1;
+        $userPdg = $commander->getRank()->getWarPoint();
 
-        if(($userPdg < ($level * 75000) || $character->getTerraformation() <= 17) ||
-            ($level == 3 || $character->getSearchAt() > $now)) {
+        if(($userPdg < ($level * 75000) || $commander->getTerraformation() <= 17) ||
+            ($level == 3 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 6000 / $character->getScientistProduction())) . 'S'));
-        $character->setSearch('expansion');
-        $character->setSearchAt($now);
-        $character->getRank()->setWarPoint($userPdg - ($level * 75000));
+        $now->add(new DateInterval('PT' . round(($level * 6000 / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch('expansion');
+        $commander->setSearchAt($now);
+        $commander->getRank()->setWarPoint($userPdg - ($level * 75000));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);

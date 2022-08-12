@@ -63,9 +63,9 @@ class Server
     protected $production;
 
     /**
-     * @ORM\OneToMany(targetEntity="Character", mappedBy="server", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Commander", mappedBy="server", fetch="EXTRA_LAZY")
      */
-    protected $characters;
+    protected $commanders;
 
     /**
      * @ORM\Column(name="attackStartAt",type="datetime", nullable=true)
@@ -109,7 +109,7 @@ class Server
         $nowBis = new DateTime();
         $nowTer = new DateTime();
 
-        $this->characters = new ArrayCollection();
+        $this->commanders = new ArrayCollection();
         $this->galaxys = new ArrayCollection();
         $this->events = new ArrayCollection();
         $this->salons = new ArrayCollection();
@@ -207,41 +207,41 @@ class Server
     /**
      * @return mixed
      */
-    public function getCharacters()
+    public function getCommanders()
     {
-        return $this->characters;
+        return $this->commanders;
     }
 
     /**
-     * @param mixed $characters
+     * @param mixed $commanders
      */
-    public function setCharacters($characters): void
+    public function setCommanders($commanders): void
     {
-        $this->characters = $characters;
+        $this->commanders = $commanders;
     }
 
     /**
-     * Add character
+     * Add commander
      *
-     * @param Character $characters
+     * @param Commander $commanders
      *
      * @return Server
      */
-    public function addCharacter(Character $characters): Server
+    public function addCommander(Commander $commanders): Server
     {
-        $this->characters[] = $characters;
+        $this->commanders[] = $commanders;
 
         return $this;
     }
 
     /**
-     * Remove character
+     * Remove commander
      *
-     * @param Character $characters
+     * @param Commander $commanders
      */
-    public function removeCharacter(Character $characters)
+    public function removeCommander(Commander $commanders)
     {
-        $this->characters->removeElement($characters);
+        $this->commanders->removeElement($commanders);
     }
 
     /**

@@ -12,7 +12,7 @@
     {% endfor %}
     {{ form_start(form_caserneRecruit) }}
         <div class="front-block soldier">
-            {% set price = character.getPoliticSoldierSale() * 5 %}
+            {% set price = commander.getPoliticSoldierSale() * 5 %}
             <div class="block-title"><h2>{{ 'soldier.recruit'|trans }}</h2></div>
             <table class="table table-striped table-bordered table-dark">
                 <tbody>
@@ -30,7 +30,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="text-center text-less">
-                        {{ 'soldier.costGroundProduct'|trans }} {{ character.getSoldierPrice(1) }} {{ 'soldier.costFleetMission'|trans }} {{ character.getSoldierPrice(2) }}
+                        {{ 'soldier.costGroundProduct'|trans }} {{ commander.getSoldierPrice(1) }} {{ 'soldier.costFleetMission'|trans }} {{ commander.getSoldierPrice(2) }}
                     </td>
                 </tr>
                 <tr class="text-center" {% if usePlanet.getSoldierAtNbr() == null %} hidden{% endif %}>
@@ -53,7 +53,7 @@
                         <img alt="{{ 'image'|trans({},'front_global') }}" class="mr-3" src="{{ asset('img/tanks.webp') }}"> {{ 'caserner.tank'|trans }} x {{ usePlanet.getTank()|number_format }} / 500 <span class="float-right"><span class="ml-5"><span class="niobiumProduct">400</span> <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'niobiumImg'|trans }}" src="{{ asset('img/niobium.webp') }}"></span> <span class="ml-3"><span class="bitcoinProduct">60</span> <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'bitcoinImg'|trans }}" src="{{ asset('img/coin.webp') }}"></span> <span class="ml-3"><span class="workerProduct">5</span> <img alt="{{ 'image'|trans({},'front_global') }}" data-toggle="tooltip" data-placement="bottom" title="{{ 'workerImg'|trans }}" src="{{ asset('img/worker.webp') }}"></span></span>
                     </th>
                     <td width="100" class="center-cells"{% if usePlanet.getWorker() < 10000 %} hidden{% endif %}>
-                        {% if (usePlanet.getBunker() > 0 or usePlanet.getCaserne() > 0) and usePlanet.getLightUsine() > 0 and character.getTank() == 1 and usePlanet.getTank() < 500 and usePlanet.getTank() + usePlanet.getTankAtNbr() < 500 %}
+                        {% if (usePlanet.getBunker() > 0 or usePlanet.getCaserne() > 0) and usePlanet.getLightUsine() > 0 and commander.getTank() == 1 and usePlanet.getTank() < 500 and usePlanet.getTank() + usePlanet.getTankAtNbr() < 500 %}
                             {{ form_widget(form_caserneRecruit.tank,{attr: { max: 500 - usePlanet.getTank() }}) }}
                         {% else %}
                             {{ form_widget(form_caserneRecruit.tank,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-right' }}) }}
@@ -62,10 +62,10 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="text-center text-less">
-                        {{ 'tank.costGroundProduct'|trans }} {{ character.getTankPrice(1) }} {{ 'tank.costFleetMission'|trans }} {{ character.getTankPrice(2) }}
+                        {{ 'tank.costGroundProduct'|trans }} {{ commander.getTankPrice(1) }} {{ 'tank.costFleetMission'|trans }} {{ commander.getTankPrice(2) }}
                     </td>
                 </tr>
-                {% if (usePlanet.getBunker() <= 0 and usePlanet.getCaserne() <= 0) or usePlanet.getLightUsine() <= 0 or character.getTank() == 0 %}
+                {% if (usePlanet.getBunker() <= 0 and usePlanet.getCaserne() <= 0) or usePlanet.getLightUsine() <= 0 or commander.getTank() == 0 %}
                     <tr>
                         <td colspan="2" class="center-cells text-center text-more text-rouge">
                             {{ 'caserner.noTank'|trans }}
@@ -140,7 +140,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" class="text-center text-less">
-                        {{ 'scientist.costGroundProduct'|trans }} {{ character.getScientistPrice(1) }} {{ 'scientist.costFleetMission'|trans }} {{ character.getScientistPrice(2) }}
+                        {{ 'scientist.costGroundProduct'|trans }} {{ commander.getScientistPrice(1) }} {{ 'scientist.costFleetMission'|trans }} {{ commander.getScientistPrice(2) }}
                     </td>
                 </tr>
                 {% if usePlanet.getCenterSearch() <= 0 %}

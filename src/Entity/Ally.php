@@ -26,9 +26,9 @@ class Ally
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Character", mappedBy="ally", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Commander", mappedBy="ally", fetch="EXTRA_LAZY")
      */
-    protected $characters;
+    protected $commanders;
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet", mappedBy="ally", fetch="EXTRA_LAZY")
@@ -185,7 +185,7 @@ class Ally
      */
     public function __construct()
     {
-        $this->characters = new ArrayCollection();
+        $this->commanders = new ArrayCollection();
         $this->fleets = new ArrayCollection();
         $this->salons = new ArrayCollection();
         $this->proposals = new ArrayCollection();
@@ -297,12 +297,12 @@ class Ally
     /**
      * @return Collection
      */
-    public function getCharacters()
+    public function getCommanders()
     {
         $criteria = Criteria::create()
             ->orderBy(array('username' => 'ASC'));
 
-        return $this->characters->matching($criteria);
+        return $this->commanders->matching($criteria);
     }
 
     /**
@@ -338,27 +338,27 @@ class Ally
     }
 
     /**
-     * Add character
+     * Add commander
      *
-     * @param Character $character
+     * @param Commander $commander
      *
      * @return Ally
      */
-    public function addCharacter(Character $character)
+    public function addCommander(Commander $commander)
     {
-        $this->characters[] = $character;
+        $this->commanders[] = $commander;
 
         return $this;
     }
 
     /**
-     * Remove character
+     * Remove commander
      *
-     * @param Character $character
+     * @param Commander $commander
      */
-    public function removeCharacter(Character $character)
+    public function removeCommander(Commander $commander)
     {
-        $this->characters->removeElement($character);
+        $this->commanders->removeElement($commander);
     }
 
     /**
@@ -523,16 +523,16 @@ class Ally
     /**
      * @return mixed
      */
-    public function getCharactersPoint()
+    public function getCommandersPoint()
     {
         $return = 0;
 
-        foreach($this->getCharacters() as $character) {
-            if($character->getRank()) {
-                $return = $return + $character->getRank()->getPoint();
+        foreach($this->getCommanders() as $commander) {
+            if($commander->getRank()) {
+                $return = $return + $commander->getRank()->getPoint();
             }
         }
-        return round($return / (count($this->getCharacters()) > 0 ? count($this->getCharacters()) : 1));
+        return round($return / (count($this->getCommanders()) > 0 ? count($this->getCommanders()) : 1));
     }
 
     /**
@@ -592,10 +592,10 @@ class Ally
     {
         $return = 0;
 
-        foreach($this->getCharacters() as $character) {
-            $return = $return + $character->getTerraformation() + 2;
-            $return = $return + $character->getPoliticColonisation();
-            $return = $return + $character->getPoliticInvade();
+        foreach($this->getCommanders() as $commander) {
+            $return = $return + $commander->getTerraformation() + 2;
+            $return = $return + $commander->getPoliticColonisation();
+            $return = $return + $commander->getPoliticInvade();
         }
         return $return;
     }
@@ -607,8 +607,8 @@ class Ally
     {
         $return = 0;
 
-        foreach($this->getCharacters() as $character) {
-            foreach ($character->getPlanets() as $planet) {
+        foreach($this->getCommanders() as $commander) {
+            foreach ($commander->getPlanets() as $planet) {
                 if(!$planet->getEmpty()) {
                     $return++;
                 }

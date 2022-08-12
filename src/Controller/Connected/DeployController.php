@@ -29,9 +29,9 @@ class DeployController extends AbstractController
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 7200 . 'S'));
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
         $planet = $fleet->getPlanet();
@@ -41,7 +41,7 @@ class DeployController extends AbstractController
             if($planet->getSkyRadar()) {
                 $planet->setSkyRadar($planet->getSkyRadar() + 1);
             } else {
-                $planet->setCharacter($fleet->getCharacter());
+                $planet->setCommander($fleet->getCommander());
                 $planet->setName('Radar');
                 $planet->setSkyRadar(1);
                 $planet->setRadarAt($now);
@@ -70,9 +70,9 @@ class DeployController extends AbstractController
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 3600 . 'S'));
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
         $planet = $fleet->getPlanet();
@@ -82,7 +82,7 @@ class DeployController extends AbstractController
             if($planet->getSkyBrouilleur()) {
                 $planet->setSkyBrouilleur($planet->getSkyBrouilleur() + 1);
             } else {
-                $planet->setCharacter($fleet->getCharacter());
+                $planet->setCommander($fleet->getCommander());
                 $planet->setName('Brouilleur');
                 $planet->setSkyBrouilleur(1);
                 $planet->setBrouilleurAt($now);
@@ -108,9 +108,9 @@ class DeployController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
         $planet = $fleet->getPlanet();
@@ -118,7 +118,7 @@ class DeployController extends AbstractController
         if($fleet->getMoonMaker() && $planet->getEmpty() && !$planet->getCdr() &&
             $planet->getNbCdr() > 750000 && $planet->getWtCdr() > 750000) {
             $fleet->setMoonMaker($fleet->getMoonMaker() - 1);
-            $planet->setCharacter($fleet->getCharacter());
+            $planet->setCommander($fleet->getCommander());
             $planet->setEmpty(false);
             $planet->setMoon(true);
             $planet->setNbProduction(0);
@@ -172,9 +172,9 @@ class DeployController extends AbstractController
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 300 . 'S'));
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
         if (($fleet->getPlanet()->getNbCdr() > 0 || $fleet->getPlanet()->getWtCdr()) > 0 && $fleet->getCargoPlace() != $fleet->getCargoFull()) {

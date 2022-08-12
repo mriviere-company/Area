@@ -28,10 +28,10 @@ class Fleet_List
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="fleetLists", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="fleetLists", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\OneToMany(targetEntity="Fleet", mappedBy="fleetList", fetch="EXTRA_LAZY")
@@ -45,13 +45,13 @@ class Fleet_List
 
     /**
      * Fleet_List constructor.
-     * @param Character $character
+     * @param Commander $commander
      * @param string|null $name
      * @param int $priority
      */
-    public function __construct(Character $character, ?string $name, int $priority)
+    public function __construct(Commander $commander, ?string $name, int $priority)
     {
-        $this->character = $character;
+        $this->commander = $commander;
         $this->name = $name ? $name : 'Cohorte';
         $this->priority = $priority;
         $this->fleets = new ArrayCollection();
@@ -89,17 +89,17 @@ class Fleet_List
     /**
      * @return mixed
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param mixed $character
+     * @param mixed $commander
      */
-    public function setCharacter($character): void
+    public function setCommander($commander): void
     {
-        $this->character = $character;
+        $this->commander = $commander;
     }
 
     /**

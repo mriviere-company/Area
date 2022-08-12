@@ -77,16 +77,16 @@
         <source>This value should be {{ limit }} or less.</source>
         <target>Cette valeur doit être inférieure ou égale à {{ limit }}.</target>
       </trans-unit>
-      <trans-unit id="HX7TOFm" resname="This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.">
-        <source>This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.</source>
+      <trans-unit id="HX7TOFm" resname="This value is too long. It should have {{ limit }} commander or less.|This value is too long. It should have {{ limit }} commanders or less.">
+        <source>This value is too long. It should have {{ limit }} commander or less.|This value is too long. It should have {{ limit }} commanders or less.</source>
         <target>Cette chaîne est trop longue. Elle doit avoir au maximum {{ limit }} caractère.|Cette chaîne est trop longue. Elle doit avoir au maximum {{ limit }} caractères.</target>
       </trans-unit>
       <trans-unit id="qgR8M_U" resname="This value should be {{ limit }} or more.">
         <source>This value should be {{ limit }} or more.</source>
         <target>Cette valeur doit être supérieure ou égale à {{ limit }}.</target>
       </trans-unit>
-      <trans-unit id="ekfrU.c" resname="This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.">
-        <source>This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.</source>
+      <trans-unit id="ekfrU.c" resname="This value is too short. It should have {{ limit }} commander or more.|This value is too short. It should have {{ limit }} commanders or more.">
+        <source>This value is too short. It should have {{ limit }} commander or more.|This value is too short. It should have {{ limit }} commanders or more.</source>
         <target>Cette chaîne est trop courte. Elle doit avoir au minimum {{ limit }} caractère.|Cette chaîne est trop courte. Elle doit avoir au minimum {{ limit }} caractères.</target>
       </trans-unit>
       <trans-unit id="1KV4L.t" resname="This value should not be blank.">
@@ -181,8 +181,8 @@
         <source>This value should be the user's current password.</source>
         <target>Cette valeur doit être le mot de passe actuel de l'utilisateur.</target>
       </trans-unit>
-      <trans-unit id="gYImVyV" resname="This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.">
-        <source>This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.</source>
+      <trans-unit id="gYImVyV" resname="This value should have exactly {{ limit }} commander.|This value should have exactly {{ limit }} commanders.">
+        <source>This value should have exactly {{ limit }} commander.|This value should have exactly {{ limit }} commanders.</source>
         <target>Cette chaîne doit avoir exactement {{ limit }} caractère.|Cette chaîne doit avoir exactement {{ limit }} caractères.</target>
       </trans-unit>
       <trans-unit id="xJ2Bcr_" resname="The file was only partially uploaded.">

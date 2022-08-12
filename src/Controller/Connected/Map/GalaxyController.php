@@ -36,8 +36,8 @@ class GalaxyController extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
         $server = $usePlanet->getSector()->getGalaxy()->getServer();
-        $character = $user->getCharacter($server);
-        if ($usePlanet->getCharacter() != $character) {
+        $commander = $user->getCommander($server);
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -70,12 +70,12 @@ class GalaxyController extends AbstractController
             );
         }
 
-        $planets = $em->getRepository('App:Planet')
+        $planets = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->select(
                 'p.merchant, p.cdr, p.empty, s.position as sector, s.id as sectorId, g.id as galaxy, c.username as username, a.sigle as alliance, s.destroy as destroy, c.zombie as zombie'
             )
-            ->leftJoin('p.character', 'c')
+            ->leftJoin('p.commander', 'c')
             ->leftJoin('c.ally', 'a')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
@@ -86,9 +86,9 @@ class GalaxyController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $doms = $em->getRepository('App:Ally')
+        $doms = $doctrine->getRepository(Ally::class)
             ->createQueryBuilder('a')
-            ->join('a.characters', 'c')
+            ->join('a.commanders', 'c')
             ->join('c.planets', 'p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
@@ -102,11 +102,11 @@ class GalaxyController extends AbstractController
             ->getResult();
 
 
-        $totalPlanet = $em->getRepository('App:Galaxy')
+        $totalPlanet = $doctrine->getRepository(Galaxy::class)
             ->createQueryBuilder('g')
             ->join('g.sectors', 's')
             ->join('s.planets', 'p')
-            ->join('p.character', 'c')
+            ->join('p.commander', 'c')
             ->join('c.ally', 'a')
             ->select('count(p) as number')
             ->groupBy('g.id')
@@ -116,11 +116,11 @@ class GalaxyController extends AbstractController
             ->getOneOrNullResult();
 
         if ($totalPlanet) {
-            $totalPlanet = $em->getRepository('App:Galaxy')
+            $totalPlanet = $doctrine->getRepository(Galaxy::class)
                 ->createQueryBuilder('g')
                 ->join('g.sectors', 's')
                 ->join('s.planets', 'p')
-                ->join('p.character', 'c')
+                ->join('p.commander', 'c')
                 ->join('c.ally', 'a')
                 ->select('count(p) as number')
                 ->groupBy('g.id')

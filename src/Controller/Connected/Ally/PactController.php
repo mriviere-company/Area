@@ -37,13 +37,13 @@ class PactController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $ally = $character->getAlly();
+        $ally = $commander->getAlly();
 
         $allied = new Allied($ally, $pact->getAlly()->getSigle(), true);
         $pact->setAccepted(true);
@@ -66,9 +66,9 @@ class PactController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -90,13 +90,13 @@ class PactController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $ally = $character->getAlly();
+        $ally = $commander->getAlly();
 
         $pna = new Pna($ally, $pact->getAlly()->getSigle(), true);
         $pact->setAccepted(true);
@@ -119,9 +119,9 @@ class PactController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -144,21 +144,21 @@ class PactController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $ally = $character->getAlly();
-        $otherAlly = $em->getRepository('App:Ally')
+        $ally = $commander->getAlly();
+        $otherAlly = $doctrine->getRepository(Ally::class)
             ->createQueryBuilder('a')
             ->where('a.sigle = :sigle')
             ->setParameter('sigle', $pact->getAllyTag())
             ->getQuery()
             ->getOneOrNullResult();
 
-        $pact2 = $em->getRepository('App:Pna')
+        $pact2 = $doctrine->getRepository(Pna::class)
             ->createQueryBuilder('pna')
             ->where('pna.allyTag = :allytag')
             ->andWhere('pna.ally = :ally')
@@ -189,36 +189,36 @@ class PactController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 43200 . 'S'));
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $otherAlly = $em->getRepository('App:Ally')
+        $otherAlly = $doctrine->getRepository(Ally::class)
             ->createQueryBuilder('a')
             ->where('a.sigle = :sigle')
             ->setParameter('sigle', $pact->getAllyTag())
             ->getQuery()
             ->getOneOrNullResult();
 
-        $pact2 = $em->getRepository('App:Allied')
+        $pact2 = $doctrine->getRepository(Allied::class)
             ->createQueryBuilder('al')
             ->where('al.allyTag = :allytag')
             ->andWhere('al.ally = :ally')
             ->setParameters([
-                'allytag' => $character->getAlly()->getSigle(),
+                'allytag' => $commander->getAlly()->getSigle(),
                 'ally' => $otherAlly])
             ->getQuery()
             ->getOneOrNullResult();
 
         if($pact2) {
             $pact2->setDismissAt($now);
-            $pact2->setDismissBy($character->getAlly()->getSigle());
+            $pact2->setDismissBy($commander->getAlly()->getSigle());
             $pact->setDismissAt($now);
-            $pact->setDismissBy($character->getAlly()->getSigle());
+            $pact->setDismissBy($commander->getAlly()->getSigle());
         } else {
             $em->remove($pact);
         }
@@ -240,16 +240,16 @@ class PactController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $character->getAlly();
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
+        $ally = $commander->getAlly();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 864000 . 'S'));
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $waitingPeaces = $em->getRepository('App:Peace')
+        $waitingPeaces = $doctrine->getRepository(Peace::class)
             ->createQueryBuilder('p')
             ->where('p.allyTag = :sigle')
             ->andWhere('p.accepted = false')
@@ -288,37 +288,37 @@ class PactController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $character->getAlly();
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
+        $ally = $commander->getAlly();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 864000 . 'S'));
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $peace = $em->getRepository('App:Peace')
+        $peace = $doctrine->getRepository(Peace::class)
             ->createQueryBuilder('p')
             ->where('p.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
             ->getOneOrNullResult();
 
-        $otherPeaces = $em->getRepository('App:Peace')
+        $otherPeaces = $doctrine->getRepository(Peace::class)
             ->createQueryBuilder('p')
             ->where('p.id != :id')
             ->setParameter('id', $id)
             ->getQuery()
             ->getResult();
 
-        $otherAlly = $em->getRepository('App:Ally')
+        $otherAlly = $doctrine->getRepository(Ally::class)
             ->createQueryBuilder('a')
             ->where('a.id = :id')
             ->setParameter('id', $peace->getAlly()->getId())
             ->getQuery()
             ->getOneOrNullResult();
 
-        $war = $em->getRepository('App:War')
+        $war = $doctrine->getRepository(War::class)
             ->createQueryBuilder('w')
             ->where('w.ally = :ally')
             ->andWhere('w.allyTag = :sigle')
@@ -327,7 +327,7 @@ class PactController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        $war2 = $em->getRepository('App:War')
+        $war2 = $doctrine->getRepository(War::class)
             ->createQueryBuilder('w')
             ->where('w.ally = :ally')
             ->andWhere('w.allyTag = :sigle')
@@ -370,26 +370,26 @@ class PactController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
 
-        $otherAlly = $em->getRepository('App:Ally')
+        $otherAlly = $doctrine->getRepository(Ally::class)
             ->createQueryBuilder('a')
             ->where('a.sigle = :sigle')
             ->setParameter('sigle', $peace->getAllyTag())
             ->getQuery()
             ->getOneOrNullResult();
 
-        $peace2 = $em->getRepository('App:Allied')
+        $peace2 = $doctrine->getRepository(Allied::class)
             ->createQueryBuilder('al')
             ->where('al.allyTag = :allytag')
             ->andWhere('al.ally = :ally')
             ->setParameters([
-                'allytag' => $character->getAlly()->getSigle(),
+                'allytag' => $commander->getAlly()->getSigle(),
                 'ally' => $otherAlly])
             ->getQuery()
             ->getOneOrNullResult();

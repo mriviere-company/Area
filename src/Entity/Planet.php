@@ -33,10 +33,10 @@ class Planet
     protected $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="planets", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="planets", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\Column(name="lastActivity",type="datetime", nullable=true)
@@ -556,7 +556,7 @@ class Planet
 
     /**
      * Planet constructor.
-     * @param Object|null $character
+     * @param Object|null $commander
      * @param string $name
      * @param int $ground
      * @param int $sky
@@ -568,9 +568,9 @@ class Planet
      * @param bool $sun
      * @param bool $empty
      */
-    public function __construct(?object $character, string $name, int $ground, int $sky, int $position, Sector $sector, ?string $image,  int $merchant, ?string $cdr, bool $sun, bool $empty)
+    public function __construct(?object $commander, string $name, int $ground, int $sky, int $position, Sector $sector, ?string $image,  int $merchant, ?string $cdr, bool $sun, bool $empty)
     {
-        $this->character = $character;
+        $this->commander = $commander;
         $this->name = $name;
         $this->sky = $sky ? $sky : 0;
         $this->ground = $ground ? $ground : 0;
@@ -703,7 +703,7 @@ class Planet
      */
     public function setRestartAll(): void
     {
-        $this->character = null;
+        $this->commander = null;
         $this->centerSearch = null;
         $this->name = 'Inhabitée';
         $this->lastActivity = null;
@@ -909,12 +909,12 @@ class Planet
     /**
      * @return array
      */
-    public function getFleetNoFriends($character)
+    public function getFleetNoFriends($commander)
     {
         $fullFleet = [];
         $x = 0;
         foreach($this->fleets as $fleet) {
-            if($fleet->getCharacter()->getId() === $character->getId() || $fleet->getCharacter()->getAlly()->getId() === $character->getAlly()->getId()) {
+            if($fleet->getCommander()->getId() === $commander->getId() || $fleet->getCommander()->getAlly()->getId() === $commander->getAlly()->getId()) {
             } else {
                 $fullFleet[$x] = $fleet;
             }
@@ -954,17 +954,17 @@ class Planet
     }
 
     /**
-     * @param $character
+     * @param $commander
      * @return int
      */
-    public function getFleetsAbandon($character): int
+    public function getFleetsAbandon($commander): int
     {
         $planete = 0;
         foreach($this->getFleets() as $fleet) {
             if($fleet->getFlightTime()) {
                 $planete = 0;
             } else {
-                if($fleet->getCharacter() != $character) {
+                if($fleet->getCommander() != $commander) {
                     if($fleet->getAttack()) {
                         $planete = 1;
                     }
@@ -981,7 +981,7 @@ class Planet
     public function getPreviousPlanet(): int
     {
         $id = $this->getId();
-        foreach($this->getCharacter()->getPlanets() as $planet) {
+        foreach($this->getCommander()->getPlanets() as $planet) {
             if($planet->getId() === $this->getId()) {
                 return $id;
             }
@@ -998,7 +998,7 @@ class Planet
     {
         $id = $this->getId();
         $next = 0;
-        foreach($this->getCharacter()->getPlanets() as $planet) {
+        foreach($this->getCommander()->getPlanets() as $planet) {
             $id = $planet->getId();
             if($next == 1) {
                 return $id;
@@ -1015,8 +1015,8 @@ class Planet
      */
     public function getPlanetAlliance()
     {
-        if ($this->getCharacter()) {
-            return $this->getCharacter()->getAlly();
+        if ($this->getCommander()) {
+            return $this->getCommander()->getAlly();
         } else {
             return null;
         }
@@ -1025,13 +1025,13 @@ class Planet
     /**
      * @return string|null
      */
-    public function getOurAllyPact($character): ?string
+    public function getOurAllyPact($commander): ?string
     {
-        if ($this->getCharacter()) {
-            if ($this->getCharacter()->getAlly() && $character->getAlly()) {
-                if (count($this->getCharacter()->getAlly()->getAllieds()) > 0) {
-                    foreach($this->getCharacter()->getAlly()->getAllieds() as $allied) {
-                        if($allied->getAllyTag() === $character->getAlly()->getSigle() && $allied->getAccepted()) {
+        if ($this->getCommander()) {
+            if ($this->getCommander()->getAlly() && $commander->getAlly()) {
+                if (count($this->getCommander()->getAlly()->getAllieds()) > 0) {
+                    foreach($this->getCommander()->getAlly()->getAllieds() as $allied) {
+                        if($allied->getAllyTag() === $commander->getAlly()->getSigle() && $allied->getAccepted()) {
                             return 'pact';
                         }
                     }
@@ -1042,14 +1042,14 @@ class Planet
     }
 
     /**
-     * @param $character
+     * @param $commander
      * @return string|null
      */
-    public function getOurFleet($character): ?string
+    public function getOurFleet($commander): ?string
     {
 
         foreach($this->getFleets() as $fleet) {
-            if ($fleet->getCharacter()->getId() === $character->getId() && $fleet->getFlightTime() == null) {
+            if ($fleet->getCommander()->getId() === $commander->getId() && $fleet->getFlightTime() == null) {
                 return 'hello';
             }
         }
@@ -1151,20 +1151,20 @@ class Planet
     }
 
     /**
-     * @return Character
+     * @return Commander
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param Character|null $character
+     * @param Commander|null $commander
      * @return Planet
      */
-    public function setCharacter(Character $character = null)
+    public function setCommander(Commander $commander = null)
     {
-        $this->character = $character;
+        $this->commander = $commander;
 
         return $this;
     }

@@ -41,7 +41,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
      * @Assert\Ip
      * @Assert\NotBlank(message = "required")
      */
-    protected $ipAddress;
+    protected $s;
 
     /**
      * @ORM\Column(name="cheat",type="smallint", options={"unsigned":true})
@@ -82,9 +82,9 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     protected $walletAddress;
 
     /**
-     * @ORM\OneToMany(targetEntity="Character", mappedBy="user", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Commander", mappedBy="user", fetch="EXTRA_LAZY")
      */
-    protected $characters;
+    protected $commanders;
 
     /**
      * User constructor.
@@ -101,7 +101,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
         $this->password = $password;
         $this->ipAddress = $ip;
         $this->confirmed = $confirmed;
-        $this->characters = new ArrayCollection();
+        $this->commanders = new ArrayCollection();
         $this->connectLast = 0;
         $this->newletter = 1;
         $this->tutorial = 1;
@@ -126,11 +126,11 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
      * @param Server $server
      * @return mixed
      */
-    public function getCharacter(Server $server)
+    public function getCommander(Server $server)
     {
-        foreach($this->characters as $character) {
-            if ($character->getServer() == $server)
-                return $character;
+        foreach($this->commanders as $commander) {
+            if ($commander->getServer() == $server)
+                return $commander;
         }
         return null;
     }
@@ -138,14 +138,14 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     /**
      * @return mixed
      */
-    public function getMainCharacter()
+    public function getMainCommander()
     {
-        $mainCharacter =  null;
-        foreach($this->characters as $character) {
-            if (!$mainCharacter || ($mainCharacter && $character->getLastActivity() > $mainCharacter->getLastActivity()))
-                $mainCharacter = $character;
+        $mainCommander =  null;
+        foreach($this->commanders as $commander) {
+            if (!$mainCommander || ($mainCommander && $commander->getLastActivity() > $mainCommander->getLastActivity()))
+                $mainCommander = $commander;
         }
-        return $mainCharacter;
+        return $mainCommander;
     }
 
     /**
@@ -155,8 +155,8 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     {
         $servers = [];
         $x = 0;
-        foreach ($this->characters as $character) {
-            $servers[$x] = $character->getServer()->getId();
+        foreach ($this->commanders as $commander) {
+            $servers[$x] = $commander->getServer()->getId();
             $x++;
         }
         return $servers;
@@ -375,29 +375,29 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     /**
      * @return mixed
      */
-    public function getCharacters()
+    public function getCommanders()
     {
-        return $this->characters;
+        return $this->commanders;
     }
 
     /**
-     * @param ArrayCollection $characters
+     * @param ArrayCollection $commanders
      */
-    public function setCharacters(ArrayCollection $characters): void
+    public function setCommanders(ArrayCollection $commanders): void
     {
-        $this->characters = $characters;
+        $this->commanders = $commanders;
     }
 
     /**
-     * Add character
+     * Add commander
      *
-     * @param Character $characters
+     * @param Commander $commanders
      *
      * @return User
      */
-    public function addCharacter(Character $characters): User
+    public function addCommander(Commander $commanders): User
     {
-        $this->characters[] = $characters;
+        $this->commanders[] = $commanders;
 
         return $this;
     }

@@ -16,9 +16,9 @@ class CronTaskController extends AbstractController
 {
     /**
      * @Route("/construction/", name="cron_task")
-     * @Route("/construction/{opened}/", name="cron_task_character", requirements={"opened"="\d+"})
-     * @Route("/connect/construction/{opened}/", name="connect_cron_task_character", requirements={"opened"="\d+"})
-     * @Route("/connect/carte-spatiale/construction/{opened}/", name="map_cron_task_character", requirements={"opened"="\d+"})
+     * @Route("/construction/{opened}/", name="cron_task_commander", requirements={"opened"="\d+"})
+     * @Route("/connect/construction/{opened}/", name="connect_cron_task_commander", requirements={"opened"="\d+"})
+     * @Route("/connect/carte-spatiale/construction/{opened}/", name="map_cron_task_commander", requirements={"opened"="\d+"})
      * @param ManagerRegistry $doctrine
      * @param null $opened
      * @return Response
@@ -29,24 +29,24 @@ class CronTaskController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
 
-        $characterGOs = $em->getRepository('App:Character')
+        $commanderGOs = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->where('c.gameOver is not null')
             ->andWhere('c.rank is not null')
             ->getQuery()
             ->getResult();
 
-        if ($characterGOs) {
+        if ($commanderGOs) {
             echo "Game Over : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\GameOverController::gameOverCronAction', [
-                'characterGOs'  => $characterGOs,
+                'commanderGOs'  => $commanderGOs,
                 'now'  => $now,
                 'em' => $em
             ]);
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $asteroides = $em->getRepository('App:Planet')
+        $asteroides = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->where('p.cdr = true')
             ->andWhere('p.recycleAt < :now OR p.recycleAt IS null')
@@ -63,7 +63,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $dailyReports = $em->getRepository('App:Server')
+        $dailyReports = $doctrine->getRepository(Server::class)
             ->createQueryBuilder('s')
             ->where('s.dailyReport < :now')
             ->setParameters(['now' => $now])
@@ -84,7 +84,7 @@ class CronTaskController extends AbstractController
             }
         }
 
-        $dests = $em->getRepository('App:Destination')
+        $dests = $doctrine->getRepository(Destination::class)
             ->createQueryBuilder('d')
             ->where('d.fleet is null')
             ->getQuery()
@@ -100,7 +100,7 @@ class CronTaskController extends AbstractController
         }
 
         while (1) {
-            $firstFleet = $em->getRepository('App:Fleet')
+            $firstFleet = $doctrine->getRepository(Fleet::class)
                 ->createQueryBuilder('f')
                 ->join('f.planet', 'p')
                 ->select('p.id')
@@ -124,7 +124,7 @@ class CronTaskController extends AbstractController
             }
         }
 
-        $planets = $em->getRepository('App:Planet') // Actualiser DONE
+        $planets = $doctrine->getRepository(Planet::class) // Actualiser DONE
             ->createQueryBuilder('p')
             ->where('p.constructAt < :now')
             ->setParameters(['now' => $now])
@@ -141,7 +141,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $planetSoldiers = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans entraînement, zombie, invasion, pillage, planètes, daily.
+        $planetSoldiers = $doctrine->getRepository(Planet::class) // CHANGE -> Actualiser dans entraînement, zombie, invasion, pillage, planètes, daily.
             ->createQueryBuilder('p')
             ->where('p.soldierAt < :now')
             ->setParameters(['now' => $now])
@@ -157,7 +157,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent() ?? "<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $planetTanks = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans entraînement, zombie, invasion, pillage, planètes, daily.
+        $planetTanks = $doctrine->getRepository(Planet::class) // CHANGE -> Actualiser dans entraînement, zombie, invasion, pillage, planètes, daily.
             ->createQueryBuilder('p')
             ->where('p.tankAt < :now')
             ->setParameters(['now' => $now])
@@ -173,7 +173,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $planetNuclears = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans overview, entraînement, chantier spatial.
+        $planetNuclears = $doctrine->getRepository(Planet::class) // CHANGE -> Actualiser dans overview, entraînement, chantier spatial.
             ->createQueryBuilder('p')
             ->where('p.nuclearAt < :now')
             ->setParameters(['now' => $now])
@@ -189,7 +189,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $planetScientists = $em->getRepository('App:Planet') // Actualiser DONE
+        $planetScientists = $doctrine->getRepository(Planet::class) // Actualiser DONE
             ->createQueryBuilder('p')
             ->where('p.scientistAt < :now')
             ->setParameters(['now' => $now])
@@ -205,7 +205,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $prods = $em->getRepository('App:Product') // Actualiser DONE
+        $prods = $doctrine->getRepository(Product::class) // Actualiser DONE
             ->createQueryBuilder('p')
             ->where('p.planet is null')
             ->getQuery()
@@ -220,7 +220,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $products = $em->getRepository('App:Product') // Actualiser DONE
+        $products = $doctrine->getRepository(Product::class) // Actualiser DONE
             ->createQueryBuilder('p')
             ->where('p.productAt < :now')
             ->setParameters(['now' => $now])
@@ -236,7 +236,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $radars = $em->getRepository('App:Planet') // CHANGE -> Actualiser dans overview, carte spatiale.
+        $radars = $doctrine->getRepository(Planet::class) // CHANGE -> Actualiser dans overview, carte spatiale.
             ->createQueryBuilder('p')
             ->where('p.radarAt < :now or p.brouilleurAt < :now')
             ->setParameters(['now' => $now])
@@ -253,7 +253,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $fleets = $em->getRepository('App:Fleet') // Actualiser DONE
+        $fleets = $doctrine->getRepository(Fleet::class) // Actualiser DONE
             ->createQueryBuilder('f')
             ->where('f.flightTime < :now')
             ->andWhere('f.flightType != :six or f.flightType is null')
@@ -271,7 +271,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $nukeBombs = $em->getRepository('App:Fleet')
+        $nukeBombs = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->where('f.flightTime < :now')
             ->andWhere('f.flightType = :six')
@@ -289,7 +289,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $fleetCdrs = $em->getRepository('App:Fleet') // CHANGE ->  Flottes, carte spatiale, gérer flotte, combat.
+        $fleetCdrs = $doctrine->getRepository(Fleet::class) // CHANGE ->  Flottes, carte spatiale, gérer flotte, combat.
             ->createQueryBuilder('f')                           // Pouvoir cumuler plusieurs recyclage en une seule fois.
             ->join('f.planet', 'p')
             ->where('f.recycleAt < :now')
@@ -310,7 +310,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $pacts = $em->getRepository('App:Allied')
+        $pacts = $doctrine->getRepository(Allied::class)
             ->createQueryBuilder('al')
             ->where('al.dismissAt < :now')
             ->setParameters(['now' => $now])
@@ -326,7 +326,7 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $peaces = $em->getRepository('App:Peace')
+        $peaces = $doctrine->getRepository(Peace::class)
             ->createQueryBuilder('p')
             ->where('p.signedAt < :now')
             ->setParameters(['now' => $now])
@@ -342,9 +342,9 @@ class CronTaskController extends AbstractController
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $reports = $em->getRepository('App:Report')
+        $reports = $doctrine->getRepository(Report::class)
             ->createQueryBuilder('r')
-            ->join('r.character', 'c')
+            ->join('r.commander', 'c')
             ->andWhere('c.bot = true')
             ->getQuery()
             ->getResult();
@@ -358,7 +358,7 @@ class CronTaskController extends AbstractController
             $em->flush();
         }
 
-        $zCharacters = $em->getRepository('App:Character')
+        $zCommanders = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->join('c.planets', 'p')
             ->where('c.zombieAt < :now')
@@ -372,26 +372,26 @@ class CronTaskController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        if($zCharacters) {
+        if($zCommanders) {
             echo "Zombies : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\ZombiesController::zombiesAction', [
-                'zCharacters'  => $zCharacters,
+                'zCommanders'  => $zCommanders,
                 'now' => $now,
                 'em' => $em
             ]);
             echo $cronValue->getContent()?:"<span style='color:#FF0000'>KO<span><br/>";
         }
 
-        $embargos = $em->getRepository('App:Planet')
+        $embargos = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
-            ->join('p.character', 'c')
+            ->join('p.commander', 'c')
             ->join('p.fleets', 'f')
-            ->join('f.character', 'cf')
+            ->join('f.commander', 'cf')
             ->where('f.attack = true')
             ->andWhere('c.zombie = false')
             ->andWhere('cf.zombie = false')
             ->andWhere('c.bot = 0')
-            ->andWhere('f.character != p.character')
+            ->andWhere('f.commander != p.commander')
             ->andWhere('f.signature > 125000')
             ->getQuery()
             ->getResult();
@@ -422,7 +422,7 @@ class CronTaskController extends AbstractController
     {
         $em = $doctrine->getManager();
 
-        $planets = $em->getRepository('App:Planet')
+        $planets = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->andWhere('p.miner > 0 or p.extractor > 0')
             ->getQuery()
@@ -454,9 +454,9 @@ class CronTaskController extends AbstractController
     {
         $em = $doctrine->getManager();
 
-        $stats = $em->getRepository('App:Report')
+        $stats = $doctrine->getRepository(Report::class)
             ->createQueryBuilder('r')
-            ->join('r.character', 'c')
+            ->join('r.commander', 'c')
             ->andWhere('c.bot = true')
             ->getQuery()
             ->getResult();
@@ -481,7 +481,7 @@ class CronTaskController extends AbstractController
         $fiveWeeks = new DateTime();
         $fiveWeeks->sub(new DateInterval('PT' . 3888000 . 'S'));
 
-        $newBots = $em->getRepository('App:Character')
+        $newBots = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->where('c.bot = false')
             ->andWhere('c.lastActivity < :five')
@@ -503,27 +503,27 @@ class CronTaskController extends AbstractController
     public function HordeYesAction(ManagerRegistry $doctrine)
     {
         $em = $doctrine->getManager();
-        $hydra = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
+        $hydra = $doctrine->getRepository(Commander::class)->findOneBy(['zombie' => 1]);
         $count = 0;
 
-        $planets = $em->getRepository('App:Planet')
+        $planets = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->join('p.fleets', 'f')
-            ->where('f.character = :character')
+            ->where('f.commander = :commander')
             ->andWhere('f.flightTime is null')
-            ->setParameters(['character' => $hydra])
+            ->setParameters(['commander' => $hydra])
             ->getQuery()
             ->getResult();
 
         foreach ($planets as $planet) {
             if (count($planet->getFleets()) > 1) {
                 $one = new Fleet();
-                $one->setCharacter($hydra);
+                $one->setCommander($hydra);
                 $one->setPlanet($planet);
                 $one->setName('Horde V');
                 $one->setAttack(1);
                 foreach ($planet->getFleets() as $fleet) {
-                    if ($fleet->getCharacter() == $hydra && !$fleet->getDestination()) {
+                    if ($fleet->getCommander() == $hydra && !$fleet->getDestination()) {
                         $one->setBarge($one->getBarge() + $fleet->getBarge());
                         $one->setHunter($one->getHunter() + $fleet->getHunter());
                         $one->setHunterWar($one->getHunterWar() + $fleet->getHunterWar());
@@ -533,7 +533,7 @@ class CronTaskController extends AbstractController
                         $one->setFregate($one->getFregate() + $fleet->getFregate());
                         $one->setFregatePlasma($one->getFregatePlasma() + $fleet->getFregatePlasma());
                         $one->setDestroyer($one->getDestroyer() + $fleet->getDestroyer());
-                        $fleet->setCharacter(null);
+                        $fleet->setCommander(null);
                         $em->remove($fleet);
                         $count = $count + 1;
                     }
@@ -554,7 +554,7 @@ class CronTaskController extends AbstractController
     {
         $em = $doctrine->getManager();
 
-        $missions = $em->getRepository('App:Mission')->findAll();
+        $missions = $doctrine->getRepository(Mission::class)->findAll();
 
         foreach ($missions as $mission) {
             $em->remove($mission);
@@ -571,7 +571,7 @@ class CronTaskController extends AbstractController
     public function testAction(ManagerRegistry $doctrine)
     {
         $em = $doctrine->getManager();
-        $importedUsers = $em->getRepository('App:ImportUser')
+        $importedUsers = $doctrine->getRepository(ImportUser::class)
             ->createQueryBuilder('iu')
             ->getQuery()
             ->getResult();
@@ -592,7 +592,7 @@ class CronTaskController extends AbstractController
     {
         $em = $doctrine->getManager();
 
-        $grade = $em->getRepository('App:Rank')
+        $grade = $doctrine->getRepository(Rank::class)
             ->createQueryBuilder('g')
             ->where('g.id = :id')
             ->setParameter('id', 34)
@@ -612,7 +612,7 @@ class CronTaskController extends AbstractController
     {
         $em = $doctrine->getManager();
 
-        $plas = $em->getRepository('App:Planet')
+        $plas = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->getQuery()
             ->getResult();

@@ -37,7 +37,7 @@
                             title="{{ 'tooltip.sector'|trans({'%position%': planet.sector}) }}"
                             href="{{ path('map', {'sector':planet.sectorId, 'galaxy': planet.galaxy, 'usePlanet': usePlanet.getId()}) }}">
                     {% endif %}
-                    <span class="{% if planet.empty == true %}pp-no2{% elseif planet.username == character.getUsername() %}pp-mine2{% elseif ally and planet.alliance == ally.getSigle() and planet.alliance != null or character.getOurAllyPact(planet.alliance) %}pp-ally2{% elseif planet.username and planet.zombie == false %}pp-enemy2{% elseif planet.cdr == true %}pp-cdr2{% elseif planet.merchant == true %}pp-ia2{% elseif planet.zombie %}pp-bot{% endif %}">&#x25A0</span>
+                    <span class="{% if planet.empty == true %}pp-no2{% elseif planet.username == commander.getUsername() %}pp-mine2{% elseif ally and planet.alliance == ally.getSigle() and planet.alliance != null or commander.getOurAllyPact(planet.alliance) %}pp-ally2{% elseif planet.username and planet.zombie == false %}pp-enemy2{% elseif planet.cdr == true %}pp-cdr2{% elseif planet.merchant == true %}pp-ia2{% elseif planet.zombie %}pp-bot{% endif %}">&#x25A0</span>
                     {% set y = y + 1 %}
                     {% if y % 25 == 0 %}</a></td>{% endif %}
                     {% set x = x + 1 %}
@@ -58,7 +58,7 @@
             </div>
             <div class="mt-3 galaxy-info text-center">
                 {{ 'galaxy.domination'|trans }}{% for dom in doms %}<span class="ml-1">(<a
-                            href="{{ path('ally_profil', {'allyCharacter': dom.id, 'usePlanet': usePlanet.getId()}) }}">[{{ dom.alliance }}]</a>
+                            href="{{ path('ally_profil', {'allyCommander': dom.id, 'usePlanet': usePlanet.getId()}) }}">[{{ dom.alliance }}]</a>
                     </span> {{ (dom.number * 100 / totalPlanet)|number_format(2) }}%){% endfor %}
             </div>
         </div>

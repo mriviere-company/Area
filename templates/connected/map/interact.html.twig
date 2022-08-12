@@ -17,7 +17,7 @@
         {{ form_start(form_fleetMove,{attr: { action: path('planet_interact', {'planet': planet.getId(), 'usePlanet': usePlanet.getId()}) }}) }}
         <table class="table table-striped table-bordered table-dark">
             <tbody>
-            <tr {% if character.getFleets()|length == 0 %}hidden{% endif %}>
+            <tr {% if commander.getFleets()|length == 0 %}hidden{% endif %}>
                 <td class="center-cells">
                     {{ form_widget(form_fleetMove.list) }}
                 </td>
@@ -28,14 +28,14 @@
                     {{ form_widget(form_fleetMove.sendForm) }}
                 </td>
             </tr>
-            {#{% if planet.getCharacter() == null and planet.getCdr() == false and planet.getMerchant() == false %}
+            {#{% if planet.getCommander() == null and planet.getCdr() == false and planet.getMerchant() == false %}
                 <tr>
                     <td colspan="3" class="center-cells">
                         <span><a href="{{ path('send_sonde', {'usePlanet': usePlanet.getId(), 'id': planet.getId()}) }}">{{ 'interact.colonize'|trans }}</a></span>
                     </td>
                 </tr>
             {% endif %}
-            {% if planet.getCharacter() and fleet.getAllianceCharacter() %}
+            {% if planet.getCommander() and fleet.getAllianceCommander() %}
                 <tr>
                     <td colspan="3" class="center-cells">
                         <span><a href="{{ path('send_sonde', {'usePlanet': usePlanet.getId(), 'id': planet.getId()}) }}">{{ 'interact.invader'|trans }}</a></span>
@@ -56,10 +56,10 @@
                     </td>
                 </tr>
             {% endif %}#}
-            {% if planet.getCharacter() and (render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': planet.getSector().getPosition(), 'galaxy': planet.getSector().getGalaxy().getPosition()})) > planet.getSkyBrouilleur() or planet.getOurFleet(character)) %}
+            {% if planet.getCommander() and (render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': planet.getSector().getPosition(), 'galaxy': planet.getSector().getGalaxy().getPosition()})) > planet.getSkyBrouilleur() or planet.getOurFleet(commander)) %}
                 <tr>
                     <td colspan="3" class="center-cells">
-                        <span><a href="{{ path('user_profil', {'characterProfil': planet.getCharacter().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.seeProfil'|trans }} {{ planet.getCharacter().getUsername() }}</a></span>
+                        <span><a href="{{ path('user_profil', {'commanderProfil': planet.getCommander().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.seeProfil'|trans }} {{ planet.getCommander().getUsername() }}</a></span>
                     </td>
                 </tr>
             {% endif %}
@@ -68,7 +68,7 @@
                     <span><a href="{{ path('send_sonde', {'planet': planet.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.sendSonde'|trans }}</a></span>
                 </td>
             </tr>
-            {% if planet.getCharacter() and planet.getCharacter().getZombie() == 0 %}
+            {% if planet.getCommander() and planet.getCommander().getZombie() == 0 %}
                 <tr>
                     <td colspan="3" class="center-cells">
                         <span><a href="{{ path('send_nuclear', {'planet': planet.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.sendNuclear'|trans }}</a></span>

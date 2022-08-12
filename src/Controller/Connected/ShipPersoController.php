@@ -34,14 +34,14 @@ class ShipPersoController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $ship = $character->getShip();
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
+        $ship = $commander->getShip();
         $now = new DateTime();
 
-        if($character->getGameOver()) {
+        if($commander->getGameOver()) {
             return $this->redirectToRoute('game_over');
         }
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -64,7 +64,7 @@ class ShipPersoController extends AbstractController
             $laser = abs($form_shipPerso->get('laser')->getData()) * 2;
             $plasma = abs($form_shipPerso->get('plasma')->getData());
 
-            if ($ship->getMax() - $points >= 0 && $ship->getLastUpdate() < $now && $character->getShip()->getRemainingPoints() > 0) {
+            if ($ship->getMax() - $points >= 0 && $ship->getLastUpdate() < $now && $commander->getShip()->getRemainingPoints() > 0) {
                 if ($form_shipPerso->get('ship')->getData() == 'hunter' && $points <= $ship->getPointHunter()) {
                     $ship->setArmorHunter($ship->getArmorHunter() + $armor);
                     $ship->setMissileHunter($ship->getMissileHunter() + $missile);
@@ -189,13 +189,13 @@ class ShipPersoController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        $ship = $character->getShip();
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
+        $ship = $commander->getShip();
 
         if ($ship->getRetry() > 0) {
             $nextMax = 1175 - $ship->getRemainingPoints() + $ship->getMax();
             $nextRetry = $ship->getRetry() - 1;
-            $character->setShip(null);
+            $commander->setShip(null);
             $em->remove($ship);
             $ships = new Ships();
             if ($nextMax < 40) {
@@ -203,8 +203,8 @@ class ShipPersoController extends AbstractController
             }
             $ships->setMax($nextMax);
             $ships->setRetry($nextRetry);
-            $character->setShip($ships);
-            $ships->setCharacter($character);
+            $commander->setShip($ships);
+            $ships->setCommander($commander);
             $em->persist($ships);
             $em->flush();
         }

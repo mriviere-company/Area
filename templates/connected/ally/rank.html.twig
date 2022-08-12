@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="front-block">
-        {% if character.getStats()|length > 7 %}
+        {% if commander.getStats()|length > 7 %}
             <div class="front-block-second">
                 {% set points = [] %}
                 {% set otherAlly = [] %}
@@ -57,7 +57,7 @@
             <tbody>
             {% set x = 1 %}
             {% for allAlly in allAllys %}
-                <tr{% if ally and ally.getSigle() == allAlly.sigle %} class="currentBack"{% elseif  allAlly and allAlly.sigle in character.getAllyFriendsTag() %} class="availableBack"{% elseif allAlly and allAlly.sigle in character.getAllyEnnemyTag() %} class="warningBack"{% endif %}>
+                <tr{% if ally and ally.getSigle() == allAlly.sigle %} class="currentBack"{% elseif  allAlly and allAlly.sigle in commander.getAllyFriendsTag() %} class="availableBack"{% elseif allAlly and allAlly.sigle in commander.getAllyEnnemyTag() %} class="warningBack"{% endif %}>
                     <td width="15px" class="tab-cells-name p-2">
                         {% if x == 1 %}
                             <div class="text-or glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 2 %}
@@ -76,7 +76,7 @@
                     </td>
                     <td class="tab-cells-name p-2 text-left">
                         <span><a data-toggle="modal" data-target="#allyModal"
-                                 href="{{ path('ally_profil_modal', {'allyCharacter': allAlly.id, 'usePlanet': usePlanet.getId()}) }}">[{{ allAlly.sigle }}] {{ allAlly.name }}</a>{% if allAlly.politic == 'democrat' %}<div
+                                 href="{{ path('ally_profil_modal', {'allyCommander': allAlly.id, 'usePlanet': usePlanet.getId()}) }}">[{{ allAlly.sigle }}] {{ allAlly.name }}</a>{% if allAlly.politic == 'democrat' %}<div
                             class="ml-2 text-vert glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="top"
                             title="{{ 'democrat'|trans }}"></div>{% elseif allAlly.politic == 'communism' %}<div
                         class="ml-2 text-rouge glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="top"
@@ -88,7 +88,7 @@
                         {% if allAlly.politic == 'communism' or allAlly.politic == 'fascism' %}
                             ?? / {{ allAlly.maxMembers }}
                         {% else %}
-                            {{ allAlly.characters }} / {{ allAlly.maxMembers }}
+                            {{ allAlly.commanders }} / {{ allAlly.maxMembers }}
                         {% endif %}
                     </td>
                     <td class="tab-cells-name p-2">

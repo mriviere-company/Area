@@ -20,10 +20,10 @@ class S_Content
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="sContents", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="sContents", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\Column(name="message",type="string", length=200)
@@ -43,13 +43,13 @@ class S_Content
 
     /**
      * S_Content constructor.
-     * @param $character
+     * @param $commander
      * @param $message
      * @param $salon
      */
-    public function __construct(Character $character, string $message, Salon $salon)
+    public function __construct(Commander $commander, string $message, Salon $salon)
     {
-        $this->character = $character;
+        $this->commander = $commander;
         $this->message = $message;
         $this->salon = $salon;
         $this->sendAt = new DateTime();
@@ -58,17 +58,17 @@ class S_Content
     /**
      * @return mixed
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param mixed $character
+     * @param mixed $commander
      */
-    public function setCharacter($character): void
+    public function setCommander($commander): void
     {
-        $this->character = $character;
+        $this->commander = $commander;
     }
 
     /**

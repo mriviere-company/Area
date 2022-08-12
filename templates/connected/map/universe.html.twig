@@ -13,11 +13,11 @@
                             title="{{ 'tooltip.galaxy'|trans({'%position%': galaxy.position}) }}"
                             src="{{ asset('img/galaxy.webp') }}"><span
                             class="galaxy-position">{{ 'galaxy.nbr'|trans({'%position%': galaxy.position}) }}</span><span
-                            class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.characters|number_format }) }}</span></span></a>
+                            class="galaxy-players">{{ 'galaxy.players'|trans({'%players%': galaxy.commanders|number_format }) }}</span></span></a>
         {% endfor %}
         <div class="mt-3 galaxy-info text-center">
             {{ 'universe.domination'|trans }}{% for dom in doms %}<span class="ml-1">(<a
-                        href="{{ path('ally_profil', {'allyCharacter': dom.id, 'usePlanet': usePlanet.getId()}) }}">[{{ dom.alliance }}]</a>
+                        href="{{ path('ally_profil', {'allyCommander': dom.id, 'usePlanet': usePlanet.getId()}) }}">[{{ dom.alliance }}]</a>
                 </span> {{ (dom.number * 100 / totalPlanet )|number_format(2) }}%){% endfor %}
         </div>
     </div>

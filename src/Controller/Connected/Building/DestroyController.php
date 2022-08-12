@@ -30,14 +30,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getMiner();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('miner');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('miner');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -64,14 +64,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getExtractor();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('extractor');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('extractor');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -98,14 +98,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getFarm();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('farm');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('farm');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -132,8 +132,8 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        if ($usePlanet->getCharacter() != $character) {
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -165,14 +165,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getNiobiumStock();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('niobiumStock');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('niobiumStock');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -199,14 +199,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getWaterStock();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('waterStock');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('waterStock');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -233,14 +233,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getSilos();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('silos');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('silos');
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
@@ -267,14 +267,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getCenterSearch();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('centerSearch');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('centerSearch');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
             ($usePlanet->getScientist() > $usePlanet->getScientistMax() - 250)) {
@@ -303,14 +303,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getCity();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('city');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('city');
 
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
@@ -339,14 +339,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getMetropole();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('metropole');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('metropole');
         $newSky = $usePlanet->getSkyPlace() - $user->getBuildingSkyPlace('metropole');
 
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
@@ -377,13 +377,13 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        if ($usePlanet->getCharacter() != $character) {
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getSpaceShip();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('spaceShip');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('spaceShip');
         $newSky = $usePlanet->getSkyPlace() - $user->getBuildingSkyPlace('spaceShip');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now)
@@ -414,14 +414,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getLightUsine();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('lightUsine');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('lightUsine');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now)
             || $usePlanet->getProduct()) {
@@ -450,14 +450,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getHeavyUsine();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('heavyUsine');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('heavyUsine');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now)
             || $usePlanet->getProduct()) {
@@ -486,14 +486,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getCaserne();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('caserne');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('caserne');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
             ($usePlanet->getSoldier() > $usePlanet->getSoldierMax() - 500 || $usePlanet->getSoldierAt())) {
@@ -522,14 +522,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getBunker();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('bunker');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('bunker');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
             ($usePlanet->getSoldier() > $usePlanet->getSoldierMax() - 500 || $usePlanet->getSoldierAt())) {
@@ -558,14 +558,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getNuclearBase();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('nuclearBase');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('nuclearBase');
 
         if(($level == 0 || $usePlanet->getConstructAt() > $now) ||
             $usePlanet->getNuclearBomb() > $usePlanet->getNuclearBase() - 1) {
@@ -593,14 +593,14 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $level = $usePlanet->getRadar();
-        $newGround = $usePlanet->getGroundPlace() - $character->getBuildingGroundPlace('radar');
+        $newGround = $usePlanet->getGroundPlace() - $commander->getBuildingGroundPlace('radar');
 
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
@@ -623,8 +623,8 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        if ($usePlanet->getCharacter() != $character) {
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -652,8 +652,8 @@ class DestroyController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
-        if ($usePlanet->getCharacter() != $character) {
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 

@@ -29,26 +29,26 @@ class ReportController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         if ($id == 'defaut') {
-            $reports = $em->getRepository('App:Report')
+            $reports = $doctrine->getRepository(Report::class)
                 ->createQueryBuilder('r')
-                ->where('r.character = :character')
-                ->setParameters(['character' => $character])
+                ->where('r.commander = :commander')
+                ->setParameters(['commander' => $commander])
                 ->orderBy('r.sendAt', 'DESC')
                 ->getQuery()
                 ->getResult();
         } else {
-            $reports = $em->getRepository('App:Report')
+            $reports = $doctrine->getRepository(Report::class)
                 ->createQueryBuilder('r')
-                ->where('r.character = :character')
+                ->where('r.commander = :commander')
                 ->andWhere('r.type = :type')
-                ->setParameters(['character' => $character, 'type' => $id])
+                ->setParameters(['commander' => $commander, 'type' => $id])
                 ->orderBy('r.sendAt', 'DESC')
                 ->getQuery()
                 ->getResult();
@@ -95,9 +95,9 @@ class ReportController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $report->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $report->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -119,9 +119,9 @@ class ReportController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character || $report->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $report->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
@@ -144,12 +144,12 @@ class ReportController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
-        if ($character == $id->getCharacter()) {
+        if ($commander == $id->getCommander()) {
             $alpha = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-'];
             $newShareKey = $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)]
                 . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)] . $alpha[rand(0, 36)]
@@ -172,17 +172,17 @@ class ReportController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $reports = $em->getRepository('App:Report')
+        $reports = $doctrine->getRepository(Report::class)
             ->createQueryBuilder('r')
             ->where('r.newReport > 0')
-            ->andWhere('r.character = :character')
-            ->setParameters(['character' => $character])
+            ->andWhere('r.commander = :commander')
+            ->setParameters(['commander' => $commander])
             ->getQuery()
             ->getResult();
 

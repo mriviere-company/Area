@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
-class CharacterOptionType extends AbstractType
+class CommanderOptionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

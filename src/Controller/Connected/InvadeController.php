@@ -28,17 +28,17 @@ class InvadeController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
 
-        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $redirect = $this->forward('App\Controller\Connected\Execute\WarPlanetController::invaderAction', [
             'usePlanet' => $usePlanet,
             'fleet' => $fleet,
-            'character' => $character,
+            'commander' => $commander,
             'now'  => $now,
             'em' => $em]);
 
@@ -66,17 +66,17 @@ class InvadeController extends AbstractController
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
         $now = new DateTime();
 
-        if ($usePlanet->getCharacter() != $character || $fleet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander || $fleet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         $redirect = $this->forward('App\Controller\Connected\Execute\WarPlanetController::raidAction', [
             'usePlanet' => $usePlanet,
             'fleet' => $fleet,
-            'character' => $character,
+            'commander' => $commander,
             'now'  => $now,
             'em' => $em]);
 

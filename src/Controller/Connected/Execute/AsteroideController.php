@@ -40,7 +40,7 @@ class AsteroideController extends AbstractController
                 $asteroide->setImageName(null);
                 $asteroide->setRecycleAt(null);
                 $asteroide->setName('Vide');
-                $newAsteroides = $em->getRepository('App:Planet')
+                $newAsteroides = $doctrine->getRepository(Planet::class)
                     ->createQueryBuilder('p')
                     ->join('p.sector', 's')
                     ->join('s.galaxy', 'g')
@@ -57,12 +57,12 @@ class AsteroideController extends AbstractController
                     $newAsteroides->setCdr(true);
                     $newAsteroides->setImageName('cdr.webp');
                     $newAsteroides->setName('Astéroïdes');
-                    $iaPlayer = $em->getRepository('App:Character')->findOneBy(['zombie' => 1]);
-                    $planetZb = $em->getRepository('App:Planet')
+                    $iaPlayer = $doctrine->getRepository(Commander::class)->findOneBy(['zombie' => 1]);
+                    $planetZb = $doctrine->getRepository(Planet::class)
                         ->createQueryBuilder('p')
-                        ->where('p.character = :character')
+                        ->where('p.commander = :commander')
                         ->andWhere('p.radarAt is null and p.brouilleurAt is null')
-                        ->setParameters(['character' => $iaPlayer])
+                        ->setParameters(['commander' => $iaPlayer])
                         ->orderBy('p.ground', 'ASC')
                         ->getQuery()
                         ->setMaxresults(1)
@@ -76,7 +76,7 @@ class AsteroideController extends AbstractController
                     $fleet->setCorvetWar(50 * $alea);
                     $fleet->setFregatePlasma(3 * $alea);
                     $fleet->setDestroyer($alea);
-                    $fleet->setCharacter($iaPlayer);
+                    $fleet->setCommander($iaPlayer);
                     $fleet->setPlanet($planetZb);
                     $destination = new Destination($fleet, $newAsteroides);
                     $em->persist($destination);

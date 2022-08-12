@@ -6,18 +6,18 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class CharacterService extends AbstractController
+class CommanderService extends AbstractController
 {
-    public function characterAction(ManagerRegistry $doctrine)
+    public function commanderAction(ManagerRegistry $doctrine)
     {
         $user = $this->getUser();
-        $character = $user->getMainCharacter();
+        $commander = $user->getMainCommander();
         $em = $doctrine->getManager();
 
-        return $em->getRepository('App:Character')
+        return $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->where('c.user = :user')
-            ->setParameters(['character' => $character])
+            ->setParameters(['commander' => $commander])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

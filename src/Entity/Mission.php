@@ -20,10 +20,10 @@ class Mission
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="missions", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="missions", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\Column(name="mission_at", type="datetime")
@@ -36,12 +36,12 @@ class Mission
 
     /**
      * Mission constructor.
-     * @param Character $character
+     * @param Commander $commander
      * @param int $type
      */
-    public function __construct(Character $character, int $type)
+    public function __construct(Commander $commander, int $type)
     {
-        $this->character = $character;
+        $this->commander = $commander;
         $this->type = $type;
         $this->missionAt = new DateTime();
     }
@@ -49,17 +49,17 @@ class Mission
     /**
      * @return mixed
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param mixed $character
+     * @param mixed $commander
      */
-    public function setCharacter($character): void
+    public function setCommander($commander): void
     {
-        $this->character = $character;
+        $this->commander = $commander;
     }
 
     /**
@@ -195,7 +195,7 @@ class Mission
      */
     public function getLevelMission()
     {
-        $level = $this->getCharacter()->getLevel();
+        $level = $this->getCommander()->getLevel();
         if ($level >= $this->type) {
             return true;
         }

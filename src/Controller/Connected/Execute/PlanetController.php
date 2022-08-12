@@ -50,19 +50,19 @@ class PlanetController extends AbstractController
             $planet->setCity($planet->getCity() + 1);
             $planet->setWorkerProduction($planet->getWorkerProduction() + 5.56);
             $planet->setWorkerMax($planet->getWorkerMax() + 12500);
-            $quest = $planet->getCharacter() ? $planet->getCharacter()->checkQuests('build_city') : null;
+            $quest = $planet->getCommander() ? $planet->getCommander()->checkQuests('build_city') : null;
             if($quest) {
-                $planet->getCharacter()->getRank()->setWarPoint($planet->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
-                $planet->getCharacter()->removeQuest($quest);
+                $planet->getCommander()->getRank()->setWarPoint($planet->getCommander()->getRank()->getWarPoint() + $quest->getGain());
+                $planet->getCommander()->removeQuest($quest);
             }
         } elseif ($build == 'metropole') {
             $planet->setMetropole($planet->getMetropole() + 1);
             $planet->setWorkerProduction($planet->getWorkerProduction() + 8.32);
             $planet->setWorkerMax($planet->getWorkerMax() + 40000);
-            $quest = $planet->getCharacter() ? $planet->getCharacter()->checkQuests('build_metro') : null;
+            $quest = $planet->getCommander() ? $planet->getCommander()->checkQuests('build_metro') : null;
             if($quest) {
-                $planet->getCharacter()->getRank()->setWarPoint($planet->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
-                $planet->getCharacter()->removeQuest($quest);
+                $planet->getCommander()->getRank()->setWarPoint($planet->getCommander()->getRank()->getWarPoint() + $quest->getGain());
+                $planet->getCommander()->removeQuest($quest);
             }
         } elseif ($build == 'caserne') {
             $planet->setCaserne($planet->getCaserne() + 1);
@@ -87,10 +87,10 @@ class PlanetController extends AbstractController
         } elseif ($build == 'heavyUsine') {
             $planet->setHeavyUsine($planet->getHeavyUsine() + 1);
             $planet->setShipProduction($planet->getShipProduction() + 0.3);
-            $quest = $planet->getCharacter() ? $planet->getCharacter()->checkQuests('build_heavy') : null;
+            $quest = $planet->getCommander() ? $planet->getCommander()->checkQuests('build_heavy') : null;
             if($quest) {
-                $planet->getCharacter()->getRank()->setWarPoint($planet->getCharacter()->getRank()->getWarPoint() + $quest->getGain());
-                $planet->getCharacter()->removeQuest($quest);
+                $planet->getCommander()->getRank()->setWarPoint($planet->getCommander()->getRank()->getWarPoint() + $quest->getGain());
+                $planet->getCommander()->removeQuest($quest);
             }
         } elseif ($build == 'spaceShip') {
             $planet->setSpaceShip($planet->getSpaceShip() + 1);

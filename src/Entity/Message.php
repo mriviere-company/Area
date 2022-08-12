@@ -20,10 +20,10 @@ class Message
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Character", inversedBy="messages", fetch="EXTRA_LAZY")
-     * @ORM\JoinColumn(name="character_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="messages", fetch="EXTRA_LAZY")
+     * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
-    protected $character;
+    protected $commander;
 
     /**
      * @ORM\Column(name="sender",type="string", nullable=true)
@@ -69,16 +69,16 @@ class Message
 
     /**
      * Message constructor.
-     * @param Character $character
+     * @param Commander $commander
      * @param string|null $title
      * @param string $content
      * @param int $bitcoin
      * @param int $id
      * @param string|null $username
      */
-    public function __construct(Character $character, ?string $title, string $content, int $bitcoin, int $id, ?string $username)
+    public function __construct(Commander $commander, ?string $title, string $content, int $bitcoin, int $id, ?string $username)
     {
-        $this->character = $character;
+        $this->commander = $commander;
         $this->title = $title ? $title : 'Bonjour';
         $this->content = $content;
         $this->bitcoin = $bitcoin;
@@ -100,17 +100,17 @@ class Message
     /**
      * @return mixed
      */
-    public function getCharacter()
+    public function getCommander()
     {
-        return $this->character;
+        return $this->commander;
     }
 
     /**
-     * @param mixed $character
+     * @param mixed $commander
      */
-    public function setCharacter($character): void
+    public function setCommander($commander): void
     {
-        $this->character = $character;
+        $this->commander = $commander;
     }
 
     /**

@@ -30,24 +30,24 @@ class ExplorerController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getOnde() + 1;
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getOnde() + 1;
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < ($level * 2300)) ||
-            ($level == 6 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < ($level * 2300)) ||
+            ($level == 6 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 300 / $character->getScientistProduction())) . 'S'));
-        $character->setSearch('onde');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * 2300));
+        $now->add(new DateInterval('PT' . round(($level * 300 / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch('onde');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * 2300));
         if(($user->getTutorial() == 8)) {
             $user->setTutorial(9);
         }
@@ -68,24 +68,24 @@ class ExplorerController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getTerraformation() + 1;
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getTerraformation() + 1;
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < ($level * 12000) || $character->getUtility() == 0) ||
-            ($level > 19 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < ($level * 12000) || $commander->getUtility() == 0) ||
+            ($level > 19 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 4200) / $character->getScientistProduction()) . 'S')); // X100 NORMAL GAME
-        $character->setSearch('terraformation');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * 12000));
+        $now->add(new DateInterval('PT' . round(($level * 4200) / $commander->getScientistProduction()) . 'S')); // X100 NORMAL GAME
+        $commander->setSearch('terraformation');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * 12000));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -103,24 +103,24 @@ class ExplorerController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getCargo() + 1;
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getCargo() + 1;
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < ($level * 3500) || $character->getUtility() < 2) ||
-            ($level == 6 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < ($level * 3500) || $commander->getUtility() < 2) ||
+            ($level == 6 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 400 / $character->getScientistProduction())) . 'S'));
-        $character->setSearch('cargo');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * 3500));
+        $now->add(new DateInterval('PT' . round(($level * 400 / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch('cargo');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * 3500));
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -138,24 +138,24 @@ class ExplorerController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getRecycleur();
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getRecycleur();
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < 16900 || $character->getUtility() < 3) ||
-            ($level == 1 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < 16900 || $commander->getUtility() < 3) ||
+            ($level == 1 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(400 / $character->getScientistProduction()) . 'S'));
-        $character->setSearch('recycleur');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - 16900);
+        $now->add(new DateInterval('PT' . round(400 / $commander->getScientistProduction()) . 'S'));
+        $commander->setSearch('recycleur');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - 16900);
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -173,24 +173,24 @@ class ExplorerController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getBarge();
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getBarge();
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < 35000 || $character->getUtility() < 3) ||
-            ($level == 1 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < 35000 || $commander->getUtility() < 3) ||
+            ($level == 1 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(280 / $character->getScientistProduction()) . 'S')); // X100 NORMAL GAME
-        $character->setSearch('barge');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - 35000);
+        $now->add(new DateInterval('PT' . round(280 / $commander->getScientistProduction()) . 'S')); // X100 NORMAL GAME
+        $commander->setSearch('barge');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - 35000);
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
@@ -208,24 +208,24 @@ class ExplorerController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getUtility() + 1;
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getUtility() + 1;
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < ($level * 2500)) ||
-            ($level == 4 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < ($level * 2500)) ||
+            ($level == 4 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(($level * 200 / $character->getScientistProduction())) . 'S'));
-        $character->setSearch('utility');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - ($level * 2500));
+        $now->add(new DateInterval('PT' . round(($level * 200 / $commander->getScientistProduction())) . 'S'));
+        $commander->setSearch('utility');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - ($level * 2500));
         if(($user->getTutorial() == 8)) {
             $user->setTutorial(9);
         }
@@ -246,24 +246,24 @@ class ExplorerController extends AbstractController
         $em = $doctrine->getManager();
         $now = new DateTime();
         $user = $this->getUser();
-        $character = $user->getCharacter($usePlanet->getSector()->getGalaxy()->getServer());
+        $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
 
-        if ($usePlanet->getCharacter() != $character) {
+        if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $level = $character->getHyperespace();
-        $characterBt = $character->getBitcoin();
+        $level = $commander->getHyperespace();
+        $commanderBt = $commander->getBitcoin();
 
-        if(($characterBt < 25000000 || $character->getUtility() < 3) ||
-            ($level == 1 || $character->getSearchAt() > $now)) {
+        if(($commanderBt < 25000000 || $commander->getUtility() < 3) ||
+            ($level == 1 || $commander->getSearchAt() > $now)) {
             return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $now->add(new DateInterval('PT' . round(6048 / $character->getScientistProduction()) . 'S')); // X100 NORMAL GAME
-        $character->setSearch('hyperespace');
-        $character->setSearchAt($now);
-        $character->setBitcoin($characterBt - 25000000);
+        $now->add(new DateInterval('PT' . round(6048 / $commander->getScientistProduction()) . 'S')); // X100 NORMAL GAME
+        $commander->setSearch('hyperespace');
+        $commander->setSearchAt($now);
+        $commander->setBitcoin($commanderBt - 25000000);
         $em->flush();
 
         return $this->redirectToRoute('search', ['usePlanet' => $usePlanet->getId()]);

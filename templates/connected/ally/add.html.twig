@@ -16,7 +16,7 @@
                 <h1 class="text-center p-4">{{ 'ally.addTitle'|trans }}</h1>
                 <ul class="nav nav-tabs mt-4" id="myTab">
                     <li class="nav-item">
-                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCharacters()|length }} {{ 'ally.members'|trans }}</a>
+                        <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}" >{{ ally.getCommanders()|length }} {{ 'ally.members'|trans }}</a>
                     </li>
                     <li class="nav-item">
                         <a href="{{ path('ally_page_bank', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.found'|trans }}</a>
@@ -27,7 +27,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">{{ 'ally.add'|trans }}</a>
                     </li>
-                    {% if character.getGrade().getPlacement() == 1 %}
+                    {% if commander.getGrade().getPlacement() == 1 %}
                         <li class="nav-item">
                             <a href="{{ path('ally_page_admin', {'usePlanet': usePlanet.getId()}) }}" >{{ 'ally.admin'|trans }}</a>
                         </li>
@@ -40,7 +40,7 @@
                 </ul>
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="add" role="tabpanel" aria-labelledby="add-tab">
-                        {% if character.getGrade().getCanRecruit() == 1 %}
+                        {% if commander.getGrade().getCanRecruit() == 1 %}
                             {{ form_start(form_allyAdd) }}
                             <div class="row mt-5">
                                 <div class="offset-1 col-5 form-group">
@@ -62,12 +62,12 @@
                             {% for proposal in ally.getProposals() %}
                                 <tr>
                                     <td class="center-cells">
-                                        {% if proposal.getCharacter().getImageName() %}
-                                            <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ vich_uploader_asset(proposal.getCharacter(), 'imageFile') }}">
+                                        {% if proposal.getCommander().getImageName() %}
+                                            <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ vich_uploader_asset(proposal.getCommander(), 'imageFile') }}">
                                         {% else %}
                                             <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ asset('img/avatar.webp') }}">
                                         {% endif %}
-                                        <span><a href="{{ path('user_profil', {'characterProfil': proposal.getCharacter().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ proposal.getCharacter().getUsername() }}</a></span>
+                                        <span><a href="{{ path('user_profil', {'commanderProfil': proposal.getCommander().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ proposal.getCommander().getUsername() }}</a></span>
                                     </td>
                                     <td class="center-cells">
                                         {{ proposal.getProposalAt()|date('d/m/Y H:i') }}
@@ -107,7 +107,7 @@
                                     {% endif %}
                                 </th>
                                 <th class="tab-cells-name p-2">
-                                    <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'characterProfil': user.id, 'usePlanet': usePlanet.getId()}) }}">{{ user.username }}</a></span>
+                                    <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'commanderProfil': user.id, 'usePlanet': usePlanet.getId()}) }}">{{ user.username }}</a></span>
                                 </th>
                                 <th class="tab-cells-name p-2">
                                     {{ user.planets }}

@@ -27,7 +27,7 @@
             </table>
         {% endif %}
         <div class="front-block-second">
-            {% set shipPoints = [character.getShip().getArmorPoints() - 5115, character.getShip().getShieldPoints() - 159, character.getShip().getMissilePoints() - 272, character.getShip().getLaserPoints() - 30, character.getShip().getPlasmaPoints() - 25, character.getShip().getPrecisionPoints()] %}
+            {% set shipPoints = [commander.getShip().getArmorPoints() - 5115, commander.getShip().getShieldPoints() - 159, commander.getShip().getMissilePoints() - 272, commander.getShip().getLaserPoints() - 30, commander.getShip().getPlasmaPoints() - 25, commander.getShip().getPrecisionPoints()] %}
             <div id="shipPoints" data-ship-points="{{ shipPoints|json_encode }}"></div>
             <div class="row">
                 <div class="col-12">
@@ -39,25 +39,25 @@
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunter.webp') }}">
                             </th>
                             <td class="text-center hunterClick{% if app.user.getTutorial() == 19 %} tutorial-show{% endif %}">
-                                {{ 'ship.hunter'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointHunter() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointHunter() }}</span>
+                                {{ 'ship.hunter'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointHunter() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointHunter() }}</span>
                             </td>
                             <th width="74" class="p-0 hunterHeavyClick">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunterHeavy.webp') }}">
                             </th>
                             <td class="text-center hunterHeavyClick">
-                                {{ 'ship.hunterHeavy'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointHunterHeavy() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointHunterHeavy() }}</span>
+                                {{ 'ship.hunterHeavy'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointHunterHeavy() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointHunterHeavy() }}</span>
                             </td>
                             <th width="74" class="p-0 hunterWarClick">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/hunterWar.webp') }}">
                             </th>
                             <td class="text-center hunterWarClick">
-                                {{ 'ship.hunterWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointHunterWar() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointHunterWar() }}</span>
+                                {{ 'ship.hunterWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointHunterWar() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointHunterWar() }}</span>
                             </td>
                             <th width="74" class="p-0 corvetClick">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/corvet.webp') }}">
                             </th>
                             <td class="text-center corvetClick">
-                                {{ 'ship.corvet'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointCorvet() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointCorvet() }}</span>
+                                {{ 'ship.corvet'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointCorvet() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointCorvet() }}</span>
                             </td>
                         </tr>
                         <tr>
@@ -65,25 +65,25 @@
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/corvetLaser.webp') }}">
                             </th>
                             <td class="text-center corvetLaserClick">
-                                {{ 'ship.corvetLaser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointCorvetLaser() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointCorvetLaser() }}</span>
+                                {{ 'ship.corvetLaser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointCorvetLaser() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointCorvetLaser() }}</span>
                             </td>
                             <th width="74" class="p-0 corvetWarClick">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/corvetWar.webp') }}">
                             </th>
                             <td class="text-center corvetWarClick">
-                                {{ 'ship.corvetWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointCorvetWar() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointCorvetWar() }}</span>
+                                {{ 'ship.corvetWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointCorvetWar() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointCorvetWar() }}</span>
                             </td>
                             <th width="74" class="p-0 fregateClick">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/fregate.webp') }}">
                             </th>
                             <td class="text-center fregateClick">
-                                {{ 'ship.fregate'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointFregate() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointFregate() }}</span>
+                                {{ 'ship.fregate'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointFregate() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointFregate() }}</span>
                             </td>
                             <th width="74" class="p-0 fregatePlasmaClick">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/fregatePlasma.webp') }}">
                             </th>
                             <td class="text-center fregatePlasmaClick">
-                                {{ 'ship.fregatePlasma'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointFregatePlasma() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointFregatePlasma() }}</span>
+                                {{ 'ship.fregatePlasma'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointFregatePlasma() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointFregatePlasma() }}</span>
                             </td>
                         </tr>
                         <tr>
@@ -91,26 +91,26 @@
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/croiser.webp') }}">
                             </th>
                             <td class="text-center croiserClick">
-                                {{ 'ship.croiser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointCroiser() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointCroiser() }}</span>
+                                {{ 'ship.croiser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointCroiser() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointCroiser() }}</span>
                             </td>
                             <th width="74" class="p-0 ironCladClick">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/ironClad.webp') }}">
                             </th>
                             <td class="text-center ironCladClick">
-                                {{ 'ship.ironClad'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointIronClad() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointIronClad() }}</span>
+                                {{ 'ship.ironClad'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointIronClad() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointIronClad() }}</span>
                             </td>
                             <th width="74" class="p-0 destroyerClick">
                                 <img alt="{{ 'image'|trans({},'front_global') }}" width="74" src="{{ asset('img/destroyer.webp') }}">
                             </th>
                             <td class="text-center destroyerClick">
-                                {{ 'ship.destroyer'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if character.getShip().getPointDestroyer() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ character.getShip().getPointDestroyer() }}</span>
+                                {{ 'ship.destroyer'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="{% if commander.getShip().getPointDestroyer() > 0 %}text-vert{% else %}text-rouge{% endif %}">{{ commander.getShip().getPointDestroyer() }}</span>
                             </td>
                         </tr>
                         </tbody>
                     </table>
                     <table class="table table-striped table-bordered table-dark persoFleet">
                         <tbody>
-                        {% if character.getShip().getPointHunter() == 0 %}
+                        {% if commander.getShip().getPointHunter() == 0 %}
                             <tr name="hunter" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/hunter.webp') }}">
@@ -119,16 +119,16 @@
                                     {{ 'ship.hunter'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorHunter() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorHunter() }}
                                 </td>
                                 <td class="p-0 text-center">
                                     {{ 'ship.shield'|trans|raw }} 0
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateHunter() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateHunter() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileHunter() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileHunter() }}
                                 </td>
                                 <td class="p-0 text-center">
                                     {{ 'ship.laser'|trans|raw }} 0
@@ -146,10 +146,10 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'hunter' }}) }}
-                                    {{ 'ship.hunter'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointHunter() }}</span><span class="totalExec hidden">{{ character.getShip().getPointHunter() }}</span>
+                                    {{ 'ship.hunter'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointHunter() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointHunter() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorHunter() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorHunter() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorHunter() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorHunter() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {% if app.user.getTutorial() == 19 %}
@@ -165,7 +165,7 @@
                                     {{ form_widget(form_shipPerso.shield,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateHunter() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateHunter() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateHunter() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateHunter() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -173,7 +173,7 @@
                             </tr>
                             <tr name="hunter" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileHunter() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileHunter() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileHunter() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileHunter() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {% if app.user.getTutorial() == 19 %}
@@ -202,7 +202,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointHunterHeavy() == 0 %}
+                        {% if commander.getShip().getPointHunterHeavy() == 0 %}
                             <tr name="hunterHeavy" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/hunterHeavy.webp') }}">
@@ -211,16 +211,16 @@
                                     {{ 'ship.hunterHeavy'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorHunterHeavy() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorHunterHeavy() }}
                                 </td>
                                 <td class="p-0 text-center">
                                     {{ 'ship.shield'|trans|raw }} 0
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateHunterHeavy() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateHunterHeavy() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileHunterHeavy() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileHunterHeavy() }}
                                 </td>
                                 <td class="p-0 text-center">
                                     {{ 'ship.laser'|trans|raw }} 0
@@ -238,10 +238,10 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'hunterHeavy' }}) }}
-                                    {{ 'ship.hunterHeavy'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointHunterHeavy() }}</span><span class="totalExec hidden">{{ character.getShip().getPointHunterHeavy() }}</span>
+                                    {{ 'ship.hunterHeavy'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointHunterHeavy() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointHunterHeavy() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorHunterHeavy() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorHunterHeavy() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorHunterHeavy() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorHunterHeavy() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
@@ -253,7 +253,7 @@
                                     {{ form_widget(form_shipPerso.shield,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateHunterHeavy() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateHunterHeavy() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateHunterHeavy() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateHunterHeavy() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -261,7 +261,7 @@
                             </tr>
                             <tr name="hunterHeavy" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileHunterHeavy() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileHunterHeavy() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileHunterHeavy() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileHunterHeavy() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
@@ -286,7 +286,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointHunterWar() == 0 %}
+                        {% if commander.getShip().getPointHunterWar() == 0 %}
                             <tr name="hunterWar" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/hunterWar.webp') }}">
@@ -295,22 +295,22 @@
                                     {{ 'ship.hunterWar'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorHunterWar() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorHunterWar() }}
                                 </td>
                                 <td class="p-0 text-center">
                                     {{ 'ship.shield'|trans|raw }} 0
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateHunterWar() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateHunterWar() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileHunterWar() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileHunterWar() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.laser'|trans|raw }} {{ character.getShip().getLaserHunterWar() }}
+                                    {{ 'ship.laser'|trans|raw }} {{ commander.getShip().getLaserHunterWar() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.plasma'|trans|raw }}  {{ character.getShip().getPlasmaHunterWar() }}
+                                    {{ 'ship.plasma'|trans|raw }}  {{ commander.getShip().getPlasmaHunterWar() }}
                                 </td>
                             </tr>
                         {% else %}
@@ -322,10 +322,10 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'hunterWar' }}) }}
-                                    {{ 'ship.hunterWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointHunterWar() }}</span><span class="totalExec hidden">{{ character.getShip().getPointHunterWar() }}</span>
+                                    {{ 'ship.hunterWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointHunterWar() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointHunterWar() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorHunterWar() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorHunterWar() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorHunterWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorHunterWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
@@ -337,7 +337,7 @@
                                     {{ form_widget(form_shipPerso.shield,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateHunterWar() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateHunterWar() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateHunterWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateHunterWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -345,19 +345,19 @@
                             </tr>
                             <tr name="hunterWar" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileHunterWar() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileHunterWar() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileHunterWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileHunterWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ character.getShip().getLaserHunterWar() }}</span> <span class="basis" hidden>{{ character.getShip().getLaserHunterWar() }}</span>
+                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ commander.getShip().getLaserHunterWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getLaserHunterWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.laser) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ character.getShip().getPlasmaHunterWar() }}</span> <span class="basis" hidden>{{ character.getShip().getPlasmaHunterWar() }}</span>
+                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ commander.getShip().getPlasmaHunterWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getPlasmaHunterWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.plasma) }}
@@ -370,7 +370,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointCorvet() == 0 %}
+                        {% if commander.getShip().getPointCorvet() == 0 %}
                             <tr name="corvet" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/corvet.webp') }}">
@@ -379,16 +379,16 @@
                                     {{ 'ship.corvet'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorCorvet() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorCorvet() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.shield'|trans|raw }} {{ character.getShip().getShieldCorvet() }}
+                                    {{ 'ship.shield'|trans|raw }} {{ commander.getShip().getShieldCorvet() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateCorvet() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateCorvet() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileCorvet() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileCorvet() }}
                                 </td>
                                 <td class="p-0 text-center">
                                     {{ 'ship.laser'|trans|raw }} 0
@@ -406,22 +406,22 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'corvet' }}) }}
-                                    {{ 'ship.corvet'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointCorvet() }}</span><span class="totalExec hidden">{{ character.getShip().getPointCorvet() }}</span>
+                                    {{ 'ship.corvet'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointCorvet() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointCorvet() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorCorvet() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorCorvet() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorCorvet() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorCorvet() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ character.getShip().getShieldCorvet() }}</span> <span class="basis" hidden>{{ character.getShip().getShieldCorvet() }}</span>
+                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ commander.getShip().getShieldCorvet() }}</span> <span class="basis" hidden>{{ commander.getShip().getShieldCorvet() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.shield) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateCorvet() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateCorvet() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateCorvet() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateCorvet() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -429,7 +429,7 @@
                             </tr>
                             <tr name="corvet" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileCorvet() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileCorvet() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileCorvet() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileCorvet() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
@@ -454,7 +454,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointCorvetLaser() == 0 %}
+                        {% if commander.getShip().getPointCorvetLaser() == 0 %}
                             <tr name="corvetLaser" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/corvetLaser.webp') }}">
@@ -463,19 +463,19 @@
                                     {{ 'ship.corvetLaser'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorCorvetLaser() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorCorvetLaser() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.shield'|trans|raw }} {{ character.getShip().getShieldCorvetLaser() }}
+                                    {{ 'ship.shield'|trans|raw }} {{ commander.getShip().getShieldCorvetLaser() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateCorvetLaser() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateCorvetLaser() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileCorvetLaser() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileCorvetLaser() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.laser'|trans|raw }} {{ character.getShip().getLaserCorvetLaser() }}
+                                    {{ 'ship.laser'|trans|raw }} {{ commander.getShip().getLaserCorvetLaser() }}
                                 </td>
                                 <td class="p-0 text-center">
                                     {{ 'ship.plasma'|trans|raw }}  0
@@ -490,22 +490,22 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'corvetLaser' }}) }}
-                                    {{ 'ship.corvetLaser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointCorvetLaser() }}</span><span class="totalExec hidden">{{ character.getShip().getPointCorvetLaser() }}</span>
+                                    {{ 'ship.corvetLaser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointCorvetLaser() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointCorvetLaser() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorCorvetLaser() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorCorvetLaser() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorCorvetLaser() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorCorvetLaser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ character.getShip().getShieldCorvetLaser() }}</span> <span class="basis" hidden>{{ character.getShip().getShieldCorvetLaser() }}</span>
+                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ commander.getShip().getShieldCorvetLaser() }}</span> <span class="basis" hidden>{{ commander.getShip().getShieldCorvetLaser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.shield) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateCorvetLaser() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateCorvetLaser() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateCorvetLaser() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateCorvetLaser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -513,13 +513,13 @@
                             </tr>
                             <tr name="corvetLaser" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileCorvetLaser() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileCorvetLaser() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileCorvetLaser() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileCorvetLaser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ character.getShip().getLaserCorvetLaser() }}</span> <span class="basis" hidden>{{ character.getShip().getLaserCorvetLaser() }}</span>
+                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ commander.getShip().getLaserCorvetLaser() }}</span> <span class="basis" hidden>{{ commander.getShip().getLaserCorvetLaser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.laser) }}
@@ -538,7 +538,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointCorvetWar() == 0 %}
+                        {% if commander.getShip().getPointCorvetWar() == 0 %}
                             <tr name="corvetWar" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/corvetWar.webp') }}">
@@ -547,19 +547,19 @@
                                     {{ 'ship.corvetWar'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorCorvetWar() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorCorvetWar() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.shield'|trans|raw }} {{ character.getShip().getShieldCorvetWar() }}
+                                    {{ 'ship.shield'|trans|raw }} {{ commander.getShip().getShieldCorvetWar() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateCorvetWar() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateCorvetWar() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileCorvetWar() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileCorvetWar() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.laser'|trans|raw }} {{ character.getShip().getLaserCorvetWar() }}
+                                    {{ 'ship.laser'|trans|raw }} {{ commander.getShip().getLaserCorvetWar() }}
                                 </td>
                                 <td class="p-0 text-center">
                                     {{ 'ship.plasma'|trans|raw }}
@@ -574,22 +574,22 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'corvetWar' }}) }}
-                                    {{ 'ship.corvetWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointCorvetWar() }}</span><span class="totalExec hidden">{{ character.getShip().getPointCorvetWar() }}</span>
+                                    {{ 'ship.corvetWar'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointCorvetWar() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointCorvetWar() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorCorvetWar() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorCorvetWar() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorCorvetWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorCorvetWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ character.getShip().getShieldCorvetWar() }}</span> <span class="basis" hidden>{{ character.getShip().getShieldCorvetWar() }}</span>
+                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ commander.getShip().getShieldCorvetWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getShieldCorvetWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.shield) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateCorvetWar() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateCorvetWar() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateCorvetWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateCorvetWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -597,13 +597,13 @@
                             </tr>
                             <tr name="corvetWar" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileCorvetWar() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileCorvetWar() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileCorvetWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileCorvetWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.laser'|trans|raw }}  <span class="addPoint">{{ character.getShip().getLaserCorvetWar() }}</span> <span class="basis" hidden>{{ character.getShip().getLaserCorvetWar() }}</span>
+                                    {{ 'ship.laser'|trans|raw }}  <span class="addPoint">{{ commander.getShip().getLaserCorvetWar() }}</span> <span class="basis" hidden>{{ commander.getShip().getLaserCorvetWar() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.laser) }}
@@ -622,7 +622,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointFregate() == 0 %}
+                        {% if commander.getShip().getPointFregate() == 0 %}
                             <tr name="fregate" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/fregate.webp') }}">
@@ -631,19 +631,19 @@
                                     {{ 'ship.fregate'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorFregate() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorFregate() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.shield'|trans|raw }} {{ character.getShip().getShieldFregate() }}
+                                    {{ 'ship.shield'|trans|raw }} {{ commander.getShip().getShieldFregate() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateFregate() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateFregate() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileFregate() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileFregate() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.laser'|trans|raw }} {{ character.getShip().getLaserFregate() }}
+                                    {{ 'ship.laser'|trans|raw }} {{ commander.getShip().getLaserFregate() }}
                                 </td>
                                 <td class="p-0 text-center">
                                     {{ 'ship.plasma'|trans|raw }}
@@ -658,22 +658,22 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'fregate' }}) }}
-                                    {{ 'ship.fregate'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointFregate() }}</span><span class="totalExec hidden">{{ character.getShip().getPointFregate() }}</span>
+                                    {{ 'ship.fregate'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointFregate() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointFregate() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorFregate() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorFregate() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorFregate() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorFregate() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ character.getShip().getShieldFregate() }}</span> <span class="basis" hidden>{{ character.getShip().getShieldFregate() }}</span>
+                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ commander.getShip().getShieldFregate() }}</span> <span class="basis" hidden>{{ commander.getShip().getShieldFregate() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.shield) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateFregate() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateFregate() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateFregate() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateFregate() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -681,13 +681,13 @@
                             </tr>
                             <tr name="fregate" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileFregate() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileFregate() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileFregate() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileFregate() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.laser'|trans|raw }}  <span class="addPoint">{{ character.getShip().getLaserFregate() }}</span> <span class="basis" hidden>{{ character.getShip().getLaserFregate() }}</span>
+                                    {{ 'ship.laser'|trans|raw }}  <span class="addPoint">{{ commander.getShip().getLaserFregate() }}</span> <span class="basis" hidden>{{ commander.getShip().getLaserFregate() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.laser) }}
@@ -706,7 +706,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointFregatePlasma() == 0 %}
+                        {% if commander.getShip().getPointFregatePlasma() == 0 %}
                             <tr name="fregatePlasma" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/fregatePlasma.webp') }}">
@@ -715,22 +715,22 @@
                                     {{ 'ship.fregatePlasma'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorFregatePlasma() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorFregatePlasma() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.shield'|trans|raw }} {{ character.getShip().getShieldFregatePlasma() }}
+                                    {{ 'ship.shield'|trans|raw }} {{ commander.getShip().getShieldFregatePlasma() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateFregatePlasma() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateFregatePlasma() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileFregatePlasma() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileFregatePlasma() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.laser'|trans|raw }} {{ character.getShip().getLaserFregatePlasma() }}
+                                    {{ 'ship.laser'|trans|raw }} {{ commander.getShip().getLaserFregatePlasma() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.plasma'|trans|raw }} {{ character.getShip().getPlasmaFregatePlasma() }}
+                                    {{ 'ship.plasma'|trans|raw }} {{ commander.getShip().getPlasmaFregatePlasma() }}
                                 </td>
                             </tr>
                         {% else %}
@@ -742,22 +742,22 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'fregatePlasma' }}) }}
-                                    {{ 'ship.fregatePlasma'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointFregatePlasma() }}</span><span class="totalExec hidden">{{ character.getShip().getPointFregatePlasma() }}</span>
+                                    {{ 'ship.fregatePlasma'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointFregatePlasma() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointFregatePlasma() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorFregatePlasma() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorFregatePlasma() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorFregatePlasma() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorFregatePlasma() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ character.getShip().getShieldFregatePlasma() }}</span> <span class="basis" hidden>{{ character.getShip().getShieldFregatePlasma() }}</span>
+                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ commander.getShip().getShieldFregatePlasma() }}</span> <span class="basis" hidden>{{ commander.getShip().getShieldFregatePlasma() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.shield) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateFregatePlasma() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateFregatePlasma() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateFregatePlasma() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateFregatePlasma() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -765,19 +765,19 @@
                             </tr>
                             <tr name="fregatePlasma" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileFregatePlasma() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileFregatePlasma() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileFregatePlasma() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileFregatePlasma() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ character.getShip().getLaserFregatePlasma() }}</span> <span class="basis" hidden>{{ character.getShip().getLaserFregatePlasma() }}</span>
+                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ commander.getShip().getLaserFregatePlasma() }}</span> <span class="basis" hidden>{{ commander.getShip().getLaserFregatePlasma() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.laser) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ character.getShip().getPlasmaFregatePlasma() }}</span> <span class="basis" hidden>{{ character.getShip().getPlasmaFregatePlasma() }}</span>
+                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ commander.getShip().getPlasmaFregatePlasma() }}</span> <span class="basis" hidden>{{ commander.getShip().getPlasmaFregatePlasma() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.plasma) }}
@@ -790,7 +790,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointCroiser() == 0 %}
+                        {% if commander.getShip().getPointCroiser() == 0 %}
                             <tr name="croiser" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/croiser.webp') }}">
@@ -799,22 +799,22 @@
                                     {{ 'ship.croiser'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorCroiser() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorCroiser() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.shield'|trans|raw }} {{ character.getShip().getShieldCroiser() }}
+                                    {{ 'ship.shield'|trans|raw }} {{ commander.getShip().getShieldCroiser() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateCroiser() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateCroiser() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileCroiser() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileCroiser() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.laser'|trans|raw }} {{ character.getShip().getLaserCroiser() }}
+                                    {{ 'ship.laser'|trans|raw }} {{ commander.getShip().getLaserCroiser() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.plasma'|trans|raw }} {{ character.getShip().getPlasmaCroiser() }}
+                                    {{ 'ship.plasma'|trans|raw }} {{ commander.getShip().getPlasmaCroiser() }}
                                 </td>
                             </tr>
                         {% else %}
@@ -826,22 +826,22 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'croiser' }}) }}
-                                    {{ 'ship.croiser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointCroiser() }}</span><span class="totalExec hidden">{{ character.getShip().getPointCroiser() }}</span>
+                                    {{ 'ship.croiser'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointCroiser() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointCroiser() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorCroiser() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorCroiser() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorCroiser() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorCroiser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ character.getShip().getShieldCroiser() }}</span> <span class="basis" hidden>{{ character.getShip().getShieldCroiser() }}</span>
+                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ commander.getShip().getShieldCroiser() }}</span> <span class="basis" hidden>{{ commander.getShip().getShieldCroiser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.shield) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateCroiser() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateCroiser() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateCroiser() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateCroiser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -849,19 +849,19 @@
                             </tr>
                             <tr name="croiser" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileCroiser() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileCroiser() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileCroiser() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileCroiser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ character.getShip().getLaserCroiser() }}</span> <span class="basis" hidden>{{ character.getShip().getLaserCroiser() }}</span>
+                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ commander.getShip().getLaserCroiser() }}</span> <span class="basis" hidden>{{ commander.getShip().getLaserCroiser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.laser) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ character.getShip().getPlasmaCroiser() }}</span> <span class="basis" hidden>{{ character.getShip().getPlasmaCroiser() }}</span>
+                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ commander.getShip().getPlasmaCroiser() }}</span> <span class="basis" hidden>{{ commander.getShip().getPlasmaCroiser() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.plasma) }}
@@ -874,7 +874,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointIronClad() == 0 %}
+                        {% if commander.getShip().getPointIronClad() == 0 %}
                             <tr name="ironClad" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/ironClad.webp') }}">
@@ -883,22 +883,22 @@
                                     {{ 'ship.ironClad'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorIronClad() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorIronClad() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.shield'|trans|raw }} {{ character.getShip().getShieldIronClad() }}
+                                    {{ 'ship.shield'|trans|raw }} {{ commander.getShip().getShieldIronClad() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateIronClad() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateIronClad() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileIronClad() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileIronClad() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.laser'|trans|raw }} {{ character.getShip().getLaserIronClad() }}
+                                    {{ 'ship.laser'|trans|raw }} {{ commander.getShip().getLaserIronClad() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.plasma'|trans|raw }} {{ character.getShip().getPlasmaIronClad() }}
+                                    {{ 'ship.plasma'|trans|raw }} {{ commander.getShip().getPlasmaIronClad() }}
                                 </td>
                             </tr>
                         {% else %}
@@ -910,22 +910,22 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'ironClad' }}) }}
-                                    {{ 'ship.ironClad'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointIronClad() }}</span><span class="totalExec hidden">{{ character.getShip().getPointIronClad() }}</span>
+                                    {{ 'ship.ironClad'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointIronClad() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointIronClad() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorIronClad() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorIronClad() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorIronClad() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorIronClad() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ character.getShip().getShieldIronClad() }}</span> <span class="basis" hidden>{{ character.getShip().getShieldIronClad() }}</span>
+                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ commander.getShip().getShieldIronClad() }}</span> <span class="basis" hidden>{{ commander.getShip().getShieldIronClad() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.shield) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateIronClad() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateIronClad() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateIronClad() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateIronClad() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -933,19 +933,19 @@
                             </tr>
                             <tr name="ironClad" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileIronClad() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileIronClad() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileIronClad() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileIronClad() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ character.getShip().getLaserIronClad() }}</span> <span class="basis" hidden>{{ character.getShip().getLaserIronClad() }}</span>
+                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ commander.getShip().getLaserIronClad() }}</span> <span class="basis" hidden>{{ commander.getShip().getLaserIronClad() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.laser) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ character.getShip().getPlasmaIronClad() }}</span> <span class="basis" hidden>{{ character.getShip().getPlasmaIronClad() }}</span>
+                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ commander.getShip().getPlasmaIronClad() }}</span> <span class="basis" hidden>{{ commander.getShip().getPlasmaIronClad() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.plasma) }}
@@ -958,7 +958,7 @@
                             </tr>
                             {{ form_end(form_shipPerso) }}
                         {% endif %}
-                        {% if character.getShip().getPointDestroyer() == 0 %}
+                        {% if commander.getShip().getPointDestroyer() == 0 %}
                             <tr name="destroyer" class="hidden">
                                 <th width="32" class="p-0 text-center">
                                     <img alt="{{ 'image'|trans({},'front_global') }}" width="32" src="{{ asset('img/destroyer.webp') }}">
@@ -967,22 +967,22 @@
                                     {{ 'ship.destroyer'|trans|raw }} {{ 'ship.point'|trans|raw }} <span class="text-rouge">0</span>
                                 </td>
                                 <td class="p-0 text-center mt-1">
-                                    {{ 'ship.armor'|trans|raw }} {{ character.getShip().getArmorDestroyer() }}
+                                    {{ 'ship.armor'|trans|raw }} {{ commander.getShip().getArmorDestroyer() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.shield'|trans|raw }} {{ character.getShip().getShieldDestroyer() }}
+                                    {{ 'ship.shield'|trans|raw }} {{ commander.getShip().getShieldDestroyer() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.accurate'|trans|raw }} {{ character.getShip().getAccurateDestroyer() }}
+                                    {{ 'ship.accurate'|trans|raw }} {{ commander.getShip().getAccurateDestroyer() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.missile'|trans|raw }} {{ character.getShip().getMissileDestroyer() }}
+                                    {{ 'ship.missile'|trans|raw }} {{ commander.getShip().getMissileDestroyer() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.laser'|trans|raw }} {{ character.getShip().getLaserDestroyer() }}
+                                    {{ 'ship.laser'|trans|raw }} {{ commander.getShip().getLaserDestroyer() }}
                                 </td>
                                 <td class="p-0 text-center">
-                                    {{ 'ship.plasma'|trans|raw }} {{ character.getShip().getPlasmaDestroyer() }}
+                                    {{ 'ship.plasma'|trans|raw }} {{ commander.getShip().getPlasmaDestroyer() }}
                                 </td>
                             </tr>
                         {% else %}
@@ -994,22 +994,22 @@
                                 </th>
                                 <td rowspan="2" class="text-center">
                                     {{ form_widget(form_shipPerso.ship,{'attr': { 'hidden': 'hidden', 'value': 'destroyer' }}) }}
-                                    {{ 'ship.destroyer'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ character.getShip().getPointDestroyer() }}</span><span class="totalExec hidden">{{ character.getShip().getPointDestroyer() }}</span>
+                                    {{ 'ship.destroyer'|trans|raw }}<br> {{ 'ship.point'|trans|raw }} <span class="totalPoints">{{ commander.getShip().getPointDestroyer() }}</span><span class="totalExec hidden">{{ commander.getShip().getPointDestroyer() }}</span>
                                 </td>
                                 <td>
-                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ character.getShip().getArmorDestroyer() }}</span> <span class="basis" hidden>{{ character.getShip().getArmorDestroyer() }}</span>
+                                    {{ 'ship.armor'|trans|raw }} <span class="addPoint">{{ commander.getShip().getArmorDestroyer() }}</span> <span class="basis" hidden>{{ commander.getShip().getArmorDestroyer() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.armor) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ character.getShip().getShieldDestroyer() }}</span> <span class="basis" hidden>{{ character.getShip().getShieldDestroyer() }}</span>
+                                    {{ 'ship.shield'|trans|raw }} <span class="addPoint">{{ commander.getShip().getShieldDestroyer() }}</span> <span class="basis" hidden>{{ commander.getShip().getShieldDestroyer() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.shield) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ character.getShip().getAccurateDestroyer() }}</span> <span class="basis" hidden>{{ character.getShip().getAccurateDestroyer() }}</span>
+                                    {{ 'ship.accurate'|trans|raw }} <span class="addPoint">{{ commander.getShip().getAccurateDestroyer() }}</span> <span class="basis" hidden>{{ commander.getShip().getAccurateDestroyer() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.accurate,{'attr': { 'disabled': 'disabled', 'class': 'game-input-off text-left' }}) }}
@@ -1017,19 +1017,19 @@
                             </tr>
                             <tr name="destroyer" class="hidden">
                                 <td>
-                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ character.getShip().getMissileDestroyer() }}</span> <span class="basis" hidden>{{ character.getShip().getMissileDestroyer() }}</span>
+                                    {{ 'ship.missile'|trans|raw }} <span class="addPoint">{{ commander.getShip().getMissileDestroyer() }}</span> <span class="basis" hidden>{{ commander.getShip().getMissileDestroyer() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.missile) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ character.getShip().getLaserDestroyer() }}</span> <span class="basis" hidden>{{ character.getShip().getLaserDestroyer() }}</span>
+                                    {{ 'ship.laser'|trans|raw }} <span class="addPoint">{{ commander.getShip().getLaserDestroyer() }}</span> <span class="basis" hidden>{{ commander.getShip().getLaserDestroyer() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.laser) }}
                                 </td>
                                 <td>
-                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ character.getShip().getPlasmaDestroyer() }}</span> <span class="basis" hidden>{{ character.getShip().getPlasmaDestroyer() }}</span>
+                                    {{ 'ship.plasma'|trans|raw }} <span class="addPoint">{{ commander.getShip().getPlasmaDestroyer() }}</span> <span class="basis" hidden>{{ commander.getShip().getPlasmaDestroyer() }}</span>
                                 </td>
                                 <td class="center-cells">
                                     {{ form_widget(form_shipPerso.plasma) }}
@@ -1044,10 +1044,10 @@
                         {% endif %}
                         </tbody>
                     </table>
-                    {% if character.getShip().getRemainingPoints() > 0 %}{% if character.getShip().getMax() > 0  %}<div class="block-title mt-4"><h2>{{ 'ship.lastPoints'|trans({'%nbr%': character.getShip().getMax()}) }}</h2></div>{% else %}<div class="block-title mt-4"><h2>{{ 'ship.nextUpdate'|trans }} <span class="timerArea" hidden>{{ character.getShip().getLastUpdate()|date('Y/m/d H:i:s') }}</span></h2></div>{% endif %}{% endif %}
+                    {% if commander.getShip().getRemainingPoints() > 0 %}{% if commander.getShip().getMax() > 0  %}<div class="block-title mt-4"><h2>{{ 'ship.lastPoints'|trans({'%nbr%': commander.getShip().getMax()}) }}</h2></div>{% else %}<div class="block-title mt-4"><h2>{{ 'ship.nextUpdate'|trans }} <span class="timerArea" hidden>{{ commander.getShip().getLastUpdate()|date('Y/m/d H:i:s') }}</span></h2></div>{% endif %}{% endif %}
                 </div>
             </div>
-            {% if character.getShip().getRetry() > 0  %}<span><a class="btn btn-lg btn-start float-right mr-2 mb-2{% if app.user.getTutorial() < 20 %} tutorial-hide{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipRetry'|trans }}" href="{{ path('ship_retry', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'ship.retry'|trans({'%retry%': character.getShip().getRetry()}) }}</a></span>{% endif %}
+            {% if commander.getShip().getRetry() > 0  %}<span><a class="btn btn-lg btn-start float-right mr-2 mb-2{% if app.user.getTutorial() < 20 %} tutorial-hide{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipRetry'|trans }}" href="{{ path('ship_retry', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'ship.retry'|trans({'%retry%': commander.getShip().getRetry()}) }}</a></span>{% endif %}
             <canvas class="mt-5" id="doughnutChart" height="150"></canvas>
             {{ encore_entry_script_tags('shipsCharts') }}
         </div>

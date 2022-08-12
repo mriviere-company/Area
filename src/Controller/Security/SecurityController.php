@@ -14,7 +14,6 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
@@ -39,7 +38,7 @@ class SecurityController extends AbstractController
         $em = $doctrine->getManager();
 
         if ($_POST) {
-            $userSameName = $em->getRepository('App:User')
+            $userSameName = $doctrine->getRepository(User::class)
                 ->createQueryBuilder('u')
                 ->where('u.username = :username')
                 ->setParameters(['username' => $_POST['_username']])
@@ -47,7 +46,7 @@ class SecurityController extends AbstractController
                 ->getOneOrNullResult();
 
 
-            $userSameEmail = $em->getRepository('App:User')
+            $userSameEmail = $doctrine->getRepository(User::class)
                 ->createQueryBuilder('u')
                 ->orWhere('u.email = :email')
                 ->setParameters(['email' => $_POST['_email']])
@@ -70,7 +69,7 @@ class SecurityController extends AbstractController
             $encryptedIp = openssl_encrypt($userIp, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
 
 
-            $userSameIp = $em->getRepository('App:User')
+            $userSameIp = $doctrine->getRepository(User::class)
                 ->createQueryBuilder('u')
                 ->where('u.ipAddress = :ip')
                 ->setParameters(['ip' => $encryptedIp])
@@ -140,7 +139,7 @@ class SecurityController extends AbstractController
         $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
         $encryptedIp = openssl_encrypt($userIp, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
 
-        $userSameIp = $em->getRepository('App:User')
+        $userSameIp = $doctrine->getRepository(User::class)
             ->createQueryBuilder('u')
             ->where('u.ipAddress = :ip')
             ->setParameters(['ip' => $encryptedIp])
@@ -154,7 +153,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $number = $em->getRepository('App:User')
+        $number = $doctrine->getRepository(User::class)
             ->createQueryBuilder('u')
             ->select('count(u)')
             ->getQuery()
@@ -203,7 +202,7 @@ class SecurityController extends AbstractController
                 $userIp = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
                 $encryptedIp = openssl_encrypt($userIp, "AES-256-CBC", "my personal ip", 0, hex2bin('34857d973953e44afb49ea9d61104d8c'));
 
-                $userSameIp = $em->getRepository('App:User')
+                $userSameIp = $doctrine->getRepository(User::class)
                     ->createQueryBuilder('u')
                     ->where('u.ipAddress = :ip')
                     ->andWhere('u.username != :user')
@@ -220,8 +219,8 @@ class SecurityController extends AbstractController
                 $em->flush();
             }
             if ($user->getConnectLast()) {
-                $character = $user->getMainCharacter();
-                $usePlanet = $em->getRepository('App:Planet')->findByFirstPlanet($character);
+                $commander = $user->getMainCommander();
+                $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($commander);
                 return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
             }
             return $this->redirectToRoute('server_select');
@@ -240,7 +239,7 @@ class SecurityController extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
 
-        $rememberMes = $em->getRepository('App:RemembermeToken')
+        $rememberMes = $doctrine->getRepository(RemembermeToken::class)
             ->createQueryBuilder('r')
             ->where('r.username =:username')
             ->setParameters(['username' => $user->getUsername()])
