@@ -19,10 +19,10 @@ class AlliancesController extends AbstractController
     public function pactsAction($pacts, $em): Response
     {
         foreach ($pacts as $pact) {
-            $otherAlly = $doctrine->getRepository(Ally::class)
+            $otherAlliance = $doctrine->getRepository(Alliance::class)
                 ->createQueryBuilder('a')
-                ->where('a.sigle = :sigle')
-                ->setParameter('sigle', $pact->getAllyTag())
+                ->where('a.tag = :tag')
+                ->setParameter('tag', $pact->getAllianceTag())
                 ->getQuery()
                 ->getOneOrNullResult();
 
@@ -32,15 +32,15 @@ class AlliancesController extends AbstractController
                 ->andWhere('al.ally = :ally')
                 ->setParameters([
                     'allytag' => $pact->getDismissBy(),
-                    'ally' => $otherAlly])
+                    'ally' => $otherAlliance])
                 ->getQuery()
                 ->getOneOrNullResult();
 
             $salons = $doctrine->getRepository(Salon::class)
                 ->createQueryBuilder('s')
-                ->where('s.name = :sigle1')
-                ->orWhere('s.name = :sigle2')
-                ->setParameters(['sigle1' => $otherAlly->getSigle() . " - " . $pact->getDismissBy(), 'sigle2' => $pact->getDismissBy() . " - " . $otherAlly->getSigle()])
+                ->where('s.name = :tag1')
+                ->orWhere('s.name = :tag2')
+                ->setParameters(['tag1' => $otherAlliance->getTag() . " - " . $pact->getDismissBy(), 'tag2' => $pact->getDismissBy() . " - " . $otherAlliance->getTag()])
                 ->getQuery()
                 ->getResult();
 

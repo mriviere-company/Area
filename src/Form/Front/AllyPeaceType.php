@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Translation\Translator;
 
-class AllyPeaceType extends AbstractType
+class AlliancePeaceType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -76,7 +76,7 @@ class AllyPeaceType extends AbstractType
     {
         $translator = new Translator('front_ally');
         return [
-            $translator->trans('form.proposal') => '0',
+            $translator->trans('form.offer') => '0',
             $translator->trans('form.claim') => '1',
         ];
     }

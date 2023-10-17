@@ -19,11 +19,11 @@ class ChronosController extends AbstractController
      */
     public function userActivityAction($commander, $now, $em): Response
     {
-        if (!$commander->getLastActivity()) {
-            $commander->setLastActivity($now);
+        if (!$commander->getActivityAt()) {
+            $commander->setActivityAt($now);
             $em->flush($commander);
         }
-        $seconds = ($now->format('U') - ($commander->getLastActivity()->format('U')));
+        $seconds = ($now->format('U') - ($commander->getActivityAt()->format('U')));
 
         return new Response ($seconds);
     }
@@ -36,11 +36,11 @@ class ChronosController extends AbstractController
      */
     public function planetActivityAction($planet, $now, $em): Response
     {
-        if (!$planet->getLastActivity()) {
-            $planet->setLastActivity($now);
+        if (!$planet->getActivityAt()) {
+            $planet->setActivityAt($now);
             $em->flush($planet);
         }
-        $seconds = ($now->format('U') - ($planet->getLastActivity()->format('U')));
+        $seconds = ($now->format('U') - ($planet->getActivityAt()->format('U')));
 
         return new Response ($seconds);
     }

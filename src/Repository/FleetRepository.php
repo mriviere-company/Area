@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class FleetRepository extends EntityRepository
 {
-    public function findByAlly() {
+    public function findByAlliance() {
         return null;
     }
 }

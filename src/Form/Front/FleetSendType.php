@@ -93,7 +93,7 @@ class FleetSendType extends AbstractType
                 'flightType',
                 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                 [
-                    'choices' => $this->getFlightType(),
+                    'choices' => $this->getFlightAt(),
                     'label' => 'form.flightType',
                     'attr'  => [
                         'placeholder' => 'form.flightType',
@@ -106,7 +106,7 @@ class FleetSendType extends AbstractType
             ->add('sendForm', SubmitType::class, ['label' => 'form.sendFleet', 'attr' => ['class' => 'confirm-button']]);
     }
 
-    protected function getFlightType(): array
+    protected function getFlightAt(): array
     {
         $translator = new Translator('front_fleet');
         return [

@@ -136,12 +136,12 @@
                     <span class="maxInput">max</span>
                 </td>
             </tr>
-            <tr{% if usePlanet.getBrouilleurShip() == 0 %} hidden{% endif %}>
+            <tr{% if usePlanet.getJammerShip() == 0 %} hidden{% endif %}>
                 <th class="tab-cells-name p-1 pl-3">
-                    {{ 'spatial.brouilleurShip'|trans }} x {{ usePlanet.getBrouilleurShip() }}
+                    {{ 'spatial.brouilleurShip'|trans }} x {{ usePlanet.getJammerShip() }}
                 </th>
                 <td class="center-cells p-1">
-                    {{ form_widget(form_createFleet.brouilleurShip,{attr: { max: usePlanet.getBrouilleurShip()}}) }}
+                    {{ form_widget(form_createFleet.brouilleurShip,{attr: { max: usePlanet.getJammerShip()}}) }}
                 </td>
                 <td width="35" class="tab-cells-name p-1 cell-middle text-center text-orange">
                     <span class="maxInput">max</span>

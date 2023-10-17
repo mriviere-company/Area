@@ -267,7 +267,7 @@ class FleetEditShipType extends AbstractType
                 )
             )
             ->add(
-                'moreBrouilleurShip',
+                'moreJammerShip',
                 null,
                 array(
                     'label' => 'form.nbr',
@@ -283,7 +283,7 @@ class FleetEditShipType extends AbstractType
                 )
             )
             ->add(
-                'lessBrouilleurShip',
+                'lessJammerShip',
                 null,
                 array(
                     'label' => 'form.nbr',

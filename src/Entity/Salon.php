@@ -20,7 +20,7 @@ class Salon
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Ally", inversedBy="salons")
+     * @ORM\ManyToMany(targetEntity="Alliance", inversedBy="salons")
      */
     protected $allys;
 
@@ -141,11 +141,11 @@ class Salon
     /**
      * Add ally
      *
-     * @param Ally $ally
+     * @param Alliance $ally
      *
      * @return Salon
      */
-    public function addAlly(Ally $ally): Salon
+    public function addAlliance(Alliance $ally): Salon
     {
         $this->allys[] = $ally;
 
@@ -155,9 +155,9 @@ class Salon
     /**
      * Remove ally
      *
-     * @param Ally $ally
+     * @param Alliance $ally
      */
-    public function removeAlly(Ally $ally)
+    public function removeAlliance(Alliance $ally)
     {
         $this->allys->removeElement($ally);
     }
@@ -165,7 +165,7 @@ class Salon
     /**
      * @return mixed
      */
-    public function getAllys()
+    public function getAlliances()
     {
         return $this->allys;
     }
@@ -173,7 +173,7 @@ class Salon
     /**
      * @param mixed $allys
      */
-    public function setAllys($allys): void
+    public function setAlliances($allys): void
     {
         $this->allys = $allys;
     }

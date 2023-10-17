@@ -13,8 +13,8 @@
         <source>tooltip.planet</source>
         <target>%name%</target>
       </trans-unit>
-      <trans-unit id="uFkPPGX" resname="tooltip.planetAlly">
-        <source>tooltip.planetAlly</source>
+      <trans-unit id="uFkPPGX" resname="tooltip.planetAlliance">
+        <source>tooltip.planetAlliance</source>
         <target>[%ally%] %name%</target>
       </trans-unit>
       <trans-unit id="9QZR_kz" resname="tooltip.planetInfos">

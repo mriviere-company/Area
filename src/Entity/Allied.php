@@ -20,7 +20,7 @@ class Allied
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ally", inversedBy="allieds", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Alliance", inversedBy="allieds", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
@@ -54,11 +54,11 @@ class Allied
 
     /**
      * Allied constructor.
-     * @param Ally $ally
+     * @param Alliance $ally
      * @param string $tag
      * @param $accepted
      */
-    public function __construct(Ally $ally, string $tag, $accepted)
+    public function __construct(Alliance $ally, string $tag, $accepted)
     {
         $this->ally = $ally;
         $this->allyTag = $tag;
@@ -71,7 +71,7 @@ class Allied
     /**
      * @return mixed
      */
-    public function getAlly()
+    public function getAlliance()
     {
         return $this->ally;
     }
@@ -79,7 +79,7 @@ class Allied
     /**
      * @param mixed $ally
      */
-    public function setAlly($ally): void
+    public function setAlliance($ally): void
     {
         $this->ally = $ally;
     }
@@ -87,7 +87,7 @@ class Allied
     /**
      * @return mixed
      */
-    public function getAllyTag()
+    public function getAllianceTag()
     {
         return $this->allyTag;
     }
@@ -95,7 +95,7 @@ class Allied
     /**
      * @param mixed $allyTag
      */
-    public function setAllyTag($allyTag): void
+    public function setAllianceTag($allyTag): void
     {
         $this->allyTag = $allyTag;
     }

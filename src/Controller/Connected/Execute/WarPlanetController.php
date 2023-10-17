@@ -102,7 +102,7 @@ class WarPlanetController extends AbstractController
         }
         $reportInv->setSendAt($now);
         $reportInv->setCommander($commander);
-        $commander->setViewReport(false);
+        $commander->setNewReport(false);
 
         if ($commanderDefender->getZombie() == 0) {
             $reportDef = new Report();
@@ -110,13 +110,13 @@ class WarPlanetController extends AbstractController
             $reportDef->setSendAt($now);
             $reportDef->setCommander($commanderDefender);
         }
-        $commanderDefender->setViewReport(false);
-        $dSigle = null;
-        if($commanderDefender->getAlly()) {
-            $dSigle = $commanderDefender->getAlly()->getSigle();
+        $commanderDefender->setNewReport(false);
+        $dTag = null;
+        if($commanderDefender->getAlliance()) {
+            $dTag = $commanderDefender->getAlliance()->getTag();
         }
 
-        if($fleet->getPlanet()->getCommander() && $fleet->getAllianceCommander() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $commander->getSigleAllied($dSigle) == null) {
+        if($fleet->getPlanet()->getCommander() && $fleet->getAllianceCommander() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $commander->getTagAllied($dTag) == null) {
             if($dMilitary >= $aMilitary) {
                 if ($commanderDefender->getZombie() == 0) {
                     $warPointDef = round($aMilitary);
@@ -164,7 +164,7 @@ class WarPlanetController extends AbstractController
                         "sinon votre Empire ne tiendra pas longtemps. Vous avez tué <span class='text-vert'>" .
                         number_format(round($soldierDtmp + ($workerDtmp / 6) + ($tankDtmp * 3000))) . "</span> zombies. Tous vos soldats sont morts et vos barges se sont égarées sur la planète.<br>N'abandonnez pas et sortez vos tripes !");
 
-                    $commander->setZombieAtt($commander->getZombieAtt() + 10);
+                    $commander->setZombieLvl($commander->getZombieLvl() + 10);
                 } else {
                     $reportDef->setTitle("Rapport d'invasion : Victoire (défense)");
                     $reportDef->setImageName("defend_win_report.webp");
@@ -278,8 +278,8 @@ class WarPlanetController extends AbstractController
                             'planet31.webp', 'planet32.webp', 'planet33.webp'
                         ];
 
-                        if ($commander->getZombieAtt() > 9) {
-                            $commander->setZombieAtt(round($commander->getZombieAtt() / 10));
+                        if ($commander->getZombieLvl() > 9) {
+                            $commander->setZombieLvl(round($commander->getZombieLvl() / 10));
                         }
                         if($fleet->getCargoPlace() > $fleet->getCargoFull()) {
                             $place = $fleet->getCargoPlace() - $fleet->getCargoFull();
@@ -334,7 +334,7 @@ class WarPlanetController extends AbstractController
                     $commander->removeQuest($quest);
                 }
             }
-            if($fleet->getNbrShips() == 0) {
+            if($fleet->getNbrShip() == 0) {
                 $em->remove($fleet);
             }
             $em->persist($reportInv);
@@ -343,7 +343,7 @@ class WarPlanetController extends AbstractController
                 $em->persist($reportDef);
             }
         } else {
-            if (!$fleet->getAllianceCommander() || $commander->getSigleAllied($dSigle)) {
+            if (!$fleet->getAllianceCommander() || $commander->getTagAllied($dTag)) {
                 return new Response ("ally");
             } elseif (!$fleet->getPlanet()->getCommander()) {
                 return new Response ("noplayer");
@@ -420,19 +420,19 @@ class WarPlanetController extends AbstractController
         $reportLoot->setType('invade');
         $reportLoot->setSendAt($now);
         $reportLoot->setCommander($fleet->getCommander());
-        $fleet->getCommander()->setViewReport(false);
+        $fleet->getCommander()->setNewReport(false);
         $reportDef = new Report();
         $reportDef->setType('invade');
         $reportDef->setSendAt($now);
         $reportDef->setCommander($commanderDefender);
-        $commanderDefender->setViewReport(false);
-        $dSigle = null;
-        if ($commanderDefender->getAlly()) {
-            $dSigle = $commanderDefender->getAlly()->getSigle();
+        $commanderDefender->setNewReport(false);
+        $dTag = null;
+        if ($commanderDefender->getAlliance()) {
+            $dTag = $commanderDefender->getAlliance()->getTag();
         }
         $usePlanetDef = $doctrine->getRepository(Planet::class)->findByFirstPlanet($commanderDefender);
 
-        if ($fleet->getPlanet()->getCommander() && $fleet->getAllianceCommander() && $fleet->getCommander()->getSigleAllied($dSigle) == null && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $commanderDefender->getZombie() == 0) {
+        if ($fleet->getPlanet()->getCommander() && $fleet->getAllianceCommander() && $fleet->getCommander()->getTagAllied($dTag) == null && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $commanderDefender->getZombie() == 0) {
             if($dMilitary >= $aMilitary) {
                 $warPointDef = round($aMilitary);
                 if ($commanderDefender->getPoliticPdg() > 0) {
@@ -556,7 +556,7 @@ class WarPlanetController extends AbstractController
         } else {
             if ($commanderDefender->getZombie() == 1) {
                 return new Response ("zombie");
-            } elseif (!$fleet->getAllianceCommander() || $fleet->getCommander()->getSigleAllied($dSigle)) {
+            } elseif (!$fleet->getAllianceCommander() || $fleet->getCommander()->getTagAllied($dTag)) {
                 return new Response ("ally");
             } elseif (!$fleet->getPlanet()->getCommander()) {
                 return new Response ("noplayer");

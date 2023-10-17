@@ -79,7 +79,7 @@ class MessageController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $commander->setViewMessage(true);
+        $commander->setNewMessage(true);
 
         $em->flush();
 
@@ -92,7 +92,7 @@ class MessageController extends AbstractController
             $recever = $form_message->get('commander')->getData();
             $message = new Message($form_message->get('commander')->getData(), nl2br($form_message->get('title')->getData()), nl2br($form_message->get('content')->getData()), abs($form_message->get('bitcoin')->getData()), $commander->getId(), $form_message->get('anonymous')->getData() ? $commander->getUsername() : null);
             $recever->setBitcoin($recever->getBitcoin() + abs($form_message->get('bitcoin')->getData()));
-            $recever->setViewMessage(false);
+            $recever->setNewMessage(false);
             $commander->setBitcoin($commander->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
             $em->persist($message);
             $quest = $commander->checkQuests('private_message');
@@ -149,7 +149,7 @@ class MessageController extends AbstractController
             $message = new Message($userRecever, nl2br($form_message->get('title')->getData()), nl2br($form_message->get('content')->getData()), abs($form_message->get('bitcoin')->getData()), $commander->getId(), $form_message->get('anonymous')->getData() ? $commander->getUsername() : null);
 
             $userRecever->setBitcoin($userRecever->getBitcoin() + abs($form_message->get('bitcoin')->getData()));
-            $userRecever->setViewMessage(false);
+            $userRecever->setNewMessage(false);
             $commander->setBitcoin($commander->getBitcoin() - abs($form_message->get('bitcoin')->getData()));
             $em->persist($message);
             $quest = $commander->checkQuests('private_message');

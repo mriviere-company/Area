@@ -26,7 +26,7 @@ class PoliticController extends AbstractController
      * @return RedirectResponse
      * @throws Exception
      */
-    public function researchAllyAction(ManagerRegistry $doctrine, string $search, Planet $usePlanet): RedirectResponse
+    public function researchAllianceAction(ManagerRegistry $doctrine, string $search, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $now = new DateTime();

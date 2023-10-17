@@ -14,8 +14,8 @@
     {%- block footer -%}
     {%- endblock -%}
     <div class="front-block allyPage text-center text-middle pt-3">
-        <div class="my-4 text-more">[{{ allyPage.getSigle() }}] - {{ allyPage.getName() }} <span class="ml-4"><a
-                        href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'sigle': allyPage.getSigle()}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span>
+        <div class="my-4 text-more">[{{ allyPage.getTag() }}] - {{ allyPage.getName() }} <span class="ml-4"><a
+                        href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'tag': allyPage.getTag()}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span>
         </div>
         <h3 class="text-center text-or mb-4">{{ 'ally.level'|trans }}{{ allyPage.getLevel() }}</h3>
         <div class="my-3"><span
@@ -86,7 +86,7 @@
                     {% set x = 1 %}
                     {% for allied in allyPage.getAllieds()|filter(allied => allied.getAccepted() == 1) %}
                         {% if x > 1 %} - {% endif %}<span class="text-vert"><a
-                                href="{{ path('ally_profil', {'allyCommander': allyPage.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ allied.getAllytag() }}</a>
+                                href="{{ path('ally_profil', {'allyCommander': allyPage.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ allied.getAlliancetag() }}</a>
                         </span>
                         {% set x = x + 1 %}
                     {% endfor %}
@@ -97,7 +97,7 @@
                     {% set x = 1 %}
                     {% for pna in allyPage.getPnas()|filter(pna => pna.getAccepted() == 1) %}
                         {% if x > 1 %} - {% endif %}<span class="text-bleu"><a
-                                href="{{ path('ally_profil', {'allyCommander': allyPage.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ pna.getAllytag() }}</a>
+                                href="{{ path('ally_profil', {'allyCommander': allyPage.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ pna.getAlliancetag() }}</a>
                         </span>
                         {% set x = x + 1 %}
                     {% endfor %}
@@ -108,7 +108,7 @@
                     {% set x = 1 %}
                     {% for war in allyPage.getWars() %}
                         {% if x > 1 %} - {% endif %}<span class="text-rouge"><a
-                                href="{{ path('ally_profil', {'allyCommander': allyPage.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ war.getAllytag() }}</a>
+                                href="{{ path('ally_profil', {'allyCommander': allyPage.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ war.getAlliancetag() }}</a>
                         </span>
                         {% set x = x + 1 %}
                     {% endfor %}

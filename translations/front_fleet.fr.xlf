@@ -21,8 +21,8 @@
         <source>fleet.fleetName</source>
         <target>Nom</target>
       </trans-unit>
-      <trans-unit id="XT7XKs0" resname="fleet.fleetShips">
-        <source>fleet.fleetShips</source>
+      <trans-unit id="XT7XKs0" resname="fleet.fleetShip">
+        <source>fleet.fleetShip</source>
         <target>Vaisseaux : ST</target>
       </trans-unit>
       <trans-unit id="AAGmMEg" resname="fleet.fleetSignature">
@@ -133,8 +133,8 @@
         <source>fleet.rec</source>
         <target>Recyclage</target>
       </trans-unit>
-      <trans-unit id="Vf5aHVh" resname="fleet.ships">
-        <source>fleet.ships</source>
+      <trans-unit id="Vf5aHVh" resname="fleet.ship">
+        <source>fleet.ship</source>
         <target>Vaisseaux</target>
       </trans-unit>
       <trans-unit id="M1_EvvK" resname="fleet.quantity">
@@ -453,8 +453,8 @@
         <source>recyclerCancel</source>
         <target>annuler</target>
       </trans-unit>
-      <trans-unit id="700rYqU" resname="fleet.flightTime">
-        <source>fleet.flightTime</source>
+      <trans-unit id="700rYqU" resname="fleet.flightAt">
+        <source>fleet.flightAt</source>
         <target>Durée</target>
       </trans-unit>
       <trans-unit id="FI005kI" resname="fleet.fleet">

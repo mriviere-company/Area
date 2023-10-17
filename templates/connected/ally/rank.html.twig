@@ -9,17 +9,17 @@
         {% if commander.getStats()|length > 7 %}
             <div class="front-block-second">
                 {% set points = [] %}
-                {% set otherAlly = [] %}
+                {% set otherAlliance = [] %}
                 {% set date = [] %}
                 {% for otherPoint in otherPoints %}
-                    {% set otherAlly = otherAlly|merge([(otherPoint['allAlly'] / otherPoint['numbers'])|round]) %}
+                    {% set otherAlliance = otherAlliance|merge([(otherPoint['allAlliance'] / otherPoint['numbers'])|round]) %}
                 {% endfor %}
                 {% for stat in allyPoints %}
                     {% set points = points|merge([(stat['ally'])|round]) %}
                     {% set date = date|merge([(stat['date']|date("d/m/Y"))]) %}
                 {% endfor %}
                 <div id="allyPoints" data-ally-points="{{ points|json_encode }}"></div>
-                <div id="allyOtherPoints" data-ally-other-points="{{ otherAlly|json_encode }}"></div>
+                <div id="allyOtherPoints" data-ally-other-points="{{ otherAlliance|json_encode }}"></div>
                 <div id="allyDate" data-ally-date="{{ date|json_encode }}"></div>
                 <canvas id="allyChart" height="100"></canvas>
                 {{ encore_entry_script_tags('allyCharts') }}
@@ -56,8 +56,8 @@
             </thead>
             <tbody>
             {% set x = 1 %}
-            {% for allAlly in allAllys %}
-                <tr{% if ally and ally.getSigle() == allAlly.sigle %} class="currentBack"{% elseif  allAlly and allAlly.sigle in commander.getAllyFriendsTag() %} class="availableBack"{% elseif allAlly and allAlly.sigle in commander.getAllyEnnemyTag() %} class="warningBack"{% endif %}>
+            {% for allAlliance in allAlliances %}
+                <tr{% if ally and ally.getTag() == allAlliance.tag %} class="currentBack"{% elseif  allAlliance and allAlliance.tag in commander.getAllianceFriendsTag() %} class="availableBack"{% elseif allAlliance and allAlliance.tag in commander.getAllianceEnnemyTag() %} class="warningBack"{% endif %}>
                     <td width="15px" class="tab-cells-name p-2">
                         {% if x == 1 %}
                             <div class="text-or glyphicon glyphicon-star"></div> {{ x }}.{% elseif x == 2 %}
@@ -65,10 +65,10 @@
                             <div class="text-bronze glyphicon glyphicon-star"></div> {{ x }}.{% else %}
                             <div class="glyphicon glyphicon-star" hidden></div> {{ x }}.{% endif %}
                     </td>
-                    <td class="tab-cells-name borderAlly p-0">
-                        {% if allAlly.imageName %}
+                    <td class="tab-cells-name borderAlliance p-0">
+                        {% if allAlliance.imageName %}
                             <img alt="{{ 'image'|trans({},'front_global') }}" height="30" width="45"
-                                 src="{{ vich_uploader_asset(allAlly, 'imageFile', 'App\\Entity\\Ally') }}">
+                                 src="{{ vich_uploader_asset(allAlliance, 'imageFile', 'App\\Entity\\Alliance') }}">
                         {% else %}
                             <img alt="{{ 'image'|trans({},'front_global') }}" height="30" width="45"
                                  src="{{ asset('img/ally.webp') }}">
@@ -76,45 +76,45 @@
                     </td>
                     <td class="tab-cells-name p-2 text-left">
                         <span><a data-toggle="modal" data-target="#allyModal"
-                                 href="{{ path('ally_profil_modal', {'allyCommander': allAlly.id, 'usePlanet': usePlanet.getId()}) }}">[{{ allAlly.sigle }}] {{ allAlly.name }}</a>{% if allAlly.politic == 'democrat' %}<div
+                                 href="{{ path('ally_profil_modal', {'allyCommander': allAlliance.id, 'usePlanet': usePlanet.getId()}) }}">[{{ allAlliance.tag }}] {{ allAlliance.name }}</a>{% if allAlliance.politic == 'democrat' %}<div
                             class="ml-2 text-vert glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="top"
-                            title="{{ 'democrat'|trans }}"></div>{% elseif allAlly.politic == 'communism' %}<div
+                            title="{{ 'democrat'|trans }}"></div>{% elseif allAlliance.politic == 'communism' %}<div
                         class="ml-2 text-rouge glyphicon glyphicon-globe" data-toggle="tooltip" data-placement="top"
                         title="{{ 'communism'|trans }}"></div>{% else %}<div
                         class="ml-2 text-blanc glyphicon glyphicon-flash" data-toggle="tooltip" data-placement="top"
                         title="{{ 'fascism'|trans }}"></div>{% endif %}</span>
                     </td>
                     <td class="tab-cells-name p-2">
-                        {% if allAlly.politic == 'communism' or allAlly.politic == 'fascism' %}
-                            ?? / {{ allAlly.maxMembers }}
+                        {% if allAlliance.politic == 'communism' or allAlliance.politic == 'fascism' %}
+                            ?? / {{ allAlliance.maxMembers }}
                         {% else %}
-                            {{ allAlly.commanders }} / {{ allAlly.maxMembers }}
+                            {{ allAlliance.commanders }} / {{ allAlliance.maxMembers }}
                         {% endif %}
                     </td>
                     <td class="tab-cells-name p-2">
-                        {% if allAlly.politic == 'communism' or allAlly.politic == 'fascism' %}
+                        {% if allAlliance.politic == 'communism' or allAlliance.politic == 'fascism' %}
                             ???
                         {% else %}
-                            {{ allAlly.planets|number_format }}
+                            {{ allAlliance.planets|number_format }}
                         {% endif %}
                     </td>
                     <td class="tab-cells-name p-2">
-                        {{ allAlly.point|number_format }}{% if allAlly.point > allAlly.oldPoint %}<span
+                        {{ allAlliance.point|number_format }}{% if allAlliance.point > allAlliance.oldPoint %}<span
                                 class="rank-good-border text-vert">
-                            +{{ (allAlly.point - allAlly.oldPoint)|number_format }}</span>{% elseif allAlly.point < allAlly.oldPoint %}
+                            +{{ (allAlliance.point - allAlliance.oldPoint)|number_format }}</span>{% elseif allAlliance.point < allAlliance.oldPoint %}
                             <span class="rank-bad-border text-rouge">
-                            -{{ (allAlly.oldPoint - allAlly.point)|number_format }}</span>{% else %}<span
+                            -{{ (allAlliance.oldPoint - allAlliance.point)|number_format }}</span>{% else %}<span
                                 class="rank-bad-border text-mini">&#x25cf</span>{% endif %}
                     </td>
                     <td class="tab-cells-name p-2">
-                        {{ allAlly.createdAt|date('d/m/Y') }}
+                        {{ allAlliance.createdAt|date('d/m/Y') }}
                     </td>
-                    {% if ally and ally.getSigle() == allAlly.sigle %}
+                    {% if ally and ally.getTag() == allAlliance.tag %}
                         <td class="tab-cells-name p-2">
                         </td>
                     {% else %}
                         <td class="tab-cells-name p-2">
-                            <span><a href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'sigle': allAlly.sigle}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span>
+                            <span><a href="{{ path('ally_join_salon', {'usePlanet': usePlanet.getId(), 'tag': allAlliance.tag}) }}">{{ 'ally.ambassy'|trans|raw }}</a></span>
                         </td>
                     {% endif %}
                 </tr>

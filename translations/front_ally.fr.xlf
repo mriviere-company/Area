@@ -21,9 +21,9 @@
         <source>form.name</source>
         <target>Nom de l'alliance (max 15)</target>
       </trans-unit>
-      <trans-unit id="BJZrngn" resname="form.sigle">
-        <source>form.sigle</source>
-        <target>Sigle (max 4)</target>
+      <trans-unit id="BJZrngn" resname="form.tag">
+        <source>form.tag</source>
+        <target>Tag (max 4)</target>
       </trans-unit>
       <trans-unit id="5slGOln" resname="form.slogan">
         <source>form.slogan</source>
@@ -33,8 +33,8 @@
         <source>form.taxe</source>
         <target>(1 à 10%)</target>
       </trans-unit>
-      <trans-unit id="Fi2TPoc" resname="form.taxeAlly">
-        <source>form.taxeAlly</source>
+      <trans-unit id="Fi2TPoc" resname="form.taxeAlliance">
+        <source>form.taxeAlliance</source>
         <target>Taxe d'alliance :</target>
       </trans-unit>
       <trans-unit id="N7xyN0P" resname="form.send">
@@ -67,7 +67,7 @@
       </trans-unit>
       <trans-unit id="qeh0NgM" resname="form.allyName">
         <source>form.allyName</source>
-        <target>Sigle de l'alliance</target>
+        <target>Tag de l'alliance</target>
       </trans-unit>
       <trans-unit id="h2JZhLm" resname="form.description">
         <source>form.description</source>
@@ -121,8 +121,8 @@
         <source>ally.deleteText</source>
         <target>Êtes vous bien sûr de vouloir supprimer votre alliance ?</target>
       </trans-unit>
-      <trans-unit id="OjPPcBg" resname="ally.proposalAt">
-        <source>ally.proposalAt</source>
+      <trans-unit id="OjPPcBg" resname="ally.offerAt">
+        <source>ally.offerAt</source>
         <target>Date de proposition</target>
       </trans-unit>
       <trans-unit id="o0Uj.9W" resname="ally.cancelAsk">
@@ -341,8 +341,8 @@
         <source>ally.traitor</source>
         <target>Vous avez été trahis</target>
       </trans-unit>
-      <trans-unit id="wPnWRjV" resname="ally.banAlly">
-        <source>ally.banAlly</source>
+      <trans-unit id="wPnWRjV" resname="ally.banAlliance">
+        <source>ally.banAlliance</source>
         <target>Vous pourrez rejoindre/créer une alliance dans : </target>
       </trans-unit>
       <trans-unit id="tohs44N" resname="ally.makePeace">
@@ -473,8 +473,8 @@
         <source>ally.ranked</source>
         <target>Liste d'Alliances crées</target>
       </trans-unit>
-      <trans-unit id="KhhULPI" resname="ally.proposals">
-        <source>ally.proposals</source>
+      <trans-unit id="KhhULPI" resname="ally.offers">
+        <source>ally.offers</source>
         <target>Proposition(s) de recrutement</target>
       </trans-unit>
       <trans-unit id="HNcYDdh" resname="ally.usersRecrut">
@@ -513,8 +513,8 @@
         <source>rank.user</source>
         <target>Nom du joueur</target>
       </trans-unit>
-      <trans-unit id="gALA287" resname="rank.lastActivity">
-        <source>rank.lastActivity</source>
+      <trans-unit id="gALA287" resname="rank.activityAt">
+        <source>rank.activityAt</source>
         <target>Dernière activitée le</target>
       </trans-unit>
       <trans-unit id="Q.xhOA4" resname="rank.politic">
@@ -577,8 +577,8 @@
         <source>form.take</source>
         <target>Retirer</target>
       </trans-unit>
-      <trans-unit id="oPdRtj4" resname="form.proposal">
-        <source>form.proposal</source>
+      <trans-unit id="oPdRtj4" resname="form.offer">
+        <source>form.offer</source>
         <target>Proposer</target>
       </trans-unit>
       <trans-unit id="Ft7bXRw" resname="form.claim">

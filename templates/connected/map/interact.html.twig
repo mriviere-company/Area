@@ -28,7 +28,7 @@
                     {{ form_widget(form_fleetMove.sendForm) }}
                 </td>
             </tr>
-            {#{% if planet.getCommander() == null and planet.getCdr() == false and planet.getMerchant() == false %}
+            {#{% if planet.getCommander() == null and planet.getCdr() == false and planet.getTrader() == false %}
                 <tr>
                     <td colspan="3" class="center-cells">
                         <span><a href="{{ path('send_sonde', {'usePlanet': usePlanet.getId(), 'id': planet.getId()}) }}">{{ 'interact.colonize'|trans }}</a></span>
@@ -49,14 +49,14 @@
                     </td>
                 </tr>
             {% endif %}
-            {% if planet.getMerchant() == true %}
+            {% if planet.getTrader() == true %}
                 <tr>
                     <td colspan="3" class="center-cells">
                         <span><a href="{{ path('send_sonde', {'usePlanet': usePlanet.getId(), 'id': planet.getId()}) }}">{{ 'interact.sell'|trans }}</a></span>
                     </td>
                 </tr>
             {% endif %}#}
-            {% if planet.getCommander() and (render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': planet.getSector().getPosition(), 'galaxy': planet.getSector().getGalaxy().getPosition()})) > planet.getSkyBrouilleur() or planet.getOurFleet(commander)) %}
+            {% if planet.getCommander() and (render(controller('App\\Service\\PlanetService::userRadarAction', {'sector': planet.getSector().getPosition(), 'galaxy': planet.getSector().getGalaxy().getPosition()})) > planet.getSkyJammer() or planet.getOurFleet(commander)) %}
                 <tr>
                     <td colspan="3" class="center-cells">
                         <span><a href="{{ path('user_profil', {'commanderProfil': planet.getCommander().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ 'interact.seeProfil'|trans }} {{ planet.getCommander().getUsername() }}</a></span>

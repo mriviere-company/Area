@@ -79,7 +79,7 @@
     <div{% if allTuto < 17 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('ally', {'usePlanet': usePlanet.getId()}) }}">
             <div class="btn-left{% if app.request.attributes.get('_route') == 'ally_blank' or app.request.attributes.get('_route') == 'ally' %} currentBack{% endif %}{% if allTuto == 17 %} tutorial-show{% endif %}">
-                <span>{{ 'ally'|trans }}{% if commander.getProposals() and ally is null %} (<small>{{ commander.getProposals()|length }}</small>){% endif %}</span>
+                <span>{{ 'ally'|trans }}{% if commander.getOffers() and ally is null %} (<small>{{ commander.getOffers()|length }}</small>){% endif %}</span>
             </div>
         </a>
     </div>
@@ -137,7 +137,7 @@
     <div{% if allTuto < 18 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('ship_perso', {'usePlanet': usePlanet.getId()}) }}">
             <div class="btn-left{% if app.request.attributes.get('_route') == 'ship_perso' %} currentBack{% endif %}{% if commander.getShip().getLastUpdate()|date('Y/m/d H:i:s') < "now"|date('Y/m/d H:i:s') and commander.getShip().getRemainingPoints() > 0 %} availableBack{% endif %}{% if allTuto == 18 %} tutorial-show{% endif %}">
-                <span>{{ 'ship.perso'|trans }}</span>{% if commander.getShip().getMax() > 0 and commander.getShip().getRemainingPoints() > 0 %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipsFree'|trans }}"></span>{% endif %}
+                <span>{{ 'ship.perso'|trans }}</span>{% if commander.getShip().getMax() > 0 and commander.getShip().getRemainingPoints() > 0 %} <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipFree'|trans }}"></span>{% endif %}
             </div>
         </a>
     </div>
@@ -145,7 +145,7 @@
     <div{% if allTuto < 50 %} class="tutorial-hide"{% endif %}>
         <a href="{{ path('message', {'usePlanet': usePlanet.getId()}) }}">
             <div class="btn-left{% if app.request.attributes.get('_route') == 'message' %} currentBack{% endif %}">
-                {% if commander.getViewMessage() == false %}<div class="text-orange glyphicon glyphicon-envelope"></div> {% endif %}<span>{{ 'message'|trans }}</span>
+                {% if commander.getNewMessage() == false %}<div class="text-orange glyphicon glyphicon-envelope"></div> {% endif %}<span>{{ 'message'|trans }}</span>
             </div>
         </a>
     </div>

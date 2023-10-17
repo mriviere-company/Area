@@ -2,9 +2,9 @@ title: Flotte
 fleet.onThisPlanet: 'Sur %planet%'
 fleet.createFlotte: 'Créer une nouvelle flotte'
 fleet.regroupFleets: 'Ralliement des flottes'
-fleet.regroupShips: 'Ralliement des vaisseaux'
+fleet.regroupShip: 'Ralliement des vaisseaux'
 fleet.fleetName: Nom
-fleet.fleetShips: 'Vaisseaux : ST'
+fleet.fleetShip: 'Vaisseaux : ST'
 fleet.fleetSignature: Signature
 fleet.seeFlotte: 'gestion flotte'
 fleet.inAir: 'Flottes en mouvement'
@@ -33,7 +33,7 @@ fleet.transit: 'En transit de'
 fleet.abandon: Abandonner
 fleet.question: 'Êtes vous sûr de vouloir abandonner cette flotte aux zombies ?'
 fleet.rec: Recyclage
-fleet.ships: Vaisseaux
+fleet.ship: Vaisseaux
 fleet.quantity: Quantité
 fleet.transfert: Transférer
 fleet.to: 'vers'
@@ -114,7 +114,7 @@ tooltip.userFleet: '%name%'
 fleet.fusion: fusionner
 recycler: recyclage
 recyclerCancel: annuler
-fleet.flightTime: 'Durée'
+fleet.flightAt: 'Durée'
 fleet.fleet: 'Flottes en orbite'
 fleet.manage: Gérer
 fleet.split: Scinder

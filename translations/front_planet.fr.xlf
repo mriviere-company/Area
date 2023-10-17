@@ -105,8 +105,8 @@
         <source>planet.abandon.question</source>
         <target>Souhaitez vous abandonner la planète ?</target>
       </trans-unit>
-      <trans-unit id=".NuhG6f" resname="tooltip.ships">
-        <source>tooltip.ships</source>
+      <trans-unit id=".NuhG6f" resname="tooltip.ship">
+        <source>tooltip.ship</source>
         <target>Les vaisseaux qui sont posés sur votre planète.</target>
       </trans-unit>
       <trans-unit id="38OUcAN" resname="tooltip.planet">

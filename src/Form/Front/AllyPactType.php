@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Translation\Translator;
 
-class AllyPactType extends AbstractType
+class AlliancePactType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

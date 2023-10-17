@@ -6,7 +6,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 
-class AllyService extends AbstractController
+class AllianceService extends AbstractController
 {
     public function willSeeAction(ManagerRegistry $doctrine, $sector, $gal): Response
     {

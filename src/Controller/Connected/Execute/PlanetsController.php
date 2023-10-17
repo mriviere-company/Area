@@ -102,8 +102,8 @@ class PlanetsController extends AbstractController
                 $planet->setRadar($planet->getRadar() + 1);
             } elseif ($build == 'skyRadar') {
                 $planet->setSkyRadar($planet->getSkyRadar() + 1);
-            } elseif ($build == 'skyBrouilleur') {
-                $planet->setSkyBrouilleur($planet->getSkyBrouilleur() + 1);
+            } elseif ($build == 'skyJammer') {
+                $planet->setSkyJammer($planet->getSkyJammer() + 1);
             }
             if(count($planet->getConstructions()) > 0) {
                 $constructTime = new DateTime();
@@ -252,7 +252,7 @@ class PlanetsController extends AbstractController
             $planetProduct->setBarge($planetProduct->getBarge() + $product->getBarge());
             $planetProduct->setMoonMaker($planetProduct->getMoonMaker() + $product->getMoonMaker());
             $planetProduct->setRadarShip($planetProduct->getRadarShip() + $product->getRadarShip());
-            $planetProduct->setBrouilleurShip($planetProduct->getBrouilleurShip() + $product->getBrouilleurShip());
+            $planetProduct->setJammerShip($planetProduct->getJammerShip() + $product->getJammerShip());
             $planetProduct->setMotherShip($planetProduct->getMotherShip() + $product->getMotherShip());
             $planetProduct->setSonde($planetProduct->getSonde() + $product->getSonde());
             $planetProduct->setHunter($planetProduct->getHunter() + $product->getHunter());
@@ -266,7 +266,7 @@ class PlanetsController extends AbstractController
             $planetProduct->setCroiser($planetProduct->getCroiser() + $product->getCroiser());
             $planetProduct->setIronClad($planetProduct->getIronClad() + $product->getIronClad());
             $planetProduct->setDestroyer($planetProduct->getDestroyer() + $product->getDestroyer());
-            $planetProduct->setSignature($planetProduct->getNbrSignatures());
+            $planetProduct->setSignature($planetProduct->getNbSignature());
             $em->remove($product);
             $em->flush();
         }
@@ -291,17 +291,17 @@ class PlanetsController extends AbstractController
                 $radar->setSkyRadar(0);
                 $radar->setRadarAt(null);
             }
-            if($radar->getBrouilleurAt() < $now && !$radar->getMoon()) {
-                if(!$radar->getBrouilleurAt()) {
+            if($radar->getJammerAt() < $now && !$radar->getMoon()) {
+                if(!$radar->getJammerAt()) {
                     $radar->setCommander(null);
                 }
                 $radar->setName('Vide');
-                $radar->setSkyBrouilleur(0);
-                $radar->setBrouilleurAt(null);
+                $radar->setSkyJammer(0);
+                $radar->setJammerAt(null);
             }
             if($radar->getMoon()) {
-                $radar->setSkyBrouilleur(0);
-                $radar->setBrouilleurAt(null);
+                $radar->setSkyJammer(0);
+                $radar->setJammerAt(null);
                 $radar->setSkyRadar(0);
                 $radar->setRadarAt(null);
             }

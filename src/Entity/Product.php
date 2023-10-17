@@ -192,7 +192,7 @@ class Product
     /**
      * @return mixed
      */
-    public function getShips()
+    public function getShip()
     {
         $return = [];
         if ($this->sonde > 0) {
@@ -275,7 +275,7 @@ class Product
     /**
      * @return float
      */
-    public function getNbrSignatures(): float
+    public function getNbSignature(): float
     {
         $sonde = $this->getSonde();
         $colonizer = $this->getColonizer() * 20;
@@ -286,7 +286,7 @@ class Product
         $barge = $this->getBarge() * 12;
         $moonMaker = $this->getMoonMaker() * 10000;
         $radarShip = $this->getRadarShip() * 100;
-        $brouilleurShip = $this->getBrouilleurShip() * 200;
+        $brouilleurShip = $this->getJammerShip() * 200;
         $motherShip = $this->getMotherShip() * 4000;
         $hunter = $this->getHunter();
         $hunterHeavy = $this->getHunterHeavy() * 2;
@@ -659,7 +659,7 @@ class Product
     /**
      * @return mixed
      */
-    public function getBrouilleurShip()
+    public function getJammerShip()
     {
         return $this->brouilleurShip;
     }
@@ -667,7 +667,7 @@ class Product
     /**
      * @param mixed $brouilleurShip
      */
-    public function setBrouilleurShip($brouilleurShip): void
+    public function setJammerShip($brouilleurShip): void
     {
         $this->brouilleurShip = $brouilleurShip;
     }

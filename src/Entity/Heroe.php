@@ -258,7 +258,7 @@ class Heroe
      */
     public function getPlasmaPoints()
     {
-        $points = $this->commander->getPlasmaField(); // plasmas search/ships/points
+        $points = $this->commander->getPlasmaField(); // plasmas search/ship/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -274,7 +274,7 @@ class Heroe
      */
     public function getMissilePoints()
     {
-        $points = $this->commander->getMissileField(); // missiles search/ships/points
+        $points = $this->commander->getMissileField(); // missiles search/ship/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -290,7 +290,7 @@ class Heroe
      */
     public function getLaserPoints()
     {
-        $points = $this->commander->getLaserField(); // lasers search/ships/points
+        $points = $this->commander->getLaserField(); // lasers search/ship/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -306,7 +306,7 @@ class Heroe
      */
     public function getArmorPoints()
     {
-        $points = $this->commander->getArmorField(); // armors search/ships/points
+        $points = $this->commander->getArmorField(); // armors search/ship/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)
@@ -322,7 +322,7 @@ class Heroe
      */
     public function getShieldPoints()
     {
-        $points = $this->commander->getShieldField(); // shields search/ships/points
+        $points = $this->commander->getShieldField(); // shields search/ship/points
         if ($points > 500000 or rand(1, 75) == 1)
             return rand(75, 100);
         if ($points > 250000 or rand(1, 75) == 1)

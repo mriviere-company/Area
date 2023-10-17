@@ -20,7 +20,7 @@ class Peace
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ally", inversedBy="peaces", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Alliance", inversedBy="peaces", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
@@ -65,7 +65,7 @@ class Peace
 
     /**
      * Peace constructor.
-     * @param Ally $ally
+     * @param Alliance $ally
      * @param string $tag
      * @param bool $type
      * @param int $planet
@@ -73,7 +73,7 @@ class Peace
      * @param int $pdg
      * @param bool $accepted
      */
-    public function __construct(Ally $ally, string $tag, bool $type, int $planet, int $taxe, int $pdg, bool $accepted)
+    public function __construct(Alliance $ally, string $tag, bool $type, int $planet, int $taxe, int $pdg, bool $accepted)
     {
         $this->ally = $ally;
         $this->tag = $tag;
@@ -88,7 +88,7 @@ class Peace
     /**
      * @return mixed
      */
-    public function getAlly()
+    public function getAlliance()
     {
         return $this->ally;
     }
@@ -96,7 +96,7 @@ class Peace
     /**
      * @param mixed $ally
      */
-    public function setAlly($ally): void
+    public function setAlliance($ally): void
     {
         $this->ally = $ally;
     }
@@ -104,7 +104,7 @@ class Peace
     /**
      * @return mixed
      */
-    public function getAllyTag()
+    public function getAllianceTag()
     {
         return $this->allyTag;
     }
@@ -112,7 +112,7 @@ class Peace
     /**
      * @param mixed $allyTag
      */
-    public function setAllyTag($allyTag): void
+    public function setAllianceTag($allyTag): void
     {
         $this->allyTag = $allyTag;
     }

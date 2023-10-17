@@ -2,7 +2,7 @@
 
 namespace App\Controller\Connected;
 
-use App\Entity\Ships;
+use App\Entity\Ship;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -197,15 +197,15 @@ class ShipPersoController extends AbstractController
             $nextRetry = $ship->getRetry() - 1;
             $commander->setShip(null);
             $em->remove($ship);
-            $ships = new Ships();
+            $ship = new Ship();
             if ($nextMax < 40) {
                 $nextMax = 40;
             }
-            $ships->setMax($nextMax);
-            $ships->setRetry($nextRetry);
-            $commander->setShip($ships);
-            $ships->setCommander($commander);
-            $em->persist($ships);
+            $ship->setMax($nextMax);
+            $ship->setRetry($nextRetry);
+            $commander->setShip($ship);
+            $ship->setCommander($commander);
+            $em->persist($ship);
             $em->flush();
         }
 

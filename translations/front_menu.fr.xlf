@@ -185,8 +185,8 @@
         <source>groundImg</source>
         <target>Terrain</target>
       </trans-unit>
-      <trans-unit id=".NuhG6f" resname="tooltip.ships">
-        <source>tooltip.ships</source>
+      <trans-unit id=".NuhG6f" resname="tooltip.ship">
+        <source>tooltip.ship</source>
         <target>Vaisseaux au sol</target>
       </trans-unit>
       <trans-unit id="zUMI.E2" resname="tooltip.caserne">
@@ -225,8 +225,8 @@
         <source>helpNew</source>
         <target>Aide débutant</target>
       </trans-unit>
-      <trans-unit id="Jdm6zkl" resname="fleetNoAlly">
-        <source>fleetNoAlly</source>
+      <trans-unit id="Jdm6zkl" resname="fleetNoAlliance">
+        <source>fleetNoAlliance</source>
         <target>Des flottes non alliées ont été repérées en orbite de notre planète.</target>
       </trans-unit>
       <trans-unit id="n8Bz5tL" resname="embargo">

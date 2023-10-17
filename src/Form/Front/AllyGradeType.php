@@ -10,7 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Translation\Translator;
 
-class AllyGradeType extends AbstractType
+class AllianceGradeType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

@@ -1,6 +1,6 @@
 title: 'Carte spatiale'
 tooltip.planet: '%name%'
-tooltip.planetAlly: '[%ally%] %name%'
+tooltip.planetAlliance: '[%ally%] %name%'
 tooltip.planetInfos: '<h4 class="text-blanc">Planète</h4>Terrain: %land% <img alt="Area Universe jeu de stratégie/gestion/survie gratuit partez à la conquête de l''espace, Area, Universe, Galaxie, Galaxy, joueurs, joueur, Area Universe, facebook, gamers, ogame, ikariam, call of duty, zombie, planet, planète, lune, moon, player, players, alliance, guerre, invasion, flotte, fleet, ship, vaisseau, progamer, invade, game, jeu, stratégie, méritocratie, politique, gratuit, free, top3, top10, top, meilleur, meilleurs, best, construire, build, empire, guerre, war, mriviere" class="mb-1" src="/img/ground.webp"> <br> Espace: %sky% <img alt="Area Universe jeu de stratégie/gestion/survie gratuit partez à la conquête de l''espace, Area, Universe, Galaxie, Galaxy, joueurs, joueur, Area Universe, facebook, gamers, ogame, ikariam, call of duty, zombie, planet, planète, lune, moon, player, players, alliance, guerre, invasion, flotte, fleet, ship, vaisseau, progamer, invade, game, jeu, stratégie, méritocratie, politique, gratuit, free, top3, top10, top, meilleur, meilleurs, best, construire, build, empire, guerre, war, mriviere" class="mb-1" src="/img/sky.webp"> <br> Radar: %radar% <br> Brouilleur: %brouilleur%'
 tooltip.planetOrbite: '%orbite%'
 tooltip.sunInfos: '<h4 class="text-blanc">Soleil</h4>'

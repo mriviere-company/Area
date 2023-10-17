@@ -65,8 +65,8 @@
         <source>research.titleWar</source>
         <target>Recherches spatiales</target>
       </trans-unit>
-      <trans-unit id="W7nnj0e" resname="research.titleAlly">
-        <source>research.titleAlly</source>
+      <trans-unit id="W7nnj0e" resname="research.titleAlliance">
+        <source>research.titleAlliance</source>
         <target>Recherches politiques</target>
       </trans-unit>
       <trans-unit id="f6HtoPO" resname="title.industry">
@@ -157,8 +157,8 @@
         <source>title.armor.ally</source>
         <target>Blindage vaisseaux</target>
       </trans-unit>
-      <trans-unit id="uByWAVk" resname="title.merchant.ally">
-        <source>title.merchant.ally</source>
+      <trans-unit id="uByWAVk" resname="title.trader.ally">
+        <source>title.trader.ally</source>
         <target>Accords marchands</target>
       </trans-unit>
       <trans-unit id="MD2oHVX" resname="title.colonisation.ally">
@@ -365,8 +365,8 @@
         <source>research.armor.ally.desc</source>
         <target>Augmente la défense des vaisseaux de 10%.</target>
       </trans-unit>
-      <trans-unit id="ywC_tF9" resname="research.merchant.ally.desc">
-        <source>research.merchant.ally.desc</source>
+      <trans-unit id="ywC_tF9" resname="research.trader.ally.desc">
+        <source>research.trader.ally.desc</source>
         <target>Augmente les gains de vente de 5%.</target>
       </trans-unit>
       <trans-unit id="St1nXbL" resname="research.colonisation.ally.desc">

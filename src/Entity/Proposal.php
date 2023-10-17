@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="ally_proposal")
+ * @ORM\Table(name="ally_offer")
  * @ORM\Entity
  */
-class Proposal
+class Offer
 {
     /**
      * @ORM\Column(type="integer")
@@ -20,38 +20,38 @@ class Proposal
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ally", inversedBy="proposals", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Alliance", inversedBy="offers", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="proposals", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Commander", inversedBy="offers", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="commander_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $commander;
 
     /**
-     * @ORM\Column(name="proposalAt",type="datetime")
+     * @ORM\Column(name="offerAt",type="datetime")
      */
-    protected $proposalAt;
+    protected $offerAt;
 
     /**
-     * Proposal constructor.
-     * @param Ally $ally
+     * Offer constructor.
+     * @param Alliance $ally
      * @param Commander $commander
      */
-    public function __construct(Ally $ally, Commander $commander)
+    public function __construct(Alliance $ally, Commander $commander)
     {
         $this->ally = $ally;
         $this->commander = $commander;
-        $this->proposalAt = new DateTime();
+        $this->offerAt = new DateTime();
     }
 
     /**
      * @return mixed
      */
-    public function getAlly()
+    public function getAlliance()
     {
         return $this->ally;
     }
@@ -59,7 +59,7 @@ class Proposal
     /**
      * @param mixed $ally
      */
-    public function setAlly($ally): void
+    public function setAlliance($ally): void
     {
         $this->ally = $ally;
     }
@@ -83,17 +83,17 @@ class Proposal
     /**
      * @return mixed
      */
-    public function getProposalAt()
+    public function getOfferAt()
     {
-        return $this->proposalAt;
+        return $this->offerAt;
     }
 
     /**
-     * @param mixed $proposalAt
+     * @param mixed $offerAt
      */
-    public function setProposalAt($proposalAt): void
+    public function setOfferAt($offerAt): void
     {
-        $this->proposalAt = $proposalAt;
+        $this->offerAt = $offerAt;
     }
 
     public function getId()

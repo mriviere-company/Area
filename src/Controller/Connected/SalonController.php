@@ -52,10 +52,10 @@ class SalonController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if($commander->getAlly()) {
-            $sigle = $commander->getAlly()->getSigle();
+        if($commander->getAlliance()) {
+            $tag = $commander->getAlliance()->getTag();
         } else {
-            $sigle = 'AKOUNAMATATA';
+            $tag = 'AKOUNAMATATA';
         }
 
         $salon = $doctrine->getRepository(Salon::class)
@@ -74,23 +74,23 @@ class SalonController extends AbstractController
                 }
             }
         } else {
-            $commander->setViewMessage(true);
+            $commander->setNewMessage(true);
         }
 
         $salons = $doctrine->getRepository(Salon::class)
             ->createQueryBuilder('s')
             ->leftJoin('s.allys', 'a')
             ->leftJoin('s.commanders', 'c')
-            ->where('a.sigle = :sigle')
+            ->where('a.tag = :tag')
             ->orWhere('s.name = :name and s.server = :server')
             ->orWhere('c.username = :commander')
-            ->setParameters(['sigle' => $sigle, 'server' => $server, 'name' => 'Public', 'commander' => $commander->getUsername()])
+            ->setParameters(['tag' => $tag, 'server' => $server, 'name' => 'Public', 'commander' => $commander->getUsername()])
             ->getQuery()
             ->getResult();
 
         $userCos = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
-            ->where('c.lastActivity > :date')
+            ->where('c.activityAt > :date')
             ->setParameters(['date' => $connected])
             ->orderBy('c.username', 'ASC')
             ->getQuery()
@@ -179,7 +179,7 @@ class SalonController extends AbstractController
                     $userView->setSalonAt(null);
                 }
             } else {
-                foreach($salon->getAllys() as $ally) {
+                foreach($salon->getAlliances() as $ally) {
                     foreach($ally->getCommanders() as $tmpuser) {
                         if ($tmpuser != $commander) {
                             $view = new View($tmpuser, $salon);
@@ -222,14 +222,14 @@ class SalonController extends AbstractController
     }
 
     /**
-     * @Route("/rejoindre-salon/{sigle}/{usePlanet}", name="ally_join_salon", requirements={"sigle"="\w+", "usePlanet"="\d+"})
+     * @Route("/rejoindre-salon/{tag}/{usePlanet}", name="ally_join_salon", requirements={"tag"="\w+", "usePlanet"="\d+"})
      * @param ManagerRegistry $doctrine
-     * @param $sigle
+     * @param $tag
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws NonUniqueResultException
      */
-    public function addSalonAction(ManagerRegistry $doctrine, $sigle, Planet $usePlanet): RedirectResponse
+    public function addSalonAction(ManagerRegistry $doctrine, $tag, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
@@ -242,7 +242,7 @@ class SalonController extends AbstractController
         $salon = $doctrine->getRepository(Salon::class)
             ->createQueryBuilder('s')
             ->where('s.name = :name')
-            ->setParameter('name', "Ambassade - " . $sigle)
+            ->setParameter('name', "Ambassade - " . $tag)
             ->getQuery()
             ->getOneOrNullResult();
 

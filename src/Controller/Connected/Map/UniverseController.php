@@ -43,13 +43,13 @@ class UniverseController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $doms = $doctrine->getRepository(Ally::class)
+        $doms = $doctrine->getRepository(Alliance::class)
             ->createQueryBuilder('a')
             ->join('a.commanders', 'c')
             ->join('c.planets', 'p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->select('a.id, a.sigle as alliance, count(p) as number')
+            ->select('a.id, a.tag as alliance, count(p) as number')
             ->groupBy('a.id')
             ->orderBy('count(p.id)', 'DESC')
             ->where('g.server = :server')

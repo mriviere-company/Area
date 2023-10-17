@@ -142,7 +142,7 @@ class User implements PasswordAuthenticatedUserInterface, UserInterface
     {
         $mainCommander =  null;
         foreach($this->commanders as $commander) {
-            if (!$mainCommander || ($mainCommander && $commander->getLastActivity() > $mainCommander->getLastActivity()))
+            if (!$mainCommander || ($mainCommander && $commander->getActivityAt() > $mainCommander->getActivityAt()))
                 $mainCommander = $commander;
         }
         return $mainCommander;

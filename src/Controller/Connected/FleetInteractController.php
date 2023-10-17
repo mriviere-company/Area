@@ -50,7 +50,7 @@ class FleetInteractController  extends AbstractController
         $allFleets = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->where('f.commander = :commander')
-            ->andWhere('f.flightTime is null')
+            ->andWhere('f.flightAt is null')
             ->andWhere('f.fightAt is null')
             ->andWhere('f.planet != :planet')
             ->setParameters(['commander' => $commander, 'planet' => $usePlanet])
@@ -84,7 +84,7 @@ class FleetInteractController  extends AbstractController
                 $base = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
                 $price = $base / 3;
             }
-            $carburant = round($price * ($allFleet->getNbrSignatures() / 200));
+            $carburant = round($price * ($allFleet->getNbSignature() / 200));
             if($carburant > $commander->getBitcoin() && $commander->getId() != 1) {
                 return $this->redirectToRoute('fleet', ['usePlanet' => $usePlanet->getId()]);
             }
@@ -99,9 +99,9 @@ class FleetInteractController  extends AbstractController
             $em->persist($destination);
             $allFleet->setFlightTime($now);
             $allFleet->setCancelFlight($moreNow);
-            $allFleet->setSignature($allFleet->getNbrSignatures());
+            $allFleet->setSignature($allFleet->getNbSignature());
 
-            $allFleet->setFlightType(7);
+            $allFleet->setFlightAt(7);
             if($commander->getId() != 1) {
                 $commander->setBitcoin($commander->getBitcoin() - $carburant);
             }
@@ -112,13 +112,13 @@ class FleetInteractController  extends AbstractController
     }
 
     /**
-     * @Route("/regroupement-vaisseaux/{usePlanet}", name="ships_regroup", requirements={"usePlanet"="\d+"})
+     * @Route("/regroupement-vaisseaux/{usePlanet}", name="ship_regroup", requirements={"usePlanet"="\d+"})
      * @param ManagerRegistry $doctrine
      * @param Planet $usePlanet
      * @return RedirectResponse
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function shipsRegroupAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
+    public function shipRegroupAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
@@ -144,29 +144,29 @@ class FleetInteractController  extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $eAlly = $commander->getAllyEnnemy();
-        $warAlly = [];
+        $eAlliance = $commander->getAllianceEnnemy();
+        $warAlliance = [];
         $x = 0;
-        foreach ($eAlly as $tmp) {
-            $warAlly[$x] = $tmp->getAllyTag();
+        foreach ($eAlliance as $tmp) {
+            $warAlliance[$x] = $tmp->getAllianceTag();
             $x++;
         }
 
-        $fAlly = $commander->getAllyFriends();
-        $friendAlly = [];
+        $fAlliance = $commander->getAllianceFriends();
+        $friendAlliance = [];
         $x = 0;
-        foreach ($fAlly as $tmp) {
+        foreach ($fAlliance as $tmp) {
             if($tmp->getAccepted() == 1) {
-                $friendAlly[$x] = $tmp->getAllyTag();
+                $friendAlliance[$x] = $tmp->getAllianceTag();
                 $x++;
             }
         }
-        if(!$friendAlly) {
-            $friendAlly = ['impossible', 'personne'];
+        if(!$friendAlliance) {
+            $friendAlliance = ['impossible', 'personne'];
         }
 
-        if($commander->getAlly()) {
-            $allyF = $commander->getAlly();
+        if($commander->getAlliance()) {
+            $allyF = $commander->getAlliance();
         } else {
             $allyF = 'wedontexistsok';
         }
@@ -178,12 +178,12 @@ class FleetInteractController  extends AbstractController
                 ->join('f.commander', 'c')
                 ->leftJoin('c.ally', 'a')
                 ->where('f.planet = :planet')
-                ->andWhere('f.attack = true OR a.sigle in (:ally)')
+                ->andWhere('f.attack = true OR a.tag in (:ally)')
                 ->andWhere('f.commander != :commander')
-                ->andWhere('f.flightTime is null')
-                ->andWhere('c.ally is null OR a.sigle not in (:friend)')
-                ->andWhere('c.ally is null OR c.ally != :myAlly')
-                ->setParameters(['planet' => $allPlanet, 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
+                ->andWhere('f.flightAt is null')
+                ->andWhere('c.ally is null OR a.tag not in (:friend)')
+                ->andWhere('c.ally is null OR c.ally != :myAlliance')
+                ->setParameters(['planet' => $allPlanet, 'ally' => $warAlliance, 'commander' => $commander, 'friend' => $friendAlliance, 'myAlliance' => $allyF])
                 ->getQuery()
                 ->getResult();
 
@@ -192,13 +192,13 @@ class FleetInteractController  extends AbstractController
                 ->where('f.planet = :planet')
                 ->andWhere('f.commander != :commander')
                 ->andWhere('f.fightAt is not null')
-                ->andWhere('f.flightTime is null')
+                ->andWhere('f.flightAt is null')
                 ->setParameters(['planet' => $allPlanet, 'commander' => $commander])
                 ->getQuery()
                 ->setMaxResults(1)
                 ->getOneOrNullResult();
 
-            if ($allPlanet->getNbrSignaturesRegroup() > 0 and !$fleetFight and !$fleets) {
+            if ($allPlanet->getNbSignatureRegroup() > 0 and !$fleetFight and !$fleets) {
                 $one = new Fleet();
                 $one->setCommander($commander);
                 $one->setPlanet($allPlanet);
@@ -213,7 +213,7 @@ class FleetInteractController  extends AbstractController
                 $one->setBarge($one->getBarge() + $allPlanet->getBarge());
                 $one->setMoonMaker($one->getMoonMaker() + $allPlanet->getMoonMaker());
                 $one->setRadarShip($one->getRadarShip() + $allPlanet->getRadarShip());
-                $one->setBrouilleurShip($one->getBrouilleurShip() + $allPlanet->getBrouilleurShip());
+                $one->setJammerShip($one->getJammerShip() + $allPlanet->getJammerShip());
                 $one->setMotherShip($one->getMotherShip() + $allPlanet->getMotherShip());
                 $one->setHunter($one->getHunter() + $allPlanet->getHunter());
                 $one->setHunterHeavy($one->getHunterHeavy() + $allPlanet->getHunterHeavy());
@@ -226,7 +226,7 @@ class FleetInteractController  extends AbstractController
                 $one->setCroiser($one->getCroiser() + $allPlanet->getCroiser());
                 $one->setIronClad($one->getIronClad() + $allPlanet->getIronClad());
                 $one->setDestroyer($one->getDestroyer() + $allPlanet->getDestroyer());
-                $one->setSignature($one->getNbrSignatures());
+                $one->setSignature($one->getNbSignature());
                 $allPlanet->setSonde(0);
                 $allPlanet->setCargoI(0);
                 $allPlanet->setCargoV(0);
@@ -236,7 +236,7 @@ class FleetInteractController  extends AbstractController
                 $allPlanet->setBarge(0);
                 $allPlanet->setMoonMaker(0);
                 $allPlanet->setRadarShip(0);
-                $allPlanet->setBrouilleurShip(0);
+                $allPlanet->setJammerShip(0);
                 $allPlanet->setMotherShip(0);
                 $allPlanet->setHunter(0);
                 $allPlanet->setHunterHeavy(0);
@@ -278,7 +278,7 @@ class FleetInteractController  extends AbstractController
                     $base = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
                     $price = $base / 3;
                 }
-                $carburant = round($price * ($one->getNbrSignatures() / 200));
+                $carburant = round($price * ($one->getNbSignature() / 200));
                 if($carburant > $commander->getBitcoin() && $commander->getZombie() != 1) {
                     return $this->redirectToRoute('fleet', ['usePlanet' => $usePlanet->getId()]);
                 }
@@ -293,9 +293,9 @@ class FleetInteractController  extends AbstractController
                 $em->persist($destination);
                 $one->setFlightTime($now);
                 $one->setCancelFlight($moreNow);
-                $one->setSignature($one->getNbrSignatures());
+                $one->setSignature($one->getNbSignature());
 
-                $one->setFlightType(7);
+                $one->setFlightAt(7);
                 if($commander->getZombie() != 1) {
                     $commander->setBitcoin($commander->getBitcoin() - $carburant);
                 }
@@ -330,7 +330,7 @@ class FleetInteractController  extends AbstractController
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
         
-        if($planetTake->getMerchant()) {
+        if($planetTake->getTrader()) {
             if ($commander->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getNiobium() / 6) / 50000) * (1 + ($commander->getPoliticPdg() / 10)));
             } else {
@@ -342,8 +342,8 @@ class FleetInteractController  extends AbstractController
             $reportSell->setCommander($commander);
             $reportSell->setTitle("Vente aux marchands");
             $reportSell->setImageName("sell_report.webp");
-            if ($commander->getPoliticMerchant() > 0) {
-                $gainSell = ($fleetGive->getNiobium() * 0.10) * (1 + ($commander->getPoliticMerchant() / 20));
+            if ($commander->getPoliticTrader() > 0) {
+                $gainSell = ($fleetGive->getNiobium() * 0.10) * (1 + ($commander->getPoliticTrader() / 20));
             } else {
                 $gainSell = ($fleetGive->getNiobium() * 0.10);
             }
@@ -367,7 +367,7 @@ class FleetInteractController  extends AbstractController
                 $fleetGive->setNiobium(($planetTake->getNiobium() + $fleetGive->getNiobium()) - $planetTake->getNiobiumMax());
             }
         }
-        $commander->setViewReport(false);
+        $commander->setNewReport(false);
 
         $em->flush();
 
@@ -397,7 +397,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant()) {
+        if($planetTake->getTrader()) {
             if ($commander->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getWater() / 3) / 50000) * (1 + ($commander->getPoliticPdg() / 10)));
             } else {
@@ -409,8 +409,8 @@ class FleetInteractController  extends AbstractController
             $reportSell->setCommander($commander);
             $reportSell->setTitle("Vente aux marchands");
             $reportSell->setImageName("sell_report.webp");
-            if ($commander->getPoliticMerchant() > 0) {
-                $gainSell = ($fleetGive->getWater() * 0.25) * (1 + ($commander->getPoliticMerchant() / 20));
+            if ($commander->getPoliticTrader() > 0) {
+                $gainSell = ($fleetGive->getWater() * 0.25) * (1 + ($commander->getPoliticTrader() / 20));
             } else {
                 $gainSell = ($fleetGive->getWater() * 0.25);
             }
@@ -434,7 +434,7 @@ class FleetInteractController  extends AbstractController
                 $fleetGive->setWater(($planetTake->getWater() + $fleetGive->getWater()) - $planetTake->getWaterMax());
             }
         }
-        $commander->setViewReport(false);
+        $commander->setNewReport(false);
 
         $em->flush();
 
@@ -464,7 +464,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant()) {
+        if($planetTake->getTrader()) {
             if ($commander->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getSoldier() * 10) / 50000) * (1 + ($commander->getPoliticPdg() / 10)));
             } else {
@@ -476,8 +476,8 @@ class FleetInteractController  extends AbstractController
             $reportSell->setCommander($commander);
             $reportSell->setTitle("Vente aux marchands");
             $reportSell->setImageName("sell_report.webp");
-            if ($commander->getPoliticMerchant() > 0) {
-                $gainSell = ($fleetGive->getSoldier() * 80) * (1 + ($commander->getPoliticMerchant() / 20));
+            if ($commander->getPoliticTrader() > 0) {
+                $gainSell = ($fleetGive->getSoldier() * 80) * (1 + ($commander->getPoliticTrader() / 20));
             } else {
                 $gainSell = ($fleetGive->getSoldier() * 80);
             }
@@ -501,7 +501,7 @@ class FleetInteractController  extends AbstractController
                 $fleetGive->setSoldier(($planetTake->getSoldier() + $fleetGive->getSoldier()) - $planetTake->getSoldierMax());
             }
         }
-        $commander->setViewReport(false);
+        $commander->setNewReport(false);
 
         $em->flush();
 
@@ -531,7 +531,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant()) {
+        if($planetTake->getTrader()) {
             if ($commander->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getWorker() * 50) / 50000) * (1 + ($commander->getPoliticPdg() / 10)));
             } else {
@@ -543,8 +543,8 @@ class FleetInteractController  extends AbstractController
             $reportSell->setCommander($commander);
             $reportSell->setTitle("Vente aux marchands");
             $reportSell->setImageName("sell_report.webp");
-            if ($commander->getPoliticMerchant() > 0) {
-                $gainSell = ($fleetGive->getWorker() * 5) * (1 + ($commander->getPoliticMerchant() / 20));
+            if ($commander->getPoliticTrader() > 0) {
+                $gainSell = ($fleetGive->getWorker() * 5) * (1 + ($commander->getPoliticTrader() / 20));
             } else {
                 $gainSell = ($fleetGive->getWorker() * 5);
             }
@@ -568,7 +568,7 @@ class FleetInteractController  extends AbstractController
                 $fleetGive->setWorker(($planetTake->getWorker() + $fleetGive->getWorker()) - $planetTake->getWorkerMax());
             }
         }
-        $commander->setViewReport(false);
+        $commander->setNewReport(false);
 
         $em->flush();
 
@@ -598,7 +598,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant()) {
+        if($planetTake->getTrader()) {
             if ($commander->getPoliticPdg() > 0) {
                 $newWarPointS = round((($fleetGive->getScientist() * 100) / 50000) * (1 + ($commander->getPoliticPdg() / 10)));
             } else {
@@ -610,8 +610,8 @@ class FleetInteractController  extends AbstractController
             $reportSell->setCommander($commander);
             $reportSell->setTitle("Vente aux marchands");
             $reportSell->setImageName("sell_report.webp");
-            if ($commander->getPoliticMerchant() > 0) {
-                $gainSell = ($fleetGive->getScientist() * 300) * (1 + ($commander->getPoliticMerchant() / 20));
+            if ($commander->getPoliticTrader() > 0) {
+                $gainSell = ($fleetGive->getScientist() * 300) * (1 + ($commander->getPoliticTrader() / 20));
             } else {
                 $gainSell = ($fleetGive->getScientist() * 300);
             }
@@ -635,7 +635,7 @@ class FleetInteractController  extends AbstractController
                 $fleetGive->setScientist(($planetTake->getScientist() + $fleetGive->getScientist()) - $planetTake->getScientistMax());
             }
         }
-        $commander->setViewReport(false);
+        $commander->setNewReport(false);
 
         $em->flush();
 
@@ -665,7 +665,7 @@ class FleetInteractController  extends AbstractController
         } else {
             return $this->redirectToRoute('manage_fleet', ['fleetGive' => $fleetGive->getId(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if($planetTake->getMerchant()) {
+        if($planetTake->getTrader()) {
             $reportSell = new Report();
             $reportSell->setType('economic');
             $reportSell->setSendAt($now);
@@ -677,8 +677,8 @@ class FleetInteractController  extends AbstractController
             } else {
                 $newWarPointS = round((($fleetGive->getScientist() * 100) + ($fleetGive->getWorker() * 50) + ($fleetGive->getSoldier() * 10) + ($fleetGive->getWater() / 3) + ($fleetGive->getNiobium() / 6) + ($fleetGive->getTank() * 5) + ($fleetGive->getUranium() * 10)) / 50000);
             }
-            if ($commander->getPoliticMerchant() > 0) {
-                $gainSell = round((($fleetGive->getWater() * 0.25) + ($fleetGive->getSoldier() * 80) + ($fleetGive->getWorker() * 5) + ($fleetGive->getScientist() * 300) + ($fleetGive->getNiobium() * 0.10) + ($fleetGive->getTank() * 2500) + ($fleetGive->getUranium() * 5000)) * (1 + ($commander->getPoliticMerchant() / 20)));
+            if ($commander->getPoliticTrader() > 0) {
+                $gainSell = round((($fleetGive->getWater() * 0.25) + ($fleetGive->getSoldier() * 80) + ($fleetGive->getWorker() * 5) + ($fleetGive->getScientist() * 300) + ($fleetGive->getNiobium() * 0.10) + ($fleetGive->getTank() * 2500) + ($fleetGive->getUranium() * 5000)) * (1 + ($commander->getPoliticTrader() / 20)));
             } else {
                 $gainSell = round(($fleetGive->getWater() * 0.25) + ($fleetGive->getSoldier() * 80) + ($fleetGive->getWorker() * 5) + ($fleetGive->getScientist() * 300) + ($fleetGive->getNiobium() * 0.10) + ($fleetGive->getTank() * 2500) + ($fleetGive->getUranium() * 5000));
             }
@@ -750,7 +750,7 @@ class FleetInteractController  extends AbstractController
                 $planetTake->setScientist($planetTake->getScientistMax());
             }
         }
-        $commander->setViewReport(false);
+        $commander->setNewReport(false);
 
         $em->flush();
 

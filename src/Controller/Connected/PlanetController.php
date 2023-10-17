@@ -119,7 +119,7 @@ class PlanetController extends AbstractController
         $newPlanet = $colonize->getPlanet();
 
         if($colonize->getColonizer() && $newPlanet->getCommander() == null &&
-            !$newPlanet->getEmpty() && !$newPlanet->getMerchant() &&
+            !$newPlanet->getEmpty() && !$newPlanet->getTrader() &&
             !$newPlanet->getCdr() && $colonize->getCommander()->getColPlanets() < 26 &&
             $colonize->getCommander()->getColPlanets() <= ($commander->getTerraformation() + 1 + $commander->getPoliticColonisation())) {
 
@@ -129,7 +129,7 @@ class PlanetController extends AbstractController
             $newPlanet->setSoldier(20);
             $newPlanet->setScientist(0);
             $newPlanet->setNbColo(count($fleet->getCommander()->getPlanets()) + 1);
-            if($colonize->getNbrShips() == 0) {
+            if($colonize->getNbrShip() == 0) {
                 $em->remove($colonize);
             }
             $reportColo = new Report();
@@ -138,7 +138,7 @@ class PlanetController extends AbstractController
             $reportColo->setTitle("Colonisation de planète");
             $reportColo->setImageName("colonize_report.webp");
             $reportColo->setContent("Vous venez de coloniser une planète inhabitée en : (" .  $newPlanet->getSector()->getgalaxy()->getPosition() . "." . $newPlanet->getSector()->getPosition() . "." . $newPlanet->getPosition() . ") . Cette planète fait désormais partie de votre Empire, pensez à la renommer sur la page Planètes.");
-            $commander->setViewReport(false);
+            $commander->setNewReport(false);
             $em->persist($reportColo);
             $quest = $commander->checkQuests('colonize');
             if($quest) {
@@ -174,7 +174,7 @@ class PlanetController extends AbstractController
             ->join('d.planet', 'dp')
             ->join('dp.sector', 's')
             ->join('s.galaxy', 'g')
-            ->where('f.flightTime is not null')
+            ->where('f.flightAt is not null')
             ->andWhere('dp.position = :planete')
             ->andWhere('s.position = :sector')
             ->andWhere('g.position = :galaxy')

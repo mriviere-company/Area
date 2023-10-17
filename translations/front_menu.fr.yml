@@ -48,7 +48,7 @@ scientists: Scientifiques
 soldiers: Soldats
 tanks: Tanks
 groundImg: Terrain
-tooltip.ships: 'Signature vaisseaux au sol'
+tooltip.ship: 'Signature vaisseaux au sol'
 tooltip.caserne: 'Caserne/Fort défensif sur la planète'
 tooltip.tanks: 'Construction de tanks'
 tooltip.scientists: 'Centre de recherche'
@@ -60,14 +60,14 @@ heroe: Commandants
 item: Inventaire
 market: 'Points de Guerre'
 helpNew: 'Aide débutant'
-fleetNoAlly: 'Des flottes non alliées ont été repérées en orbite de notre planète.'
+fleetNoAlliance: 'Des flottes non alliées ont été repérées en orbite de notre planète.'
 moonPlanet: 'Lune'
 embargo: 'Cette planète subit actuellement un embargo.'
 previousPlanet: 'Planète précédente'
 nextPlanet: 'Planète suivante'
 tooltip.search: 'Vous pouvez lancer une recherche !'
 tooltip.building: 'Vous pouvez construire un bâtiment !'
-tooltip.shipsFree: 'Vous pouvez améliorer vos vaisseaux !'
+tooltip.shipFree: 'Vous pouvez améliorer vos vaisseaux !'
 modifyOptions: 'Mes options'
 confirm.account: 'Valider compte'
 overview.product: 'Production :'

@@ -54,7 +54,7 @@
             <tbody>
             {% set x = 1 %}
             {% for allCommander in allCommanders %}
-                <tr{% if commander.getId() == allCommander.id %} class="currentBack"{% elseif ally and ally.getId() == allCommander.alliance %} class="availableBack"{% elseif ally and allCommander.sigle in commander.getAllyEnnemyTag() and allCommander.sigle is not null %} class="warningBack"{% endif %}>
+                <tr{% if commander.getId() == allCommander.id %} class="currentBack"{% elseif ally and ally.getId() == allCommander.alliance %} class="availableBack"{% elseif ally and allCommander.tag in commander.getAllianceEnnemyTag() and allCommander.tag is not null %} class="warningBack"{% endif %}>
                     <td width="100px" class="tab-cells-name p-2">
                         {% if x == 1 %}
                             <div class="text-or glyphicon glyphicon-star"></div> <span
@@ -77,7 +77,7 @@
                                  src="{{ vich_uploader_asset(allCommander, 'imageFile', 'App\\Entity\\Commander') }}">
                         {% endif %}
                         {% if allCommander.alliance %}<span><a data-toggle="modal" data-target="#allyModal"
-                                                            href="{{ path('ally_profil_modal', {'allyCommander': allCommander.alliance, 'usePlanet': usePlanet.getId()}) }}">[{{ allCommander.sigle }}]</a>
+                                                            href="{{ path('ally_profil_modal', {'allyCommander': allCommander.alliance, 'usePlanet': usePlanet.getId()}) }}">[{{ allCommander.tag }}]</a>
                         </span> {% endif %}<span><a data-toggle="modal" data-target="#userModal"
                                                     href="{{ path('user_profil_modal', {'commanderProfil': allCommander.id, 'usePlanet': usePlanet.getId()}) }}">{{ allCommander.username }}</a>{% if allCommander.politic == 'democrat' %}<div
                             class="ml-2 text-vert glyphicon glyphicon-euro" data-toggle="tooltip" data-placement="top"

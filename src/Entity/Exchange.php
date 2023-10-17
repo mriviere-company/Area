@@ -20,7 +20,7 @@ class Exchange
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ally", inversedBy="exchanges", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Alliance", inversedBy="exchanges", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
@@ -53,14 +53,14 @@ class Exchange
 
     /**
      * Exchange constructor.
-     * @param Ally $ally
+     * @param Alliance $ally
      * @param string $username
      * @param bool $type
      * @param bool $accepted
      * @param int $amount
      * @param string|null $content
      */
-    public function __construct(Ally $ally, string $username, bool $type, bool $accepted, int $amount, ?string $content)
+    public function __construct(Alliance $ally, string $username, bool $type, bool $accepted, int $amount, ?string $content)
     {
         $this->ally = $ally;
         $this->name = $username;
@@ -151,7 +151,7 @@ class Exchange
     /**
      * @return mixed
      */
-    public function getAlly()
+    public function getAlliance()
     {
         return $this->ally;
     }
@@ -159,7 +159,7 @@ class Exchange
     /**
      * @param mixed $ally
      */
-    public function setAlly($ally): void
+    public function setAlliance($ally): void
     {
         $this->ally = $ally;
     }

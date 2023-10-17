@@ -62,7 +62,7 @@ class DailyController extends AbstractController
             $report->setImageName("daily_report.webp");
             $report->setSendAt($now);
             $report->setCommander($commander);
-            $ally = $commander->getAlly();
+            $ally = $commander->getAlliance();
             $nbrQuests = count($commander->getQuests());
             if ($nbrQuests) {
                 foreach ($commander->getQuests() as $quest) {
@@ -92,10 +92,10 @@ class DailyController extends AbstractController
                 if($ally->getPeaces()) {
                     foreach($ally->getPeaces() as $peace) {
                         if(!$peace->getType() && $peace->getAccepted() == 1) {
-                            $otherAlly = $doctrine->getRepository(Ally::class)
+                            $otherAlliance = $doctrine->getRepository(Alliance::class)
                                 ->createQueryBuilder('a')
-                                ->where('a.sigle = :sigle')
-                                ->setParameter('sigle', $peace->getAllyTag())
+                                ->where('a.tag = :tag')
+                                ->setParameter('tag', $peace->getAllianceTag())
                                 ->getQuery()
                                 ->getOneOrNullResult();
 
@@ -105,10 +105,10 @@ class DailyController extends AbstractController
                             }
                             $gain = $gain - $lose;
                             $commander->setBitcoin($commander->getBitcoin() - $lose);
-                            $otherAlly->setBitcoin($otherAlly->getBitcoin() + $lose);
-                            $exchange = new Exchange($otherAlly, $commander->getUsername(), 0, 1, $lose, "Taxe liée à la paix.");
+                            $otherAlliance->setBitcoin($otherAlliance->getBitcoin() + $lose);
+                            $exchange = new Exchange($otherAlliance, $commander->getUsername(), 0, 1, $lose, "Taxe liée à la paix.");
                             $em->persist($exchange);
-                            $report->setContent($report->getContent() . " La paix que vous avez signé envoi directement <span class='text-rouge'>" . number_format(round($lose)) . "</span> bitcoins à l'aliance [" . $otherAlly->getSigle() . "].<br>");
+                            $report->setContent($report->getContent() . " La paix que vous avez signé envoi directement <span class='text-rouge'>" . number_format(round($lose)) . "</span> bitcoins à l'aliance [" . $otherAlliance->getTag() . "].<br>");
                         }
                     }
                 }
@@ -122,18 +122,18 @@ class DailyController extends AbstractController
                 $allyBitcoin = $allyBitcoin + $taxe;
                 $ally->setBitcoin($allyBitcoin);
             } else {
-                $questAlly = $doctrine->getRepository(Quest::class)->findOneById(50);
-                $commander->addQuest($questAlly);
+                $questAlliance = $doctrine->getRepository(Quest::class)->findOneById(50);
+                $commander->addQuest($questAlliance);
             }
             $commander->addQuest($questTree);
             $troops = $commander->getAllTroops();
-            $ship = $commander->getAllShipsCost();
+            $ship = $commander->getAllShipCost();
             $cost = $commander->getBitcoin();
             $report->setContent($report->getContent() . " Le travail fourni par vos travailleurs vous rapporte <span class='text-vert'>+" . number_format(round($gain)) . "</span> bitcoins.");
             $empireCost = $troops + $ship + $buildingCost;
             $cost = $cost - $empireCost + ($gain);
             $report->setContent($report->getContent() . " L'entretien de votre empire vous coûte cependant <span class='text-rouge'>" . number_format(round($empireCost)) . "</span> bitcoins.<br>");
-            $point = round(round($worker / 100) + round($commander->getAllShipsPoint() / 10) + round($troops / 50) + $planetPoint);
+            $point = round(round($worker / 100) + round($commander->getAllShipPoint() / 10) + round($troops / 50) + $planetPoint);
             $commander->setBitcoin($cost);
 
             if ($commander->getBitcoin() < 0) {
@@ -164,7 +164,7 @@ class DailyController extends AbstractController
                     $planet->setBarge(0);
                     $planet->setMoonMaker(0);
                     $planet->setRadarShip(0);
-                    $planet->setBrouilleurShip(0);
+                    $planet->setJammerShip(0);
                     $planet->setMotherShip(0);
                     $planet->setHunter(0);
                     $planet->setHunterHeavy(0);
@@ -209,9 +209,9 @@ class DailyController extends AbstractController
             }
             $commander->getRank()->setOldPoint($commander->getRank()->getPoint());
             $commander->getRank()->setPoint($point);
-            $commander->setViewReport(false);
+            $commander->setNewReport(false);
 
-            $stats = new Stats($commander, $commander->getBitcoin(), $point, $commander->getRank()->getWarPoint(),  $commander->getZombieAtt());
+            $stats = new Stats($commander, $commander->getBitcoin(), $point, $commander->getRank()->getWarPoint(),  $commander->getZombieLvl());
             $em->persist($stats);
 
             if ($economicGO == 1) {
@@ -240,7 +240,7 @@ class DailyController extends AbstractController
             $x++;
         }
 
-        $allys = $doctrine->getRepository(Ally::class)->findAll();
+        $allys = $doctrine->getRepository(Alliance::class)->findAll();
 
         foreach ($allys as $ally) {
             $ally->setRank($ally->getCommandersPoint());

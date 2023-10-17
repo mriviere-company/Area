@@ -13,7 +13,7 @@ function manageImageForm() {
     });
 }
 
-function manageAllyImageForm() {
+function manageAllianceImageForm() {
     $('.modify-allyImage').off('click').on('click',function(e){
         $('#ally_image_imageFile_file').click();
         $('#ally_image_imageFile_file').on('change',function(){
@@ -314,19 +314,19 @@ function manageFlightTime(){
         let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
         let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
             if (jours > 0) {
-            $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
+            $('#flightAt').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (heures > 0)
         {
-            $('#flightTime').text(heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
+            $('#flightAt').text(heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (minutes > 0)
         {
-            $('#flightTime').text(minutes + ' mins ' + secondes + ' secondes');
+            $('#flightAt').text(minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (secondes > 0)
         {
-            $('#flightTime').text(secondes + ' secondes');
+            $('#flightAt').text(secondes + ' secondes');
             $('#flightCost').text(carburant);
         }
     });
@@ -371,19 +371,19 @@ function manageFlightTime(){
         let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
         let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
         if (jours > 0) {
-            $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
+            $('#flightAt').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (heures > 0)
         {
-            $('#flightTime').text(heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
+            $('#flightAt').text(heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (minutes > 0)
         {
-            $('#flightTime').text(minutes + ' mins ' + secondes + ' secondes');
+            $('#flightAt').text(minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (secondes > 0)
         {
-            $('#flightTime').text(secondes + ' secondes');
+            $('#flightAt').text(secondes + ' secondes');
             $('#flightCost').text(carburant);
         }
     });
@@ -429,19 +429,19 @@ function manageFlightTime(){
         let minutes = Math.floor((date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60))) / 60);
         let secondes = Math.floor(date_now - ((jours * 60 * 60 * 24 + heures * 60 * 60 + minutes * 60)));
         if (jours > 0) {
-            $('#flightTime').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
+            $('#flightAt').text(jours + ' jours ' + heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (heures > 0)
         {
-            $('#flightTime').text(heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
+            $('#flightAt').text(heures + ' heures ' + minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (minutes > 0)
         {
-            $('#flightTime').text(minutes + ' mins ' + secondes + ' secondes');
+            $('#flightAt').text(minutes + ' mins ' + secondes + ' secondes');
             $('#flightCost').text(carburant);
         } else if (secondes > 0)
         {
-            $('#flightTime').text(secondes + ' secondes');
+            $('#flightAt').text(secondes + ' secondes');
             $('#flightCost').text(carburant);
         }
     });
@@ -1632,7 +1632,7 @@ $(document).ready(function() {
     manageFleetListChoiceForm();
     manageTotalCaserne();
     manageImageForm();
-    manageAllyImageForm();
+    manageAllianceImageForm();
     manageModalContact();
     manageTime();
     manageRegistrationCheck();

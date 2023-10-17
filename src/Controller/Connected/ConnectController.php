@@ -12,7 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Rank;
 use App\Entity\Report;
-use App\Entity\Ships;
+use App\Entity\Ship;
 use App\Entity\Galaxy;
 use App\Entity\Server;
 use Dateinterval;
@@ -49,7 +49,7 @@ class ConnectController extends AbstractController
 
         $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($commander);
 
-        if($usePlanet) {
+        if ($usePlanet) {
             return $this->redirectToRoute('overview', ['usePlanet' => $usePlanet->getId()]);
         }
 
@@ -107,15 +107,15 @@ class ConnectController extends AbstractController
             ->getOneOrNullResult();
 
         if (!$commander->getShip()) {
-            $ships = new Ships();
-            $commander->setShip($ships);
-            $ships->setCommander($commander);
-            $em->persist($ships);
+            $ship = new Ship();
+            $commander->setShip($ship);
+            $ship->setCommander($commander);
+            $em->persist($ship);
         }
         $rank = new Rank($commander);
         $em->persist($rank);
         $commander->setRank($rank);
-        $commander->setDailyConnect($now);
+        $commander->setActivityAt($now);
         $nextZombie = new DateTime();
         $nextZombie->add(new DateInterval('PT' . 144 . 'H'));
         $commander->setZombieAt($nextZombie);
@@ -139,7 +139,7 @@ class ConnectController extends AbstractController
         $report->setImageName("welcome_report.webp");
         $report->setContent("Une épidémie s'est déclaré sur la Terre et en ce moment même il est fort a parier qu'elle est aux mains des hordes zombies. Vous et quelques autres commandant de vaisseaux spatiaux avez eu la chance de fuir avec un certains nombre de travailleurs/soldats. Remontez notre civilisation et préparez vous, les Zombies ne sont pas arrivés par hasard sur Terre... Bon courage commandant. (Pour recevoir de l'aide : La page Salon ou rendez-vous sur le discord)");
         $em->persist($report);
-        $commander->setViewReport(false);
+        $commander->setNewReport(false);
 
         $em->flush();
 
