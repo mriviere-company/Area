@@ -18,8 +18,8 @@
         "build": "encore production"
     },
     "dependencies": {
-        "bootstrap": "^4.6.1",
-        "bootstrap-confirmation2": "^4.1.0",
+        "bootstrap": "^5.3.3",
+        "bootstrap-confirmation2": "^4.2.1",
         "datatables.net": "^1.11.3",
         "datatables.net-dt": "^1.10.22",
         "glob-parent": "^6.0.0",
