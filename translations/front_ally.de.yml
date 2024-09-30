@@ -2,10 +2,10 @@ title: Allianz
 delete: 'Entferne die Allianz'
 ally.members: Mitglied
 form.name: 'Name der Allianz (max 15)'
-form.sigle: 'Initialen (max 4)'
+form.tag: 'Initialen (max 4)'
 form.slogan: 'Schlachtruf (max 30)'
 form.taxe: '(1 bis 10%)'
-form.taxeAlly: 'Allianz steuer :'
+form.taxeAlliance: 'Allianz steuer :'
 form.send: 'Eine Allianz schaffen'
 form.add: 'Vorschlag senden'
 form.transfert: Transfer
@@ -26,7 +26,7 @@ ally.memberName: Spitzname
 ally.memberDateJoin: Mitgliedschaft
 ally.memberPoint: Punkte
 ally.memberConnected: 'Online'
-ally.proposalAt: 'Datum des Vorschlags'
+ally.offerAt: 'Datum des Vorschlags'
 ally.cancelAsk: 'Angebot abbrechen'
 ally.cancel: 'Hier klicken, um abzubrechen'
 ally.allyName: 'Name der Allianz'
@@ -76,7 +76,7 @@ ally.gradeTitle: 'Création de grades'
 ally.addTitle: 'Recrutement de joueurs'
 ally.machiavel: 'Vous avez trahi vos alliés'
 ally.traitor: 'Vous avez été trahis'
-ally.banAlly: 'Vous pourrez rejoindre/créer une alliance dans : '
+ally.banAlliance: 'Vous pourrez rejoindre/créer une alliance dans : '
 ally.makePeace: 'Faire la paix'
 ally.makePeaceTitle: 'Proposition/demande de paix'
 ally.askFor: Type
@@ -104,7 +104,7 @@ ally.bitcoinDonate: Bitcoins
 ally.formGiveBitcoin: 'Transaction de Bitcoin'
 ally.formGivePdg: 'Transaction de pdg'
 ally.ranked: 'Liste der erstellten Allianzen'
-ally.proposals: 'Proposition(s) de recrutement'
+ally.offers: 'Proposition(s) de recrutement'
 ally.usersRecrut: 'Joueurs actifs sans alliance :'
 tooltip.takePlanet: 'Nombre de planète que vous demandez/offrez pour la paix(selectionné parmit les meilleurs).'
 tooltip.takeTaxe: 'Taxe que vous percevrez chaque jour pendant 2 semaines sur leurs revenus.'
@@ -114,7 +114,7 @@ rank.ally: 'Name der Allianz'
 rank.members: Mitglied
 rank.createdAt: 'Schafft das'
 rank.user: 'Name des Spielers'
-rank.lastActivity: 'Letzte Aktivität am'
+rank.activityAt: 'Letzte Aktivität am'
 rank.politic: 'Politisches Regime'
 rank.logo: Logo
 ally.list: 'Liste der Allianzen'

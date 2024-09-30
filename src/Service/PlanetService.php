@@ -13,7 +13,7 @@ class PlanetService extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
         $commander = $user->getMainCommander();
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
 
         if ($ally) {
             $planet = $doctrine->getRepository(Planet::class)
@@ -57,31 +57,31 @@ class PlanetService extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
         $commander = $user->getMainCommander();
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
 
-        $eAlly = $commander->getAllyEnnemy();
-        $warAlly = [];
+        $eAlliance = $commander->getAllianceEnnemy();
+        $warAlliance = [];
         $x = 0;
-        foreach ($eAlly as $tmp) {
-            $warAlly[$x] = $tmp->getAllyTag();
+        foreach ($eAlliance as $tmp) {
+            $warAlliance[$x] = $tmp->getAllianceTag();
             $x++;
         }
 
-        $fAlly = $commander->getAllyFriends();
-        $friendAlly = [];
+        $fAlliance = $commander->getAllianceFriends();
+        $friendAlliance = [];
         $x = 0;
-        foreach ($fAlly as $tmp) {
+        foreach ($fAlliance as $tmp) {
             if($tmp->getAccepted() == 1) {
-                $friendAlly[$x] = $tmp->getAllyTag();
+                $friendAlliance[$x] = $tmp->getAllianceTag();
                 $x++;
             }
         }
-        if(!$friendAlly) {
-            $friendAlly = ['impossibleBRU', 'personneICI'];
+        if(!$friendAlliance) {
+            $friendAlliance = ['impossibleBRU', 'personneICI'];
         }
 
         if(!$ally) {
-            $ally = 'AllywedontexistsokBYE';
+            $ally = 'AlliancewedontexistsokBYE';
         }
 
         $attacker = $doctrine->getRepository(Fleet::class)
@@ -91,12 +91,12 @@ class PlanetService extends AbstractController
             ->leftJoin('c.ally', 'a')
             ->select('f.id')
             ->where('p.commander = :commander')
-            ->andWhere('f.attack = true OR a.sigle in (:ally)')
+            ->andWhere('f.attack = true OR a.tag in (:ally)')
             ->andWhere('f.commander != :commander')
-            ->andWhere('f.flightTime is null')
-            ->andWhere('c.ally is null OR a.sigle not in (:friend)')
-            ->andWhere('c.ally is null OR c.ally != :myAlly')
-            ->setParameters(['ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $ally])
+            ->andWhere('f.flightAt is null')
+            ->andWhere('c.ally is null OR a.tag not in (:friend)')
+            ->andWhere('c.ally is null OR c.ally != :myAlliance')
+            ->setParameters(['ally' => $warAlliance, 'commander' => $commander, 'friend' => $friendAlliance, 'myAlliance' => $ally])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();
@@ -113,31 +113,31 @@ class PlanetService extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
         $commander = $user->getMainCommander();
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
 
-        $eAlly = $commander->getAllyEnnemy();
-        $warAlly = [];
+        $eAlliance = $commander->getAllianceEnnemy();
+        $warAlliance = [];
         $x = 0;
-        foreach ($eAlly as $tmp) {
-            $warAlly[$x] = $tmp->getAllyTag();
+        foreach ($eAlliance as $tmp) {
+            $warAlliance[$x] = $tmp->getAllianceTag();
             $x++;
         }
 
-        $fAlly = $commander->getAllyFriends();
-        $friendAlly = [];
+        $fAlliance = $commander->getAllianceFriends();
+        $friendAlliance = [];
         $x = 0;
-        foreach ($fAlly as $tmp) {
+        foreach ($fAlliance as $tmp) {
             if($tmp->getAccepted() == 1) {
-                $friendAlly[$x] = $tmp->getAllyTag();
+                $friendAlliance[$x] = $tmp->getAllianceTag();
                 $x++;
             }
         }
-        if(!$friendAlly) {
-            $friendAlly = ['impossibleBRU', 'personneICI'];
+        if(!$friendAlliance) {
+            $friendAlliance = ['impossibleBRU', 'personneICI'];
         }
 
         if(!$ally) {
-            $ally = 'AllywedontexistsokBYE';
+            $ally = 'AlliancewedontexistsokBYE';
         }
 
         $attacker = $doctrine->getRepository(Fleet::class)
@@ -146,12 +146,12 @@ class PlanetService extends AbstractController
             ->leftJoin('c.ally', 'a')
             ->select('f.id')
             ->where('f.planet = :planet')
-            ->andWhere('f.attack = true OR a.sigle in (:ally)')
+            ->andWhere('f.attack = true OR a.tag in (:ally)')
             ->andWhere('f.commander != :commander')
-            ->andWhere('f.flightTime is null')
-            ->andWhere('c.ally is null OR a.sigle not in (:friend)')
-            ->andWhere('c.ally is null OR c.ally != :myAlly')
-            ->setParameters(['planet' => $planet, 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $ally])
+            ->andWhere('f.flightAt is null')
+            ->andWhere('c.ally is null OR a.tag not in (:friend)')
+            ->andWhere('c.ally is null OR c.ally != :myAlliance')
+            ->setParameters(['planet' => $planet, 'ally' => $warAlliance, 'commander' => $commander, 'friend' => $friendAlliance, 'myAlliance' => $ally])
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

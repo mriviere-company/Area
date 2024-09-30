@@ -94,7 +94,7 @@ class SpatialController extends AbstractController
                 $fleet->setPlanet($usePlanet);
                 $fleet->setAttack(1);
                 $fleet->setName('Horde');
-                $fleet->setSignature($fleet->getNbrSignatures());
+                $fleet->setSignature($fleet->getNbSignature());
                 $em->persist($fleet);
                 $reportDef = new Report();
                 $reportDef->setType('invade');
@@ -106,7 +106,7 @@ class SpatialController extends AbstractController
                 $usePlanet->setSoldier($usePlanet->getSoldier() - 2);
                 $commander->setBitcoin($commander->getBitcoin() + 10000);
                 $em->persist($reportDef);
-                $commander->setViewReport(false);
+                $commander->setNewReport(false);
                 $commander->getRank()->setWarPoint(100);
                 $em->flush();
 
@@ -135,7 +135,7 @@ class SpatialController extends AbstractController
             $croiser = abs($form_spatialShip->get('croiser')->getData());
             $ironClad = abs($form_spatialShip->get('ironClad')->getData());
             $destroyer = abs($form_spatialShip->get('destroyer')->getData());
-            $all_ships = (object) [['destroyer', $destroyer], ['ironclad', $ironClad], ['croiser', $croiser], ['fregateplasma', $fregatePlasma], ['corvetwar', $corvetWar], ['corvetlaser', $corvetLaser], ['corvet', $corvet], ['hunterwar', $hunterWar], ['hunterheavy', $hunterHeavy], ['fregate', $fregate], ['sonde', $sonde], ['brouilleurship', $brouilleurShip], ['radarship', $radarShip], ['moonmaker', $moonMaker], ['barge', $barge], ['mothership', $motherShip], ['recycleur', $recycleur], ['colonizer', $colonizer], ['cargox', $cargoX], ['cargov', $cargoV], ['cargoi', $cargoI], ['hunter', $hunter]];
+            $all_ship = (object) [['destroyer', $destroyer], ['ironclad', $ironClad], ['croiser', $croiser], ['fregateplasma', $fregatePlasma], ['corvetwar', $corvetWar], ['corvetlaser', $corvetLaser], ['corvet', $corvet], ['hunterwar', $hunterWar], ['hunterheavy', $hunterHeavy], ['fregate', $fregate], ['sonde', $sonde], ['brouilleurship', $brouilleurShip], ['radarship', $radarShip], ['moonmaker', $moonMaker], ['barge', $barge], ['mothership', $motherShip], ['recycleur', $recycleur], ['colonizer', $colonizer], ['cargox', $cargoX], ['cargov', $cargoV], ['cargoi', $cargoI], ['hunter', $hunter]];
             $niobiumLess = 0;
             $waterLess = 0;
             $workerLess = 0;
@@ -143,13 +143,13 @@ class SpatialController extends AbstractController
             $warPoint = 0;
             $bitcoinLess = 0;
             $time = 0;
-            foreach ($all_ships as $one_ship) {
-                $niobiumLess = $niobiumLess + $commander->getNbShips($one_ship[0], $one_ship[1]);
-                $waterLess = $waterLess + $commander->getWtShips($one_ship[0], $one_ship[1]);
-                $workerLess = $workerLess + $commander->getWkShips($one_ship[0], $one_ship[1]);
-                $soldierLess = $soldierLess + $commander->getSdShips($one_ship[0], $one_ship[1]);
-                $warPoint = $warPoint + $commander->getPdgShips($one_ship[0], $one_ship[1]);
-                $bitcoinLess = $bitcoinLess + $commander->getBtShips($one_ship[0], $one_ship[1]);
+            foreach ($all_ship as $one_ship) {
+                $niobiumLess = $niobiumLess + $commander->getNbShip($one_ship[0], $one_ship[1]);
+                $waterLess = $waterLess + $commander->getWtShip($one_ship[0], $one_ship[1]);
+                $workerLess = $workerLess + $commander->getWkShip($one_ship[0], $one_ship[1]);
+                $soldierLess = $soldierLess + $commander->getSdShip($one_ship[0], $one_ship[1]);
+                $warPoint = $warPoint + $commander->getPdgShip($one_ship[0], $one_ship[1]);
+                $bitcoinLess = $bitcoinLess + $commander->getBtShip($one_ship[0], $one_ship[1]);
                 $time = $time + $commander->getTime($one_ship[0], $one_ship[1], 0);
             }
             $time = round($time / $usePlanet->getShipProduction());
@@ -189,7 +189,7 @@ class SpatialController extends AbstractController
                 $product->setBarge($product->getBarge() + $barge);
                 $product->setMoonMaker($product->getMoonMaker() + $moonMaker);
                 $product->setRadarShip($product->getRadarShip() + $radarShip);
-                $product->setBrouilleurShip($product->getBrouilleurShip() + $brouilleurShip);
+                $product->setJammerShip($product->getJammerShip() + $brouilleurShip);
                 $product->setMotherShip($product->getMotherShip() + $motherShip);
                 $product->setSonde($product->getSonde() + $sonde);
                 $product->setHunter($product->getHunter() + $hunter);
@@ -203,7 +203,7 @@ class SpatialController extends AbstractController
                 $product->setCroiser($product->getCroiser() + $croiser);
                 $product->setIronClad($product->getIronClad() + $ironClad);
                 $product->setDestroyer($product->getDestroyer() + $destroyer);
-                $product->setSignature($product->getNbrSignatures());
+                $product->setSignature($product->getNbSignature());
                 $oldNow = $product->getProductAt();
                 $tmpDate = $oldNow->diff($reNow);
                 $reNow->add(new DateInterval('PT' . round($time) . 'S'));
@@ -220,7 +220,7 @@ class SpatialController extends AbstractController
                 $product->setBarge($barge);
                 $product->setMoonMaker($moonMaker);
                 $product->setRadarShip($radarShip);
-                $product->setBrouilleurShip($brouilleurShip);
+                $product->setJammerShip($brouilleurShip);
                 $product->setMotherShip($motherShip);
                 $product->setSonde($sonde);
                 $product->setHunter($hunter);
@@ -235,7 +235,7 @@ class SpatialController extends AbstractController
                 $product->setIronClad($ironClad);
                 $product->setDestroyer($destroyer);
                 $product->setDestroyer($destroyer);
-                $product->setSignature($product->getNbrSignatures());
+                $product->setSignature($product->getNbSignature());
                 $product->setProductAt($now);
             }
 
@@ -246,7 +246,7 @@ class SpatialController extends AbstractController
             $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() - $warPoint);
             $commander->setBitcoin($commander->getBitcoin() - $bitcoinLess);
             $em->persist($product);
-            $quest = $commander->checkQuests('ships');
+            $quest = $commander->checkQuests('ship');
             if($quest) {
                 $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());
                 $commander->removeQuest($quest);
@@ -304,7 +304,7 @@ class SpatialController extends AbstractController
             $barge = $usePlanet->getBarge() - abs($form_createFleet->get('barge')->getData());
             $moonMaker = $usePlanet->getMoonMaker() - abs($form_createFleet->get('moonMaker')->getData());
             $radarShip = $usePlanet->getRadarShip() - abs($form_createFleet->get('radarShip')->getData());
-            $brouilleurShip = $usePlanet->getBrouilleurShip() - abs($form_createFleet->get('brouilleurShip')->getData());
+            $brouilleurShip = $usePlanet->getJammerShip() - abs($form_createFleet->get('brouilleurShip')->getData());
             $motherShip = $usePlanet->getMotherShip() - abs($form_createFleet->get('motherShip')->getData());
             $sonde = $usePlanet->getSonde() - abs($form_createFleet->get('sonde')->getData());
             $hunter = $usePlanet->getHunter() - abs($form_createFleet->get('hunter')->getData());
@@ -336,7 +336,7 @@ class SpatialController extends AbstractController
             $fleet->setBarge($form_createFleet->get('barge')->getData());
             $fleet->setMoonMaker($form_createFleet->get('moonMaker')->getData());
             $fleet->setRadarShip($form_createFleet->get('radarShip')->getData());
-            $fleet->setBrouilleurShip($form_createFleet->get('brouilleurShip')->getData());
+            $fleet->setJammerShip($form_createFleet->get('brouilleurShip')->getData());
             $fleet->setMotherShip($form_createFleet->get('motherShip')->getData());
             $fleet->setSonde($form_createFleet->get('sonde')->getData());
             $fleet->setHunter($form_createFleet->get('hunter')->getData());
@@ -351,29 +351,29 @@ class SpatialController extends AbstractController
             $fleet->setIronClad($form_createFleet->get('ironClad')->getData());
             $fleet->setDestroyer($form_createFleet->get('destroyer')->getData());
 
-            $eAlly = $commander->getAllyEnnemy();
-            $warAlly = [];
+            $eAlliance = $commander->getAllianceEnnemy();
+            $warAlliance = [];
             $x = 0;
-            foreach ($eAlly as $tmp) {
-                $warAlly[$x] = $tmp->getAllyTag();
+            foreach ($eAlliance as $tmp) {
+                $warAlliance[$x] = $tmp->getAllianceTag();
                 $x++;
             }
 
-            $fAlly = $commander->getAllyFriends();
-            $friendAlly = [];
+            $fAlliance = $commander->getAllianceFriends();
+            $friendAlliance = [];
             $x = 0;
-            foreach ($fAlly as $tmp) {
+            foreach ($fAlliance as $tmp) {
                 if($tmp->getAccepted() == 1) {
-                    $friendAlly[$x] = $tmp->getAllyTag();
+                    $friendAlliance[$x] = $tmp->getAllianceTag();
                     $x++;
                 }
             }
-            if(!$friendAlly) {
-                $friendAlly = ['impossible', 'personne'];
+            if(!$friendAlliance) {
+                $friendAlliance = ['impossible', 'personne'];
             }
 
-            if($commander->getAlly()) {
-                $allyF = $commander->getAlly();
+            if($commander->getAlliance()) {
+                $allyF = $commander->getAlliance();
             } else {
                 $allyF = 'wedontexistsok';
             }
@@ -383,12 +383,12 @@ class SpatialController extends AbstractController
                 ->join('f.commander', 'c')
                 ->leftJoin('c.ally', 'a')
                 ->where('f.planet = :planet')
-                ->andWhere('f.attack = true OR a.sigle in (:ally)')
+                ->andWhere('f.attack = true OR a.tag in (:ally)')
                 ->andWhere('f.commander != :commander')
-                ->andWhere('f.flightTime is null')
-                ->andWhere('c.ally is null OR a.sigle not in (:friend)')
-                ->andWhere('c.ally is null OR c.ally != :myAlly')
-                ->setParameters(['planet' => $usePlanet, 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
+                ->andWhere('f.flightAt is null')
+                ->andWhere('c.ally is null OR a.tag not in (:friend)')
+                ->andWhere('c.ally is null OR c.ally != :myAlliance')
+                ->setParameters(['planet' => $usePlanet, 'ally' => $warAlliance, 'commander' => $commander, 'friend' => $friendAlliance, 'myAlliance' => $allyF])
                 ->getQuery()
                 ->getResult();
 
@@ -397,7 +397,7 @@ class SpatialController extends AbstractController
                 ->where('f.planet = :planet')
                 ->andWhere('f.commander != :commander')
                 ->andWhere('f.fightAt is not null')
-                ->andWhere('f.flightTime is null')
+                ->andWhere('f.flightAt is null')
                 ->setParameters(['planet' => $usePlanet, 'commander' => $commander])
                 ->getQuery()
                 ->setMaxResults(1)
@@ -407,13 +407,13 @@ class SpatialController extends AbstractController
                 $fleet->setFightAt($fleetFight->getFightAt());
             } elseif ($fleets) {
                 foreach ($fleets as $setWar) {
-                    if($setWar->getCommander()->getAlly()) {
+                    if($setWar->getCommander()->getAlliance()) {
                         $fleetArm = $fleet->getMissile() + $fleet->getLaser() + $fleet->getPlasma();
                         if($fleetArm > 0) {
                             $fleet->setAttack(1);
                         }
-                        foreach ($eAlly as $tmp) {
-                            if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                        foreach ($eAlliance as $tmp) {
+                            if ($setWar->getCommander()->getAlliance()->getTag() == $tmp->getAllianceTag()) {
                                 $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                                 if($fleetArm > 0) {
                                     $setWar->setAttack(1);
@@ -425,7 +425,7 @@ class SpatialController extends AbstractController
                 $allFleets = $doctrine->getRepository(Fleet::class)
                     ->createQueryBuilder('f')
                     ->where('f.planet = :planet')
-                    ->andWhere('f.flightTime is null')
+                    ->andWhere('f.flightAt is null')
                     ->setParameters(['planet' => $usePlanet])
                     ->getQuery()
                     ->getResult();
@@ -463,7 +463,7 @@ class SpatialController extends AbstractController
                 $usePlanet->setHunterWar(0);
                 $usePlanet->setDestroyer(0);
             }
-            $fleet->setSignature($fleet->getNbrSignatures());
+            $fleet->setSignature($fleet->getNbSignature());
             $em->persist($fleet);
             $usePlanet->setCargoI($cargoI);
             $usePlanet->setCargoV($cargoV);
@@ -473,7 +473,7 @@ class SpatialController extends AbstractController
             $usePlanet->setBarge($barge);
             $usePlanet->setMoonMaker($moonMaker);
             $usePlanet->setRadarShip($radarShip);
-            $usePlanet->setBrouilleurShip($brouilleurShip);
+            $usePlanet->setJammerShip($brouilleurShip);
             $usePlanet->setMotherShip($motherShip);
             $usePlanet->setSonde($sonde);
             $usePlanet->setHunter($hunter);
@@ -496,7 +496,7 @@ class SpatialController extends AbstractController
                 }
                 $user->setTutorial(11);
             }
-            $usePlanet->setSignature($usePlanet->getNbrSignatures());
+            $usePlanet->setSignature($usePlanet->getNbSignature());
             $em->flush();
 
 

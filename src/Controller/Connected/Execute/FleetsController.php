@@ -149,7 +149,7 @@ class FleetsController extends AbstractController
                         $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($fleetCdr->getCommander());
                         $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCommander()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
                         $em->persist($reportRec);
-                        $fleetCdr->getCommander()->setViewReport(false);
+                        $fleetCdr->getCommander()->setNewReport(false);
                     }
                 } elseif ($fleetCdr->getCargoPlace() == $fleetCdr->getCargoFull()) {
                     $reportRec = new Report();
@@ -161,7 +161,7 @@ class FleetsController extends AbstractController
                     $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($fleetCdr->getCommander());
                     $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCommander()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
                     $em->persist($reportRec);
-                    $fleetCdr->getCommander()->setViewReport(false);
+                    $fleetCdr->getCommander()->setNewReport(false);
                     $fleetCdr->setRecycleAt(null);
                 } else {
                     $fleetCdr->setRecycleAt($tmpNoCdr);
@@ -196,7 +196,7 @@ class FleetsController extends AbstractController
                     $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($fleetCdr->getCommander());
                     $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCommander()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient de terminer de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span>.");
                     $em->persist($reportRec);
-                    $fleetCdr->getCommander()->setViewReport(false);
+                    $fleetCdr->getCommander()->setNewReport(false);
                     $fleetCdr->setRecycleAt(null);
                 } elseif ($fleetCdr->getCargoPlace() == $fleetCdr->getCargoFull()) {
                     $reportRec = new Report();
@@ -208,7 +208,7 @@ class FleetsController extends AbstractController
                     $usePlanet = $doctrine->getRepository(Planet::class)->findByFirstPlanet($fleetCdr->getCommander());
                     $reportRec->setContent("Bonjour dirigeant " . $fleetCdr->getCommander()->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleetCdr->getId() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getName() . "</a></span>" . " vient d'arrêter de recycler en " . "<span><a href='/connect/carte-spatiale/" . $fleetCdr->getPlanet()->getSector()->getPosition() ."/" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() ."/" . $usePlanet->getId() . "'>" . $fleetCdr->getPlanet()->getSector()->getGalaxy()->getPosition() . ":" . $fleetCdr->getPlanet()->getSector()->getPosition() . ":" . $fleetCdr->getPlanet()->getPosition() . "</a></span> car ses soutes sont pleines.");
                     $em->persist($reportRec);
-                    $fleetCdr->getCommander()->setViewReport(false);
+                    $fleetCdr->getCommander()->setNewReport(false);
                     $fleetCdr->setRecycleAt(null);
                 } else {
                     $fleetCdr->setRecycleAt($tmpNoCdr);
@@ -243,7 +243,7 @@ class FleetsController extends AbstractController
         $one->setName($demoFleet->getName());
         $one->setAttack($demoFleet->getAttack());
         $one->setFightAt($demoFleet->getFightAt());
-        $one->setAlly($demoFleet->getAlly());
+        $one->setAlliance($demoFleet->getAlliance());
         $one->setFleetList($demoFleet->getFleetList());
         foreach ($fleetRegroups as $fleetRegroup) {
             $one->setSonde($one->getSonde() + $fleetRegroup->getSonde());
@@ -255,7 +255,7 @@ class FleetsController extends AbstractController
             $one->setBarge($one->getBarge() + $fleetRegroup->getBarge());
             $one->setMoonMaker($one->getMoonMaker() + $fleetRegroup->getMoonMaker());
             $one->setRadarShip($one->getRadarShip() + $fleetRegroup->getRadarShip());
-            $one->setBrouilleurShip($one->getBrouilleurShip() + $fleetRegroup->getBrouilleurShip());
+            $one->setJammerShip($one->getJammerShip() + $fleetRegroup->getJammerShip());
             $one->setMotherShip($one->getMotherShip() + $fleetRegroup->getMotherShip());
             $one->setHunter($one->getHunter() + $fleetRegroup->getHunter());
             $one->setHunterHeavy($one->getHunterHeavy() + $fleetRegroup->getHunterHeavy());
@@ -280,7 +280,7 @@ class FleetsController extends AbstractController
             $fleetRegroup->setCommander(null);
             $em->remove($fleetRegroup);
         }
-        $one->setSignature($one->getNbrSignatures());
+        $one->setSignature($one->getNbSignature());
         $em->persist($one);
         echo "Flush -> " . count($fleetRegroups) . " ";
 

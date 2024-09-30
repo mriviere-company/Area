@@ -39,14 +39,9 @@ class Planet
     protected $commander;
 
     /**
-     * @ORM\Column(name="lastActivity",type="datetime", nullable=true)
+     * @ORM\Column(name="activityAt",type="datetime", nullable=true)
      */
-    protected $lastActivity;
-
-    /**
-     * @ORM\Column(name="nbColo",type="smallint", nullable=true, options={"unsigned":true})
-     */
-    protected $nbColo;
+    protected $activityAt;
 
     /**
      * @ORM\OneToOne(targetEntity="Heroe", inversedBy="planet", fetch="EXTRA_LAZY")
@@ -315,9 +310,9 @@ class Planet
     protected $skyRadar;
 
     /**
-     * @ORM\Column(name="skyBrouilleur",type="smallint", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="skyJammer",type="smallint", nullable=true, options={"unsigned":true})
      */
-    protected $skyBrouilleur;
+    protected $skyJammer;
 
     /**
      * @ORM\Column(name="lightUsine",type="smallint", nullable=true, options={"unsigned":true})
@@ -507,9 +502,9 @@ class Planet
     protected $cdr;
 
     /**
-     * @ORM\Column(name="merchant",type="smallint", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="trader",type="smallint", nullable=true, options={"unsigned":true})
      */
-    protected $merchant;
+    protected $trader;
 
     /**
      * @ORM\Column(name="moon",type="boolean")
@@ -563,12 +558,12 @@ class Planet
      * @param int $position
      * @param Sector $sector
      * @param string|null $image
-     * @param int $merchant
+     * @param int $trader
      * @param string|null $cdr
      * @param bool $sun
      * @param bool $empty
      */
-    public function __construct(?object $commander, string $name, int $ground, int $sky, int $position, Sector $sector, ?string $image,  int $merchant, ?string $cdr, bool $sun, bool $empty)
+    public function __construct(?object $commander, string $name, int $ground, int $sky, int $position, Sector $sector, ?string $image,  int $trader, ?string $cdr, bool $sun, bool $empty)
     {
         $this->commander = $commander;
         $this->name = $name;
@@ -577,7 +572,7 @@ class Planet
         $this->position = $position;
         $this->sector = $sector;
         $this->imageName = $image;
-        $this->merchant = $merchant;
+        $this->trader = $trader;
         $this->cdr = $cdr;
         $this->sun = $sun;
         $this->empty = $empty;
@@ -623,7 +618,7 @@ class Planet
         $this->radar = null;
         $this->nuclearBase = null;
         $this->skyRadar = null;
-        $this->skyBrouilleur = null;
+        $this->skyJammer = null;
         $this->lightUsine = null;
         $this->heavyUsine = null;
         $this->sonde = null;
@@ -706,7 +701,7 @@ class Planet
         $this->commander = null;
         $this->centerSearch = null;
         $this->name = 'Inhabitée';
-        $this->lastActivity = null;
+        $this->activityAt = null;
         $this->niobium = 200;
         $this->water = 140;
         $this->food = 1000;
@@ -739,7 +734,7 @@ class Planet
         $this->radar = null;
         $this->nuclearBase = null;
         $this->skyRadar = null;
-        $this->skyBrouilleur = null;
+        $this->skyJammer = null;
         $this->lightUsine = null;
         $this->heavyUsine = null;
         $this->scientist = null;
@@ -761,7 +756,7 @@ class Planet
         $barge = $this->getBarge();
         $moonMaker = $this->getMoonMaker();
         $radarShip = $this->getRadarShip();
-        $brouilleurShip = $this->getBrouilleurShip();
+        $brouilleurShip = $this->getJammerShip();
         $motherShip = $this->getMotherShip();
         $hunter = $this->getHunter();
         $hunterHeavy = $this->getHunterHeavy();
@@ -782,7 +777,7 @@ class Planet
     /**
      * @return float
      */
-    public function getNbrSignatures(): float
+    public function getNbSignature(): float
     {
         $sonde = $this->getSonde();
         $colonizer = $this->getColonizer() * 20;
@@ -793,7 +788,7 @@ class Planet
         $barge = $this->getBarge() * 12;
         $moonMaker = $this->getMoonMaker() * 10000;
         $radarShip = $this->getRadarShip() * 100;
-        $brouilleurShip = $this->getBrouilleurShip() * 200;
+        $brouilleurShip = $this->getJammerShip() * 200;
         $motherShip = $this->getMotherShip() * 4000;
         $hunter = $this->getHunter();
         $hunterHeavy = $this->getHunterHeavy() * 2;
@@ -815,7 +810,7 @@ class Planet
     /**
      * @return float
      */
-    public function getNbrSignaturesRegroup(): float
+    public function getNbSignatureRegroup(): float
     {
         $sonde = $this->getSonde();
         $colonizer = $this->getColonizer() * 20;
@@ -826,7 +821,7 @@ class Planet
         $barge = $this->getBarge() * 12;
         $moonMaker = $this->getMoonMaker() * 10000;
         $radarShip = $this->getRadarShip() * 100;
-        $brouilleurShip = $this->getBrouilleurShip() * 200;
+        $brouilleurShip = $this->getJammerShip() * 200;
         $motherShip = $this->getMotherShip() * 4000;
         $hunter = $this->getHunter();
         $hunterHeavy = $this->getHunterHeavy() * 2;
@@ -866,7 +861,7 @@ class Planet
         $space = $this->getSpaceShip() * 30;
         $radar = $this->getRadar() * 20;
         $skyr = $this->getSkyRadar() * 60;
-        $brouilleur = $this->getSkyBrouilleur() * 100;
+        $brouilleur = $this->getSkyJammer() * 100;
         $nuclear = $this->getNuclearBase() * 300;
         $orbital = $this->getOrbital() * 2000;
         $island = $this->getIsland() * 2000;
@@ -897,7 +892,7 @@ class Planet
         $space = $this->getSpaceShip() * 100;
         $radar = $this->getRadar() * 13;
         $skyr = $this->getSkyRadar() * 133;
-        $brouilleur = $this->getSkyBrouilleur() * 400;
+        $brouilleur = $this->getSkyJammer() * 400;
         $nuclear = $this->getNuclearBase() * 3333;
         $orbital = $this->getOrbital() * 333;
         $island = $this->getIsland() * 333;
@@ -914,7 +909,7 @@ class Planet
         $fullFleet = [];
         $x = 0;
         foreach($this->fleets as $fleet) {
-            if($fleet->getCommander()->getId() === $commander->getId() || $fleet->getCommander()->getAlly()->getId() === $commander->getAlly()->getId()) {
+            if($fleet->getCommander()->getId() === $commander->getId() || $fleet->getCommander()->getAlliance()->getId() === $commander->getAlliance()->getId()) {
             } else {
                 $fullFleet[$x] = $fleet;
             }
@@ -985,12 +980,13 @@ class Planet
             if($planet->getId() === $this->getId()) {
                 return $id;
             }
-            if($planet->getEmpty()) {
+            if($planet->getType() == 'empty') {
                 $id = $planet->getId();
             }
         }
         return $id;
     }
+
     /**
      * @return int
      */
@@ -1016,22 +1012,23 @@ class Planet
     public function getPlanetAlliance()
     {
         if ($this->getCommander()) {
-            return $this->getCommander()->getAlly();
+            return $this->getCommander()->getAlliance();
         } else {
             return null;
         }
     }
 
     /**
+     * @param $commander
      * @return string|null
      */
-    public function getOurAllyPact($commander): ?string
+    public function getOurAlliancePact($commander): ?string
     {
         if ($this->getCommander()) {
-            if ($this->getCommander()->getAlly() && $commander->getAlly()) {
-                if (count($this->getCommander()->getAlly()->getAllieds()) > 0) {
-                    foreach($this->getCommander()->getAlly()->getAllieds() as $allied) {
-                        if($allied->getAllyTag() === $commander->getAlly()->getSigle() && $allied->getAccepted()) {
+            if ($this->getCommander()->getAlliance() && $commander->getAlliance()) {
+                if (count($this->getCommander()->getAlliance()->getAllieds()) > 0) {
+                    foreach($this->getCommander()->getAlliance()->getAllieds() as $allied) {
+                        if($allied->getAllianceTag() === $commander->getAlliance()->getTag() && $allied->getAccepted()) {
                             return 'pact';
                         }
                     }
@@ -1204,17 +1201,17 @@ class Planet
     /**
      * @return mixed
      */
-    public function getLastActivity()
+    public function getActivityAt()
     {
-        return $this->lastActivity;
+        return $this->activityAt;
     }
 
     /**
-     * @param mixed $lastActivity
+     * @param mixed $activityAt
      */
-    public function setLastActivity($lastActivity): void
+    public function setActivityAt($activityAt): void
     {
-        $this->lastActivity = $lastActivity;
+        $this->activityAt = $activityAt;
     }
 
     /**
@@ -1476,17 +1473,17 @@ class Planet
     /**
      * @return mixed
      */
-    public function getMerchant()
+    public function getTrader()
     {
-        return $this->merchant;
+        return $this->trader;
     }
 
     /**
-     * @param mixed $merchant
+     * @param mixed $trader
      */
-    public function setMerchant($merchant): void
+    public function setTrader($trader): void
     {
-        $this->merchant = $merchant;
+        $this->trader = $trader;
     }
 
     /**
@@ -1780,17 +1777,17 @@ class Planet
     /**
      * @return mixed
      */
-    public function getSkyBrouilleur()
+    public function getSkyJammer()
     {
-        return $this->skyBrouilleur;
+        return $this->skyJammer;
     }
 
     /**
-     * @param mixed $skyBrouilleur
+     * @param mixed $skyJammer
      */
-    public function setSkyBrouilleur($skyBrouilleur): void
+    public function setSkyJammer($skyJammer): void
     {
-        $this->skyBrouilleur = $skyBrouilleur;
+        $this->skyJammer = $skyJammer;
     }
 
     /**
@@ -2420,7 +2417,7 @@ class Planet
     /**
      * @return mixed
      */
-    public function getBrouilleurShip()
+    public function getJammerShip()
     {
         return $this->brouilleurShip;
     }
@@ -2428,7 +2425,7 @@ class Planet
     /**
      * @param mixed $brouilleurShip
      */
-    public function setBrouilleurShip($brouilleurShip): void
+    public function setJammerShip($brouilleurShip): void
     {
         $this->brouilleurShip = $brouilleurShip;
     }
@@ -2468,7 +2465,7 @@ class Planet
     /**
      * @return mixed
      */
-    public function getBrouilleurAt()
+    public function getJammerAt()
     {
         return $this->brouilleurAt;
     }
@@ -2476,7 +2473,7 @@ class Planet
     /**
      * @param mixed $brouilleurAt
      */
-    public function setBrouilleurAt($brouilleurAt): void
+    public function setJammerAt($brouilleurAt): void
     {
         $this->brouilleurAt = $brouilleurAt;
     }

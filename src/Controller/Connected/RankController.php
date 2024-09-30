@@ -35,12 +35,12 @@ class RankController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $allAllys = $doctrine->getRepository(Ally::class)
+        $allAlliances = $doctrine->getRepository(Alliance::class)
             ->createQueryBuilder('a')
             ->join('a.commanders', 'c')
             ->join('c.planets', 'p')
             ->join('c.rank', 'r')
-            ->select('a.id, a.sigle, a.imageName, a.name, count(DISTINCT c.id) as commanders, count(DISTINCT p) as planets, sum(DISTINCT r.point) as point, sum(DISTINCT r.oldPoint) as oldPoint, a.maxMembers, a.createdAt, a.politic')
+            ->select('a.id, a.tag, a.imageName, a.name, count(DISTINCT c.id) as commanders, count(DISTINCT p) as planets, sum(DISTINCT r.point) as point, sum(DISTINCT r.oldPoint) as oldPoint, a.maxMembers, a.createdAt, a.politic')
             ->groupBy('a.id')
             ->where('a.rank is not null')
             ->andWhere('c.server =:server')
@@ -49,7 +49,7 @@ class RankController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        if ($commander->getAlly()) {
+        if ($commander->getAlliance()) {
             $allyPoints = $doctrine->getRepository(Stats::class)
                 ->createQueryBuilder('s')
                 ->join('s.commander', 'c')
@@ -57,19 +57,19 @@ class RankController extends AbstractController
                 ->groupBy('s.date')
                 ->where('c.ally = :ally')
                 ->andWhere('c.server =:server')
-                ->setParameters(['ally' => $commander->getAlly(), 'server' => $server])
+                ->setParameters(['ally' => $commander->getAlliance(), 'server' => $server])
                 ->getQuery()
                 ->getResult();
 
             $otherPoints = $doctrine->getRepository(Stats::class)
                 ->createQueryBuilder('s')
                 ->join('s.commander', 'c')
-                ->select('count(s) as numbers, sum(DISTINCT s.points) as allAlly')
+                ->select('count(s) as numbers, sum(DISTINCT s.points) as allAlliance')
                 ->groupBy('s.date')
                 ->where('c.ally != :ally')
                 ->andWhere('c.bot = false')
                 ->andWhere('c.server =:server')
-                ->setParameters(['ally' => $commander->getAlly(), 'server' => $server])
+                ->setParameters(['ally' => $commander->getAlliance(), 'server' => $server])
                 ->getQuery()
                 ->getResult();
         } else {
@@ -79,7 +79,7 @@ class RankController extends AbstractController
 
         return $this->render('connected/ally/rank.html.twig', [
             'usePlanet' => $usePlanet,
-            'allAllys' => $allAllys,
+            'allAlliances' => $allAlliances,
             'allyPoints' => $allyPoints,
             'otherPoints' => $otherPoints
         ]);
@@ -107,7 +107,7 @@ class RankController extends AbstractController
         $allCommanders = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->join('c.planets', 'p')
-            ->select('a.id as alliance, a.sigle as sigle, count(DISTINCT p) as planets, c.id, c.imageName, c.username, r.point as point, r.oldPoint as oldPoint, r.position as position, r.oldPosition as oldPosition, r.warPoint as warPoint, c.createdAt, a.politic as politic, c.bot')
+            ->select('a.id as alliance, a.tag as tag, count(DISTINCT p) as planets, c.id, c.imageName, c.username, r.point as point, r.oldPoint as oldPoint, r.position as position, r.oldPosition as oldPosition, r.warPoint as warPoint, c.createdAt, a.politic as politic, c.bot')
             ->leftJoin('c.rank', 'r')
             ->leftJoin('c.ally', 'a')
             ->groupBy('c.id')

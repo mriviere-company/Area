@@ -5,22 +5,522 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4b6fd995-d706-42fd-bc4e-70bee04d60c9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/Area.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Area.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/AdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/AdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/global.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/allyCharts.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/allyCharts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/js/shipsCharts.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/js/shipsCharts.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/scss/front/ally.scss" beforeDir="false" afterPath="$PROJECT_DIR$/assets/scss/front/ally.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/tuto.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/img/tuto.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/tuto2.webp" beforeDir="false" afterPath="$PROJECT_DIR$/public/img/tuto2.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/ChangeLog" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/ChangeLog" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/README" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/README" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/config.sample.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/config.sample.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_sources/config.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_sources/config.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_sources/faq.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_sources/faq.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_sources/glossary.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_sources/glossary.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_sources/setup.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_sources/setup.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_static/documentation_options.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/_static/documentation_options.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/bookmarks.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/bookmarks.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/charts.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/charts.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/config.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/config.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/copyright.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/copyright.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/credits.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/credits.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/developers.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/developers.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/faq.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/faq.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/genindex.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/glossary.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/glossary.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/import_export.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/import_export.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/intro.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/intro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/other.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/other.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/privileges.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/privileges.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/relations.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/relations.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/require.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/require.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/searchindex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/security.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/security.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/settings.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/setup.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/setup.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/themes.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/themes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/transformations.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/transformations.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/two_factor.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/two_factor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/user.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/user.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/vendors.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/doc/html/vendors.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/examples/signon.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/examples/signon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/bootstrap/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/bootstrap/bootstrap.bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/bootstrap/bootstrap.bundle.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/bootstrap/bootstrap.bundle.min.js.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/hint/show-hint.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/hint/show-hint.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/hint/show-hint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/hint/show-hint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/hint/sql-hint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/hint/sql-hint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/lint/lint.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/lint/lint.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/runmode/runmode.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/addon/runmode/runmode.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/lib/codemirror.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/lib/codemirror.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/mode/javascript/javascript.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/mode/javascript/javascript.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/mode/sql/sql.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/mode/sql/sql.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/mode/xml/xml.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/codemirror/mode/xml/xml.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/additional-methods.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/additional-methods.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/jquery-migrate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/jquery-ui.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/jquery-ui.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/jquery.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/jquery.min.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/jquery.min.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/jquery/jquery.validate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/openlayers/OpenLayers.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/js/vendor/openlayers/OpenLayers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Advisor.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Advisor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/BrowseForeigners.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/BrowseForeigners.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Charsets.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Charsets.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Charsets/Collation.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Charsets/Collation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/CheckUserPrivileges.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/CheckUserPrivileges.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Config.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Config.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Config/ServerConfigChecks.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Config/ServerConfigChecks.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Config/SpecialSchemaLinks.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Config/SpecialSchemaLinks.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Database/StructureController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Database/StructureController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Server/DatabasesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Server/DatabasesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Server/Status/MonitorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Server/Status/MonitorController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Table/GisVisualizationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Table/GisVisualizationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Table/IndexesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Controllers/Table/IndexesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Core.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Core.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/CreateAddField.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/CreateAddField.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Database/Qbe.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Database/Qbe.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/DatabaseInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/DatabaseInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Display/Results.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Display/Results.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Engines/Innodb.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Engines/Innodb.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/ErrorHandler.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/ErrorHandler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Export.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Export.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Font.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Font.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisLineString.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisLineString.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisMultiLineString.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisMultiLineString.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisMultiPoint.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisMultiPoint.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisMultiPolygon.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisMultiPolygon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisPoint.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisPoint.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisPolygon.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisPolygon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisVisualization.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Gis/GisVisualization.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Header.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Header.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/InsertEdit.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/InsertEdit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/LanguageManager.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/LanguageManager.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Navigation/NavigationTree.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Navigation/NavigationTree.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Normalization.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Normalization.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Operations.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Operations.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Pdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Pdf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Auth/AuthenticationCookie.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Auth/AuthenticationCookie.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Auth/AuthenticationSignon.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Auth/AuthenticationSignon.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportCsv.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportCsv.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportJson.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportJson.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportLatex.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportLatex.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportMediawiki.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportMediawiki.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportOds.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportOds.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportOdt.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportOdt.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportPdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportPdf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportPhparray.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportPhparray.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportSql.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportSql.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportTexytext.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportTexytext.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportXml.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportXml.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportYaml.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/ExportYaml.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/Helpers/Pdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Export/Helpers/Pdf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/ExportPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/ExportPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Import/ImportLdi.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Import/ImportLdi.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/ImportPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/ImportPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Pdf/Pdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Pdf/Pdf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Pdf/PdfRelationSchema.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Pdf/PdfRelationSchema.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Pdf/RelationStatsPdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Pdf/RelationStatsPdf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Pdf/TableStatsPdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Pdf/TableStatsPdf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/SchemaPdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/SchemaPdf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Svg/SvgRelationSchema.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/Schema/Svg/SvgRelationSchema.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/SchemaPlugin.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/SchemaPlugin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/TwoFactor/Key.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Plugins/TwoFactor/Key.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Server/Status/Monitor.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Server/Status/Monitor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Setup/ConfigGenerator.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Setup/ConfigGenerator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Sql.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Sql.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/StorageEngine.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/StorageEngine.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Table.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Twig/UtilExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Twig/UtilExtension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/TwoFactor.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/TwoFactor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Types.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Types.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/UserPreferences.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/UserPreferences.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Util.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/classes/Util.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/config.default.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/config.default.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/libraries/language_stats.inc.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/libraries/language_stats.inc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/ar/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/ar/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/az/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/az/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/be/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/be/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/bg/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/bg/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/bn/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/bn/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/ca/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/ca/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/cs/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/cs/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/da/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/da/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/de/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/de/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/el/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/el/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/en_GB/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/en_GB/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/es/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/es/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/et/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/et/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/fi/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/fi/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/fr/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/fr/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/gl/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/gl/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/he/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/he/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/hu/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/hu/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/hy/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/hy/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/ia/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/ia/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/id/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/id/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/it/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/it/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/ja/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/ja/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/kk/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/kk/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/ko/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/ko/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/nb/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/nb/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/nl/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/nl/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/pl/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/pl/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/pt/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/pt/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/pt_BR/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/pt_BR/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/ro/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/ro/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/ru/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/ru/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/si/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/si/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/sk/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/sk/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/sl/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/sl/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/sq/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/sq/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/sv/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/sv/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/tr/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/tr/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/uk/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/uk/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/vi/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/vi/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/zh_CN/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/zh_CN/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/locale/zh_TW/LC_MESSAGES/phpmyadmin.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/locale/zh_TW/LC_MESSAGES/phpmyadmin.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/setup/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/setup/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/setup/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/setup/styles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/columns_definitions/column_attributes.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/columns_definitions/column_attributes.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/columns_definitions/column_definitions_form.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/columns_definitions/column_definitions_form.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/columns_definitions/partitions.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/columns_definitions/partitions.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/console/display.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/console/display.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/console/toolbar.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/console/toolbar.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/central_columns/main.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/central_columns/main.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/body_for_table_summary.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/body_for_table_summary.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/check_all_tables.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/check_all_tables.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/show_create.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/show_create.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/structure_table_row.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/structure_table_row.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/table_header.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/structure/table_header.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/tracking/tables.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/database/tracking/tables.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/display/results/table.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/display/results/table.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/header.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/header.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/home/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/home/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/login/twofactor/key.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/login/twofactor/key.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/login/twofactor/key_configure.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/login/twofactor/key_configure.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/navigation/main.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/navigation/main.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/preferences/two_factor/main.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/preferences/two_factor/main.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/binlog/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/binlog/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/databases/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/databases/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/engines/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/engines/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/plugins/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/plugins/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/privileges/privileges_summary.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/privileges/privileges_summary.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/monitor/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/monitor/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/processes/list.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/processes/list.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/queries/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/queries/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/status/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/status/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/variables/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/status/variables/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/variables/index.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/server/variables/index.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/chart/tbl_chart.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/chart/tbl_chart.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/index_form.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/index_form.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/relation/common_form.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/relation/common_form.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/structure/display_partitions.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/structure/display_partitions.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/structure/display_structure.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/structure/display_structure.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/structure/display_table_stats.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/structure/display_table_stats.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/tracking/main.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/tracking/main.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/tracking/report_table.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/tracking/report_table.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/tracking/structure_snapshot_columns.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/tracking/structure_snapshot_columns.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/tracking/structure_snapshot_indexes.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/table/tracking/structure_snapshot_indexes.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/test/add_data.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/test/echo.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/test/gettext/gettext.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/test/gettext/notes.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/test/gettext/pgettext.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/test/gettext/plural.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/test/gettext/plural_notes.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/test/static.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/templates/transformation_overview.twig" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/templates/transformation_overview.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/blueeyes-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/blueeyes-theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/blueeyes-theme.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/blueeyes-theme.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/mono-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/mono-theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/mono-theme.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/mono-theme.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/redmond-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/redmond-theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/redmond-theme.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/redmond-theme.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/teal-theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/teal-theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/teal-theme.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/teal-theme.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/theme.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/css/theme.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_codemirror.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_codemirror.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_common.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_common.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_icons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_navigation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_navigation.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/metro/scss/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/css/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/css/theme.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/css/theme.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/scss/_common.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/scss/_common.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/scss/_icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/scss/_icons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/scss/_navigation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/scss/_navigation.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/original/scss/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/css/theme.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/css/theme.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/css/theme.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/css/theme.css.map" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_codemirror.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_codemirror.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_common.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_common.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_icons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_icons.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_navigation.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_navigation.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/themes/pmahomme/scss/_variables.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/autoload.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Common/CharacterSetEci.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Common/CharacterSetEci.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Common/FormatInformation.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Common/FormatInformation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Common/Mode.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Common/Mode.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Encoder/Encoder.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Encoder/Encoder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Renderer/Image/SvgImageBackEnd.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Renderer/Image/SvgImageBackEnd.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Renderer/Module/EdgeIterator/EdgeIterator.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Renderer/Module/EdgeIterator/EdgeIterator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Renderer/Path/EllipticArc.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/bacon/bacon-qr-code/src/Renderer/Path/EllipticArc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_classmap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_files.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_files.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_real.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_real.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/composer/installed.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/google/recaptcha/src/autoload.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base32.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base32.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base32Hex.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base32Hex.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base64.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base64.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base64DotSlash.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base64DotSlash.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base64DotSlashOrdered.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base64DotSlashOrdered.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base64UrlSafe.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Base64UrlSafe.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Binary.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Binary.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/EncoderInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/EncoderInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Encoding.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Encoding.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Hex.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/Hex.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/RFC4648.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/paragonie/constant_time_encoding/src/RFC4648.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/af/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/af/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ar/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ar/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ast/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ast/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/be/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/be/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/bg/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/bg/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/bn/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/bn/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/cs/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/cs/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/de/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/de/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/el/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/el/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/en_GB/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/en_GB/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/es/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/es/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/et/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/et/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/fa/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/fa/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/fr/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/fr/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/gu/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/gu/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/he/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/he/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/hi/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/hi/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ia/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ia/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/id/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/id/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/it/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/it/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ja/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ja/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ko/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ko/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/lt/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/lt/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/mk/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/mk/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ml/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ml/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/nb/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/nb/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/nl/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/nl/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/pl/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/pl/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/pt/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/pt/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/pt_BR/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/pt_BR/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ro/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ro/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ru/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ru/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/si/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/si/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/sk/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/sk/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/sl/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/sl/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/sv/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/sv/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/tr/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/tr/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ug/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/ug/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/uk/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/uk/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/zh_CN/LC_MESSAGES/sqlparser.mo" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/locale/zh_CN/LC_MESSAGES/sqlparser.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Component.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Component.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/AlterOperation.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/AlterOperation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Array2d.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Array2d.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/ArrayObj.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/ArrayObj.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/CaseExpression.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/CaseExpression.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Condition.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Condition.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/CreateDefinition.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/CreateDefinition.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/DataType.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/DataType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Expression.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Expression.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/ExpressionArray.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/ExpressionArray.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/FunctionCall.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/FunctionCall.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/GroupKeyword.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/GroupKeyword.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/IndexHint.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/IndexHint.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/IntoKeyword.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/IntoKeyword.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/JoinKeyword.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/JoinKeyword.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Key.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Key.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Limit.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Limit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/LockExpression.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/LockExpression.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/OptionsArray.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/OptionsArray.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/OrderKeyword.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/OrderKeyword.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/ParameterDefinition.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/ParameterDefinition.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/PartitionDefinition.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/PartitionDefinition.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Reference.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/Reference.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/RenameOperation.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/RenameOperation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/SetOperation.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/SetOperation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/UnionKeyword.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Components/UnionKeyword.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Context.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Context.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMariaDb100000.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMariaDb100000.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMariaDb100100.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMariaDb100100.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMariaDb100200.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMariaDb100200.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMariaDb100300.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMariaDb100300.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50000.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50000.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50100.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50100.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50500.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50500.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50600.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50600.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50700.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql50700.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql80000.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Contexts/ContextMySql80000.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Core.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Core.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Exceptions/LexerException.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Exceptions/LexerException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Exceptions/LoaderException.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Exceptions/LoaderException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Exceptions/ParserException.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Exceptions/ParserException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Lexer.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Lexer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Parser.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Parser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/AlterStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/AlterStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/AnalyzeStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/AnalyzeStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/BackupStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/BackupStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/CallStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/CallStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/CheckStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/CheckStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/ChecksumStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/ChecksumStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/CreateStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/CreateStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/DeleteStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/DeleteStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/DropStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/DropStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/ExplainStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/ExplainStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/InsertStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/InsertStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/LoadStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/LoadStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/LockStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/LockStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/MaintenanceStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/MaintenanceStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/NotImplementedStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/NotImplementedStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/OptimizeStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/OptimizeStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/PurgeStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/PurgeStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/RenameStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/RenameStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/RepairStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/RepairStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/ReplaceStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/ReplaceStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/RestoreStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/RestoreStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/SelectStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/SelectStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/SetStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/SetStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/ShowStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/ShowStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/TransactionStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/TransactionStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/TruncateStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/TruncateStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/UpdateStatement.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Statements/UpdateStatement.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Token.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Token.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/TokensList.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/TokensList.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Translator.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Translator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/UtfString.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/UtfString.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/BufferedQuery.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/BufferedQuery.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/CLI.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/CLI.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Error.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Error.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Formatter.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Formatter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Misc.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Misc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Query.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Query.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Routine.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Routine.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Table.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Table.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Tokens.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/phpmyadmin/sql-parser/src/Utils/Tokens.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/pragmarx/google2fa/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/pragmarx/google2fa/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/pragmarx/google2fa/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/pragmarx/google2fa/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/pragmarx/google2fa/src/Google2FA.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/pragmarx/google2fa/src/Google2FA.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/AbstractAdapter.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/AbstractAdapter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/ApcuAdapter.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/ApcuAdapter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/ArrayAdapter.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/ArrayAdapter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/ChainAdapter.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/ChainAdapter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/PhpArrayAdapter.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/PhpArrayAdapter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/PhpFilesAdapter.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/PhpFilesAdapter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/RedisTagAwareAdapter.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Adapter/RedisTagAwareAdapter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/CacheItem.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/CacheItem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/DataCollector/CacheDataCollector.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/DataCollector/CacheDataCollector.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Marshaller/TagAwareMarshaller.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Marshaller/TagAwareMarshaller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Traits/AbstractAdapterTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Traits/AbstractAdapterTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Traits/ContractsTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Traits/ContractsTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Traits/RedisTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/Traits/RedisTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/cache/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/Definition/BaseNode.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/Definition/BaseNode.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/Definition/Dumper/XmlReferenceDumper.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/Definition/Dumper/XmlReferenceDumper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/Definition/ScalarNode.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/Definition/ScalarNode.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/Resource/GlobResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/Resource/GlobResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/ResourceCheckerConfigCache.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/config/ResourceCheckerConfigCache.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/AnalyzeServiceReferencesPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/AnalyzeServiceReferencesPass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/AutowirePass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/AutowirePass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/CheckDefinitionValidityPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/CheckDefinitionValidityPass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/DecoratorServicePass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/DecoratorServicePass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/InlineServiceDefinitionsPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/InlineServiceDefinitionsPass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ResolveBindingsPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ResolveBindingsPass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ResolveChildDefinitionsPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ResolveChildDefinitionsPass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ResolveNamedArgumentsPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ResolveNamedArgumentsPass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ResolveParameterPlaceHoldersPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ResolveParameterPlaceHoldersPass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ServiceLocatorTagPass.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Compiler/ServiceLocatorTagPass.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/ContainerBuilder.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/ContainerBuilder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Dumper/PhpDumper.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Dumper/PhpDumper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/EnvVarProcessor.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/EnvVarProcessor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/LazyProxy/ProxyHelper.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/LazyProxy/ProxyHelper.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/Configurator/AbstractConfigurator.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/Configurator/AbstractConfigurator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/Configurator/DefaultsConfigurator.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/Configurator/DefaultsConfigurator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/Configurator/Traits/TagTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/Configurator/Traits/TagTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/XmlFileLoader.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/XmlFileLoader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/YamlFileLoader.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/Loader/YamlFileLoader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/ReverseContainer.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/dependency-injection/ReverseContainer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/expression-language/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/expression-language/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/expression-language/Node/Node.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/expression-language/Node/Node.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/filesystem/Filesystem.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/filesystem/Filesystem.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/filesystem/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/filesystem/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-ctype/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-ctype/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-ctype/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-ctype/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-mbstring/Mbstring.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-mbstring/Mbstring.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-mbstring/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-mbstring/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-mbstring/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/polyfill-mbstring/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/service-contracts/ServiceSubscriberTrait.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/service-contracts/ServiceSubscriberTrait.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/var-exporter/Instantiator.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/var-exporter/Instantiator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/var-exporter/Internal/Exporter.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/var-exporter/Internal/Exporter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/var-exporter/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/symfony/var-exporter/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/CHANGELOG.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/CHANGELOG.TXT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/LICENSE.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/LICENSE.TXT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/VERSION" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/VERSION" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/barcodes/datamatrix.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/barcodes/datamatrix.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/barcodes/pdf417.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/barcodes/pdf417.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/barcodes/qrcode.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/barcodes/qrcode.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/tcpdf_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/include/tcpdf_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/tcpdf.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/tcpdf.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/tcpdf_import.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/tecnickcom/tcpdf/tcpdf_import.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/CHANGELOG" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/CHANGELOG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Compiler.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Compiler.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Environment.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Environment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/ExpressionParser.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/ExpressionParser.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Extension/CoreExtension.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Extension/CoreExtension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Extension/ExtensionInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Extension/ExtensionInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Extension/GlobalsInterface.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Extension/GlobalsInterface.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/ExtensionSet.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/ExtensionSet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Loader/FilesystemLoader.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Loader/FilesystemLoader.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Node/Expression/Binary/MatchesBinary.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Node/Expression/Binary/MatchesBinary.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Node/Expression/CallExpression.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Node/Expression/CallExpression.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Node/IfNode.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/twig/twig/src/Node/IfNode.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/CHANGELOG.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/CHANGELOG.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/dist/merged-ultraslim.json" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/dist/merged-ultraslim.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/src/KBDocumentation.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/src/KBDocumentation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/src/KBEntry.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/src/KBEntry.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/src/KBException.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/src/KBException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/src/SlimData.php" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/vendor/williamdes/mariadb-mysql-kbs/src/SlimData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/phpMyAdmin/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/public/phpMyAdmin/yarn.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/AllPlanetsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/AllPlanetsController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Ally/AllyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Ally/AllyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Ally/PactController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Ally/PactController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Building/BuildingController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Building/BuildingController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Building/DestroyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Building/DestroyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ConnectController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ConnectController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/DailyCostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/DailyCostController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/DeployController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/DeployController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/AlliancesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/AlliancesController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/AsteroideController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/AsteroideController.php" afterDir="false" />
@@ -37,10 +537,6 @@
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Execute/ZombiesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Execute/ZombiesController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/FleetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/FleetController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/FleetInteractController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/FleetInteractController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/HeroeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/HeroeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/InvadeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/InvadeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ItemController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ItemController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/JailController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/JailController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Map/GalaxyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Map/GalaxyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Map/SectorController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Map/SectorController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Map/UniverseController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Map/UniverseController.php" afterDir="false" />
@@ -51,86 +547,67 @@
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/PlanetController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/PlanetController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ProfilController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ProfilController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/RankController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/RankController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ReportController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ReportController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Research/ArmementController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Research/ArmementController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Research/ExplorerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Research/ExplorerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Research/MilitaryController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Research/MilitaryController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Research/PoliticController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Research/PoliticController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/Research/SociologicController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/Research/SociologicController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/SalonController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/SalonController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Connected/SearchController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/SearchController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ShipPersoController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ShipPersoController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/SoldierController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/SoldierController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/SpatialController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/SpatialController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Connected/ZombieController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Connected/ZombieController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CronController/BotController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CronController/BotController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/CronController/CronTaskController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CronController/CronTaskController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/External/ExternalController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/External/ExternalController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Security/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Security/SecurityController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Security/ServerController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Security/ServerController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Share/ShareController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Share/ShareController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Ally.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Ally.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Character.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commander.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Allied.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Allied.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Ally.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Alliance.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Commander.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Commander.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Exchange.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Exchange.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Fleet.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Fleet.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Fleet_List.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Fleet_List.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Grade.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Grade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Heroe.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Heroe.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Message.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Message.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Mission.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Mission.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Item.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Item.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Peace.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Peace.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Planet.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Planet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Pna.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Pna.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Product.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Product.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Proposal.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Proposal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Quest.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Quest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Rank.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Rank.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Report.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Report.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/S_Content.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/S_Content.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Salon.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Salon.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Server.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Server.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/Ships.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Ships.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Stats.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Stats.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/View.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/View.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/EventListener/CharacterEvent.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/CommanderEvent.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Front/CharacterOptionType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/CommanderOptionType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/War.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/War.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/EventListener/CommanderEvent.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/EventListener/CommanderEvent.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/AllyAddType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/AllyAddType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/AllyDefconType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/AllyDefconType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/AllyGradeType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/AllyGradeType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/AllyImageType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/AllyImageType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/AllyPactType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/AllyPactType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/AllyPeaceType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/AllyPeaceType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/FleetEditShipType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/FleetEditShipType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/Front/FleetSendType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/FleetSendType.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/Front/InteractFleetType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/InteractFleetType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Front/MarketType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/MarketType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Front/MessageType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/MessageType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Front/UserImageType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/UserImageType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/Front/VoteType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/VoteType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/CharacterRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CommanderRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/Front/UserAllyType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/Front/UserAllyType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/FleetRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/FleetRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/PlanetRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PlanetRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/CharacterService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/CommanderService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/AllyService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/AllyService.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Service/PlanetService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PlanetService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/ZombieService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/ZombieService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/admin/administration.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/administration.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/anonymous/universe.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/anonymous/universe.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/ally.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/ally/add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/add.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/ally/admin.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/admin.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/ally/bank.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/bank.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/ally/exit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/exit.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/ally/grade.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/grade.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/ally/makePeace.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/makePeace.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/ally/noAlly.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/noAlly.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/ally/pact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/pact.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/ally/rank.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ally/rank.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/building.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/building.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/fleet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/connected/fleet/create.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet/create.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/fleet/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet/edit.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/fleet/ships.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet/ships.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/fleet/split.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet/split.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/fleet_list.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/fleet_list.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/game_over.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/game_over.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/map/fleet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/fleet.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/map/galaxy.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/galaxy.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/map/interact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/interact.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/map/sector.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/sector.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/map/universe.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/map/universe.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/market.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/market.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/message.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/message.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/options.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/options.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/overview.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/overview.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/planet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/planet.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/play.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/play.html.twig" afterDir="false" />
@@ -138,25 +615,40 @@
       <change beforePath="$PROJECT_DIR$/templates/connected/profil/modal_ally.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/profil/modal_ally.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/profil/modal_user.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/profil/modal_user.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/profil/player.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/profil/player.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/profil/user_responde.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/profil/user_responde.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/rank.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/rank.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/report.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/report.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/salon.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/salon.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/search.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/search.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/connected/share/message_share.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/share/message_share.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/ship_perso.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/ship_perso.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/soldier.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/soldier.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/spatial.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/spatial.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/connected/zombie.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/connected/zombie.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu/_footer.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_footer.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_left_menu.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/menu/_right_planet.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_right_planet.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/menu/_top_ressource.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/menu/_top_ressource.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_ally.de.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_ally.de.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_ally.en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_ally.en.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_ally.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_ally.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_ally.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_ally.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_fleet.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_fleet.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_fleet.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_fleet.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_map.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_map.fr.xlf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/translations/front_map.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_map.fr.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_options.de.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_options.de.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_options.en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_options.en.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/front_options.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_options.fr.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/translations/validators.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/validators.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_market.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_market.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_market.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_market.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_menu.de.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_menu.de.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_menu.en.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_menu.en.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_menu.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_menu.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_menu.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_menu.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_overview.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_overview.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_overview.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_overview.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_planet.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_planet.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_planet.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_planet.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_search.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_search.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_search.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_search.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_spatial.fr.xlf" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_spatial.fr.xlf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/translations/front_spatial.fr.yml" beforeDir="false" afterPath="$PROJECT_DIR$/translations/front_spatial.fr.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,7 +690,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration">
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/usr/local/Cellar/php/8.1.10_1/bin/php">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/symfony/dotenv" />
       <path value="$PROJECT_DIR$/vendor/symfony/validator" />
@@ -293,6 +785,9 @@
       <path value="$PROJECT_DIR$/vendor/symfony/runtime" />
     </include_path>
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="1wwbQ2MLN9LzmMpPAWIlKYPtlne" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -301,6 +796,11 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;web-ide.project.structure&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
@@ -339,7 +839,41 @@
       <workItem from="1657827668881" duration="12084000" />
       <workItem from="1660054050910" duration="19993000" />
       <workItem from="1660261954032" duration="52000" />
-      <workItem from="1660262091781" duration="8742000" />
+      <workItem from="1660262091781" duration="40118000" />
+      <workItem from="1660765118425" duration="20230000" />
+      <workItem from="1661003054735" duration="598000" />
+      <workItem from="1664566039687" duration="9851000" />
+      <workItem from="1666346816465" duration="598000" />
+      <workItem from="1666354107975" duration="171000" />
+      <workItem from="1669628763369" duration="5000" />
+      <workItem from="1678201875624" duration="57000" />
+      <workItem from="1678202022653" duration="241000" />
+      <workItem from="1678202364648" duration="598000" />
+      <workItem from="1686643320039" duration="42000" />
+      <workItem from="1686643436738" duration="95000" />
+      <workItem from="1686643609988" duration="1361000" />
+      <workItem from="1686816418430" duration="598000" />
+      <workItem from="1687127237611" duration="599000" />
+      <workItem from="1687127991430" duration="598000" />
+      <workItem from="1688484825107" duration="243000" />
+      <workItem from="1688487522048" duration="466000" />
+      <workItem from="1695596417306" duration="102000" />
+      <workItem from="1695596592514" duration="103000" />
+      <workItem from="1695596785883" duration="597000" />
+      <workItem from="1696463093014" duration="64000" />
+      <workItem from="1696645107709" duration="3104000" />
+      <workItem from="1696742305391" duration="64000" />
+      <workItem from="1696824201949" duration="300000" />
+      <workItem from="1696886020807" duration="81000" />
+      <workItem from="1696888929111" duration="645000" />
+      <workItem from="1696906987993" duration="4096000" />
+      <workItem from="1696992449832" duration="5739000" />
+      <workItem from="1697068283432" duration="9344000" />
+      <workItem from="1697201602247" duration="2585000" />
+      <workItem from="1697242986946" duration="723000" />
+      <workItem from="1697336952596" duration="3826000" />
+      <workItem from="1697442953031" duration="3380000" />
+      <workItem from="1697579810642" duration="738000" />
     </task>
     <servers />
   </component>

@@ -102,9 +102,9 @@ class AllPlanetsController extends AbstractController
                 'em' => $em]);
         }
 
-        if ($commander->getOrderPlanet() == 'alpha') {
+        if ($commander->getPlanetsOrder() == 'alpha') {
             $crit = 'p.name';
-        } elseif ($commander->getOrderPlanet() == 'colo') {
+        } elseif ($commander->getPlanetsOrder() == 'colo') {
             $crit = 'p.nbColo';
         } else {
             $crit = 'p.id';

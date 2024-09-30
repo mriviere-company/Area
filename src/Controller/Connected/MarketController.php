@@ -171,7 +171,7 @@ class MarketController extends AbstractController
      * @return RedirectResponse
      * @throws NonUniqueResultException
      */
-    public function sellMerchantAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
+    public function sellTraderAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
@@ -180,7 +180,7 @@ class MarketController extends AbstractController
         if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
-        $merchant = $doctrine->getRepository(Commander::class)->findOneBy(['merchant' => 1]);
+        $trader = $doctrine->getRepository(Commander::class)->findOneBy(['trader' => 1]);
         $now = new DateTime();
 
         if($commander->getGameOver()) {
@@ -195,9 +195,9 @@ class MarketController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $planetMerchant = $doctrine->getRepository(Planet::class)
+        $planetTrader = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
-            ->andWhere('p.merchant = true')
+            ->andWhere('p.trader = true')
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
@@ -205,9 +205,9 @@ class MarketController extends AbstractController
         $gain = 0;
         foreach ($planetsSeller as $planet) {
             if ($this->forward('App\Service\PlanetService::planetAttackedAction', ['planet'  => $planet->getId()])) {
-                if ($commander->getAlly() && $commander->getAlly()->getPolitic() == 'democrat') {
-                    if ($commander->getPoliticMerchant() > 0) {
-                        $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * (1 + ($commander->getPoliticMerchant() / 20)) * 0.75);
+                if ($commander->getAlliance() && $commander->getAlliance()->getPolitic() == 'democrat') {
+                    if ($commander->getPoliticTrader() > 0) {
+                        $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * (1 + ($commander->getPoliticTrader() / 20)) * 0.75);
                     } else {
                         $gain = $gain + round((($planet->getWater() * 0.5) + ($planet->getNiobium() * 0.25)) * 0.75);
                     }
@@ -221,9 +221,9 @@ class MarketController extends AbstractController
                     $repor->add(new DateInterval('PT' . 1200 . 'S'));
                     $fleet = new Fleet();
                     $fleet->setHunter(1);
-                    $fleet->setCommander($merchant);
+                    $fleet->setCommander($trader);
                     $fleet->setPlanet($planet);
-                    $destination = new Destination($fleet, $planetMerchant);
+                    $destination = new Destination($fleet, $planetTrader);
                     $em->persist($destination);
                     $fleet->setFlightTime($repor);
                     $fleet->setAttack(0);
@@ -243,7 +243,7 @@ class MarketController extends AbstractController
             $reportSell->setContent("Votre vente aux marchands vous a rapporté <span class='text-vert'>+" . number_format($gain) . "</span> bitcoins. Vous ne gagnez pas de points de Guerre dans les ventes automatiques, pour en gagner vendez directement aux Marchands.");
             $em->persist($reportSell);
             $commander->setBitcoin($commander->getBitcoin() + $gain);
-            $commander->setViewReport(false);
+            $commander->setNewReport(false);
             $quest = $commander->checkQuests('sell');
             if($quest) {
                 $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());

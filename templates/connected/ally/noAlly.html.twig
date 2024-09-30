@@ -24,14 +24,14 @@
         <div class="front-block-second">
             {% if ally %}
             {% else %}
-                {% if commander.getAllyBan()|date('Y/m/d H:i:s') < "now"|date('Y/m/d H:i:s') %}<h3 class="text-center text-orange mb-5">{{ 'ally.banAlly'|trans }} <span class="timerArea" hidden>{{ commander.getAllyBan()|date('Y/m/d H:i:s') }}</span></h3>{% endif %}
+                {% if commander.getAllianceBan()|date('Y/m/d H:i:s') < "now"|date('Y/m/d H:i:s') %}<h3 class="text-center text-orange mb-5">{{ 'ally.banAlliance'|trans }} <span class="timerArea" hidden>{{ commander.getAllianceBan()|date('Y/m/d H:i:s') }}</span></h3>{% endif %}
                 {{ form_start(form_ally) }}
                 <div class="row">
                     <div class="offset-1 col-4 form-group">
                         {{ form_widget(form_ally.name) }}
                     </div>
                     <div class="col-2 form-group">
-                        {{ form_widget(form_ally.sigle) }}
+                        {{ form_widget(form_ally.tag) }}
                     </div>
                     <div class="col-2 form-control-plaintext">
                         {{ form_label(form_ally.taxe) }}
@@ -58,28 +58,28 @@
                     <tbody>
                     <tr>
                         <th class="tab-cells-name">{{ 'ally.allyName'|trans }}</th>
-                        <th class="tab-cells-name">{{ 'ally.proposalAt'|trans }}</th>
+                        <th class="tab-cells-name">{{ 'ally.offerAt'|trans }}</th>
                         <th class="tab-cells-name">{{ 'ally.acceptProp'|trans }}</th>
                         <th class="tab-cells-name">{{ 'ally.refuseProp'|trans }}</th>
                     </tr>
-                    {% for proposal in commander.getProposals() %}
+                    {% for offer in commander.getOffers() %}
                         <tr>
                             <td class="center-cells">
-                                {% if proposal.getAlly().getImageName() %}
-                                    <img alt="{{ 'image'|trans({},'front_global') }}" height="10" width="15" src="{{ vich_uploader_asset(proposal.getAlly(), 'imageFile') }}">
+                                {% if offer.getAlliance().getImageName() %}
+                                    <img alt="{{ 'image'|trans({},'front_global') }}" height="10" width="15" src="{{ vich_uploader_asset(offer.getAlliance(), 'imageFile') }}">
                                 {% else %}
                                     <img alt="{{ 'image'|trans({},'front_global') }}" height="10" width="15" src="{{ asset('img/ally.webp') }}">
                                 {% endif %}
-                                <span><a href="{{ path('ally_profil', {'allyCommander': proposal.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ proposal.getAlly().getName() }}</a></span>
+                                <span><a href="{{ path('ally_profil', {'allyCommander': offer.getAlliance().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ offer.getAlliance().getName() }}</a></span>
                             </td>
                             <td class="center-cells">
-                                {{ proposal.getProposalAt()|date('d/m/Y H:i') }}
+                                {{ offer.getOfferAt()|date('d/m/Y H:i') }}
                             </td>
                             <td class="center-cells">
-                                <a href="{{ path('ally_accept', {'proposal': proposal.getId(), 'usePlanet': usePlanet.getId()}) }}"><span>{{ 'ally.accept'|trans }}</span></a>
+                                <a href="{{ path('ally_accept', {'offer': offer.getId(), 'usePlanet': usePlanet.getId()}) }}"><span>{{ 'ally.accept'|trans }}</span></a>
                             </td>
                             <td class="center-cells">
-                                <a class="text-rouge" href="{{ path('ally_refuse', {'proposal': proposal.getId(), 'usePlanet': usePlanet.getId()}) }}"><div class="glyphicon glyphicon-remove"></div> <span>{{ 'ally.refuse'|trans }}</span></a>
+                                <a class="text-rouge" href="{{ path('ally_refuse', {'offer': offer.getId(), 'usePlanet': usePlanet.getId()}) }}"><div class="glyphicon glyphicon-remove"></div> <span>{{ 'ally.refuse'|trans }}</span></a>
                             </td>
                         </tr>
                     {% endfor %}

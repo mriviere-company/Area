@@ -29,7 +29,7 @@
                     </tr>
                     <tr>
                         <td class="tab-cells-name">
-                            {{ 'fleet.ships'|trans }}
+                            {{ 'fleet.ship'|trans }}
                         </td>
                         <td class="text-center">
                             {{ 'fleet.cargo'|trans }}
@@ -197,7 +197,7 @@
                             <span class="maxInputR">max</span>
                         </td>
                     </tr>
-                    <tr{% if oldFleet.getBrouilleurShip == 0 %} hidden{% endif %}>
+                    <tr{% if oldFleet.getJammerShip == 0 %} hidden{% endif %}>
                         <th class="p-1 pl-3">
                             {{ 'fleet.brouilleurShip'|trans }}
                         </th>
@@ -205,10 +205,10 @@
                             0
                         </td>
                         <td class="text-right p-1">
-                            {{ oldFleet.getBrouilleurShip()|number_format }}
+                            {{ oldFleet.getJammerShip()|number_format }}
                         </td>
                         <td class="center-cells p-1">
-                            {{ form_widget(form_spatialShip.brouilleurShip,{attr: { max: oldFleet.getBrouilleurShip()}}) }}
+                            {{ form_widget(form_spatialShip.brouilleurShip,{attr: { max: oldFleet.getJammerShip()}}) }}
                         </td>
                         <td width="35" class="tab-cells-name p-1 cell-middle text-center text-orange">
                             <span class="maxInputR">max</span>

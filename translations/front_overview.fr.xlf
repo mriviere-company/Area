@@ -53,20 +53,20 @@
         <source>tooltip.maxPlanets</source>
         <target>Votre nombre de planètes ainsi que la limite maximum.</target>
       </trans-unit>
-      <trans-unit id=".NuhG6f" resname="tooltip.ships">
-        <source>tooltip.ships</source>
+      <trans-unit id=".NuhG6f" resname="tooltip.ship">
+        <source>tooltip.ship</source>
         <target>Total de vos vaisseaux</target>
       </trans-unit>
-      <trans-unit id="MtvXZUq" resname="tooltip.shipsAlly">
-        <source>tooltip.shipsAlly</source>
+      <trans-unit id="MtvXZUq" resname="tooltip.shipAlliance">
+        <source>tooltip.shipAlliance</source>
         <target>Total des vaisseaux de l'alliance</target>
       </trans-unit>
-      <trans-unit id="Q5oOJ7L" resname="tooltip.maxPlanetsAlly">
-        <source>tooltip.maxPlanetsAlly</source>
+      <trans-unit id="Q5oOJ7L" resname="tooltip.maxPlanetsAlliance">
+        <source>tooltip.maxPlanetsAlliance</source>
         <target>Le nombre de planète que tout les membres de l'alliance ont ensemble.</target>
       </trans-unit>
-      <trans-unit id="SO7Gzgx" resname="tooltip.bitcoinAlly">
-        <source>tooltip.bitcoinAlly</source>
+      <trans-unit id="SO7Gzgx" resname="tooltip.bitcoinAlliance">
+        <source>tooltip.bitcoinAlliance</source>
         <target>Les bitcoins dans la banque de votre Alliance.</target>
       </trans-unit>
       <trans-unit id="YeKOyhx" resname="tooltip.pdg">
@@ -177,8 +177,8 @@
         <source>overview.time</source>
         <target>Temps</target>
       </trans-unit>
-      <trans-unit id="_sfLz5u" resname="overview.fleetShips">
-        <source>overview.fleetShips</source>
+      <trans-unit id="_sfLz5u" resname="overview.fleetShip">
+        <source>overview.fleetShip</source>
         <target>Vaisseaux : ST</target>
       </trans-unit>
       <trans-unit id="MGcDn3X" resname="overview.fleetSignature">
@@ -277,8 +277,8 @@
         <source>info.allyMembers</source>
         <target>Membres : </target>
       </trans-unit>
-      <trans-unit id="h_MdDI6" resname="info.allyShips">
-        <source>info.allyShips</source>
+      <trans-unit id="h_MdDI6" resname="info.allyShip">
+        <source>info.allyShip</source>
         <target>Vaisseaux :</target>
       </trans-unit>
       <trans-unit id="ZsK9M84" resname="title.fleetOnYou">
@@ -533,8 +533,8 @@
         <source>armor_ally</source>
         <target>Blindage vaisseaux</target>
       </trans-unit>
-      <trans-unit id="1hoWnBR" resname="merchant_ally">
-        <source>merchant_ally</source>
+      <trans-unit id="1hoWnBR" resname="trader_ally">
+        <source>trader_ally</source>
         <target>Accords marchands</target>
       </trans-unit>
       <trans-unit id="NnKmXig" resname="colonisation_ally">

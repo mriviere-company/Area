@@ -8,7 +8,7 @@
     <div class="front-block">
         {% if ally %}
             <div class="front-block-second">
-                <h1 class="text-center text-orange mb-4">{{ ally.getName() }}<small> - [{{ ally.getSigle() }}]</small></h1>
+                <h1 class="text-center text-orange mb-4">{{ ally.getName() }}<small> - [{{ ally.getTag() }}]</small></h1>
                 <h3 class="text-center text-or mb-4">{{ 'ally.level'|trans }}{{ ally.getLevel() }}</h3>
                 <div class="text-center modify-allyImage">
                     {% if ally.getImageName() %}
@@ -62,7 +62,7 @@
                                 {% endif %}
                             </tr>
                             {% for user in ally.getCommanders() %}
-                                <tr{% if user.getId() == commander.id %} class="currentBack"{% elseif user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %} class="availableBack"{% endif %}>
+                                <tr{% if user.getId() == commander.id %} class="currentBack"{% elseif user.getActivityAt()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %} class="availableBack"{% endif %}>
                                     <td class="center-cells">
                                         {% if commander.getGrade().getPlacement() == 1 %}
                                             <button class="confirm-button" href="{{ path('ally_addUser_grade', {'newGradeUser': user.getId(), 'usePlanet': usePlanet.getId() }) }}" data-toggle="modal" data-target="#openModal">{% if user.getGrade() %}{{ user.getGrade().getName() }}{% else %}???{% endif %}</button> <span class="glyphicon glyphicon-question-sign text-orange" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.changeGrade'|trans }}"></span>
@@ -74,13 +74,13 @@
                                         <span><a data-toggle="modal" data-target="#userModal" href="{{ path('user_profil_modal', {'commanderProfil': user.getId(), 'usePlanet': usePlanet.getId()}) }}">{{ user.getUsername() }}</a></span>
                                     </td>
                                     <td class="center-cells">
-                                        {% if user.getLastActivity()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %}{{ user.getLastActivity()|date('H:i') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}
+                                        {% if user.getActivityAt()|date('d/m/Y H:i:s') > "now"|date('d/m/Y H:i:s') %}{{ user.getActivityAt()|date('H:i') }}{% else %}{{ 'ally.notConnected'|trans }}{% endif %}
                                     </td>
                                     <td class="center-cells">
                                         {{ user.getRank().getPoint() }}{% if user.getRank().getPoint() > user.getRank().getOldPoint() %}<span class="rank-good-border text-vert">+{{ (user.getRank().getPoint() - user.getRank().getOldPoint())|number_format }}</span>{% elseif user.getRank().getPoint() < user.getRank().getOldPoint() %}<span class="rank-bad-border text-rouge">-{{ (user.getRank().getOldPoint() - user.getRank().getPoint())|number_format }}</span>{% else %}<span class="rank-bad-border text-mini">&#x25cf</span>{% endif %}
                                     </td>
                                     <td class="center-cells">
-                                        {{ user.getJoinAllyAt()|date('d/m/Y') }}
+                                        {{ user.getJoinAllianceAt()|date('d/m/Y') }}
                                     </td>
                                     {% if user.getId() == commander.id or commander.getGrade().getCanKick() != 1 or (ally.getPolitic() == 'fascism' and ally.getWars()|length > 0 or ally.getPeaces()|length > 0) %}
                                         {% if user.getId() == commander.id and (ally.getPolitic() == 'fascism' and ally.getWars()|length == 0 and ally.getPeaces()|length == 0) %}
@@ -106,7 +106,7 @@
                         <div class="row pb-5">
                             {% for userVote in userVotes %}
                                 <div class="col-4 center-block text-more">
-                                    {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> {% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> {% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> {% endif %}{{ userVote.getUsername() }} : {{ userVote.getVoteAlly() }}
+                                    {% if x == 1 %}<div class="text-or glyphicon glyphicon-star"></div> {% elseif x == 2 %}<div class="text-argent glyphicon glyphicon-star"></div> {% elseif x == 3 %}<div class="text-bronze glyphicon glyphicon-star"></div> {% endif %}{{ userVote.getUsername() }} : {{ userVote.getVoteAlliance() }}
                                 </div>
                                 {% set x = x + 1 %}
                             {% endfor %}

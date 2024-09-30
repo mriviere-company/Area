@@ -52,7 +52,7 @@ class OverviewController extends AbstractController
             ->join('s.galaxy', 'g')
             ->join('f.destination', 'd')
             ->join('d.planet', 'dp')
-            ->where('f.flightTime < :now')
+            ->where('f.flightAt < :now')
             ->andWhere('f.flightType != :six or f.flightType is null')
             ->andWhere('f.commander = :commander or p.commander = :commander')
             ->setParameters(['now' => $now, 'six' => 6, 'commander' => $commander])
@@ -183,10 +183,10 @@ class OverviewController extends AbstractController
             ->getQuery()
             ->getOneOrNullResult();
 
-        $allShipsProduct = $allTroops['ppsignature'] / 12;
-        $allShipsPlanet = round($allTroops['psignature'] / 12);
-        $allShipsFleet = $allFleets['fsignature'] / 2;
-        $allShips = $allShipsProduct + $allShipsPlanet + $allShipsFleet;
+        $allShipProduct = $allTroops['ppsignature'] / 12;
+        $allShipPlanet = round($allTroops['psignature'] / 12);
+        $allShipFleet = $allFleets['fsignature'] / 2;
+        $allShip = $allShipProduct + $allShipPlanet + $allShipFleet;
         $allTroopsProduct = $commander->getPriceTroopsProduct($allTroops);
         $allTroopsPlanet = $commander->getPriceTroopsPlanet($allTroops);
         $allTroopsFleet = $commander->getPriceTroopsFleet($allFleets);
@@ -195,7 +195,7 @@ class OverviewController extends AbstractController
         $allBuildings = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->join('c.planets', 'p')
-            ->select('sum(p.miner * 1) as miner, sum(p.extractor * 1) as extractor, sum(p.aeroponicFarm * 2) as aeroponicFarm, sum(p.farm * 1) as farm, sum(p.silos * 30) as silos, sum(p.niobiumStock * 30) as niobiumStock, sum(p.waterStock * 30) as waterStock, sum(p.caserne * 66) as caserne, sum(p.bunker * 800) as bunker, sum(p.centerSearch * 53) as centerSearch, sum(p.city * 13) as city, sum(p.metropole * 26) as metropole, sum(p.lightUsine * 333) as lightUsine, sum(p.heavyUsine * 666) as heavyUsine, sum(p.spaceShip * 100) as spaceShip, sum(p.radar * 13) as radar, sum(p.skyRadar * 133) as skyRadar, sum(p.skyBrouilleur * 400) as skyBrouilleur, sum(p.nuclearBase * 3333) as nuclearBase, sum(p.orbital * 333) as orbital, sum(p.island * 333) as island, sum(p.worker) as worker, sum(p.workerProduction) as workerProd')
+            ->select('sum(p.miner * 1) as miner, sum(p.extractor * 1) as extractor, sum(p.aeroponicFarm * 2) as aeroponicFarm, sum(p.farm * 1) as farm, sum(p.silos * 30) as silos, sum(p.niobiumStock * 30) as niobiumStock, sum(p.waterStock * 30) as waterStock, sum(p.caserne * 66) as caserne, sum(p.bunker * 800) as bunker, sum(p.centerSearch * 53) as centerSearch, sum(p.city * 13) as city, sum(p.metropole * 26) as metropole, sum(p.lightUsine * 333) as lightUsine, sum(p.heavyUsine * 666) as heavyUsine, sum(p.spaceShip * 100) as spaceShip, sum(p.radar * 13) as radar, sum(p.skyRadar * 133) as skyRadar, sum(p.skyJammer * 400) as skyJammer, sum(p.nuclearBase * 3333) as nuclearBase, sum(p.orbital * 333) as orbital, sum(p.island * 333) as island, sum(p.worker) as worker, sum(p.workerProduction) as workerProd')
             ->where('p.commander = :commander')
             ->setParameters(['commander' => $commander])
             ->setMaxResults(1)
@@ -204,7 +204,7 @@ class OverviewController extends AbstractController
 
         $allWorkers = $allBuildings['worker'];
         $allWorkersProd = $allBuildings['workerProd'] * 60;
-        $allBuilding = $allBuildings['centerSearch'] + $allBuildings['miner'] + $allBuildings['extractor'] + $allBuildings['niobiumStock'] + $allBuildings['waterStock'] + $allBuildings['city'] + $allBuildings['metropole'] + $allBuildings['bunker'] + $allBuildings['caserne'] + $allBuildings['spaceShip'] + $allBuildings['lightUsine'] + $allBuildings['heavyUsine'] + $allBuildings['radar'] + $allBuildings['skyRadar'] + $allBuildings['skyBrouilleur'] + $allBuildings['nuclearBase'] + $allBuildings['orbital'] + $allBuildings['island'];
+        $allBuilding = $allBuildings['centerSearch'] + $allBuildings['miner'] + $allBuildings['extractor'] + $allBuildings['niobiumStock'] + $allBuildings['waterStock'] + $allBuildings['city'] + $allBuildings['metropole'] + $allBuildings['bunker'] + $allBuildings['caserne'] + $allBuildings['spaceShip'] + $allBuildings['lightUsine'] + $allBuildings['heavyUsine'] + $allBuildings['radar'] + $allBuildings['skyRadar'] + $allBuildings['skyJammer'] + $allBuildings['nuclearBase'] + $allBuildings['orbital'] + $allBuildings['island'];
 
         if ($commander->getPoliticWorker() > 0) {
             $allWorkersProd = $allWorkersProd * (1 + ($commander->getPoliticWorker() / 5));
@@ -221,11 +221,11 @@ class OverviewController extends AbstractController
             ->join('d.planet', 'dp')
             ->join('dp.sector', 'ds')
             ->join('ds.galaxy', 'dg')
-            ->select('f.attack, f.name, f.signature, p.name as pName, p.position as position, p.skyBrouilleur, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, dp.name as dName, dp.position as dPosition, ds.position as dSector, dg.position as dGalaxy, ds.id as dIdSector, dg.id as dIdGalaxy, f.flightTime, c.id as commander, a.sigle as sigle, c.username as username')
+            ->select('f.attack, f.name, f.signature, p.name as pName, p.position as position, p.skyJammer, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, dp.name as dName, dp.position as dPosition, ds.position as dSector, dg.position as dGalaxy, ds.id as dIdSector, dg.id as dIdGalaxy, f.flightAt, c.id as commander, a.tag as tag, c.username as username')
             ->where('f.commander != :commander')
             ->andWhere('dp.commander = :commander')
             ->setParameters(['commander' => $commander])
-            ->orderBy('f.flightTime')
+            ->orderBy('f.flightAt')
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
@@ -241,18 +241,18 @@ class OverviewController extends AbstractController
             ->join('d.planet', 'dp')
             ->join('dp.sector', 'ds')
             ->join('ds.galaxy', 'dg')
-            ->select('f.id, f.attack, f.name, f.signature, p.name as pName, p.position as position, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, dp.name as dName, dp.position as dPosition, ds.position as dSector, dg.position as dGalaxy, ds.id as dIdSector, dg.id as dIdGalaxy, f.flightTime')
+            ->select('f.id, f.attack, f.name, f.signature, p.name as pName, p.position as position, s.position as sector, g.position as galaxy, s.id as idSector, g.id as idGalaxy, dp.name as dName, dp.position as dPosition, ds.position as dSector, dg.position as dGalaxy, ds.id as dIdSector, dg.id as dIdGalaxy, f.flightAt')
             ->where('f.commander = :commander')
-            ->andWhere('f.flightTime < :time')
+            ->andWhere('f.flightAt < :time')
             ->setParameters(['commander' => $commander, 'time' => $oneHour])
-            ->orderBy('f.flightTime')
+            ->orderBy('f.flightAt')
             ->setMaxResults(4)
             ->getQuery()
             ->getResult();
 
-        if ($commander->getOrderPlanet() == 'alpha') {
+        if ($commander->getPlanetsOrder() == 'alpha') {
             $crit = 'p.name';
-        } elseif ($commander->getOrderPlanet() == 'colo') {
+        } elseif ($commander->getPlanetsOrder() == 'colo') {
             $crit = 'p.nbColo';
         } else {
             $crit = 'p.id';
@@ -294,12 +294,12 @@ class OverviewController extends AbstractController
             'attackFleets' => $attackFleets,
             'fleetMove' => $fleetMove,
             'allTroops' => $allTroops,
-            'allShips' => $allShips,
+            'allShip' => $allShip,
             'allBuildings' => $allBuilding,
             'allWorkers' => $allWorkers,
-            'allShipsProduct' => $allShipsProduct,
-            'allShipsPlanet' => $allShipsPlanet,
-            'allShipsFleet' => $allShipsFleet,
+            'allShipProduct' => $allShipProduct,
+            'allShipPlanet' => $allShipPlanet,
+            'allShipFleet' => $allShipFleet,
             'allTroopsProduct' => $allTroopsProduct,
             'allTroopsPlanet' => $allTroopsPlanet,
             'allTroopsFleet' => $allTroopsFleet,
@@ -344,8 +344,8 @@ class OverviewController extends AbstractController
                     $em->remove($commander->getRank());
                 }
                 $commander->setRank(null);
-                $commander->setJoinAllyAt(null);
-                $commander->setAllyBan(null);
+                $commander->setJoinAllianceAt(null);
+                $commander->setAllianceBan(null);
                 $commander->setScientistProduction(1);
                 $commander->setSearchAt(null);
                 $commander->setDemography(0);
@@ -379,7 +379,7 @@ class OverviewController extends AbstractController
                 $commander->setPoliticCostSoldier(0);
                 $commander->setPoliticCostTank(0);
                 $commander->setPoliticInvade(0);
-                $commander->setPoliticMerchant(0);
+                $commander->setPoliticTrader(0);
                 $commander->setPoliticPdg(0);
                 $commander->setPoliticProd(0);
                 $commander->setPoliticRecycleur(0);
@@ -389,17 +389,17 @@ class OverviewController extends AbstractController
                 $commander->setPoliticTankDef(0);
                 $commander->setPoliticWorker(0);
                 $commander->setPoliticWorkerDef(0);
-                $commander->setZombieAtt(1);
-                if ($commander->getAlly()) {
-                    $ally = $commander->getAlly();
+                $commander->setZombieLvl(1);
+                if ($commander->getAlliance()) {
+                    $ally = $commander->getAlliance();
                     if (count($ally->getCommanders()) == 1 || ($ally->getPolitic() == 'fascism' && $commander->getGrade()->getPlacement() == 1)) {
                         foreach ($ally->getCommanders() as $commanderTmp) {
-                            $commanderTmp->setAlly(null);
+                            $commanderTmp->setAlliance(null);
                             $commanderTmp->setGrade(null);
-                            $commanderTmp->setAllyBan($now);
+                            $commanderTmp->setAllianceBan($now);
                         }
                         foreach ($ally->getFleets() as $fleet) {
-                            $fleet->setAlly(null);
+                            $fleet->setAlliance(null);
                         }
                         foreach ($ally->getGrades() as $grade) {
                             $em->remove($grade);
@@ -429,29 +429,29 @@ class OverviewController extends AbstractController
                             $em->remove($allied);
                         }
 
-                        foreach ($ally->getProposals() as $proposal) {
-                            $em->remove($proposal);
+                        foreach ($ally->getOffers() as $offer) {
+                            $em->remove($offer);
                         }
                         $em->flush();
 
                         $pnas = $doctrine->getRepository(Pna::class)
                             ->createQueryBuilder('p')
                             ->where('p.allyTag = :allytag')
-                            ->setParameters(['allytag' => $ally->getSigle()])
+                            ->setParameters(['allytag' => $ally->getTag()])
                             ->getQuery()
                             ->getResult();
 
                         $pacts = $doctrine->getRepository(Allied::class)
                             ->createQueryBuilder('a')
                             ->where('a.allyTag = :allytag')
-                            ->setParameters(['allytag' => $ally->getSigle()])
+                            ->setParameters(['allytag' => $ally->getTag()])
                             ->getQuery()
                             ->getResult();
 
                         $wars = $doctrine->getRepository(War::class)
                             ->createQueryBuilder('w')
                             ->where('w.allyTag = :allytag')
-                            ->setParameters(['allytag' => $ally->getSigle()])
+                            ->setParameters(['allytag' => $ally->getTag()])
                             ->getQuery()
                             ->getResult();
 
@@ -471,7 +471,7 @@ class OverviewController extends AbstractController
                         $em->remove($ally);
                     }
                 }
-                $commander->setAlly(null);
+                $commander->setAlliance(null);
                 $commander->setGrade(null);
 
                 foreach ($commander->getSalons() as $salon) {

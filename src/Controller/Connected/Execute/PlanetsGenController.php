@@ -26,7 +26,7 @@ class PlanetsGenController extends AbstractController
             $workerBonus = 1;
         }
         foreach ($commander->getPlanets() as $planet) {
-            if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and $planet->getMoon()) {
+            if (!$planet->getRadarAt() and !$planet->getJammerAt() and $planet->getMoon()) {
                 $nbProd = ($planet->getNbProduction() * $seconds) / 600;
                 $wtProd = ($planet->getWtProduction() * $seconds) / 600;
                 $fdProd = ($planet->getFdProduction() * $seconds) / 600;
@@ -48,7 +48,7 @@ class PlanetsGenController extends AbstractController
                     }
                 }
 
-                if ($commander->getAlly()) {
+                if ($commander->getAlliance()) {
                     if ($commander->getPoliticProd() > 0) {
                         $niobium = $planet->getNiobium() + ($nbProd * (1.2 + ($commander->getPoliticProd() / 14)));
                         $water = $planet->getWater() + ($wtProd * (1.2 + ($commander->getPoliticProd() / 14)));
@@ -79,7 +79,7 @@ class PlanetsGenController extends AbstractController
                 } else {
                     $planet->setFood($planet->getFoodMax());
                 }
-                $planet->setLastActivity($now);
+                $planet->setActivityAt($now);
                 $em->flush($planet);
             } elseif ($planet->getMoon()) {
                 $fdProd = ($planet->getFdProduction() * $seconds) / 60;
@@ -101,7 +101,7 @@ class PlanetsGenController extends AbstractController
                     }
                 }
 
-                if ($commander->getAlly()) {
+                if ($commander->getAlliance()) {
                     if ($commander->getPoliticProd() > 0) {
                         $food = $planet->getFood() + ($fdProd * (1.2 + ($commander->getPoliticProd() / 14)));
 
@@ -116,11 +116,11 @@ class PlanetsGenController extends AbstractController
                 } else {
                     $planet->setFood($planet->getFoodMax());
                 }
-                $planet->setLastActivity($now);
+                $planet->setActivityAt($now);
                 $em->flush($planet);
             }
         }
-        $commander->setLastActivity($now);
+        $commander->setActivityAt($now);
         $em->flush($commander);
 
         return new Response (null);
@@ -142,7 +142,7 @@ class PlanetsGenController extends AbstractController
             $workerBonus = 1;
         }
 
-        if (!$planet->getRadarAt() and !$planet->getBrouilleurAt() and !$planet->getMoon()) {
+        if (!$planet->getRadarAt() and !$planet->getJammerAt() and !$planet->getMoon()) {
             $nbProd = ($planet->getNbProduction() * $seconds) / 600;
             $wtProd = ($planet->getWtProduction() * $seconds) / 600;
             $fdProd = ($planet->getFdProduction() * $seconds) / 600;
@@ -164,7 +164,7 @@ class PlanetsGenController extends AbstractController
                 }
             }
 
-            if ($commander->getAlly()) {
+            if ($commander->getAlliance()) {
                 if ($commander->getPoliticProd() > 0) {
                     $niobium = $planet->getNiobium() + ($nbProd * (1.2 + ($commander->getPoliticProd() / 14)));
                     $water = $planet->getWater() + ($wtProd * (1.2 + ($commander->getPoliticProd() / 14)));
@@ -195,7 +195,7 @@ class PlanetsGenController extends AbstractController
             } else {
                 $planet->setFood($planet->getFoodMax());
             }
-            $planet->setLastActivity($now);
+            $planet->setActivityAt($now);
             $em->flush($planet);
         } elseif ($planet->getMoon()) {
             $fdProd = ($planet->getFdProduction() * $seconds) / 60;
@@ -217,7 +217,7 @@ class PlanetsGenController extends AbstractController
                 }
             }
 
-            if ($commander->getAlly()) {
+            if ($commander->getAlliance()) {
                 if ($commander->getPoliticProd() > 0) {
                     $food = $planet->getFood() + ($fdProd * (1.2 + ($commander->getPoliticProd() / 14)));
 
@@ -232,10 +232,10 @@ class PlanetsGenController extends AbstractController
             } else {
                 $planet->setFood($planet->getFoodMax());
             }
-            $planet->setLastActivity($now);
+            $planet->setActivityAt($now);
             $em->flush($planet);
         }
-        $commander->setLastActivity($now);
+        $commander->setActivityAt($now);
         $em->flush($commander);
 
         return new Response (null);

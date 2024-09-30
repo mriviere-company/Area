@@ -15,7 +15,7 @@ fleet: Flleets
 fleetList: Lists
 planet: Planets
 search: Research
-ally: Ally
+ally: Alliance
 galaxy: Galaxy
 map: 'Spatial map'
 building: Building
@@ -39,9 +39,9 @@ soldiers: Soldiers
 groundImg: Ground
 SkyImg: Sky
 rank: Rank
-market: Merchants
+market: Traders
 helpNew: 'Beginner assistance'
-fleetNoAlly: 'Non-allied fleets have been spotted in orbit of our planet.'
+fleetNoAlliance: 'Non-allied fleets have been spotted in orbit of our planet.'
 embargo: 'This planet is currently under embargo.'
 previousPlanet: 'Previous planet'
 nextPlanet: 'Next planet'

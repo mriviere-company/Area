@@ -128,9 +128,9 @@ class ZombieController extends AbstractController
             ->setMaxresults(1)
             ->getOneOrNullResult();
 
-        if ($commander->getZombieAtt() > 0) {
+        if ($commander->getZombieLvl() > 0) {
             if (rand(0, 100) >= 5) {
-                $commander->setZombieAtt($commander->getZombieAtt() - $mission->getGain());
+                $commander->setZombieLvl($commander->getZombieLvl() - $mission->getGain());
                 $mission->setMissionAt($nowMission);
                 $reportMission->setTitle("Mission d'élimination zombies");
                 $reportMission->setImageName("zombie_win_report.webp");
@@ -140,21 +140,21 @@ class ZombieController extends AbstractController
                 $reportMission->setImageName("zombie_lose_report.webp");
                 $loseSoldiers = ($planet->getSoldier() / rand(8,10));
                 $planet->setSoldier($planet->getSoldier() - $loseSoldiers);
-                $commander->setZombieAtt($commander->getZombieAtt() + $mission->getGain());
+                $commander->setZombieLvl($commander->getZombieLvl() + $mission->getGain());
                 $reportMission->setContent("Des hommes de l'escouade militaire envoyée reviennent progressivement par petit groupe.<br>Ils ne s'attendaient pas à une telle résistance... <span class='text-rouge'>" . number_format($loseSoldiers) . "</span> soldats sont morts durant la mission et votre niveau de menace a augmenté de " . $mission->getGain() . " !");
                 $mission->setMissionAt($nowMission);
             }
         } else {
             if (rand(0, 100) >= 5) {
                 $zombieThreat = rand(1, 10);
-                $commander->setZombieAtt($commander->getZombieAtt() + $zombieThreat);
+                $commander->setZombieLvl($commander->getZombieLvl() + $zombieThreat);
                 $reportMission->setTitle("Mission de récupération d'uranium");
                 $reportMission->setImageName("uranium_win_report.webp");
                 $reportMission->setContent("L'escouade militaire envoyée en mission est de retour, son capitaine vous fait son rapport :<br> <span class='text-vert'>+" . number_format($mission->getGain()) . "</span> uranium ont été récupérés en zone zombie.<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+" . $zombieThreat ."</span>.");
                 $planet->setUranium($planet->getUranium() + $mission->getGain());
                 $mission->setMissionAt($nowMission);
             } else {
-                $commander->setZombieAtt($commander->getZombieAtt() + $mission->getGain());
+                $commander->setZombieLvl($commander->getZombieLvl() + $mission->getGain());
                 $reportMission->setTitle("Échec mission");
                 $reportMission->setImageName("zombie_lose_report.webp");
                 $reportMission->setContent("Des hommes de l'escouade militaire envoyée reviennent progressivement par petit groupe.<br>Ils ne s'attendaient pas à une telle résistance...<br>Vous étiez en mission sur le territoire zombie et avez fait augmenter la menace de <span class='text-rouge'>+". $mission->getGain() ."</span>.");
@@ -162,8 +162,8 @@ class ZombieController extends AbstractController
             }
         }
 
-        if ($commander->getZombieAtt() <= -150) {
-            $commander->setZombieAtt(-150);
+        if ($commander->getZombieLvl() <= -150) {
+            $commander->setZombieLvl(-150);
         }
 
         if ($user->getTutorial() == 52) {
@@ -210,7 +210,7 @@ class ZombieController extends AbstractController
         $reportMission->setCommander($commander);
         $reportMission->setTitle("Mission d'élimination zombies");
         $reportMission->setImageName("zombie_win_report.webp");
-        $zombieAtt = $commander->getZombieAtt();
+        $zombieLvl = $commander->getZombieLvl();
         $zombieUranium = 0;
         $loseSoldiers = 0;
 
@@ -229,40 +229,40 @@ class ZombieController extends AbstractController
             $nowMission = new DateTime();
             $nowMission->add(new DateInterval('PT' . $mission->getTime() . 'S'));
 
-            if ($zombieAtt >= 0) {
+            if ($zombieLvl >= 0) {
                 if (rand(0, 100) >= 5) {
-                    $zombieAtt = $zombieAtt - $mission->getGain();
+                    $zombieLvl = $zombieLvl - $mission->getGain();
                     $mission->setMissionAt($nowMission);
                 } else {
                     $loseSoldiers = $loseSoldiers + ($planet->getSoldier() / rand(8,10));
-                    $zombieAtt = $zombieAtt + $mission->getGain();
+                    $zombieLvl = $zombieLvl + $mission->getGain();
                     $mission->setMissionAt($nowMission);
                 }
             } else {
                 if (rand(0, 100) >= 5) {
-                    $zombieAtt = $zombieAtt + rand(1, 10);
+                    $zombieLvl = $zombieLvl + rand(1, 10);
                     $zombieUranium = $zombieUranium + $mission->getGain();
                     $mission->setMissionAt($nowMission);
                 } else {
-                    $zombieAtt = $zombieAtt + $mission->getGain();
+                    $zombieLvl = $zombieLvl + $mission->getGain();
                     $mission->setMissionAt($nowMission);
                 }
             }
         }
         $planet->setSoldier($planet->getSoldier() - $loseSoldiers);
         $planet->setUranium($planet->getUranium() + $zombieUranium);
-        $diffZombieAtt = $zombieAtt - $commander->getZombieAtt();
-        $commander->setZombieAtt($zombieAtt);
+        $diffZombieLvl = $zombieLvl - $commander->getZombieLvl();
+        $commander->setZombieLvl($zombieLvl);
 
-        if ($commander->getZombieAtt() <= -150) {
-            $commander->setZombieAtt(-150);
+        if ($commander->getZombieLvl() <= -150) {
+            $commander->setZombieLvl(-150);
         }
 
         if ($user->getTutorial() == 52) {
             $user->setTutorial(53);
         }
 
-        $reportMission->setContent("Voici le rapport de vos missions zombies :<br><span class='text-vert'>+" . number_format($zombieUranium) . "</span> gains d'uraniums lors de vos recherches !<br><span class='text-vert'>" . number_format($diffZombieAtt) . "</span> menaces zombies. <br><span class='text-rouge'>-" . number_format($loseSoldiers) . "</span> soldats perdus.");
+        $reportMission->setContent("Voici le rapport de vos missions zombies :<br><span class='text-vert'>+" . number_format($zombieUranium) . "</span> gains d'uraniums lors de vos recherches !<br><span class='text-vert'>" . number_format($diffZombieLvl) . "</span> menaces zombies. <br><span class='text-rouge'>-" . number_format($loseSoldiers) . "</span> soldats perdus.");
 
         $em->persist($reportMission);
         $em->flush();

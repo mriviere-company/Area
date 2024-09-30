@@ -2,12 +2,12 @@ title: Alliance
 delete: 'Delete Alliance'
 ally.members: members
 form.name: 'Alliance name (max 15)'
-form.sigle: 'Tag (max 4)'
+form.tag: 'Tag (max 4)'
 form.slogan: 'Rallying cry (max 30)'
 form.taxe: '(1 to 10%)'
-form.taxeAlly: 'Alliance tax :'
+form.taxeAlliance: 'Alliance tax :'
 form.send: 'Create an Alliance'
-form.add: 'Send proposal'
+form.add: 'Send offer'
 form.transfert: Transfer
 form.num: number
 form.exchangeType: 'Type of transfer'
@@ -26,13 +26,13 @@ ally.memberName: Nickname
 ally.memberDateJoin: Membership
 ally.memberPoint: Points
 ally.memberConnected: 'Online'
-ally.proposalAt: 'Proposal date'
-ally.cancelAsk: 'Cancel proposal'
+ally.offerAt: 'Offer date'
+ally.cancelAsk: 'Cancel offer'
 ally.cancel: 'Click here to cancel'
-ally.allyName: 'Ally name'
-ally.refuseProp: 'Refuse the received proposal'
+ally.allyName: 'Alliance name'
+ally.refuseProp: 'Refuse the received offer'
 ally.refuse: 'Click here to decline'
-ally.acceptProp: 'Accept the proposal'
+ally.acceptProp: 'Accept the offer'
 ally.accept: 'Join the Alliance'
 ally.leave: 'Quit Alliance'
 ally.leaveText: 'Are you sure you want to leave your Alliance ?'
@@ -76,7 +76,7 @@ ally.gradeTitle: 'Administration alliance'
 ally.addTitle: 'Recrutement de joueurs'
 ally.machiavel: 'Vous avez trahi vos alliés'
 ally.traitor: 'Vous avez été trahis'
-ally.banAlly: 'You will be able to join/create an alliance in : '
+ally.banAlliance: 'You will be able to join/create an alliance in : '
 ally.makePeace: 'Faire la paix'
 ally.makePeaceTitle: 'Proposition/demande de paix'
 ally.askFor: Type
@@ -91,7 +91,7 @@ ally.peaceOffer: 'Vos propositions de paix'
 ally.give: Proposer
 ally.claim: Claim
 ally.acceptPeace: 'Accepter les termes'
-ally.removePeace: 'Cancel the proposal'
+ally.removePeace: 'Cancel the offer'
 ally.peaceName: 'Alliance in peace'
 ally.remainPeace: 'Remaining time'
 ally.statusPeace: Statut
@@ -104,7 +104,7 @@ ally.bitcoinDonate: Bitcoins
 ally.formGiveBitcoin: 'Bitcoins exchanges'
 ally.formGivePdg: 'Transaction de pdg'
 ally.ranked: 'List of Created Alliances'
-ally.proposals: 'Recruit proposal'
+ally.offers: 'Recruit offer'
 ally.usersRecrut: 'Joueurs actifs sans alliance :'
 tooltip.takePlanet: 'Nombre de planète que vous demandez/offrez pour la paix(selectionné parmit les meilleurs).'
 tooltip.takeTaxe: 'Taxe que vous percevrez chaque jour pendant 2 semaines sur leurs revenus.'
@@ -114,7 +114,7 @@ rank.ally: 'Alliance name'
 rank.members: Members
 rank.createdAt: 'Created the'
 rank.user: 'Player nickname'
-rank.lastActivity: 'Last activity the'
+rank.activityAt: 'Last activity the'
 rank.politic: 'Political regime'
 rank.logo: Logo
 ally.list: 'Alliances list'

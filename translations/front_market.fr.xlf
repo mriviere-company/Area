@@ -141,8 +141,8 @@
         <source>scientist</source>
         <target>Entraîner des scientifiques</target>
       </trans-unit>
-      <trans-unit id="7FpeCGu" resname="ships">
-        <source>ships</source>
+      <trans-unit id="7FpeCGu" resname="ship">
+        <source>ship</source>
         <target>Construire des vaisseaux</target>
       </trans-unit>
       <trans-unit id="NZjOb5Z" resname="logo">

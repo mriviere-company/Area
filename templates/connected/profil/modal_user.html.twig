@@ -28,11 +28,11 @@
                                                        class="border-solid-img" height="64" width="64"
                                                        src="{{ asset('img/avatar.webp') }}"></div>
                 {% endif %}
-                {% if commanderProfil.getAlly() %}
-                    {% if commanderProfil.getAlly.imageName %}
+                {% if commanderProfil.getAlliance() %}
+                    {% if commanderProfil.getAlliance.imageName %}
                         <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}"
                                                            class="border-solid-img" height="42" width="64"
-                                                           src="{{ vich_uploader_asset(commanderProfil.getAlly, 'imageFile') }}">
+                                                           src="{{ vich_uploader_asset(commanderProfil.getAlliance, 'imageFile') }}">
                         </div>
                     {% else %}
                         <div class="text-center mt-4"><img alt="{{ 'image'|trans({},'front_global') }}"
@@ -45,12 +45,12 @@
                 <div class="my-2 text-middle"><span
                             class="glyphicon glyphicon-link text-orange"></span> {{ 'user.name'|trans }} {{ commanderProfil.getUsername() }}
                 </div>
-                {% if commanderProfil.getAlly() %}
-                    {% if commanderProfil.getAlly().getPolitic() != 'fascism' %}
+                {% if commanderProfil.getAlliance() %}
+                    {% if commanderProfil.getAlliance().getPolitic() != 'fascism' %}
                         <div class="my-2 text-middle"><span
                                     class="glyphicon glyphicon-link text-orange"></span> {{ 'user.planet'|trans }} {{ commanderProfil.getAllPlanets() }}
                         </div>
-                        {% if commanderProfil.getAlly().getPolitic() == 'democrat' %}
+                        {% if commanderProfil.getAlliance().getPolitic() == 'democrat' %}
                             <div class="my-2 text-middle"><span
                                 class="glyphicon glyphicon-link text-orange"></span> {{ 'user.first.planet'|trans }} {{ commanderProfil.getFirstPlanet(usePlanet)|raw }}
                             </div>{% endif %}
@@ -77,13 +77,13 @@
                     </div>
                 {% endif %}
                 <div class="my-2 text-middle"><span
-                            class="glyphicon glyphicon-link text-orange"></span> {{ 'user.ally'|trans }} {% if commanderProfil.getAlly() %}
+                            class="glyphicon glyphicon-link text-orange"></span> {{ 'user.ally'|trans }} {% if commanderProfil.getAlliance() %}
                         <span><a
-                                href="{{ path('ally_profil', {'allyCommander': commanderProfil.getAlly().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ commanderProfil.getAlly().getName() }}</a>
+                                href="{{ path('ally_profil', {'allyCommander': commanderProfil.getAlliance().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ commanderProfil.getAlliance().getName() }}</a>
                         </span>{% else %}{{ 'user.allyNone'|trans }}{% endif %}</div>
-                {% if commanderProfil.getAlly() %}
+                {% if commanderProfil.getAlliance() %}
                     <div class="my-2 text-middle"><span
-                        class="glyphicon glyphicon-link text-orange"></span> {{ 'user.politic'|trans }} {{ commanderProfil.getAlly().getPolitic()|trans }}
+                        class="glyphicon glyphicon-link text-orange"></span> {{ 'user.politic'|trans }} {{ commanderProfil.getAlliance().getPolitic()|trans }}
                     </div>{% endif %}
                 {% if commanderProfil.getNbrInvade() %}
                     <div class="my-2 text-middle"><span

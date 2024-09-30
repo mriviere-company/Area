@@ -647,7 +647,7 @@ class DestroyController extends AbstractController
     /**
      * @Route("/detruire-brouilleur/{usePlanet}", name="building_remove_brouilleur", requirements={"usePlanet"="\d+"})
      */
-    public function buildingRemoveBrouilleurAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
+    public function buildingRemoveJammerAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $now = new DateTime();
@@ -657,14 +657,14 @@ class DestroyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $level = $usePlanet->getSkyBrouilleur();
-        $newSky = $usePlanet->getSkyPlace() - $user->getBuildingSkyPlace('skyBrouilleur');
+        $level = $usePlanet->getSkyJammer();
+        $newSky = $usePlanet->getSkyPlace() - $user->getBuildingSkyPlace('skyJammer');
 
         if($level == 0 || $usePlanet->getConstructAt() > $now) {
             return $this->redirectToRoute('building', ['usePlanet' => $usePlanet->getId()]);
         }
         $now->add(new DateInterval('PT' . 180 . 'S'));
-        $usePlanet->setSkyBrouilleur($level - 1);
+        $usePlanet->setSkyJammer($level - 1);
         $usePlanet->setSkyPlace($newSky);
         $usePlanet->setConstruct('destruct');
         $usePlanet->setConstructAt($now);

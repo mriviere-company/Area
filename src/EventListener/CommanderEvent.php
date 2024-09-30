@@ -83,11 +83,11 @@ class CommanderEvent implements EventSubscriberInterface
                 $twentyFour->sub(new DateInterval('PT' . 86400 . 'S'));
 
                 if ($commander instanceof Commander) {
-                    if ($twentyFour > $commander->getDailyConnect()) {
-                        $commander->setDailyConnect($now);
+                    if ($twentyFour > $commander->getActivityAt()) {
+                        $commander->setActivityAt($now);
                         $bonus = (($commander->getLevel() + 1) * 50) * rand(1,5);
                         $commander->setBitcoin($commander->getBitcoin() + $bonus);
-                        $commander->setViewReport(false);
+                        $commander->setNewReport(false);
                         $reportDaily = new Report();
                         $reportDaily->setType('economic');
                         $reportDaily->setSendAt($now);
@@ -188,7 +188,7 @@ class CommanderEvent implements EventSubscriberInterface
                             } elseif ($research == 'heavyShip') {
                                 $commander->setHeavyShip($commander->getHeavyShip() + 1);
                             }
-                            if ($commander->getAlly()) {
+                            if ($commander->getAlliance()) {
                                 if ($research == 'prod_ally') {
                                     $commander->setPoliticProd($commander->getPoliticProd() + 1);
                                 } elseif ($research == 'recycleur_ally') {
@@ -218,8 +218,8 @@ class CommanderEvent implements EventSubscriberInterface
                                     $commander->setPoliticSoldierSale($commander->getPoliticSoldierSale() + 1);
                                 } elseif ($research == 'cost_tank_ally') {
                                     $commander->setPoliticCostTank($commander->getPoliticCostTank() + 1);
-                                } elseif ($research == 'merchant_ally') {
-                                    $commander->setPoliticMerchant($commander->getPoliticMerchant() + 1);
+                                } elseif ($research == 'trader_ally') {
+                                    $commander->setPoliticTrader($commander->getPoliticTrader() + 1);
                                 } elseif ($research == 'tank_def_ally') {
                                     $commander->setPoliticTankDef($commander->getPoliticTankDef() + 1);
                                 } elseif ($research == 'invade_ally') {

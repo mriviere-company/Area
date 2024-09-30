@@ -3,7 +3,7 @@
 namespace App\Controller\Security;
 
 use App\Entity\Event;
-use App\Entity\Ships;
+use App\Entity\Ship;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
@@ -40,7 +40,7 @@ class ServerController extends AbstractController
         $em->persist($server);
         $em->flush();
 
-        $event = new Event('ZombieAttack', $server, 6, 21, 00, 6, 22, 00);
+        $event = new Event('ZombieLvlack', $server, 6, 21, 00, 6, 22, 00);
         $em->persist($event);
         $em->flush();
 
@@ -64,7 +64,7 @@ class ServerController extends AbstractController
         $em->persist($event);
         $em->flush();
 
-        $event = new Event('ArenaAlly', $server, 12, 20, 00, 12, 22, 00);
+        $event = new Event('ArenaAlliance', $server, 12, 20, 00, 12, 22, 00);
         $em->persist($event);
         $em->flush();
 
@@ -91,10 +91,10 @@ class ServerController extends AbstractController
         $em->persist($rank);
         $iaZombie->setRank($rank);
         $em->persist($iaZombie);
-        $ships = new Ships();
-        $iaZombie->setShip($ships);
-        $ships->setCommander($iaZombie);
-        $em->persist($ships);
+        $ship = new Ship();
+        $iaZombie->setShip($ship);
+        $ship->setCommander($iaZombie);
+        $em->persist($ship);
         $em->flush();
 
         $iaAlien = new Commander($iaZombieUser, 'Aliens', $server);
@@ -106,10 +106,10 @@ class ServerController extends AbstractController
         $em->persist($rank);
         $iaAlien->setRank($rank);
         $em->persist($iaAlien);
-        $ships = new Ships();
-        $iaAlien->setShip($ships);
-        $ships->setCommander($iaAlien);
-        $em->persist($ships);
+        $ship = new Ship();
+        $iaAlien->setShip($ship);
+        $ship->setCommander($iaAlien);
+        $em->persist($ship);
         $em->flush();
 
         return $this->redirectToRoute('server_select');
@@ -180,35 +180,35 @@ class ServerController extends AbstractController
                     if ((in_array($nbrSector, $planetPve)) && ((!$alreadyBot1 && rand(0, 8) == 1) || !$alreadyBot1 && $nbrPlanet == 25)) {
                         $alreadyBot1 = true;
                         if (in_array($nbrSector, $planetPveOne)) {
-                            $planet = new Planet(null, 'Fort Marchand I', 500, 150, $nbrPlanet, $sector, 'merchant.webp',  1, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand I', 500, 150, $nbrPlanet, $sector, 'trader.webp',  1, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(200);
                             $fleet->setCorvetWar(25);
                             $fleet->setFregatePlasma(2);
                             $fleet->setDestroyer(1);
                         } elseif (in_array($nbrSector, $planetPveTwo)) {
-                            $planet = new Planet(null, 'Fort Marchand II', 1000, 300, $nbrPlanet, $sector, 'merchant.webp',  2, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand II', 1000, 300, $nbrPlanet, $sector, 'trader.webp',  2, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(2000);
                             $fleet->setCorvetWar(250);
                             $fleet->setFregatePlasma(20);
                             $fleet->setDestroyer(10);
                         } elseif (in_array($nbrSector, $planetPveThree)) {
-                            $planet = new Planet(null, 'Fort Marchand III', 1500, 450, $nbrPlanet, $sector, 'merchant.webp',  3, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand III', 1500, 450, $nbrPlanet, $sector, 'trader.webp',  3, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(20000);
                             $fleet->setCorvetWar(2500);
                             $fleet->setFregatePlasma(200);
                             $fleet->setDestroyer(100);
                         } elseif (in_array($nbrSector, $planetPveFour)) {
-                            $planet = new Planet(null, 'Fort Marchand IV', 3000, 600, $nbrPlanet, $sector, 'merchant.webp',  4, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand IV', 3000, 600, $nbrPlanet, $sector, 'trader.webp',  4, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(200000);
                             $fleet->setCorvetWar(25000);
                             $fleet->setFregatePlasma(2000);
                             $fleet->setDestroyer(1000);
                         } else {
-                            $planet = new Planet(null, 'Fort Marchand V', 4000, 800, $nbrPlanet, $sector, 'merchant.webp',  5, null, false, false);
+                            $planet = new Planet(null, 'Fort Marchand V', 4000, 800, $nbrPlanet, $sector, 'trader.webp',  5, null, false, false);
                             $fleet = new Fleet();
                             $fleet->setHunterWar(2000000);
                             $fleet->setCorvetWar(250000);
@@ -219,7 +219,7 @@ class ServerController extends AbstractController
                         $fleet->setPlanet($planet);
                         $fleet->setAttack(1);
                         $fleet->setName('Horde');
-                        $fleet->setSignature($fleet->getNbrSignatures());
+                        $fleet->setSignature($fleet->getNbSignature());
                         $em->persist($fleet);
                     } elseif ((in_array($nbrSector, $sectorPositions)) && ((!$alreadyBot2 && rand(0, 8) == 1) || !$alreadyBot2 && $nbrPlanet == 24)) {
                         $alreadyBot2 = true;
@@ -254,7 +254,7 @@ class ServerController extends AbstractController
                         $fleetBot->setPlanet($planet);
                         $fleetBot->setAttack(1);
                         $fleetBot->setName('Horde');
-                        $fleetBot->setSignature($fleetBot->getNbrSignatures());
+                        $fleetBot->setSignature($fleetBot->getNbSignature());
                         $em->persist($fleetBot);
                     } else {
                         if (rand(1, 19) < 6) {
@@ -270,7 +270,7 @@ class ServerController extends AbstractController
                             $fleet->setPlanet($planet);
                             $fleet->setAttack(1);
                             $fleet->setName('Horde');
-                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $fleet->setSignature($fleet->getNbSignature());
                             $em->persist($fleet);
                         } elseif (rand(0, 70) < 2) {
                             $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_water.webp',  0, 'water', false, false);
@@ -283,7 +283,7 @@ class ServerController extends AbstractController
                             $fleet->setPlanet($planet);
                             $fleet->setAttack(1);
                             $fleet->setName('Horde');
-                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $fleet->setSignature($fleet->getNbSignature());
                             $em->persist($fleet);
                         } elseif (rand(0, 90) < 2) {
                             $planet = new Planet(null, 'Astéroïdes', 0, 0, $nbrPlanet, $sector, 'cdr_uranium.webp',  0, 'uranium', false, false);
@@ -296,7 +296,7 @@ class ServerController extends AbstractController
                             $fleet->setPlanet($planet);
                             $fleet->setAttack(1);
                             $fleet->setName('Horde');
-                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $fleet->setSignature($fleet->getNbSignature());
                             $em->persist($fleet);
                         } else {
                             $nbrPlanets++;
@@ -341,7 +341,7 @@ class ServerController extends AbstractController
             $fleet->setPlanet($putFleet);
             $fleet->setAttack(1);
             $fleet->setName('Horde');
-            $fleet->setSignature($fleet->getNbrSignatures());
+            $fleet->setSignature($fleet->getNbSignature());
             $em->persist($fleet);
         }
         $em->flush();
@@ -380,10 +380,10 @@ class ServerController extends AbstractController
                 while ($nbrPlanet <= 25) {
                     if (($nbrSector == 7 || $nbrSector == 10) && $nbrPlanet == 13) {
                         $planet = new Planet();
-                        $planet->setMerchant(true);
+                        $planet->setTrader(true);
                         $planet->setGround(400);
                         $planet->setSky(80);
-                        $planet->setImageName('merchant.webp');
+                        $planet->setImageName('trader.webp');
                         $planet->setName('Marchands');
                         $planet->setSector($sector);
                         $planet->setPosition($nbrPlanet);
@@ -455,9 +455,9 @@ class ServerController extends AbstractController
                 $commander->setShip(null);
                 $em->remove($ship);
             }
-            if ($commander->getAlly()) {
-                $ally = $commander->getAlly();
-                $commander->setAlly(null);
+            if ($commander->getAlliance()) {
+                $ally = $commander->getAlliance();
+                $commander->setAlliance(null);
                 foreach ($ally->getAllieds() as $allied) {
                     $em->remove($allied);
                 }
@@ -490,8 +490,8 @@ class ServerController extends AbstractController
                 $em->remove($commander->getRank());
             }
 
-            foreach ($commander->getProposals() as $proposal) {
-                $commander->removeProposal($proposal);
+            foreach ($commander->getOffers() as $offer) {
+                $commander->removeOffer($offer);
             }
 
             foreach ($commander->getFleetLists() as $list) {
@@ -687,7 +687,7 @@ class ServerController extends AbstractController
         $fleets = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
             ->where('f.planet is null')
-            ->andWhere('f.flightTime is null')
+            ->andWhere('f.flightAt is null')
             ->getQuery()
             ->getResult();
 

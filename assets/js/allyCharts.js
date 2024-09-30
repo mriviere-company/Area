@@ -1,4 +1,4 @@
-function manageAllyChart() {
+function manageAllianceChart() {
     //line
     let allyPoints = $('#allyPoints').data("allyPoints");
     let allyOtherPoints = $('#allyOtherPoints').data("allyOtherPoints");
@@ -39,5 +39,5 @@ function manageAllyChart() {
 }
 
 $(document).ready(function() {
-    manageAllyChart();
+    manageAllianceChart();
 });

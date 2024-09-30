@@ -35,8 +35,8 @@ class GameOverController extends AbstractController
             $userGO->setSearch(null);
             $em->remove($userGO->getRank(null));
             $userGO->setRank(null);
-            $userGO->setJoinAllyAt(null);
-            $userGO->setAllyBan(null);
+            $userGO->setJoinAllianceAt(null);
+            $userGO->setAllianceBan(null);
             $userGO->setScientistProduction(1);
             $userGO->setSearchAt(null);
             $userGO->setDemography(0);
@@ -70,7 +70,7 @@ class GameOverController extends AbstractController
             $userGO->setPoliticCostSoldier(0);
             $userGO->setPoliticCostTank(0);
             $userGO->setPoliticInvade(0);
-            $userGO->setPoliticMerchant(0);
+            $userGO->setPoliticTrader(0);
             $userGO->setPoliticPdg(0);
             $userGO->setPoliticProd(0);
             $userGO->setPoliticRecycleur(0);
@@ -80,17 +80,17 @@ class GameOverController extends AbstractController
             $userGO->setPoliticTankDef(0);
             $userGO->setPoliticWorker(0);
             $userGO->setPoliticWorkerDef(0);
-            $userGO->setZombieAtt(1);
-            if ($userGO->getAlly()) {
-                $ally = $userGO->getAlly();
+            $userGO->setZombieLvl(1);
+            if ($userGO->getAlliance()) {
+                $ally = $userGO->getAlliance();
                 if (count($ally->getCommanders()) == 1 || ($ally->getPolitic() == 'fascism' && $userGO->getGrade()->getPlacement() == 1)) {
                     foreach ($ally->getCommanders() as $userGO) {
-                        $userGO->setAlly(null);
+                        $userGO->setAlliance(null);
                         $userGO->setGrade(null);
-                        $userGO->setAllyBan($now);
+                        $userGO->setAllianceBan($now);
                     }
                     foreach ($ally->getFleets() as $fleet) {
-                        $fleet->setAlly(null);
+                        $fleet->setAlliance(null);
                     }
                     foreach ($ally->getGrades() as $grade) {
                         $em->remove($grade);
@@ -120,29 +120,29 @@ class GameOverController extends AbstractController
                         $em->remove($allied);
                     }
 
-                    foreach ($ally->getProposals() as $proposal) {
-                        $em->remove($proposal);
+                    foreach ($ally->getOffers() as $offer) {
+                        $em->remove($offer);
                     }
                     $em->flush();
 
                     $pnas = $doctrine->getRepository(Pna::class)
                         ->createQueryBuilder('p')
                         ->where('p.allyTag = :allytag')
-                        ->setParameters(['allytag' => $ally->getSigle()])
+                        ->setParameters(['allytag' => $ally->getTag()])
                         ->getQuery()
                         ->getResult();
 
                     $pacts = $doctrine->getRepository(Allied::class)
                         ->createQueryBuilder('a')
                         ->where('a.allyTag = :allytag')
-                        ->setParameters(['allytag' => $ally->getSigle()])
+                        ->setParameters(['allytag' => $ally->getTag()])
                         ->getQuery()
                         ->getResult();
 
                     $wars = $doctrine->getRepository(War::class)
                         ->createQueryBuilder('w')
                         ->where('w.allyTag = :allytag')
-                        ->setParameters(['allytag' => $ally->getSigle()])
+                        ->setParameters(['allytag' => $ally->getTag()])
                         ->getQuery()
                         ->getResult();
 
@@ -162,7 +162,7 @@ class GameOverController extends AbstractController
                     $em->remove($ally);
                 }
             }
-            $userGO->setAlly(null);
+            $userGO->setAlliance(null);
             $userGO->setGrade(null);
 
             foreach ($userGO->getSalons() as $salon) {

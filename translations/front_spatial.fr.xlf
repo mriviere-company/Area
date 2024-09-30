@@ -129,8 +129,8 @@
         <source>spatial.fleetName</source>
         <target>Nom de la flotte</target>
       </trans-unit>
-      <trans-unit id="ZVsNS6Q" resname="spatial.fleetShips">
-        <source>spatial.fleetShips</source>
+      <trans-unit id="ZVsNS6Q" resname="spatial.fleetShip">
+        <source>spatial.fleetShip</source>
         <target>Vaisseaux</target>
       </trans-unit>
       <trans-unit id="c2yz9Cy" resname="spatial.fleetSignature">

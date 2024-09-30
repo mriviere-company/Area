@@ -9,7 +9,7 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Translation\Translator;
 
-class UserAllyType extends AbstractType
+class UserAllianceType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -34,12 +34,12 @@ class UserAllyType extends AbstractType
                 ]
             )
             ->add(
-                'sigle',
+                'tag',
                 null,
                 [
-                    'label' => 'form.sigle',
+                    'label' => 'form.tag',
                     'attr'  => [
-                        'placeholder' => 'form.sigle',
+                        'placeholder' => 'form.tag',
                         'class' => 'game-input',
                         'maxlength' => '4',
                         'minlength' => '1',
@@ -97,7 +97,7 @@ class UserAllyType extends AbstractType
                 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                 [
                     'choices' => $this->getPercentTaxe(),
-                    'label' => 'form.taxeAlly',
+                    'label' => 'form.taxeAlliance',
                     'attr'  => [
                         'placeholder' => 'form.taxe',
                         'class' => 'select2 game-input',
@@ -107,7 +107,7 @@ class UserAllyType extends AbstractType
             )
             ->add('sendForm', SubmitType::class, ['label' => 'form.send', 'attr' => ['class' => 'confirm-button pull-right mt-3']]);
 
-        $builder->get('sigle')
+        $builder->get('tag')
             ->addModelTransformer(new CallbackTransformer(
                 function ($tagAsUpper) {
                     return strtolower($tagAsUpper);
@@ -172,7 +172,7 @@ class UserAllyType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'App\Entity\Ally',
+                'data_class'         => 'App\Entity\Alliance',
                 'translation_domain' => 'front_ally',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',

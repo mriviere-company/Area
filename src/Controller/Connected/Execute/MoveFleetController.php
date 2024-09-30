@@ -30,7 +30,7 @@ class MoveFleetController extends AbstractController
         foreach ($fleets as $fleet) {
             $commander = $fleet->getCommander();
             $server = $fleet->getDestination()->getPlanet()->getSector()->getGalaxy()->getServer();
-            if (!$commander || $commander->getMerchant() == 1) {
+            if (!$commander || $commander->getTrader() == 1) {
                 $em->remove($fleet->getDestination());
                 $em->remove($fleet);
             } else {
@@ -47,12 +47,12 @@ class MoveFleetController extends AbstractController
                     $report->setSendAt($now);
                     $report->setCommander($commander);
                     $report->setContent("Bonjour dirigeant " . $commander->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleet->getId() . "/" . $usePlanet->getId() . "'>" . $fleet->getName() . "</a></span>" . " vient d'arriver en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() . "/" . $newHome->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $newHome->getSector()->getGalaxy()->getPosition() . ":" . $newHome->getSector()->getPosition() . ":" . $newHome->getPosition() . "</a></span>.");
-                    $commander->setViewReport(false);
+                    $commander->setNewReport(false);
                     $oldPlanet = $fleet->getPlanet();
                     $fleet->setFlightTime(null);
                     $fleet->setPlanet($newHome);
                     $previousDestination = $fleet->getDestination();
-                    if ($fleet->getFlightType() != '2') {
+                    if ($fleet->getFlightAt() != '2') {
                         $em->remove($previousDestination);
                         if ($newHome->getNbCdr() || $newHome->getWtCdr()) {
                             $fleet->setRecycleAt($nowReport);
@@ -61,29 +61,29 @@ class MoveFleetController extends AbstractController
                         }
                     }
 
-                    $eAlly = $commander->getAllyEnnemy();
-                    $warAlly = [];
+                    $eAlliance = $commander->getAllianceEnnemy();
+                    $warAlliance = [];
                     $x = 0;
-                    foreach ($eAlly as $tmp) {
-                        $warAlly[$x] = $tmp->getAllyTag();
+                    foreach ($eAlliance as $tmp) {
+                        $warAlliance[$x] = $tmp->getAllianceTag();
                         $x++;
                     }
 
-                    $fAlly = $commander->getAllyFriends();
-                    $friendAlly = [];
+                    $fAlliance = $commander->getAllianceFriends();
+                    $friendAlliance = [];
                     $x = 0;
-                    foreach ($fAlly as $tmp) {
+                    foreach ($fAlliance as $tmp) {
                         if ($tmp->getAccepted() == 1) {
-                            $friendAlly[$x] = $tmp->getAllyTag();
+                            $friendAlliance[$x] = $tmp->getAllianceTag();
                             $x++;
                         }
                     }
-                    if (!$friendAlly) {
-                        $friendAlly = ['impossible', 'personne'];
+                    if (!$friendAlliance) {
+                        $friendAlliance = ['impossible', 'personne'];
                     }
 
-                    if ($commander->getAlly()) {
-                        $allyF = $commander->getAlly();
+                    if ($commander->getAlliance()) {
+                        $allyF = $commander->getAlliance();
                     } else {
                         $allyF = 'wedontexistsok';
                     }
@@ -93,12 +93,12 @@ class MoveFleetController extends AbstractController
                         ->join('f.commander', 'c')
                         ->leftJoin('c.ally', 'a')
                         ->where('f.planet = :planet')
-                        ->andWhere('f.attack = true OR a.sigle in (:ally)')
+                        ->andWhere('f.attack = true OR a.tag in (:ally)')
                         ->andWhere('f.commander != :commander')
-                        ->andWhere('f.flightTime is null')
-                        ->andWhere('c.ally is null OR a.sigle not in (:friend)')
-                        ->andWhere('c.ally is null OR c.ally != :myAlly')
-                        ->setParameters(['planet' => $newHome, 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
+                        ->andWhere('f.flightAt is null')
+                        ->andWhere('c.ally is null OR a.tag not in (:friend)')
+                        ->andWhere('c.ally is null OR c.ally != :myAlliance')
+                        ->setParameters(['planet' => $newHome, 'ally' => $warAlliance, 'commander' => $commander, 'friend' => $friendAlliance, 'myAlliance' => $allyF])
                         ->getQuery()
                         ->getResult();
 
@@ -108,9 +108,9 @@ class MoveFleetController extends AbstractController
                         ->leftJoin('c.ally', 'a')
                         ->where('f.planet = :planet')
                         ->andWhere('f.commander != :commander')
-                        ->andWhere('f.flightTime is null')
-                        ->andWhere('c.ally is null OR a.sigle not in (:friend)')
-                        ->setParameters(['planet' => $newHome, 'commander' => $commander, 'friend' => $friendAlly])
+                        ->andWhere('f.flightAt is null')
+                        ->andWhere('c.ally is null OR a.tag not in (:friend)')
+                        ->setParameters(['planet' => $newHome, 'commander' => $commander, 'friend' => $friendAlliance])
                         ->getQuery()
                         ->getResult();
 
@@ -119,7 +119,7 @@ class MoveFleetController extends AbstractController
                         ->where('f.planet = :planet')
                         ->andWhere('f.commander != :commander')
                         ->andWhere('f.fightAt is not null')
-                        ->andWhere('f.flightTime is null')
+                        ->andWhere('f.flightAt is null')
                         ->setParameters(['planet' => $newHome, 'commander' => $commander])
                         ->getQuery()
                         ->setMaxResults(1)
@@ -129,13 +129,13 @@ class MoveFleetController extends AbstractController
                         $fleet->setFightAt($fleetFight->getFightAt());
                     } elseif ($warFleets) {
                         foreach ($warFleets as $setWar) {
-                            if ($setWar->getCommander()->getAlly()) {
+                            if ($setWar->getCommander()->getAlliance()) {
                                 $fleetArm = $fleet->getMissile() + $fleet->getLaser() + $fleet->getPlasma();
                                 if ($fleetArm > 0) {
                                     $fleet->setAttack(1);
                                 }
-                                foreach ($eAlly as $tmp) {
-                                    if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                                foreach ($eAlliance as $tmp) {
+                                    if ($setWar->getCommander()->getAlliance()->getTag() == $tmp->getAllianceTag()) {
                                         $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                                         if ($fleetArm > 0) {
                                             $setWar->setAttack(1);
@@ -147,7 +147,7 @@ class MoveFleetController extends AbstractController
                         $allFleets = $doctrine->getRepository(Fleet::class)
                             ->createQueryBuilder('f')
                             ->where('f.planet = :planet')
-                            ->andWhere('f.flightTime is null')
+                            ->andWhere('f.flightAt is null')
                             ->setParameters(['planet' => $newHome])
                             ->getQuery()
                             ->getResult();
@@ -166,7 +166,7 @@ class MoveFleetController extends AbstractController
                             ->createQueryBuilder('f')
                             ->join('f.commander', 'c')
                             ->where('f.planet = :planet')
-                            ->andWhere('f.flightTime is null')
+                            ->andWhere('f.flightAt is null')
                             ->setParameters(['planet' => $newHome])
                             ->getQuery()
                             ->getResult();
@@ -188,7 +188,7 @@ class MoveFleetController extends AbstractController
                             $zbRegroups = $doctrine->getRepository(Fleet::class)
                                 ->createQueryBuilder('f')
                                 ->where('f.planet = :planet')
-                                ->andWhere('f.flightTime is null')
+                                ->andWhere('f.flightAt is null')
                                 ->andWhere('f.commander = :commander')
                                 ->andWhere('f.id != :fleet')
                                 ->setParameters(['planet' => $newHome, 'commander' => $commander, 'fleet' => $fleet->getId()])
@@ -204,13 +204,13 @@ class MoveFleetController extends AbstractController
                                 $fleet->setFregate($fleet->getFregate() + $zbRegroup->getFregate());
                                 $em->remove($zbRegroup);
                             }
-                            $fleet->setSignature($fleet->getNbrSignatures());
+                            $fleet->setSignature($fleet->getNbSignature());
                         }
                         $newPlaCommander = $newPlanet->getCommander();
-                        if ($fleet->getFlightType() == '1' && $commander->getZombie() == 0) {
+                        if ($fleet->getFlightAt() == '1' && $commander->getZombie() == 0) {
                             $em->persist($report);
-                        } elseif ($fleet->getFlightType() == '2') {
-                            if ($newPlanet->getMerchant()) {
+                        } elseif ($fleet->getFlightAt() == '2') {
+                            if ($newPlanet->getTrader()) {
                                 $reportSell = new Report();
                                 $reportSell->setType('economic');
                                 $reportSell->setSendAt($nowReport);
@@ -222,8 +222,8 @@ class MoveFleetController extends AbstractController
                                 } else {
                                     $newWarPointS = round((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6) + ($fleet->getTank() * 5) + ($fleet->getUranium() * 10)) / 50000);
                                 }
-                                if ($commander->getPoliticMerchant() > 0) {
-                                    $gainSell = (($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10) + ($fleet->getTank() * 2500) + ($fleet->getUranium() * 5000)) * (1 + ($commander->getPoliticMerchant() / 20));
+                                if ($commander->getPoliticTrader() > 0) {
+                                    $gainSell = (($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10) + ($fleet->getTank() * 2500) + ($fleet->getUranium() * 5000)) * (1 + ($commander->getPoliticTrader() / 20));
                                 } else {
                                     $gainSell = ($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10) + ($fleet->getTank() * 2500) + ($fleet->getUranium() * 5000);
                                 }
@@ -323,7 +323,7 @@ class MoveFleetController extends AbstractController
                                 $base = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
                                 $price = $base / 3;
                             }
-                            $carburant = round($price * ($fleet->getNbrSignatures() / 200));
+                            $carburant = round($price * ($fleet->getNbSignature() / 200));
                             if ($carburant <= $commander->getBitcoin()) {
                                 if ($fleet->getMotherShip()) {
                                     $speed = $fleet->getSpeed() - ($fleet->getSpeed() * 0.10);
@@ -336,14 +336,14 @@ class MoveFleetController extends AbstractController
                                 $nowFlight = new DateTime();
                                 $nowFlight->add(new DateInterval('PT' . round($distance) . 'S'));
                                 $fleet->setFlightTime($nowFlight);
-                                $fleet->setFlightType(1);
+                                $fleet->setFlightAt(1);
                                 $fleet->getDestination()->setPlanet($oldPlanet);
                                 $fleet->setCancelFlight($moreNow);
                                 $commander->setBitcoin($commander->getBitcoin() - $carburant);
                             }
-                        } elseif ($fleet->getFlightType() == '3') {
+                        } elseif ($fleet->getFlightAt() == '3') {
                             if ($fleet->getColonizer() && $newPlaCommander == null &&
-                                !$newPlanet->getEmpty() && !$newPlanet->getMerchant() &&
+                                !$newPlanet->getEmpty() && !$newPlanet->getTrader() &&
                                 !$newPlanet->getCdr() && $commander->getColPlanets() < 26 &&
                                 $commander->getColPlanets() <= ($commander->getTerraformation() + 1 + $commander->getPoliticColonisation())) {
 
@@ -365,7 +365,7 @@ class MoveFleetController extends AbstractController
                                     $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());
                                     $commander->removeQuest($quest);
                                 }
-                                if ($fleet->getNbrShips() == 0) {
+                                if ($fleet->getNbrShip() == 0) {
                                     $em->remove($fleet);
                                 }
                                 $reportColo = new Report();
@@ -374,10 +374,10 @@ class MoveFleetController extends AbstractController
                                 $reportColo->setTitle("Colonisation de planète");
                                 $reportColo->setImageName("colonize_report.webp");
                                 $reportColo->setContent("Vous venez de coloniser une planète inhabitée en : " . "<span><a href='/connect/carte-spatiale/" . $newPlanet->getSector()->getPosition() . "/" . $newPlanet->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $newPlanet->getSector()->getGalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . "</a></span>" . ". Cette planète fait désormais partie de votre Empire, pensez à la renommer sur la page Planètes.");
-                                $commander->setViewReport(false);
+                                $commander->setNewReport(false);
                                 $em->persist($reportColo);
                             }
-                        } elseif ($fleet->getFlightType() == '4') {
+                        } elseif ($fleet->getFlightAt() == '4') {
                             if ($commander->getPoliticBarge() > 0) {
                                 $barge = $fleet->getBarge() * 2500 * (1 + ($commander->getPoliticBarge() / 4));
                             } else {
@@ -436,18 +436,18 @@ class MoveFleetController extends AbstractController
                             $reportLoot->setType('invade');
                             $reportLoot->setSendAt($now);
                             $reportLoot->setCommander($commander);
-                            $commander->setViewReport(false);
+                            $commander->setNewReport(false);
                             $reportDef = new Report();
                             $reportDef->setType('invade');
                             $reportDef->setSendAt($now);
                             $reportDef->setCommander($commanderDefender);
-                            $commanderDefender->setViewReport(false);
-                            $dSigle = null;
-                            if ($commanderDefender->getAlly()) {
-                                $dSigle = $commanderDefender->getAlly()->getSigle();
+                            $commanderDefender->setNewReport(false);
+                            $dTag = null;
+                            if ($commanderDefender->getAlliance()) {
+                                $dTag = $commanderDefender->getAlliance()->getTag();
                             }
 
-                            if ($fleet->getPlanet()->getUser() && $fleet->getAllianceCommander() && $commander->getSigleAllied($dSigle) == null && $commanderDefender->getZombie() == 0) {
+                            if ($fleet->getPlanet()->getUser() && $fleet->getAllianceCommander() && $commander->getTagAllied($dTag) == null && $commanderDefender->getZombie() == 0) {
                                 if($dMilitary >= $aMilitary) {
                                     $warPointDef = round($aMilitary);
                                     if ($commanderDefender->getPoliticPdg() > 0) {
@@ -542,7 +542,7 @@ class MoveFleetController extends AbstractController
                                 $em->persist($reportLoot);
                                 $em->persist($reportDef);
                             }
-                        } elseif ($fleet->getFlightType() == '5' && $fleet->getPlanet()->getUser()) {
+                        } elseif ($fleet->getFlightAt() == '5' && $fleet->getPlanet()->getUser()) {
                             $alea = rand(4, 8);
                             if ($commander->getPoliticBarge() > 0) {
                                 $barge = $fleet->getBarge() * 2500 * (1 + ($commander->getPoliticBarge() / 4));
@@ -614,7 +614,7 @@ class MoveFleetController extends AbstractController
                             }
                             $reportInv->setSendAt($now);
                             $reportInv->setCommander($commander);
-                            $commander->setViewReport(false);
+                            $commander->setNewReport(false);
 
                             if ($commanderDefender->getZombie() == 0) {
                                 $reportDef = new Report();
@@ -622,13 +622,13 @@ class MoveFleetController extends AbstractController
                                 $reportDef->setSendAt($now);
                                 $reportDef->setCommander($commanderDefender);
                             }
-                            $commanderDefender->setViewReport(false);
-                            $dSigle = null;
-                            if($commanderDefender->getAlly()) {
-                                $dSigle = $commanderDefender->getAlly()->getSigle();
+                            $commanderDefender->setNewReport(false);
+                            $dTag = null;
+                            if($commanderDefender->getAlliance()) {
+                                $dTag = $commanderDefender->getAlliance()->getTag();
                             }
 
-                            if($fleet->getPlanet()->getUser() && $fleet->getAllianceCommander() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $commander->getSigleAllied($dSigle) == null) {
+                            if($fleet->getPlanet()->getUser() && $fleet->getAllianceCommander() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $commander->getTagAllied($dTag) == null) {
                                 if($dMilitary >= $aMilitary) {
                                     if ($commanderDefender->getZombie() == 0) {
                                         $warPointDef = round($aMilitary);
@@ -676,7 +676,7 @@ class MoveFleetController extends AbstractController
                                             "sinon votre Empire ne tiendra pas longtemps. Vous avez tué <span class='text-vert'>" . number_format(round($soldierDtmp + ($workerDtmp / 6) + ($tankDtmp * 3000))) .
                                             "</span> zombies. Tous vos soldats sont morts et vos barges se sont égarées sur la planète.<br>N'abandonnez pas et sortez vos tripes !");
 
-                                        $commander->setZombieAtt($commander->getZombieAtt() + 10);
+                                        $commander->setZombieLvl($commander->getZombieLvl() + 10);
                                     } else {
                                         $reportDef->setTitle("Rapport d'invasion : Victoire (défense)");
                                         $reportDef->setImageName("defend_win_report.webp");
@@ -795,8 +795,8 @@ class MoveFleetController extends AbstractController
                                                 'planet31.webp', 'planet32.webp', 'planet33.webp'
                                             ];
 
-                                            if ($commander->getZombieAtt() > 9) {
-                                                $commander->setZombieAtt(round($commander->getZombieAtt() / 10));
+                                            if ($commander->getZombieLvl() > 9) {
+                                                $commander->setZombieLvl(round($commander->getZombieLvl() / 10));
                                             }
                                             if($fleet->getCargoPlace() > $fleet->getCargoFull()) {
                                                 $place = $fleet->getCargoPlace() - $fleet->getCargoFull();
@@ -853,7 +853,7 @@ class MoveFleetController extends AbstractController
                                         $commander->removeQuest($quest);
                                     }
                                 }
-                                if($fleet->getNbrShips() == 0) {
+                                if($fleet->getNbrShip() == 0) {
                                     $em->remove($fleet);
                                 }
                                 $em->persist($reportInv);
@@ -861,7 +861,7 @@ class MoveFleetController extends AbstractController
                                     $em->persist($reportDef);
                                 }
                             }
-                        } elseif ($fleet->getFlightType() == '7') {
+                        } elseif ($fleet->getFlightAt() == '7') {
                             $planetGround = $fleet->getPlanet();
                             $planetGround->setSonde($planetGround->getSonde() + $fleet->getSonde());
                             $planetGround->setCargoI($planetGround->getCargoI() + $fleet->getCargoI());
@@ -872,7 +872,7 @@ class MoveFleetController extends AbstractController
                             $planetGround->setBarge($planetGround->getBarge() + $fleet->getBarge());
                             $planetGround->setMoonMaker($planetGround->getMoonMaker() + $fleet->getMoonMaker());
                             $planetGround->setRadarShip($planetGround->getRadarShip() + $fleet->getRadarShip());
-                            $planetGround->setBrouilleurShip($planetGround->getBrouilleurShip() + $fleet->getBrouilleurShip());
+                            $planetGround->setJammerShip($planetGround->getJammerShip() + $fleet->getJammerShip());
                             $planetGround->setMotherShip($planetGround->getMotherShip() + $fleet->getMotherShip());
                             $planetGround->setHunter($planetGround->getHunter() + $fleet->getHunter());
                             $planetGround->setHunterHeavy($planetGround->getHunterHeavy() + $fleet->getHunterHeavy());
@@ -896,7 +896,7 @@ class MoveFleetController extends AbstractController
                             $planetGround->setNuclearBomb($planetGround->getNuclearBomb() + $fleet->getNuclearBomb());
                             $fleet->setCommander(null);
                             $em->remove($fleet);
-                            $planetGround->setSignature($planetGround->getNbrSignatures());
+                            $planetGround->setSignature($planetGround->getNbSignature());
                         }
                     } else {
                         if ($commander->getZombie() == 0) {
@@ -925,7 +925,7 @@ class MoveFleetController extends AbstractController
         $nowReport = new DateTime();
         $commander = $fleet->getCommander();
 
-        if (!$commander || $commander->getMerchant() == 1) {
+        if (!$commander || $commander->getTrader() == 1) {
             $em->remove($fleet->getDestination());
             $em->remove($fleet);
         } else {
@@ -942,12 +942,12 @@ class MoveFleetController extends AbstractController
                 $report->setSendAt($now);
                 $report->setCommander($commander);
                 $report->setContent("Bonjour dirigeant " . $commander->getUsername() . " votre flotte " . "<span><a href='/connect/gerer-flotte/" . $fleet->getId() . "/" . $usePlanet->getId() . "'>" . $fleet->getName() . "</a></span>" . " vient d'arriver en " . "<span><a href='/connect/carte-spatiale/" . $newHome->getSector()->getPosition() . "/" . $newHome->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $newHome->getSector()->getGalaxy()->getPosition() . ":" . $newHome->getSector()->getPosition() . ":" . $newHome->getPosition() . "</a></span>.");
-                $commander->setViewReport(false);
+                $commander->setNewReport(false);
                 $oldPlanet = $fleet->getPlanet();
                 $fleet->setFlightTime(null);
                 $fleet->setPlanet($newHome);
                 $previousDestination = $fleet->getDestination();
-                if ($fleet->getFlightType() != '2') {
+                if ($fleet->getFlightAt() != '2') {
                     $em->remove($previousDestination);
                     if ($newHome->getNbCdr() || $newHome->getWtCdr()) {
                         $fleet->setRecycleAt($nowReport);
@@ -956,29 +956,29 @@ class MoveFleetController extends AbstractController
                     }
                 }
 
-                $eAlly = $commander->getAllyEnnemy();
-                $warAlly = [];
+                $eAlliance = $commander->getAllianceEnnemy();
+                $warAlliance = [];
                 $x = 0;
-                foreach ($eAlly as $tmp) {
-                    $warAlly[$x] = $tmp->getAllyTag();
+                foreach ($eAlliance as $tmp) {
+                    $warAlliance[$x] = $tmp->getAllianceTag();
                     $x++;
                 }
 
-                $fAlly = $commander->getAllyFriends();
-                $friendAlly = [];
+                $fAlliance = $commander->getAllianceFriends();
+                $friendAlliance = [];
                 $x = 0;
-                foreach ($fAlly as $tmp) {
+                foreach ($fAlliance as $tmp) {
                     if ($tmp->getAccepted() == 1) {
-                        $friendAlly[$x] = $tmp->getAllyTag();
+                        $friendAlliance[$x] = $tmp->getAllianceTag();
                         $x++;
                     }
                 }
-                if (!$friendAlly) {
-                    $friendAlly = ['impossible', 'personne'];
+                if (!$friendAlliance) {
+                    $friendAlliance = ['impossible', 'personne'];
                 }
 
-                if ($commander->getAlly()) {
-                    $allyF = $commander->getAlly();
+                if ($commander->getAlliance()) {
+                    $allyF = $commander->getAlliance();
                 } else {
                     $allyF = 'wedontexistsok';
                 }
@@ -988,12 +988,12 @@ class MoveFleetController extends AbstractController
                     ->join('f.commander', 'c')
                     ->leftJoin('c.ally', 'a')
                     ->where('f.planet = :planet')
-                    ->andWhere('f.attack = true OR a.sigle in (:ally)')
+                    ->andWhere('f.attack = true OR a.tag in (:ally)')
                     ->andWhere('f.commander != :commander')
-                    ->andWhere('f.flightTime is null')
-                    ->andWhere('c.ally is null OR a.sigle not in (:friend)')
-                    ->andWhere('c.ally is null OR c.ally != :myAlly')
-                    ->setParameters(['planet' => $newHome, 'ally' => $warAlly, 'commander' => $commander, 'friend' => $friendAlly, 'myAlly' => $allyF])
+                    ->andWhere('f.flightAt is null')
+                    ->andWhere('c.ally is null OR a.tag not in (:friend)')
+                    ->andWhere('c.ally is null OR c.ally != :myAlliance')
+                    ->setParameters(['planet' => $newHome, 'ally' => $warAlliance, 'commander' => $commander, 'friend' => $friendAlliance, 'myAlliance' => $allyF])
                     ->getQuery()
                     ->getResult();
 
@@ -1003,9 +1003,9 @@ class MoveFleetController extends AbstractController
                     ->leftJoin('c.ally', 'a')
                     ->where('f.planet = :planet')
                     ->andWhere('f.commander != :commander')
-                    ->andWhere('f.flightTime is null')
-                    ->andWhere('c.ally is null OR a.sigle not in (:friend)')
-                    ->setParameters(['planet' => $newHome, 'commander' => $commander, 'friend' => $friendAlly])
+                    ->andWhere('f.flightAt is null')
+                    ->andWhere('c.ally is null OR a.tag not in (:friend)')
+                    ->setParameters(['planet' => $newHome, 'commander' => $commander, 'friend' => $friendAlliance])
                     ->getQuery()
                     ->getResult();
 
@@ -1014,7 +1014,7 @@ class MoveFleetController extends AbstractController
                     ->where('f.planet = :planet')
                     ->andWhere('f.commander != :commander')
                     ->andWhere('f.fightAt is not null')
-                    ->andWhere('f.flightTime is null')
+                    ->andWhere('f.flightAt is null')
                     ->setParameters(['planet' => $newHome, 'commander' => $commander])
                     ->getQuery()
                     ->setMaxResults(1)
@@ -1024,13 +1024,13 @@ class MoveFleetController extends AbstractController
                     $fleet->setFightAt($fleetFight->getFightAt());
                 } elseif ($warFleets) {
                     foreach ($warFleets as $setWar) {
-                        if ($setWar->getCommander()->getAlly()) {
+                        if ($setWar->getCommander()->getAlliance()) {
                             $fleetArm = $fleet->getMissile() + $fleet->getLaser() + $fleet->getPlasma();
                             if ($fleetArm > 0) {
                                 $fleet->setAttack(1);
                             }
-                            foreach ($eAlly as $tmp) {
-                                if ($setWar->getCommander()->getAlly()->getSigle() == $tmp->getAllyTag()) {
+                            foreach ($eAlliance as $tmp) {
+                                if ($setWar->getCommander()->getAlliance()->getTag() == $tmp->getAllianceTag()) {
                                     $fleetArm = $setWar->getMissile() + $setWar->getLaser() + $setWar->getPlasma();
                                     if ($fleetArm > 0) {
                                         $setWar->setAttack(1);
@@ -1042,7 +1042,7 @@ class MoveFleetController extends AbstractController
                     $allFleets = $doctrine->getRepository(Fleet::class)
                         ->createQueryBuilder('f')
                         ->where('f.planet = :planet')
-                        ->andWhere('f.flightTime is null')
+                        ->andWhere('f.flightAt is null')
                         ->setParameters(['planet' => $newHome])
                         ->getQuery()
                         ->getResult();
@@ -1061,7 +1061,7 @@ class MoveFleetController extends AbstractController
                         ->createQueryBuilder('f')
                         ->join('f.commander', 'c')
                         ->where('f.planet = :planet')
-                        ->andWhere('f.flightTime is null')
+                        ->andWhere('f.flightAt is null')
                         ->setParameters(['planet' => $newHome])
                         ->getQuery()
                         ->getResult();
@@ -1084,7 +1084,7 @@ class MoveFleetController extends AbstractController
                         $zbRegroups = $doctrine->getRepository(Fleet::class)
                             ->createQueryBuilder('f')
                             ->where('f.planet = :planet')
-                            ->andWhere('f.flightTime is null')
+                            ->andWhere('f.flightAt is null')
                             ->andWhere('f.commander = :commander')
                             ->andWhere('f.id != :fleet')
                             ->setParameters(['planet' => $newHome, 'commander' => $commander, 'fleet' => $fleet->getId()])
@@ -1100,13 +1100,13 @@ class MoveFleetController extends AbstractController
                             $fleet->setFregate($fleet->getFregate() + $zbRegroup->getFregate());
                             $em->remove($zbRegroup);
                         }
-                        $fleet->setSignature($fleet->getNbrSignatures());
+                        $fleet->setSignature($fleet->getNbSignature());
                     }
-                    if ($fleet->getFlightType() == '1' && $commander->getZombie() == 0) {
+                    if ($fleet->getFlightAt() == '1' && $commander->getZombie() == 0) {
                         $em->persist($report);
                     }
-                    if ($fleet->getFlightType() == '2') {
-                        if ($newPlanet->getMerchant()) {
+                    if ($fleet->getFlightAt() == '2') {
+                        if ($newPlanet->getTrader()) {
                             $reportSell = new Report();
                             $reportSell->setType('economic');
                             $reportSell->setSendAt($nowReport);
@@ -1118,8 +1118,8 @@ class MoveFleetController extends AbstractController
                             } else {
                                 $newWarPointS = round((($fleet->getScientist() * 100) + ($fleet->getWorker() * 50) + ($fleet->getSoldier() * 10) + ($fleet->getWater() / 3) + ($fleet->getNiobium() / 6) + ($fleet->getTank() * 5) + ($fleet->getUranium() * 10)) / 50000);
                             }
-                            if ($commander->getPoliticMerchant() > 0) {
-                                $gainSell = (($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10) + ($fleet->getTank() * 2500) + ($fleet->getUranium() * 5000)) * (1 + ($commander->getPoliticMerchant() / 20));
+                            if ($commander->getPoliticTrader() > 0) {
+                                $gainSell = (($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10) + ($fleet->getTank() * 2500) + ($fleet->getUranium() * 5000)) * (1 + ($commander->getPoliticTrader() / 20));
                             } else {
                                 $gainSell = ($fleet->getWater() * 0.25) + ($fleet->getSoldier() * 80) + ($fleet->getWorker() * 5) + ($fleet->getScientist() * 300) + ($fleet->getNiobium() * 0.10) + ($fleet->getTank() * 2500) + ($fleet->getUranium() * 5000);
                             }
@@ -1219,7 +1219,7 @@ class MoveFleetController extends AbstractController
                             $base = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
                             $price = $base / 3;
                         }
-                        $carburant = round($price * ($fleet->getNbrSignatures() / 200));
+                        $carburant = round($price * ($fleet->getNbSignature() / 200));
                         if ($carburant <= $commander->getBitcoin()) {
                             if ($fleet->getMotherShip()) {
                                 $speed = $fleet->getSpeed() - ($fleet->getSpeed() * 0.10);
@@ -1232,14 +1232,14 @@ class MoveFleetController extends AbstractController
                             $nowFlight = new DateTime();
                             $nowFlight->add(new DateInterval('PT' . round($distance) . 'S'));
                             $fleet->setFlightTime($nowFlight);
-                            $fleet->setFlightType(1);
+                            $fleet->setFlightAt(1);
                             $fleet->getDestination()->setPlanet($oldPlanet);
                             $fleet->setCancelFlight($moreNow);
                             $commander->setBitcoin($commander->getBitcoin() - $carburant);
                         }
-                    } elseif ($fleet->getFlightType() == '3') {
+                    } elseif ($fleet->getFlightAt() == '3') {
                         if ($fleet->getColonizer() && $newPlaCommander == null &&
-                            !$newPlanet->getEmpty() && !$newPlanet->getMerchant() &&
+                            !$newPlanet->getEmpty() && !$newPlanet->getTrader() &&
                             !$newPlanet->getCdr() && $commander->getColPlanets() < 26 &&
                             $commander->getColPlanets() <= ($commander->getTerraformation() + 1 + $commander->getPoliticColonisation())) {
 
@@ -1261,7 +1261,7 @@ class MoveFleetController extends AbstractController
                                 $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());
                                 $commander->removeQuest($quest);
                             }
-                            if ($fleet->getNbrShips() == 0) {
+                            if ($fleet->getNbrShip() == 0) {
                                 $em->remove($fleet);
                             }
                             $reportColo = new Report();
@@ -1270,10 +1270,10 @@ class MoveFleetController extends AbstractController
                             $reportColo->setTitle("Colonisation de planète");
                             $reportColo->setImageName("colonize_report.webp");
                             $reportColo->setContent("Vous venez de coloniser une planète inhabitée en : " . "<span><a href='/connect/carte-spatiale/" . $newPlanet->getSector()->getPosition() . "/" . $newPlanet->getSector()->getGalaxy()->getPosition() . "/" . $usePlanet->getId() . "'>" . $newPlanet->getSector()->getGalaxy()->getPosition() . ":" . $newPlanet->getSector()->getPosition() . ":" . $newPlanet->getPosition() . "</a></span>" . ". Cette planète fait désormais partie de votre Empire, pensez à la renommer sur la page Planètes.");
-                            $commander->setViewReport(false);
+                            $commander->setNewReport(false);
                             $em->persist($reportColo);
                         }
-                    } elseif ($fleet->getFlightType() == '4') {
+                    } elseif ($fleet->getFlightAt() == '4') {
                         if ($commander->getPoliticBarge() > 0) {
                             $barge = $fleet->getBarge() * 2500 * (1 + ($commander->getPoliticBarge() / 4));
                         } else {
@@ -1332,18 +1332,18 @@ class MoveFleetController extends AbstractController
                         $reportLoot->setType('invade');
                         $reportLoot->setSendAt($now);
                         $reportLoot->setCommander($commander);
-                        $commander->setViewReport(false);
+                        $commander->setNewReport(false);
                         $reportDef = new Report();
                         $reportDef->setType('invade');
                         $reportDef->setSendAt($now);
                         $reportDef->setCommander($commanderDefender);
-                        $commanderDefender->setViewReport(false);
-                        $dSigle = null;
-                        if ($commanderDefender->getAlly()) {
-                            $dSigle = $commanderDefender->getAlly()->getSigle();
+                        $commanderDefender->setNewReport(false);
+                        $dTag = null;
+                        if ($commanderDefender->getAlliance()) {
+                            $dTag = $commanderDefender->getAlliance()->getTag();
                         }
 
-                        if ($fleet->getPlanet()->getUser() && $fleet->getAllianceCommander() && $commander->getSigleAllied($dSigle) == null && $commanderDefender->getZombie() == 0) {
+                        if ($fleet->getPlanet()->getUser() && $fleet->getAllianceCommander() && $commander->getTagAllied($dTag) == null && $commanderDefender->getZombie() == 0) {
                             if($dMilitary >= $aMilitary) {
                                 $warPointDef = round($aMilitary);
                                 if ($commanderDefender->getPoliticPdg() > 0) {
@@ -1438,7 +1438,7 @@ class MoveFleetController extends AbstractController
                             $em->persist($reportLoot);
                             $em->persist($reportDef);
                         }
-                    } elseif ($fleet->getFlightType() == '5' && $fleet->getPlanet()->getUser()) {
+                    } elseif ($fleet->getFlightAt() == '5' && $fleet->getPlanet()->getUser()) {
                         $alea = rand(4, 8);
                         if ($commander->getPoliticBarge() > 0) {
                             $barge = $fleet->getBarge() * 2500 * (1 + ($commander->getPoliticBarge() / 4));
@@ -1510,7 +1510,7 @@ class MoveFleetController extends AbstractController
                         }
                         $reportInv->setSendAt($now);
                         $reportInv->setCommander($commander);
-                        $commander->setViewReport(false);
+                        $commander->setNewReport(false);
 
                         if ($commanderDefender->getZombie() == 0) {
                             $reportDef = new Report();
@@ -1518,13 +1518,13 @@ class MoveFleetController extends AbstractController
                             $reportDef->setSendAt($now);
                             $reportDef->setCommander($commanderDefender);
                         }
-                        $commanderDefender->setViewReport(false);
-                        $dSigle = null;
-                        if($commanderDefender->getAlly()) {
-                            $dSigle = $commanderDefender->getAlly()->getSigle();
+                        $commanderDefender->setNewReport(false);
+                        $dTag = null;
+                        if($commanderDefender->getAlliance()) {
+                            $dTag = $commanderDefender->getAlliance()->getTag();
                         }
 
-                        if($fleet->getPlanet()->getUser() && $fleet->getAllianceCommander() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $commander->getSigleAllied($dSigle) == null) {
+                        if($fleet->getPlanet()->getUser() && $fleet->getAllianceCommander() && $fleet->getFightAt() == null && $fleet->getFlightTime() == null && $commander->getTagAllied($dTag) == null) {
                             if($dMilitary >= $aMilitary) {
                                 if ($commanderDefender->getZombie() == 0) {
                                     $warPointDef = round($aMilitary);
@@ -1572,7 +1572,7 @@ class MoveFleetController extends AbstractController
                                         "sinon votre Empire ne tiendra pas longtemps. Vous avez tué <span class='text-vert'>" . number_format(round($soldierDtmp + ($workerDtmp / 6) + ($tankDtmp * 3000))) .
                                         "</span> zombies. Tous vos soldats sont morts et vos barges se sont égarées sur la planète.<br>N'abandonnez pas et sortez vos tripes !");
 
-                                    $commander->setZombieAtt($commander->getZombieAtt() + 10);
+                                    $commander->setZombieLvl($commander->getZombieLvl() + 10);
                                 } else {
                                     $reportDef->setTitle("Rapport d'invasion : Victoire (défense)");
                                     $reportDef->setImageName("defend_win_report.webp");
@@ -1691,8 +1691,8 @@ class MoveFleetController extends AbstractController
                                             'planet31.webp', 'planet32.webp', 'planet33.webp'
                                         ];
 
-                                        if ($commander->getZombieAtt() > 9) {
-                                            $commander->setZombieAtt(round($commander->getZombieAtt() / 10));
+                                        if ($commander->getZombieLvl() > 9) {
+                                            $commander->setZombieLvl(round($commander->getZombieLvl() / 10));
                                         }
                                         if($fleet->getCargoPlace() > $fleet->getCargoFull()) {
                                             $place = $fleet->getCargoPlace() - $fleet->getCargoFull();
@@ -1749,7 +1749,7 @@ class MoveFleetController extends AbstractController
                                     $commander->removeQuest($quest);
                                 }
                             }
-                            if($fleet->getNbrShips() == 0) {
+                            if($fleet->getNbrShip() == 0) {
                                 $em->remove($fleet);
                             }
                             $em->persist($reportInv);
@@ -1757,7 +1757,7 @@ class MoveFleetController extends AbstractController
                                 $em->persist($reportDef);
                             }
                         }
-                    } elseif ($fleet->getFlightType() == '7') {
+                    } elseif ($fleet->getFlightAt() == '7') {
                         $planetGround = $fleet->getPlanet();
                         $planetGround->setSonde($planetGround->getSonde() + $fleet->getSonde());
                         $planetGround->setCargoI($planetGround->getCargoI() + $fleet->getCargoI());
@@ -1768,7 +1768,7 @@ class MoveFleetController extends AbstractController
                         $planetGround->setBarge($planetGround->getBarge() + $fleet->getBarge());
                         $planetGround->setMoonMaker($planetGround->getMoonMaker() + $fleet->getMoonMaker());
                         $planetGround->setRadarShip($planetGround->getRadarShip() + $fleet->getRadarShip());
-                        $planetGround->setBrouilleurShip($planetGround->getBrouilleurShip() + $fleet->getBrouilleurShip());
+                        $planetGround->setJammerShip($planetGround->getJammerShip() + $fleet->getJammerShip());
                         $planetGround->setMotherShip($planetGround->getMotherShip() + $fleet->getMotherShip());
                         $planetGround->setHunter($planetGround->getHunter() + $fleet->getHunter());
                         $planetGround->setHunterHeavy($planetGround->getHunterHeavy() + $fleet->getHunterHeavy());
@@ -1792,7 +1792,7 @@ class MoveFleetController extends AbstractController
                         $planetGround->setNuclearBomb($planetGround->getNuclearBomb() + $fleet->getNuclearBomb());
                         $fleet->setCommander(null);
                         $em->remove($fleet);
-                        $planetGround->setSignature($planetGround->getNbrSignatures());
+                        $planetGround->setSignature($planetGround->getNbSignature());
                     }
                 } else {
                     if ($commander->getZombie() == 0) {

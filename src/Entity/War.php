@@ -20,7 +20,7 @@ class War
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ally", inversedBy="wars", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Alliance", inversedBy="wars", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
@@ -44,11 +44,11 @@ class War
 
     /**
      * War constructor.
-     * @param Ally $ally
+     * @param Alliance $ally
      * @param string $tag
      * @param bool $accepted
      */
-    public function __construct(Ally $ally, string $tag, bool $accepted)
+    public function __construct(Alliance $ally, string $tag, bool $accepted)
     {
         $this->ally = $ally;
         $this->allyTag = $tag;
@@ -59,7 +59,7 @@ class War
     /**
      * @return mixed
      */
-    public function getAlly()
+    public function getAlliance()
     {
         return $this->ally;
     }
@@ -67,7 +67,7 @@ class War
     /**
      * @param mixed $ally
      */
-    public function setAlly($ally): void
+    public function setAlliance($ally): void
     {
         $this->ally = $ally;
     }
@@ -75,7 +75,7 @@ class War
     /**
      * @return mixed
      */
-    public function getAllyTag()
+    public function getAllianceTag()
     {
         return $this->allyTag;
     }
@@ -83,7 +83,7 @@ class War
     /**
      * @param mixed $allyTag
      */
-    public function setAllyTag($allyTag): void
+    public function setAllianceTag($allyTag): void
     {
         $this->allyTag = $allyTag;
     }

@@ -22,7 +22,7 @@ planet.population: Populations
 planet.ship: Vaisseaux
 planet.abandon: Abandonner
 planet.abandon.question: 'Souhaitez vous abandonner la planète ?'
-tooltip.ships: 'Les vaisseaux qui sont posés sur votre planète.'
+tooltip.ship: 'Les vaisseaux qui sont posés sur votre planète.'
 tooltip.planet: 'Infrastructures de la planète'
 tank: Tanks
 planetList.add: Ajouter

@@ -8,7 +8,7 @@ use JetBrains\PhpStorm\NoReturn;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Entity\Ships;
+use App\Entity\Ship;
 use App\Entity\Rank;
 use App\Entity\Destination;
 use App\Entity\Fleet;
@@ -44,8 +44,8 @@ class BotController extends AbstractController
             $user->setPassword(password_hash($nick . 'bot', PASSWORD_BCRYPT));
             $user->setTutorial(60);
             $user->setBot(true);
-            $user->setDailyConnect($now);
-            $user->setLastActivity($now);
+            $user->setActivityAt($now);
+            $user->setActivityAt($now);
             $user->setNewletter(false);
             // image de profil
             $em->persist($commander);
@@ -89,10 +89,10 @@ class BotController extends AbstractController
                     }
                 }
             }
-            $ships = new Ships();
-            $user->setShip($ships);
-            $ships->setCommander($commander);
-            $em->persist($ships);
+            $ship = new Ship();
+            $user->setShip($ship);
+            $ship->setCommander($commander);
+            $em->persist($ship);
             $rank = new Rank($user);
             $em->persist($rank);
             $user->setRank($rank);
@@ -120,7 +120,7 @@ class BotController extends AbstractController
                 ->where('u.bot = true')
                 ->andWhere('u.rank is null')
                 ->andWhere('u.zombie = false')
-                ->andWhere('u.merchant = false')
+                ->andWhere('u.trader = false')
                 ->setMaxResults(1)
                 ->getQuery()
                 ->getOneOrNullResult();
@@ -135,7 +135,7 @@ class BotController extends AbstractController
                     ->where('p.user is null')
                     ->andWhere('p.ground = 25')
                     ->andWhere('p.sky = 5')
-                    ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
+                    ->andWhere('p.empty = false and p.trader = false and p.cdr = false and g.position = :gal and s.position = :sector')
                     ->setParameters(['galaxy' => rand(1, 25), 'sector' => rand(1, 100)])
                     ->setMaxResults(1)
                     ->getQuery()
@@ -149,7 +149,7 @@ class BotController extends AbstractController
                         ->where('p.user is null')
                         ->andWhere('p.ground = 25')
                         ->andWhere('p.sky = 5')
-                        ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
+                        ->andWhere('p.empty = false and p.trader = false and p.cdr = false and g.position = :gal and s.position = :sector')
                         ->setParameters(['galaxy' => rand(1, 25), 'sector' => rand(1, 100)])
                         ->setMaxResults(1)
                         ->getQuery()
@@ -184,13 +184,13 @@ class BotController extends AbstractController
                         }
                     }
                     $user->setTutorial(60);
-                    $commander->setDailyConnect($now);
-                    //$commander->setLastActivity($now);
+                    $commander->setActivityAt($now);
+                    //$commander->setActivityAt($now);
 
-                    $ships = new Ships();
-                    $commander->setShip($ships);
-                    $ships->setCommander($commander);
-                    $em->persist($ships);
+                    $ship = new Ship();
+                    $commander->setShip($ship);
+                    $ship->setCommander($commander);
+                    $em->persist($ship);
 
                     $rank = new Rank($commander);
                     $em->persist($rank);
@@ -204,14 +204,14 @@ class BotController extends AbstractController
             ->createQueryBuilder('u')
             ->join('u.planets', 'p')
             ->join('u.rank', 'r')
-            ->where('u.bot = true and u.merchant = false and u.zombie = false')
+            ->where('u.bot = true and u.trader = false and u.zombie = false')
             ->getQuery()
             ->getResult();
 
-        $merchant = $doctrine->getRepository(User::class)->findOneBy(['merchant' => 1]);
-        $planetMerchant = $doctrine->getRepository(Planet::class)
+        $trader = $doctrine->getRepository(User::class)->findOneBy(['trader' => 1]);
+        $planetTrader = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
-            ->andWhere('p.merchant = true')
+            ->andWhere('p.trader = true')
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
@@ -234,8 +234,8 @@ class BotController extends AbstractController
                     ->setMaxResults(1)
                     ->getOneOrNullResult();
 
-                if (!$bot->getAlly()) {
-                    $proposal = $doctrine->getRepository(Proposal::class)
+                if (!$bot->getAlliance()) {
+                    $offer = $doctrine->getRepository(Offer::class)
                         ->createQueryBuilder('p')
                         ->where('p.user = :user')
                         ->setParameters(['user' => $bot])
@@ -243,13 +243,13 @@ class BotController extends AbstractController
                         ->setMaxResults(1)
                         ->getOneOrNullResult();
 
-                    if ($proposal) {
-                        $ally = $proposal->getAlly();
+                    if ($offer) {
+                        $ally = $offer->getAlliance();
                         $ally->addUser($bot);
-                        $bot->setAlly($ally);
-                        $bot->setJoinAllyAt($now);
+                        $bot->setAlliance($ally);
+                        $bot->setJoinAllianceAt($now);
                         $bot->setGrade($ally->getNewMember());
-                        $em->remove($proposal);
+                        $em->remove($offer);
                     }
                 }
 
@@ -303,7 +303,7 @@ class BotController extends AbstractController
                         $sonde->setCommander($bot);
                         $sonde->setPlanet($fPlanet);
                         $sonde->setName('Auto Sonde');
-                        $sonde->setSignature($sonde->getNbrSignatures());
+                        $sonde->setSignature($sonde->getNbSignature());
                         $speed = $sonde->getSpeed();
                         $server = $doctrine->getRepository(Server::class)->find(['id' => 1]);
                         $distance = $speed * $base * 1000 * $server->getSpeed();
@@ -313,11 +313,11 @@ class BotController extends AbstractController
                         $sonde->setFlightTime($move);
                         $destination = new Destination($sonde, $planet);
                         $em->persist($destination);
-                        $sonde->setFlightType(1);
+                        $sonde->setFlightAt(1);
                         $sonde->setCancelFlight($moreNow);
                         $em->persist($sonde);
                     }
-                    //$bot->setLastActivity($now);
+                    //$bot->setActivityAt($now);
                 }
 
                 if (rand(1, 1500) == 1501) {
@@ -334,9 +334,9 @@ class BotController extends AbstractController
                             $sellTime->add(new DateInterval('PT' . 1200 . 'S'));
                             $seller = new Fleet();
                             $seller->setHunter(1);
-                            $seller->setCommander($merchant);
+                            $seller->setCommander($trader);
                             $seller->setPlanet($planet);
-                            $destination = new Destination($seller, $planetMerchant);
+                            $destination = new Destination($seller, $planetTrader);
                             $em->persist($destination);
                             $seller->setFlightTime($sellTime);
                             $seller->setAttack(0);
@@ -347,7 +347,7 @@ class BotController extends AbstractController
                         }
                     }
                     // créer une flotte et l'envoyer recyclage
-                    //$bot->setLastActivity($now);
+                    //$bot->setActivityAt($now);
                 }
                 if (rand(1, 8000) == 8001 && $messageSent == 1) {
                     $messageSent = 0;
@@ -365,7 +365,7 @@ class BotController extends AbstractController
                     }
                     // Alliance création/rejoindre/inviter
                     // créer une flotte et l'envoyer coloniser/envahir
-                    //$bot->setLastActivity($now);
+                    //$bot->setActivityAt($now);
                 }
                 if ($cPlanet) {
                     $cPlanet->setSoldier($cPlanet->getSoldierMax());
@@ -417,7 +417,7 @@ class BotController extends AbstractController
                     } elseif ($construct && $construct->getContent() === 'false') {
                         $construct = $this->forward('App\Controller\CronController\BotController::buildBuildingBotAction', [
                             'usePlanet' => $cPlanet,
-                            'building' => 'skyBrouilleur',
+                            'building' => 'skyJammer',
                             'user' => $bot
                         ]);
                     }
@@ -463,7 +463,7 @@ class BotController extends AbstractController
                             ->join('p.sector', 's')
                             ->join('s.galaxy', 'g')
                             ->where('p.user is null')
-                            ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.id = :gal and s.position = :sector')
+                            ->andWhere('p.empty = false and p.trader = false and p.cdr = false and g.id = :gal and s.position = :sector')
                             ->setParameters(['galaxy' => $bot->getFirstPlanetFleet()->getSector()->getGalaxy(), 'sector' => rand(1, 100)])
                             ->getQuery()
                             ->setMaxResults(1)
@@ -481,7 +481,7 @@ class BotController extends AbstractController
                                 ->join('p.sector', 's')
                                 ->join('s.galaxy', 'g')
                                 ->where('p.user is null')
-                                ->andWhere('p.empty = false and p.merchant = false and p.cdr = false and g.position = :gal and s.position = :sector')
+                                ->andWhere('p.empty = false and p.trader = false and p.cdr = false and g.position = :gal and s.position = :sector')
                                 ->setParameters(['galaxy' => rand(10, 25), 'sector' => rand(1, 100)])
                                 ->getQuery()
                                 ->setMaxResults(1)
@@ -499,7 +499,7 @@ class BotController extends AbstractController
                 }
                 if (rand(1, 80) == 81) {
                     // envahir et lancer recherches
-                    //$bot->setLastActivity($now);
+                    //$bot->setActivityAt($now);
                 }
             }
         }

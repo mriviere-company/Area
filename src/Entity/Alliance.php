@@ -16,7 +16,7 @@ use Doctrine\Common\Collections\Criteria;
  * @ORM\Entity
  * @Vich\Uploadable
  */
-class Ally
+class Alliance
 {
     /**
      * @ORM\Column(type="integer")
@@ -42,9 +42,9 @@ class Ally
     protected $politic;
 
     /**
-     * @ORM\OneToMany(targetEntity="Proposal", mappedBy="ally", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Offer", mappedBy="ally", fetch="EXTRA_LAZY")
      */
-    protected $proposals;
+    protected $offers;
 
     /**
      * @ORM\Column(name="name",type="string", length=15, unique=true)
@@ -55,12 +55,12 @@ class Ally
     protected $name;
 
     /**
-     * @ORM\Column(name="sigle",type="string", length=5, unique=true)
+     * @ORM\Column(name="tag",type="string", length=5, unique=true)
      * @Assert\NotBlank(message = "required")
      * @Assert\Regex(
      *     pattern="/[a-zA-Z0-9]/")
      */
-    protected $sigle;
+    protected $tag;
 
     /**
      * @ORM\Column(name="slogan",type="string", length=30)
@@ -181,14 +181,14 @@ class Ally
     private $updatedAt;
 
     /**
-     * Ally constructor.
+     * Alliance constructor.
      */
     public function __construct()
     {
         $this->commanders = new ArrayCollection();
         $this->fleets = new ArrayCollection();
         $this->salons = new ArrayCollection();
-        $this->proposals = new ArrayCollection();
+        $this->offers = new ArrayCollection();
         $this->pnas = new ArrayCollection();
         $this->allieds = new ArrayCollection();
         $this->wars = new ArrayCollection();
@@ -205,27 +205,27 @@ class Ally
     }
 
     /**
-     * Add proposal
+     * Add offer
      *
-     * @param Proposal $proposal
+     * @param Offer $offer
      *
-     * @return Ally
+     * @return Alliance
      */
-    public function addProposal(Proposal $proposal)
+    public function addOffer(Offer $offer)
     {
-        $this->proposals[] = $proposal;
+        $this->offers[] = $offer;
 
         return $this;
     }
 
     /**
-     * Remove proposal
+     * Remove offer
      *
-     * @param Proposal $proposal
+     * @param Offer $offer
      */
-    public function removeProposal(Proposal $proposal)
+    public function removeOffer(Offer $offer)
     {
-        $this->proposals->removeElement($proposal);
+        $this->offers->removeElement($offer);
     }
 
     /**
@@ -318,7 +318,7 @@ class Ally
      *
      * @param Fleet $fleet
      *
-     * @return Ally
+     * @return Alliance
      */
     public function addFleet(Fleet $fleet)
     {
@@ -342,7 +342,7 @@ class Ally
      *
      * @param Commander $commander
      *
-     * @return Ally
+     * @return Alliance
      */
     public function addCommander(Commander $commander)
     {
@@ -366,9 +366,9 @@ class Ally
      *
      * @param Pna $pna
      *
-     * @return Ally
+     * @return Alliance
      */
-    public function addAllyPna(Pna $pna)
+    public function addAlliancePna(Pna $pna)
     {
         $this->pnas[] = $pna;
 
@@ -380,7 +380,7 @@ class Ally
      *
      * @param Pna $pna
      */
-    public function removeAllyPna(Pna $pna)
+    public function removeAlliancePna(Pna $pna)
     {
         $this->pnas->removeElement($pna);
     }
@@ -390,9 +390,9 @@ class Ally
      *
      * @param Allied $allied
      *
-     * @return Ally
+     * @return Alliance
      */
-    public function addAllyAllied(Allied $allied)
+    public function addAllianceAllied(Allied $allied)
     {
         $this->allieds[] = $allied;
 
@@ -404,7 +404,7 @@ class Ally
      *
      * @param Allied $allied
      */
-    public function removeAllyAllied(Allied $allied)
+    public function removeAllianceAllied(Allied $allied)
     {
         $this->allieds->removeElement($allied);
     }
@@ -414,9 +414,9 @@ class Ally
      *
      * @param War $war
      *
-     * @return Ally
+     * @return Alliance
      */
-    public function addAllyWar(War $war)
+    public function addAllianceWar(War $war)
     {
         $this->wars[] = $war;
 
@@ -444,7 +444,7 @@ class Ally
      *
      * @param War $war
      */
-    public function removeAllyWar(War $war)
+    public function removeAllianceWar(War $war)
     {
         $this->wars->removeElement($war);
     }
@@ -454,7 +454,7 @@ class Ally
      *
      * @param Grade $grade
      *
-     * @return Ally
+     * @return Alliance
      */
     public function addGrade(Grade $grade)
     {
@@ -478,7 +478,7 @@ class Ally
      *
      * @param Salon $salon
      *
-     * @return Ally
+     * @return Alliance
      */
     public function addSalon(Salon $salon)
     {
@@ -500,20 +500,20 @@ class Ally
     /**
      * @return mixed
      */
-    public function getAlreadyPact($sigle)
+    public function getAlreadyPact($tag)
     {
         foreach($this->getPnas() as $pna) {
-            if($pna->getAllyTag() == $sigle) {
+            if($pna->getAllianceTag() == $tag) {
                 return 'pna';
             }
         }
         foreach($this->getWars() as $war) {
-            if($war->getAllyTag() == $sigle) {
+            if($war->getAllianceTag() == $tag) {
                 return 'pna';
             }
         }
         foreach($this->getAllieds() as $allied) {
-            if($allied->getAllyTag() == $sigle) {
+            if($allied->getAllianceTag() == $tag) {
                 return 'pna';
             }
         }
@@ -529,7 +529,7 @@ class Ally
 
         foreach($this->getCommanders() as $commander) {
             if($commander->getRank()) {
-                $return = $return + $commander->getRank()->getPoint();
+                $return += $commander->getRank()->getPoint();
             }
         }
         return round($return / (count($this->getCommanders()) > 0 ? count($this->getCommanders()) : 1));
@@ -538,21 +538,21 @@ class Ally
     /**
      * @return mixed
      */
-    public function getSigleAllied($sigle)
+    public function getTagAllied($tag)
     {
         foreach($this->getPnas() as $pna) {
-            if ($pna->getAllyTag() == $sigle && $pna->getAccepted() == 1) {
-                return $sigle;
+            if ($pna->getAllianceTag() == $tag && $pna->getAccepted() == 1) {
+                return $tag;
             }
         }
         foreach($this->getAllieds() as $pact) {
-            if ($pact->getAllyTag() == $sigle && $pact->getAccepted() == 1) {
-                return $sigle;
+            if ($pact->getAllianceTag() == $tag && $pact->getAccepted() == 1) {
+                return $tag;
             }
         }
         foreach ($this->getPeaces() as $peace) {
-            if ($peace->getAllyTag() == $sigle && $peace->getAccepted()) {
-                return $sigle;
+            if ($peace->getAllianceTag() == $tag && $peace->getAccepted()) {
+                return $tag;
             }
         }
         return null;
@@ -561,23 +561,23 @@ class Ally
     /**
      * @return mixed
      */
-    public function getSigleAlliedArray($sigles)
+    public function getTagAlliedArray($tags)
     {
-        if($sigles) {
-            foreach ($sigles as $sigle) {
+        if($tags) {
+            foreach ($tags as $tag) {
                 foreach ($this->getPnas() as $pna) {
-                    if ($pna->getAllyTag() == $sigle && $pna->getAccepted()) {
-                        return $pna->getAllyTag();
+                    if ($pna->getAllianceTag() == $tag && $pna->getAccepted()) {
+                        return $pna->getAllianceTag();
                     }
                 }
                 foreach ($this->getAllieds() as $pact) {
-                    if ($pact->getAllyTag() == $sigle && $pact->getAccepted()) {
-                        return $pact->getAllyTag();
+                    if ($pact->getAllianceTag() == $tag && $pact->getAccepted()) {
+                        return $pact->getAllianceTag();
                     }
                 }
                 foreach ($this->getPeaces() as $peace) {
-                    if ($peace->getAllyTag() == $sigle && $peace->getAccepted()) {
-                        return $peace->getAllyTag();
+                    if ($peace->getAllianceTag() == $tag && $peace->getAccepted()) {
+                        return $peace->getAllianceTag();
                     }
                 }
             }
@@ -593,9 +593,9 @@ class Ally
         $return = 0;
 
         foreach($this->getCommanders() as $commander) {
-            $return = $return + $commander->getTerraformation() + 2;
-            $return = $return + $commander->getPoliticColonisation();
-            $return = $return + $commander->getPoliticInvade();
+            $return += $commander->getTerraformation() + 2;
+            $return += $commander->getPoliticColonisation();
+            $return += $commander->getPoliticInvade();
         }
         return $return;
     }
@@ -823,17 +823,17 @@ class Ally
     /**
      * @return mixed
      */
-    public function getSigle()
+    public function getTag()
     {
-        return $this->sigle;
+        return $this->tag;
     }
 
     /**
-     * @param mixed $sigle
+     * @param mixed $tag
      */
-    public function setSigle($sigle): void
+    public function setTag($tag): void
     {
-        $this->sigle = $sigle;
+        $this->tag = $tag;
     }
 
     /**
@@ -871,17 +871,17 @@ class Ally
     /**
      * @return mixed
      */
-    public function getProposals()
+    public function getOffers()
     {
-        return $this->proposals;
+        return $this->offers;
     }
 
     /**
-     * @param mixed $proposals
+     * @param mixed $offers
      */
-    public function setProposals($proposals): void
+    public function setOffers($offers): void
     {
-        $this->proposals = $proposals;
+        $this->offers = $offers;
     }
 
     /**

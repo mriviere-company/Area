@@ -6,7 +6,7 @@
 
 {% block body %}
     {% for message in app.flashes('fail') %}
-        <div class="flash-notice mt-5 alerte-flash-error text-center">
+        <div class="flash-notice mt-5 alert-flash-error text-center">
             {{ message }}
         </div>
     {% endfor %}
@@ -1049,7 +1049,7 @@
             </div>
             {% if commander.getShip().getRetry() > 0  %}<span><a class="btn btn-lg btn-start float-right mr-2 mb-2{% if app.user.getTutorial() < 20 %} tutorial-hide{% endif %}" data-toggle="tooltip" data-placement="top" title="{{ 'tooltip.shipRetry'|trans }}" href="{{ path('ship_retry', {'usePlanet': usePlanet.getId()}) }}"><span>{{ 'ship.retry'|trans({'%retry%': commander.getShip().getRetry()}) }}</a></span>{% endif %}
             <canvas class="mt-5" id="doughnutChart" height="150"></canvas>
-            {{ encore_entry_script_tags('shipsCharts') }}
+            {{ encore_entry_script_tags('shipCharts') }}
         </div>
     </div>
 {% endblock %}

@@ -6,10 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Table(name="ships")
+ * @ORM\Table(name="ship")
  * @ORM\Entity
  */
-class Ships
+class Ship
 {
     /**
      * @ORM\Column(type="integer")

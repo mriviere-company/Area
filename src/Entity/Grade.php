@@ -20,7 +20,7 @@ class Grade
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ally", inversedBy="grades", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Alliance", inversedBy="grades", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
@@ -78,7 +78,7 @@ class Grade
 
     /**
      * Grade constructor.
-     * @param Ally $ally
+     * @param Alliance $ally
      * @param string $name
      * @param int $placement
      * @param bool $recruit
@@ -89,7 +89,7 @@ class Grade
      * @param bool $see
      * @param bool $use
      */
-    public function __construct(Ally $ally, string $name, int $placement, bool $recruit, bool $kick, bool $war, bool $peace, bool $edit, bool $see, bool $use)
+    public function __construct(Alliance $ally, string $name, int $placement, bool $recruit, bool $kick, bool $war, bool $peace, bool $edit, bool $see, bool $use)
     {
         $this->ally = $ally;
         $this->name = $name;
@@ -107,7 +107,7 @@ class Grade
     /**
      * @return mixed
      */
-    public function getAlly()
+    public function getAlliance()
     {
         return $this->ally;
     }
@@ -115,7 +115,7 @@ class Grade
     /**
      * @param mixed $ally
      */
-    public function setAlly($ally): void
+    public function setAlliance($ally): void
     {
         $this->ally = $ally;
     }

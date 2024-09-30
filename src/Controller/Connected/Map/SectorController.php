@@ -54,7 +54,7 @@ class SectorController extends AbstractController
             ->join('f.planet', 'p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->where('f.flightTime < :now')
+            ->where('f.flightAt < :now')
             ->andWhere('f.flightType != :six or f.flightType is null')
             ->andWhere('s.id = :sector')
             ->andWhere('g.id = :galaxy')
@@ -101,8 +101,8 @@ class SectorController extends AbstractController
             }
             return $this->redirectToRoute('galaxy', ['sector' => $form_navigate->get('galaxy')->getData(), 'usePlanet' => $usePlanet->getId()]);
         }
-        if ($commander->getAlly()) {
-            $viewSector = $doctrine->getRepository(Ally::class)
+        if ($commander->getAlliance()) {
+            $viewSector = $doctrine->getRepository(Alliance::class)
                 ->createQueryBuilder('a')
                 ->join('a.commanders', 'c')
                 ->join('c.planets', 'p')
@@ -113,7 +113,7 @@ class SectorController extends AbstractController
                 ->where('s.id = :sector')
                 ->andWhere('g.id = :galaxy')
                 ->andWhere('a.id = :alliance')
-                ->setParameters(['sector' => $sector->getId(), 'galaxy' => $galaxy->getId(), 'alliance' => $commander->getAlly()->getId()])
+                ->setParameters(['sector' => $sector->getId(), 'galaxy' => $galaxy->getId(), 'alliance' => $commander->getAlliance()->getId()])
                 ->orderBy('p.radar', 'DESC')
                 ->addOrderBy('p.skyRadar', 'DESC')
                 ->getQuery()
@@ -132,7 +132,7 @@ class SectorController extends AbstractController
                 ->where('s.id = :sector')
                 ->andWhere('g.id = :galaxy')
                 ->andWhere('a.id = :alliance')
-                ->setParameters(['sector' => $sector->getId(), 'galaxy' => $galaxy->getId(), 'alliance' => $commander->getAlly()->getId()])
+                ->setParameters(['sector' => $sector->getId(), 'galaxy' => $galaxy->getId(), 'alliance' => $commander->getAlliance()->getId()])
                 ->getQuery()
                 ->getResult();
         } else {
@@ -176,7 +176,7 @@ class SectorController extends AbstractController
             ->leftJoin('c.ally', 'a')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->select('p.id, p.position, p.name, p.ground, p.sun, p.sky, p.nbCdr, p.wtCdr, p.signature, p.imageName, p.empty, p.merchant, p.cdr, p.skyRadar, p.radar, p.skyBrouilleur, c.id as commander, c.username as username, c.zombie as zombie, a.id as alliance, a.sigle as sigle, count(DISTINCT f) as fleets') // count(DISTINCT p) as planets, sum(DISTINCT r.warPoint) as pdg
+            ->select('p.id, p.position, p.name, p.ground, p.sun, p.sky, p.nbCdr, p.wtCdr, p.signature, p.imageName, p.empty, p.trader, p.cdr, p.skyRadar, p.radar, p.skyJammer, c.id as commander, c.username as username, c.zombie as zombie, a.id as alliance, a.tag as tag, count(DISTINCT f) as fleets') // count(DISTINCT p) as planets, sum(DISTINCT r.warPoint) as pdg
             ->groupBy('p.id')
             ->where('s.id = :sector')
             ->andWhere('g.id = :galaxy')
@@ -192,11 +192,11 @@ class SectorController extends AbstractController
             ->join('f.planet', 'p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->select('p.id as planet, f.id, f.name, f.fightAt, f.signature, c.id as commander, c.username as username, a.sigle as alliance, a.id as allianceId')
+            ->select('p.id as planet, f.id, f.name, f.fightAt, f.signature, c.id as commander, c.username as username, a.tag as alliance, a.id as allianceId')
             ->groupBy('f.id')
             ->where('s.id = :sector')
             ->andWhere('g.id = :galaxy')
-            ->andWhere('f.flightTime is null')
+            ->andWhere('f.flightAt is null')
             ->setParameters(['sector' => $sector->getId(), 'galaxy' => $galaxy->getId()])
             ->getQuery()
             ->getResult();
@@ -216,12 +216,12 @@ class SectorController extends AbstractController
             ->leftJoin('dc.ally', 'da')
             ->join('dp.sector', 'fs')
             ->join('fs.galaxy', 'g')
-            ->select('f.id, f.name, f.flightTime, p.name as planetname, p.skyBrouilleur, pc.id as pcommander, pa.id as palliance, dc.id as dcommander, da.id as dalliance, dp.name as dname, dp.position as dposition, p.position as position, ps.position as sector, gp.position as galaxy, fs.position as dsector, g.position as dgalaxy, f.signature, c.id as commander, c.username as username, a.id as alliance, a.sigle as sigle, c.merchant as merchant, a.imageName as imageName')
+            ->select('f.id, f.name, f.flightAt, p.name as planetname, p.skyJammer, pc.id as pcommander, pa.id as palliance, dc.id as dcommander, da.id as dalliance, dp.name as dname, dp.position as dposition, p.position as position, ps.position as sector, gp.position as galaxy, fs.position as dsector, g.position as dgalaxy, f.signature, c.id as commander, c.username as username, a.id as alliance, a.tag as tag, c.trader as trader, a.imageName as imageName')
             ->where('fs.id = :sector')
             ->andWhere('g.id = :galaxy')
             ->andWhere('ps.id != :sector')
             ->setParameters(['sector' => $sector->getId(), 'galaxy' => $galaxy->getId()])
-            ->orderBy('f.flightTime')
+            ->orderBy('f.flightAt')
             ->getQuery()
             ->getResult();
 
@@ -240,12 +240,12 @@ class SectorController extends AbstractController
             ->leftJoin('dc.ally', 'da')
             ->join('dp.sector', 'fs')
             ->join('fs.galaxy', 'g')
-            ->select('f.id, f.name, f.flightTime, p.name as planetname, p.skyBrouilleur, pc.id as pcommander, pa.id as palliance, dc.id as dcommander, da.id as dalliance, dp.name as dname, dp.position as dposition, p.position as position, ps.position as sector, gp.position as galaxy, fs.position as dsector, g.position as dgalaxy, f.signature, c.id as commander, c.username as username, a.id as alliance, a.sigle as sigle, c.merchant as merchant, a.imageName as imageName')
+            ->select('f.id, f.name, f.flightAt, p.name as planetname, p.skyJammer, pc.id as pcommander, pa.id as palliance, dc.id as dcommander, da.id as dalliance, dp.name as dname, dp.position as dposition, p.position as position, ps.position as sector, gp.position as galaxy, fs.position as dsector, g.position as dgalaxy, f.signature, c.id as commander, c.username as username, a.id as alliance, a.tag as tag, c.trader as trader, a.imageName as imageName')
             ->where('fs.id != :sector')
             ->andWhere('ps.id = :sector')
             ->andWhere('gp.id = :galaxy')
             ->setParameters(['sector' => $sector->getId(), 'galaxy' => $galaxy->getId()])
-            ->orderBy('f.flightTime')
+            ->orderBy('f.flightAt')
             ->getQuery()
             ->getResult();
 
@@ -264,13 +264,13 @@ class SectorController extends AbstractController
             ->leftJoin('dc.ally', 'da')
             ->join('dp.sector', 'fs')
             ->join('fs.galaxy', 'gs')
-            ->select('f.id, f.name, f.flightTime, p.name as planetname, pc.id as pcommander, pa.id as palliance, dc.id as dcommander, da.id as dalliance, dp.name as dname, dp.position as dposition, p.position as position, ps.position as sector, gp.position as galaxy, f.signature, c.id as commander, c.username as username, a.id as alliance, a.sigle as sigle, c.merchant as merchant, a.imageName as imageName')
+            ->select('f.id, f.name, f.flightAt, p.name as planetname, pc.id as pcommander, pa.id as palliance, dc.id as dcommander, da.id as dalliance, dp.name as dname, dp.position as dposition, p.position as position, ps.position as sector, gp.position as galaxy, f.signature, c.id as commander, c.username as username, a.id as alliance, a.tag as tag, c.trader as trader, a.imageName as imageName')
             ->where('ps.id = :sector')
             ->andWhere('fs.id = :sector')
             ->andWhere('gs.id = :galaxy')
             ->andWhere('gp.id = :galaxy')
             ->setParameters(['sector' => $sector->getId(), 'galaxy' => $galaxy->getId()])
-            ->orderBy('f.flightTime')
+            ->orderBy('f.flightAt')
             ->getQuery()
             ->getResult();
 
@@ -315,7 +315,7 @@ class SectorController extends AbstractController
             ->createQueryBuilder('f')
             ->join('f.planet', 'p')
             ->where('p.id = :sector')
-            ->andWhere('f.flightTime is null')
+            ->andWhere('f.flightAt is null')
             ->setParameters(['sector' => $planet->getId()])
             ->getQuery()
             ->getResult();
@@ -383,7 +383,7 @@ class SectorController extends AbstractController
                 $base = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
                 $price = $base / 3;
             }
-            $carburant = round($price * ($fleet->getNbrSignatures() / 200));
+            $carburant = round($price * ($fleet->getNbSignature() / 200));
             if($carburant > $commander->getBitcoin()) {
                 return $this->redirectToRoute('map', ['usePlanet' => $usePlanet->getId(), 'sector' => $planet->getSector()->getId(), 'galaxy' => $planet->getSector()->getGalaxy()->getId()]);
             }
@@ -413,7 +413,7 @@ class SectorController extends AbstractController
                 }
                 return $this->redirectToRoute('map', ['usePlanet' => $usePlanet->getId(), 'sector' => $planet->getSector()->getId(), 'galaxy' => $planet->getSector()->getGalaxy()->getId()]);
             }
-            $fleet->setFlightType($form_sendFleet->get('flightType')->getData());
+            $fleet->setFlightAt($form_sendFleet->get('flightType')->getData());
             $fleet->setCancelFlight($moreNow);
             $commander->setBitcoin($commander->getBitcoin() - $carburant);
 
@@ -489,7 +489,7 @@ class SectorController extends AbstractController
             $base = sqrt(pow(($x2 - $x1), 2) + pow(($y2 - $y1), 2));
             $price = $base / 3;
         }
-        $carburant = round($price * ($fPlanet->getNbrSignatures() / 200));
+        $carburant = round($price * ($fPlanet->getNbSignature() / 200));
         if(1 > $commander->getBitcoin()) {
             return $this->redirectToRoute('map', ['usePlanet' => $usePlanet->getId(), 'sector' => $planet->getSector()->getId(), 'galaxy' => $planet->getSector()->getGalaxy()->getId()]);
         }
@@ -498,7 +498,7 @@ class SectorController extends AbstractController
         $fleet->setCommander($commander);
         $fleet->setPlanet($fPlanet);
         $fleet->setName('Auto Sonde');
-        $fleet->setSignature($fleet->getNbrSignatures());
+        $fleet->setSignature($fleet->getNbSignature());
         $fPlanet->setSonde($fPlanet->getSonde() - 1);
         $speed = $fleet->getSpeed();
         $distance = $speed * $base * 1000 * $server->getSpeed();
@@ -508,7 +508,7 @@ class SectorController extends AbstractController
         $fleet->setFlightTime($now);
         $destination = new Destination($fleet, $planet);
         $em->persist($destination);
-        $fleet->setFlightType(1);
+        $fleet->setFlightAt(1);
         $fleet->setCancelFlight($moreNow);
         $commander->setBitcoin($commander->getBitcoin() - $carburant);
         $em->persist($fleet);
@@ -572,8 +572,8 @@ class SectorController extends AbstractController
         $fleet->setFlightTime($now);
         $destination = new Destination($fleet, $planet);
         $em->persist($destination);
-        $fleet->setFlightType(6);
-        $fleet->setSignature($fleet->getNbrSignatures());
+        $fleet->setFlightAt(6);
+        $fleet->setSignature($fleet->getNbSignature());
         $em->persist($fleet);
         if ($planet->getCommander()) {
             $quest = $commander->checkQuests('nuclear_planet');

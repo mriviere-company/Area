@@ -471,7 +471,7 @@ class Item
     /**
      * @return null
      */
-    public function getBrouilleurShip()
+    public function getJammerShip()
     {
         return $this->brouilleurShip;
     }
@@ -479,7 +479,7 @@ class Item
     /**
      * @param null $brouilleurShip
      */
-    public function setBrouilleurShip($brouilleurShip): void
+    public function setJammerShip($brouilleurShip): void
     {
         $this->brouilleurShip = $brouilleurShip;
     }

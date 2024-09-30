@@ -83,7 +83,7 @@ class AsteroideController extends AbstractController
                     $fleet->setFlightTime($timeAttAst);
                     $fleet->setAttack(1);
                     $fleet->setName('Horde');
-                    $fleet->setSignature($fleet->getNbrSignatures());
+                    $fleet->setSignature($fleet->getNbSignature());
                     $em->persist($fleet);
                 }
             }

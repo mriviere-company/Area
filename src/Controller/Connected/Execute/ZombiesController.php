@@ -55,12 +55,12 @@ class ZombiesController extends AbstractController
                 return new Response ("KO<br/>");
             }
 
-            if ($zCommander->getZombieAtt() > 0) {
+            if ($zCommander->getZombieLvl() > 0) {
                 $reportDef = new Report();
                 $reportDef->setType('invade');
                 $reportDef->setSendAt($now);
                 $reportDef->setCommander($zCommander);
-                if ($zCommander->getZombieAtt() >= 1 && $zCommander->getUser()->getTutorial() == 50) {
+                if ($zCommander->getZombieLvl() >= 1 && $zCommander->getUser()->getTutorial() == 50) {
                     $zCommander->getUser()->setTutorial(51);
                 }
 
@@ -78,18 +78,18 @@ class ZombiesController extends AbstractController
                     $dWorker = $dWorker * (1 + ($zCommander->getPoliticWorkerDef() / 5));
                 }
                 $dMilitary = $dWorker + $dSoldier + $dTanks;
-                $aMilitary = (500 * (($zCommander->getZombieAtt() / 2) + 1) * 2 * round(1 + ($zCommander->getTerraformation()) / 5));
-                $soldierAtmp = (500 * (($zCommander->getZombieAtt() / 2) + 1));
+                $aMilitary = (500 * (($zCommander->getZombieLvl() / 2) + 1) * 2 * round(1 + ($zCommander->getTerraformation()) / 5));
+                $soldierAtmp = (500 * (($zCommander->getZombieLvl() / 2) + 1));
 
                 if ($dMilitary > $aMilitary) {
-                    if ($zCommander->getAlly()) {
-                        if ($zCommander->getAlly()->getPolitic() == 'fascism') {
-                            $zCommander->setZombieAtt($zCommander->getZombieAtt() + 150);
+                    if ($zCommander->getAlliance()) {
+                        if ($zCommander->getAlliance()->getPolitic() == 'fascism') {
+                            $zCommander->setZombieLvl($zCommander->getZombieLvl() + 150);
                         } else {
-                            $zCommander->setZombieAtt($zCommander->getZombieAtt() + 200);
+                            $zCommander->setZombieLvl($zCommander->getZombieLvl() + 200);
                         }
                     } else {
-                        $zCommander->setZombieAtt($zCommander->getZombieAtt() + 100);
+                        $zCommander->setZombieLvl($zCommander->getZombieLvl() + 100);
                     }
                     $warPointDef = round($aMilitary / 10);
                     $zCommander->getRank()->setWarPoint($zCommander->getRank()->getWarPoint() + $warPointDef);
@@ -124,7 +124,7 @@ class ZombiesController extends AbstractController
                         $em->persist($reportDef);
                     }
                 } else {
-                    $zCommander->setZombieAtt((round($zCommander->getZombieAtt() / 2)));
+                    $zCommander->setZombieLvl((round($zCommander->getZombieLvl() / 2)));
                     $soldierDtmp = $planetAtt->getSoldier() != 0 ? $planetAtt->getSoldier() : 1;
                     $workerDtmp = $planetAtt->getWorker();
                     $tankDtmp = $planetAtt->getTank();
@@ -160,17 +160,17 @@ class ZombiesController extends AbstractController
                     }
                 }
             } else {
-                if ($zCommander->getAlly()) {
-                    if ($zCommander->getAlly()->getPolitic() == 'fascism') {
-                        $zCommander->setZombieAtt($zCommander->getZombieAtt() + 150);
+                if ($zCommander->getAlliance()) {
+                    if ($zCommander->getAlliance()->getPolitic() == 'fascism') {
+                        $zCommander->setZombieLvl($zCommander->getZombieLvl() + 150);
                     } else {
-                        $zCommander->setZombieAtt($zCommander->getZombieAtt() + 200);
+                        $zCommander->setZombieLvl($zCommander->getZombieLvl() + 200);
                     }
                 } else {
-                    $zCommander->setZombieAtt($zCommander->getZombieAtt() + 100);
+                    $zCommander->setZombieLvl($zCommander->getZombieLvl() + 100);
                 }
             }
-            $zCommander->setViewReport(false);
+            $zCommander->setNewReport(false);
             $timeAtt = new DateTime();
             $timeAtt->add(new DateInterval('PT' . round(86400 * rand(1,3)) . 'S'));
             $nextZombie = new DateTime();
@@ -178,20 +178,20 @@ class ZombiesController extends AbstractController
             $zCommander->setZombieAt($nextZombie);
             $fleetZb = new Fleet();
             $fleetZb->setName('Horde');
-            $fleetZb->setHunter(1 + round(($zCommander->getAllShipsPoint() / (3 * rand(1, 5))) / 5));
-            $fleetZb->setHunterWar(1 + round(($zCommander->getAllShipsPoint() / (4 * rand(1, 5))) / 5));
-            $fleetZb->setCorvet(1 + round(($zCommander->getAllShipsPoint() / (5 * rand(1, 5))) / 5));
-            $fleetZb->setCorvetLaser(1 + round(($zCommander->getAllShipsPoint() / (6 * rand(1, 5))) / 5));
-            $fleetZb->setCorvetWar(1 + round(($zCommander->getAllShipsPoint() / (7 * rand(1, 5))) / 5));
-            $fleetZb->setFregate(1 + round(($zCommander->getAllShipsPoint() / (8 * rand(1, 5))) / 5));
+            $fleetZb->setHunter(1 + round(($zCommander->getAllShipPoint() / (3 * rand(1, 5))) / 5));
+            $fleetZb->setHunterWar(1 + round(($zCommander->getAllShipPoint() / (4 * rand(1, 5))) / 5));
+            $fleetZb->setCorvet(1 + round(($zCommander->getAllShipPoint() / (5 * rand(1, 5))) / 5));
+            $fleetZb->setCorvetLaser(1 + round(($zCommander->getAllShipPoint() / (6 * rand(1, 5))) / 5));
+            $fleetZb->setCorvetWar(1 + round(($zCommander->getAllShipPoint() / (7 * rand(1, 5))) / 5));
+            $fleetZb->setFregate(1 + round(($zCommander->getAllShipPoint() / (8 * rand(1, 5))) / 5));
             $fleetZb->setCommander($zombie);
             $fleetZb->setPlanet($planetZb);
-            $fleetZb->setSignature($fleetZb->getNbrSignatures());
+            $fleetZb->setSignature($fleetZb->getNbSignature());
             $destination = new Destination($fleetZb, $planetAtt);
             $em->persist($destination);
             $fleetZb->setFlightTime($timeAtt);
             $fleetZb->setAttack(1);
-            $fleetZb->setFlightType(1);
+            $fleetZb->setFlightAt(1);
             $em->persist($fleetZb);
         }
         echo "Flush -> " . count($zCommanders) . " ";

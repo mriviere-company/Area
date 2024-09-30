@@ -73,7 +73,7 @@ class GalaxyController extends AbstractController
         $planets = $doctrine->getRepository(Planet::class)
             ->createQueryBuilder('p')
             ->select(
-                'p.merchant, p.cdr, p.empty, s.position as sector, s.id as sectorId, g.id as galaxy, c.username as username, a.sigle as alliance, s.destroy as destroy, c.zombie as zombie'
+                'p.trader, p.cdr, p.empty, s.position as sector, s.id as sectorId, g.id as galaxy, c.username as username, a.tag as alliance, s.destroy as destroy, c.zombie as zombie'
             )
             ->leftJoin('p.commander', 'c')
             ->leftJoin('c.ally', 'a')
@@ -86,13 +86,13 @@ class GalaxyController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $doms = $doctrine->getRepository(Ally::class)
+        $doms = $doctrine->getRepository(Alliance::class)
             ->createQueryBuilder('a')
             ->join('a.commanders', 'c')
             ->join('c.planets', 'p')
             ->join('p.sector', 's')
             ->join('s.galaxy', 'g')
-            ->select('a.id, a.sigle as alliance, count(p) as number')
+            ->select('a.id, a.tag as alliance, count(p) as number')
             ->groupBy('a.id')
             ->where('g.id = :galaxy')
             ->setParameters(['galaxy' => $galaxy->getId()])

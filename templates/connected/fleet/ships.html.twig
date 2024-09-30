@@ -6,7 +6,7 @@
 
 {% block body %}
     {#<script type="text/javascript" src="{{ asset('build/flight.js') }}"></script> a remettre plus tard si besoin#}
-    {% if fleet.getCommander().getId() == commander.id or (fleet.getAlly().getId() == ally.id and commander.getGrade().getPlacement() == 1) and fleet.fightAt() is null and fleet.flightTime() is null and fleet.getPlanet().getCommander() == commander and fleet.getPlanet().getRadarAt() == null and fleet.getPlanet().getBrouilleurAt() == null %}
+    {% if fleet.getCommander().getId() == commander.id or (fleet.getAlliance().getId() == ally.id and commander.getGrade().getPlacement() == 1) and fleet.fightAt() is null and fleet.flightAt() is null and fleet.getPlanet().getCommander() == commander and fleet.getPlanet().getRadarAt() == null and fleet.getPlanet().getJammerAt() == null %}
     {% set cargoBonus = 1.2 + (commander.getPoliticCargo() / 5) %}
     {% set multiple = fleet.getMotherShip() > 0 ? 1.1 : 1 %}
         <div class="front-block editFleet">
@@ -279,7 +279,7 @@
                         <span class="maxInputLess">max</span>
                     </td>
                 </tr>
-                <tr{% if fleet.getPlanet().getBrouilleurShip() == 0 and fleet.getBrouilleurShip() == 0 %} hidden{% endif %}>
+                <tr{% if fleet.getPlanet().getJammerShip() == 0 and fleet.getJammerShip() == 0 %} hidden{% endif %}>
                     <th class="tab-cells-name  p-1 pl-3">
                         {{ 'fleet.brouilleurShip'|trans }}
                     </th>
@@ -287,19 +287,19 @@
                         0
                     </td>
                     <td class="text-right p-1">
-                        {{ fleet.getBrouilleurShip()|number_format }}
+                        {{ fleet.getJammerShip()|number_format }}
                     </td>
                     <td class="center-cells p-1 px-4">
-                        {{ form_widget(form_spatialShip.lessBrouilleurShip,{attr: { max: fleet.getBrouilleurShip()}}) }}
+                        {{ form_widget(form_spatialShip.lessJammerShip,{attr: { max: fleet.getJammerShip()}}) }}
                     </td>
                     <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
                         <span class="maxInput">max</span>
                     </td>
                     <td class="text-right p-1">
-                        {{ fleet.getPlanet().getBrouilleurShip()|number_format }}
+                        {{ fleet.getPlanet().getJammerShip()|number_format }}
                     </td>
                     <td class="center-cells p-1 px-4">
-                        {{ form_widget(form_spatialShip.moreBrouilleurShip,{attr: { max: fleet.getPlanet().getBrouilleurShip()}}) }}
+                        {{ form_widget(form_spatialShip.moreJammerShip,{attr: { max: fleet.getPlanet().getJammerShip()}}) }}
                     </td>
                     <td width="30" class="tab-cells-name p-1 cell-middle text-center text-orange">
                         <span class="maxInputLess">max</span>

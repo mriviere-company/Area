@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Connected\Ally;
+namespace App\Controller\Connected\Alliance;
 
 use App\Entity\Commander;
 use Doctrine\ORM\NonUniqueResultException;
@@ -12,18 +12,18 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Front\UserAllyType;
-use App\Form\Front\AllyImageType;
-use App\Form\Front\AllyAddType;
-use App\Form\Front\AllyPactType;
-use App\Form\Front\AllyGradeType;
-use App\Form\Front\AllyDefconType;
+use App\Form\Front\UserAllianceType;
+use App\Form\Front\AllianceImageType;
+use App\Form\Front\AllianceAddType;
+use App\Form\Front\AlliancePactType;
+use App\Form\Front\AllianceGradeType;
+use App\Form\Front\AllianceDefconType;
 use App\Form\Front\VoteType;
 use App\Form\Front\ExchangeType;
 use App\Form\Front\UserAttrGradeType;
 use App\Entity\Grade;
-use App\Entity\Ally;
-use App\Entity\Proposal;
+use App\Entity\Alliance;
+use App\Entity\Offer;
 use App\Entity\Exchange;
 use App\Entity\Pna;
 use App\Entity\Allied;
@@ -38,7 +38,7 @@ use App\Entity\Salon;
  * @Route("/connect")
  * @Security("is_granted('ROLE_USER')")
  */
-class AllyController extends AbstractController
+class AllianceController extends AbstractController
 {
     /**
      * @Route("/alliance/{usePlanet}", name="ally", requirements={"usePlanet"="\d+"})
@@ -58,15 +58,15 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if($commander->getAlly()) {
-            $ally = $commander->getAlly();
+        if($commander->getAlliance()) {
+            $ally = $commander->getAlliance();
         } else {
             return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
         }
-        $form_allyImage = $this->createForm(AllyImageType::class, $ally);
+        $form_allyImage = $this->createForm(AllianceImageType::class, $ally);
         $form_allyImage->handleRequest($request);
 
-        $form_vote = $this->createForm(VoteType::class, null, ["allyId" => $commander->getAlly()->getId()]);
+        $form_vote = $this->createForm(VoteType::class, null, ["allyId" => $commander->getAlliance()->getId()]);
         $form_vote->handleRequest($request);
 
         if ($form_allyImage->isSubmitted() && $form_allyImage->isValid()) {
@@ -79,10 +79,10 @@ class AllyController extends AbstractController
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if ($commander->getVoteName()) {
                 $unVoteUser = $doctrine->getRepository(User::class)->findOneBy(['username' => $commander->getVoteName()]);
-                $unVoteUser->setVoteAlly($unVoteUser->getVoteAlly() - 1);
+                $unVoteUser->setVoteAlliance($unVoteUser->getVoteAlliance() - 1);
             }
             $commander->setVoteName($form_vote->get('commander')->getData()->getUsername());
-            $form_vote->get('commander')->getData()->setVoteAlly($form_vote->get('commander')->getData()->getVoteAlly() + 1);
+            $form_vote->get('commander')->getData()->setVoteAlliance($form_vote->get('commander')->getData()->getVoteAlliance() + 1);
             $em->flush();
 
             $leader = $doctrine->getRepository(Commander::class)
@@ -90,17 +90,17 @@ class AllyController extends AbstractController
                 ->join('c.grade', 'g')
                 ->where('g.placement = 1')
                 ->andWhere('c.ally = :ally')
-                ->setParameters(['ally' => $commander->getAlly()])
+                ->setParameters(['ally' => $commander->getAlliance()])
                 ->getQuery()
                 ->getOneOrNullResult();
 
             if ($leader) {
                 $newLeader = $doctrine->getRepository(Commander::class)
                     ->createQueryBuilder('c')
-                    ->where('c.voteAlly > :vote and c.id != :commander')
+                    ->where('c.voteAlliance > :vote and c.id != :commander')
                     ->andWhere('c.ally = :ally')
-                    ->setParameters(['vote' => $leader->getVoteAlly(), 'ally' => $commander->getAlly(), 'commander' => $leader->getId()])
-                    ->orderBy('u.voteAlly', 'DESC')
+                    ->setParameters(['vote' => $leader->getVoteAlliance(), 'ally' => $commander->getAlliance(), 'commander' => $leader->getId()])
+                    ->orderBy('u.voteAlliance', 'DESC')
                     ->getQuery()
                     ->getOneOrNullResult();
 
@@ -114,8 +114,8 @@ class AllyController extends AbstractController
                 $newLeader = $doctrine->getRepository(Commander::class)
                     ->createQueryBuilder('c')
                     ->andWhere('c.ally = :ally')
-                    ->setParameters(['ally' => $commander->getAlly()])
-                    ->orderBy('c.voteAlly', 'DESC')
+                    ->setParameters(['ally' => $commander->getAlliance()])
+                    ->orderBy('c.voteAlliance', 'DESC')
                     ->getQuery()
                     ->setMaxResults(1)
                     ->getOneOrNullResult();
@@ -124,7 +124,7 @@ class AllyController extends AbstractController
                     ->createQueryBuilder('g')
                     ->where('g.placement = 1')
                     ->andWhere('g.ally = :ally')
-                    ->setParameters(['ally' => $commander->getAlly()])
+                    ->setParameters(['ally' => $commander->getAlliance()])
                     ->getQuery()
                     ->setMaxResults(1)
                     ->getOneOrNullResult();
@@ -138,10 +138,10 @@ class AllyController extends AbstractController
 
         $userVotes = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
-            ->where('c.voteAlly > 0')
+            ->where('c.voteAlliance > 0')
             ->andWhere('c.ally = :ally')
-            ->setParameters(['ally' => $commander->getAlly()])
-            ->orderBy('c.voteAlly', 'DESC')
+            ->setParameters(['ally' => $commander->getAlliance()])
+            ->orderBy('c.voteAlliance', 'DESC')
             ->getQuery()
             ->getResult();
 
@@ -166,13 +166,13 @@ class AllyController extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
 
         if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
-        $form_userAttrGrade = $this->createForm(UserAttrGradeType::class, null, ["allyId" => $commander->getAlly()->getId()]);
+        $form_userAttrGrade = $this->createForm(UserAttrGradeType::class, null, ["allyId" => $commander->getAlliance()->getId()]);
         $form_userAttrGrade->handleRequest($request);
 
         if (($form_userAttrGrade->isSubmitted() && $form_userAttrGrade->isValid())) {
@@ -205,7 +205,7 @@ class AllyController extends AbstractController
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function noAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
+    public function noAllianceAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
@@ -216,18 +216,18 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if($commander->getAlly()) {
+        if($commander->getAlliance()) {
             return $this->redirectToRoute('ally', ['usePlanet' => $usePlanet->getId()]);
         } else {
-            $ally = new Ally();
+            $ally = new Alliance();
         }
 
-        $form_ally = $this->createForm(UserAllyType::class, $ally);
+        $form_ally = $this->createForm(UserAllianceType::class, $ally);
         $form_ally->handleRequest($request);
 
         if ($form_ally->isSubmitted() && $form_ally->isValid()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            if($commander->getAllyBan() > $now) {
+            if($commander->getAllianceBan() > $now) {
                 return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
             }
 
@@ -282,17 +282,17 @@ class AllyController extends AbstractController
 
             $salon = new Salon($ally->getName(), $server);
             $salon->setServer($server);
-            $salon->addAlly($ally);
+            $salon->addAlliance($ally);
             $em->persist($salon);
 
-            $salonPublic = new Salon('Ambassade - ' . $ally->getSigle(), $server);
-            $salonPublic->addAlly($ally);
+            $salonPublic = new Salon('Ambassade - ' . $ally->getTag(), $server);
+            $salonPublic->addAlliance($ally);
             $salonPublic->setServer($server);
             $em->persist($salonPublic);
 
-            $commander->setAlly($ally);
-            $commander->setVoteAlly(1);
-            $commander->setJoinAllyAt($now);
+            $commander->setAlliance($ally);
+            $commander->setVoteAlliance(1);
+            $commander->setJoinAllianceAt($now);
             $commander->setGrade($grade);
             $em->persist($ally);
             $quest = $commander->checkQuests('ally_join');
@@ -310,7 +310,7 @@ class AllyController extends AbstractController
             $em->flush();
         }
 
-        return $this->render('connected/ally/noAlly.html.twig', [
+        return $this->render('connected/ally/noAlliance.html.twig', [
             'form_ally' => $form_ally->createView(),
             'usePlanet' => $usePlanet
         ]);
@@ -323,14 +323,14 @@ class AllyController extends AbstractController
      * @return RedirectResponse
      * @throws Exception
      */
-    public function removeAllyAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
+    public function removeAllianceAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
 
         if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
@@ -338,7 +338,7 @@ class AllyController extends AbstractController
 
         if ($ally->getPolitic() != 'fascism') {
             foreach ($ally->getCommanders() as $user) {
-                $user->setAlly(null);
+                $user->setAlliance(null);
                 $commander->setGrade(null);
                 $user->setPoliticArmement(0);
                 $user->setPoliticCostScientist(0);
@@ -349,7 +349,7 @@ class AllyController extends AbstractController
                 $user->setPoliticCostSoldier(0);
                 $user->setPoliticCostTank(0);
                 $user->setPoliticInvade(0);
-                $user->setPoliticMerchant(0);
+                $user->setPoliticTrader(0);
                 $user->setPoliticPdg(0);
                 $user->setPoliticProd(0);
                 $user->setPoliticRecycleur(0);
@@ -359,10 +359,10 @@ class AllyController extends AbstractController
                 $user->setPoliticTankDef(0);
                 $user->setPoliticWorker(0);
                 $user->setPoliticWorkerDef(0);
-                $user->setAllyBan($now);
+                $user->setAllianceBan($now);
             }
             foreach ($ally->getFleets() as $fleet) {
-                $fleet->setAlly(null);
+                $fleet->setAlliance(null);
             }
             foreach ($ally->getGrades() as $grade) {
                 $em->remove($grade);
@@ -395,29 +395,29 @@ class AllyController extends AbstractController
                 $em->remove($allied);
             }
 
-            foreach ($ally->getProposals() as $proposal) {
-                $em->remove($proposal);
+            foreach ($ally->getOffers() as $offer) {
+                $em->remove($offer);
             }
             $em->flush();
 
             $pnas = $doctrine->getRepository(Pna::class)
                 ->createQueryBuilder('p')
                 ->where('p.allyTag = :allytag')
-                ->setParameters(['allytag' => $ally->getSigle()])
+                ->setParameters(['allytag' => $ally->getTag()])
                 ->getQuery()
                 ->getResult();
 
             $pacts = $doctrine->getRepository(Allied::class)
                 ->createQueryBuilder('a')
                 ->where('a.allyTag = :allytag')
-                ->setParameters(['allytag' => $ally->getSigle()])
+                ->setParameters(['allytag' => $ally->getTag()])
                 ->getQuery()
                 ->getResult();
 
             $wars = $doctrine->getRepository(War::class)
                 ->createQueryBuilder('w')
                 ->where('w.allyTag = :allytag')
-                ->setParameters(['allytag' => $ally->getSigle()])
+                ->setParameters(['allytag' => $ally->getTag()])
                 ->getQuery()
                 ->getResult();
 
@@ -447,21 +447,21 @@ class AllyController extends AbstractController
      * @return RedirectResponse
      * @throws Exception
      */
-    public function leaveAllyAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
+    public function leaveAllianceAction(ManagerRegistry $doctrine, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
 
         if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         if ($ally->getPolitic() == 'democrat') {
-            if ($commander->getGrade()->getPlacement() == 1 || count($commander->getAlly()->getCommanders()) == 1) {
+            if ($commander->getGrade()->getPlacement() == 1 || count($commander->getAlliance()->getCommanders()) == 1) {
                 return $this->redirectToRoute('ally', ['usePlanet' => $usePlanet->getId()]);
             }
             $user->setPoliticArmement(0);
@@ -473,7 +473,7 @@ class AllyController extends AbstractController
             $user->setPoliticCostSoldier(0);
             $user->setPoliticCostTank(0);
             $user->setPoliticInvade(0);
-            $user->setPoliticMerchant(0);
+            $user->setPoliticTrader(0);
             $user->setPoliticPdg(0);
             $user->setPoliticProd(0);
             $user->setPoliticRecycleur(0);
@@ -484,10 +484,10 @@ class AllyController extends AbstractController
             $user->setPoliticTankDef(0);
             $user->setPoliticWorker(0);
             $user->setPoliticWorkerDef(0);
-            $user->setAlly(null);
-            $user->setJoinAllyAt(null);
+            $user->setAlliance(null);
+            $user->setJoinAllianceAt(null);
             $commander->setGrade(null);
-            $user->setAllyBan($now);
+            $user->setAllianceBan($now);
 
             $em->flush();
         }
@@ -503,20 +503,20 @@ class AllyController extends AbstractController
      * @return RedirectResponse
      * @throws Exception
      */
-    public function kickAllyAction(ManagerRegistry $doctrine, User $kicked, Planet $usePlanet): RedirectResponse
+    public function kickAllianceAction(ManagerRegistry $doctrine, User $kicked, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 172800 . 'S'));
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
         if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
 
         if ($commander->getGrade()->getCanKick() == 1) {
-            if ($commander->getGrade()->getCanKick() == 0 || $kicked->getAlly() != $commander->getAlly() || ($ally->getPolitic() == 'fascism' and count($ally->getWars()) > 0 or count($ally->getPeaces()) > 0)) {
+            if ($commander->getGrade()->getCanKick() == 0 || $kicked->getAlliance() != $commander->getAlliance() || ($ally->getPolitic() == 'fascism' and count($ally->getWars()) > 0 or count($ally->getPeaces()) > 0)) {
                 return $this->redirectToRoute('ally', ['usePlanet' => $usePlanet->getId()]);
             }
             $kicked->setPoliticArmement(0);
@@ -528,7 +528,7 @@ class AllyController extends AbstractController
             $kicked->setPoliticCostSoldier(0);
             $kicked->setPoliticCostTank(0);
             $kicked->setPoliticInvade(0);
-            $kicked->setPoliticMerchant(0);
+            $kicked->setPoliticTrader(0);
             $kicked->setPoliticPdg(0);
             $kicked->setPoliticProd(0);
             $kicked->setPoliticRecycleur(0);
@@ -538,12 +538,12 @@ class AllyController extends AbstractController
             $kicked->setPoliticTankDef(0);
             $kicked->setPoliticWorker(0);
             $kicked->setPoliticWorkerDef(0);
-            $ally = $commander->getAlly();
+            $ally = $commander->getAlliance();
             $ally->removeUser($kicked);
-            $kicked->setAlly(null);
-            $kicked->setJoinAllyAt(null);
+            $kicked->setAlliance(null);
+            $kicked->setJoinAllianceAt(null);
             $kicked->setGrade(null);
-            $kicked->setAllyBan($now);
+            $kicked->setAllianceBan($now);
 
             $em->flush();
         }
@@ -552,13 +552,13 @@ class AllyController extends AbstractController
     }
 
     /**
-     * @Route("/rejoindre-alliance/{proposal}/{usePlanet}", name="ally_accept", requirements={"proposal"="\d+", "usePlanet"="\d+"})
+     * @Route("/rejoindre-alliance/{offer}/{usePlanet}", name="ally_accept", requirements={"offer"="\d+", "usePlanet"="\d+"})
      * @param ManagerRegistry $doctrine
-     * @param Proposal $proposal
+     * @param Offer $offer
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function allyAcceptAction(ManagerRegistry $doctrine, Proposal $proposal, Planet $usePlanet): RedirectResponse
+    public function allyAcceptAction(ManagerRegistry $doctrine, Offer $offer, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $now = new DateTime();
@@ -569,19 +569,19 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if($commander->getAlly()) {
+        if($commander->getAlliance()) {
             return $this->redirectToRoute('ally', ['usePlanet' => $usePlanet->getId()]);
         }
-        if($commander->getAllyBan() > $now) {
+        if($commander->getAllianceBan() > $now) {
             return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $ally = $proposal->getAlly();
+        $ally = $offer->getAlliance();
         $ally->addCommander($commander);
-        $user->setAlly($ally);
-        $user->setJoinAllyAt($now);
+        $user->setAlliance($ally);
+        $user->setJoinAllianceAt($now);
         $commander->setGrade($ally->getNewMember());
-        $em->remove($proposal);
+        $em->remove($offer);
         $quest = $commander->checkQuests('ally_join');
         if($quest) {
             $commander->getRank()->setWarPoint($commander->getRank()->getWarPoint() + $quest->getGain());
@@ -594,13 +594,13 @@ class AllyController extends AbstractController
     }
 
     /**
-     * @Route("/refuser-alliance/{proposal}/{usePlanet}", name="ally_refuse", requirements={"proposal"="\d+", "usePlanet"="\d+"})
+     * @Route("/refuser-alliance/{offer}/{usePlanet}", name="ally_refuse", requirements={"offer"="\d+", "usePlanet"="\d+"})
      * @param ManagerRegistry $doctrine
-     * @param Proposal $proposal
+     * @param Offer $offer
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function allyRefusetAction(ManagerRegistry $doctrine, Proposal $proposal, Planet $usePlanet): RedirectResponse
+    public function allyRefusetAction(ManagerRegistry $doctrine, Offer $offer, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
@@ -609,20 +609,20 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $em->remove($proposal);
+        $em->remove($offer);
         $em->flush();
 
         return $this->redirectToRoute('ally', ['usePlanet' => $usePlanet->getId()]);
     }
 
     /**
-     * @Route("/annuler-alliance/{proposal}/{usePlanet}", name="ally_cancel", requirements={"proposal"="\d+", "usePlanet"="\d+"})
+     * @Route("/annuler-alliance/{offer}/{usePlanet}", name="ally_cancel", requirements={"offer"="\d+", "usePlanet"="\d+"})
      * @param ManagerRegistry $doctrine
-     * @param Proposal $proposal
+     * @param Offer $offer
      * @param Planet $usePlanet
      * @return RedirectResponse
      */
-    public function allyCanceltAction(ManagerRegistry $doctrine, Proposal $proposal, Planet $usePlanet): RedirectResponse
+    public function allyCanceltAction(ManagerRegistry $doctrine, Offer $offer, Planet $usePlanet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
@@ -631,7 +631,7 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $em->remove($proposal);
+        $em->remove($offer);
         $em->flush();
 
         return $this->redirectToRoute('ally_page_add', ['usePlanet' => $usePlanet->getId()]);
@@ -644,23 +644,23 @@ class AllyController extends AbstractController
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function exitPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
+    public function exitPageAllianceAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
         $em = $doctrine->getManager();
 
         if ($usePlanet->getCommander() != $commander) {
             return $this->redirectToRoute('home');
         }
         if ($ally->getPolitic() != 'fascism') {
-            if ($commander->getAlly()) {
-                $ally = $commander->getAlly();
+            if ($commander->getAlliance()) {
+                $ally = $commander->getAlliance();
             } else {
                 return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
             }
-            $form_allyImage = $this->createForm(AllyImageType::class, $ally);
+            $form_allyImage = $this->createForm(AllianceImageType::class, $ally);
             $form_allyImage->handleRequest($request);
 
             if ($form_allyImage->isSubmitted() && $form_allyImage->isValid()) {
@@ -674,7 +674,7 @@ class AllyController extends AbstractController
                 $user->setPoliticCostSoldier(0);
                 $user->setPoliticCostTank(0);
                 $user->setPoliticInvade(0);
-                $user->setPoliticMerchant(0);
+                $user->setPoliticTrader(0);
                 $user->setPoliticPdg(0);
                 $user->setPoliticProd(0);
                 $user->setPoliticRecycleur(0);
@@ -705,7 +705,7 @@ class AllyController extends AbstractController
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function bankPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
+    public function bankPageAllianceAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
@@ -716,15 +716,15 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if($commander->getAlly()) {
-            $ally = $commander->getAlly();
+        if($commander->getAlliance()) {
+            $ally = $commander->getAlliance();
         } else {
             return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
         }
         $exchanges = $doctrine->getRepository(Exchange::class)
             ->createQueryBuilder('e')
             ->andWhere('e.ally = :ally')
-            ->setParameters(['ally' => $commander->getAlly()])
+            ->setParameters(['ally' => $commander->getAlliance()])
             ->orderBy('e.createdAt', 'DESC')
             ->getQuery()
             ->getResult();
@@ -803,16 +803,16 @@ class AllyController extends AbstractController
         }
         $userExchange = $doctrine->getRepository(User::class)->findOneByUsername($id->getName());
 
-        if($commander->getAlly() && $commander->getGrade()->getPlacement() == 1) {
+        if($commander->getAlliance() && $commander->getGrade()->getPlacement() == 1) {
             $amountExchange = abs($id->getAmount());
-            if ($id->getType() == 0 && $amountExchange <= $id->getAlly()->getBitcoin()) {
+            if ($id->getType() == 0 && $amountExchange <= $id->getAlliance()->getBitcoin()) {
                 $userExchange->setBitcoin($commander->getBitcoin() + $id->getAmount());
-                $id->getAlly()->setBitcoin($id->getAlly()->getBitcoin() - $amountExchange);
+                $id->getAlliance()->setBitcoin($id->getAlliance()->getBitcoin() - $amountExchange);
                 $id->setAccepted(1);
                 $em->flush();
-            } elseif ($amountExchange <= $id->getAlly()->getPdg()) {
+            } elseif ($amountExchange <= $id->getAlliance()->getPdg()) {
                 $userExchange->getRank()->setWarPoint(($userExchange->getRank()->getWarPoint() + $id->getAmount()));
-                $id->getAlly()->setPdg($id->getAlly()->getPdg() - $amountExchange);
+                $id->getAlliance()->setPdg($id->getAlliance()->getPdg() - $amountExchange);
                 $id->setAccepted(1);
                 $em->flush();
             }
@@ -840,7 +840,7 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if($commander->getAlly() && $commander->getGrade()->getPlacement() == 1) {
+        if($commander->getAlliance() && $commander->getGrade()->getPlacement() == 1) {
             $em->remove($id);
             $em->flush();
         } else {
@@ -858,7 +858,7 @@ class AllyController extends AbstractController
      * @return RedirectResponse|Response
      * @throws NonUniqueResultException
      */
-    public function addPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
+    public function addPageAllianceAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
@@ -869,14 +869,14 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $maxMembers = count($commander->getAlly()->getCommanders()) + count($commander->getAlly()->getProposals());
-        if($commander->getAlly()) {
-            $ally = $commander->getAlly();
+        $maxMembers = count($commander->getAlliance()->getCommanders()) + count($commander->getAlliance()->getOffers());
+        if($commander->getAlliance()) {
+            $ally = $commander->getAlliance();
         } else {
             return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $form_allyAdd = $this->createForm(AllyAddType::class);
+        $form_allyAdd = $this->createForm(AllianceAddType::class);
         $form_allyAdd->handleRequest($request);
 
         if (($form_allyAdd->isSubmitted() && $form_allyAdd->isValid()) && $commander->getGrade()->getCanRecruit() == 1) {
@@ -885,40 +885,40 @@ class AllyController extends AbstractController
                 $this->addFlash("fail", "Vous avez atteint le nombre maximum d'invitations.");
                 return $this->redirectToRoute('ally_page_add', ['usePlanet' => $usePlanet->getId()]);
             }
-            $userProposal = $doctrine->getRepository(User::class)
+            $userOffer = $doctrine->getRepository(User::class)
                 ->createQueryBuilder('u')
-                ->leftJoin('u.proposals', 'pr')
+                ->leftJoin('u.offers', 'pr')
                 ->where('u.username = :username')
                 ->andWhere('c.ally is null')
                 ->andWhere('pr.ally is null or pr.ally != :ally')
-                ->setParameters(['username' => $form_allyAdd->get('nameUser')->getData(), 'ally' => $commander->getAlly()])
+                ->setParameters(['username' => $form_allyAdd->get('nameUser')->getData(), 'ally' => $commander->getAlliance()])
                 ->getQuery()
                 ->getOneOrNullResult();
 
-            if($userProposal) {
-                $proposal = new Proposal($ally, $userProposal);
-                $em->persist($proposal);
-                $ally->addProposal($proposal);
-                $userProposal->addProposal($proposal);
+            if($userOffer) {
+                $offer = new Offer($ally, $userOffer);
+                $em->persist($offer);
+                $ally->addOffer($offer);
+                $userOffer->addOffer($offer);
                 $em->flush();
             }
             return $this->redirectToRoute('ally_page_add', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $lastActivity = new DateTime();
-        $lastActivity->sub(new DateInterval('PT' . 5184000 . 'S'));
+        $activityAt = new DateTime();
+        $activityAt->sub(new DateInterval('PT' . 5184000 . 'S'));
         $usersRecruitable = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->join('c.planets', 'p')
-            ->leftJoin('c.proposals', 'pr')
+            ->leftJoin('c.offers', 'pr')
             ->select('c.username, c.id, count(DISTINCT p) as planets, c.imageName')
             ->groupBy('c.id')
-            ->where('c.lastActivity > :date')
+            ->where('c.activityAt > :date')
             ->andWhere('c.ally is null')
             ->andWhere('c.rank is not null')
             ->andWhere('pr is null')
-            ->setParameters(['date' => $lastActivity])
-            ->orderBy('c.lastActivity', 'DESC')
+            ->setParameters(['date' => $activityAt])
+            ->orderBy('c.activityAt', 'DESC')
             ->getQuery()
             ->getResult();
 
@@ -939,7 +939,7 @@ class AllyController extends AbstractController
     {
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
         $em = $doctrine->getManager();
 
         if ($usePlanet->getCommander() != $commander) {
@@ -970,7 +970,7 @@ class AllyController extends AbstractController
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function adminPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
+    public function adminPageAllianceAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
@@ -980,16 +980,16 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if($commander->getAlly()) {
-            $ally = $commander->getAlly();
+        if($commander->getAlliance()) {
+            $ally = $commander->getAlliance();
         } else {
             return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $form_allyDecon = $this->createForm(AllyDefconType::class,$ally);
+        $form_allyDecon = $this->createForm(AllianceDefconType::class,$ally);
         $form_allyDecon->handleRequest($request);
 
-        $form_allyGrade = $this->createForm(AllyGradeType::class);
+        $form_allyGrade = $this->createForm(AllianceGradeType::class);
         $form_allyGrade->handleRequest($request);
 
         if (($form_allyDecon->isSubmitted() && $form_allyDecon->isValid())) {
@@ -1000,7 +1000,7 @@ class AllyController extends AbstractController
         if (($form_allyGrade->isSubmitted() && $form_allyGrade->isValid()) && $ally->getPolitic() != 'fascism') {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
             $grade = new Grade($ally, $form_allyGrade->get('name')->getData(), $form_allyGrade->get('placement')->getData(), $form_allyGrade->get('canRecruit')->getData(), $form_allyGrade->get('canKick')->getData(), $form_allyGrade->get('canWar')->getData(), $form_allyGrade->get('canPeace')->getData(), $form_allyGrade->get('canEdit')->getData(), $form_allyGrade->get('seeMembers')->getData(), $form_allyGrade->get('useFleets')->getData());
-            if ($commander->getAlly()->getPolitic() == 'communism') {
+            if ($commander->getAlliance()->getPolitic() == 'communism') {
                 $grade->setPlacement(1);
             }
 
@@ -1026,7 +1026,7 @@ class AllyController extends AbstractController
      * @return RedirectResponse|Response
      * @throws NonUniqueResultException
      */
-    public function pactPageAllyAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
+    public function pactPageAllianceAction(ManagerRegistry $doctrine, Request $request, Planet $usePlanet): RedirectResponse|Response
     {
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
@@ -1037,76 +1037,76 @@ class AllyController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        if($commander->getAlly()) {
-            $ally = $commander->getAlly();
+        if($commander->getAlliance()) {
+            $ally = $commander->getAlliance();
         } else {
             return $this->redirectToRoute('ally_blank', ['usePlanet' => $usePlanet->getId()]);
         }
         $waitingPna = $doctrine->getRepository(Pna::class)
             ->createQueryBuilder('pna')
-            ->where('pna.allyTag = :sigle')
+            ->where('pna.allyTag = :tag')
             ->andWhere('pna.accepted = false')
-            ->setParameters(['sigle' => $ally->getSigle()])
+            ->setParameters(['tag' => $ally->getTag()])
             ->getQuery()
             ->getResult();
 
         $waitingAllied = $doctrine->getRepository(Allied::class)
             ->createQueryBuilder('al')
-            ->where('al.allyTag = :sigle')
+            ->where('al.allyTag = :tag')
             ->andWhere('al.accepted = false')
-            ->setParameters(['sigle' => $ally->getSigle()])
+            ->setParameters(['tag' => $ally->getTag()])
             ->getQuery()
             ->getResult();
 
-        $form_allyPact = $this->createForm(AllyPactType::class);
+        $form_allyPact = $this->createForm(AlliancePactType::class);
         $form_allyPact->handleRequest($request);
 
 
         if (($form_allyPact->isSubmitted() && $form_allyPact->isValid())) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $allyPact = $doctrine->getRepository(Ally::class, ['usePlanet' => $usePlanet->getId()])
+            $allyPact = $doctrine->getRepository(Alliance::class, ['usePlanet' => $usePlanet->getId()])
                 ->createQueryBuilder('a')
-                ->where('a.sigle = :sigle')
-                ->setParameter('sigle', $form_allyPact->get('allyName')->getData())
+                ->where('a.tag = :tag')
+                ->setParameter('tag', $form_allyPact->get('allyName')->getData())
                 ->getQuery()
                 ->getOneOrNullResult();
 
-            if((!$allyPact || $commander->getAlly()->getAlreadyPact($allyPact->getSigle())) || $allyPact == $ally) {
+            if((!$allyPact || $commander->getAlliance()->getAlreadyPact($allyPact->getTag())) || $allyPact == $ally) {
                 return $this->redirectToRoute('ally_page_pacts', ['usePlanet' => $usePlanet->getId()]);
             }
             if($form_allyPact->get('pactType')->getData() == 2 && $commander->getGrade()->getCanPeace() == 1) {
-                $pna = new Pna($ally, $allyPact->getSigle(), false);
+                $pna = new Pna($ally, $allyPact->getTag(), false);
                 $em->persist($pna);
-                $ally->addAllyPna($pna);
+                $ally->addAlliancePna($pna);
             } elseif($form_allyPact->get('pactType')->getData() == 1  && $commander->getGrade()->getCanPeace() == 1) {
                 if ($ally->getPolitic() == $allyPact->getPolitic() || $ally->getPolitic() == 'democrat' || $allyPact->getPolitic() == 'democrat') {
-                    $allied = new Allied($ally, $allyPact->getSigle(), false);
+                    $allied = new Allied($ally, $allyPact->getTag(), false);
                     $em->persist($allied);
-                    $ally->addAllyAllied($allied);
+                    $ally->addAllianceAllied($allied);
                 } else {
                     $this->addFlash("fail", "La politique de cette alliance vous est hostile.");
                     return $this->redirectToRoute('ally_page_pacts', ['usePlanet' => $usePlanet->getId()]);
                 }
             } elseif($form_allyPact->get('pactType')->getData() == 3 && $commander->getGrade()->getCanWar() == 1) {
-                $war = new War($ally, $allyPact->getSigle(), true);
-                $war2 = new War($allyPact, $ally->getSigle(), true);
+                $war = new War($ally, $allyPact->getTag(), true);
+                $war2 = new War($allyPact, $ally->getTag(), true);
                 $em->persist($war);
                 $em->persist($war2);
-                $ally->addAllyWar($war);
-                $allyPact->addAllyWar($war2);
+                $ally->addAllianceWar($war);
+                $allyPact->addAllianceWar($war2);
             }
             $em->flush();
             return $this->redirectToRoute('ally_page_pacts', ['usePlanet' => $usePlanet->getId()]);
         }
 
-        $allAllys = $doctrine->getRepository(Ally::class)->findAll();
+        $allAlliances = $doctrine->getRepository(Alliance::class)->findAll();
 
         return $this->render('connected/ally/pact.html.twig', [
             'waitingPna' => $waitingPna,
             'usePlanet' => $usePlanet,
             'waitingAllied' => $waitingAllied,
             'form_allyPact' => $form_allyPact->createView(),
-            'allAllys' => $allAllys
+            'allAlliances' => $allAlliances
         ]);
     }
 }

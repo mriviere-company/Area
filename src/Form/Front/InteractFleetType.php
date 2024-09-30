@@ -30,7 +30,7 @@ class InteractFleetType extends AbstractType
                         return $er->createQueryBuilder('f')
                             ->join('f.commander', 'c')
                             ->where('c.id = :commander')
-                            ->andWhere('f.flightTime is null')
+                            ->andWhere('f.flightAt is null')
                             ->andWhere('f.fightAt is null')
                             ->setParameters(['commander' => $options['commander']])
                             ->orderBy('f.name', 'ASC');
@@ -48,7 +48,7 @@ class InteractFleetType extends AbstractType
                 'flightType',
                 'Symfony\Component\Form\Extension\Core\Type\ChoiceType',
                 [
-                    'choices' => $this->getFlightType(),
+                    'choices' => $this->getFlightAt(),
                     'label' => 'form.flightType',
                     'attr'  => [
                         'placeholder' => 'form.flightType',
@@ -60,7 +60,7 @@ class InteractFleetType extends AbstractType
             ->add('sendForm', SubmitType::class, ['label' => 'form.sendFleet', 'attr' => ['class' => 'confirm-button']]);
     }
 
-    protected function getFlightType()
+    protected function getFlightAt()
     {
         $translator = new Translator('front_fleet');
         return [

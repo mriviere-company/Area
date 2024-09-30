@@ -33,10 +33,10 @@ class Commander
     protected $username;
 
     /**
-     * @ORM\Column(name="orderPlanet",type="string", length=10)
+     * @ORM\Column(name="planetsOrder",type="string", length=10)
      * @Assert\NotBlank(message = "required")
      */
-    protected $orderPlanet;
+    protected $planetsOrder;
 
     /**
      * @ORM\Column(name="experience",type="integer", nullable=true, options={"unsigned":true})
@@ -44,25 +44,20 @@ class Commander
     protected $experience;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Ally", inversedBy="commanders", fetch="EXTRA_LAZY")
+     * @ORM\ManyToOne(targetEntity="Alliance", inversedBy="commanders", fetch="EXTRA_LAZY")
      * @ORM\JoinColumn(name="ally_id", referencedColumnName="id", onDelete="SET NULL")
      */
     protected $ally;
 
     /**
-     * @ORM\Column(name="allyBan",type="datetime", nullable=true)
+     * @ORM\Column(name="allianceBanAt",type="datetime", nullable=true)
      */
-    protected $allyBan;
-
-    /**
-     * @ORM\Column(name="dailyConnect",type="datetime", nullable=true)
-     */
-    protected $dailyConnect;
+    protected $allianceBanAt;
 
     /**
      * @ORM\Column(name="zombie_att",type="smallint")
      */
-    protected $zombieAtt;
+    protected $zombieLvl;
 
     /**
      * @ORM\Column(name="zombie_at",type="datetime", nullable=true)
@@ -70,14 +65,14 @@ class Commander
     protected $zombieAt;
 
     /**
-     * @ORM\OneToMany(targetEntity="Proposal", mappedBy="commander", fetch="EXTRA_LAZY", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="Offer", mappedBy="commander", fetch="EXTRA_LAZY", orphanRemoval=true)
      */
-    protected $proposals;
+    protected $offers;
 
     /**
-     * @ORM\Column(name="joinAllyAt",type="datetime", nullable=true)
+     * @ORM\Column(name="joinAllianceAt",type="datetime", nullable=true)
      */
-    protected $joinAllyAt;
+    protected $joinAllianceAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="Grade", inversedBy="commanders", fetch="EXTRA_LAZY")
@@ -113,7 +108,7 @@ class Commander
     protected $stats;
 
     /**
-     * @ORM\OneToOne(targetEntity="Ships", mappedBy="commander", fetch="EXTRA_LAZY")
+     * @ORM\OneToOne(targetEntity="Ship", mappedBy="commander", fetch="EXTRA_LAZY")
      */
     protected $ship;
 
@@ -170,42 +165,22 @@ class Commander
     protected $views;
 
     /**
-     * @ORM\Column(name="viewMessage",type="boolean")
+     * @ORM\Column(name="newMessage",type="boolean")
      * @Assert\NotBlank(message = "required")
      */
-    protected $viewMessage;
+    protected $newMessage;
 
     /**
-     * @ORM\Column(name="zombie",type="boolean")
-     */
-    protected $zombie;
-
-    /**
-     * @ORM\Column(name="alien",type="boolean")
-     */
-    protected $alien;
-
-    /**
-     * @ORM\Column(name="bot",type="boolean")
-     */
-    protected $bot;
-
-    /**
-     * @ORM\Column(name="merchant",type="boolean")
-     */
-    protected $merchant;
-
-    /**
-     * @ORM\Column(name="viewReport",type="boolean")
+     * @ORM\Column(name="newReport",type="boolean")
      * @Assert\NotBlank(message = "required")
      */
-    protected $viewReport;
+    protected $newReport;
 
 
     /**
      * @ORM\Column(name="vote_ally",type="smallint", options={"unsigned":true})
      */
-    protected $voteAlly;
+    protected $voteAlliance;
 
     /**
      * @ORM\Column(name="vote_name",type="string", nullable=true)
@@ -402,9 +377,9 @@ class Commander
     protected $politicInvade;
 
     /**
-     * @ORM\Column(name="politic_merchant",type="smallint", nullable=true, options={"unsigned":true})
+     * @ORM\Column(name="politic_trader",type="smallint", nullable=true, options={"unsigned":true})
      */
-    protected $politicMerchant;
+    protected $politicTrader;
 
     /**
      * @ORM\Column(name="politic_search",type="smallint", nullable=true, options={"unsigned":true})
@@ -442,9 +417,9 @@ class Commander
     protected $createdAt;
 
     /**
-     * @ORM\Column(name="lastActivity",type="datetime", nullable=true)
+     * @ORM\Column(name="activityAt",type="datetime", nullable=true)
      */
-    protected $lastActivity;
+    protected $activityAt;
 
     /**
      * @ORM\Column(name="gameOver",type="string", nullable=true)
@@ -505,7 +480,7 @@ class Commander
         $this->username = $username;
         $this->server = $server;
         $this->planets = new ArrayCollection();
-        $this->proposals = new ArrayCollection();
+        $this->offers = new ArrayCollection();
         $this->salons = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->reports = new ArrayCollection();
@@ -517,19 +492,19 @@ class Commander
         $this->stats = new ArrayCollection();
         $this->scientistProduction = 1;
         $this->bitcoin = 5000;
-        $this->viewMessage = 1;
-        $this->viewReport = 1;
+        $this->newMessage = 1;
+        $this->newReport = 1;
         $this->salonAt = null;
         $this->execution = null;
         $this->nbrInvade = null;
         $this->salonBan = null;
-        $this->joinAllyAt = null;
-        $this->allyBan = null;
-        $this->orderPlanet = 'pos';
+        $this->joinAllianceAt = null;
+        $this->allianceBanAt = null;
+        $this->planetsOrder = 'pos';
         $this->searchAt = null;
         $this->search = null;
         $this->createdAt = new DateTime();
-        $this->lastActivity = null;
+        $this->activityAt = null;
         $this->gameOver = null;
         $this->imageFile = null;
         $this->onde = null;
@@ -562,7 +537,7 @@ class Commander
         $this->politicCostSoldier = null;
         $this->politicCostTank = null;
         $this->politicInvade = null;
-        $this->politicMerchant = null;
+        $this->politicTrader = null;
         $this->politicPdg = null;
         $this->politicProd = null;
         $this->politicRecycleur = null;
@@ -572,14 +547,14 @@ class Commander
         $this->politicTankDef = null;
         $this->politicWorker = null;
         $this->politicWorkerDef = null;
-        $this->voteAlly = 0;
+        $this->voteAlliance = 0;
         $this->voteName = null;
-        $this->dailyConnect = null;
+        $this->activityAt = null;
         $this->zombieAt = null;
         $this->zombie = 0;
         $this->bot = 0;
-        $this->zombieAtt = 1;
-        $this->merchant = 0;
+        $this->zombieLvl = 1;
+        $this->trader = 0;
         $this->alien = 0;
     }
 
@@ -588,10 +563,10 @@ class Commander
      */
     public function getPlanets()
     {
-        if ($this->getOrderPlanet() == 'alpha') {
+        if ($this->getPlanetsOrder() == 'alpha') {
             $criteria = Criteria::create()
                 ->orderBy(array('name' => 'ASC'));
-        } elseif ($this->getOrderPlanet() == 'colo') {
+        } elseif ($this->getPlanetsOrder() == 'colo') {
             $criteria = Criteria::create()
                 ->orderBy(array('nbColo' => 'ASC'));
         } else {
@@ -803,15 +778,15 @@ class Commander
     }
 
     /**
-     * Add proposal
+     * Add offer
      *
-     * @param Proposal $proposal
+     * @param Offer $offer
      *
      * @return Commander
      */
-    public function addProposal(Proposal $proposal)
+    public function addOffer(Offer $offer)
     {
-        $this->proposals[] = $proposal;
+        $this->offers[] = $offer;
 
         return $this;
     }
@@ -819,17 +794,17 @@ class Commander
     /**
      * Remove planet
      *
-     * @param Proposal $proposal
+     * @param Offer $offer
      */
-    public function removeProposal(Proposal $proposal)
+    public function removeOffer(Offer $offer)
     {
-        $this->proposals->removeElement($proposal);
+        $this->offers->removeElement($offer);
     }
 
     /**
      * @return mixed
      */
-    public function getAllyEnnemy()
+    public function getAllianceEnnemy()
     {
         if($this->ally) {
             return $this->ally->getWars();
@@ -841,16 +816,16 @@ class Commander
     /**
      * @return mixed
      */
-    public function getAllyEnnemyTag()
+    public function getAllianceEnnemyTag()
     {
         if($this->ally) {
-            $warAlly = [];
+            $warAlliance = [];
             $x = 0;
             foreach ($this->ally->getWars() as $tmp) {
-                $warAlly[$x] = $tmp->getAllyTag();
+                $warAlliance[$x] = $tmp->getAllianceTag();
                 $x++;
             }
-            return $warAlly;
+            return $warAlliance;
         } else {
             return [];
         }
@@ -861,7 +836,7 @@ class Commander
      */
     public function getWhichQuest()
     {
-        $return = ['private_message', 'salon_message', 'pdg', 'spy_planet', 'sell', 'cohort', 'destroy_fleet', 'recycle', 'invade', 'soldier', 'scientist', 'ships'];
+        $return = ['private_message', 'salon_message', 'pdg', 'spy_planet', 'sell', 'cohort', 'destroy_fleet', 'recycle', 'invade', 'soldier', 'scientist', 'ship'];
         if ($this->getColPlanets() < 20) {
             $return[] = 'colonize';
         }
@@ -928,23 +903,23 @@ class Commander
     /**
      * @return mixed
      */
-    public function getSigleAllied($sigle)
+    public function getTagAllied($tag)
     {
-        $ally = $this->getAlly();
-        if($sigle && $ally) {
+        $ally = $this->getAlliance();
+        if($tag && $ally) {
             foreach ($ally->getPnas() as $pna) {
-                if ($pna->getAllyTag() == $sigle && $pna->getAccepted()) {
-                    return $pna->getAllyTag();
+                if ($pna->getAllianceTag() == $tag && $pna->getAccepted()) {
+                    return $pna->getAllianceTag();
                 }
             }
             foreach ($ally->getAllieds() as $pact) {
-                if ($pact->getAllyTag() == $sigle && $pact->getAccepted()) {
-                    return $pact->getAllyTag();
+                if ($pact->getAllianceTag() == $tag && $pact->getAccepted()) {
+                    return $pact->getAllianceTag();
                 }
             }
             foreach ($ally->getPeaces() as $peace) {
-                if ($peace->getAllyTag() == $sigle && $peace->getAccepted()) {
-                    return $peace->getAllyTag();
+                if ($peace->getAllianceTag() == $tag && $peace->getAccepted()) {
+                    return $peace->getAllianceTag();
                 }
             }
         }
@@ -954,17 +929,17 @@ class Commander
     /**
      * @return mixed
      */
-    public function getOurAllyPact($sigle)
+    public function getOurAlliancePact($tag)
     {
-        $ally = $this->getAlly();
-        if($sigle && $ally) {
+        $ally = $this->getAlliance();
+        if($tag && $ally) {
             foreach ($ally->getPnas() as $pna) {
-                if ($pna->getAllyTag() == $sigle && $pna->getAccepted()) {
+                if ($pna->getAllianceTag() == $tag && $pna->getAccepted()) {
                     return 'toto';
                 }
             }
             foreach ($ally->getAllieds() as $pact) {
-                if ($pact->getAllyTag() == $sigle && $pact->getAccepted()) {
+                if ($pact->getAllianceTag() == $tag && $pact->getAccepted()) {
                     return 'toto';
                 }
             }
@@ -975,27 +950,27 @@ class Commander
     /**
      * @return string
      */
-    public function getFleetsColor($commander, $sigle): string
+    public function getFleetsColor($commander, $tag): string
     {
         $color = 'pp-enemy';
         if ($this->getId() == $commander) {
             return 'pp-mine';
         }
-        if ($this->getAlly() and $sigle) {
-            if ($this->getAlly()->getSigle() == $sigle && $color != 'pp-mine' && $sigle) {
+        if ($this->getAlliance() and $tag) {
+            if ($this->getAlliance()->getTag() == $tag && $color != 'pp-mine' && $tag) {
                 return 'pp-ally';
             }
-            if ($this->getAlly() && $sigle) {
-                if (count($this->getAlly()->getAllieds()) > 0) {
-                    foreach ($this->getAlly()->getAllieds() as $allied) {
-                        if ($allied->getAllyTag() == $sigle && $allied->getAccepted() == 1) {
+            if ($this->getAlliance() && $tag) {
+                if (count($this->getAlliance()->getAllieds()) > 0) {
+                    foreach ($this->getAlliance()->getAllieds() as $allied) {
+                        if ($allied->getAllianceTag() == $tag && $allied->getAccepted() == 1) {
                             return 'pp-ally';
                         }
                     }
                 }
-                if (count($this->getAlly()->getPeaces()) > 0) {
-                    foreach ($this->getAlly()->getPeaces() as $peace) {
-                        if ($peace->getAllyTag() == $sigle && $peace->getAccepted() == 1) {
+                if (count($this->getAlliance()->getPeaces()) > 0) {
+                    foreach ($this->getAlliance()->getPeaces() as $peace) {
+                        if ($peace->getAllianceTag() == $tag && $peace->getAccepted() == 1) {
                             return 'pp-peace';
                         }
                     }
@@ -1030,10 +1005,10 @@ class Commander
     /**
      * @return mixed
      */
-    public function getAllyFriends()
+    public function getAllianceFriends()
     {
-        if($this->getAlly()) {
-            return $this->getAlly()->getAllieds();
+        if($this->getAlliance()) {
+            return $this->getAlliance()->getAllieds();
         } else {
             return [];
         }
@@ -1042,16 +1017,16 @@ class Commander
     /**
      * @return mixed
      */
-    public function getAllyFriendsTag()
+    public function getAllianceFriendsTag()
     {
-        if($this->getAlly()) {
-            $friendAlly = [];
+        if($this->getAlliance()) {
+            $friendAlliance = [];
             $x = 0;
-            foreach ($this->getAlly()->getAllieds() as $tmp) {
-                $friendAlly[$x] = $tmp->getAllyTag();
+            foreach ($this->getAlliance()->getAllieds() as $tmp) {
+                $friendAlliance[$x] = $tmp->getAllianceTag();
                 $x++;
             }
-            return $friendAlly;
+            return $friendAlliance;
         } else {
             return [];
         }
@@ -1075,9 +1050,9 @@ class Commander
      */
     public function getPeaces()
     {
-        if($this->getAlly()) {
-            if($this->getAlly()->getPeaces()) {
-                foreach($this->getAlly()->getPeaces() as $peace) {
+        if($this->getAlliance()) {
+            if($this->getAlliance()->getPeaces()) {
+                foreach($this->getAlliance()->getPeaces() as $peace) {
                     if($peace->getAccepted() == 1 && !$peace->getType()) {
                         return $peace;
                     }
@@ -1092,14 +1067,14 @@ class Commander
     /**
      * @return int
      */
-    public function getAllShips(): int
+    public function getAllShip(): int
     {
         $return = 0;
         foreach($this->planets as $planet) {
-            $return = $return + $planet->getShipOn();
+            $return += $planet->getShipOn();
         }
         foreach($this->fleets as $fleet) {
-            $return = $return + $fleet->getNbrShips();
+            $return += $fleet->getNbrShip();
         }
         return $return;
     }
@@ -1215,7 +1190,7 @@ class Commander
                     return $return;
                 } elseif ($this->politicSearch < 5){
                     return $return;
-                } elseif ($this->politicMerchant < 5){
+                } elseif ($this->politicTrader < 5){
                     return $return;
                 }
             }
@@ -1290,8 +1265,8 @@ class Commander
                 }
             }
             if ($this->ally->getLevel() >= 5) {
-                if ('merchant_ally' == $search) {
-                    return $this->politicMerchant;
+                if ('trader_ally' == $search) {
+                    return $this->politicTrader;
                 } elseif ('tank_def_ally' == $search) {
                     return $this->politicTankDef;
                 } elseif ('invade_ally' == $search && $this->ally->getPolitic() == 'communism') {
@@ -1338,7 +1313,7 @@ class Commander
             return 300000;
         } elseif ('invade_ally' == $search && $this->ally->getPolitic() == 'communism') {
             return 250000;
-        } elseif ('merchant_ally' == $search) {
+        } elseif ('trader_ally' == $search) {
             return 250000;
         } elseif ('pdg_ally' == $search) {
             return 300000;
@@ -1389,7 +1364,7 @@ class Commander
             return 2700;
         } elseif ('invade_ally' == $search && $this->ally->getPolitic() == 'communism') {
             return 2400;
-        } elseif ('merchant_ally' == $search) {
+        } elseif ('trader_ally' == $search) {
             return 2400;
         } elseif ('pdg_ally' == $search) {
             return 2700;
@@ -1454,8 +1429,8 @@ class Commander
             return $planet->getRadar();
         } elseif ('skyRadar' == $building) {
             return $planet->getSkyRadar();
-        } elseif ('skyBrouilleur' == $building) {
-            return $planet->getSkyBrouilleur();
+        } elseif ('skyJammer' == $building) {
+            return $planet->getSkyJammer();
         } elseif ('island' == $building) {
             return $planet->getIsland();
         } elseif ('orbital' == $building) {
@@ -1505,7 +1480,7 @@ class Commander
             return 'continue';
         } elseif ('skyRadar' == $building && $this->onde >= 3) {
             return 'continue';
-        } elseif ('skyBrouilleur' == $building && $this->onde >= 5) {
+        } elseif ('skyJammer' == $building && $this->onde >= 5) {
             return 'continue';
         } elseif ('island' == $building && $this->expansion > 0) {
             return 'continue';
@@ -1556,7 +1531,7 @@ class Commander
             return 120;
         } elseif ('skyRadar' == $building) {
             return 2000;
-        } elseif ('skyBrouilleur' == $building) {
+        } elseif ('skyJammer' == $building) {
             return 5100;
         }
         return 0;
@@ -1601,7 +1576,7 @@ class Commander
             return 65;
         } elseif ('skyRadar' == $building) {
             return 1720;
-        } elseif ('skyBrouilleur' == $building) {
+        } elseif ('skyJammer' == $building) {
             return 3210;
         }
         return 0;
@@ -1661,7 +1636,7 @@ class Commander
             return 1;
         } elseif ('skyRadar' == $building) {
             return 2;
-        } elseif ('skyBrouilleur' == $building) {
+        } elseif ('skyJammer' == $building) {
             return 4;
         }
         return 0;
@@ -1719,7 +1694,7 @@ class Commander
             return 220;
         } elseif ('skyRadar' == $building) {
             return 1440;
-        } elseif ('skyBrouilleur' == $building) {
+        } elseif ('skyJammer' == $building) {
             return 3240;
         } elseif ('island' == $building) {
             return 1440;
@@ -1802,7 +1777,7 @@ class Commander
     /**
      * @return mixed
      */
-    public function getNbShips($name, $prod)
+    public function getNbShip($name, $prod)
     {
         $return = 0;
         if($name == 'barge') {
@@ -1858,7 +1833,7 @@ class Commander
     /**
      * @return mixed
      */
-    public function getWtShips($name, $prod)
+    public function getWtShip($name, $prod)
     {
         $return = 0;
         if($name == 'barge') {
@@ -1912,7 +1887,7 @@ class Commander
     /**
      * @return mixed
      */
-    public function getWkShips($name, $prod)
+    public function getWkShip($name, $prod)
     {
         $return = 0;
         if($name == 'barge') {
@@ -1966,7 +1941,7 @@ class Commander
     /**
      * @return mixed
      */
-    public function getSdShips($name, $prod)
+    public function getSdShip($name, $prod)
     {
         $return = 0;
         if ($name == 'colonizer') {
@@ -1984,7 +1959,7 @@ class Commander
     /**
      * @return mixed
      */
-    public function getBtShips($name, $prod)
+    public function getBtShip($name, $prod)
     {
         $return = 0;
         if ($name == 'brouilleurship') {
@@ -2006,7 +1981,7 @@ class Commander
     /**
      * @return mixed
      */
-    public function getPdgShips($name, $prod)
+    public function getPdgShip($name, $prod)
     {
         $return = 0;
         if ($name == 'mothership') {
@@ -2028,12 +2003,12 @@ class Commander
     /**
      * @return int
      */
-    public function getPriceShips($ships): int
+    public function getPriceShip($ship): int
     {
-        $ships['ppsignature'] = $ships['ppsignature'];
-        $ships['psignature'] = $ships['psignature'] / 4;
-        $ships['fsignature'] = $ships['fsignature'] * 6;
-        $return = $ships['ppsignature'] + $ships['psignature'] + $ships['fsignature'];
+        $ship['ppsignature'] = $ship['ppsignature'];
+        $ship['psignature'] = $ship['psignature'] / 4;
+        $ship['fsignature'] = $ship['fsignature'] * 6;
+        $return = $ship['ppsignature'] + $ship['psignature'] + $ship['fsignature'];
 
         return $return;
     }
@@ -2041,17 +2016,17 @@ class Commander
     /**
      * @return float
      */
-    public function getAllShipsCost(): float
+    public function getAllShipCost(): float
     {
         $return = 0;
         foreach($this->planets as $planet) {
             if($planet->getProduct()) {
-                $return = $return + $planet->getProduct()->getNbrSignatures() / 12;
+                $return += $planet->getProduct()->getNbSignature() / 12;
             }
-            $return = $return + ($planet->getNbrSignatures() / 12);
+            $return += ($planet->getNbSignature() / 12);
         }
         foreach($this->fleets as $fleet) {
-            $return = $return + ($fleet->getNbrSignatures() / 2);
+            $return += ($fleet->getNbSignature() / 2);
         }
 
         return $return;
@@ -2064,7 +2039,7 @@ class Commander
     {
         $return = 0;
         foreach($this->planets as $planet) {
-            $return = $return + $planet->getBuildingCost();
+            $return += $planet->getBuildingCost();
         }
 
         return $return;
@@ -2073,14 +2048,14 @@ class Commander
     /**
      * @return float
      */
-    public function getAllShipsPoint(): float
+    public function getAllShipPoint(): float
     {
         $return = 0;
         foreach($this->planets as $planet) {
-            $return = $return + ($planet->getNbrSignatures() / 5);
+            $return += ($planet->getNbSignature() / 5);
         }
         foreach($this->fleets as $fleet) {
-            $return = $return + ($fleet->getNbrSignatures() / 5);
+            $return += ($fleet->getNbSignature() / 5);
         }
 
         return $return;
@@ -2102,11 +2077,11 @@ class Commander
     {
         $return = 0;
         foreach($this->planets as $planet) {
-            $return = $return + $planet->getTank();
+            $return += $planet->getTank();
         }
 
         foreach($this->fleets as $fleet) {
-            $return = $return + $fleet->getTank();
+            $return += $fleet->getTank();
         }
         return $return;
     }
@@ -2118,10 +2093,10 @@ class Commander
     {
         $return = 0;
         foreach($this->planets as $planet) {
-            $return = $return + $planet->getSoldier();
+            $return += $planet->getSoldier();
         }
         foreach($this->fleets as $fleet) {
-            $return = $return + $fleet->getSoldier();
+            $return += $fleet->getSoldier();
         }
         return $return;
     }
@@ -2275,22 +2250,23 @@ class Commander
             $scPrices = 2;
         }
         foreach($this->planets as $planet) {
-            $return = $return + ($planet->getSoldier() * $sPrice);
-            $return = $return + $planet->getSoldierAtNbr();
-            $return = $return + ($planet->getTank() * $tPrice);
-            $return = $return + ($planet->getTankAtNbr() * $tPrice);
-            $return = $return + ($planet->getScientist() * $scPrice);
-            $return = $return + ($planet->getScientistAtNbr() * $scPrices);
+            $return += ($planet->getSoldier() * $sPrice);
+            $return += $planet->getSoldierAtNbr();
+            $return += ($planet->getTank() * $tPrice);
+            $return += ($planet->getTankAtNbr() * $tPrice);
+            $return += ($planet->getScientist() * $scPrice);
+            $return += ($planet->getScientistAtNbr() * $scPrices);
         }
         foreach($this->fleets as $fleet) {
-            $return = $return + ($fleet->getSoldier() * $sPrices);
-            $return = $return + ($fleet->getScientist() * $scPrice);
-            $return = $return + ($fleet->getTank() * $tPrices);
+            $return += ($fleet->getSoldier() * $sPrices);
+            $return += ($fleet->getScientist() * $scPrice);
+            $return += ($fleet->getTank() * $tPrices);
         }
         return $return;
     }
 
     /**
+     * @param $cat
      * @return int
      */
     public function getSoldierPrice($cat): int
@@ -2311,6 +2287,7 @@ class Commander
     }
 
     /**
+     * @param $cat
      * @return int
      */
     public function getTankPrice($cat): int
@@ -2331,6 +2308,7 @@ class Commander
     }
 
     /**
+     * @param $cat
      * @return int
      */
     public function getScientistPrice($cat): int
@@ -2449,7 +2427,7 @@ class Commander
     {
         $return = 0;
         foreach($this->planets as $planet) {
-            $return = $return + ($planet->getWorker());
+            $return += ($planet->getWorker());
         }
         return $return;
     }
@@ -2554,7 +2532,7 @@ class Commander
     {
         $return = 0;
         foreach($this->planets as $planet) {
-            $return = $return + ($planet->getScientist());
+            $return += ($planet->getScientist());
         }
         return $return;
     }
@@ -2571,7 +2549,7 @@ class Commander
             $bonus = 1;
         }
         foreach($this->planets as $planet) {
-            $return = $return + ($planet->getNbProduction() * 6) * $bonus;
+            $return += ($planet->getNbProduction() * 6) * $bonus;
         }
         return $return;
     }
@@ -2588,7 +2566,7 @@ class Commander
             $bonus = 1;
         }
         foreach($this->planets as $planet) {
-            $return = $return + ($planet->getWtProduction() * 6) * $bonus;
+            $return += ($planet->getWtProduction() * 6) * $bonus;
         }
         return $return;
     }
@@ -2817,7 +2795,7 @@ class Commander
     /**
      * @return mixed
      */
-    public function getAlly()
+    public function getAlliance()
     {
         return $this->ally;
     }
@@ -2825,7 +2803,7 @@ class Commander
     /**
      * @param mixed $ally
      */
-    public function setAlly($ally): void
+    public function setAlliance($ally): void
     {
         $this->ally = $ally;
     }
@@ -2913,33 +2891,33 @@ class Commander
     /**
      * @return mixed
      */
-    public function getJoinAllyAt()
+    public function getJoinAllianceAt()
     {
-        return $this->joinAllyAt;
+        return $this->joinAllianceAt;
     }
 
     /**
-     * @param mixed $joinAllyAt
+     * @param mixed $joinAllianceAt
      */
-    public function setJoinAllyAt($joinAllyAt): void
+    public function setJoinAllianceAt($joinAllianceAt): void
     {
-        $this->joinAllyAt = $joinAllyAt;
+        $this->joinAllianceAt = $joinAllianceAt;
     }
 
     /**
      * @return mixed
      */
-    public function getProposals()
+    public function getOffers()
     {
-        return $this->proposals;
+        return $this->offers;
     }
 
     /**
-     * @param mixed $proposals
+     * @param mixed $offers
      */
-    public function setProposals($proposals): void
+    public function setOffers($offers): void
     {
-        $this->proposals = $proposals;
+        $this->offers = $offers;
     }
 
     /**
@@ -3345,9 +3323,9 @@ class Commander
     /**
      * @return mixed
      */
-    public function getViewMessage()
+    public function getNewMessage()
     {
-        return $this->viewMessage;
+        return $this->newMessage;
     }
 
     /**
@@ -3369,25 +3347,25 @@ class Commander
     /**
      * @return mixed
      */
-    public function getViewReport()
+    public function getNewReport()
     {
-        return $this->viewReport;
+        return $this->newReport;
     }
 
     /**
-     * @param mixed $viewReport
+     * @param mixed $newReport
      */
-    public function setViewReport($viewReport): void
+    public function setNewReport($newReport): void
     {
-        $this->viewReport = $viewReport;
+        $this->newReport = $newReport;
     }
 
     /**
-     * @param mixed $viewMessage
+     * @param mixed $newMessage
      */
-    public function setViewMessage($viewMessage): void
+    public function setNewMessage($newMessage): void
     {
-        $this->viewMessage = $viewMessage;
+        $this->newMessage = $newMessage;
     }
 
     /**
@@ -3457,17 +3435,17 @@ class Commander
     /**
      * @return mixed
      */
-    public function getLastActivity()
+    public function getActivityAt()
     {
-        return $this->lastActivity;
+        return $this->activityAt;
     }
 
     /**
-     * @param mixed $lastActivity
+     * @param mixed $activityAt
      */
-    public function setLastActivity($lastActivity): void
+    public function setActivityAt($activityAt): void
     {
-        $this->lastActivity = $lastActivity;
+        $this->activityAt = $activityAt;
     }
 
     /**
@@ -3529,25 +3507,25 @@ class Commander
     /**
      * @return mixed
      */
-    public function getAllyBan()
+    public function getAllianceBanAt()
     {
-        return $this->allyBan;
+        return $this->allianceBanAt;
     }
 
     /**
      * @return mixed
      */
-    public function getOrderPlanet()
+    public function getPlanetsOrder()
     {
-        return $this->orderPlanet;
+        return $this->planetsOrder;
     }
 
     /**
-     * @param mixed $orderPlanet
+     * @param mixed $planetsOrder
      */
-    public function setOrderPlanet($orderPlanet): void
+    public function setPlanetsOrder($planetsOrder): void
     {
-        $this->orderPlanet = $orderPlanet;
+        $this->planetsOrder = $planetsOrder;
     }
 
     /**
@@ -3793,17 +3771,17 @@ class Commander
     /**
      * @return mixed
      */
-    public function getPoliticMerchant()
+    public function getPoliticTrader()
     {
-        return $this->politicMerchant;
+        return $this->politicTrader;
     }
 
     /**
-     * @param mixed $politicMerchant
+     * @param mixed $politicTrader
      */
-    public function setPoliticMerchant($politicMerchant): void
+    public function setPoliticTrader($politicTrader): void
     {
-        $this->politicMerchant = $politicMerchant;
+        $this->politicTrader = $politicTrader;
     }
 
     /**
@@ -3873,17 +3851,17 @@ class Commander
     /**
      * @return mixed
      */
-    public function getVoteAlly()
+    public function getVoteAlliance()
     {
-        return $this->voteAlly;
+        return $this->voteAlliance;
     }
 
     /**
-     * @param mixed $voteAlly
+     * @param mixed $voteAlliance
      */
-    public function setVoteAlly($voteAlly): void
+    public function setVoteAlliance($voteAlliance): void
     {
-        $this->voteAlly = $voteAlly;
+        $this->voteAlliance = $voteAlliance;
     }
 
     /**
@@ -3937,49 +3915,33 @@ class Commander
     /**
      * @return mixed
      */
-    public function getMerchant()
+    public function getTrader()
     {
-        return $this->merchant;
+        return $this->trader;
     }
 
     /**
-     * @param mixed $merchant
+     * @param mixed $trader
      */
-    public function setMerchant($merchant): void
+    public function setTrader($trader): void
     {
-        $this->merchant = $merchant;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDailyConnect()
-    {
-        return $this->dailyConnect;
-    }
-
-    /**
-     * @param mixed $dailyConnect
-     */
-    public function setDailyConnect($dailyConnect): void
-    {
-        $this->dailyConnect = $dailyConnect;
+        $this->trader = $trader;
     }
 
     /**
      * @return mixed
      */
-    public function getZombieAtt()
+    public function getZombieLvl()
     {
-        return $this->zombieAtt;
+        return $this->zombieLvl;
     }
 
     /**
-     * @param mixed $zombieAtt
+     * @param mixed $zombieLvl
      */
-    public function setZombieAtt($zombieAtt): void
+    public function setZombieLvl($zombieLvl): void
     {
-        $this->zombieAtt = $zombieAtt;
+        $this->zombieLvl = $zombieLvl;
     }
 
     /**
@@ -4031,11 +3993,11 @@ class Commander
     }
 
     /**
-     * @param mixed $allyBan
+     * @param mixed $allianceBanAt
      */
-    public function setAllyBan($allyBan): void
+    public function setAllianceBan($allianceBanAt): void
     {
-        $this->allyBan = $allyBan;
+        $this->allianceBanAt = $allianceBanAt;
     }
 
     /**

@@ -105,7 +105,7 @@ class CronTaskController extends AbstractController
                 ->join('f.planet', 'p')
                 ->select('p.id')
                 ->where('f.fightAt < :now')
-                ->andWhere('f.flightTime is null')
+                ->andWhere('f.flightAt is null')
                 ->setParameters(['now' => $now])
                 ->getQuery()
                 ->setMaxResults(1)
@@ -244,7 +244,7 @@ class CronTaskController extends AbstractController
             ->getResult();
 
         if ($radars) {
-            echo "Radar/Brouilleur : ";
+            echo "Radar/Jammer : ";
             $cronValue = $this->forward('App\Controller\Connected\Execute\PlanetsController::radarsAction', [
                 'radars'  => $radars,
                 'now' => $now,
@@ -255,7 +255,7 @@ class CronTaskController extends AbstractController
 
         $fleets = $doctrine->getRepository(Fleet::class) // Actualiser DONE
             ->createQueryBuilder('f')
-            ->where('f.flightTime < :now')
+            ->where('f.flightAt < :now')
             ->andWhere('f.flightType != :six or f.flightType is null')
             ->setParameters(['now' => $now, 'six' => 6])
             ->getQuery()
@@ -273,7 +273,7 @@ class CronTaskController extends AbstractController
 
         $nukeBombs = $doctrine->getRepository(Fleet::class)
             ->createQueryBuilder('f')
-            ->where('f.flightTime < :now')
+            ->where('f.flightAt < :now')
             ->andWhere('f.flightType = :six')
             ->setParameters(['now' => $now, 'six' => 6])
             ->getQuery()
@@ -294,7 +294,7 @@ class CronTaskController extends AbstractController
             ->join('f.planet', 'p')
             ->where('f.recycleAt < :now')
             ->andWhere('f.recycleur > 0')
-            ->andWhere('f.flightTime is null')
+            ->andWhere('f.flightAt is null')
             ->andWhere('p.nbCdr > 0 or p.wtCdr > 0')
             ->setParameters(['now' => $now])
             ->getQuery()
@@ -484,7 +484,7 @@ class CronTaskController extends AbstractController
         $newBots = $doctrine->getRepository(Commander::class)
             ->createQueryBuilder('c')
             ->where('c.bot = false')
-            ->andWhere('c.lastActivity < :five')
+            ->andWhere('c.activityAt < :five')
             ->setParameters(['five' => $fiveWeeks])
             ->getQuery()
             ->getResult();
@@ -510,7 +510,7 @@ class CronTaskController extends AbstractController
             ->createQueryBuilder('p')
             ->join('p.fleets', 'f')
             ->where('f.commander = :commander')
-            ->andWhere('f.flightTime is null')
+            ->andWhere('f.flightAt is null')
             ->setParameters(['commander' => $hydra])
             ->getQuery()
             ->getResult();
@@ -538,7 +538,7 @@ class CronTaskController extends AbstractController
                         $count = $count + 1;
                     }
                 }
-                $one->setSignature($one->getNbrSignatures());
+                $one->setSignature($one->getNbSignature());
                 $em->persist($one);
             }
         }

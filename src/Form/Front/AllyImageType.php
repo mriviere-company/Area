@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class AllyImageType extends AbstractType
+class AllianceImageType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -40,7 +40,7 @@ class AllyImageType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class'         => 'App\Entity\Ally',
+                'data_class'         => 'App\Entity\Alliance',
                 'translation_domain' => 'front_ally',
                 'csrf_protection' => true,
                 'csrf_field_name' => '_token',

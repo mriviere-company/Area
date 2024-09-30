@@ -6,7 +6,7 @@
 
 {% block body %}
     {% for message in app.flashes('fail') %}
-        <div class="flash-notice mt-5 alerte-flash-error text-center">
+        <div class="flash-notice mt-5 alert-flash-error text-center">
             {{ message }}
         </div>
     {% endfor %}
@@ -56,24 +56,24 @@
                             <tbody>
                             <tr>
                                 <th class="tab-cells-name">{{ 'ally.memberName'|trans }}</th>
-                                <th class="tab-cells-name">{{ 'ally.proposalAt'|trans }}</th>
+                                <th class="tab-cells-name">{{ 'ally.offerAt'|trans }}</th>
                                 <th class="tab-cells-name">{{ 'ally.cancelAsk'|trans }}</th>
                             </tr>
-                            {% for proposal in ally.getProposals() %}
+                            {% for offer in ally.getOffers() %}
                                 <tr>
                                     <td class="center-cells">
-                                        {% if proposal.getCommander().getImageName() %}
-                                            <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ vich_uploader_asset(proposal.getCommander(), 'imageFile') }}">
+                                        {% if offer.getCommander().getImageName() %}
+                                            <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ vich_uploader_asset(offer.getCommander(), 'imageFile') }}">
                                         {% else %}
                                             <img alt="{{ 'image'|trans({},'front_global') }}" height="15" width="15" src="{{ asset('img/avatar.webp') }}">
                                         {% endif %}
-                                        <span><a href="{{ path('user_profil', {'commanderProfil': proposal.getCommander().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ proposal.getCommander().getUsername() }}</a></span>
+                                        <span><a href="{{ path('user_profil', {'commanderProfil': offer.getCommander().getId(), 'usePlanet': usePlanet.getId()}) }}">{{ offer.getCommander().getUsername() }}</a></span>
                                     </td>
                                     <td class="center-cells">
-                                        {{ proposal.getProposalAt()|date('d/m/Y H:i') }}
+                                        {{ offer.getOfferAt()|date('d/m/Y H:i') }}
                                     </td>
                                     <td class="center-cells">
-                                        <a class="text-rouge" href="{{ path('ally_cancel',{'proposal': proposal.getId(), 'usePlanet': usePlanet.getId()}) }}"><div class="glyphicon glyphicon-remove"></div> <span>{{ 'ally.cancel'|trans }}</span></a>
+                                        <a class="text-rouge" href="{{ path('ally_cancel',{'offer': offer.getId(), 'usePlanet': usePlanet.getId()}) }}"><div class="glyphicon glyphicon-remove"></div> <span>{{ 'ally.cancel'|trans }}</span></a>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -99,7 +99,7 @@
                         </tr>
                         {% for user in usersRecrutable %}
                             <tr>
-                                <th class="tab-cells-name borderAlly p-0">
+                                <th class="tab-cells-name borderAlliance p-0">
                                     {% if user.imageName %}
                                         <img alt="{{ 'image'|trans({},'front_global') }}" height="30" width="30" src="{{ vich_uploader_asset(user, 'imageFile', 'App\\Entity\\User') }}">
                                     {% else %}

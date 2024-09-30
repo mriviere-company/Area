@@ -72,7 +72,7 @@ class SoldierController extends AbstractController
             if ($form_caserneRecruit->get('soldier')->getData()) {
                 $now = new DateTime();
                 $nbrSoldier = abs($form_caserneRecruit->get('soldier')->getData());
-                if ($commander->getAlly()) {
+                if ($commander->getAlliance()) {
                     if ($commander->getPoliticSoldierSale() > 0) {
                         $price = 8 - ($commander->getPoliticSoldierSale() * 5);
                     } else {

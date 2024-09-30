@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\Connected\Ally;
+namespace App\Controller\Connected\Alliance;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\Front\AllyPeaceType;
+use App\Form\Front\AlliancePeaceType;
 use App\Entity\Pna;
 use App\Entity\Allied;
 use App\Entity\Planet;
@@ -43,12 +43,12 @@ class PactController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
 
-        $allied = new Allied($ally, $pact->getAlly()->getSigle(), true);
+        $allied = new Allied($ally, $pact->getAlliance()->getTag(), true);
         $pact->setAccepted(true);
         $em->persist($allied);
-        $ally->addAllyAllied($allied);
+        $ally->addAllianceAllied($allied);
 
         $em->flush();
 
@@ -96,12 +96,12 @@ class PactController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
 
-        $pna = new Pna($ally, $pact->getAlly()->getSigle(), true);
+        $pna = new Pna($ally, $pact->getAlliance()->getTag(), true);
         $pact->setAccepted(true);
         $em->persist($pna);
-        $ally->addAllyPna($pna);
+        $ally->addAlliancePna($pna);
 
         $em->flush();
 
@@ -150,11 +150,11 @@ class PactController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $ally = $commander->getAlly();
-        $otherAlly = $doctrine->getRepository(Ally::class)
+        $ally = $commander->getAlliance();
+        $otherAlliance = $doctrine->getRepository(Alliance::class)
             ->createQueryBuilder('a')
-            ->where('a.sigle = :sigle')
-            ->setParameter('sigle', $pact->getAllyTag())
+            ->where('a.tag = :tag')
+            ->setParameter('tag', $pact->getAllianceTag())
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -163,8 +163,8 @@ class PactController extends AbstractController
             ->where('pna.allyTag = :allytag')
             ->andWhere('pna.ally = :ally')
             ->setParameters([
-                'allytag' => $ally->getSigle(),
-                'ally' => $otherAlly])
+                'allytag' => $ally->getTag(),
+                'ally' => $otherAlliance])
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -197,10 +197,10 @@ class PactController extends AbstractController
             return $this->redirectToRoute('home');
         }
 
-        $otherAlly = $doctrine->getRepository(Ally::class)
+        $otherAlliance = $doctrine->getRepository(Alliance::class)
             ->createQueryBuilder('a')
-            ->where('a.sigle = :sigle')
-            ->setParameter('sigle', $pact->getAllyTag())
+            ->where('a.tag = :tag')
+            ->setParameter('tag', $pact->getAllianceTag())
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -209,16 +209,16 @@ class PactController extends AbstractController
             ->where('al.allyTag = :allytag')
             ->andWhere('al.ally = :ally')
             ->setParameters([
-                'allytag' => $commander->getAlly()->getSigle(),
-                'ally' => $otherAlly])
+                'allytag' => $commander->getAlliance()->getTag(),
+                'ally' => $otherAlliance])
             ->getQuery()
             ->getOneOrNullResult();
 
         if($pact2) {
             $pact2->setDismissAt($now);
-            $pact2->setDismissBy($commander->getAlly()->getSigle());
+            $pact2->setDismissBy($commander->getAlliance()->getTag());
             $pact->setDismissAt($now);
-            $pact->setDismissBy($commander->getAlly()->getSigle());
+            $pact->setDismissBy($commander->getAlliance()->getTag());
         } else {
             $em->remove($pact);
         }
@@ -241,7 +241,7 @@ class PactController extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 864000 . 'S'));
 
@@ -251,18 +251,18 @@ class PactController extends AbstractController
 
         $waitingPeaces = $doctrine->getRepository(Peace::class)
             ->createQueryBuilder('p')
-            ->where('p.allyTag = :sigle')
+            ->where('p.allyTag = :tag')
             ->andWhere('p.accepted = false')
-            ->setParameters(['sigle' => $ally->getSigle()])
+            ->setParameters(['tag' => $ally->getTag()])
             ->getQuery()
             ->getResult();
 
-        $form_peace = $this->createForm(AllyPeaceType::class);
+        $form_peace = $this->createForm(AlliancePeaceType::class);
         $form_peace->handleRequest($request);
 
         if (($form_peace->isSubmitted() && $form_peace->isValid())) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
-            $peace = new Peace($ally, $war->getAllyTag(), $form_peace->get('type')->getData(), $form_peace->get('planetNbr')->getData(), $form_peace->get('taxeNbr')->getData(), $form_peace->get('pdgNbr')->getData(), false);
+            $peace = new Peace($ally, $war->getAllianceTag(), $form_peace->get('type')->getData(), $form_peace->get('planetNbr')->getData(), $form_peace->get('taxeNbr')->getData(), $form_peace->get('pdgNbr')->getData(), false);
             $em->persist($peace);
             $em->flush();
 
@@ -289,7 +289,7 @@ class PactController extends AbstractController
         $em = $doctrine->getManager();
         $user = $this->getUser();
         $commander = $user->getCommander($usePlanet->getSector()->getGalaxy()->getServer());
-        $ally = $commander->getAlly();
+        $ally = $commander->getAlliance();
         $now = new DateTime();
         $now->add(new DateInterval('PT' . 864000 . 'S'));
 
@@ -311,27 +311,27 @@ class PactController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        $otherAlly = $doctrine->getRepository(Ally::class)
+        $otherAlliance = $doctrine->getRepository(Alliance::class)
             ->createQueryBuilder('a')
             ->where('a.id = :id')
-            ->setParameter('id', $peace->getAlly()->getId())
+            ->setParameter('id', $peace->getAlliance()->getId())
             ->getQuery()
             ->getOneOrNullResult();
 
         $war = $doctrine->getRepository(War::class)
             ->createQueryBuilder('w')
             ->where('w.ally = :ally')
-            ->andWhere('w.allyTag = :sigle')
+            ->andWhere('w.allyTag = :tag')
             ->setParameter('ally', $ally)
-            ->setParameters(['ally' => $ally, 'sigle' => $otherAlly->getSigle()])
+            ->setParameters(['ally' => $ally, 'tag' => $otherAlliance->getTag()])
             ->getQuery()
             ->getOneOrNullResult();
 
         $war2 = $doctrine->getRepository(War::class)
             ->createQueryBuilder('w')
             ->where('w.ally = :ally')
-            ->andWhere('w.allyTag = :sigle')
-            ->setParameters(['ally' => $otherAlly, 'sigle' => $ally->getSigle()])
+            ->andWhere('w.allyTag = :tag')
+            ->setParameters(['ally' => $otherAlliance, 'tag' => $ally->getTag()])
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -349,7 +349,7 @@ class PactController extends AbstractController
         foreach ($otherPeaces as $otherPeace) {
             $em->remove($otherPeace);
         }
-        $peace2 = new Peace($otherAlly, $peace->getAlly()->getSigle(), $type, $peace->getPlanet(), $peace->getTaxe(), $peace->getPdg(), true);
+        $peace2 = new Peace($otherAlliance, $peace->getAlliance()->getTag(), $type, $peace->getPlanet(), $peace->getTaxe(), $peace->getPdg(), true);
         $peace->setSignedAt($now);
         $peace->setAccepted(true);
         $em->persist($peace2);
@@ -377,10 +377,10 @@ class PactController extends AbstractController
         }
 
 
-        $otherAlly = $doctrine->getRepository(Ally::class)
+        $otherAlliance = $doctrine->getRepository(Alliance::class)
             ->createQueryBuilder('a')
-            ->where('a.sigle = :sigle')
-            ->setParameter('sigle', $peace->getAllyTag())
+            ->where('a.tag = :tag')
+            ->setParameter('tag', $peace->getAllianceTag())
             ->getQuery()
             ->getOneOrNullResult();
 
@@ -389,8 +389,8 @@ class PactController extends AbstractController
             ->where('al.allyTag = :allytag')
             ->andWhere('al.ally = :ally')
             ->setParameters([
-                'allytag' => $commander->getAlly()->getSigle(),
-                'ally' => $otherAlly])
+                'allytag' => $commander->getAlliance()->getTag(),
+                'ally' => $otherAlliance])
             ->getQuery()
             ->getOneOrNullResult();
 

@@ -2,10 +2,10 @@ title: Alliance
 delete: 'Supprimer l''alliance'
 ally.members: membres
 form.name: 'Nom de l''alliance (max 15)'
-form.sigle: 'Sigle (max 4)'
+form.tag: 'Tag (max 4)'
 form.slogan: 'Cri de ralliement (max 30)'
 form.taxe: '(1 à 10%)'
-form.taxeAlly: 'Taxe d''alliance :'
+form.taxeAlliance: 'Taxe d''alliance :'
 form.send: 'Créer une alliance'
 form.add: 'Envoyer proposition'
 form.transfert: Transfert
@@ -13,7 +13,7 @@ form.num: nombre
 form.exchangeType: 'Type de transfert'
 form.pactType: 'Type de pacte'
 form.image: Image
-form.allyName: 'Sigle de l''alliance'
+form.allyName: 'Tag de l''alliance'
 form.description: 'Description de l''alliance'
 form.nameUser: 'Pseudo du joueur'
 Donner: Donner
@@ -26,7 +26,7 @@ ally.memberName: Pseudo
 ally.memberDateJoin: Adhésion
 ally.memberPoint: Points
 ally.memberConnected: 'En ligne'
-ally.proposalAt: 'Date de proposition'
+ally.offerAt: 'Date de proposition'
 ally.cancelAsk: 'Annuler proposition'
 ally.cancel: 'Cliquez ici pour annuler'
 ally.allyName: 'Nom d''alliance'
@@ -84,7 +84,7 @@ ally.gradeTitle: 'Administration alliance'
 ally.addTitle: 'Recrutement de joueurs'
 ally.machiavel: 'Vous avez trahi vos alliés'
 ally.traitor: 'Vous avez été trahi'
-ally.banAlly: 'Vous pourrez rejoindre/créer une alliance dans : '
+ally.banAlliance: 'Vous pourrez rejoindre/créer une alliance dans : '
 ally.makePeace: 'Faire la paix'
 ally.makePeaceTitle: 'Proposition/demande de paix'
 ally.askFor: Type
@@ -117,7 +117,7 @@ ally.exchangeRefuse: Non
 ally.formBank: 'Transaction alliance :'
 ally.formGivePdg: 'Transaction de pdg'
 ally.ranked: 'Liste d''Alliances crées'
-ally.proposals: 'Proposition(s) de recrutement'
+ally.offers: 'Proposition(s) de recrutement'
 ally.usersRecrut: 'Joueurs actifs sans alliance :'
 tooltip.takePlanet: 'Nombre de planètes que vous demandez/offrez pour la paix (selectionnées parmi les meilleures).'
 tooltip.takeTaxe: 'Taxe que vous percevrez chaque jour pendant 2 semaines sur leurs revenus.'
@@ -143,7 +143,7 @@ ally.leave.question: 'Souhaitez vous quitter l''alliance ?'
 ally.delete.question: 'Souhaitez vous détruire l''alliance ?'
 form.give: Donner
 form.take: Retirer
-form.proposal: Proposer
+form.offer: Proposer
 form.claim: Réclamer
 form.non: Aucune
 form.none: Aucun

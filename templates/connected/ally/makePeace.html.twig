@@ -58,7 +58,7 @@
                         {% for peace in waitingPeaces %}
                             {% if peace.getAccepted() == 0 %}
                                 <tr>
-                                    <th colspan="4" class="tab-cells-name text-orange">[{{ peace.getAllyTag() }}] {{ peace.getAlly().getName() }}</th>
+                                    <th colspan="4" class="tab-cells-name text-orange">[{{ peace.getAllianceTag() }}] {{ peace.getAlliance().getName() }}</th>
                                 </tr>
                                 <tr>
                                     <th class="tab-cells-name">{{ 'ally.askFor'|trans }}</th>
@@ -108,7 +108,7 @@
                         {% for peace in ally.getPeaces() %}
                             {% if peace.getAccepted() == 0 %}
                                 <tr>
-                                    <th colspan="4" class="tab-cells-name text-orange">[{{ peace.getAlly().getSigle() }}] {{ peace.getAlly().getName() }}</th>
+                                    <th colspan="4" class="tab-cells-name text-orange">[{{ peace.getAlliance().getTag() }}] {{ peace.getAlliance().getName() }}</th>
                                 </tr>
                                 <tr>
                                     <th class="tab-cells-name">{{ 'ally.askFor'|trans }}</th>

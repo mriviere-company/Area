@@ -6,7 +6,7 @@
 
 {% block body %}
     {% for message in app.flashes('fail') %}
-        <div class="flash-notice mt-5 alerte-flash-error text-center">
+        <div class="flash-notice mt-5 alert-flash-error text-center">
             {{ message }}
         </div>
     {% endfor %}
@@ -67,10 +67,10 @@
                                 {% for allied in ally.getAllieds() %}
                                     <tr>
                                         <td class="center-cells">
-                                            [{{ allied.getAllytag() }}]
+                                            [{{ allied.getAlliancetag() }}]
                                         </td>
                                         <td class="center-cells">
-                                            {% if allied.getDismissBy() == ally.getSigle() %}{{ 'ally.machiavel'|trans }}{% elseif allied.getDismissBy() != ally.getSigle() and allied.getDismissBy() %}{{ 'ally.traitor'|trans }}{% elseif allied.getAccepted() == 1 %}{{ 'ally.accepted'|trans }}{% else %}{{ 'ally.pactWaiting'|trans }}{% endif %}
+                                            {% if allied.getDismissBy() == ally.getTag() %}{{ 'ally.machiavel'|trans }}{% elseif allied.getDismissBy() != ally.getTag() and allied.getDismissBy() %}{{ 'ally.traitor'|trans }}{% elseif allied.getAccepted() == 1 %}{{ 'ally.accepted'|trans }}{% else %}{{ 'ally.pactWaiting'|trans }}{% endif %}
                                         </td>
                                         <td class="center-cells">
                                             {{ allied.getSignedAt()|date('d/m/Y H:i') }}
@@ -95,7 +95,7 @@
                                 {% for pna in ally.getPnas() %}
                                     <tr>
                                         <td class="center-cells">
-                                            {{ pna.getAllytag() }}
+                                            {{ pna.getAlliancetag() }}
                                         </td>
                                         <td class="center-cells">
                                             {% if pna.getAccepted() == 1 %}{{ 'ally.accepted'|trans }}{% else %}{{ 'ally.pactWaiting'|trans }}{% endif %}
@@ -122,7 +122,7 @@
                                 {% for war in ally.getWars() %}
                                     <tr>
                                         <td class="center-cells">
-                                            {{ war.getAllytag() }}
+                                            {{ war.getAlliancetag() }}
                                         </td>
                                         <td class="center-cells">
                                             {{ war.getSignedAt()|date('d/m/Y H:i') }}
@@ -147,7 +147,7 @@
                                     {% if peace.getAccepted() == 1 %}
                                         <tr>
                                             <td class="center-cells">
-                                                {{ peace.getAllytag() }}
+                                                {{ peace.getAlliancetag() }}
                                             </td>
                                             <td class="center-cells">
                                                 <div class="timerArea" hidden>{{ peace.getSignedAt|date('Y/m/d H:i:s') }}</div>
@@ -172,7 +172,7 @@
                                 <tr>
                                     {% for pna in waitingPna %}
                                         <td class="center-cells">
-                                            [{{ pna.getAlly().getSigle() }}]{{ pna.getAlly().getName() }}
+                                            [{{ pna.getAlliance().getTag() }}]{{ pna.getAlliance().getName() }}
                                         </td>
                                         <td class="center-cells">
                                             {{ pna.getSignedAt()|date('d/m/Y H:i') }}
@@ -184,7 +184,7 @@
                                     {% endfor %}
                                     {% for allied in waitingAllied %}
                                         <td class="center-cells">
-                                            [{{ allied.getAlly().getSigle() }}]{{ allied.getAlly().getName() }}
+                                            [{{ allied.getAlliance().getTag() }}]{{ allied.getAlliance().getName() }}
                                         </td>
                                         <td class="center-cells">
                                             {{ allied.getSignedAt()|date('d/m/Y H:i') }}
@@ -224,9 +224,9 @@
                             {{ 'rank.createdAt'|trans }}
                         </th>
                     </tr>
-                    {% for ally in allAllys %}
+                    {% for ally in allAlliances %}
                         <tr>
-                            <th class="tab-cells-name borderAlly p-0">
+                            <th class="tab-cells-name borderAlliance p-0">
                                 {% if ally.getImageName() %}
                                     <img alt="{{ 'image'|trans({},'front_global') }}" height="30" width="45" src="{{ vich_uploader_asset(ally, 'imageFile') }}">
                                 {% else %}
@@ -234,7 +234,7 @@
                                 {% endif %}
                             </th>
                             <th class="tab-cells-name p-2">
-                                <span><a data-toggle="modal" data-target="#allyModal" href="{{ path('ally_profil_modal', {'allyCommander': ally.getId(), 'usePlanet': usePlanet.getId()}) }}">[{{ ally.getSigle() }}] {{ ally.getName() }}</a></span>
+                                <span><a data-toggle="modal" data-target="#allyModal" href="{{ path('ally_profil_modal', {'allyCommander': ally.getId(), 'usePlanet': usePlanet.getId()}) }}">[{{ ally.getTag() }}] {{ ally.getName() }}</a></span>
                             </th>
                             <th class="tab-cells-name p-2">
                                 {{ ally.getPolitic()|trans }}

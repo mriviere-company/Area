@@ -34,9 +34,9 @@ class PlanetRepository extends EntityRepository
             $request = $this->createQueryBuilder('p')
                 ->where('p.commander = :commander')
                 ->setParameters(['commander' => $commander]);
-            if ($commander->getOrderPlanet() == 'alpha') {
+            if ($commander->getPlanetsOrder() == 'alpha') {
                 $request->orderBy('p.name', 'ASC');
-            } elseif ($commander->getOrderPlanet() == 'colo') {
+            } elseif ($commander->getPlanetsOrder() == 'colo') {
                 $request->orderBy('p.nbColo', 'ASC');
             } else {
                 $request->orderBy('p.id', 'ASC');

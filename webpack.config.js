@@ -23,7 +23,7 @@ Encore
     .addEntry('main', './assets/main.js')
     .addEntry('admin', './assets/js/adminCharts.js')
     .addEntry('allyCharts', './assets/js/allyCharts.js')
-    .addEntry('shipsCharts', './assets/js/shipsCharts.js')
+    .addEntry('shipCharts', './assets/js/shipCharts.js')
     .addEntry('bitcoinCharts', './assets/js/bitcoinCharts.js')
     .addEntry('pdgCharts', './assets/js/pdgCharts.js')
     .addEntry('zombieCharts', './assets/js/zombieCharts.js')

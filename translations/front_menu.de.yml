@@ -41,7 +41,7 @@ SkyImg: Raum
 rank: Rang
 market: Einzelhändler
 helpNew: 'Hilfe für Anfänger'
-fleetNoAlly: 'Nicht alliierte Flotten wurden im Orbit unseres Planeten gesichtet.'
+fleetNoAlliance: 'Nicht alliierte Flotten wurden im Orbit unseres Planeten gesichtet.'
 embargo: 'Dieser Planet steht derzeit unter Embargo.'
 previousPlanet: 'Vorheriger Planet'
 nextPlanet: 'Nächster Planet'

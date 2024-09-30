@@ -36,7 +36,7 @@ class DeployController extends AbstractController
         }
         $planet = $fleet->getPlanet();
 
-        if($fleet->getRadarShip() && $planet->getEmpty()) {
+        if($fleet->getRadarShip() && $planet->getType() == 'empty') {
             $fleet->setRadarShip($fleet->getRadarShip() - 1);
             if($planet->getSkyRadar()) {
                 $planet->setSkyRadar($planet->getSkyRadar() + 1);
@@ -47,7 +47,7 @@ class DeployController extends AbstractController
                 $planet->setRadarAt($now);
             }
 
-            if($fleet->getNbrShips() == 0) {
+            if($fleet->getNbrShip() == 0) {
                 $em->remove($fleet);
             }
             $em->flush();
@@ -64,7 +64,7 @@ class DeployController extends AbstractController
      * @return RedirectResponse
      * @throws Exception
      */
-    public function deployBrouilleurAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
+    public function deployJammerAction(ManagerRegistry $doctrine, Planet $usePlanet, Fleet $fleet): RedirectResponse
     {
         $em = $doctrine->getManager();
         $now = new DateTime();
@@ -77,18 +77,18 @@ class DeployController extends AbstractController
         }
         $planet = $fleet->getPlanet();
 
-        if($fleet->getBrouilleurShip() && $planet->getEmpty()) {
-            $fleet->setBrouilleurShip($fleet->getBrouilleurShip() - 1);
-            if($planet->getSkyBrouilleur()) {
-                $planet->setSkyBrouilleur($planet->getSkyBrouilleur() + 1);
+        if($fleet->getJammerShip() && $planet->getType() == 'empty') {
+            $fleet->setJammerShip($fleet->getJammerShip() - 1);
+            if($planet->getSkyJammer()) {
+                $planet->setSkyJammer($planet->getSkyJammer() + 1);
             } else {
                 $planet->setCommander($fleet->getCommander());
-                $planet->setName('Brouilleur');
-                $planet->setSkyBrouilleur(1);
-                $planet->setBrouilleurAt($now);
+                $planet->setName('Jammer');
+                $planet->setSkyJammer(1);
+                $planet->setJammerAt($now);
             }
 
-            if($fleet->getNbrShips() == 0) {
+            if($fleet->getNbrShip() == 0) {
                 $em->remove($fleet);
             }
             $em->flush();
@@ -115,7 +115,7 @@ class DeployController extends AbstractController
         }
         $planet = $fleet->getPlanet();
 
-        if($fleet->getMoonMaker() && $planet->getEmpty() && !$planet->getCdr() &&
+        if($fleet->getMoonMaker() && $planet->getType() == 'empty' && !$planet->getCdr() &&
             $planet->getNbCdr() > 750000 && $planet->getWtCdr() > 750000) {
             $fleet->setMoonMaker($fleet->getMoonMaker() - 1);
             $planet->setCommander($fleet->getCommander());
@@ -149,7 +149,7 @@ class DeployController extends AbstractController
             $planet->setNbCdr(0);
             $planet->setWtCdr(0);
 
-            if($fleet->getNbrShips() == 0) {
+            if($fleet->getNbrShip() == 0) {
                 $em->remove($fleet);
             }
             $em->flush();

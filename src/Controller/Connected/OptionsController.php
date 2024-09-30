@@ -41,7 +41,7 @@ class OptionsController extends AbstractController
         if ($form_prefers->isSubmitted() && $form_prefers->isValid()) {
             $this->get("security.csrf.token_manager")->refreshToken("task_item");
             if($form_prefers->get('planetOrder')->getData()) {
-                $commander->setOrderPlanet($form_prefers->get('planetOrder')->getData());
+                $commander->setPlanetsOrder($form_prefers->get('planetOrder')->getData());
             }
             $commander->setUsername($form_prefers->get('username')->getData());
 

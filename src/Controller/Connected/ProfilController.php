@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use App\Entity\Planet;
 use App\Entity\Commander;
-use App\Entity\Ally;
+use App\Entity\Alliance;
 
 /**
  * @Route("/connect")
@@ -56,11 +56,11 @@ class ProfilController extends AbstractController
     /**
      * @Route("/profil-alliance/{allyCommander}/{usePlanet}", name="ally_profil", requirements={"usePlanet"="\d+", "allyCommander"="\d+"})
      * @param ManagerRegistry $doctrine
-     * @param Ally $allyCommander
+     * @param Alliance $allyCommander
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function allyProfilAction(ManagerRegistry $doctrine, Ally $allyCommander, Planet $usePlanet): RedirectResponse|Response
+    public function allyProfilAction(ManagerRegistry $doctrine, Alliance $allyCommander, Planet $usePlanet): RedirectResponse|Response
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
@@ -126,11 +126,11 @@ class ProfilController extends AbstractController
     /**
      * @Route("/profil-alliance-popup/{allyCommander}/{usePlanet}", name="ally_profil_modal", requirements={"usePlanet"="\d+", "allyCommander"="\d+"})
      * @param ManagerRegistry $doctrine
-     * @param Ally $allyCommander
+     * @param Alliance $allyCommander
      * @param Planet $usePlanet
      * @return RedirectResponse|Response
      */
-    public function allyProfilModalAction(ManagerRegistry $doctrine, Ally $allyCommander, Planet $usePlanet): RedirectResponse|Response
+    public function allyProfilModalAction(ManagerRegistry $doctrine, Alliance $allyCommander, Planet $usePlanet): RedirectResponse|Response
     {
         $em = $doctrine->getManager();
         $user = $this->getUser();
