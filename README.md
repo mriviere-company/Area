@@ -66,7 +66,7 @@ A real-time multiplayer space strategy game played in the browser, **designed, b
 
 > **100% hand-written, no AI.** All the code in this repository was written without any AI coding assistant, between 2017 and 2024: game design, backend, frontend, database, and deployment, by one person.
 
-This repository is **archived**: it is the game's first version, kept as is. The game was fully rebuilt in 2026 as **Area Reborn** (private repository, live at [areauniverse.com](https://www.areauniverse.com/)), this time with AI tools.
+This repository is **archived**: it is the game's first version, kept as is. The game was fully rebuilt in 2024 as **Area Reborn** (private repository, live at [areauniverse.com](https://www.areauniverse.com/)), this time with AI tools.
 
 ## At a glance
 
