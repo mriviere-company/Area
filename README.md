@@ -6,7 +6,7 @@ Jeu de stratégie spatiale multijoueur en temps réel, jouable dans le navigateu
 
 > **100 % écrit à la main, sans IA.** Tout le code de ce dépôt a été écrit sans assistant de code IA, entre 2017 et 2024 : conception du jeu, backend, frontend, base de données et mise en production, par une seule personne.
 
-Ce dépôt est **archivé** : c'est la première version du jeu, conservée telle quelle. Le jeu a été entièrement refondu en 2026 sous le nom **Area Reborn** (dépôt privé, en production sur [areauniverse.com](https://www.areauniverse.com/)), cette fois avec des outils d'IA.
+Ce dépôt est **archivé** : c'est la première version du jeu, conservée telle quelle. Le jeu a été entièrement refondu en 2024 sous le nom **Area Reborn** (dépôt privé, en production sur [areauniverse.com](https://www.areauniverse.com/)), cette fois avec des outils d'IA.
 
 ## En bref
 
